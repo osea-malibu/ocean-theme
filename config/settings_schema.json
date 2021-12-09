@@ -291,31 +291,19 @@
     ]
   },
   {
-    "name": "t:settings_schema.search_input.name",
+    "name": "Search",
     "settings": [
-      {
-        "type": "header",
-        "content": "t:settings_schema.search_input.settings.header.content"
-      },
       {
         "type": "checkbox",
         "id": "predictive_search_enabled",
         "default": true,
-        "label": "t:settings_schema.search_input.settings.predictive_search_enabled.label"
+        "label": "Enable predictive search"
       },
       {
-        "type": "checkbox",
-        "id": "predictive_search_show_vendor",
-        "default": false,
-        "label": "t:settings_schema.search_input.settings.predictive_search_show_vendor.label",
-        "info": "t:settings_schema.search_input.settings.predictive_search_show_vendor.info"
-      },
-      {
-        "type": "checkbox",
-        "id": "predictive_search_show_price",
-        "default": true,
-        "label": "t:settings_schema.search_input.settings.predictive_search_show_price.label",
-        "info": "t:settings_schema.search_input.settings.predictive_search_show_price.info"
+        "type": "textarea",
+        "id": "predictive_search_exclude_page",
+        "info": "A comma separated list of page handles",
+        "label": "Pages to exclude from search results"
       }
     ]
   },
@@ -345,7 +333,7 @@
         "type": "checkbox",
         "id": "currency_code_enabled",
         "label": "t:settings_schema.currency_format.settings.currency_code_enabled.label",
-        "default": true
+        "default": false
       }
     ]
   }

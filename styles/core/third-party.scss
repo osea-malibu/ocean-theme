@@ -1,0 +1,166 @@
+// Searchandize search results widget overrides - possibly remove app and this code
+body div.snize-ac-results {
+  animation-name: fadeIn;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  background-color: transparent;
+  box-shadow: none;
+  top: $header-height !important;
+  display: none !important;
+
+  &::before {
+    content: " ";
+    background-color: $color-neutral-100;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: $header-height;
+    bottom: 0;
+    z-index: -1;
+  }
+
+  ul {
+    display: flex !important;
+    flex-wrap: wrap;
+
+    li {
+      &.snize-label {
+        color: $color-primary-500;
+        text-align: left;
+        font-size: 0.875rem;
+        font-family: $font-sans;
+        text-transform: none;
+        letter-spacing: toRem(0.5);
+        line-height: 1.2;
+        background-color: transparent;
+        border: none;
+        padding: toRem(24) 0 toRem(8);
+        width: 100%;
+      }
+      &.snize-suggestion {
+        padding: toRem(4) 0;
+        letter-spacing: toRem(0.5);
+        padding: 0.25rem 0.5rem;
+        margin: 0 0.5rem 0.5rem 0;
+        background-color: $color-neutral-0;
+        border: 1px solid $color-neutral-300;
+        border-radius: $border-radius-sm;
+
+        b {
+          font-weight: 700;
+        }
+      }
+      &.snize-product {
+        width: 33%;
+        padding: 0 1rem 0 0;
+
+        .snize-item {
+          display: flex;
+          flex-direction: column;
+
+          .snize-thumbnail {
+            background-color: $color-neutral-0;
+            border-radius: $border-radius-sm;
+            width: 200px;
+            height: 200px;
+            margin: 0;
+
+            img {
+              max-width: 200px !important;
+              max-height: 200px !important;
+            }
+          }
+          .snize-overhidden {
+            max-width: 200px;
+
+            .snize-title {
+              color: $color-text-dark;
+              font-family: $font-sans;
+              font-weight: 700;
+              font-size: toRem(14);
+              letter-spacing: toRem(1);
+              margin-top: toRem(16);
+            }
+            .snize-description {
+              margin-top: toRem(8);
+              color: $color-text-dark;
+              -webkit-line-clamp: 1 !important;
+            }
+            .snize-price {
+              color: $color-neutral-500;
+              font-size: toRem(14);
+              font-weight: 400;
+
+              &-list {
+                margin-top: toRem(8);
+              }
+            }
+          }
+        }
+      }
+      &.snize-view-all-link {
+        border: 1px solid $color-primary-400;
+        border-radius: $border-radius-sm;
+        background-color: $color-neutral-0;
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+
+        span {
+          color: $color-primary-700;
+          text-transform: uppercase;
+          font-weight: 700;
+          letter-spacing: toRem(2);
+          line-height: 1;
+          font-size: toRem(12);
+        }
+      }
+      &.snize-category {
+        width: 100%;
+        padding: toRem(4) 0;
+
+        a.snize-view-link {
+          font-weight: 700;
+          letter-spacing: toRem(1);
+          line-height: 1.2;
+          color: $color-text-dark;
+        }
+      }
+      &.snize-page {
+        width: 100%;
+        padding: toRem(4) 0;
+
+        b {
+          font-weight: 700;
+        }
+      }
+      &.snize-seperator {
+        display: none;
+      }
+    }
+  }
+
+  div.snize-dropdown-arrow {
+    width: toRem(12);
+    height: toRem(12);
+    top: toRem(-6);
+    border-left: 1px solid $color-primary-700;
+    border-top: 1px solid $color-primary-700;
+    background-color: $color-neutral-100;
+    transform: rotate(45deg);
+
+    div.snize-arrow-outer,
+    div.snize-arrow-inner {
+      display: none;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

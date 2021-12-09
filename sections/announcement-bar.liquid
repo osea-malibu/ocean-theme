@@ -1,72 +1,56 @@
-{%- for block in section.blocks -%}
-  {%- case block.type -%}
-    {%- when 'announcement' -%}
-      <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
-        {%- if block.settings.text != blank -%}
-          {%- if block.settings.link != blank -%}
-            <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+<div class="announcement-bar">
+  {%- if section.blocks.size > 1 -%}
+    <div class="slider slider-nav-autoplay slider-nav-outside" data-slider-nav-autoplay-interval={{ section.settings.slide_interval | times: 1000 }}>
+      <ul class="slider-container">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.text != blank -%}
+            <li class="announcement-bar__message" role="region" aria-label="{{ block.settings.text | strip_html }}">
+              {{ block.settings.text }}
+            </li>
           {%- endif -%}
-              <p class="announcement-bar__message h5">
-                {{ block.settings.text | escape }}
-                {%- if block.settings.link != blank -%}
-                  {% render 'icon-arrow' %}
-                {%- endif -%}
-              </p>
-          {%- if block.settings.link != blank -%}
-            </a>
-          {%- endif -%}
-        {%- endif -%}
-      </div>
-  {%- endcase -%}
-{%- endfor -%}
+        {%- endfor -%}
+      </ul>
+      <button type="button" class="slider-nav slider-nav-small"></button>
+      <button type="button" class="slider-nav slider-nav-small slider-nav-next"></button>
+    </div>
+  {%- else -%}
+    <div class="announcement-bar__message" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
+      {{ section.blocks[0].settings.text }}
+    </div>
+  {%- endif -%}
+</div>
 
 {% schema %}
 {
-  "name": "t:sections.announcement-bar.name",
+  "name": "Announcement bar",
   "max_blocks": 12,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Adding more than 1 visible announcement converts text into a carousel. For best performance keep only 1 announcement active at a time."
+    },
+    {
+      "default": 3,
+      "id": "slide_interval",
+      "info": "Number of seconds before slide changes when there is more than one announcement",
+      "label": "Slide change interval",
+      "max": 20,
+      "min": 0,
+      "step": 1,
+      "type": "range",
+      "unit": "sec"
+    }
+  ],
   "blocks": [
     {
       "type": "announcement",
-      "name": "t:sections.announcement-bar.blocks.announcement.name",
+      "name": "Announcement",
       "settings": [
         {
-          "type": "text",
+          "type": "richtext",
           "id": "text",
-          "default": "Welcome to our store",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
-        },
-        {
-          "type": "select",
-          "id": "color_scheme",
-          "options": [
-            {
-              "value": "background-1",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.color_scheme.options__1.label"
-            },
-            {
-              "value": "background-2",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.color_scheme.options__2.label"
-            },
-            {
-              "value": "inverse",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.color_scheme.options__3.label"
-            },
-            {
-              "value": "accent-1",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.color_scheme.options__4.label"
-            },
-            {
-              "value": "accent-2",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.color_scheme.options__5.label"
-            }
-          ],
-          "default": "accent-1",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.color_scheme.label"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+          "default": "<p>Free shipping on orders over $50</p>",
+          "label": "Text"
         }
       ]
     }

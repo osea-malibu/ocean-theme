@@ -1,0 +1,217 @@
+/* component-button */
+.button,
+.shopify-challenge__button,
+.customer button {
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  border: 1px solid $color-primary-400;
+  border-radius: $border-radius-sm;
+  background-color: $color-neutral-0;
+  color: $color-primary-700;
+  transition: color 0.12s ease, background-color 0.12s ease,
+    border-color 0.12s ease, box-shadow 0.12s ease, outline 0.12s ease;
+  appearance: none;
+  font-size: toRem(16);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.05rem;
+
+  &:not([disabled]):hover {
+    border-color: $color-primary-700;
+    box-shadow: $box-shadow-low;
+  }
+
+  &:focus {
+    border-color: $color-neutral-0;
+    box-shadow: $box-shadow-low;
+  }
+
+  &.icon {
+    &-right {
+      svg {
+        position: relative;
+        right: toRem(-8);
+      }
+    }
+  }
+
+  &--secondary {
+    background-color: $color-primary-700;
+    border-color: $color-primary-700;
+    color: $color-neutral-0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &:not([disabled]):hover {
+      border-color: $color-primary-500;
+      background-color: $color-primary-500;
+      box-shadow: $box-shadow-low;
+    }
+
+    &:focus {
+      border-color: $color-primary-400;
+    }
+  }
+
+  &--md {
+    padding: 0.75rem 1rem;
+    line-height: toRem(14);
+  }
+
+  &--sm {
+    padding: 0.5rem 0.75rem;
+    font-size: toRem(14);
+
+    svg {
+      max-width: 18px;
+    }
+  }
+
+  &--full-width {
+    display: flex;
+    width: 100%;
+  }
+}
+
+/* Button - other */
+
+.button:disabled,
+.button[aria-disabled="true"],
+.button.disabled,
+.customer button:disabled,
+.customer button[aria-disabled="true"],
+.customer button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.button.loading {
+  color: transparent;
+  position: relative;
+
+  @media screen and (forced-colors: active) {
+    color: $color-primary-700;
+  }
+
+  & > .loading-overlay__spinner {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    height: 100%;
+    display: flex;
+  }
+}
+
+/* Button - social share */
+.share-button {
+  display: block;
+  position: relative;
+
+  details {
+    width: fit-content;
+  }
+
+  &__button {
+    font-size: 1.4rem;
+    display: flex;
+    min-height: 2.4rem;
+    align-items: center;
+    color: $color-primary-700;
+    margin-left: 0;
+    padding-left: 0;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.3rem;
+    }
+
+    .icon-share {
+      height: 1.2rem;
+      margin-right: 1rem;
+      width: 1.3rem;
+    }
+  }
+
+  &__fallback {
+    background: $color-neutral-0;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 3rem;
+    left: 0.1rem;
+    z-index: 3;
+    width: 100%;
+    min-width: max-content;
+    box-shadow: 0 0 0 0.1rem rgba($color-primary-700, 0.55);
+
+    button {
+      width: 4.4rem;
+      height: 4.4rem;
+      padding: 0;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        color: rgba($color-primary-700, 0.75);
+
+        svg {
+          transform: scale(1);
+        }
+      }
+    }
+
+    .field__input {
+      box-shadow: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  &__button,
+  &__fallback button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+  }
+
+  &__close:not(.hidden) + .share-button__copy {
+    display: none;
+  }
+
+  &__close,
+  &__copy {
+    background-color: transparent;
+    color: $color-primary-700;
+  }
+
+  &__message:not(:empty) {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    padding: 0.8rem 0 0.8rem 1.5rem;
+
+    &:not(.hidden) ~ * {
+      display: none;
+    }
+  }
+}
+
+details[open] > .share-button__fallback {
+  animation: animateMenuOpen 0.2s ease;
+}

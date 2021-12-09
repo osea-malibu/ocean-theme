@@ -92,14 +92,14 @@
     {%- endcase -%}
   {%- endfor -%}
 
-  <div class="element-margin center">
+  <div class="center">
     <a href="{{ blog.url }}" class="article-template__link link animate-arrow{% if blog.comments_enabled? == false %} spaced-section{% endif %}">
       <span class="icon-wrap">{% render 'icon-arrow' %}</span>
       {{ 'blogs.article.back_to_blog' | t: title: blog.title }}
     </a>
   </div>
   {%- if blog.comments_enabled? -%}
-    <div class="article-template__comment-wrapper background-secondary">
+    <div class="article-template__comment-wrapper">
       <div id="comments" class="page-width page-width--narrow">
         {%- if article.comments_count > 0 -%}
           {%- assign anchorId = '#Comments-' | append: article.id -%}
@@ -138,7 +138,7 @@
           <h2>{{ 'blogs.article.comment_form_title' | t }}</h2>
           {%- if form.errors -%}
             <div class="form__message" role="alert">
-              <h3 class="form-status caption-large text-body" tabindex="-1" autofocus>
+              <h3 class="form-status caption-large font-sans" tabindex="-1" autofocus>
                 {% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}
               </h3>
             </div>

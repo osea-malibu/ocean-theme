@@ -50,7 +50,7 @@
           <div class="collage-card collage-product card-wrapper{% if focus_card_left %} collage-card--left{% elsif focus_card_right %} collage-card--right{% endif %}">
             {%- if block.settings.product != blank -%}
               {%- assign featured_media = block.settings.product.selected_or_first_available_variant.featured_media | default: block.settings.product.featured_media -%}
-              <div class="collage-content card{% if block.settings.secondary_background %} card-colored color-background-1{% endif %}{% if block.settings.image_padding %} collage-card-spacing{% endif %}" {{ block.shopify_attributes }}>
+              <div class="collage-content card{% if block.settings.secondary_background %} card-colored{% endif %}{% if block.settings.image_padding %} collage-card-spacing{% endif %}" {{ block.shopify_attributes }}>
                 {%- if featured_media != blank -%}
                   <div class="collage-content__info card-information card-information__wrapper">
                     <h3 class="card-information__text h4"><a href="{{ block.settings.product.url }}" class="full-unstyled-link">{{ block.settings.product.title | escape }}</a></h3>
@@ -112,7 +112,7 @@
                     </div>
                   </div>
                 {%- else -%}
-                  <div class="collage-card__no-image card-colored color-background-1 card__text-spacing center">
+                  <div class="collage-card__no-image card-colored card__text-spacing center">
                     <h3 class="h2"><a href="{{ block.settings.product.url }}" class="full-unstyled-link">{{ block.settings.product.title | escape }}</a></h3>
                   </div>
                   <div class="collage-product__badge">
@@ -135,7 +135,7 @@
               </div>
             {%- else -%}
               <div class="collage-content">
-                <div class="collage-card__no-image card-colored color-background-1 card__text-spacing center">
+                <div class="collage-card__no-image card-colored card__text-spacing center">
                   <h3 class="h2">{{ 'onboarding.product_title' | t }}</h3>
                 </div>
                 <div class="collage-content__info">

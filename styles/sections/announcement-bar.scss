@@ -1,0 +1,33 @@
+/* section-announcement-bar */
+#shopify-section-announcement-bar {
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 4;
+}
+
+.announcement-bar {
+  background-color: $color-primary-700;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+
+  &__message {
+    color: $color-neutral-0;
+    font-size: toRem(14);
+    font-weight: 400;
+    line-height: toRem(30);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .slider {
+    max-width: 600px;
+  }
+}

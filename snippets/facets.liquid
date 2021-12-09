@@ -35,7 +35,7 @@
         {% if enable_filtering %}
           <div id="FacetsWrapperDesktop" class="facets__wrapper">
             {%- unless results.filters == empty -%}
-              <h2 class="facets__heading caption-large text-body">{{ 'products.facets.filter_by_label' | t }}</h2>
+              <h2 class="facets__heading caption-large font-sans">{{ 'products.facets.filter_by_label' | t }}</h2>
             {%- endunless -%}
 
             {%- for filter in results.filters -%}
@@ -162,7 +162,7 @@
               {% endcase %}
             {%- endfor -%}
             <noscript>
-              <button type="submit" class="facets__button-no-js button button--tertiary">{{ 'products.facets.filter_button' | t }}</button>
+              <button type="submit" class="facets__button-no-js button">{{ 'products.facets.filter_button' | t }}</button>
             </noscript>
           </div>
 
@@ -171,7 +171,7 @@
               {%- for value in filter.active_values -%}
                 <facet-remove>
                   <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
-                    <span class="active-facets__button-inner button button--tertiary">
+                    <span class="active-facets__button-inner button">
                       {{ value.label | escape }}
                       {% render 'icon-close-small' %}
                       <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
@@ -183,7 +183,7 @@
                 {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
                   <facet-remove>
                     <a href="{{ filter.url_to_remove }}" class="active-facets__button active-facets__button--light">
-                      <span class="active-facets__button-inner button button--tertiary">
+                      <span class="active-facets__button-inner button">
                         {%- if filter.min_value.value -%}{{ filter.min_value.value | money }}{%- else -%}{{ 0 | money }}{%- endif -%}-{%- if filter.max_value.value -%}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{%- endif -%}
                         {% render 'icon-close-small' %}
                         <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
@@ -208,7 +208,7 @@
         {%- if enable_sorting -%}
           <div class="facet-filters sorting caption">
             <div class="facet-filters__field">
-              <h2 class="facet-filters__label caption-large text-body">
+              <h2 class="facet-filters__label caption-large font-sans">
                 <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
               </h2>
               <div class="select">
@@ -223,13 +223,13 @@
             </div>
 
             <noscript>
-              <button type="submit" class="facets__button-no-js button button--tertiary">{{ 'products.facets.sort_button' | t }}</button>
+              <button type="submit" class="facets__button-no-js button">{{ 'products.facets.sort_button' | t }}</button>
             </noscript>
           </div>
         {%- endif -%}
 
         <div class="product-count light" role="status">
-          <h2 class="product-count__text text-body">
+          <h2 class="product-count__text font-sans">
             <span id="ProductCountDesktop">
               {%- if results.results_count -%}
                 {{ 'templates.search.results_with_count' | t: terms: results.terms, count: results.results_count }}
@@ -255,7 +255,7 @@
       <summary class="mobile-facets__open-wrapper focus-offset">
         <span class="mobile-facets__open">
           {% render 'icon-filter' %}
-          <span class="mobile-facets__open-label button-label">
+          <span class="mobile-facets__open-label">
             {%- if enable_filtering and enable_sorting -%}
               {{ 'products.facets.filter_and_sort' | t }}
             {%- elsif enable_filtering -%}
@@ -458,7 +458,7 @@
       {%- for value in filter.active_values -%}
         <facet-remove>
           <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
-            <span class="active-facets__button-inner button button--tertiary">
+            <span class="active-facets__button-inner button">
               {{ value.label | escape }}
               {% render 'icon-close-small' %}
               <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
@@ -471,7 +471,7 @@
         {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
           <facet-remove>
             <a href="{{ filter.url_to_remove }}" class="active-facets__button active-facets__button--light">
-              <span class="active-facets__button-inner button button--tertiary">
+              <span class="active-facets__button-inner button">
                 {%- if filter.min_value.value -%}{{ filter.min_value.value | money }}{%- else -%}{{ 0 | money }}{%- endif -%}-{%- if filter.max_value.value -%}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{%- endif -%}
                 {% render 'icon-close-small' %}
                 <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
@@ -488,7 +488,7 @@
     </facet-remove>
   </div>
   <div class="product-count light{% unless collapse_on_larger_devices %} medium-hide large-up-hide{% endunless %}" role="status">
-    <h2 class="product-count__text text-body">
+    <h2 class="product-count__text font-sans">
       <span id="ProductCount">
         {%- if results.results_count -%}
           {{ 'templates.search.results_with_count' | t: terms: results.terms, count: results.results_count }}
