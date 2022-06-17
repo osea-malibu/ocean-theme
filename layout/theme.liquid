@@ -9,10 +9,8 @@
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
     {%- if settings.favicon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
-
-    <link rel="stylesheet" href="https://use.typekit.net/keg8hrc.css">
 
     <title>
       {{ page_title }}
@@ -27,15 +25,10 @@
 
     {% render 'meta-tags' %}
 
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}" defer></script>
+    <script src="{{ 'yotpo-widgets.js' | asset_url }}" async></script>
     
     {{ content_for_header }}
-
-    {%- liquid
-      assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
-      assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
-      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
-    %}
 
     {% style %}
       {% render 'font-face' %}
@@ -46,18 +39,18 @@
       }
     {% endstyle %}
 
+    {{ 'application.css' | asset_url | stylesheet_tag }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
-    <script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/DsuqaG0zlf2fAYBY85pxQw" async></script>
 </head>
 
-  <body>
+  <body class="antialiased">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ "accessibility.skip_to_text" | t }}
     </a>
 
-    <div id="HeaderContent">
+    <div id="HeaderContent" class="relative h-24">
       {% section 'announcement-bar' %}
       {% section 'header' %}
     </div>

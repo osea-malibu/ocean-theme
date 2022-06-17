@@ -21,10 +21,6 @@
 }
 
 @media screen and (min-width: 750px) {
-  .header-wrapper:not(.header-wrapper--border-bottom) + cart-notification .cart-notification {
-    border-top-width: 0.1rem;
-  }
-
   .cart-notification {
     border-width: 0 0.1rem 0.1rem;
     max-width: 36.8rem;
@@ -33,8 +29,7 @@
 }
 
 .cart-notification.animate {
-  transition: transform var(--duration-short) ease,
-    visibility 0s var(--duration-short) ease;
+  transition: transform var(--duration-short) ease, visibility 0s var(--duration-short) ease;
 }
 
 .cart-notification.active {

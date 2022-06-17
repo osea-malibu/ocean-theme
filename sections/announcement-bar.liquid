@@ -1,10 +1,10 @@
-<div class="announcement-bar">
+<div class="bg-seaweed-700 flex justify-center px-4">
   {%- if section.blocks.size > 1 -%}
-    <div class="slider slider-nav-autoplay slider-nav-outside" data-slider-nav-autoplay-interval={{ section.settings.slide_interval | times: 1000 }}>
+    <div class="slider slider-nav-autoplay slider-nav-outside max-w-xl" data-slider-nav-autoplay-interval={{ section.settings.slide_interval | times: 1000 }}>
       <ul class="slider-container">
         {%- for block in section.blocks -%}
           {%- if block.settings.text != blank -%}
-            <li class="announcement-bar__message" role="region" aria-label="{{ block.settings.text | strip_html }}">
+            <li class="text-white text-base font-weight-book text-center py-1 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
               {{ block.settings.text }}
             </li>
           {%- endif -%}
@@ -14,7 +14,7 @@
       <button type="button" class="slider-nav slider-nav-small slider-nav-next"></button>
     </div>
   {%- else -%}
-    <div class="announcement-bar__message" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
+    <div class="text-white text-base font-weight-book text-center py-1 tracking-wider" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
       {{ section.blocks[0].settings.text }}
     </div>
   {%- endif -%}
@@ -23,6 +23,7 @@
 {% schema %}
 {
   "name": "Announcement bar",
+  "class": "inset-x-0 fixed top-0 z-30",
   "max_blocks": 12,
   "settings": [
     {

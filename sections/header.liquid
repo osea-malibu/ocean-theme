@@ -14,100 +14,75 @@
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
 
-<style>
-  header-drawer {
-    justify-self: start;
-    margin-left: -1.2rem;
-  }
-
-  @media screen and (min-width: 990px) {
-    header-drawer {
-      display: none;
-    }
-  }
-</style>
-
 <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
 
-<svg xmlns="http://www.w3.org/2000/svg" class="hidden">
-  <symbol id="icon-search" viewbox="0 0 18 19" fill="none">
-    <g transform="translate(1.875 1)" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd">
-      <circle cx="6.5" cy="6.5" r="6.5"></circle>
-      <path d="M11.5 11.5l3.625 4.5"></path>
-    </g>
-  </symbol>
-
-  <symbol id="icon-close" class="icon icon-close" viewBox="-2 -1 24 24">
-    <g fill="currentColor">
-      <polygon transform="translate(10.5, 11) rotate(-315) translate(-10.5, -11)" points="11.5 -2.5 9.5 -2.5 9.5 24.5 11.5 24.5"></polygon>
-      <polygon transform="translate(10.5, 11) rotate(-45) translate(-10.5, -11)" points="11.5 -2.5 9.5 -2.5 9.5 24.5 11.5 24.5"></polygon>
-    </g>
-  </symbol>
-</svg>
-
-<div class="header-wrapper">
-  <header class="header page-width{% if section.settings.menu != blank %} header--has-menu{% endif %}">
-    {%- if section.settings.menu != blank -%}
-      <header-drawer data-breakpoint="tablet">
-        <details id="Details-menu-drawer-container" class="menu-drawer-container">
-          <summary class="header__icon header__icon--menu header__icon--summary link focus-inset" aria-label="{{ 'sections.header.menu' | t }}">
-            <span>
-              {% render 'icon-hamburger' %}
-              {% render 'icon-close' %}
-            </span>
-          </summary>
-          <div id="menu-drawer" class="menu-drawer motion-reduce" tabindex="-1">
-            <div class="menu-drawer__inner-container">
-              <div class="menu-drawer__navigation-container">
-                <nav class="menu-drawer__navigation">
-                  <ul class="menu-drawer__menu list-menu" role="list">
-                    {%- for link in section.settings.menu.links -%}
+<header class="header container bg-white mx-auto">
+  <div class="px-6 py-2 flex items-center justify-between">
+    <div class="flex-1 flex items-center justify-start">
+      {%- if section.settings.hamburger_menu != blank -%}
+        <header-drawer data-breakpoint="tablet" class="mr-1 md:mr-4 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
+          <details id="Details-menu-drawer-container" class="menu-drawer-container">
+            <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-1 text-seaweed-700 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
+              <span class="flex items-center justify-center h-full">
+                <svg class="icon-hamburger h-8 w-8 block absolute opacity-100 transition-opacity transition-transform scale-100" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="3" y1="12" x2="21" y2="12" /> 
+                  <line x1="3" y1="6" x2="21" y2="6" /> 
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+                <svg class="icon-close h-8 w-8 block absolute opacity-100 transition-opacity transition-transform scale-100" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </span>
+            </summary>
+            <div id="menu-drawer-overlay" class="block fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 transition-opacity"></div>
+            <div id="menu-drawer" class="menu-drawer motion-reduce fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200{% if section.settings.enable_navbar %} top-24{% else %} top-full{% endif %}" tabindex="-1">
+              <div class="relative flex flex-col justify-between overyflow-y-auto">
+                <nav class="py-12">
+                  <ul role="list">
+                    {%- for link in section.settings.hamburger_menu.links -%}
                       <li>
-                        {%- if link.links != blank -%}
+                        {%- if link.title == 'Divider' -%}
+                          <hr class="ml-8 my-4 w-8 border-seaweed-500" />
+                        {%- elsif link.links != blank -%}
                           <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
-                            <summary class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.child_active %} menu-drawer__menu-item--active{% endif %}">
-                              {{ link.title | escape }}
+                            <summary class="menu-drawer__menu-item px-8 py-4 text-3xl cursor-pointer text-seaweed-700 font-serif tracking-tight font-regular flex{% if link.child_active %} text-seaweed-800{% endif %}">
+                              <span class="mr-3">{{ link.title | escape }}</span>
                               {% render 'icon-arrow' %}
                               {% render 'icon-caret' %}
                             </summary>
-                            <div id="link-{{ link.title | escape }}" class="menu-drawer__submenu motion-reduce" tabindex="-1">
-                              <div class="menu-drawer__inner-submenu">
-                                <button class="menu-drawer__close-button link link--text focus-inset" aria-expanded="true">
-                                  {% render 'icon-arrow' %}
-                                  {{ link.title | escape }}
+                            <div id="link-{{ link.title | escape }}" class="menu-drawer__submenu motion-reduce absolute inset-x-0 top-0 bg-sand-200 z-10 h-full" tabindex="-1">
+                              <div class="pb-10">
+                                <button class="flex items-center px-8 py-4 w-full text-sm text-seaweed-700 leading-6 font-medium uppercase tracking-wider" aria-expanded="true">
+                                  <svg class="h-6 w-6 mr-2 text-seaweed-700" aria-hidden="true" focusable="false" role="presentation" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <line x1="5" y1="12" x2="9" y2="16" />
+                                    <line x1="5" y1="12" x2="9" y2="8" />
+                                  </svg>
+                                  Back
                                 </button>
-                                <ul class="menu-drawer__menu list-menu" role="list" tabindex="-1">
+                                <ul role="list" tabindex="-1">
                                   {%- for childlink in link.links -%}
                                     <li>
                                       {%- if childlink.links == blank -%}
-                                        <a href="{{ childlink.url }}" class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                                        <a href="{{ childlink.url }}" class="block px-8 py-4 text-3xl font-serif cursor-pointer text-seaweed-700{% if childlink.current %} text-seaweed-800{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
                                           {{ childlink.title | escape }}
                                         </a>
                                       {%- else -%}
-                                        <details id="Details-menu-drawer-submenu-{{ forloop.index }}">
-                                          <summary class="menu-drawer__menu-item link link--text list-menu__item focus-inset">
-                                            {{ childlink.title | escape }}
-                                            {% render 'icon-arrow' %}
-                                            {% render 'icon-caret' %}
-                                          </summary>
-                                          <div id="childlink-{{ childlink.title | escape }}" class="menu-drawer__submenu motion-reduce">
-                                            <button class="menu-drawer__close-button link link--text focus-inset" aria-expanded="true">
-                                              {% render 'icon-arrow' %}
-                                              {{ childlink.title | escape }}
-                                            </button>
-                                            <ul class="menu-drawer__menu list-menu" role="list" tabindex="-1">
-                                              {%- for grandchildlink in childlink.links -%}
-                                                <li>
-                                                  <a href="{{ grandchildlink.url }}" class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if grandchildlink.current %} menu-drawer__menu-item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
-                                                    {{ grandchildlink.title | escape }}
-                                                  </a>
-                                                </li>
-                                              {%- endfor -%}
-                                            </ul>
-                                          </div>
-                                        </details>
+                                        <p class="px-8 py-2 text-3xl cursor-pointer text-seaweed-700 font-serif">
+                                          {{ childlink.title | escape }}
+                                        </p>
+                                        <ul id="childlink-{{ childlink.title | escape }}" role="list" tabindex="-1" class="px-8 mb-4">
+                                          {%- for grandchildlink in childlink.links -%}
+                                            <li>
+                                              <a href="{{ grandchildlink.url }}" class="block text-seaweed-700 text-xl py-1 mb-1{% if grandchildlink.current %} text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                                {{ grandchildlink.title | escape }}
+                                              </a>
+                                            </li>
+                                          {%- endfor -%}
+                                        </ul>
                                       {%- endif -%}
                                     </li>
                                   {%- endfor -%}
@@ -116,7 +91,7 @@
                             </div>
                           </details>
                         {%- else -%}
-                          <a href="{{ link.url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.current %} menu-drawer__menu-item--active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+                          <a href="{{ link.url }}" class="block px-8 py-4 text-3xl cursor-pointer text-seaweed-700 font-serif tracking-tight font-regular{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
                             {{ link.title | escape }}
                           </a>
                         {%- endif -%}
@@ -124,10 +99,10 @@
                     {%- endfor -%}
                   </ul>
                 </nav>
-                <div class="menu-drawer__utility-links">
+                <hr class="mx-8 border-seaweed-500" />
+                <div class="pt-12 pb-24">
                   {%- if shop.customer_accounts_enabled -%}
-                    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="menu-drawer__account link focus-inset h5">
-                      {% render 'icon-account' %}
+                    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="flex px-8 py-3 text-lg items-center text-seaweed-700 font-book tracking-wide leading-6">
                       {%- liquid
                         if customer
                           echo 'customer.account_fallback' | t
@@ -137,144 +112,111 @@
                       -%}
                     </a>
                   {%- endif -%}
-                  <ul class="list list-social list-unstyled" role="list">
-                    {%- if settings.social_twitter_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_twitter_link }}" class="list-social__link link">
-                          {%- render 'icon-twitter' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                    {%- if settings.social_facebook_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_facebook_link }}" class="list-social__link link">
-                          {%- render 'icon-facebook' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                    {%- if settings.social_pinterest_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_pinterest_link }}" class="list-social__link link">
-                          {%- render 'icon-pinterest' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                    {%- if settings.social_instagram_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_instagram_link }}" class="list-social__link link">
-                          {%- render 'icon-instagram' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                    {%- if settings.social_tiktok_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_tiktok_link }}" class="list-social__link link">
-                          {%- render 'icon-tiktok' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.tiktok' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                    {%- if settings.social_tumblr_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_tumblr_link }}" class="list-social__link link">
-                          {%- render 'icon-tumblr' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.tumblr' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                    {%- if settings.social_snapchat_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_snapchat_link }}" class="list-social__link link">
-                          {%- render 'icon-snapchat' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                    {%- if settings.social_youtube_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_youtube_link }}" class="list-social__link link">
-                          {%- render 'icon-youtube' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                    {%- if settings.social_vimeo_link != blank -%}
-                      <li class="list-social__item">
-                        <a href="{{ settings.social_vimeo_link }}" class="list-social__link link">
-                          {%- render 'icon-vimeo' -%}
-                          <span class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
-                        </a>
-                      </li>
-                    {%- endif -%}
-                  </ul>
+                  <a href="/pages/customer-care" class="block px-8 py-3 text-seaweed-700 text-lg font-book tracking-wide leading-6">Help</a>
+                  <p class="pl-8 pr-6 py-3 text-seaweed-700 text-lg font-book md:tracking-wide leading-6">Customer Support<span style="font-family:sans-serif">:</span> <a href="tel:13103610547" class="font-regular">310-361-0547</a></p>
+                  <details>
+                    <summary class="flex px-8 py-3 items-center justify-start text-seaweed-700 text-lg font-book tracking-wide leading-6">
+                      <span class="mr-2">Locations</span>
+                      <div class="w-6 h-6 flex items-center justify-center">
+                        <svg class="absolute icon-expand h-4 w-4 text-seaweed-700 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="12" y1="5" x2="12" y2="19" />
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        <svg class="absolute icon-collapse h-4 w-4 text-seaweed-700 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                      </div>
+                    </summary>
+                    <ul class="px-8 pt-1 pb-4">
+                      <li><a class="text-seaweed-700 py-1 block tracking-wide px-2" href="/pages/venice-skincare-studio-1">Venice Skincare Studio</a></li>
+                      <li><a class="text-seaweed-700 py-1 block tracking-wide px-2" href="/pages/spas">Featured Partners</a></li>
+                      <li><a class="text-seaweed-700 py-1 block tracking-wide px-2" href="/pages/contact-us">Contact Us</a></li>
+                    </ul>
+                  </details>
                 </div>
               </div>
             </div>
-          </div>
-        </details>
-      </header-drawer>
-    {%- endif -%}
+          </details>
+        </header-drawer>
+      {%- endif -%}
+      
+      {%- if shop.customer_accounts_enabled and section.settings.enable_navbar -%}
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="h-10 w-10 flex justify-center items-center">
+          <svg class="h-7 w-7 text-seaweed-700 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="hidden">
+            {%- liquid
+              if customer
+                echo 'customer.account_fallback' | t
+              else
+                echo 'customer.log_in' | t
+              endif
+            -%}
+          </span>
+        </a>
+      {%- endif -%}
 
-    {%- if section.settings.menu != blank -%}
-      <nav class="header__inline-menu">
-        <ul class="header__menu" role="list">
-          {%- for link in section.settings.menu.links -%}
-            <li>
-              {%- if link.links != blank -%}
-                <details-disclosure>
-                  <details id="Details-HeaderMenu-{{ forloop.index }}">
-                    <summary class="header__menu-item focus-inset">
-                      <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
-                    </summary>
-                    <ul id="HeaderMenu-MenuList-{{ forloop.index }}" class="header__submenu list-menu list-menu--disclosure caption-large motion-reduce" role="list" tabindex="-1">
-                      {%- for childlink in link.links -%}
-                        <li>
-                          {%- if childlink.links == blank -%}
-                            <a href="{{ childlink.url }}" class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
-                              {{ childlink.title | escape }}
-                            </a>
-                          {%- else -%}
-                            <details id="Details-HeaderSubMenu-{{ forloop.index }}">
-                              <summary class="header__menu-item link link--text list-menu__item focus-inset caption-large">
-                                {{ childlink.title | escape }}
-                                {% render 'icon-caret' %}
-                              </summary>
-                              <ul id="HeaderMenu-SubMenuList-{{ forloop.index }}" class="header__submenu list-menu motion-reduce">
-                                {%- for grandchildlink in childlink.links -%}
-                                  <li>
-                                    <a href="{{ grandchildlink.url }}" class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
-                                      {{ grandchildlink.title | escape }}
-                                    </a>
-                                  </li>
-                                {%- endfor -%}
-                              </ul>
-                            </details>
-                          {%- endif -%}
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  </details>
-                </details-disclosure>
-              {%- else -%}
-                <a href="{{ link.url }}" class="header__menu-item focus-inset"{% if link.current %} aria-current="page"{% endif %}>
-                  <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
-                </a>
-              {%- endif -%}
-            </li>
-          {%- endfor -%}
-        </ul>
-      </nav>
-    {%- endif -%}
+      {%- if section.settings.inline_menu != blank -%}
+        {%- unless section.settings.enable_navbar -%}
+          <nav class="header__inline-menu flex-1 hidden lg:flex">
+            <ul class="header__menu -ml-4 mr-0 my-0 p-0 flex" role="list">
+              {%- for link in section.settings.inline_menu.links -%}
+                <li>
+                  {%- if link.links != blank -%}
+                    <details-disclosure>
+                      <details id="Details-HeaderMenu-{{ forloop.index }}">
+                        <summary class="text-seaweed-700 tracking-wide leading-6 py-3 pl-4 pr-8">
+                          <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                        </summary>
+                        <ul id="HeaderMenu-MenuList-{{ forloop.index }}" class="header__submenu list-menu list-menu--disclosure caption-large motion-reduce" role="list" tabindex="-1">
+                          {%- for childlink in link.links -%}
+                            <li>
+                              {%- if childlink.links == blank -%}
+                                <a href="{{ childlink.url }}" class="header__menu-item link link--text caption-large{% if childlink.current %} list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                                  {{ childlink.title | escape }}
+                                </a>
+                              {%- else -%}
+                                <details id="Details-HeaderSubMenu-{{ forloop.index }}">
+                                  <summary class="header__menu-item link link--text caption-large">
+                                    {{ childlink.title | escape }}
+                                    {% render 'icon-caret' %}
+                                  </summary>
+                                  <ul id="HeaderMenu-SubMenuList-{{ forloop.index }}" class="header__submenu list-menu motion-reduce">
+                                    {%- for grandchildlink in childlink.links -%}
+                                      <li>
+                                        <a href="{{ grandchildlink.url }}" class="header__menu-item link link--text focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                          {{ grandchildlink.title | escape }}
+                                        </a>
+                                      </li>
+                                    {%- endfor -%}
+                                  </ul>
+                                </details>
+                              {%- endif -%}
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </details>
+                    </details-disclosure>
+                  {%- else -%}
+                    <a href="{{ link.url }}" class="block text-seaweed-700 tracking-wide leading-6 whitespace-nowrap py-3 pl-4 pr-8"{% if link.current %} aria-current="page"{% endif %}>
+                      <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                    </a>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+        {%- endunless -%}
+      {%- endif -%}
+    </div>
 
     {%- if request.page_type == 'index' -%}
-      <h1 class="header__heading">
+      <h1 class="header__heading flex-initial">
     {%- endif -%}
-        <a href="{{ routes.root_url }}" class="header__heading-link focus-inset">
-          <svg width="80px" height="40px" viewBox="0 0 586 290" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <a href="{{ routes.root_url }}" class="header__heading-link cursor-pointer flex-initial">
+          <svg class="mx-auto h-12 w-24" viewBox="0 0 586 290" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g fill="currentColor" fill-rule="evenodd" stroke="none" stroke-width="1">
               <path d="M77.748,88.935 C61.3,88.935 47.781,94.078 37.194,104.359 C26.604,114.639 21.312,127.765 21.312,143.736 C21.312,159.229 26.621,172.117 37.244,182.397 C47.867,192.678 61.161,197.819 77.132,197.819 C93.165,197.819 106.545,192.575 117.271,182.087 C127.996,171.602 133.36,158.544 133.36,142.915 C133.36,127.699 127.996,114.9 117.271,104.514 C106.545,94.128 93.37,88.935 77.748,88.935 Z M76.872,69.311 C99.068,69.311 117.551,76.347 132.316,90.412 C147.08,104.481 154.462,122.117 154.462,143.317 C154.462,164.524 147.01,182.074 132.107,195.968 C117.205,209.862 98.418,216.809 75.74,216.809 C54.088,216.809 36.054,209.862 21.632,195.968 C7.21,182.074 0,164.659 0,143.729 C0,122.252 7.26,104.481 21.787,90.412 C36.31,76.347 54.672,69.311 76.872,69.311 Z" id="Fill-3"></path>
               <path d="M143.023,290 L140.909,269.951 C145.041,269.515 149.364,267.8 153.941,265.986 C155.581,265.336 157.276,264.664 159.013,264.03 C201.699,248.463 212.874,225.326 217.068,193.041 C219.479,174.488 217.37,152.81 215.331,131.846 C210.332,80.448 204.666,22.193 268.193,0.9 L274.6,20.015 C226.284,36.209 230.507,79.624 235.396,129.894 C237.544,151.979 239.766,174.815 237.06,195.638 C232.712,229.107 221.085,262.851 165.92,282.969 C164.447,283.506 162.954,284.099 161.372,284.726 C155.996,286.858 149.903,289.274 143.023,290" id="Fill-1"></path>
@@ -287,16 +229,18 @@
       </h1>
     {%- endif -%}
 
-    <div class="header__icons">
-      <details-modal class="header__search">
+    <div class="flex-1 flex justify-end items-center">
+      <details-modal class="header__search w-10 h-10 flex justify-center items-center">
         <details>
-          <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
-            <span>
-              <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false" role="presentation">
-                <use href="#icon-search">
+          <summary class="header__icon header__icon--search cursor-pointer modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+            <span class="flex items-center justify-center h-full">
+              <svg class="modal__toggle-open icon icon-search h-7 w-7 text-seaweed-700 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"> 
+                <circle cx="11" cy="11" r="8" /> 
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
-              <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false" role="presentation">
-                <use href="#icon-close">
+              <svg class="modal__toggle-close icon icon-close h-8 w-8 text-seaweed-700 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </span>
           </summary>
@@ -343,45 +287,57 @@
                 </form>
               </predictive-search>
               <button type="button" class="header__icon" aria-label="{{ 'accessibility.close' | t }}">
-                <svg class="icon icon-close" aria-hidden="true" focusable="false" role="presentation">
-                  <use href="#icon-close">
+                <svg class="icon icon-close h-8 w-8" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
             </div>
           </div>
         </details>
       </details-modal>
-
+      
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
-          {% render 'icon-account' %}
-          <span class="visually-hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
-          </span>
-        </a>
+        {%- unless section.settings.enable_navbar -%}
+          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="h-10 w-10 justify-center items-center ml-1 md:ml-4 hidden lg:flex">
+            <svg class="h-8 w-8 text-seaweed-700 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span class="hidden">
+              {%- liquid
+                if customer
+                  echo 'customer.account_fallback' | t
+                else
+                  echo 'customer.log_in' | t
+                endif
+              -%}
+            </span>
+          </a>
+        {%- endunless -%}
       {%- endif -%}
 
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-        {%- render 'icon-cart' -%}
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble">
+        <span class="hidden">{{ 'templates.cart.cart' | t }}</span>
+        <div class="w-8 h-8 bg-seafoam-300 rounded-full flex justify-center items-center">
+          <span aria-hidden="true" class="text-seaweed-700 leading-8 font-book text-lg">{{ cart.item_count }}</span>
+          <span class="hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+        </div>
       </a>
     </div>
-  </header>
-</div>
+  </div>
+  {%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
+    <nav class="overflow-x-auto bg-white -mt-2">
+      <ul class="flex lg:justify-center">
+        {%- for link in section.settings.navbar_menu.links -%}
+          <li class="first:pl-1">
+            <a href="{{ link.url }}" class="block whitespace-nowrap text-sm xl:text-base py-2 px-2 lg:px-3 text-seaweed-700 font-book tracking-wide">{{ link.title | escape }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+</header>
 
 {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
 
@@ -390,10 +346,10 @@
     "@context": "http://schema.org",
     "@type": "Organization",
     "name": {{ shop.name | json }},
-    {% if section.settings.logo %}
-      {% assign image_size = section.settings.logo.width | append: 'x' %}
-      "logo": {{ section.settings.logo | img_url: image_size | prepend: "https:" | json }},
-    {% endif %}
+    {%- if section.settings.logo -%}
+      {%- assign image_size = section.settings.logo.width -%}
+      "logo": {{ section.settings.logo | image_url: width: image_size | prepend: "https:" | json }},
+    {%- endif -%}
     "sameAs": [
       {{ settings.social_twitter_link | json }},
       {{ settings.social_facebook_link | json }},
@@ -429,6 +385,7 @@
 {% schema %}
 {
   "name": "t:sections.header.name",
+  "class": "inset-x-0 fixed top-8 z-10",
   "settings": [
     {
       "type": "image_picker",
@@ -436,20 +393,28 @@
       "label": "t:sections.header.settings.logo.label"
     },
     {
-      "type": "range",
-      "id": "logo_width",
-      "min": 50,
-      "max": 250,
-      "step": 10,
-      "default": 100,
-      "unit": "t:sections.header.settings.logo_width.unit",
-      "label": "t:sections.header.settings.logo_width.label"
+      "type": "link_list",
+      "id": "inline_menu",
+      "default": "main-menu",
+      "label": "Inline menu"
     },
     {
       "type": "link_list",
-      "id": "menu",
+      "id": "hamburger_menu",
       "default": "main-menu",
-      "label": "t:sections.header.settings.menu.label"
+      "label": "Hamburger Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_navbar",
+      "default": false,
+      "label": "Enable navbar layout"
+    },
+    {
+      "type": "link_list",
+      "id": "navbar_menu",
+      "default": "main-menu",
+      "label": "Navbar Menu"
     }
   ]
 }

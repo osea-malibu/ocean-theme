@@ -1,10 +1,11 @@
 {
   "name": "ocean-theme",
   "version": "1.0.0",
-  "description": "[![Build status](https://github.com/shopify/dawn/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Shopify/dawn/actions/workflows/ci.yml?query=branch%3Amain) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=informational)](/.github/CONTRIBUTING.md)",
+  "description": "Custom theme based on Dawn",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tailwindcss build styles/application.css -o assets/application.css && theme deploy --allow-live"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,16 @@
   },
   "homepage": "https://github.com/osea-malibu/ocean-theme#readme",
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.2",
+    "@tailwindcss/typography": "^0.5.2",
+    "autoprefixer": "^10.4.7",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-sass": "^5.0.0",
-    "node-sass": "^6.0.1",
+    "postcss": "^8.4.14",
     "sass": "^1.44.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.0.24"
   }
 }

@@ -12,7 +12,6 @@
 @import "ui/slider.scss";
 
 // global sections
-@import "sections/announcement-bar.scss";
 @import "sections/header.scss";
 
 // global components
@@ -39,7 +38,24 @@ body {
   margin: 0;
   color: $color-text-dark;
   background-color: $color-neutral-0;
-  font-family: neuzeit-grotesk, sans-serif;
+  font-family: $font-sans;
+}
+
+details:not([open]) > summary > div > .icon-collapse {
+  opacity: 0;
+  transform: scale(0.75);
+}
+details:not([open]) > summary > div > .icon-expand {
+  opacity: 1;
+  transform: scale(1);
+}
+details[open] > summary > div > .icon-collapse {
+  opacity: 1;
+  transform: scale(1);
+}
+details[open] > summary > div > .icon-expand {
+  opacity: 0;
+  transform: scale(0.75);
 }
 
 .page-width {
@@ -163,22 +179,6 @@ table:not([class]) th {
   border: 0.1rem solid rgba(var(--color-foreground), 0.2);
 }
 
-a:empty,
-ul:empty,
-dl:empty,
-div:empty,
-section:empty,
-article:empty,
-p:empty,
-h1:empty,
-h2:empty,
-h3:empty,
-h4:empty,
-h5:empty,
-h6:empty {
-  display: none;
-}
-
 .link,
 .customer a {
   cursor: pointer;
@@ -227,20 +227,6 @@ h6:empty {
 
 .circle-divider:last-of-type::after {
   display: none;
-}
-
-hr {
-  border: none;
-  height: 0.1rem;
-  background-color: rgba(var(--color-foreground), 0.2);
-  display: block;
-  margin: 5rem 0;
-}
-
-@media screen and (min-width: 750px) {
-  hr {
-    margin: 7rem 0;
-  }
 }
 
 .full-unstyled-link {
@@ -428,16 +414,14 @@ summary::-webkit-details-marker {
 .focus-offset:focus-visible {
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   outline-offset: 1rem;
-  box-shadow: 0 0 0 1rem rgb(var(--color-background)),
-    0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
+  box-shadow: 0 0 0 1rem rgb(var(--color-background)), 0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
 }
 
 .focus-offset.focused,
 .no-js .focus-offset:focus {
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   outline-offset: 1rem;
-  box-shadow: 0 0 0 1rem rgb(var(--color-background)),
-    0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
+  box-shadow: 0 0 0 1rem rgb(var(--color-background)), 0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
 }
 
 .no-js .focus-offset:focus:not(:focus-visible) {
@@ -887,8 +871,7 @@ deferred-media {
   margin-bottom: 0;
   pointer-events: none;
   position: absolute;
-  transition: top var(--duration-short) ease,
-    font-size var(--duration-short) ease;
+  transition: top var(--duration-short) ease, font-size var(--duration-short) ease;
   color: rgba(var(--color-foreground), 0.75);
   letter-spacing: 0.1rem;
   line-height: 1.5;

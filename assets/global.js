@@ -15,10 +15,7 @@ document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
   }
 
   summary.addEventListener("click", (event) => {
-    event.currentTarget.setAttribute(
-      "aria-expanded",
-      !event.currentTarget.closest("details").hasAttribute("open")
-    );
+    event.currentTarget.setAttribute("aria-expanded", !event.currentTarget.closest("details").hasAttribute("open"));
   });
 
   if (summary.closest("header-drawer")) return;
@@ -35,12 +32,7 @@ function trapFocus(container, elementToFocus = container) {
   removeTrapFocus();
 
   trapFocusHandlers.focusin = (event) => {
-    if (
-      event.target !== container &&
-      event.target !== last &&
-      event.target !== first
-    )
-      return;
+    if (event.target !== container && event.target !== last && event.target !== first) return;
 
     document.addEventListener("keydown", trapFocusHandlers.keydown);
   };
@@ -58,10 +50,7 @@ function trapFocus(container, elementToFocus = container) {
     }
 
     //  On the first focusable element and tab backward, focus the last element.
-    if (
-      (event.target === container || event.target === first) &&
-      event.shiftKey
-    ) {
+    if ((event.target === container || event.target === first) && event.shiftKey) {
       event.preventDefault();
       last.focus();
     }
@@ -81,20 +70,7 @@ try {
 }
 
 function focusVisiblePolyfill() {
-  const navKeys = [
-    "ARROWUP",
-    "ARROWDOWN",
-    "ARROWLEFT",
-    "ARROWRIGHT",
-    "TAB",
-    "ENTER",
-    "SPACE",
-    "ESCAPE",
-    "HOME",
-    "END",
-    "PAGEUP",
-    "PAGEDOWN",
-  ];
+  const navKeys = ["ARROWUP", "ARROWDOWN", "ARROWLEFT", "ARROWRIGHT", "TAB", "ENTER", "SPACE", "ESCAPE", "HOME", "END", "PAGEUP", "PAGEDOWN"];
   let currentFocusedElement = null;
   let mouseClick = null;
 
@@ -111,8 +87,7 @@ function focusVisiblePolyfill() {
   window.addEventListener(
     "focus",
     () => {
-      if (currentFocusedElement)
-        currentFocusedElement.classList.remove("focused");
+      if (currentFocusedElement) currentFocusedElement.classList.remove("focused");
 
       if (mouseClick) return;
 
@@ -125,10 +100,7 @@ function focusVisiblePolyfill() {
 
 function pauseAllMedia() {
   document.querySelectorAll(".js-youtube").forEach((video) => {
-    video.contentWindow.postMessage(
-      '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
-      "*"
-    );
+    video.contentWindow.postMessage('{"event":"command","func":"' + "pauseVideo" + '","args":""}', "*");
   });
   document.querySelectorAll(".js-vimeo").forEach((video) => {
     video.contentWindow.postMessage('{"method":"pause"}', "*");
@@ -165,9 +137,7 @@ class QuantityInput extends HTMLElement {
     this.input = this.querySelector("input");
     this.changeEvent = new Event("change", { bubbles: true });
 
-    this.querySelectorAll("button").forEach((button) =>
-      button.addEventListener("click", this.onButtonClick.bind(this))
-    );
+    this.querySelectorAll("button").forEach((button) => button.addEventListener("click", this.onButtonClick.bind(this)));
   }
 
   onButtonClick(event) {
@@ -175,8 +145,7 @@ class QuantityInput extends HTMLElement {
     const previousValue = this.input.value;
 
     event.target.name === "plus" ? this.input.stepUp() : this.input.stepDown();
-    if (previousValue !== this.input.value)
-      this.input.dispatchEvent(this.changeEvent);
+    if (previousValue !== this.input.value) this.input.dispatchEvent(this.changeEvent);
   }
 }
 
@@ -225,9 +194,7 @@ Shopify.setSelectorByValue = function (selector, value) {
 };
 
 Shopify.addListener = function (target, eventName, callback) {
-  target.addEventListener
-    ? target.addEventListener(eventName, callback, false)
-    : target.attachEvent("on" + eventName, callback);
+  target.addEventListener ? target.addEventListener(eventName, callback, false) : target.attachEvent("on" + eventName, callback);
 };
 
 Shopify.postLink = function (path, options) {
@@ -251,22 +218,12 @@ Shopify.postLink = function (path, options) {
   document.body.removeChild(form);
 };
 
-Shopify.CountryProvinceSelector = function (
-  country_domid,
-  province_domid,
-  options
-) {
+Shopify.CountryProvinceSelector = function (country_domid, province_domid, options) {
   this.countryEl = document.getElementById(country_domid);
   this.provinceEl = document.getElementById(province_domid);
-  this.provinceContainer = document.getElementById(
-    options["hideElement"] || province_domid
-  );
+  this.provinceContainer = document.getElementById(options["hideElement"] || province_domid);
 
-  Shopify.addListener(
-    this.countryEl,
-    "change",
-    Shopify.bind(this.countryHandler, this)
-  );
+  Shopify.addListener(this.countryEl, "change", Shopify.bind(this.countryHandler, this));
 
   this.initCountry();
   this.initProvince();
@@ -328,11 +285,7 @@ class MenuDrawer extends HTMLElement {
 
     this.mainDetailsToggle = this.querySelector("details");
 
-    if (navigator.platform === "iPhone")
-      document.documentElement.style.setProperty(
-        "--viewport-height",
-        `${window.innerHeight}px`
-      );
+    if (navigator.platform === "iPhone") document.documentElement.style.setProperty("--viewport-height", `${window.innerHeight}px`);
 
     this.addEventListener("keyup", this.onKeyUp.bind(this));
     this.addEventListener("focusout", this.onFocusOut.bind(this));
@@ -340,12 +293,9 @@ class MenuDrawer extends HTMLElement {
   }
 
   bindEvents() {
-    this.querySelectorAll("summary").forEach((summary) =>
-      summary.addEventListener("click", this.onSummaryClick.bind(this))
-    );
-    this.querySelectorAll("button").forEach((button) =>
-      button.addEventListener("click", this.onCloseButtonClick.bind(this))
-    );
+    this.querySelectorAll("summary").forEach((summary) => summary.addEventListener("click", this.onSummaryClick.bind(this)));
+    this.querySelectorAll("button").forEach((button) => button.addEventListener("click", this.onCloseButtonClick.bind(this)));
+    document.getElementById("menu-drawer-overlay").addEventListener("click", this.onCloseButtonClick.bind(this));
   }
 
   onKeyUp(event) {
@@ -354,12 +304,7 @@ class MenuDrawer extends HTMLElement {
     const openDetailsElement = event.target.closest("details[open]");
     if (!openDetailsElement) return;
 
-    openDetailsElement === this.mainDetailsToggle
-      ? this.closeMenuDrawer(
-          event,
-          this.mainDetailsToggle.querySelector("summary")
-        )
-      : this.closeSubmenu(openDetailsElement);
+    openDetailsElement === this.mainDetailsToggle ? this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector("summary")) : this.closeSubmenu(openDetailsElement);
   }
 
   onSummaryClick(event) {
@@ -369,31 +314,18 @@ class MenuDrawer extends HTMLElement {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function addTrapFocus() {
-      trapFocus(
-        summaryElement.nextElementSibling,
-        detailsElement.querySelector("button")
-      );
-      summaryElement.nextElementSibling.removeEventListener(
-        "transitionend",
-        addTrapFocus
-      );
+      trapFocus(summaryElement.nextElementSibling, detailsElement.querySelector("button"));
+      summaryElement.nextElementSibling.removeEventListener("transitionend", addTrapFocus);
     }
 
     if (detailsElement === this.mainDetailsToggle) {
       if (isOpen) event.preventDefault();
-      isOpen
-        ? this.closeMenuDrawer(event, summaryElement)
-        : this.openMenuDrawer(summaryElement);
+      isOpen ? this.closeMenuDrawer(event, summaryElement) : this.openMenuDrawer(summaryElement);
     } else {
       setTimeout(() => {
         detailsElement.classList.add("menu-opening");
         summaryElement.setAttribute("aria-expanded", true);
-        !reducedMotion || reducedMotion.matches
-          ? addTrapFocus()
-          : summaryElement.nextElementSibling.addEventListener(
-              "transitionend",
-              addTrapFocus
-            );
+        !reducedMotion || reducedMotion.matches ? addTrapFocus() : summaryElement.nextElementSibling.addEventListener("transitionend", addTrapFocus);
       }, 100);
     }
   }
@@ -414,9 +346,7 @@ class MenuDrawer extends HTMLElement {
         details.removeAttribute("open");
         details.classList.remove("menu-opening");
       });
-      document.body.classList.remove(
-        `overflow-hidden-${this.dataset.breakpoint}`
-      );
+      document.body.classList.remove(`overflow-hidden-${this.dataset.breakpoint}`);
       removeTrapFocus(elementToFocus);
       this.closeAnimation(this.mainDetailsToggle);
     }
@@ -424,11 +354,7 @@ class MenuDrawer extends HTMLElement {
 
   onFocusOut(event) {
     setTimeout(() => {
-      if (
-        this.mainDetailsToggle.hasAttribute("open") &&
-        !this.mainDetailsToggle.contains(document.activeElement)
-      )
-        this.closeMenuDrawer();
+      if (this.mainDetailsToggle.hasAttribute("open") && !this.mainDetailsToggle.contains(document.activeElement)) this.closeMenuDrawer();
     });
   }
 
@@ -439,9 +365,7 @@ class MenuDrawer extends HTMLElement {
 
   closeSubmenu(detailsElement) {
     detailsElement.classList.remove("menu-opening");
-    detailsElement
-      .querySelector("summary")
-      .setAttribute("aria-expanded", false);
+    detailsElement.querySelector("summary").setAttribute("aria-expanded", false);
     removeTrapFocus();
     this.closeAnimation(detailsElement);
   }
@@ -461,10 +385,7 @@ class MenuDrawer extends HTMLElement {
       } else {
         detailsElement.removeAttribute("open");
         if (detailsElement.closest("details[open]")) {
-          trapFocus(
-            detailsElement.closest("details[open]"),
-            detailsElement.querySelector("summary")
-          );
+          trapFocus(detailsElement.closest("details[open]"), detailsElement.querySelector("summary"));
         }
       }
     };
@@ -481,21 +402,8 @@ class HeaderDrawer extends MenuDrawer {
   }
 
   openMenuDrawer(summaryElement) {
-    this.header =
-      this.header || document.getElementById("shopify-section-header");
-    this.borderOffset =
-      this.borderOffset ||
-      this.closest(".header-wrapper").classList.contains(
-        "header-wrapper--border-bottom"
-      )
-        ? 1
-        : 0;
-    document.documentElement.style.setProperty(
-      "--header-bottom-position",
-      `${parseInt(
-        this.header.getBoundingClientRect().bottom - this.borderOffset
-      )}px`
-    );
+    this.header = this.header || document.getElementById("shopify-section-header");
+    document.documentElement.style.setProperty("--header-bottom-position", `${parseInt(this.header.getBoundingClientRect().bottom)}px`);
 
     setTimeout(() => {
       this.mainDetailsToggle.classList.add("menu-opening");
@@ -512,20 +420,13 @@ customElements.define("header-drawer", HeaderDrawer);
 class ModalDialog extends HTMLElement {
   constructor() {
     super();
-    this.querySelector('[id^="ModalClose-"]').addEventListener(
-      "click",
-      this.hide.bind(this)
-    );
+    this.querySelector('[id^="ModalClose-"]').addEventListener("click", this.hide.bind(this));
     this.addEventListener("keyup", (event) => {
       if (event.code.toUpperCase() === "ESCAPE") this.hide();
     });
     if (this.classList.contains("media-modal")) {
       this.addEventListener("pointerup", (event) => {
-        if (
-          event.pointerType === "mouse" &&
-          !event.target.closest("deferred-media, product-model")
-        )
-          this.hide();
+        if (event.pointerType === "mouse" && !event.target.closest("deferred-media, product-model")) this.hide();
       });
     } else {
       this.addEventListener("click", (event) => {
@@ -580,14 +481,10 @@ class DeferredMedia extends HTMLElement {
     window.pauseAllMedia();
     if (!this.getAttribute("loaded")) {
       const content = document.createElement("div");
-      content.appendChild(
-        this.querySelector("template").content.firstElementChild.cloneNode(true)
-      );
+      content.appendChild(this.querySelector("template").content.firstElementChild.cloneNode(true));
 
       this.setAttribute("loaded", true);
-      this.appendChild(
-        content.querySelector("video, model-viewer, iframe")
-      ).focus();
+      this.appendChild(content.querySelector("video, model-viewer, iframe")).focus();
     }
   }
 }
@@ -616,22 +513,17 @@ class SliderComponent extends HTMLElement {
   }
 
   initPages() {
-    const sliderItemsToShow = Array.from(this.sliderItems).filter(
-      (element) => element.clientWidth > 0
-    );
+    const sliderItemsToShow = Array.from(this.sliderItems).filter((element) => element.clientWidth > 0);
     this.sliderLastItem = sliderItemsToShow[sliderItemsToShow.length - 1];
     if (sliderItemsToShow.length === 0) return;
-    this.slidesPerPage = Math.floor(
-      this.slider.clientWidth / sliderItemsToShow[0].clientWidth
-    );
+    this.slidesPerPage = Math.floor(this.slider.clientWidth / sliderItemsToShow[0].clientWidth);
     this.totalPages = sliderItemsToShow.length - this.slidesPerPage + 1;
     this.update();
   }
 
   update() {
     if (!this.pageCount || !this.pageTotal) return;
-    this.currentPage =
-      Math.round(this.slider.scrollLeft / this.sliderLastItem.clientWidth) + 1;
+    this.currentPage = Math.round(this.slider.scrollLeft / this.sliderLastItem.clientWidth) + 1;
 
     if (this.currentPage === 1) {
       this.prevButton.setAttribute("disabled", "disabled");
@@ -652,9 +544,7 @@ class SliderComponent extends HTMLElement {
   onButtonClick(event) {
     event.preventDefault();
     const slideScrollPosition =
-      event.currentTarget.name === "next"
-        ? this.slider.scrollLeft + this.sliderLastItem.clientWidth
-        : this.slider.scrollLeft - this.sliderLastItem.clientWidth;
+      event.currentTarget.name === "next" ? this.slider.scrollLeft + this.sliderLastItem.clientWidth : this.slider.scrollLeft - this.sliderLastItem.clientWidth;
     this.slider.scrollTo({
       left: slideScrollPosition,
     });
@@ -689,10 +579,7 @@ class VariantSelects extends HTMLElement {
   }
 
   updateOptions() {
-    this.options = Array.from(
-      this.querySelectorAll("select"),
-      (select) => select.value
-    );
+    this.options = Array.from(this.querySelectorAll("select"), (select) => select.value);
   }
 
   updateMasterId() {
@@ -708,57 +595,38 @@ class VariantSelects extends HTMLElement {
   updateMedia() {
     if (!this.currentVariant) return;
     if (!this.currentVariant.featured_media) return;
-    const newMedia = document.querySelector(
-      `[data-media-id="${this.dataset.section}-${this.currentVariant.featured_media.id}"]`
-    );
+    const newMedia = document.querySelector(`[data-media-id="${this.dataset.section}-${this.currentVariant.featured_media.id}"]`);
 
     if (!newMedia) return;
-    const modalContent = document.querySelector(
-      `#ProductModal-${this.dataset.section} .product-media-modal__content`
-    );
-    const newMediaModal = modalContent.querySelector(
-      `[data-media-id="${this.currentVariant.featured_media.id}"]`
-    );
+    const modalContent = document.querySelector(`#ProductModal-${this.dataset.section} .product-media-modal__content`);
+    const newMediaModal = modalContent.querySelector(`[data-media-id="${this.currentVariant.featured_media.id}"]`);
     const parent = newMedia.parentElement;
     if (parent.firstChild == newMedia) return;
     modalContent.prepend(newMediaModal);
     parent.prepend(newMedia);
-    this.stickyHeader =
-      this.stickyHeader || document.querySelector("sticky-header");
+    this.stickyHeader = this.stickyHeader || document.querySelector("sticky-header");
     if (this.stickyHeader) {
       this.stickyHeader.dispatchEvent(new Event("preventHeaderReveal"));
     }
     window.setTimeout(() => {
       parent.scrollLeft = 0;
-      parent
-        .querySelector("li.product__media-item")
-        .scrollIntoView({ behavior: "smooth" });
+      parent.querySelector("li.product__media-item").scrollIntoView({ behavior: "smooth" });
     });
   }
 
   updateURL() {
     if (!this.currentVariant || this.dataset.updateUrl === "false") return;
-    window.history.replaceState(
-      {},
-      "",
-      `${this.dataset.url}?variant=${this.currentVariant.id}`
-    );
+    window.history.replaceState({}, "", `${this.dataset.url}?variant=${this.currentVariant.id}`);
   }
 
   updateShareUrl() {
-    const shareButton = document.getElementById(
-      `Share-${this.dataset.section}`
-    );
+    const shareButton = document.getElementById(`Share-${this.dataset.section}`);
     if (!shareButton) return;
-    shareButton.updateUrl(
-      `${window.shopUrl}${this.dataset.url}?variant=${this.currentVariant.id}`
-    );
+    shareButton.updateUrl(`${window.shopUrl}${this.dataset.url}?variant=${this.currentVariant.id}`);
   }
 
   updateVariantInput() {
-    const productForms = document.querySelectorAll(
-      `#product-form-${this.dataset.section}, #product-form-installment`
-    );
+    const productForms = document.querySelectorAll(`#product-form-${this.dataset.section}, #product-form-installment`);
     productForms.forEach((productForm) => {
       const input = productForm.querySelector('input[name="id"]');
       input.value = this.currentVariant.id;
@@ -787,9 +655,7 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
-    fetch(
-      `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`
-    )
+    fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
       .then((response) => response.text())
       .then((responseText) => {
         const id = `price-${this.dataset.section}`;
@@ -802,17 +668,12 @@ class VariantSelects extends HTMLElement {
         const price = document.getElementById(`price-${this.dataset.section}`);
 
         if (price) price.classList.remove("visibility-hidden");
-        this.toggleAddButton(
-          !this.currentVariant.available,
-          window.variantStrings.soldOut
-        );
+        this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
-    const productForm = document.getElementById(
-      `product-form-${this.dataset.section}`
-    );
+    const productForm = document.getElementById(`product-form-${this.dataset.section}`);
     if (!productForm) return;
     const addButton = productForm.querySelector('[name="add"]');
     const addButtonText = productForm.querySelector('[name="add"] > span');
@@ -831,9 +692,7 @@ class VariantSelects extends HTMLElement {
   }
 
   setUnavailable() {
-    const button = document.getElementById(
-      `product-form-${this.dataset.section}`
-    );
+    const button = document.getElementById(`product-form-${this.dataset.section}`);
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
     const price = document.getElementById(`price-${this.dataset.section}`);
@@ -843,9 +702,7 @@ class VariantSelects extends HTMLElement {
   }
 
   getVariantData() {
-    this.variantData =
-      this.variantData ||
-      JSON.parse(this.querySelector('[type="application/json"]').textContent);
+    this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
     return this.variantData;
   }
 }
@@ -860,9 +717,7 @@ class VariantRadios extends VariantSelects {
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll("fieldset"));
     this.options = fieldsets.map((fieldset) => {
-      return Array.from(fieldset.querySelectorAll("input")).find(
-        (radio) => radio.checked
-      ).value;
+      return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
     });
   }
 }
@@ -883,45 +738,24 @@ const slider = (function () {
     initSlider(sliderElement) {
       for (const navElement of sliderElement.querySelectorAll(".slider-nav")) {
         const next = navElement.classList.contains("slider-nav-next");
-        navElement.addEventListener("click", () =>
-          this.slide(sliderElement, next)
-        );
+        navElement.addEventListener("click", () => this.slide(sliderElement, next));
       }
-      for (const indicatorElement of sliderElement.querySelectorAll(
-        ".slider-indicators"
-      )) {
-        indicatorElement.addEventListener("click", () =>
-          this.slideToByIndicator()
-        );
-        this.onSlideEnd(
-          sliderElement,
-          () => this.handleIndicators(sliderElement),
-          60
-        );
+      for (const indicatorElement of sliderElement.querySelectorAll(".slider-indicators")) {
+        indicatorElement.addEventListener("click", () => this.slideToByIndicator());
+        this.onSlideEnd(sliderElement, () => this.handleIndicators(sliderElement), 60);
       }
       if (sliderElement.classList.contains("slider-nav-autoplay")) {
-        const timeout = sliderElement.getAttribute(
-          "data-slider-nav-autoplay-interval"
-        )
-          ? sliderElement.getAttribute("data-slider-nav-autoplay-interval")
-          : 2500;
-        this.autoPlay(
-          sliderElement,
-          timeout,
-          sliderElement.classList.contains("slider-nav-autopause")
-        );
+        const timeout = sliderElement.getAttribute("data-slider-nav-autoplay-interval") ? sliderElement.getAttribute("data-slider-nav-autoplay-interval") : 2500;
+        this.autoPlay(sliderElement, timeout, sliderElement.classList.contains("slider-nav-autopause"));
       }
-      if (sliderElement.classList.contains("slider-nav-animation"))
-        this.setVisibleSlides(sliderElement);
+      if (sliderElement.classList.contains("slider-nav-animation")) this.setVisibleSlides(sliderElement);
     },
 
     setVisibleSlides(sliderElement) {
       const observer = new IntersectionObserver(
         (slides) => {
           slides.forEach((slide) => {
-            slide.isIntersecting
-              ? slide.target.parentElement.classList.add("slide-visible")
-              : slide.target.parentElement.classList.remove("slide-visible");
+            slide.isIntersecting ? slide.target.parentElement.classList.add("slide-visible") : slide.target.parentElement.classList.remove("slide-visible");
           });
         },
         {
@@ -929,10 +763,7 @@ const slider = (function () {
           threshold: 0.3,
         }
       );
-      for (const slide of sliderElement.querySelectorAll(
-        ".slider-container>*>*"
-      ))
-        observer.observe(slide);
+      for (const slide of sliderElement.querySelectorAll(".slider-container>*>*")) observer.observe(slide);
     },
 
     slide(sliderElement, next = true) {
@@ -943,19 +774,11 @@ const slider = (function () {
       const slides = container.children;
       const gapWidth = parseInt(window.getComputedStyle(container).columnGap);
       const scrollStep = slides[0].offsetWidth + gapWidth;
-      let scrollLeftPosition = next
-        ? container.scrollLeft + scrollStep
-        : container.scrollLeft - scrollStep;
+      let scrollLeftPosition = next ? container.scrollLeft + scrollStep : container.scrollLeft - scrollStep;
       if (fullpage) {
-        scrollLeftPosition = next
-          ? container.scrollLeft + container.offsetWidth
-          : container.scrollLeft - container.offsetWidth;
+        scrollLeftPosition = next ? container.scrollLeft + container.offsetWidth : container.scrollLeft - container.offsetWidth;
       }
-      if (
-        container.scrollLeft + container.offsetWidth >
-          container.scrollWidth - (gapWidth / 2 + 1) &&
-        next
-      ) {
+      if (container.scrollLeft + container.offsetWidth > container.scrollWidth - (gapWidth / 2 + 1) && next) {
         if (noloop) return;
         scrollLeftPosition = 0;
       }
@@ -967,13 +790,10 @@ const slider = (function () {
 
     slideToByIndicator() {
       const indicator = window.event.target;
-      const indicatorIndex = Array.from(
-        indicator.parentElement.children
-      ).indexOf(indicator);
+      const indicatorIndex = Array.from(indicator.parentElement.children).indexOf(indicator);
       const indicatorCount = indicator.parentElement.children.length;
       const sliderElement = indicator.closest(".slider");
-      const slideCount =
-        sliderElement.querySelector(".slider-container").children.length;
+      const slideCount = sliderElement.querySelector(".slider-container").children.length;
       const relativeSlideIndex = (slideCount / indicatorCount) * indicatorIndex;
       this.slideTo(sliderElement, relativeSlideIndex);
     },
@@ -1030,15 +850,10 @@ const slider = (function () {
       const container = sliderElement.querySelector(".slider-container");
       const slidingAreaWidth = container.scrollWidth - container.offsetWidth;
       const percentSlide = container.scrollLeft / slidingAreaWidth;
-      for (const scrollIndicatorContainers of sliderElement.querySelectorAll(
-        ".slider-indicators"
-      )) {
+      for (const scrollIndicatorContainers of sliderElement.querySelectorAll(".slider-indicators")) {
         const scrollIndicators = scrollIndicatorContainers.children;
-        const activeIndicator = Math.round(
-          (scrollIndicators.length - 1) * percentSlide
-        );
-        for (const element of scrollIndicators)
-          element.removeAttribute("class");
+        const activeIndicator = Math.round((scrollIndicators.length - 1) * percentSlide);
+        for (const element of scrollIndicators) element.removeAttribute("class");
         scrollIndicators[activeIndicator].classList.add("active");
       }
     },
