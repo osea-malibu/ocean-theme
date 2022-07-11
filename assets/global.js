@@ -62,7 +62,7 @@ function trapFocus(container, elementToFocus = container) {
   elementToFocus.focus();
 }
 
-// Here run the querySelector to figure out if the browser supports :focus-visible or not and run code based on it.
+// querySelector to see if the browser supports :focus-visible and run code based on it.
 try {
   document.querySelector(":focus-visible");
 } catch {
@@ -171,7 +171,6 @@ function fetchConfig(type = "json") {
 
 /*
  * Shopify Common JS
- *
  */
 if (typeof window.Shopify == "undefined") {
   window.Shopify = {};
@@ -295,7 +294,7 @@ class MenuDrawer extends HTMLElement {
   bindEvents() {
     this.querySelectorAll("summary").forEach((summary) => summary.addEventListener("click", this.onSummaryClick.bind(this)));
     this.querySelectorAll("button").forEach((button) => button.addEventListener("click", this.onCloseButtonClick.bind(this)));
-    document.getElementById("menu-drawer-overlay").addEventListener("click", this.onCloseButtonClick.bind(this));
+    document.getElementById("menu-scrim").addEventListener("click", this.onCloseButtonClick.bind(this));
   }
 
   onKeyUp(event) {
@@ -491,68 +490,6 @@ class DeferredMedia extends HTMLElement {
 
 customElements.define("deferred-media", DeferredMedia);
 
-// TODO: check out difference between this and the new one I built
-class SliderComponent extends HTMLElement {
-  constructor() {
-    super();
-    this.slider = this.querySelector("ul");
-    this.sliderItems = this.querySelectorAll("li");
-    this.pageCount = this.querySelector(".slider-counter--current");
-    this.pageTotal = this.querySelector(".slider-counter--total");
-    this.prevButton = this.querySelector('button[name="previous"]');
-    this.nextButton = this.querySelector('button[name="next"]');
-
-    if (!this.slider || !this.nextButton) return;
-
-    const resizeObserver = new ResizeObserver((entries) => this.initPages());
-    resizeObserver.observe(this.slider);
-
-    this.slider.addEventListener("scroll", this.update.bind(this));
-    this.prevButton.addEventListener("click", this.onButtonClick.bind(this));
-    this.nextButton.addEventListener("click", this.onButtonClick.bind(this));
-  }
-
-  initPages() {
-    const sliderItemsToShow = Array.from(this.sliderItems).filter((element) => element.clientWidth > 0);
-    this.sliderLastItem = sliderItemsToShow[sliderItemsToShow.length - 1];
-    if (sliderItemsToShow.length === 0) return;
-    this.slidesPerPage = Math.floor(this.slider.clientWidth / sliderItemsToShow[0].clientWidth);
-    this.totalPages = sliderItemsToShow.length - this.slidesPerPage + 1;
-    this.update();
-  }
-
-  update() {
-    if (!this.pageCount || !this.pageTotal) return;
-    this.currentPage = Math.round(this.slider.scrollLeft / this.sliderLastItem.clientWidth) + 1;
-
-    if (this.currentPage === 1) {
-      this.prevButton.setAttribute("disabled", "disabled");
-    } else {
-      this.prevButton.removeAttribute("disabled");
-    }
-
-    if (this.currentPage === this.totalPages) {
-      this.nextButton.setAttribute("disabled", "disabled");
-    } else {
-      this.nextButton.removeAttribute("disabled");
-    }
-
-    this.pageCount.textContent = this.currentPage;
-    this.pageTotal.textContent = this.totalPages;
-  }
-
-  onButtonClick(event) {
-    event.preventDefault();
-    const slideScrollPosition =
-      event.currentTarget.name === "next" ? this.slider.scrollLeft + this.sliderLastItem.clientWidth : this.slider.scrollLeft - this.sliderLastItem.clientWidth;
-    this.slider.scrollTo({
-      left: slideScrollPosition,
-    });
-  }
-}
-
-customElements.define("slider-component", SliderComponent);
-
 class VariantSelects extends HTMLElement {
   constructor() {
     super();
@@ -563,7 +500,6 @@ class VariantSelects extends HTMLElement {
     this.updateOptions();
     this.updateMasterId();
     this.toggleAddButton(true, "", false);
-    this.updatePickupAvailability();
     this.removeErrorMessage();
 
     if (!this.currentVariant) {
@@ -634,18 +570,6 @@ class VariantSelects extends HTMLElement {
     });
   }
 
-  updatePickupAvailability() {
-    const pickUpAvailability = document.querySelector("pickup-availability");
-    if (!pickUpAvailability) return;
-
-    if (this.currentVariant && this.currentVariant.available) {
-      pickUpAvailability.fetchAvailability(this.currentVariant.id);
-    } else {
-      pickUpAvailability.removeAttribute("available");
-      pickUpAvailability.innerHTML = "";
-    }
-  }
-
   removeErrorMessage() {
     const section = this.closest("section");
     if (!section) return;
@@ -655,13 +579,15 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
-    fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
+    const isCollection = window.location.pathname.includes("/products/");
+    const url = isCollection ? `${this.dataset.url}?variant=${this.currentVariant.id}` : `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`;
+    fetch(url)
       .then((response) => response.text())
       .then((responseText) => {
         const id = `price-${this.dataset.section}`;
         const html = new DOMParser().parseFromString(responseText, "text/html");
         const destination = document.getElementById(id);
-        const source = html.getElementById(id);
+        const source = isCollection ? html.querySelector(".price").parentElement : html.getElementById(id);
 
         if (source && destination) destination.innerHTML = source.innerHTML;
 
@@ -724,146 +650,307 @@ class VariantRadios extends VariantSelects {
 
 customElements.define("variant-radios", VariantRadios);
 
-// slider - based on swiffy slider
-const slider = (function () {
-  "use strict";
-  return {
-    version: "1.1.0",
-    init(rootElement = document.body) {
-      for (const sliderElement of rootElement.querySelectorAll(".slider")) {
-        this.initSlider(sliderElement);
-      }
-    },
+class TabController extends HTMLElement {
+  constructor() {
+    super();
+    this.tablist = this.querySelector("[role=tablist]");
+    this.tabs = this.querySelectorAll("[role=tab]");
+    this.tabpanels = this.querySelectorAll("[role=tabpanel]");
+    this.activeTab = this.querySelector("[role=tab][aria-selected=true]");
 
-    initSlider(sliderElement) {
-      for (const navElement of sliderElement.querySelectorAll(".slider-nav")) {
-        const next = navElement.classList.contains("slider-nav-next");
-        navElement.addEventListener("click", () => this.slide(sliderElement, next));
-      }
-      for (const indicatorElement of sliderElement.querySelectorAll(".slider-indicators")) {
-        indicatorElement.addEventListener("click", () => this.slideToByIndicator());
-        this.onSlideEnd(sliderElement, () => this.handleIndicators(sliderElement), 60);
-      }
-      if (sliderElement.classList.contains("slider-nav-autoplay")) {
-        const timeout = sliderElement.getAttribute("data-slider-nav-autoplay-interval") ? sliderElement.getAttribute("data-slider-nav-autoplay-interval") : 2500;
-        this.autoPlay(sliderElement, timeout, sliderElement.classList.contains("slider-nav-autopause"));
-      }
-      if (sliderElement.classList.contains("slider-nav-animation")) this.setVisibleSlides(sliderElement);
-    },
+    this.addEventListeners();
+  }
 
-    setVisibleSlides(sliderElement) {
-      const observer = new IntersectionObserver(
-        (slides) => {
-          slides.forEach((slide) => {
-            slide.isIntersecting ? slide.target.parentElement.classList.add("slide-visible") : slide.target.parentElement.classList.remove("slide-visible");
-          });
-        },
-        {
-          root: sliderElement.querySelector(".slider-container"),
-          threshold: 0.3,
+  // Private function to set event listeners
+  addEventListeners() {
+    for (let tab of this.tabs) {
+      tab.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.setActiveTab(tab.getAttribute("aria-controls"));
+      });
+      tab.addEventListener("keyup", (e) => {
+        if (e.keyCode == 13 || e.keyCode == 32) {
+          // return or space
+          e.preventDefault();
+          this.setActiveTab(tab.getAttribute("aria-controls"));
         }
-      );
-      for (const slide of sliderElement.querySelectorAll(".slider-container>*>*")) observer.observe(slide);
-    },
-
-    slide(sliderElement, next = true) {
-      const container = sliderElement.querySelector(".slider-container");
-      const fullpage = sliderElement.classList.contains("slider-nav-page");
-      const noloop = sliderElement.classList.contains("slider-nav-noloop");
-      const nodelay = sliderElement.classList.contains("slider-nav-nodelay");
-      const slides = container.children;
-      const gapWidth = parseInt(window.getComputedStyle(container).columnGap);
-      const scrollStep = slides[0].offsetWidth + gapWidth;
-      let scrollLeftPosition = next ? container.scrollLeft + scrollStep : container.scrollLeft - scrollStep;
-      if (fullpage) {
-        scrollLeftPosition = next ? container.scrollLeft + container.offsetWidth : container.scrollLeft - container.offsetWidth;
-      }
-      if (container.scrollLeft + container.offsetWidth > container.scrollWidth - (gapWidth / 2 + 1) && next) {
-        if (noloop) return;
-        scrollLeftPosition = 0;
-      }
-      container.scroll({
-        left: scrollLeftPosition,
-        behavior: nodelay ? "auto" : "smooth",
       });
-    },
+    }
+    this.tablist.addEventListener("keyup", (e) => {
+      switch (e.keyCode) {
+        case 35: // end key
+          e.preventDefault();
+          this.setActiveTab(this.tabs[this.tabs.length - 1].getAttribute("aria-controls"));
+          break;
+        case 36: // home key
+          e.preventDefault();
+          this.setActiveTab(this.tabs[0].getAttribute("aria-controls"));
+          break;
+        case 37: // left arrow
+          e.preventDefault();
+          let previous = [...this.tabs].indexOf(this.activeTab) - 1;
+          previous = previous >= 0 ? previous : this.tabs.length - 1;
+          this.setActiveTab(this.tabs[previous].getAttribute("aria-controls"));
+          break;
+        case 39: // right arrow
+          e.preventDefault();
+          let next = [...this.tabs].indexOf(this.activeTab) + 1;
+          next = next < this.tabs.length ? next : 0;
+          this.setActiveTab(this.tabs[next].getAttribute("aria-controls"));
+          break;
+      }
+    });
+  }
 
-    slideToByIndicator() {
-      const indicator = window.event.target;
-      const indicatorIndex = Array.from(indicator.parentElement.children).indexOf(indicator);
-      const indicatorCount = indicator.parentElement.children.length;
-      const sliderElement = indicator.closest(".slider");
-      const slideCount = sliderElement.querySelector(".slider-container").children.length;
-      const relativeSlideIndex = (slideCount / indicatorCount) * indicatorIndex;
-      this.slideTo(sliderElement, relativeSlideIndex);
-    },
+  // Public function to set the tab by id
+  // This can be called by the developer too.
+  setActiveTab(id) {
+    for (let tab of this.tabs) {
+      if (tab.getAttribute("aria-controls") == id) {
+        tab.setAttribute("aria-selected", "true");
+        tab.classList.add("bg-wave-200");
+        tab.focus();
+        this.activeTab = tab;
+      } else {
+        tab.setAttribute("aria-selected", "false");
+        tab.classList.remove("bg-wave-200");
+      }
+    }
+    for (let tabpanel of this.tabpanels) {
+      if (tabpanel.getAttribute("id") == id) {
+        tabpanel.setAttribute("aria-expanded", "true");
+      } else {
+        tabpanel.setAttribute("aria-expanded", "false");
+      }
+    }
+  }
+}
 
-    slideTo(sliderElement, slideIndex) {
-      const container = sliderElement.querySelector(".slider-container");
-      const gapWidth = parseInt(window.getComputedStyle(container).columnGap);
-      const scrollStep = container.children[0].offsetWidth + gapWidth;
-      const nodelay = sliderElement.classList.contains("slider-nav-nodelay");
-      container.scroll({
-        left: scrollStep * slideIndex,
-        behavior: nodelay ? "auto" : "smooth",
-      });
-    },
+customElements.define("tab-controller", TabController);
 
-    onSlideEnd(sliderElement, delegate, timeout = 125) {
-      let isScrolling;
-      sliderElement.querySelector(".slider-container").addEventListener(
-        "scroll",
-        function () {
-          window.clearTimeout(isScrolling);
-          isScrolling = setTimeout(delegate, timeout);
-        },
-        { capture: false, passive: true }
-      );
-    },
+// TODO: replace instances with swiffy slider and delete
+/* class SliderComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.slider = this.querySelector("ul");
+    this.sliderItems = this.querySelectorAll("li");
+    this.pageCount = this.querySelector(".slider-counter--current");
+    this.pageTotal = this.querySelector(".slider-counter--total");
+    this.prevButton = this.querySelector('button[name="previous"]');
+    this.nextButton = this.querySelector('button[name="next"]');
 
-    autoPlay(sliderElement, timeout, autopause) {
-      timeout = timeout < 750 ? 750 : timeout;
-      let autoplayTimer = setInterval(() => this.slide(sliderElement), timeout);
-      const autoplayer = () => this.autoPlay(sliderElement, timeout, autopause);
-      if (autopause) {
-        ["mouseover", "touchstart"].forEach(function (event) {
-          sliderElement.addEventListener(
-            event,
-            function () {
-              window.clearTimeout(autoplayTimer);
-            },
-            { once: true, passive: true }
-          );
+    if (!this.slider || !this.nextButton) return;
+
+    const resizeObserver = new ResizeObserver((entries) => this.initPages());
+    resizeObserver.observe(this.slider);
+
+    this.slider.addEventListener("scroll", this.update.bind(this));
+    this.prevButton.addEventListener("click", this.onButtonClick.bind(this));
+    this.nextButton.addEventListener("click", this.onButtonClick.bind(this));
+  }
+
+  initPages() {
+    const sliderItemsToShow = Array.from(this.sliderItems).filter((element) => element.clientWidth > 0);
+    this.sliderLastItem = sliderItemsToShow[sliderItemsToShow.length - 1];
+    if (sliderItemsToShow.length === 0) return;
+    this.slidesPerPage = Math.floor(this.slider.clientWidth / sliderItemsToShow[0].clientWidth);
+    this.totalPages = sliderItemsToShow.length - this.slidesPerPage + 1;
+    this.update();
+  }
+
+  update() {
+    if (!this.pageCount || !this.pageTotal) return;
+    this.currentPage = Math.round(this.slider.scrollLeft / this.sliderLastItem.clientWidth) + 1;
+
+    if (this.currentPage === 1) {
+      this.prevButton.setAttribute("disabled", "disabled");
+    } else {
+      this.prevButton.removeAttribute("disabled");
+    }
+
+    if (this.currentPage === this.totalPages) {
+      this.nextButton.setAttribute("disabled", "disabled");
+    } else {
+      this.nextButton.removeAttribute("disabled");
+    }
+
+    this.pageCount.textContent = this.currentPage;
+    this.pageTotal.textContent = this.totalPages;
+  }
+
+  onButtonClick(event) {
+    event.preventDefault();
+    const slideScrollPosition =
+      event.currentTarget.name === "next" ? this.slider.scrollLeft + this.sliderLastItem.clientWidth : this.slider.scrollLeft - this.sliderLastItem.clientWidth;
+    console.log(slideScrollPosition);
+    this.slider.scrollTo({
+      left: slideScrollPosition,
+    });
+  }
+}
+
+customElements.define("slider-component", SliderComponent); */
+
+// Based on Swiffy Slider: https://swiffyslider.com/docs/
+class SliderComponent extends HTMLElement {
+  constructor() {
+    super();
+
+    this.initSlider(this);
+  }
+
+  initSlider(sliderElement) {
+    for (let navElement of sliderElement.querySelectorAll(".slider-nav")) {
+      let next = navElement.classList.contains("slider-nav-next");
+      navElement.addEventListener("click", () => this.slide(sliderElement, next), { passive: true });
+    }
+    for (let indicatorElement of sliderElement.querySelectorAll(".slider-indicators")) {
+      indicatorElement.addEventListener("click", () => this.slideToByIndicator());
+      this.onSlideEnd(sliderElement, () => this.handleIndicators(sliderElement), 60);
+    }
+    if (sliderElement.classList.contains("slider-nav-autoplay")) {
+      const timeout = sliderElement.getAttribute("data-slider-nav-autoplay-interval") ? sliderElement.getAttribute("data-slider-nav-autoplay-interval") : 2500;
+      this.autoPlay(sliderElement, timeout, sliderElement.classList.contains("slider-nav-autopause"));
+    }
+    if (["slider-nav-autohide", "slider-nav-animation"].some((className) => sliderElement.classList.contains(className))) {
+      const threshold = sliderElement.getAttribute("data-slider-nav-animation-threshold") ? sliderElement.getAttribute("data-slider-nav-animation-threshold") : 0.3;
+      this.setVisibleSlides(sliderElement, threshold);
+    }
+  }
+
+  setVisibleSlides(sliderElement, threshold = 0.3) {
+    let observer = new IntersectionObserver(
+      (slides) => {
+        slides.forEach((slide) => {
+          slide.isIntersecting ? slide.target.classList.add("slide-visible") : slide.target.classList.remove("slide-visible");
         });
+        sliderElement.querySelector(".slider-container>*:first-child").classList.contains("slide-visible")
+          ? sliderElement.classList.add("slider-item-first-visible")
+          : sliderElement.classList.remove("slider-item-first-visible");
+        sliderElement.querySelector(".slider-container>*:last-child").classList.contains("slide-visible")
+          ? sliderElement.classList.add("slider-item-last-visible")
+          : sliderElement.classList.remove("slider-item-last-visible");
+      },
+      {
+        root: sliderElement.querySelector(".slider-container"),
+        threshold: threshold,
+      }
+    );
+    for (let slide of sliderElement.querySelectorAll(".slider-container>*")) observer.observe(slide);
+  }
+
+  slide(sliderElement, next = true) {
+    const container = sliderElement.querySelector(".slider-container");
+    const fullpage = sliderElement.classList.contains("slider-nav-page");
+    const noloop = sliderElement.classList.contains("slider-nav-noloop");
+    const nodelay = sliderElement.classList.contains("slider-nav-nodelay");
+    const slides = container.children;
+    const gapWidth = parseInt(window.getComputedStyle(container).columnGap);
+    const scrollStep = slides[0].offsetWidth + gapWidth;
+    let scrollLeftPosition = next ? container.scrollLeft + scrollStep : container.scrollLeft - scrollStep;
+    if (fullpage) {
+      scrollLeftPosition = next ? container.scrollLeft + container.offsetWidth : container.scrollLeft - container.offsetWidth;
+    }
+    if (container.scrollLeft < 1 && !next && !noloop) {
+      scrollLeftPosition = container.scrollWidth - container.offsetWidth;
+    }
+    if (container.scrollLeft >= container.scrollWidth - container.offsetWidth && next && !noloop) {
+      scrollLeftPosition = 0;
+    }
+    container.scroll({
+      left: scrollLeftPosition,
+      behavior: nodelay ? "auto" : "smooth",
+    });
+  }
+
+  slideToByIndicator() {
+    const indicator = window.event.target;
+    const indicatorIndex = Array.from(indicator.parentElement.children).indexOf(indicator);
+    const indicatorCount = indicator.parentElement.children.length;
+    const sliderElement = indicator.closest(".slider");
+    const slideCount = sliderElement.querySelector(".slider-container").children.length;
+    const relativeSlideIndex = (slideCount / indicatorCount) * indicatorIndex;
+    this.slideTo(sliderElement, relativeSlideIndex);
+  }
+
+  slideTo(sliderElement, slideIndex) {
+    const container = sliderElement.querySelector(".slider-container");
+    const gapWidth = parseInt(window.getComputedStyle(container).columnGap);
+    const scrollStep = container.children[0].offsetWidth + gapWidth;
+    const nodelay = sliderElement.classList.contains("slider-nav-nodelay");
+    container.scroll({
+      left: scrollStep * slideIndex,
+      behavior: nodelay ? "auto" : "smooth",
+    });
+  }
+
+  onSlideEnd(sliderElement, delegate, timeout = 125) {
+    let isScrolling;
+    sliderElement.querySelector(".slider-container").addEventListener(
+      "scroll",
+      function () {
+        window.clearTimeout(isScrolling);
+        isScrolling = setTimeout(delegate, timeout);
+      },
+      { capture: false, passive: true }
+    );
+  }
+
+  autoPlay(sliderElement, timeout, autopause) {
+    timeout = timeout < 750 ? 750 : timeout;
+    let autoplayTimer = setInterval(() => this.slide(sliderElement), timeout);
+    const autoplayer = () => this.autoPlay(sliderElement, timeout, autopause);
+    if (autopause) {
+      ["mouseover", "touchstart"].forEach(function (event) {
         sliderElement.addEventListener(
-          "mouseout",
+          event,
+          function () {
+            window.clearTimeout(autoplayTimer);
+          },
+          { once: true, passive: true }
+        );
+      });
+      ["mouseout", "touchend"].forEach(function (event) {
+        sliderElement.addEventListener(
+          event,
           function () {
             autoplayer();
           },
-          { once: true }
+          { once: true, passive: true }
         );
-      }
-      return autoplayTimer;
-    },
+      });
+    }
+    return autoplayTimer;
+  }
 
-    handleIndicators(sliderElement) {
-      const container = sliderElement.querySelector(".slider-container");
-      const slidingAreaWidth = container.scrollWidth - container.offsetWidth;
-      const percentSlide = container.scrollLeft / slidingAreaWidth;
-      for (const scrollIndicatorContainers of sliderElement.querySelectorAll(".slider-indicators")) {
-        const scrollIndicators = scrollIndicatorContainers.children;
-        const activeIndicator = Math.round((scrollIndicators.length - 1) * percentSlide);
-        for (const element of scrollIndicators) element.removeAttribute("class");
-        scrollIndicators[activeIndicator].classList.add("active");
-      }
-    },
-  };
-})();
+  handleIndicators(sliderElement) {
+    const container = sliderElement.querySelector(".slider-container");
+    const slidingAreaWidth = container.scrollWidth - container.offsetWidth;
+    const percentSlide = container.scrollLeft / slidingAreaWidth;
+    for (let scrollIndicatorContainers of sliderElement.querySelectorAll(".slider-indicators")) {
+      let scrollIndicators = scrollIndicatorContainers.children;
+      let activeIndicator = Math.abs(Math.round((scrollIndicators.length - 1) * percentSlide));
+      for (let element of scrollIndicators) element.classList.remove("active");
+      scrollIndicators[activeIndicator].classList.add("active");
+    }
+  }
+}
 
-window.slider = slider;
-if (document.querySelectorAll(".slider").length > 0) {
+customElements.define("slider-component", SliderComponent);
+
+/* window.slider = slider;
+if (!document.currentScript.hasAttribute("data-noinit")) {
   window.addEventListener("load", () => {
-    "use strict";
     slider.init();
   });
-}
+} */
+
+// add shadow to header when #MainContent reaches top of window
+let observer = new IntersectionObserver((entries) => {
+  if (entries[0].boundingClientRect.y < 0) {
+    document.querySelector("#shopify-section-header").classList.add("shadow-md", "shadow-seaweed-400/5");
+  } else {
+    document.querySelector("#shopify-section-header").classList.remove("shadow-md", "shadow-seaweed-400/5");
+  }
+});
+observer.observe(document.querySelector("#HeaderScrollPixel"));

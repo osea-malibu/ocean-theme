@@ -3,104 +3,158 @@
     "image_banner": {
       "type": "image-banner",
       "settings": {
-        "desktop_text_box_position": "flex-end"
-      },
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Talk about your brand"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_label_2": ""
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ]
+        "image": "shopify://shop_images/800x480_-_OE.jpg",
+        "image_height": "medium",
+        "adapt_height_first_image": false,
+        "desktop_text_box_position": "flex-end",
+        "show_text_box": true,
+        "image_overlay_opacity": 0,
+        "color_scheme": "background-1",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
     },
-    "rich_text": {
+    "165703204544efb73d": {
       "type": "rich-text",
       "blocks": {
-        "heading": {
-          "type": "heading"
+        "165703204528fb3b00-0": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "Skincare from the Sea",
+            "heading_classes": "text-center font-serif text-4xl md:text-5xl tracking-tight mb-2 md:mb-4"
+          }
         },
-        "text": {
-          "type": "text"
-        },
-        "button": {
-          "type": "button"
+        "165703204528fb3b00-1": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph_text": "Inspired by the Ocean, Sun, Earth and Atmosphere, our nutrient dense formulas nourish skin and spark the senses.",
+            "paragraph_classes": "text-center text-lg md:text-xl sm:tracking-wide"
+          }
         }
       },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ]
-    },
-    "featured_products": {
-      "type": "featured-collection",
+      "block_order": ["165703204528fb3b00-0", "165703204528fb3b00-1"],
       "settings": {
-        "title": "Featured products",
-        "collection": "all",
-        "image_ratio": "square"
+        "section_classes": "py-10 px-6 sm:px-4 max-w-xl mx-auto"
+      }
+    },
+    "16570286821ae9514b": {
+      "type": "featured-collections",
+      "blocks": {
+        "ef36c6b7-d88e-4497-b951-129a5bb04048": {
+          "type": "collection",
+          "settings": {
+            "collection_name": "Best Sellers",
+            "collection": "bestsellers"
+          }
+        },
+        "51eaa0a9-2da3-44a2-a6fc-7f4e5872d25f": {
+          "type": "collection",
+          "settings": {
+            "collection_name": "Sets",
+            "collection": "skincare-sets-1"
+          }
+        },
+        "22fccd37-1cfc-4508-8e46-a630734697ba": {
+          "type": "collection",
+          "settings": {
+            "collection_name": "Body Care",
+            "collection": "body-care"
+          }
+        }
+      },
+      "block_order": ["ef36c6b7-d88e-4497-b951-129a5bb04048", "51eaa0a9-2da3-44a2-a6fc-7f4e5872d25f", "22fccd37-1cfc-4508-8e46-a630734697ba"],
+      "settings": {
+        "products_to_show": 12
       }
     },
     "collage": {
       "type": "collage",
       "blocks": {
         "video": {
-          "type": "video"
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description": "Describe the video",
+            "image_padding": false
+          }
         },
         "product": {
-          "type": "product"
+          "type": "product",
+          "settings": {
+            "product": "",
+            "second_image": false,
+            "image_padding": false,
+            "secondary_background": false
+          }
         },
         "collection": {
-          "type": "collection"
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "image_padding": false,
+            "color_scheme": "background-1"
+          }
         }
       },
-      "block_order": [
-        "video",
-        "product",
-        "collection"
-      ]
+      "block_order": ["video", "product", "collection"],
+      "settings": {
+        "heading": "Multimedia collage",
+        "desktop_layout": "left",
+        "mobile_layout": "collage"
+      }
     },
     "video": {
-      "type": "video"
+      "type": "video",
+      "settings": {
+        "heading": "Video",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "description": "",
+        "full_width": false
+      }
     },
     "multi_column": {
       "type": "multicolumn",
       "blocks": {
         "column1": {
-          "type": "column"
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
         },
         "column2": {
-          "type": "column"
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
         },
         "column3": {
-          "type": "column"
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
         }
       },
-      "block_order": [
-        "column1",
-        "column2",
-        "column3"
-      ]
+      "block_order": ["column1", "column2", "column3"],
+      "settings": {
+        "title": "Multicolumn",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "column_alignment": "left",
+        "background_style": "primary",
+        "button_label": "Button label",
+        "button_link": "",
+        "swipe_on_mobile": false
+      }
     }
   },
-  "order": [
-    "image_banner",
-    "rich_text",
-    "featured_products",
-    "collage",
-    "video",
-    "multi_column"
-  ]
+  "order": ["image_banner", "165703204544efb73d", "16570286821ae9514b", "collage", "video", "multi_column"]
 }

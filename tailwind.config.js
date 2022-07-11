@@ -1,5 +1,24 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
-  content: ["./layout/*.liquid", "./templates/*.liquid", "./sections/*.liquid", "./snippets/*.liquid"],
+  content: ["./layout/*.liquid", "./templates/*.liquid", "./sections/*.liquid", "./snippets/*.liquid", "./assets/global.js"],
+  safelist: [
+    "max-w-lg",
+    "max-w-xl",
+    "mb-4",
+    "md:mb-4",
+    "md:text-5xl",
+    "md:text-xl",
+    "p-6",
+    "px-3",
+    "py-10",
+    "sm:px-4",
+    "sm:tracking-wide",
+    "text-3xl",
+    "text-4xl",
+    "text-5xl",
+    "text-6xl",
+  ],
   theme: {
     colors: {
       black: "#000",
@@ -71,12 +90,34 @@ module.exports = {
     letterSpacing: {
       tightest: "-.075em",
       tighter: "-.05em",
-      tight: "-.025em",
+      tight: "-.02em",
       normal: "0",
+      slight: ".015em",
       wide: ".025em",
       wider: ".05em",
       widest: ".1em",
-      widest: ".25em",
+    },
+    strokeWidth: {
+      1: "1px",
+      "1/25": "1.25px",
+      "1/50": "1.5px",
+      "1/75": "1.75px",
+      2: "2px",
+      "2/25": "2.25px",
+      "2/50": "2.5px",
+      "2/75": "2.75px",
+    },
+    screens: {
+      xs: "475px",
+      ...defaultTheme.screens,
+    },
+    extend: {
+      transitionProperty: {
+        height: "height",
+        "max-height": "max-height",
+        spacing: "margin, padding",
+        "transform-opacity": "transform, opacity",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],

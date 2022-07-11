@@ -3,9 +3,7 @@ class PredictiveSearch extends HTMLElement {
     super();
     this.cachedResults = {};
     this.input = this.querySelector('input[type="search"]');
-    this.predictiveSearchResults = this.querySelector(
-      "[data-predictive-search]"
-    );
+    this.predictiveSearchResults = this.querySelector("[data-predictive-search]");
     this.isOpen = false;
 
     this.setupEventListeners();
@@ -43,11 +41,7 @@ class PredictiveSearch extends HTMLElement {
   }
 
   onFormSubmit(event) {
-    if (
-      !this.getQuery().length ||
-      this.querySelector('[aria-selected="true"] a')
-    )
-      event.preventDefault();
+    if (!this.getQuery().length || this.querySelector('[aria-selected="true"] a')) event.preventDefault();
   }
 
   onFocus() {
@@ -107,9 +101,7 @@ class PredictiveSearch extends HTMLElement {
     if (!moveUp && selectedElement) {
       activeElement = selectedElement.nextElementSibling || allElements[0];
     } else if (moveUp) {
-      activeElement =
-        selectedElement.previousElementSibling ||
-        allElements[allElements.length - 1];
+      activeElement = selectedElement.previousElementSibling || allElements[allElements.length - 1];
     }
 
     if (activeElement === selectedElement) return;
@@ -122,9 +114,7 @@ class PredictiveSearch extends HTMLElement {
   }
 
   selectOption() {
-    const selectedProduct = this.querySelector(
-      '[aria-selected="true"] a, [aria-selected="true"] button'
-    );
+    const selectedProduct = this.querySelector('[aria-selected="true"] a, [aria-selected="true"] button');
 
     if (selectedProduct) selectedProduct.click();
   }
@@ -139,13 +129,9 @@ class PredictiveSearch extends HTMLElement {
     }
 
     fetch(
-      `${routes.predictive_search_url}?q=${encodeURIComponent(
-        searchTerm
-      )}&${encodeURIComponent(
-        "resources[type]"
-      )}=product,page,article,collection&${encodeURIComponent(
+      `${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&${encodeURIComponent("resources[type]")}=product,page,article,collection&${encodeURIComponent(
         "resources[limit]"
-      )}=9&section_id=predictive-search`
+      )}=8&${encodeURIComponent("resources[options][fields]")}=author,body,product_type,tag,title,variants.title&section_id=predictive-search`
     )
       .then((response) => {
         if (!response.ok) {
@@ -157,9 +143,7 @@ class PredictiveSearch extends HTMLElement {
         return response.text();
       })
       .then((text) => {
-        const resultsMarkup = new DOMParser()
-          .parseFromString(text, "text/html")
-          .querySelector("#shopify-section-predictive-search").innerHTML;
+        const resultsMarkup = new DOMParser().parseFromString(text, "text/html").querySelector("#shopify-section-predictive-search").innerHTML;
         this.cachedResults[queryKey] = resultsMarkup;
         this.renderSearchResults(resultsMarkup);
       })
@@ -169,11 +153,18 @@ class PredictiveSearch extends HTMLElement {
       });
   }
 
+  onPopularSearchClick(event) {
+    event.preventDefault();
+    const searchTerm = event.currentTarget.getAttribute("data-term");
+
+    this.input.value = searchTerm;
+    this.input.focus();
+    this.onChange();
+  }
+
   setLiveRegionLoadingState() {
-    this.statusElement =
-      this.statusElement || this.querySelector(".predictive-search-status");
-    this.loadingText =
-      this.loadingText || this.getAttribute("data-loading-text");
+    this.statusElement = this.statusElement || this.querySelector(".predictive-search-status");
+    this.loadingText = this.loadingText || this.getAttribute("data-loading-text");
 
     this.setLiveRegionText(this.loadingText);
     this.setAttribute("loading", true);
@@ -198,10 +189,9 @@ class PredictiveSearch extends HTMLElement {
 
   setLiveRegionResults() {
     this.removeAttribute("loading");
-    this.setLiveRegionText(
-      this.querySelector("[data-predictive-search-live-region-count-value]")
-        .textContent
-    );
+    this.setLiveRegionText(this.querySelector("[data-predictive-search-live-region-count-value]").textContent);
+
+    this.querySelectorAll(".button-popular-search").forEach((button) => button.addEventListener("click", this.onPopularSearchClick.bind(this)));
   }
 
   open() {

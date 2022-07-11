@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tailwindcss build styles/application.css -o assets/application.css && theme deploy --allow-live"
+    "tailwind": "npx tailwindcss -i styles/application.css -o assets/application.css --watch",
+    "build": "npm run-script tailwind && shopify theme serve"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
     "@tailwindcss/forms": "^0.5.2",
     "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.7",
+    "container-query-polyfill": "^0.1.2",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-sass": "^5.0.0",
@@ -28,6 +30,7 @@
     "sass": "^1.44.0"
   },
   "devDependencies": {
+    "liquid-schema-plugin": "^1.1.0",
     "tailwindcss": "^3.0.24"
   }
 }

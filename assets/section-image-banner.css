@@ -126,8 +126,7 @@
     --alpha-button-background: 0;
   }
 
-  .banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt)
-    .banner__content {
+  .banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
     position: absolute;
     height: auto;
   }
@@ -198,7 +197,6 @@
 
 .banner__box {
   border: 0;
-  padding: 4rem 3.5rem;
   position: relative;
   height: fit-content;
   align-items: center;
@@ -229,7 +227,7 @@
 }
 
 .banner::after {
-  content: '';
+  content: "";
   position: absolute;
   background: #000000;
   opacity: 0;

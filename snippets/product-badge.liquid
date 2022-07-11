@@ -1,0 +1,41 @@
+{% comment %}
+    Renders a list of product's price (regular, sale)
+
+    Accepts:
+    - product: {Object} Product Liquid object
+
+    Usage:
+    {% render 'product-badge', product: product %}
+{% endcomment %}
+{%- liquid
+  assign badge_text = ''
+  assign badge_class = ''
+
+  if product.available == false
+    assign badge_text = 'Out of stock'
+    assign badge_class = 'bg-wave-200 text-wave-800'
+  elsif product.tags contains 'badge::new'
+    assign badge_text = 'New'
+    assign badge_class = 'bg-coral-600 text-white'
+  elsif product.tags contains 'badge::editor_pick'
+    assign badge_text = "Editor's pick"
+    assign badge_class = 'bg-coral-600 text-white'
+  else
+    for tag in product.tags
+      if tag contains 'badge::'
+        assign string_array = tag | split: '::'
+        assign badge_text = string_array[1]
+
+        if tag contains 'Save' or tag contains 'save'
+          assign badge_class = 'bg-seafoam-300 text-seaweed-700'
+        else
+          assign badge_class = 'bg-coral-600 text-white'
+        endif
+      endif
+    endfor
+  endif
+-%}
+
+<div class="absolute top-1 left-1 inline-block px-2 py-1 mb-1 uppercase font-black tracking-widest text-xs {{ badge_class }}">
+  {{ badge_text }}
+</div>

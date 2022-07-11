@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -8,7 +7,6 @@
   <link rel="stylesheet" href="{{ 'component-loading-overlay.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
 
-<noscript>{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-search.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
@@ -18,45 +16,81 @@
 <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
 
-<header class="header container bg-white mx-auto">
+<header class="header container mx-auto relative">
   <div class="px-6 py-2 flex items-center justify-between">
     <div class="flex-1 flex items-center justify-start">
+      {% comment %} Hamburger menu {% endcomment %}
       {%- if section.settings.hamburger_menu != blank -%}
+        {%- assign menu_link_styles = 'px-8 py-3 text-xl tracking-wide font-regular cursor-pointer' -%}
         <header-drawer data-breakpoint="tablet" class="mr-1 md:mr-4 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="menu-drawer-container">
-            <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-1 text-seaweed-700 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
+            {% comment %} Hamburger icon {% endcomment %}
+            <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-1 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
               <span class="flex items-center justify-center h-full">
-                <svg class="icon-hamburger h-8 w-8 block absolute opacity-100 transition-opacity transition-transform scale-100" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="icon-hamburger h-8 w-8 block absolute opacity-100 transition-transform-opacity scale-100" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="3" y1="12" x2="21" y2="12" /> 
                   <line x1="3" y1="6" x2="21" y2="6" /> 
                   <line x1="3" y1="18" x2="21" y2="18" />
                 </svg>
-                <svg class="icon-close h-8 w-8 block absolute opacity-100 transition-opacity transition-transform scale-100" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                {% comment %} Close icon - replaces hamburger when drawer is open {% endcomment %}
+                <svg class="icon-close h-8 w-8 block absolute opacity-100 transition-transform-opacity scale-100" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </span>
             </summary>
-            <div id="menu-drawer-overlay" class="block fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 transition-opacity"></div>
-            <div id="menu-drawer" class="menu-drawer motion-reduce fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200{% if section.settings.enable_navbar %} top-24{% else %} top-full{% endif %}" tabindex="-1">
-              <div class="relative flex flex-col justify-between overyflow-y-auto">
-                <nav class="py-12">
+            {% comment %} Scrim - closes menu on click {% endcomment %}
+            <div id="menu-scrim" class="block fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 transition-opacity"></div>
+            {% comment %} L1 Drawer {% endcomment %}
+            <div id="menu-drawer" class="menu-drawer motion-reduce fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-24 overyflow-y-auto" tabindex="-1">
+              <div class="relative flex flex-col justify-between">
+                <nav class="pt-12 pb-6">
                   <ul role="list">
                     {%- for link in section.settings.hamburger_menu.links -%}
                       <li>
+                        {% comment %} Convert link with title 'Divider' into divider {% endcomment %}
                         {%- if link.title == 'Divider' -%}
                           <hr class="ml-8 my-4 w-8 border-seaweed-500" />
+                        {% comment %} Convert link with title 'Accordion' into accordion {% endcomment %}
+                        {%- elsif link.title contains 'Accordion' -%}
+                          <details>
+                            <summary class="flex items-center justify-start {{ menu_link_styles }}">
+                              <span class="mr-2">{{ link.title | replace: 'Accordion - ', '' }}</span>
+                              <div class="w-6 h-6 flex items-center justify-center">
+                                <svg class="absolute icon-expand h-5 w-5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <line x1="12" y1="5" x2="12" y2="19" />
+                                  <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                <svg class="absolute icon-collapse h-5 w-5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                              </div>
+                            </summary>
+                            <ul class="px-8 pb-2">
+                              {%- for childlink in link.links -%}
+                                <li><a class="py-2 px-2 block tracking-wide" href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+                              {%- endfor -%}
+                            </ul>
+                          </details>
+                        {% comment %} L1 - Link with sub menu {% endcomment %}
                         {%- elsif link.links != blank -%}
                           <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
-                            <summary class="menu-drawer__menu-item px-8 py-4 text-3xl cursor-pointer text-seaweed-700 font-serif tracking-tight font-regular flex{% if link.child_active %} text-seaweed-800{% endif %}">
+                            <summary class="menu-drawer__menu-item flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}">
                               <span class="mr-3">{{ link.title | escape }}</span>
-                              {% render 'icon-arrow' %}
+                              <svg class="icon-arrow h-6 w-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z"/>
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <line x1="13" y1="18" x2="19" y2="12" />
+                                <line x1="13" y1="6" x2="19" y2="12" />
+                              </svg>
                               {% render 'icon-caret' %}
                             </summary>
-                            <div id="link-{{ link.title | escape }}" class="menu-drawer__submenu motion-reduce absolute inset-x-0 top-0 bg-sand-200 z-10 h-full" tabindex="-1">
+                            {% comment %} L2 Drawer {% endcomment %}
+                            <div id="link-{{ link.title | escape }}" class="menu-drawer__submenu motion-reduce absolute inset-x-0 top-0 bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
                               <div class="pb-10">
-                                <button class="flex items-center px-8 py-4 w-full text-sm text-seaweed-700 leading-6 font-medium uppercase tracking-wider" aria-expanded="true">
-                                  <svg class="h-6 w-6 mr-2 text-seaweed-700" aria-hidden="true" focusable="false" role="presentation" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                {% comment %} Back button {% endcomment %}
+                                <button class="flex items-center px-8 pt-6 pb-2 w-full text-sm leading-6 font-bold uppercase tracking-wider" aria-expanded="true">
+                                  <svg class="h-6 w-6 mr-2" aria-hidden="true" focusable="false" role="presentation" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                     <line x1="5" y1="12" x2="9" y2="16" />
                                     <line x1="5" y1="12" x2="9" y2="8" />
@@ -66,18 +100,21 @@
                                 <ul role="list" tabindex="-1">
                                   {%- for childlink in link.links -%}
                                     <li>
+                                      {% comment %} L2 - Link without sub menu {% endcomment %}
                                       {%- if childlink.links == blank -%}
-                                        <a href="{{ childlink.url }}" class="block px-8 py-4 text-3xl font-serif cursor-pointer text-seaweed-700{% if childlink.current %} text-seaweed-800{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                                        <a href="{{ childlink.url }}" class="block {{ menu_link_styles }}{% if childlink.current %} text-seaweed-800{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
                                           {{ childlink.title | escape }}
                                         </a>
+                                      {% comment %} L2 - Link with sub menu {% endcomment %}
                                       {%- else -%}
-                                        <p class="px-8 py-2 text-3xl cursor-pointer text-seaweed-700 font-serif">
+                                        <p class="px-8 py-0 mt-3 mb-2 text-2xl tracking-wide cursor-pointer font-medium">
                                           {{ childlink.title | escape }}
                                         </p>
-                                        <ul id="childlink-{{ childlink.title | escape }}" role="list" tabindex="-1" class="px-8 mb-4">
+                                        {% comment %} L3 menu {% endcomment %}
+                                        <ul id="childlink-{{ childlink.title | escape }}" role="list" tabindex="-1" class="mb-6">
                                           {%- for grandchildlink in childlink.links -%}
                                             <li>
-                                              <a href="{{ grandchildlink.url }}" class="block text-seaweed-700 text-xl py-1 mb-1{% if grandchildlink.current %} text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                              <a href="{{ grandchildlink.url }}" class="block {{ menu_link_styles }}{% if grandchildlink.current %} text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
                                                 {{ grandchildlink.title | escape }}
                                               </a>
                                             </li>
@@ -90,8 +127,9 @@
                               </div>
                             </div>
                           </details>
+                        {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
-                          <a href="{{ link.url }}" class="block px-8 py-4 text-3xl cursor-pointer text-seaweed-700 font-serif tracking-tight font-regular{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+                          <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
                             {{ link.title | escape }}
                           </a>
                         {%- endif -%}
@@ -99,65 +137,103 @@
                     {%- endfor -%}
                   </ul>
                 </nav>
-                <hr class="mx-8 border-seaweed-500" />
-                <div class="pt-12 pb-24">
-                  {%- if shop.customer_accounts_enabled -%}
-                    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="flex px-8 py-3 text-lg items-center text-seaweed-700 font-book tracking-wide leading-6">
-                      {%- liquid
-                        if customer
-                          echo 'customer.account_fallback' | t
-                        else
-                          echo 'customer.log_in' | t
-                        endif
-                      -%}
-                    </a>
-                  {%- endif -%}
-                  <a href="/pages/customer-care" class="block px-8 py-3 text-seaweed-700 text-lg font-book tracking-wide leading-6">Help</a>
-                  <p class="pl-8 pr-6 py-3 text-seaweed-700 text-lg font-book md:tracking-wide leading-6">Customer Support<span style="font-family:sans-serif">:</span> <a href="tel:13103610547" class="font-regular">310-361-0547</a></p>
-                  <details>
-                    <summary class="flex px-8 py-3 items-center justify-start text-seaweed-700 text-lg font-book tracking-wide leading-6">
-                      <span class="mr-2">Locations</span>
-                      <div class="w-6 h-6 flex items-center justify-center">
-                        <svg class="absolute icon-expand h-4 w-4 text-seaweed-700 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <line x1="12" y1="5" x2="12" y2="19" />
-                          <line x1="5" y1="12" x2="19" y2="12" />
+                {% comment %} Customer service menu {% endcomment %}
+                <div class="px-8">
+                  <div class="border-seaweed-500 border p-4 mb-24 max-w-md">
+                    <h4 class="text-center font-serif text-2xl tracking-tight mb-3">Customer Support</h4>
+                    <p class="text-center">Monday - Friday 8am - 5pm PT</p>
+                    <p class="text-center mb-3"><em>Except for major holidays</em></p>
+                    <div class="flex items-center justify-center flex-col sm:flex-row">
+                      <a class="button button-secondary button-sm button-icon button-icon-left w-full mr-0 mb-2 sm:mb-0 sm:mr-4" href="tel:13103610547">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                         </svg>
-                        <svg class="absolute icon-collapse h-4 w-4 text-seaweed-700 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <line x1="5" y1="12" x2="19" y2="12" />
+                        <span>310-361-0547</span>
+                      </a>
+                      <button class="button button-secondary button-sm button-icon button-icon-left w-full">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                         </svg>
-                      </div>
-                    </summary>
-                    <ul class="px-8 pt-1 pb-4">
-                      <li><a class="text-seaweed-700 py-1 block tracking-wide px-2" href="/pages/venice-skincare-studio-1">Venice Skincare Studio</a></li>
-                      <li><a class="text-seaweed-700 py-1 block tracking-wide px-2" href="/pages/spas">Featured Partners</a></li>
-                      <li><a class="text-seaweed-700 py-1 block tracking-wide px-2" href="/pages/contact-us">Contact Us</a></li>
-                    </ul>
-                  </details>
+                        <span>Chat</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </details>
         </header-drawer>
       {%- endif -%}
-      
-      {%- if shop.customer_accounts_enabled and section.settings.enable_navbar -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="h-10 w-10 flex justify-center items-center">
-          <svg class="h-7 w-7 text-seaweed-700 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-          <span class="hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
-          </span>
-        </a>
-      {%- endif -%}
 
+      {% comment %} Predictive search {% endcomment %}
+      <details-modal class="header__search w-10 h-10 flex justify-center items-center">
+        <details>
+          <summary class="header__icon header__icon--search cursor-pointer modal__toggle{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3 lg:w-10 lg:h-10{% endunless %}" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+            <span class="flex items-center justify-center h-full">
+              <svg class="modal__toggle-open icon icon-search h-7 w-7 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"> 
+                <circle cx="11" cy="11" r="8" /> 
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <svg class="modal__toggle-close icon icon-close h-8 w-8 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </span>
+          </summary>
+          <div class="search-modal absolute inset-0 z-40 opacity-0 h-full transition-opacity" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+            <div class="modal-overlay fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50"></div>
+            <div class="search-modal__content bg-white flex items-center justify-center w-full h-full px-6 -translate-y-6" tabindex="-1">
+              <predictive-search class="w-full md:relative" data-loading-text="{{ 'accessibility.loading' | t }}">
+                <form action="{{ routes.search_url }}" method="get" role="search" class="search w-full">
+                  <div class="relative flex items-center w-full">
+                    <input class="border-seaweed-500 rounded-sm w-full h-10 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible transition-all"
+                      id="Search-In-Modal"
+                      type="search"
+                      name="q"
+                      value=""
+                      placeholder="Search for products, categories, and content"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-owns="predictive-search-results-list"
+                      aria-controls="predictive-search-results-list"
+                      aria-haspopup="listbox"
+                      aria-autocomplete="list"
+                      autocorrect="off"
+                      autocomplete="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                    >
+                    <label class="hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
+                    <input type="hidden" name="options[prefix]" value="last">
+                    <button class="cursor-pointer w-10 h-10 flex items-center justify-center ml-3 md:ml-4 shrink-0" aria-label="{{ 'general.search.search' | t }}">
+                      <svg class="h-7 w-7 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"> 
+                        <circle cx="11" cy="11" r="8" /> 
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class=" predictive-search fixed top-16 left-1/2 -translate-x-2/4 bg-wave-200 z-30 max-h-0 w-screen shadow-md shadow-seaweed-700/10 transition-max-height overflow-y-auto" tabindex="-1" data-predictive-search>
+                    <div class="predictive-search__loading-state justify-center p-4">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                      </svg>
+                    </div>
+                  </div>
+                  <span class="predictive-search-status hidden" role="status" aria-hidden="true"></span>
+                </form>
+              </predictive-search>
+              <button type="button" class="cursor-pointer ml-1 md:ml-4 -mr-1 w-10 h-10 flex items-center justify-center shrink-0" aria-label="{{ 'accessibility.close' | t }}">
+                <svg class="h-8 w-8 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </details>
+      </details-modal>
+
+      {% comment %} Inline menu {% endcomment %}
       {%- if section.settings.inline_menu != blank -%}
         {%- unless section.settings.enable_navbar -%}
           <nav class="header__inline-menu flex-1 hidden lg:flex">
@@ -167,10 +243,10 @@
                   {%- if link.links != blank -%}
                     <details-disclosure>
                       <details id="Details-HeaderMenu-{{ forloop.index }}">
-                        <summary class="text-seaweed-700 tracking-wide leading-6 py-3 pl-4 pr-8">
+                        <summary class="tracking-wide leading-6 py-3 pl-4 pr-8 font-book">
                           <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
                         </summary>
-                        <ul id="HeaderMenu-MenuList-{{ forloop.index }}" class="header__submenu list-menu list-menu--disclosure caption-large motion-reduce" role="list" tabindex="-1">
+                        <ul id="HeaderMenu-MenuList-{{ forloop.index }}" class="header__submenu motion-reduce absolute bg-wave-200" role="list" tabindex="-1">
                           {%- for childlink in link.links -%}
                             <li>
                               {%- if childlink.links == blank -%}
@@ -200,7 +276,7 @@
                       </details>
                     </details-disclosure>
                   {%- else -%}
-                    <a href="{{ link.url }}" class="block text-seaweed-700 tracking-wide leading-6 whitespace-nowrap py-3 pl-4 pr-8"{% if link.current %} aria-current="page"{% endif %}>
+                    <a href="{{ link.url }}" class="block tracking-wide leading-6 py-3 pl-4 pr-8 font-book whitespace-nowrap"{% if link.current %} aria-current="page"{% endif %}>
                       <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
                     </a>
                   {%- endif -%}
@@ -212,6 +288,7 @@
       {%- endif -%}
     </div>
 
+    {% comment %} OSEA logo {% endcomment %}
     {%- if request.page_type == 'index' -%}
       <h1 class="header__heading flex-initial">
     {%- endif -%}
@@ -230,114 +307,49 @@
     {%- endif -%}
 
     <div class="flex-1 flex justify-end items-center">
-      <details-modal class="header__search w-10 h-10 flex justify-center items-center">
-        <details>
-          <summary class="header__icon header__icon--search cursor-pointer modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
-            <span class="flex items-center justify-center h-full">
-              <svg class="modal__toggle-open icon icon-search h-7 w-7 text-seaweed-700 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"> 
-                <circle cx="11" cy="11" r="8" /> 
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <svg class="modal__toggle-close icon icon-close h-8 w-8 text-seaweed-700 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </span>
-          </summary>
-          <div class="search-modal modal__content" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
-            <div class="modal-overlay"></div>
-            <div class="search-modal__content" tabindex="-1">
-              <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
-                <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
-                  <div class="field">
-                    <input class="search__input"
-                      id="Search-In-Modal"
-                      type="search"
-                      name="q"
-                      value=""
-                      placeholder="Search for products, categories, content"
-                      role="combobox"
-                      aria-expanded="false"
-                      aria-owns="predictive-search-results-list"
-                      aria-controls="predictive-search-results-list"
-                      aria-haspopup="listbox"
-                      aria-autocomplete="list"
-                      autocorrect="off"
-                      autocomplete="off"
-                      autocapitalize="off"
-                      spellcheck="false"
-                    >
-                    <label class="visually-hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
-                    <input type="hidden" name="options[prefix]" value="last">
-                    <button class="header__icon" aria-label="{{ 'general.search.search' | t }}">
-                      <svg class="icon icon-search" aria-hidden="true" focusable="false" role="presentation">
-                        <use href="#icon-search">
-                      </svg>
-                    </button>
-                  </div>
-                  <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
-                    <div class="predictive-search__loading-state">
-                      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-                      </svg>
-                    </div>
-                  </div>
-
-                  <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
-                </form>
-              </predictive-search>
-              <button type="button" class="header__icon" aria-label="{{ 'accessibility.close' | t }}">
-                <svg class="icon icon-close h-8 w-8" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </details>
-      </details-modal>
-      
+      {% comment %} Accounts link {% endcomment %}   
       {%- if shop.customer_accounts_enabled -%}
-        {%- unless section.settings.enable_navbar -%}
-          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="h-10 w-10 justify-center items-center ml-1 md:ml-4 hidden lg:flex">
-            <svg class="h-8 w-8 text-seaweed-700 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <span class="hidden">
-              {%- liquid
-                if customer
-                  echo 'customer.account_fallback' | t
-                else
-                  echo 'customer.log_in' | t
-                endif
-              -%}
-            </span>
-          </a>
-        {%- endunless -%}
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="h-10 w-10 justify-center items-center ml-1 flex md:ml-4">
+          <svg class="h-8 w-8 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="hidden">
+            {%- liquid
+              if customer
+                echo 'customer.account_fallback' | t
+              else
+                echo 'customer.log_in' | t
+              endif
+            -%}
+          </span>
+        </a>
       {%- endif -%}
 
+      {% comment %} Cart menu {% endcomment %}
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble">
         <span class="hidden">{{ 'templates.cart.cart' | t }}</span>
         <div class="w-8 h-8 bg-seafoam-300 rounded-full flex justify-center items-center">
-          <span aria-hidden="true" class="text-seaweed-700 leading-8 font-book text-lg">{{ cart.item_count }}</span>
+          <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
           <span class="hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
         </div>
       </a>
     </div>
   </div>
-  {%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
-    <nav class="overflow-x-auto bg-white -mt-2">
-      <ul class="flex lg:justify-center">
-        {%- for link in section.settings.navbar_menu.links -%}
-          <li class="first:pl-1">
-            <a href="{{ link.url }}" class="block whitespace-nowrap text-sm xl:text-base py-2 px-2 lg:px-3 text-seaweed-700 font-book tracking-wide">{{ link.title | escape }}</a>
-          </li>
-        {%- endfor -%}
-      </ul>
-    </nav>
-  {%- endif -%}
 </header>
+
+{% comment %} Navbar menu {% endcomment %}
+{%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
+  <nav class="overflow-x-auto bg-white -mt-2">
+    <ul class="flex lg:justify-center">
+      {%- for link in section.settings.navbar_menu.links -%}
+        <li class="first:pl-1">
+          <a href="{{ link.url }}" class="block whitespace-nowrap text-sm xl:text-base py-2 px-2 lg:px-3 font-book tracking-wide">{{ link.title | escape }}</a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+{%- endif -%}
 
 {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
 
@@ -385,7 +397,7 @@
 {% schema %}
 {
   "name": "t:sections.header.name",
-  "class": "inset-x-0 fixed top-8 z-10",
+  "class": "inset-x-0 fixed top-8 z-10 bg-white transition-shadow",
   "settings": [
     {
       "type": "image_picker",

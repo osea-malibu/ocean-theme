@@ -13,22 +13,8 @@
           "type": "buttons"
         }
       },
-      "block_order": [
-        "subtotal",
-        "buttons"
-      ]
-    },
-    "featured-products": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "all",
-        "image_ratio": "square"
-      }
+      "block_order": ["subtotal", "buttons"]
     }
   },
-  "order": [
-    "cart-items",
-    "cart-footer",
-    "featured-products"
-  ]
+  "order": ["cart-items", "cart-footer"]
 }

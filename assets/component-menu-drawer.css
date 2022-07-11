@@ -33,7 +33,7 @@ details[open].menu-opening > .menu-drawer__submenu {
   visibility: visible;
 }
 
-.menu-drawer-container.menu-opening #menu-drawer-overlay {
+.menu-drawer-container.menu-opening #menu-scrim {
   opacity: 1;
 }
 
@@ -45,10 +45,6 @@ details[open].menu-opening > .menu-drawer__submenu {
   .no-js .menu-drawer {
     height: auto;
   }
-}
-
-.no-js .menu-drawer__menu-item {
-  font-size: 1.6rem;
 }
 
 .no-js .menu-drawer__submenu .menu-drawer__menu-item {

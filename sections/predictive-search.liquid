@@ -18,83 +18,80 @@
     endfor
 
     assign allResults = pageList | concat: productList | concat: predictive_search.resources.articles | concat: predictive_search.resources.collections
+    
+    assign article_title = article.title | truncate: 55
+    assign article_description = article.excerpt | truncate: 75
+
+    assign header_styles = 'font-sans font-book text-xl tracking-wide py-4 flex items-center'
+    assign grid_styles = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 mb-6'
+    assign link_styles = 'block w-full pt-1 pb-2 text-lg leading-tight'
   -%}
 
-  <div id="predictive-search-results" class="page-width">
+  <div id="predictive-search-results" class="px-6 container mx-auto">
     {%- if allResults.size > 0 -%}
-      <div class="predictive-search__row">
-          <div class="predictive-search__column block-list">
+      <div class="flex flex-col mb-6 sm:flex-row-reverse">
+          {% comment %} Result tiles column {% endcomment %}
+          <div class="block w-full">
             {%- if productList.size > 0 -%}
-              <h2 id="predictive-search-products" class="predictive-search__heading h6">
-                {{ predictive_search.resources.products.size }} product results
-                <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                  <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              <h2 id="predictive-search-products" class="{{ header_styles }}">
+                <span class="block mr-3">{{ predictive_search.resources.products.size }} product results</span>
+                <svg aria-hidden="true" focusable="false" role="status" class="loading-spinner animate-spin h-5 w-5 text-seaweed-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-1" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </h2>
-              <ul id="predictive-search-results-list" class="predictive-search__results-list list-unstyled" role="listbox" aria-labelledby="predictive-search-products">
+              <ul id="predictive-search-results-list" class="{{ grid_styles }}" role="listbox" aria-labelledby="predictive-search-products">
                 {%- for product in productList -%}
-                  <li id="predictive-search-product-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
-                    <a href="{{ product.url }}" class="predictive-search__item predictive-search__item--link" tabindex="-1">
-                      {%- if product.featured_media != blank -%}
-                        <img class="predictive-search__image"
-                          loading="lazy"
-                          srcset="{{ product.featured_media | image_url: height: 260 }} 1x, {{ product.featured_media | image_url: height: 520 }} 2x"
-                          src="{{ product.featured_media | image_url: height: 260 }}"
-                          alt="{{ product.featured_media.alt }}"
-                          width="260"
-                          height="260"
-                        >
-                      {%- endif -%}
-                      <div class="predictive-search__item-content">
-                        <h3 class="predictive-search__item-heading text-sm font-sans bold">{{ product.title }}</h3>
-                        <p class="predictive-search__item-description text-sm font-sans">{{ product.metafields.custom_fields["short_description"] }}</p>
-                        {% render 'price', product: product, use_variant: true, show_badges: false %}
-                      </div>
-                    </a>
+                  {% comment %} Product result list item {% endcomment %}
+                  <li id="predictive-search-product-{{ forloop.index }}" role="option" aria-selected="false" class="w-full">
+                    {% render 'search-card',
+                      url: product.url,
+                      image: product.featured_media,
+                      title: product.title,
+                      description: product.metafields.custom_fields["short_description"],
+                      product: product
+                    %}
                   </li>
                 {%- endfor -%}
               </ul>
             {%- endif -%}
             {%- if predictive_search.resources.articles.size > 0 -%}
-              <h2 id="predictive-search-products" class="predictive-search__heading h6">
-                {{ predictive_search.resources.articles.size }} journal results
-                <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                  <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              <h2 id="predictive-search-articles" class="{{ header_styles }}">
+                <span class="block mr-3">{{ predictive_search.resources.articles.size }} journal results</span>
+                <svg aria-hidden="true" focusable="false" role="status" class="loading-spinner animate-spin h-5 w-5 text-seaweed-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-1" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </h2>
-              <ul id="predictive-search-results-list" class="predictive-search__results-list list-unstyled" role="listbox" aria-labelledby="predictive-search-products">
+              <ul id="predictive-search-results-list" class="{{ grid_styles }}" role="listbox" aria-labelledby="predictive-search-articles">
                 {%- for article in predictive_search.resources.articles -%}
-                  <li id="predictive-search-article-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
-                    <a href="{{ article.url }}" class="predictive-search__item predictive-search__item--link" tabindex="-1">
-                      {%- if article.image != blank -%}
-                        <img class="predictive-search__image"
-                          loading="lazy"
-                          srcset="{{ article.image | image_url: width: 260, height: 260, crop: 'center' }} 1x, {{ article.image | image_url: width: 520, height: 520, crop: 'center' }} 2x"
-                          src="{{ article.image | image_url: width: 260, height: 260, crop: 'center' }}"
-                          alt="{{ article.image.alt }}"
-                          width="260"
-                          height="260"
-                        >
-                      {%- endif -%}
-                      <div class="predictive-search__item-content">
-                        <h3 class="predictive-search__item-heading text-sm font-sans bold">{{ article.title }}</h3>
-                        <p class="predictive-search__item-description text-sm font-sans">{{ article.excerpt | truncate: 80 }}</p>
-                      </div>
-                    </a>
+                  {% comment %} Article result list item {% endcomment %}
+                  <li id="predictive-search-article-{{ forloop.index }}" class="w-full" role="option" aria-selected="false">
+                    {%- liquid
+                      assign article_title = article.title | truncate: 55
+                      assign article_description = article.excerpt | truncate: 75
+                    -%}
+                    {% render 'search-card',
+                      url: article.url,
+                      image: article.image,
+                      title: article_title,
+                      description: article_description
+                    %}
                   </li>
                 {%- endfor -%}
               </ul>
             {%- endif -%}
           </div>
-          <div class="predictive-search__column text-list">
+          {% comment %} Result links column {% endcomment %}
+          <div class="block sm:mr-4 md:min-w-[220px] lg:min-w-[240px]">
             {%- if predictive_search.resources.collections.size > 0 -%}
-              <h2 id="predictive-search-products" class="predictive-search__heading h6">
-                Categories
+              <h2 id="predictive-search-collections" class="{{ header_styles }}">
+                Collections
               </h2>
-              <ul class="predictive-search__results-list list-unstyled" role="listbox" aria-labelledby="predictive-search-products">
+              <ul class="mb-6" role="listbox" aria-labelledby="predictive-search-collections">
                 {%- for collection in predictive_search.resources.collections -%}
-                  <li id="predictive-search-page-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
-                    <a href="{{ collection.url }}" class="predictive-search__item predictive-search__item--link" tabindex="-1">
+                  <li id="predictive-search-page-{{ forloop.index }}" role="option" aria-selected="false">
+                    <a href="{{ collection.url }}" class="{{ link_styles }}" tabindex="-1">
                       {{ collection.title | highlight: predictive_search.terms }}
                     </a>
                   </li>
@@ -102,13 +99,13 @@
               </ul>
             {%- endif -%}
             {%- if pageList.size > 0 -%}
-              <h2 id="predictive-search-products" class="predictive-search__heading h6">
+              <h2 id="predictive-search-pages" class="{{ header_styles }}">
                 Pages
               </h2>
-              <ul class="predictive-search__results-list list-unstyled" role="listbox" aria-labelledby="predictive-search-products">
+              <ul role="listbox" aria-labelledby="predictive-search-pages">
                 {%- for page in pageList -%}
-                  <li id="predictive-search-page-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
-                    <a href="{{ page.url }}" class="predictive-search__item predictive-search__item--link" tabindex="-1">
+                  <li id="predictive-search-page-{{ forloop.index }}" role="option" aria-selected="false">
+                    <a href="{{ page.url }}" class="{{ link_styles }}" tabindex="-1">
                       {{ page.title | highlight: predictive_search.terms }}
                     </a>
                   </li>
@@ -118,22 +115,41 @@
           </div>
       </div>
     {%- else -%}
-      <div class="predictive-search__no-results">
-        <h4 class="h6">Your search for “{{ predictive_search.terms }}” returned no results.</h4>
-      </div>
-      <div class="predictive-search__row">
-        <div class="predictive-search__column">
-        </div>
-        <div class="predictive-search__column">
+      <div class="mt-4 mb-8">
+        <h2 class="{{ header_styles }} justify-center">
+          <span class="block mr-8">Sorry, your search for <b>“{{ predictive_search.terms }}”</b> returned no results.</span>
+          <svg aria-hidden="true" focusable="false" role="status" class="loading-spinner animate-spin h-5 w-5 text-seaweed-700 -ml-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-1" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </h2>
+        <hr class="border-transparent my-4">
+        {%- if settings.predictive_search_popular_searches.links.size > 0 -%}
+          <div class="py-4">
+            <h5 class="tracking-wide font-book mb-2">Try one of these popular searches:</h5>
+              {%- for link in settings.predictive_search_popular_searches.links -%}
+                <button data-term="{{ link.title | escape }}" class="button-popular-search button button-secondary button-sm lowercase mr-2 mb-2">{{ link.title | escape }}</button>
+              {%- endfor -%}
+          </div>
+        {%- endif -%}
+        <div class="py-4">
+          <h5 class="tracking-wide font-book mb-2">Trending products:</h5>
+          <ul class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 lg:gap-4">
+            {%- for product in collections['bestsellers'].products limit: 10 -%}
+              <li>
+                {% render 'search-card',
+                  url: product.url,
+                  image: product.featured_media,
+                  title: product.title,
+                  description: product.metafields.custom_fields["short_description"],
+                  product: product
+                %}
+              </li>
+            {%- endfor -%}
+          </ul>
         </div>
       </div>
     {%- endif -%}
-
-    <div class="predictive-search__loading-state" aria-hidden="true">
-      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-      </svg>
-    </div>
   </div>
 
   <span class="hidden" data-predictive-search-live-region-count-value>

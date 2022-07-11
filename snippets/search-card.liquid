@@ -1,0 +1,39 @@
+{% comment %}
+    Renders a product/article card for search results. 
+
+    Accepts:
+    - url: {String} Destination of card click (required)
+    - image: {Object} Image Liquid object (optional)
+    - title: {String} First line of text in card (optional)
+    - description: {String} Second line of text in card (optional)
+    - product: {Object} Product Liquid object (optional - include for product type card)
+
+    Usage:
+    {% render 'search-card', product: product %}
+{% endcomment %}
+
+<a href="{{ url }}" class="group flex flex-row md:flex-col rounded-sm bg-white shadow-sm shadow-seafoam-500/50 md:h-full" tabindex="-1">
+  {%- if image != blank -%}
+    <div class="bg-wave-100 shrink-0 flex items-center justify-center rounded-l-sm lg:rounded-t-sm lg:rounded-bl-none overflow-hidden">
+      <img class="w-36 md:w-full md:h-52 {% if product == blank %}object-cover h-full{% else %}object-contain h-36{% endif %}"
+        loading="lazy"
+        srcset="{{ image | image_url: height: 260 }} 1x, {{ image | image_url: height: 520 }} 2x"
+        src="{{ image | image_url: height: 260 }}"
+        alt="{{ image.alt }}"
+        width="260"
+        height="260"
+      />
+    </div>
+  {%- endif -%}
+  <div class="flex flex-col p-4">
+    {%- if title != blank -%}
+      <h3 class="font-sans font-medium tracking-wide leading-tight mb-1">{{ title }}</h3>
+    {%- endif -%}
+    {%- if description != blank -%}
+      <p class="text-sm font-sans leading-tight mb-1">{{ description }}</p>
+    {%- endif -%}
+    {%- if product != blank -%}
+      {% render 'price', product: product, use_variant: true, price_class: 'text-sm text-wave-600' %}
+    {%- endif -%}
+  </div>
+</a>

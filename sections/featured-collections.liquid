@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="{{ 'component-rating.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-rating.css' | asset_url | stylesheet_tag }}</noscript>
+
+<div class="container mx-auto px-6">
+  <tab-controller id="featured-collections-tabs">
+    {%- if section.blocks.size > 1 -%}
+      <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-center mb-4">
+        {%- for block in section.blocks -%}
+          <li
+            role="tab"
+            aria-controls="tab-{{ forloop.index }}"
+            tabindex="0"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            class="button button-sm button-secondary px-3 sm:px-4{% unless forloop.last %} mr-3{% endunless %}{% if forloop.first %} bg-wave-200{% endif %}"
+          >
+            {%- if block.settings.collection_name != blank -%}{{ block.settings.collection_name }}{%- else -%}{{ block.settings.collection.title }}{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      <div id="tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+        <slider-component class="
+          slider 
+          slider-item-reveal 
+          slider-nav-outside-expand 
+          slider-nav-visible 
+          slider-indicators-outside 
+          slider-indicators-dark 
+          slider-indicators-round 
+          slider-item-snapstart
+          [--swiffy-slider-item-reveal:6rem] 
+          xs:[--swiffy-slider-item-reveal:8rem] 
+          [--swiffy-slider-item-count:1] 
+          sm:[--swiffy-slider-item-count:2] 
+          lg:[--swiffy-slider-item-count:3] 
+          xl:[--swiffy-slider-item-count:4] 
+        ">
+          <ul class="slider-container -mr-6 w-[calc(100%+1.5rem)] xs:w-full xs:mr-0" role="list">
+            {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
+              <li>
+                {% render 'product-card',
+                  product_card_product: product,
+                  show_secondary_image_on_hover: true,
+                  show_secondary_image_as_default: false,
+                  button_class: 'sm:px-3 md:px-5 sm:text-sm md',
+                %}
+              </li>
+            {%- else -%}
+              {%- for i in (1..4) -%}
+                <li>
+                  {% render 'product-card-placeholder' %}
+                </li>
+              {%- endfor -%}
+            {%- endfor -%}
+          </ul>
+          {%- if block.settings.collection.all_products_count > 2 and section.settings.products_to_show > 2 -%}
+            <button type="button" class="slider-nav left-2" aria-label="Go to previous">
+              <svg aria-hidden="true" class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+            <button type="button" class="slider-nav slider-nav-next xs:right-2" aria-label="Go to next">
+              <svg aria-hidden="true" class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-l-2 border-r-6 border-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+
+            <ul class="slider-indicators">
+              <li class="active"></li>
+              <li></li>
+              <li></li>
+            </ul>
+          {%- endif -%}
+        </slider-component>
+      </div>
+    {%- endfor -%}
+  </tab-controller>
+</div>
+
+{% schema %}
+{
+  "name": "Featured collections",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 2,
+      "default": 4,
+      "label": "t:sections.featured-collection.settings.products_to_show.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "text",
+          "id": "collection_name",
+          "info": "Override the default collection name.",
+          "label": "Name (optional)"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collections"
+    }
+  ]
+}
+{% endschema %}

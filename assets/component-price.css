@@ -3,9 +3,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  font-size: 1.6rem;
-  line-height: 1.5;
-  color: rgb(var(--color-foreground));
 }
 
 .price.price--unavailable {
@@ -16,10 +13,6 @@
   justify-content: flex-end;
 }
 
-.price .price-item {
-  margin: 0 1rem 0 0;
-}
-
 .price:not(.price--show-badge) .price-item--last:last-of-type {
   margin: 0;
 }
@@ -27,18 +20,6 @@
 @media screen and (min-width: 750px) {
   .price {
     margin-bottom: 0;
-  }
-}
-
-.price--large {
-  font-size: 1.6rem;
-  line-height: calc(1 + 0.5 / var(--font-body-scale));
-  letter-spacing: 0.13rem;
-}
-
-@media screen and (min-width: 750px) {
-  .price--large {
-    font-size: 1.8rem;
   }
 }
 
@@ -67,23 +48,8 @@
   flex-wrap: wrap;
 }
 
-.price--center {
-  display: flex;
-  justify-content: center;
-}
-
 .price--on-sale .price-item--regular {
   text-decoration: line-through;
   color: rgba(var(--color-foreground), 0.75);
   font-size: 1.3rem;
-}
-
-.unit-price {
-  display: block;
-  font-size: 1.1rem;
-  letter-spacing: 0.04rem;
-  line-height: calc(1 + 0.2 / var(--font-body-scale));
-  margin-top: 0.2rem;
-  text-transform: uppercase;
-  color: rgba(var(--color-foreground), 0.7);
 }
