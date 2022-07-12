@@ -3,7 +3,7 @@
     "image_banner": {
       "type": "image-banner",
       "settings": {
-        "image": "shopify://shop_images/800x480_-_OE.jpg",
+        "image": "shopify:\/\/shop_images\/800x480_-_OE.jpg",
         "image_height": "medium",
         "adapt_height_first_image": false,
         "desktop_text_box_position": "flex-end",
@@ -32,7 +32,10 @@
           }
         }
       },
-      "block_order": ["165703204528fb3b00-0", "165703204528fb3b00-1"],
+      "block_order": [
+        "165703204528fb3b00-0",
+        "165703204528fb3b00-1"
+      ],
       "settings": {
         "section_classes": "py-10 px-6 sm:px-4 max-w-xl mx-auto"
       }
@@ -62,54 +65,13 @@
           }
         }
       },
-      "block_order": ["ef36c6b7-d88e-4497-b951-129a5bb04048", "51eaa0a9-2da3-44a2-a6fc-7f4e5872d25f", "22fccd37-1cfc-4508-8e46-a630734697ba"],
+      "block_order": [
+        "ef36c6b7-d88e-4497-b951-129a5bb04048",
+        "51eaa0a9-2da3-44a2-a6fc-7f4e5872d25f",
+        "22fccd37-1cfc-4508-8e46-a630734697ba"
+      ],
       "settings": {
         "products_to_show": 12
-      }
-    },
-    "collage": {
-      "type": "collage",
-      "blocks": {
-        "video": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-            "description": "Describe the video",
-            "image_padding": false
-          }
-        },
-        "product": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "second_image": false,
-            "image_padding": false,
-            "secondary_background": false
-          }
-        },
-        "collection": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "image_padding": false,
-            "color_scheme": "background-1"
-          }
-        }
-      },
-      "block_order": ["video", "product", "collection"],
-      "settings": {
-        "heading": "Multimedia collage",
-        "desktop_layout": "left",
-        "mobile_layout": "collage"
-      }
-    },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "Video",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "description": "",
-        "full_width": false
       }
     },
     "multi_column": {
@@ -119,7 +81,7 @@
           "type": "column",
           "settings": {
             "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -128,7 +90,7 @@
           "type": "column",
           "settings": {
             "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -137,13 +99,17 @@
           "type": "column",
           "settings": {
             "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "link_label": "",
             "link": ""
           }
         }
       },
-      "block_order": ["column1", "column2", "column3"],
+      "block_order": [
+        "column1",
+        "column2",
+        "column3"
+      ],
       "settings": {
         "title": "Multicolumn",
         "image_width": "full",
@@ -156,5 +122,10 @@
       }
     }
   },
-  "order": ["image_banner", "165703204544efb73d", "16570286821ae9514b", "collage", "video", "multi_column"]
+  "order": [
+    "image_banner",
+    "165703204544efb73d",
+    "16570286821ae9514b",
+    "multi_column"
+  ]
 }
