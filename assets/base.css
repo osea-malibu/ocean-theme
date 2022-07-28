@@ -17,6 +17,26 @@
   --color-icon: rgb(var(--color-base-outline-button-labels));
 }
 
+.no-js:not(html) {
+  display: none !important;
+}
+
+html.no-js .no-js:not(html) {
+  display: block !important;
+}
+
+.no-js-inline {
+  display: none !important;
+}
+
+html.no-js .no-js-inline {
+  display: inline-block !important;
+}
+
+html.no-js .no-js-hidden {
+  display: none !important;
+}
+
 .rte-width {
   max-width: 82rem;
   margin: 0 auto 2rem;
@@ -1188,58 +1208,10 @@ input[type="checkbox"] {
 }
 
 /* component-quantity */
-.quantity {
-  border: 0.1rem solid rgba(var(--color-base-text), 0.08);
-  position: relative;
-  height: 4.5rem;
-  width: calc(14rem / var(--font-body-scale));
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .quantity__input {
-  color: currentColor;
-  font-size: 1.4rem;
-  font-weight: 400;
   opacity: 0.85;
   text-align: center;
   background-color: transparent;
-  border: 0;
-  padding: 0 0.5rem;
-  width: 100%;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.quantity__button {
-  width: calc(4.5rem / var(--font-body-scale));
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  font-size: 1.8rem;
-  border: 0;
-  background-color: transparent;
-  cursor: pointer;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  color: rgb(var(--color-foreground));
-  padding: 0;
-}
-
-.quantity__button svg {
-  width: 1rem;
-  pointer-events: none;
 }
 
 .quantity__input:-webkit-autofill,
@@ -1360,21 +1332,6 @@ input[type="checkbox"] {
     overflow: auto;
   }
 }
-.badge {
-  border: 1px solid transparent;
-  border-radius: 4rem;
-  display: inline-block;
-  font-size: 1.2rem;
-  letter-spacing: 0.1rem;
-  line-height: 1;
-  padding: 0.6rem 1.3rem;
-  text-align: center;
-  background-color: rgb(var(--color-badge-background));
-  border-color: rgba(var(--color-badge-border), var(--alpha-badge-border));
-  color: rgb(var(--color-foreground));
-  word-break: break-word;
-}
-
 .gradient {
   background: var(--color-background);
   background: var(--gradient-background);

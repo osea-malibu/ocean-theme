@@ -29,7 +29,7 @@
 @layer components {
   /* Buttons */
   .button {
-    @apply cursor-pointer flex items-center justify-center border px-6 py-2 rounded-sm font-bold tracking-widest uppercase whitespace-nowrap text-center transition-colors motion-reduce:transition-none;
+    @apply cursor-pointer inline-flex items-center justify-center border px-6 py-2 rounded-sm font-bold tracking-widest uppercase whitespace-nowrap text-center transition-colors motion-reduce:transition-none;
   }
   .button-xs {
     @apply px-3 py-0.5 text-xs;
@@ -93,6 +93,16 @@
     @apply ml-3;
   }
 
+  /* Inputs */
+  .input {
+    @apply cursor-text bg-white border border-seaweed-400 rounded-sm px-4 tracking-wide focus:ring-1;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-block px-2 py-1 uppercase font-black tracking-widest bg-coral-600 text-white;
+  }
+
   /* Predictive search */
   predictive-search[open] .predictive-search,
   predictive-search[loading] .predictive-search {
@@ -125,8 +135,7 @@
     --swiffy-slider-item-reveal: 0rem;
     --swiffy-slider-item-count: 1;
     --swiffy-slider-track-opacity: 0.1;
-    --swiffy-slider-nav-outside-size: 3.5rem;
-    --swiffy-slider-indicator-outside-size: 2rem;
+    --swiffy-slider-indicator-outside-size: theme(spacing.8);
     --swiffy-slider-animation-duration: 0.75s;
     --swiffy-slider-animation-delay: 0s;
     --swiffy-slider-animation-timing: ease-in-out;
@@ -178,7 +187,10 @@
     @apply scroll-auto;
   }
   .slider-indicators {
-    @apply absolute right-8 bottom-0 left-8 flex justify-center p-0 mb-4 list-none;
+    @apply absolute invisible right-8 bottom-0 left-8 flex justify-center p-0 mb-4 list-none;
+  }
+  .slider-indicators-visible .slider-indicators {
+    @apply visible;
   }
   .slider-nav-scrollbar .slider-indicators {
     margin-bottom: calc(1rem + var(--swiffy-slider-track-height));
@@ -224,12 +236,6 @@
   }
   .slider.slider-nav-autohide.slider-item-last-visible .slider-nav.slider-nav-next {
     @apply invisible;
-  }
-  .slider-nav-outside .slider-container {
-    margin: 0 var(--swiffy-slider-nav-outside-size);
-  }
-  .slider-nav-outside .slider-nav {
-    @apply p-0;
   }
   .slider .slider-nav:hover {
     @apply opacity-100;
@@ -327,29 +333,9 @@
       transform: none;
     }
   }
-  @media (min-width: 62rem) {
-    .slider-nav-outside-expand .slider-nav {
-      margin-left: -4rem;
-    }
-    .slider-nav-outside-expand .slider-nav.slider-nav-next {
-      margin-right: -4rem;
-    }
-  }
   @media (max-width: 62rem) {
     .slider {
       --swiffy-slider-track-height: 0rem;
-      --swiffy-slider-item-reveal: 0rem;
-      --swiffy-slider-item-count: 1;
-    }
-    .slider-nav-outside .slider-container,
-    .slider-nav-outside-expand .slider-container {
-      margin: 0 2rem;
-    }
-    .slider-nav-outside-expand .slider-container {
-      margin: 0 var(--swiffy-slider-nav-outside-size);
-    }
-    .slider-nav-outside-expand .slider-nav {
-      padding: 0;
     }
     .slider-indicators {
       margin-bottom: 0.5rem;
@@ -365,10 +351,6 @@
     .slider.slider-nav-touch .slider-nav {
       visibility: visible;
     }
-    .slider:not(.slider-nav-touch).slider-nav-outside .slider-container,
-    .slider:not(.slider-nav-touch).slider-nav-outside-expand .slider-container {
-      margin: 0 0;
-    }
     .slider-item-nosnap-touch {
       --swiffy-slider-snap-align: unset;
     }
@@ -379,5 +361,12 @@
   /* Text highlight (used in search results) */
   strong.highlight {
     @apply font-regular bg-seafoam-300;
+  }
+
+  .icon-list-check {
+    @apply pl-6;
+  }
+  .icon-list-check li {
+    @apply before:content-['\2713'] before:inline-block before:mr-2 before:-ml-6 before:w-4;
   }
 }

@@ -4,7 +4,9 @@
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
 
-<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+{%- unless settings.cart_type == 'drawer' -%}
+  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+{%- endunless -%}
 
 <cart-items class="page-width{% if cart == empty %} is-empty{% endif %}">
   <div class="title-wrapper-with-link">
@@ -58,7 +60,7 @@
                   </td>
 
                   <td class="cart-item__details">
-                    {%- if section.settings.show_vendor -%}
+                    {%- if settings.show_vendor -%}
                       <p class="caption-with-letter-spacing light">{{ item.product.vendor }}</p>
                     {%- endif -%}
 
@@ -279,14 +281,6 @@
 
 {% schema %}
 {
-  "name": "t:sections.main-cart-items.name",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "default": false,
-      "label": "t:sections.main-cart-items.settings.show_vendor.label"
-    }
-  ]
+  "name": "t:sections.main-cart-items.name"
 }
 {% endschema %}

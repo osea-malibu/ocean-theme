@@ -1,20 +1,29 @@
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="{{ 'component-loading-overlay.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- if settings.cart_type == "drawer" -%}
+  {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
+  {{ 'component-cart.css' | asset_url | stylesheet_tag }}
+  {{ 'component-totals.css' | asset_url | stylesheet_tag }}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+  {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 
 <noscript>{{ 'component-search.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
-<noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
 
 <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+{%- if settings.cart_type == "drawer" -%}
+  <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 <header class="header container mx-auto relative">
   <div class="px-6 py-2 flex items-center justify-between">
@@ -166,7 +175,7 @@
       {%- endif -%}
 
       {% comment %} Predictive search {% endcomment %}
-      <details-modal class="header__search w-10 h-10 flex justify-center items-center">
+      <details-modal class="header__search flex justify-center items-center">
         <details>
           <summary class="header__icon header__icon--search cursor-pointer modal__toggle{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3 lg:w-10 lg:h-10{% endunless %}" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
             <span class="flex items-center justify-center h-full">
@@ -328,12 +337,34 @@
 
       {% comment %} Cart menu {% endcomment %}
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble">
-        <span class="hidden">{{ 'templates.cart.cart' | t }}</span>
+        <span class="hidden">Cart</span>
         <div class="w-8 h-8 bg-seafoam-300 rounded-full flex justify-center items-center">
           <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
           <span class="hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
         </div>
       </a>
+
+      {% comment %} <header-drawer>
+        <details id="Details-menu-drawer-container" class="menu-drawer-container">
+          <summary class="header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" aria-label="{{ 'sections.header.menu' | t }}" id="cart-icon-bubble">
+            <span class="hidden">{{ 'templates.cart.cart' | t }}</span>
+            <div class="cart-count-bubble w-8 h-8 bg-seafoam-300 rounded-full flex justify-center items-center">
+              <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
+              <span class="hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+            </div>
+          </summary>
+          <div id="menu-scrim" class="block fixed inset-0 bg-seaweed-800/50 opacity-0 z-10 transition-opacity"></div>
+          <div id="menu-drawer" class="menu-drawer motion-reduce fixed invisible z-20 right-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 translate-x-full bg-white top-0 overyflow-y-auto" tabindex="-1">
+            <button aria-label="Close cart menu" id="menu-close" class="text-seaweed-700 h-16 w-16 flex items-center justify-center absolute top-0 right-0">
+              <svg aria-hidden="true" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            {% render 'mini-cart' %}
+          </div>
+        </details>
+      </header-drawer> {% endcomment %}
     </div>
   </div>
 </header>
@@ -351,7 +382,9 @@
   </nav>
 {%- endif -%}
 
-{%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
+{%- if settings.cart_type == "notification" -%}
+  {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
+{%- endif -%}
 
 <script type="application/ld+json">
   {
@@ -397,7 +430,7 @@
 {% schema %}
 {
   "name": "t:sections.header.name",
-  "class": "inset-x-0 fixed top-8 z-10 bg-white transition-shadow",
+  "class": "inset-x-0 fixed top-8 z-40 bg-white transition-shadow",
   "settings": [
     {
       "type": "image_picker",

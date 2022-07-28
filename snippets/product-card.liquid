@@ -4,67 +4,115 @@
     Accepts:
     - product_card_product: {Object} Product Liquid object (optional)
     - show_secondary_image_on_hover: {Boolean} Show the secondary image on hover. Default: false (optional)
-    - show_secondary_image_as_default: {Boolean} Make the secondary image appear first. Default: false (optional)
+    - custom_default_image: {Boolean} Make the secondary image appear first. Default: false (optional)
     - variant_picker_type: {'button' or 'dropdown'} Display mode of variant options, default: 'button' (optional)
     - button_class: {String} Tailwind styling classes (optional)
     - price_class: {String} Tailwind styling classes (optional)
+    - hide_badge: {Boolean}
+    - subscription: {Boolean}
 
     Usage:
     {% render 'product-card', product_card_product: section.settings.product %}
 {% endcomment %}
 
+{% comment %} <script>console.log('product:', {{ product_card_product.selling_plan_groups | json }});</script> {% endcomment %}
+
 <div class="flex flex-col relative grow h-full">
   <div class="w-full order-1 grow flex flex-col">
-    <a href="{{ product_card_product.url | default: '#' }}" class="flex justify-between items-start">
-      <h3 class="text-lg font-medium leading-5 {% if product_card_product.title.size == 25 %}tracking-normal{% else %}tracking-wide{% endif %}">
-        {{ product_card_product.title | escape }}
-      </h3>
+    <a href="{{ product_card_product.url | default: '#' }}" class="group">
+      <div class="flex justify-between items-start">
+        <h3 class="text-lg font-medium leading-5 group-hover:underline underline-offset-1 decoration-1 tracking-wide{% if product_card_product.handle == 'undaria-algae-body-butter' %} xs:tracking-normal sm:tracking-wide{% endif %}">
+          {{ product_card_product.title | escape }}
+        </h3>
 
-      {%- if product_card_product.metafields.reviews.rating.value != blank -%}
-        {% liquid
-          assign rating_value = product_card_product.metafields.reviews.rating.value | slice: 0, 4
-          assign full_stars = rating_value | floor
-          assign partial_stars = rating_value | modulo: 1 | times: 100
-          assign empty_stars = 5 | minus: full_stars | minus: 1
-        %}
-        <div class="flex items-center ml-0.5 h-5" role="img" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: rating_value, rating_max: product_card_product.metafields.reviews.rating.value.scale_max }}">
-          {%- for full_star in (1..full_stars) -%}
-            <svg aria-hidden="true" class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-          {%- endfor -%}
-          {%- if full_stars < 5 -%}
-            <svg class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-              <defs>
-                <linearGradient id="grad-{{ product_card_product.id }}">
-                  <stop offset="{{ partial_stars }}%" stop-color="#1D4D41"/>
-                  <stop offset="{{ partial_stars }}%" stop-color="#F1F5F4"/>
-                </linearGradient>
-              </defs>
-              <polygon fill="url(#grad-{{ product_card_product.id }})" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-          {%- endif -%}
-          {%- for full_star in (1..empty_stars) -%}
-            <svg class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="#F1F5F4" stroke="currentColor" stroke-width="2">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-          {%- endfor -%}
-          <p class="text-xs ml-0.5">
-            <span aria-hidden="true">{{ product_card_product.metafields.reviews.rating_count }}</span>
-            <span class="hidden">{{ product_card_product.metafields.reviews.rating_count }} {{ "accessibility.total_reviews" | t }}</span>
-          </p>
-        </div>
-      {%- endif -%}
+        {%- if product_card_product.metafields.reviews.rating.value != blank -%}
+          {% liquid
+            assign rating_value = product_card_product.metafields.reviews.rating.value | slice: 0, 4
+            assign full_stars = rating_value | floor
+            assign partial_stars = rating_value | modulo: 1 | times: 100
+            assign empty_stars = 5 | minus: full_stars | minus: 1
+          %}
+          <div class="flex items-center ml-0.5 h-5" role="img" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: rating_value, rating_max: product_card_product.metafields.reviews.rating.value.scale_max }}">
+            {%- for full_star in (1..full_stars) -%}
+              <svg aria-hidden="true" class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            {%- endfor -%}
+            {%- if full_stars < 5 -%}
+              <svg class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                <defs>
+                  <linearGradient id="grad-{{ product_card_product.id }}">
+                    <stop offset="{{ partial_stars }}%" stop-color="#1D4D41"/>
+                    <stop offset="{{ partial_stars }}%" stop-color="#F1F5F4"/>
+                  </linearGradient>
+                </defs>
+                <polygon fill="url(#grad-{{ product_card_product.id }})" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            {%- endif -%}
+            {%- for full_star in (1..empty_stars) -%}
+              <svg class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="#F1F5F4" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            {%- endfor -%}
+            <p class="text-xs ml-0.5{% if product_card_product.handle == 'undaria-algae-body-butter' %} 2xs:hidden xs:flex{% endif %}">
+              <span aria-hidden="true">{{ product_card_product.metafields.reviews.rating_count }}</span>
+              <span class="hidden">{{ product_card_product.metafields.reviews.rating_count }} {{ "accessibility.total_reviews" | t }}</span>
+            </p>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <p class="text-sm group-hover:underline underline-offset-1 decoration-1 tracking-wide{% if product_card_product.handle == 'undaria-algae-oil' %} tracking-normal{% endif %} leading-tight">
+        {%- if product_card_product.metafields.custom_fields.short_description == 'Daily moisturizer that creates a hydrating barrier' -%}
+          Daily moisturizer for a hydrating barrier
+        {%- else -%}
+          {{ product_card_product.metafields.custom_fields.short_description | escape }}
+        {%- endif -%}
+      </p>
     </a>
-
-    <p class="text-sm tracking-wide{% if product_card_product.metafields.custom_fields.short_description.size == 50 %} tracking-normal{% endif %} leading-tight">{{ product_card_product.metafields.custom_fields.short_description | escape }}</p>
 
     <div class="mt-auto">
       {%- liquid
         assign random_number = "now" | date: "%N"
         assign product_form_id = 'product-form-' | append: product_card_product.id | append: '-' | append: random_number
+        assign options = '' | split: ''
+
+        if subscription and product_card_product.selling_plan_groups.size > 0
+          assign options = product_card_product.selling_plan_groups[0].selling_plans
+        elsif product_card_product.has_only_default_variant == false
+          assign options = product_card_product.options_with_values
+        endif
       -%}
-      {%- unless product_card_product.has_only_default_variant -%}
+      {% comment %} <script>console.log('options', {{ options | json }});</script> {% endcomment %}
+      {%- if subscription and product_card_product.selling_plan_groups.size > 0 -%}
+        <variant-radios
+          class="no-js-hidden block mt-1"
+          data-section="{{ product_card_product.id }}-{{ random_number }}"
+          data-url="{{ product_card_product.url }}"
+        >
+          <fieldset class="js flex">
+            <legend class="hidden">{{ option.name }}</legend>
+            {%- for value in product_card_product.selling_plan_groups[0].selling_plans -%}
+              <div class="flex-grow{% unless forloop.last %} mr-2{% endunless %}">
+                <input type="radio"
+                  id="{{ product_card_product.id }}-{{ forloop.index0 }}-{{ random_number }}"
+                  class="peer hidden"
+                  name="{{ option.name }}"
+                  value="{{ value | escape }}"
+                  form="{{ product_form_id }}"
+                  {% if option.selected_value == value %}checked{% endif %}
+                >
+                <label
+                  class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-wide w-full"
+                  for="{{ product_card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ random_number }}"
+                  tabindex="0"
+                >
+                  {{ value.name | replace: 'Delivery every ', '' }}
+              </div>
+            {%- endfor -%}
+          </fieldset>
+        </variant-radios>
+      {%- elsif product_card_product.has_only_default_variant == false -%}
         {%- if variant_picker_type == 'dropdown' -%}
           <variant-selects class="no-js-hidden block mt-2" data-section="{{ product_card_product.id }}-{{ random_number }}" data-url="{{ product_card_product.url }}" {{ block.shopify_attributes }}>
             {%- for option in product.options_with_values -%}
@@ -94,7 +142,11 @@
             </script>
           </variant-selects>
         {%- else -%}
-          <variant-radios class="no-js-hidden block mt-2" data-section="{{ product_card_product.id }}-{{ random_number }}" data-url="{{ product_card_product.url }}">
+          <variant-radios
+            class="no-js-hidden block mt-1"
+            data-section="{{ product_card_product.id }}-{{ random_number }}"
+            data-url="{{ product_card_product.url }}"
+          >
             {%- for option in product_card_product.options_with_values -%}
               <fieldset class="js flex">
                 <legend class="hidden">{{ option.name }}</legend>
@@ -111,6 +163,7 @@
                     <label
                       class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2"
                       for="{{ product_card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ random_number }}"
+                      tabindex="0"
                     >
                       {{ value }}
                     </label>
@@ -118,14 +171,11 @@
                 {%- endfor -%}
               </fieldset>
             {%- endfor -%}
-            <script type="application/json">
-              {{ product_card_product.variants | json }}
-            </script>
           </variant-radios>
         {%- endif -%}
-      {%- endunless -%}
+      {%- endif -%}
 
-      <product-form>
+      <product-form data-cart-type="{{ settings.cart_type }}">
         <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
           <svg aria-hidden="true" focusable="false" role="presentation" class="w-4 h-4 mr-1 text-coral-800" viewBox="0 0 13 13">
             <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
@@ -141,13 +191,22 @@
           <button
             type="submit"
             name="add"
-            class="button button-tertiary w-full transition flex justify-between mt-2 {{ button_class }}"
-          {% if product_card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+            class="button button-tertiary border border-seaweed-400 w-full transition flex justify-between mt-2 {{ button_class }}"
+            {% if product_card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
           >
             {%- if product_card_product.selected_or_first_available_variant.available -%}
-              <span>{{ 'products.product.add_to_cart' | t }}</span>
+              {%- if subscription -%}
+                <span>Subscribe</span>
+              {%- else -%}
+                <span>{{ 'products.product.add_to_cart' | t }}</span>
+              {%- endif -%}
               <span id="price-{{ product_card_product.id }}-{{ random_number }}" class="{{ price_class }}">
-                {% render 'price', product: product_card_product, show_price_range: true, use_variant: true %}
+                {% render 'price',
+                  product: product_card_product,
+                  show_price_range: true,
+                  use_variant: true,
+                  subscription: true
+                %}
               </span>
             {%- else -%}
               {{ 'products.product.sold_out' | t }}
@@ -160,25 +219,33 @@
 
   <div class="relative block overflow-hidden no-underline" tabindex="-1">
     {%- if product_card_product.featured_media -%}
-      <a href="{{ product_card_product.url | default: '#' }}" class="group block bg-wave-100 mb-2">
-        {%- if show_secondary_image_as_default == false -%}
-          <img
-            srcset="{%- if product_card_product.featured_media.width >= 165 -%}{{ product_card_product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
-              {%- if product_card_product.featured_media.width >= 360 -%}{{ product_card_product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
-              {%- if product_card_product.featured_media.width >= 533 -%}{{ product_card_product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
-              {%- if product_card_product.featured_media.width >= 720 -%}{{ product_card_product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
-              {%- if product_card_product.featured_media.width >= 940 -%}{{ product_card_product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
-              {%- if product_card_product.featured_media.width >= 1066 -%}{{ product_card_product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
-              {{ product_card_product.featured_media | image_url: width: 5760 }} {{ product_card_product.featured_media.width }}w"
-            src="{{ product_card_product.featured_media | image_url: width: 533 }}"
-            sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
-            alt="{{ product_card_product.featured_media.alt | escape }}"
-            loading="lazy"
-            width="{{ product_card_product.featured_media.width }}"
-            height="{{ product_card_product.featured_media.height }}"
-          >
+      <a
+        aria-label="{{ product_card_product.title | escape }}"
+        href="{{ product_card_product.url | default: '#' }}"
+        class="group block bg-wave-100 mb-2"
+        tabindex="-1"
+      >
+        {%- if custom_default_image != nil -%}
+          {% assign default_image = custom_default_image %}
+        {%- else -%}
+          {% assign default_image = product_card_product.featured_media %}
         {%- endif -%}
-        {%- if product_card_product.media[1] != nil and show_secondary_image_on_hover or show_secondary_image_as_default -%}
+        <img
+          srcset="{%- if default_image.width >= 165 -%}{{ default_image | image_url: width: 165 }} 165w,{%- endif -%}
+            {%- if default_image.width >= 360 -%}{{ default_image | image_url: width: 360 }} 360w,{%- endif -%}
+            {%- if default_image.width >= 533 -%}{{ default_image | image_url: width: 533 }} 533w,{%- endif -%}
+            {%- if default_image.width >= 720 -%}{{ default_image | image_url: width: 720 }} 720w,{%- endif -%}
+            {%- if default_image.width >= 940 -%}{{ default_image | image_url: width: 940 }} 940w,{%- endif -%}
+            {%- if default_image.width >= 1066 -%}{{ default_image | image_url: width: 1066 }} 1066w,{%- endif -%}
+            {{ default_image | image_url: width: 5760 }} {{ default_image.width }}w"
+          src="{{ default_image | image_url: width: 533 }}"
+          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+          alt="{{ default_image.alt | escape }}"
+          loading="lazy"
+          width="{{ default_image.width }}"
+          height="{{ default_image.height }}"
+        >
+        {%- if product_card_product.media[1] != nil and show_secondary_image_on_hover -%}
           <img
             srcset="{%- if product_card_product.media[1].width >= 165 -%}{{ product_card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
               {%- if product_card_product.media[1].width >= 360 -%}{{ product_card_product.media[1] | image_url: width: 360 }} 360w,{%- endif -%}
@@ -205,6 +272,6 @@
       </h2>
     {%- endif -%}
 
-    {% render 'product-badge', product: product_card_product %}
+    {% if hide_badge != true %}{% render 'product-badge', product: product_card_product %}{% endif %}
   </div>
 </div>

@@ -2,7 +2,7 @@
 
 <noscript>{{ 'component-rating.css' | asset_url | stylesheet_tag }}</noscript>
 
-<div class="container mx-auto px-6">
+<div class="container mx-auto px-6 {{ section.settings.wrapper_classes }}">
   <tab-controller id="featured-collections-tabs">
     {%- if section.blocks.size > 1 -%}
       <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-center mb-4">
@@ -12,7 +12,7 @@
             aria-controls="tab-{{ forloop.index }}"
             tabindex="0"
             aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-            class="button button-sm button-secondary px-3 sm:px-4{% unless forloop.last %} mr-3{% endunless %}{% if forloop.first %} bg-wave-200{% endif %}"
+            class="button button-sm button-secondary px-3 sm:px-4{% unless forloop.last %} mr-2 xs:mr-3{% endunless %}{% if forloop.first %} bg-wave-200{% endif %}"
           >
             {%- if block.settings.collection_name != blank -%}{{ block.settings.collection_name }}{%- else -%}{{ block.settings.collection.title }}{%- endif -%}
           </li>
@@ -25,13 +25,13 @@
         <slider-component class="
           slider 
           slider-item-reveal 
-          slider-nav-outside-expand 
           slider-nav-visible 
+          slider-indicators-visible 
           slider-indicators-outside 
           slider-indicators-dark 
           slider-indicators-round 
           slider-item-snapstart
-          [--swiffy-slider-item-reveal:6rem] 
+          [--swiffy-slider-item-reveal:5rem] 
           xs:[--swiffy-slider-item-reveal:8rem] 
           [--swiffy-slider-item-count:1] 
           sm:[--swiffy-slider-item-count:2] 
@@ -44,7 +44,6 @@
                 {% render 'product-card',
                   product_card_product: product,
                   show_secondary_image_on_hover: true,
-                  show_secondary_image_as_default: false,
                   button_class: 'sm:px-3 md:px-5 sm:text-sm md',
                 %}
               </li>
@@ -57,7 +56,7 @@
             {%- endfor -%}
           </ul>
           {%- if block.settings.collection.all_products_count > 2 and section.settings.products_to_show > 2 -%}
-            <button type="button" class="slider-nav left-2" aria-label="Go to previous">
+            <button type="button" class="slider-nav" aria-label="Go to previous">
               <svg aria-hidden="true" class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
@@ -68,11 +67,11 @@
               </svg>
             </button>
 
-            <ul class="slider-indicators">
+            <ol class="slider-indicators">
               <li class="active"></li>
               <li></li>
               <li></li>
-            </ul>
+            </ol>
           {%- endif -%}
         </slider-component>
       </div>
@@ -93,6 +92,11 @@
       "step": 2,
       "default": 4,
       "label": "t:sections.featured-collection.settings.products_to_show.label"
+    },
+    {
+      "type": "textarea",
+      "id": "wrapper_classes",
+      "label": "Wrapper classes"
     }
   ],
   "blocks": [

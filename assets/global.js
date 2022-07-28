@@ -293,8 +293,12 @@ class MenuDrawer extends HTMLElement {
 
   bindEvents() {
     this.querySelectorAll("summary").forEach((summary) => summary.addEventListener("click", this.onSummaryClick.bind(this)));
-    this.querySelectorAll("button").forEach((button) => button.addEventListener("click", this.onCloseButtonClick.bind(this)));
-    document.getElementById("menu-scrim").addEventListener("click", this.onCloseButtonClick.bind(this));
+    this.querySelector("#menu-scrim").addEventListener("click", this.onSummaryClick.bind(this));
+    // TODO: this closes menu when any action is taken
+    //this.querySelectorAll("button").forEach((button) => button.addEventListener("click", this.onCloseButtonClick.bind(this)));
+
+    const closeButton = this.querySelector("#menu-close");
+    closeButton && closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
   }
 
   onKeyUp(event) {
@@ -335,7 +339,7 @@ class MenuDrawer extends HTMLElement {
     });
     summaryElement.setAttribute("aria-expanded", true);
     trapFocus(this.mainDetailsToggle, summaryElement);
-    document.body.classList.add(`overflow-hidden-${this.dataset.breakpoint}`);
+    document.body.classList.add("overflow-hidden");
   }
 
   closeMenuDrawer(event, elementToFocus = false) {
@@ -345,7 +349,7 @@ class MenuDrawer extends HTMLElement {
         details.removeAttribute("open");
         details.classList.remove("menu-opening");
       });
-      document.body.classList.remove(`overflow-hidden-${this.dataset.breakpoint}`);
+      document.body.classList.remove("overflow-hidden");
       removeTrapFocus(elementToFocus);
       this.closeAnimation(this.mainDetailsToggle);
     }
@@ -410,7 +414,8 @@ class HeaderDrawer extends MenuDrawer {
 
     summaryElement.setAttribute("aria-expanded", true);
     trapFocus(this.mainDetailsToggle, summaryElement);
-    document.body.classList.add(`overflow-hidden-${this.dataset.breakpoint}`);
+    // TODO: replace with tailwind class
+    document.body.classList.add("overflow-hidden");
   }
 }
 
@@ -803,6 +808,10 @@ class SliderComponent extends HTMLElement {
     for (let navElement of sliderElement.querySelectorAll(".slider-nav")) {
       let next = navElement.classList.contains("slider-nav-next");
       navElement.addEventListener("click", () => this.slide(sliderElement, next), { passive: true });
+
+      if (this.classList.contains("slider-nav-hide-ends")) {
+        sliderElement.querySelector(".slider-nav-prev").classList.add("hidden");
+      }
     }
     for (let indicatorElement of sliderElement.querySelectorAll(".slider-indicators")) {
       indicatorElement.addEventListener("click", () => this.slideToByIndicator());
@@ -861,6 +870,14 @@ class SliderComponent extends HTMLElement {
       left: scrollLeftPosition,
       behavior: nodelay ? "auto" : "smooth",
     });
+
+    if (this.classList.contains("slider-nav-hide-ends")) {
+      if (scrollLeftPosition === 0) {
+        sliderElement.querySelector(".slider-nav-prev").classList.add("hidden");
+      } else {
+        sliderElement.querySelector(".slider-nav-prev").classList.remove("hidden");
+      }
+    }
   }
 
   slideToByIndicator() {
