@@ -65,7 +65,8 @@ class CartItems extends HTMLElement {
     console.log("target", target);
     this.enableLoading(line);
 
-    const selling_plan = target.checked ? target.dataset["default-plan"] : null;
+    const selling_plan = target.checked ? target.dataset.default : null;
+    console.log("selling_plan", selling_plan);
 
     console.log("getSectionsToRender", this.getSectionsToRender());
 
