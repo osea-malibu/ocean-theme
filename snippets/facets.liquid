@@ -173,7 +173,7 @@
                   <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
                     <span class="active-facets__button-inner button">
                       {{ value.label | escape }}
-                      {% render 'icon-close-small' %}
+                      {% render 'icon-close' %}
                       <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
                     </span>
                   </a>
@@ -185,7 +185,7 @@
                     <a href="{{ filter.url_to_remove }}" class="active-facets__button active-facets__button--light">
                       <span class="active-facets__button-inner button">
                         {%- if filter.min_value.value -%}{{ filter.min_value.value | money }}{%- else -%}{{ 0 | money }}{%- endif -%}-{%- if filter.max_value.value -%}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{%- endif -%}
-                        {% render 'icon-close-small' %}
+                        {% render 'icon-close' %}
                         <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
                       </span>
                     </a>
@@ -460,7 +460,7 @@
           <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
             <span class="active-facets__button-inner button">
               {{ value.label | escape }}
-              {% render 'icon-close-small' %}
+              {% render 'icon-close' %}
               <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
             </span>
           </a>
@@ -473,7 +473,7 @@
             <a href="{{ filter.url_to_remove }}" class="active-facets__button active-facets__button--light">
               <span class="active-facets__button-inner button">
                 {%- if filter.min_value.value -%}{{ filter.min_value.value | money }}{%- else -%}{{ 0 | money }}{%- endif -%}-{%- if filter.max_value.value -%}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{%- endif -%}
-                {% render 'icon-close-small' %}
+                {% render 'icon-close' %}
                 <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
               </span>
             </a>

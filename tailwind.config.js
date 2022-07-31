@@ -1,7 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  content: ["./layout/*.liquid", "./templates/*.liquid", "./sections/*.liquid", "./snippets/*.liquid", "./assets/global.js"],
+  content: ["./layout/*.liquid", "./templates/*.liquid", "./sections/*.liquid", "./snippets/*.liquid", "./assets/*.js"],
   safelist: [
     "[--swiffy-slider-item-reveal:12rem]",
     "bg-[#ffb545]",

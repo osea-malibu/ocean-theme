@@ -375,6 +375,41 @@
         "id": "cart_drawer_collection",
         "label": "Collection",
         "info": "Visible when cart drawer is empty"
+      },
+      {
+        "type": "header",
+        "content": "Free shipping countdown"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_shipping_countdown",
+        "label": "Enable free shipping countdown",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "shipping_countdown_threshold",
+        "info": "Cart total required to qualify for free shipping",
+        "label": "Qualification threshold",
+        "default": 50
+      },
+      {
+        "type": "text",
+        "id": "shipping_countdown_text_left",
+        "label": "Countdown message, before dollar amount",
+        "default": "You are"
+      },
+      {
+        "type": "text",
+        "id": "shipping_countdown_text_right",
+        "label": "Countdown message, after dollar amount",
+        "default": "away from free shipping!"
+      },
+      {
+        "type": "text",
+        "id": "shipping_countdown_text_success",
+        "label": "Success message",
+        "default": "Congrats! You get free shipping."
       }
     ]
   }

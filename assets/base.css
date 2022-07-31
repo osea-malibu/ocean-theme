@@ -1135,12 +1135,6 @@ deferred-media {
   resize: vertical;
 }
 
-input[type="checkbox"] {
-  display: inline-block;
-  width: auto;
-  margin-right: 0.5rem;
-}
-
 /* Form global */
 .form__label {
   display: block;
@@ -1336,15 +1330,4 @@ input[type="checkbox"] {
   background: var(--color-background);
   background: var(--gradient-background);
   background-attachment: fixed;
-}
-
-@media screen and (forced-colors: active) {
-  .icon {
-    color: CanvasText;
-    fill: CanvasText !important;
-  }
-
-  .icon-close-small path {
-    stroke: CanvasText;
-  }
 }

@@ -97,6 +97,27 @@
   .input {
     @apply cursor-text bg-white border border-seaweed-400 rounded-sm px-4 tracking-wide focus:ring-1;
   }
+  .input-xs {
+    @apply px-3 py-0.5 text-xs;
+  }
+  .input-sm {
+    @apply px-4 py-1 text-sm;
+  }
+  .input-lg {
+    @apply px-7 py-3 text-lg;
+  }
+  .input-xl {
+    @apply px-8 py-4 text-xl;
+  }
+  select.input-sm {
+    @apply cursor-pointer pr-5 bg-[right_0.25rem_center];
+  }
+  [type="checkbox"] {
+    @apply cursor-pointer p-0;
+  }
+  [type="checkbox"]:checked {
+    @apply bg-seaweed-700;
+  }
 
   /* Badge */
   .badge {

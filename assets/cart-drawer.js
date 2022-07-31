@@ -2,9 +2,13 @@ class CartDrawer extends HTMLElement {
   constructor() {
     super();
 
+    this.overlay = this.querySelector("#CartDrawer-Overlay");
+    this.drawer = this.querySelector(".drawer__inner");
+
     this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
-    this.querySelector("#CartDrawer-Overlay").addEventListener("click", this.close.bind(this));
+    this.overlay.addEventListener("click", this.close.bind(this));
     this.setHeaderCartIconAccessibility();
+    this.open();
   }
 
   setHeaderCartIconAccessibility() {
@@ -29,14 +33,17 @@ class CartDrawer extends HTMLElement {
     if (cartDrawerNote && !cartDrawerNote.hasAttribute("role")) this.setSummaryAccessibility(cartDrawerNote);
     // here the animation doesn't seem to always get triggered. A timeout seem to help
     setTimeout(() => {
-      this.classList.add("animate", "active");
+      this.classList.remove("invisible");
+      this.classList.add("visible");
+      this.overlay.classList.add("opacity-100");
+      this.drawer.classList.add("translate-x-0");
     });
 
     this.addEventListener(
       "transitionend",
       () => {
         const containerToTrapFocusOn = this.classList.contains("is-empty") ? this.querySelector(".drawer__inner-empty") : document.getElementById("CartDrawer");
-        const focusElement = this.querySelector(".drawer__inner") || this.querySelector(".drawer__close");
+        const focusElement = this.drawer || this.querySelector(".drawer__close");
         trapFocus(containerToTrapFocusOn, focusElement);
       },
       { once: true }
@@ -46,7 +53,11 @@ class CartDrawer extends HTMLElement {
   }
 
   close() {
-    this.classList.remove("active");
+    this.classList.add("invisible");
+    this.classList.remove("visible");
+    this.overlay.classList.remove("opacity-100");
+    this.drawer.classList.remove("translate-x-0");
+
     removeTrapFocus(this.activeElement);
     document.body.classList.remove("overflow-hidden");
   }
@@ -67,20 +78,29 @@ class CartDrawer extends HTMLElement {
   }
 
   renderContents(parsedState) {
-    this.querySelector(".drawer__inner").classList.contains("is-empty") && this.querySelector(".drawer__inner").classList.remove("is-empty");
+    this.drawer.classList.contains("is-empty") && this.drawer.classList.remove("is-empty");
     this.productId = parsedState.id;
-    console.log("parsedState", parsedState);
-    // added to correct sections returning null in dev environment bug
+    // BUG WORKAROUND FOR SHOPIFY CLI
+    // cart/add does not return sections via dev server
+    // if sections are null, fall back on Section Rendering API
+    // https://github.com/Shopify/shopify-cli/issues/1797
     if (!parsedState.sections) {
-      console.log("await url", `${routes.cart_url}?sections=${this.getSectionsToRender().map((section) => section.id)}`);
-      //const sections = await fetch(`${routes.cart_url}?sections=${this.getSectionsToRender().map(section => section.id)}`);
-      //parsedState.sections = await sections.json();
-    }
+      fetch(`${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map((section) => section.id)}`)
+        .then((response) => response.json())
+        .then((response) => {
+          parsedState.sections = response;
 
-    this.getSectionsToRender().forEach((section) => {
-      const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
-      sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
-    });
+          this.getSectionsToRender().forEach((section) => {
+            const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
+            sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+          });
+        });
+    } else {
+      this.getSectionsToRender().forEach((section) => {
+        const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
+        sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+      });
+    }
 
     setTimeout(() => {
       this.querySelector("#CartDrawer-Overlay").addEventListener("click", this.close.bind(this));
@@ -128,6 +148,11 @@ class CartDrawerItems extends CartItems {
         section: "cart-icon-bubble",
         selector: ".shopify-section",
       },
+      /* {
+        id: "cart-subscribe",
+        section: "cart-subscribe",
+        selector: "cart-subscribe",
+      }, */
     ];
   }
 }

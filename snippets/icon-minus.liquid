@@ -1,3 +1,13 @@
-<svg class="{{ classes }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+{% comment %}
+    Accepts:
+    - classes: {String} sting of TailwindCSS classnames
+    - stroke_width: {Number} SVG stroke line thickness. Default: 1 (optional)
+    - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
+
+    Usage:
+    {% render 'icon-minus', classes: 'w-10 h-10 text-seaweed-700' %}
+{% endcomment %}
+
+<svg {% if aria_hidden %}aria-hidden="true"{% endif %} class="{{ classes }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
   <line x1="5" y1="12" x2="19" y2="12" />
 </svg>

@@ -1,10 +1,13 @@
 class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
-    this.addEventListener("click", (event) => {
+
+    this.button = this.querySelector("button");
+
+    this.button.addEventListener("click", (event) => {
       event.preventDefault();
       const cartItems = this.closest("cart-items") || this.closest("cart-drawer-items");
-      cartItems.updateQuantity(this.dataset.index, 0);
+      cartItems.updateQuantity(this.dataset.index, 0, event.target.name);
     });
   }
 }
@@ -27,7 +30,7 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.updateQuantity(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"));
+    this.updateQuantity(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"), event.target.checked);
   }
 
   getSectionsToRender() {
@@ -55,15 +58,25 @@ class CartItems extends HTMLElement {
     ];
   }
 
-  updateQuantity(line, quantity, name) {
+  updateQuantity(line, quantity, name, checked) {
+    /* console.log("line", line);
+    console.log("quantity", quantity);
+    console.log("name", name);
+    console.log("checked", checked); */
     this.enableLoading(line);
+
+    const selling_plan = checked ? 608174263 : null;
+
+    console.log("getSectionsToRender", this.getSectionsToRender());
 
     const body = JSON.stringify({
       line,
-      quantity,
       sections: this.getSectionsToRender().map((section) => section.section),
       sections_url: window.location.pathname,
+      ...(!["subscribe", "selling_plan"].includes(name) && { quantity }),
+      ...(name === "subscribe" && { selling_plan }),
     });
+    console.log("body", body);
 
     fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
       .then((response) => {
@@ -78,8 +91,13 @@ class CartItems extends HTMLElement {
         if (cartFooter) cartFooter.classList.toggle("is-empty", parsedState.item_count === 0);
         if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle("is-empty", parsedState.item_count === 0);
 
+        console.log("parsedState", parsedState);
+
         this.getSectionsToRender().forEach((section) => {
+          console.log("section", section);
           const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
+          console.log("elementToReplace", elementToReplace);
+          console.log("parsedState.sections", parsedState.sections);
           elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
         });
 
@@ -145,6 +163,32 @@ class CartItems extends HTMLElement {
 }
 
 customElements.define("cart-items", CartItems);
+
+class ShippingCountdown extends HTMLElement {
+  constructor() {
+    super();
+
+    this.debouncedOnChange = debounce((event) => {
+      this.onChange(event);
+    }, 300);
+
+    this.addEventListener("change", this.debouncedOnChange.bind(this));
+  }
+
+  onChange(event) {
+    console.log(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"));
+  }
+}
+
+customElements.define("shipping-countdown", ShippingCountdown);
+
+class CartSubscribe extends HTMLElement {
+  constructor() {
+    super();
+  }
+}
+
+customElements.define("cart-subscribe", CartSubscribe);
 
 if (!customElements.get("cart-note")) {
   customElements.define(

@@ -6,7 +6,6 @@ if (!customElements.get("product-form")) {
         super();
 
         this.form = this.querySelector("form");
-        console.log("this.form", this.form);
         this.form.querySelector("[name=id]").disabled = false;
         this.form.addEventListener("submit", this.onSubmitHandler.bind(this));
         this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
@@ -31,10 +30,6 @@ if (!customElements.get("product-form")) {
 
         const formData = new FormData(this.form);
         if (this.dataset.cartType != "page") {
-          console.log(
-            "this.cart.getSectionsToRender()",
-            this.cart.getSectionsToRender().map((section) => section.id)
-          );
           formData.append(
             "sections",
             this.cart.getSectionsToRender().map((section) => section.id)
@@ -42,13 +37,8 @@ if (!customElements.get("product-form")) {
           formData.append("sections_url", window.location.pathname);
           this.cart.setActiveElement(document.activeElement);
         }
-        for (var pair of formData.entries()) {
-          console.log(pair[0] + ", " + pair[1]);
-        }
-        formData.append("test", "test");
         config.body = formData;
 
-        console.log("config", config);
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
           .then((response) => {
@@ -70,7 +60,6 @@ if (!customElements.get("product-form")) {
 
             this.error = false;
 
-            console.log("response.sections", response.sections);
             this.cart.renderContents(response);
           })
           .catch((e) => {
