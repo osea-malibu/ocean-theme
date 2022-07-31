@@ -148,11 +148,11 @@ class CartDrawerItems extends CartItems {
         section: "cart-icon-bubble",
         selector: ".shopify-section",
       },
-      /* {
+      {
         id: "cart-subscribe",
         section: "cart-subscribe",
-        selector: "cart-subscribe",
-      }, */
+        selector: ".cart-subscribe",
+      },
     ];
   }
 }

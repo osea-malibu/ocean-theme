@@ -229,31 +229,29 @@
                         <script>console.log('item.product.selling_plan_groups', {{ item.product.selling_plan_groups | json }});</script>
                         <td class="cart-item__subscribe p-0" role="cell" headers="CartDrawer-ColumnSubscribe">
                           {%- if item.product.selling_plan_groups.size > 0 -%}
-                            <cart-subscribe>
-                              <div class="cart-subscibe flex flex-col items-end">
-                                <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex items-center tracking-wide text-sm relative">
-                                  <input
-                                    id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
-                                    type="checkbox"
-                                    class="w-4 h-4 box-content mr-1 input"
-                                    name="subscribe"
-                                    data-index="{{ item.index | plus: 1 }}"
-                                    {% if item.selling_plan_allocation %}checked{% endif %}
-                                  >
-                                  <span id="CartSubscribeCheckbox-label">{% if item.selling_plan_allocation %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
-                                </label>
-                                {%- if item.selling_plan_allocation -%}
-                                  <div class="relative mt-2 text-seaweed-700">
-                                    <label for="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">Ship every</label>
-                                    <select id="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="input input-sm pl-[5rem]">
-                                      {%- for option in item.product.selling_plan_groups[0].selling_plans -%}
-                                        <option value="{{ option.id }}">{{ option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' }}</option>
-                                      {%- endfor -%}
-                                    </select>
-                                  </div>
-                                {%- endif -%}
-                              </div>
-                            </cart-subscribe>
+                            <div class="cart-subscibe flex flex-col items-end">
+                              <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex items-center tracking-wide text-sm relative">
+                                <input
+                                  id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
+                                  type="checkbox"
+                                  class="w-4 h-4 box-content mr-1 input"
+                                  name="subscribe"
+                                  data-index="{{ item.index | plus: 1 }}"
+                                  {% if item.selling_plan_allocation %}checked{% endif %}
+                                >
+                                <span id="CartSubscribeCheckbox-label">{% if item.selling_plan_allocation %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
+                              </label>
+                              {%- if item.selling_plan_allocation -%}
+                                <div class="relative mt-2 text-seaweed-700">
+                                  <label for="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">Ship every</label>
+                                  <select id="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="input input-sm pl-[5rem]">
+                                    {%- for option in item.product.selling_plan_groups[0].selling_plans -%}
+                                      <option value="{{ option.id }}">{{ option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' }}</option>
+                                    {%- endfor -%}
+                                  </select>
+                                </div>
+                              {%- endif -%}
+                            </div>
                           {%- endif -%}
                         </td>
                       </tr>

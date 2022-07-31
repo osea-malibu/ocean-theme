@@ -182,14 +182,6 @@ class ShippingCountdown extends HTMLElement {
 
 customElements.define("shipping-countdown", ShippingCountdown);
 
-class CartSubscribe extends HTMLElement {
-  constructor() {
-    super();
-  }
-}
-
-customElements.define("cart-subscribe", CartSubscribe);
-
 if (!customElements.get("cart-note")) {
   customElements.define(
     "cart-note",
