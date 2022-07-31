@@ -30,7 +30,7 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.updateQuantity(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"), event.target.checked);
+    this.updateQuantity(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"), event.target);
   }
 
   getSectionsToRender() {
@@ -58,14 +58,14 @@ class CartItems extends HTMLElement {
     ];
   }
 
-  updateQuantity(line, quantity, name, checked) {
-    /* console.log("line", line);
+  updateQuantity(line, quantity, name, target) {
+    console.log("line", line);
     console.log("quantity", quantity);
     console.log("name", name);
-    console.log("checked", checked); */
+    console.log("target", target);
     this.enableLoading(line);
 
-    const selling_plan = checked ? 608174263 : null;
+    const selling_plan = target.checked ? 608174263 : null;
 
     console.log("getSectionsToRender", this.getSectionsToRender());
 
