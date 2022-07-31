@@ -237,7 +237,7 @@
                                   class="w-4 h-4 box-content mr-1 input"
                                   name="subscribe"
                                   data-index="{{ item.index | plus: 1 }}"
-                                  data-deafult-plan="{{ item.product.selling_plan_groups[0].selling_plans[0].id }}"
+                                  data-default-plan="{{ item.product.selling_plan_groups[0].selling_plans[0].id }}"
                                   {% if item.selling_plan_allocation %}checked{% endif %}
                                 >
                                 <span id="CartSubscribeCheckbox-label">{% if item.selling_plan_allocation %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
