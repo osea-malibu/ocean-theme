@@ -101,7 +101,7 @@
     @apply px-3 py-0.5 text-xs;
   }
   .input-sm {
-    @apply px-4 py-1 text-sm;
+    @apply px-4 py-1 text-sm leading-4;
   }
   .input-lg {
     @apply px-7 py-3 text-lg;
@@ -110,7 +110,7 @@
     @apply px-8 py-4 text-xl;
   }
   select.input-sm {
-    @apply cursor-pointer pr-5 bg-[right_0.25rem_center];
+    @apply cursor-pointer pr-5 bg-[right_0.125rem_center] xs:bg-[right_0.25rem_center];
   }
   [type="checkbox"] {
     @apply cursor-pointer p-0;
@@ -145,6 +145,17 @@
   }
   tab-controller [role="tabpanel"][aria-expanded="true"] {
     @apply block;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply appearance-none h-2 w-full rounded-sm border border-white shadow-[0_0_0_1px_rgba(0,0,0,1)] shadow-seaweed-400;
+  }
+  .progress-bar::-webkit-progress-bar {
+    @apply bg-wave-400 rounded-sm;
+  }
+  .progress-bar::-webkit-progress-value {
+    @apply bg-seaweed-700 rounded-l-sm;
   }
 
   /* Slider */
