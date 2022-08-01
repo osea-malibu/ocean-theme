@@ -58,15 +58,16 @@ class CartItems extends HTMLElement {
     ];
   }
 
-  updateQuantity(line, quantity, name, target) {
-    console.log("line", line);
-    console.log("quantity", quantity);
-    console.log("name", name);
-    console.log("target", target);
+  updateQuantity(line, value, name, target) {
     this.enableLoading(line);
+    console.log("value", value);
 
-    const selling_plan = target.checked ? target.dataset.default : null;
-    console.log("selling_plan", selling_plan);
+    let selling_plan = null;
+    if (name === "subscribe" && target.checked) {
+      selling_plan = target.dataset.default;
+    } else if (name === "selling_plan") {
+      selling_plan = value;
+    }
 
     console.log("getSectionsToRender", this.getSectionsToRender());
 
@@ -74,7 +75,7 @@ class CartItems extends HTMLElement {
       line,
       sections: this.getSectionsToRender().map((section) => section.section),
       sections_url: window.location.pathname,
-      ...(!["subscribe", "selling_plan"].includes(name) && { quantity }),
+      ...(!["subscribe", "selling_plan"].includes(name) && { quantity: value }),
       ...(name === "subscribe" && { selling_plan }),
     });
     console.log("body", body);

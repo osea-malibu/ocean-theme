@@ -245,7 +245,7 @@
                               {%- if item.selling_plan_allocation -%}
                                 <div class="relative mt-2 text-seaweed-700">
                                   <label for="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">Ship every</label>
-                                  <select id="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="input input-sm pl-[5rem]">
+                                  <select id="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="input input-sm pl-[5rem]" name="selling_plan">
                                     {%- for option in item.product.selling_plan_groups[0].selling_plans -%}
                                       <option value="{{ option.id }}">{{ option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' }}</option>
                                     {%- endfor -%}
