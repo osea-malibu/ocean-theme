@@ -105,8 +105,8 @@ class CartItems extends HTMLElement {
         } */
         this.disableLoading();
       })
-      .catch(() => {
-        console.log("catch");
+      .catch((error) => {
+        console.log("catch", error);
         this.querySelectorAll(".loading-overlay").forEach((overlay) => overlay.classList.add("hidden"));
         const errors = document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
         errors.textContent = window.cartStrings.error;
