@@ -76,7 +76,7 @@ class CartItems extends HTMLElement {
       sections: this.getSectionsToRender().map((section) => section.section),
       sections_url: window.location.pathname,
       ...(!["subscribe", "selling_plan"].includes(name) && { quantity: value }),
-      ...(name === "subscribe" && { selling_plan }),
+      ...(["subscribe", "selling_plan"].includes(name) && { selling_plan }),
     });
     console.log("body", body);
 
