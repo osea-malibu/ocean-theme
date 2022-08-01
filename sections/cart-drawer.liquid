@@ -226,8 +226,6 @@
                           </div>
                         </td>
 
-                        <script>console.log('item.selling_plan_allocation', {{ item.selling_plan_allocation.selling_plan.id | json }});</script>
-                        <script>console.log('item.product.selling_plan_groups', {{ item.product.selling_plan_groups | json }});</script>
                         <td class="cart-item__subscribe p-0" role="cell" headers="CartDrawer-ColumnSubscribe">
                           {%- if item.product.selling_plan_groups.size > 0 -%}
                             <div class="cart-subscibe flex flex-col items-end">
@@ -253,10 +251,7 @@
                                     data-index="{{ item.index | plus: 1 }}"
                                   >
                                     {%- for option in item.product.selling_plan_groups[0].selling_plans -%}
-                                      <option
-                                        value="{{ option.id }}"
-                                        {% if option.id == item.selling_plan_allocation.selling_plan.id %}selected{% endif %}
-                                      >{{ option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' }}</option>
+                                      <option value="{{ option.id }}" {% if option.id == item.selling_plan_allocation.selling_plan.id %}selected{% endif %}>{{ option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' }}</option>
                                     {%- endfor -%}
                                   </select>
                                 </div>
