@@ -7,7 +7,7 @@ class CartRemoveButton extends HTMLElement {
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
       const cartItems = this.closest("cart-items") || this.closest("cart-drawer-items");
-      cartItems.updateQuantity(this.dataset.index, 0, event.target.name);
+      cartItems.updateCartItem(this.dataset.index, 0, event.target.name);
     });
   }
 }
@@ -30,7 +30,7 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.updateQuantity(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"), event.target);
+    this.updateCartItem(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"), event.target);
   }
 
   getSectionsToRender() {
@@ -58,7 +58,7 @@ class CartItems extends HTMLElement {
     ];
   }
 
-  updateQuantity(line, value, name, target) {
+  updateCartItem(line, value, name, target) {
     this.enableLoading(line);
 
     let selling_plan = null;
@@ -90,6 +90,7 @@ class CartItems extends HTMLElement {
         if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle("is-empty", parsedState.item_count === 0);
 
         this.getSectionsToRender().forEach((section) => {
+          console.log("section", section);
           const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
           elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
         });
@@ -106,7 +107,7 @@ class CartItems extends HTMLElement {
         this.disableLoading();
       })
       .catch((error) => {
-        console.log("catch", error);
+        console.log("Cart update error: ", error);
         this.querySelectorAll(".loading-overlay").forEach((overlay) => overlay.classList.add("hidden"));
         const errors = document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
         errors.textContent = window.cartStrings.error;
