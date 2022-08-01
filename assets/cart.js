@@ -94,7 +94,7 @@ class CartItems extends HTMLElement {
           elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
         });
 
-        this.updateLiveRegions(line, parsedState.item_count);
+        /* this.updateLiveRegions(line, parsedState.item_count);
         const lineItem = document.getElementById(`CartItem-${line}`) || document.getElementById(`CartDrawer-Item-${line}`);
         if (lineItem && lineItem.querySelector(`[name="${name}"]`)) {
           cartDrawerWrapper ? trapFocus(cartDrawerWrapper, lineItem.querySelector(`[name="${name}"]`)) : lineItem.querySelector(`[name="${name}"]`).focus();
@@ -102,7 +102,7 @@ class CartItems extends HTMLElement {
           trapFocus(cartDrawerWrapper.querySelector(".drawer__inner-empty"), cartDrawerWrapper.querySelector("a"));
         } else if (document.querySelector(".cart-item") && cartDrawerWrapper) {
           trapFocus(cartDrawerWrapper, document.querySelector(".cart-item__name"));
-        }
+        } */
         this.disableLoading();
       })
       .catch(() => {
