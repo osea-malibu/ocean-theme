@@ -103,7 +103,7 @@
                               <p class="text-xs text-wave-600">{{ item.product.vendor }}</p>
                             {%- endif -%}
 
-                            <a href="{{ item.url }}" class="block leading-none">{{ item.product.title | replace: 'Eye Serum', 'Serum' | escape }}</a>
+                            <a href="{{ item.url }}" class="block leading-none">{{ item.product.title | replace: 'Eye Serum', 'Serum' | replace: 'Discovery, ', '' | escape }}</a>
                           </div>
                         </td>
 
