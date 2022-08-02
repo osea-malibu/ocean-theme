@@ -106,6 +106,7 @@ module.exports = {
     "right-6",
     "rotate-180",
     "sm:[--swiffy-slider-item-count:3]",
+    "sm:-mt-[14px]",
     "sm:hidden",
     "sm:mb-0",
     "sm:min-h-full",

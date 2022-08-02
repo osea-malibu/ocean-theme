@@ -139,7 +139,7 @@ class CartItems extends HTMLElement {
 
   enableLoading(line) {
     const mainCartItems = document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
-    mainCartItems.classList.add("cart__items--disabled");
+    mainCartItems.classList.add("pointer-events-none");
 
     const cartItemElements = this.querySelectorAll(`#CartItem-${line} .loading-overlay`);
     const cartDrawerItemElements = this.querySelectorAll(`#CartDrawer-Item-${line} .loading-overlay`);
@@ -152,7 +152,7 @@ class CartItems extends HTMLElement {
 
   disableLoading() {
     const mainCartItems = document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
-    mainCartItems.classList.remove("cart__items--disabled");
+    mainCartItems.classList.remove("pointer-events-none");
   }
 }
 

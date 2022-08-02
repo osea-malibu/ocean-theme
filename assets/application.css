@@ -984,7 +984,6 @@ tab-controller [role="tabpanel"][aria-expanded="true"] {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  border-radius: 0.125rem;
   border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
@@ -996,14 +995,11 @@ tab-controller [role="tabpanel"][aria-expanded="true"] {
 }
 
 .progress-bar::-webkit-progress-bar {
-  border-radius: 0.125rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(202 216 221 / var(--tw-bg-opacity));
+  background-color: rgb(219 229 211 / var(--tw-bg-opacity));
 }
 
 .progress-bar::-webkit-progress-value {
-  border-top-left-radius: 0.125rem;
-  border-bottom-left-radius: 0.125rem;
   --tw-bg-opacity: 1;
   background-color: rgb(29 77 65 / var(--tw-bg-opacity));
 }
@@ -1541,6 +1537,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-bottom: 0.25rem;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
 .-mr-1 {
   margin-right: -0.25rem;
 }
@@ -1559,10 +1559,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .mb-5 {
   margin-bottom: 1.25rem;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
 }
 
 .mb-10 {
@@ -1705,6 +1701,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   height: 2rem;
 }
 
+.h-0 {
+  height: 0px;
+}
+
 .h-6 {
   height: 1.5rem;
 }
@@ -1797,16 +1797,16 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   width: 2rem;
 }
 
-.w-full {
-  width: 100%;
-}
-
 .w-6 {
   width: 1.5rem;
 }
 
 .w-4 {
   width: 1rem;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .w-10 {
@@ -1881,16 +1881,16 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   max-width: 100%;
 }
 
-.max-w-md {
-  max-width: 28rem;
-}
-
 .max-w-sm {
   max-width: 24rem;
 }
 
 .max-w-lg {
   max-width: 32rem;
+}
+
+.max-w-md {
+  max-width: 28rem;
 }
 
 .max-w-\[85\%\] {
@@ -2344,6 +2344,11 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-right: 0.5rem;
 }
 
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -2382,11 +2387,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 .py-0 {
   padding-top: 0px;
   padding-bottom: 0px;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .px-1 {
@@ -2678,6 +2678,16 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   color: rgb(221 39 21 / var(--tw-text-opacity));
 }
 
+.text-seafoam-700 {
+  --tw-text-opacity: 1;
+  color: rgb(123 146 104 / var(--tw-text-opacity));
+}
+
+.text-seafoam-800 {
+  --tw-text-opacity: 1;
+  color: rgb(98 120 81 / var(--tw-text-opacity));
+}
+
 .no-underline {
   -webkit-text-decoration-line: none;
           text-decoration-line: none;
@@ -2710,6 +2720,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .opacity-50 {
   opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
 }
 
 .shadow-md {
@@ -3014,20 +3028,16 @@ strong.highlight {
     margin-right: 1rem;
   }
 
+  .sm\:-mt-\[14px\] {
+    margin-top: -14px;
+  }
+
   .sm\:hidden {
     display: none;
   }
 
-  .sm\:h-10 {
-    height: 2.5rem;
-  }
-
   .sm\:min-h-full {
     min-height: 100%;
-  }
-
-  .sm\:w-10 {
-    width: 2.5rem;
   }
 
   .sm\:w-10\/12 {

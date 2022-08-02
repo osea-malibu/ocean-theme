@@ -30,12 +30,6 @@ cart-drawer:not(.is-empty) .cart-drawer__collection {
   margin-top: 2.5rem;
 }
 
-.drawer__contents {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
 cart-drawer {
   position: fixed;
   top: 0;
@@ -54,12 +48,6 @@ cart-drawer {
 
 .cart-drawer__overlay:empty {
   display: block;
-}
-
-.cart-drawer__form {
-  flex-grow: 1;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .cart-drawer__collection {

@@ -149,13 +149,13 @@
 
   /* Progress bar */
   .progress-bar {
-    @apply appearance-none h-2 w-full rounded-sm border border-white shadow-[0_0_0_1px_rgba(0,0,0,1)] shadow-seaweed-400;
+    @apply appearance-none h-2 w-full border border-white shadow-[0_0_0_1px_rgba(0,0,0,1)] shadow-seaweed-400;
   }
   .progress-bar::-webkit-progress-bar {
-    @apply bg-wave-400 rounded-sm;
+    @apply bg-seafoam-300;
   }
   .progress-bar::-webkit-progress-value {
-    @apply bg-seaweed-700 rounded-l-sm;
+    @apply bg-seaweed-700;
   }
 
   /* Slider */
