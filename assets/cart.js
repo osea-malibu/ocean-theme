@@ -166,20 +166,15 @@ class ShippingCountdown extends HTMLElement {
     this.threshold = this.dataset.threshold * 100;
 
     this.percentComplete = (this.total / this.threshold) * 100;
+    if (this.percentComplete > 100) {
+      this.percentComplete = 100;
+    } else if (this.percentComplete < 0) {
+      this.percentComplete = 0;
+    }
 
     this.progressBar = this.querySelector("progress");
     this.progressBar.value = this.percentComplete;
     this.progressBar.innerText = `${this.percentComplete}%`;
-
-    console.log("this.total", this.total);
-    console.log("this.threshold", this.threshold);
-    console.log("this.percentComplete", this.percentComplete);
-
-    this.addEventListener("change", this.onChange.bind(this));
-  }
-
-  onChange(event) {
-    console.log(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"));
   }
 }
 
