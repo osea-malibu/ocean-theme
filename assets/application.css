@@ -1348,6 +1348,18 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   }
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
@@ -2252,6 +2264,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   background-color: rgb(246 252 250 / var(--tw-bg-opacity));
 }
 
+.bg-coral-800\/25 {
+  background-color: rgb(221 39 21 / 0.25);
+}
+
+.bg-coral-700\/50 {
+  background-color: rgb(245 84 69 / 0.5);
+}
+
 .bg-gradient-radial {
   background-image: radial-gradient(var(--tw-gradient-stops));
 }
@@ -2686,6 +2706,16 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 .text-seafoam-800 {
   --tw-text-opacity: 1;
   color: rgb(98 120 81 / var(--tw-text-opacity));
+}
+
+.text-seaweed-500 {
+  --tw-text-opacity: 1;
+  color: rgb(110 149 139 / var(--tw-text-opacity));
+}
+
+.text-wave-500 {
+  --tw-text-opacity: 1;
+  color: rgb(162 186 193 / var(--tw-text-opacity));
 }
 
 .no-underline {

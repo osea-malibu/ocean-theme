@@ -162,11 +162,20 @@ class ShippingCountdown extends HTMLElement {
   constructor() {
     super();
 
-    this.debouncedOnChange = debounce((event) => {
-      this.onChange(event);
-    }, 300);
+    this.total = document.getElementById("CartDrawer-Total").dataset.total;
+    this.threshold = this.dataset.threshold * 100;
 
-    this.addEventListener("change", this.debouncedOnChange.bind(this));
+    this.percentComplete = (this.total / this.threshold) * 100;
+
+    this.progressBar = this.querySelector("progress");
+    this.progressBar.value = this.percentComplete;
+    this.progressBar.innerText = `${this.percentComplete}%`;
+
+    console.log("this.total", this.total);
+    console.log("this.threshold", this.threshold);
+    console.log("this.percentComplete", this.percentComplete);
+
+    this.addEventListener("change", this.onChange.bind(this));
   }
 
   onChange(event) {

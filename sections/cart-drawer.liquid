@@ -41,10 +41,17 @@
       <div>
         <h2 class="hidden">{{ 'sections.cart.title' | t }}</h2>
         {% comment %} Shipping countdown {% endcomment %}
-        <shipping-countdown>
+        <shipping-countdown data-threshold="{{ settings.shipping_countdown_threshold }}">
+          {%- assign amount_remaining = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price -%}
           <div class="p-4 text-center">
-            <h3>{{ settings.shipping_countdown_text_left }} <span class="countdown-amount"></span> {{ settings.shipping_countdown_text_right }}</h3>
-            <progress max="100" value="50" class="progress-bar mx-auto max-w-md">0%</progress>
+            <h3 class="mb-1">
+              {%- if amount_remaining > 0 -%}
+                {{ settings.shipping_countdown_text_left }} <span class="countdown-amount">{{ amount_remaining | money }}</span> {{ settings.shipping_countdown_text_right }}
+              {%- else -%}
+                {{ settings.shipping_countdown_text_success }}
+              {%- endif -%}
+            </h3>
+            <progress max="100" value="0" class="progress-bar block mx-auto max-w-md">0%</progress>
           </div>
         </shipping-countdown>
         {% comment %} Close button {% endcomment %}
@@ -214,6 +221,7 @@
                           {%- endif -%}
                         </td>
 
+                        <script>console.log('item', {{ item | json }});</script>
                         <td class="cart-item__totals p-0 [grid-area:price]" role="cell" headers="CartDrawer-ColumnTotal">
                           <div class="flex items-center justify-end">
                             <div class="loading-overlay hidden mr-2">
@@ -222,35 +230,65 @@
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                               </svg>
                             </div>
-
                             <div class="cart-item__price-wrapper h-full flex items-center justify-end transition-opacity">
-                              {%- if item.original_line_price != item.final_line_price -%}
-                                <div class="cart-item__discounted-prices">
-                                  <span class="visually-hidden">
+                              {%- if item.selling_plan_allocation != nil -%}
+                                {%- assign subscription_price = item.selling_plan_allocation.per_delivery_price | divided_by: 100.0 | round: 2 -%}
+                                <div class="flex">
+                                  <span class="sr-only">
                                     {{ 'products.product.price.regular_price' | t }}
                                   </span>
-                                  <s class="cart-item__old-price price price--end">
-                                    {{ item.original_line_price | money }}
+                                  <s class="text-wave-600 mr-1">
+                                    {{ item.selling_plan_allocation.compare_at_price | times: item.quantity | money }}
                                   </s>
-                                  <span class="visually-hidden">
+                                  <span class="sr-only">
                                     {{ 'products.product.price.sale_price' | t }}
                                   </span>
-                                  <span class="price price--end">
+                                  <span>
+                                    {{ item.selling_plan_allocation.per_delivery_price | times: item.quantity | money }}
+                                  </span>
+                                </div>
+                              {%- elsif item.original_line_price != item.final_line_price -%}
+                                <div class="flex">
+                                  <span class="sr-only">
+                                    {{ 'products.product.price.regular_price' | t }}
+                                  </span>
+                                  <s class="text-wave-600 mr-1">
+                                    {{ item.original_line_price | money }}
+                                  </s>
+                                  <span class="sr-only">
+                                    {{ 'products.product.price.sale_price' | t }}
+                                  </span>
+                                  <span>
                                     {{ item.final_line_price | money }}
                                   </span>
                                 </div>
+                              {%- elsif item.product.has_only_default_variant != true and item.variant.compare_at_price > item.variant.price -%}
+                                <div class="flex">
+                                  <span class="sr-only">
+                                    {{ 'products.product.price.regular_price' | t }}
+                                  </span>
+                                  <s class="text-wave-600 mr-1">
+                                    {{ item.variant.compare_at_price | times: item.quantity | money }}
+                                  </s>
+                                  <span class="sr-only">
+                                    {{ 'products.product.price.sale_price' | t }}
+                                  </span>
+                                  <span class="price price--end">
+                                    {{ item.variant.price | times: item.quantity | money }}
+                                  </span>
+                                </div>
                               {%- else -%}
-                                <span class="price price--end">
+                                <span class="flex">
                                   {{ item.original_line_price | money }}
                                 </span>
                               {%- endif -%}
 
                               {%- if item.variant.available and item.unit_price_measurement -%}
-                                <div class="unit-price caption">
-                                  <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+                                <div class="unit-price">
+                                  <span class="sr-only">{{ 'products.product.price.unit_price' | t }}</span>
                                   {{ item.variant.unit_price | money }}
                                   <span aria-hidden="true">/</span>
-                                  <span class="visually-hidden">&nbsp;{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+                                  <span class="sr-only">&nbsp;{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
                                   {%- if item.variant.unit_price_measurement.reference_value != 1 -%}
                                     {{- item.variant.unit_price_measurement.reference_value -}}
                                   {%- endif -%}
@@ -266,10 +304,10 @@
                 </table>
               </div>
             {%- endif -%}
-            <p id="CartDrawer-LiveRegionText" class="visually-hidden" role="status"></p>
-            <p id="CartDrawer-LineItemStatus" class="visually-hidden" aria-hidden="true" role="status">{{ 'accessibility.loading' | t }}</p>
+            <p id="CartDrawer-LiveRegionText" class="sr-only" role="status"></p>
+            <p id="CartDrawer-LineItemStatus" class="sr-only" aria-hidden="true" role="status">{{ 'accessibility.loading' | t }}</p>
           </div>
-          <div id="CartDrawer-CartErrors" role="alert"></div>
+          <div id="CartDrawer-CartErrors" role="alert" class="absolute inset-x-0 top-0 w-full text-center text-coral-800"></div>
         </form>
       </cart-drawer-items>
       <div class="drawer__footer bg-seafoam-200 flex-shrink-0 px-6 py-4">
@@ -290,12 +328,12 @@
           {%- endif -%}
 
           <!-- Start blocks-->
-          <!-- Subtotals-->
 
+          <!-- Subtotals-->
           <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
             <div class="flex justify-between items-center w-full" role="status">
-              <h3 class="">{{ 'sections.cart.subtotal' | t }}</h3>
-              <p class="">{{ cart.total_price | money_with_currency }}</p>
+              <h3>{{ 'sections.cart.subtotal' | t }}</h3>
+              <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p>
             </div>
 
             <div>
@@ -314,7 +352,6 @@
           </div>
 
           <!-- CTAs -->
-
           <div class="mb-2" {{ block.shopify_attributes }}>
             <noscript>
               <button
