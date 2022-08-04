@@ -78,6 +78,7 @@ class CartDrawer extends HTMLElement {
   }
 
   renderContents(parsedState) {
+    console.log("renderCOntents");
     this.drawer.classList.contains("is-empty") && this.drawer.classList.remove("is-empty");
     this.productId = parsedState.id;
     // BUG WORKAROUND FOR SHOPIFY CLI
