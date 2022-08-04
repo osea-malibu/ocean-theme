@@ -1,0 +1,87 @@
+{% comment %}
+    Renders a product card
+
+    Accepts:
+    - product_card_product: {Object} Product Liquid object (optional)
+    - custom_default_image: {Boolean} Make the secondary image appear first. Default: false (optional)
+    - variant_picker_type: {'button' or 'dropdown'} Display mode of variant options, default: 'button' (optional)
+    - card_class: {String} Tailwind styling classes (optional)
+    - button_class: {String} Tailwind styling classes (optional)
+    - price_class: {String} Tailwind styling classes (optional)
+    - hide_price: {Boolean} Removes price from button element. Default: false (optional)
+
+    Usage:
+    {% render 'product-card-mini', product_card_product: section.settings.product %}
+{% endcomment %}
+
+<div class="flex flex-col relative grow h-full {{ card_class }}">
+  <div class="w-full order-1 grow flex flex-col">
+    <a href="{{ product_card_product.url | default: '#' }}" class="group">
+      <h4 class="text-xs font-book group-hover:underline underline-offset-1 decoration-1 tracking-wide text-center {% if product_card_product.title.size > 30 %}leading-none{% else %}leading-tight{% endif %}">
+        {{ product_card_product.title | replace: ' - Sample', '' | escape }}
+      </h4>
+    </a>
+
+    <div class="mt-auto">
+      {%- liquid
+        assign random_number = "now" | date: "%N"
+        assign product_form_id = 'product-form-' | append: product_card_product.id | append: '-' | append: random_number
+      -%}
+
+      <product-form data-cart-type="{{ settings.cart_type }}">
+        {%- form 'product', product_card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          <input type="hidden" name="id" value="{{ product_card_product.selected_or_first_available_variant.id }}" disabled>
+          <button
+            type="submit"
+            name="add"
+            class="button button-tertiary button-xs w-full transition flex mt-2 {% if hide_price %}justify-center{% else %}justify-between{% endif %} {{ button_class }}"
+            {% if product_card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+          >
+            {%- if product_card_product.selected_or_first_available_variant.available -%}
+              <span>Add</span>
+              {%- unless hide_price -%}
+                <span id="price-{{ product_card_product.id }}-{{ random_number }}" class="{{ price_class }}">
+                  {% render 'price',
+                    product: product_card_product,
+                    show_price_range: true,
+                    use_variant: true,
+                    subscription: true
+                  %}
+                </span>
+              {%- endunless -%}
+            {%- else -%}
+              {{ 'products.product.sold_out' | t }}
+            {%- endif -%}
+          </button>
+        {%- endform -%}
+      </product-form>
+    </div>
+  </div>
+
+  <div class="relative block overflow-hidden no-underline" tabindex="-1">
+    {%- if product_card_product.featured_media -%}
+      <a
+        aria-label="{{ product_card_product.title | escape }}"
+        href="{{ product_card_product.url | default: '#' }}"
+        class="group block mx-auto"
+        tabindex="-1"
+      >
+        {%- if custom_default_image != nil -%}
+          {% assign default_image = custom_default_image %}
+        {%- else -%}
+          {% assign default_image = product_card_product.featured_media %}
+        {%- endif -%}
+        <img
+          srcset="{{ default_image | image_url: width: 144 }} 2x,
+            {{ default_image | image_url: width: 72 }}"
+          src="{{ default_image | image_url: width: 144 }}"
+          alt="{{ default_image.alt | escape }}"
+          loading="lazy"
+          width="72"
+          height="72"
+          class="mx-auto"
+        >
+      </a>
+    {%- endif -%}
+  </div>
+</div>
