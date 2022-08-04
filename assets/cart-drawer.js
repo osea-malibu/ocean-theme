@@ -8,7 +8,6 @@ class CartDrawer extends HTMLElement {
     this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
     this.overlay.addEventListener("click", this.close.bind(this));
     this.setHeaderCartIconAccessibility();
-    this.open();
   }
 
   setHeaderCartIconAccessibility() {
@@ -53,7 +52,6 @@ class CartDrawer extends HTMLElement {
   }
 
   close() {
-    console.log("close drawer");
     this.classList.add("invisible");
     this.classList.remove("visible");
     this.overlay.classList.remove("opacity-100");
