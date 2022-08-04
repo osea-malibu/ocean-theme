@@ -53,6 +53,7 @@ class CartDrawer extends HTMLElement {
   }
 
   close() {
+    console.log("close drawer");
     this.classList.add("invisible");
     this.classList.remove("visible");
     this.overlay.classList.remove("opacity-100");
