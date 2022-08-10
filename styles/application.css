@@ -27,6 +27,26 @@
 }
 
 @layer components {
+  /* Cart drawer */
+  /* cart-drawer {
+    @apply invisible;
+  } */
+  cart-drawer .cart-drawer__overlay {
+    @apply opacity-0 motion-safe:transition-opacity;
+  }
+  cart-drawer .drawer__inner {
+    @apply translate-x-full motion-safe:transition-transform;
+  }
+  /* cart-drawer.active {
+    @apply visible;
+  } */
+  cart-drawer.active .cart-drawer__overlay {
+    @apply opacity-100;
+  }
+  cart-drawer.active .drawer__inner {
+    @apply translate-x-0;
+  }
+
   /* Buttons */
   .button {
     @apply cursor-pointer inline-flex items-center justify-center border px-6 py-2 rounded-sm font-bold tracking-widest uppercase whitespace-nowrap text-center transition-colors motion-reduce:transition-none;

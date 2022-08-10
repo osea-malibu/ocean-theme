@@ -585,12 +585,12 @@ class VariantSelects extends HTMLElement {
 
   renderProductInfo() {
     const isCollection = window.location.pathname.includes("/products/");
-    const url = isCollection ? `${this.dataset.url}?variant=${this.currentVariant.id}` : `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`;
-    fetch(url)
+    fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
       .then((response) => response.text())
       .then((responseText) => {
         const id = `price-${this.dataset.section}`;
         const html = new DOMParser().parseFromString(responseText, "text/html");
+        console.log("html", html.querySelector(".price"));
         const destination = document.getElementById(id);
         const source = isCollection ? html.querySelector(".price").parentElement : html.getElementById(id);
 
@@ -650,10 +650,26 @@ class VariantRadios extends VariantSelects {
     this.options = fieldsets.map((fieldset) => {
       return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
     });
+    console.log("this.options", this.options);
   }
 }
 
 customElements.define("variant-radios", VariantRadios);
+
+class SellingPlanRadios extends VariantSelects {
+  constructor() {
+    super();
+  }
+
+  updateOptions() {
+    const fieldsets = Array.from(this.querySelectorAll("fieldset"));
+    this.options = fieldsets.map((fieldset) => {
+      return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
+    });
+  }
+}
+
+customElements.define("selling-plan-radios", SellingPlanRadios);
 
 class TabController extends HTMLElement {
   constructor() {

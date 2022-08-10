@@ -35,6 +35,7 @@ module.exports = {
     "lg:hidden",
     "lg:justify-center",
     "lg:max-w-lg",
+    "lg:max-w-6xl",
     "lg:max-w-full",
     "lg:mb-4",
     "lg:min-h-[24rem]",

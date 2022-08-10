@@ -33,9 +33,7 @@ class CartDrawer extends HTMLElement {
     // here the animation doesn't seem to always get triggered. A timeout seem to help
     setTimeout(() => {
       this.classList.remove("invisible");
-      this.classList.add("visible");
-      this.overlay.classList.add("opacity-100");
-      this.drawer.classList.add("translate-x-0");
+      this.classList.add("active");
     });
 
     this.addEventListener(
@@ -52,10 +50,8 @@ class CartDrawer extends HTMLElement {
   }
 
   close() {
-    this.classList.add("invisible");
-    this.classList.remove("visible");
-    this.overlay.classList.remove("opacity-100");
-    this.drawer.classList.remove("translate-x-0");
+    this.classList.remove("active");
+    setTimeout(() => this.classList.add("invisible"), 400);
 
     removeTrapFocus(this.activeElement);
     document.body.classList.remove("overflow-hidden");
@@ -77,7 +73,6 @@ class CartDrawer extends HTMLElement {
   }
 
   renderContents(parsedState) {
-    console.log("renderContents");
     this.drawer.classList.contains("is-empty") && this.drawer.classList.remove("is-empty");
     this.productId = parsedState.id;
     // BUG WORKAROUND FOR SHOPIFY CLI
@@ -94,18 +89,26 @@ class CartDrawer extends HTMLElement {
             const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
             sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
           });
+
+          setTimeout(() => {
+            this.querySelector("#CartDrawer-Overlay").addEventListener("click", this.close.bind(this));
+            this.open();
+          });
+        })
+        .catch((e) => {
+          console.error(e);
         });
     } else {
       this.getSectionsToRender().forEach((section) => {
         const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
         sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
       });
-    }
 
-    setTimeout(() => {
-      this.querySelector("#CartDrawer-Overlay").addEventListener("click", this.close.bind(this));
-      this.open();
-    });
+      setTimeout(() => {
+        this.querySelector("#CartDrawer-Overlay").addEventListener("click", this.close.bind(this));
+        this.open();
+      });
+    }
   }
 
   getSectionInnerHTML(html, selector = ".shopify-section") {

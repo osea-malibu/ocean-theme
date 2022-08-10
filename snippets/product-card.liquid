@@ -83,7 +83,7 @@
           assign options = product_card_product.options_with_values
         endif
       -%}
-      {% comment %} <script>console.log('options', {{ options | json }});</script> {% endcomment %}
+      <script>console.log('options', {{ options | json }});</script>
       {%- if subscription and product_card_product.selling_plan_groups.size > 0 -%}
         <variant-radios
           class="no-js-hidden block mt-1"
@@ -97,7 +97,7 @@
                 <input type="radio"
                   id="{{ product_card_product.id }}-{{ forloop.index0 }}-{{ random_number }}"
                   class="peer hidden"
-                  name="{{ option.name }}"
+                  name="selling_plan"
                   value="{{ value | escape }}"
                   form="{{ product_form_id }}"
                   {% if option.selected_value == value %}checked{% endif %}
@@ -114,7 +114,12 @@
         </variant-radios>
       {%- elsif product_card_product.has_only_default_variant == false -%}
         {%- if variant_picker_type == 'dropdown' -%}
-          <variant-selects class="no-js-hidden block mt-2" data-section="{{ product_card_product.id }}-{{ random_number }}" data-url="{{ product_card_product.url }}" {{ block.shopify_attributes }}>
+          <variant-selects
+            class="no-js-hidden block mt-2"
+            data-section="{{ product_card_product.id }}-{{ random_number }}"
+            data-url="{{ product_card_product.url }}"
+            data-updateUrl="false"
+          >
             {%- for option in product.options_with_values -%}
               <div>
                 <label class="form__label" for="Option-{{ product_card_product.id }}-{{ forloop.index0 }}-{{ random_number }}">
@@ -146,6 +151,7 @@
             class="no-js-hidden block mt-1"
             data-section="{{ product_card_product.id }}-{{ random_number }}"
             data-url="{{ product_card_product.url }}"
+            data-update-url="false"
           >
             {%- for option in product_card_product.options_with_values -%}
               <fieldset class="js flex">
@@ -171,6 +177,10 @@
                 {%- endfor -%}
               </fieldset>
             {%- endfor -%}
+
+            <script type="application/json">
+              {{ product_card_product.variants | json }}
+            </script>
           </variant-radios>
         {%- endif -%}
       {%- endif -%}
@@ -188,10 +198,11 @@
 
         {%- form 'product', product_card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
           <input type="hidden" name="id" value="{{ product_card_product.selected_or_first_available_variant.id }}" disabled>
+          {% comment %} <input type="radio" name="selling_plan" value="{{ selling_plan.id }}" disabled> {% endcomment %}
           <button
             type="submit"
             name="add"
-            class="button button-tertiary border border-seaweed-400 w-full transition flex justify-between mt-2 {{ button_class }}"
+            class="button button-tertiary w-full transition flex justify-between mt-2 {{ button_class }}"
             {% if product_card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
           >
             {%- if product_card_product.selected_or_first_available_variant.available -%}
@@ -200,7 +211,7 @@
               {%- else -%}
                 <span>{{ 'products.product.add_to_cart' | t }}</span>
               {%- endif -%}
-              <span id="price-{{ product_card_product.id }}-{{ random_number }}" class="{{ price_class }}">
+              <span id="price-{{ product_card_product.id }}-{{ random_number }}" class="whitespace-nowrap {{ price_class }}">
                 {% render 'price',
                   product: product_card_product,
                   show_price_range: true,

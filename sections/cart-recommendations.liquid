@@ -1,0 +1,20 @@
+{%- if recommendations.performed and recommendations.products_count > 0 -%}
+  <div class="block max-w-md mx-auto bg-wave-100 p-4 rounded-sm">
+    <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
+    <ul class="grid grid-cols-3 gap-4">
+      {%- for product in recommendations.products -%}
+        {%- render 'product-card-mini',
+          product_card_product: product,
+          button_class: 'button-secondary'
+        -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Cart recommendations",
+    "settings": []
+  }
+{% endschema %}

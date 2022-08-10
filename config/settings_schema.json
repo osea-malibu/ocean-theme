@@ -373,6 +373,13 @@
         "default": false
       },
       {
+        "type": "checkbox",
+        "id": "enable_sets_upsell",
+        "info": "If a cart product is part of a set, display set upsell card.",
+        "label": "Enable sets upsell",
+        "default": false
+      },
+      {
         "type": "header",
         "content": "Cart drawer"
       },
@@ -407,21 +414,132 @@
       },
       {
         "type": "text",
-        "id": "shipping_countdown_text_left",
-        "label": "Countdown message, before dollar amount",
-        "default": "You are"
-      },
-      {
-        "type": "text",
-        "id": "shipping_countdown_text_right",
-        "label": "Countdown message, after dollar amount",
-        "default": "away from free shipping!"
+        "id": "shipping_countdown_text",
+        "info": "Variables: remaining_amount",
+        "label": "Countdown message",
+        "default": "You are remaining_amount away from free shipping!"
       },
       {
         "type": "text",
         "id": "shipping_countdown_text_success",
         "label": "Success message",
         "default": "Congrats! You get free shipping."
+      }
+    ]
+  },
+  {
+    "name": "Gift with purchase",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_gwp",
+        "label": "Enable gift with purchase"
+      },
+      {
+        "type": "select",
+        "id": "gwp_type",
+        "options": [
+          {
+            "value": "auto",
+            "label": "Automatically"
+          },
+          {
+            "value": "banner",
+            "label": "Cart banner"
+          },
+          {
+            "value": "coupon",
+            "label": "Coupon code"
+          }
+        ],
+        "default": "auto",
+        "label": "How to add gift to cart"
+      },
+      {
+        "type": "text",
+        "id": "gwp_coupon_code",
+        "info": "Use with Coupon Code add type",
+        "label": "Coupon code"
+      },
+      {
+        "type": "textarea",
+        "id": "gwp_success_text",
+        "label": "Success message",
+        "default": "Congrats! You've unlocked a FREE gift!"
+      },
+      {
+        "type": "paragraph",
+        "content": "Up to 3 tiers. For single gift, use only tier 1. Success message shows after all thresholds have been met."
+      },
+      {
+        "type": "header",
+        "content": "Tier 1"
+      },
+      {
+        "type": "product",
+        "id": "gwp_tier1_product",
+        "label": "Gift product"
+      },
+      {
+        "type": "number",
+        "id": "gwp_tier1_threshold",
+        "label": "Threshold",
+        "default": 100
+      },
+      {
+        "type": "html",
+        "id": "gwp_tier1_text",
+        "info": "Variables: remaining_amount, gift_product",
+        "label": "Countdown message",
+        "default": "Spend another remaining_amount to get a FREE gift_product!"
+      },
+      {
+        "type": "header",
+        "content": "Tier 2"
+      },
+      {
+        "type": "product",
+        "id": "gwp_tier2_product",
+        "label": "Gift product"
+      },
+      {
+        "type": "number",
+        "id": "gwp_tier2_threshold",
+        "label": "Threshold",
+        "default": 200
+      },
+      {
+        "type": "html",
+        "id": "gwp_tier2_text",
+        "info": "Variables: remaining_amount, gift_product",
+        "label": "Countdown message",
+        "default": "Spend another remaining_amount to get a FREE gift_product!"
+      },
+      {
+        "type": "header",
+        "content": "Tier 3"
+      },
+      {
+        "type": "product",
+        "id": "gwp_tier3_product",
+        "label": "Gift product"
+      },
+      {
+        "type": "number",
+        "id": "gwp_tier3_threshold",
+        "label": "Threshold",
+        "default": 300
+      },
+      {
+        "type": "html",
+        "id": "gwp_tier3_text",
+        "info": "Variables: remaining_amount, gift_product",
+        "label": "Countdown message",
+        "default": "Spend another remaining_amount to get a FREE gift_product!"
       }
     ]
   }

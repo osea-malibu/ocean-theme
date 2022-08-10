@@ -30,7 +30,6 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    console.log("cart items changed");
     this.updateCartItem(event.target.dataset.index, event.target.value, document.activeElement.getAttribute("name"), event.target);
   }
 
@@ -90,10 +89,30 @@ class CartItems extends HTMLElement {
         if (cartFooter) cartFooter.classList.toggle("is-empty", parsedState.item_count === 0);
         if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle("is-empty", parsedState.item_count === 0);
 
-        this.getSectionsToRender().forEach((section) => {
-          const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
-          elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
-        });
+        // BUG WORKAROUND FOR SHOPIFY CLI
+        // cart/add does not return sections via dev server
+        // if sections are null, fall back on Section Rendering API
+        // https://github.com/Shopify/shopify-cli/issues/1797
+        if (!parsedState.sections) {
+          fetch(`${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map((section) => section.section)}`)
+            .then((response) => response.json())
+            .then((response) => {
+              parsedState.sections = response;
+
+              this.getSectionsToRender().forEach((section) => {
+                const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
+                elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+        } else {
+          this.getSectionsToRender().forEach((section) => {
+            const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
+            elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
+          });
+        }
 
         this.updateLiveRegions(line, parsedState.item_count);
         const lineItem = document.getElementById(`CartItem-${line}`) || document.getElementById(`CartDrawer-Item-${line}`);
@@ -107,7 +126,7 @@ class CartItems extends HTMLElement {
         this.disableLoading();
       })
       .catch((error) => {
-        console.log("Cart update error: ", error);
+        console.error(error);
         this.querySelectorAll(".loading-overlay").forEach((overlay) => overlay.classList.add("hidden"));
         const errors = document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
         errors.textContent = window.cartStrings.error;
@@ -180,6 +199,68 @@ class ShippingCountdown extends HTMLElement {
 }
 
 customElements.define("shipping-countdown", ShippingCountdown);
+
+class CartRecommendations extends HTMLElement {
+  constructor() {
+    super();
+
+    this.filteredIdArray = JSON.parse(this.dataset.ids);
+    this.destination = this.querySelector("#CartDrawer-Recommendations");
+
+    if (this.filteredIdArray.length > 0) {
+      this.getRecommendations(this.filteredIdArray[0]);
+    }
+  }
+
+  getRecommendations(productId) {
+    fetch(window.Shopify.routes.root + `recommendations/products?product_id=${productId}&limit=3&section_id=cart-recommendations`)
+      .then((response) => response.text())
+      .then((text) => {
+        this.destination.innerHTML = text;
+      });
+  }
+}
+
+customElements.define("cart-recommendations", CartRecommendations);
+
+class GiftWithPurchase extends HTMLElement {
+  constructor() {
+    super();
+
+    this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    this.button = this.querySelector("button");
+    this.button?.addEventListener("click", this.onButtonClick.bind(this));
+  }
+
+  onButtonClick() {
+    console.log("button clicked");
+    let formData = {
+      items: [
+        {
+          id: this.button.dataset.id,
+          quantity: 1,
+        },
+      ],
+    };
+    fetch(window.Shopify.routes.root + "cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("response", response);
+        this.cart.renderContents(response);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+}
+
+customElements.define("gift-with-purchase", GiftWithPurchase);
 
 if (!customElements.get("cart-note")) {
   customElements.define(

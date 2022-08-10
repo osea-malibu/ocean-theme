@@ -53,13 +53,12 @@ if (!customElements.get("product-form")) {
               soldOutMessage.classList.remove("hidden");
               this.error = true;
               return;
-            } else if (this.dataset.cartType == "page") {
+            } else if (!this.cart) {
               window.location = window.routes.cart_url;
               return;
             }
 
             this.error = false;
-
             this.cart.renderContents(response);
           })
           .catch((e) => {

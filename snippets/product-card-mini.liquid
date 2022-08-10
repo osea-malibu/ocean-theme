@@ -14,7 +14,7 @@
     {% render 'product-card-mini', product_card_product: section.settings.product %}
 {% endcomment %}
 
-<div class="flex flex-col relative grow h-full {{ card_class }}">
+<li class="flex flex-col relative grow h-full {{ card_class }}">
   <div class="w-full order-1 grow flex flex-col">
     <a href="{{ product_card_product.url | default: '#' }}" class="group">
       <h4 class="text-xs font-book group-hover:underline underline-offset-1 decoration-1 tracking-wide text-center {% if product_card_product.title.size > 30 %}leading-none{% else %}leading-tight{% endif %}">
@@ -34,7 +34,7 @@
           <button
             type="submit"
             name="add"
-            class="button button-tertiary button-xs w-full transition flex mt-2 {% if hide_price %}justify-center{% else %}justify-between{% endif %} {{ button_class }}"
+            class="button button-xs w-full transition flex mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %} {{ button_class }}"
             {% if product_card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
           >
             {%- if product_card_product.selected_or_first_available_variant.available -%}
@@ -43,7 +43,7 @@
                 <span id="price-{{ product_card_product.id }}-{{ random_number }}" class="{{ price_class }}">
                   {% render 'price',
                     product: product_card_product,
-                    show_price_range: true,
+                    show_price_range: false,
                     use_variant: true,
                     subscription: true
                   %}
@@ -84,4 +84,4 @@
       </a>
     {%- endif -%}
   </div>
-</div>
+</li>
