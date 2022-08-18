@@ -365,7 +365,6 @@
                               </div>
                               <div class="cart-item__price-wrapper h-full flex items-center justify-end transition-opacity">
                                 {%- if item.selling_plan_allocation != nil -%}
-                                  {%- assign subscription_price = item.selling_plan_allocation.per_delivery_price | divided_by: 100.0 | round: 2 -%}
                                   <div class="flex">
                                     <span class="sr-only">
                                       {{ 'products.product.price.regular_price' | t }}
@@ -472,13 +471,15 @@
         {%- endif -%}
 
         {% comment %} Product recommendations {% endcomment %}
-        {%- assign filtered_items = null | sort -%}
-        {%- for item in cart.items -%}
-          {%- unless item.product.type == 'Sample' or item.product.type == 'Free Gift' -%}
-            {%- assign item_array = item | sort -%}
-            {%- assign filtered_items = filtered_items | concat: item_array -%}
-          {%- endunless -%}
-        {%- endfor -%}
+        {%- liquid
+          assign filtered_items = null | sort
+          for item in cart.items
+            unless item.product.type == 'Sample' or item.product.type == 'Free Gift'
+              assign item_array = item | sort
+              assign filtered_items = filtered_items | concat: item_array
+            endunless
+          endfor 
+        -%}
         <cart-recommendations data-ids="{{ filtered_items | map: 'product_id' | escape }}">
           <div id="CartDrawer-Recommendations"></div>
         </cart-recommendations>
