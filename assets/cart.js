@@ -60,6 +60,9 @@ class CartItems extends HTMLElement {
 
   updateCartItem(line, value, name, target) {
     this.enableLoading(line);
+    if (window.gwpSettings.enabled && window.gwpSettings.type === "banner") {
+      document.getElementById("GwpButton")?.remove();
+    }
 
     let selling_plan = null;
     if (name === "subscribe" && target.checked) {
@@ -77,11 +80,24 @@ class CartItems extends HTMLElement {
     });
 
     fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
-      .then((response) => {
-        return response.text();
-      })
+      .then((response) => response.text())
       .then((state) => {
         const parsedState = JSON.parse(state);
+
+        if (window.gwpSettings.enabled) {
+          const cartIdArray = this.dataset.cartIds.slice(1, -1).split(",");
+          const { tiers } = window.gwpSettings;
+
+          tiers.forEach((tier) => {
+            if (tier.product != "") {
+              if (cartIdArray.includes(tier.product) && parsedState.total_price < tier.threshold) {
+                const line = cartIdArray.findIndex((i) => i === tier.product) + 1;
+                this.removeGift(line);
+              }
+            }
+          });
+        }
+
         this.classList.toggle("is-empty", parsedState.item_count === 0);
         const cartDrawerWrapper = document.querySelector("cart-drawer");
         const cartFooter = document.getElementById("main-cart-footer");
@@ -89,32 +105,9 @@ class CartItems extends HTMLElement {
         if (cartFooter) cartFooter.classList.toggle("is-empty", parsedState.item_count === 0);
         if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle("is-empty", parsedState.item_count === 0);
 
-        // BUG WORKAROUND FOR SHOPIFY CLI
-        // cart/add does not return sections via dev server
-        // if sections are null, fall back on Section Rendering API
-        // https://github.com/Shopify/shopify-cli/issues/1797
-        if (!parsedState.sections) {
-          fetch(`${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map((section) => section.section)}`)
-            .then((response) => response.json())
-            .then((response) => {
-              parsedState.sections = response;
-
-              this.getSectionsToRender().forEach((section) => {
-                const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
-                elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
-              });
-            })
-            .catch((e) => {
-              console.error(e);
-            });
-        } else {
-          this.getSectionsToRender().forEach((section) => {
-            const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
-            elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
-          });
-        }
-
+        this.replaceSections(parsedState);
         this.updateLiveRegions(line, parsedState.item_count);
+
         const lineItem = document.getElementById(`CartItem-${line}`) || document.getElementById(`CartDrawer-Item-${line}`);
         if (lineItem && lineItem.querySelector(`[name="${name}"]`)) {
           cartDrawerWrapper ? trapFocus(cartDrawerWrapper, lineItem.querySelector(`[name="${name}"]`)) : lineItem.querySelector(`[name="${name}"]`).focus();
@@ -134,11 +127,53 @@ class CartItems extends HTMLElement {
       });
   }
 
+  replaceSections(parsedState) {
+    // BUG WORKAROUND FOR SHOPIFY CLI
+    // cart/add does not return sections via dev server
+    // if sections are null, fall back on Section Rendering API
+    // https://github.com/Shopify/shopify-cli/issues/1797
+    if (!parsedState.sections) {
+      fetch(`${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map((section) => section.section)}`)
+        .then((response) => response.json())
+        .then((response) => {
+          parsedState.sections = response;
+
+          this.getSectionsToRender().forEach((section) => {
+            const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
+            elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
+          });
+        })
+        .catch((error) => console.error(error));
+    } else {
+      this.getSectionsToRender().forEach((section) => {
+        const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
+        elementToReplace.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
+      });
+    }
+  }
+
+  removeGift(line) {
+    const body = JSON.stringify({
+      line,
+      quantity: 0,
+    });
+    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
+      .then((response) => response.text())
+      .then((state) => {
+        const parsedState = JSON.parse(state);
+        this.replaceSections(parsedState);
+      })
+      .catch((error) => console.error(error));
+  }
+
   updateLiveRegions(line, itemCount) {
     if (this.currentItemCount === itemCount) {
       const lineItemError = document.getElementById(`Line-item-error-${line}`) || document.getElementById(`CartDrawer-LineItemError-${line}`);
       const quantityElement = document.getElementById(`Quantity-${line}`) || document.getElementById(`Drawer-quantity-${line}`);
 
+      if (!quantityElement) {
+        return;
+      }
       lineItemError.querySelector(".cart-item__error-text").innerHTML = window.cartStrings.quantityError.replace("[quantity]", quantityElement.value);
     }
 
@@ -233,34 +268,51 @@ class GiftWithPurchase extends HTMLElement {
   }
 
   onButtonClick() {
-    console.log("button clicked");
-    let formData = {
+    const body = JSON.stringify({
       items: [
         {
           id: this.button.dataset.id,
           quantity: 1,
         },
       ],
-    };
-    fetch(window.Shopify.routes.root + "cart/add.js", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
+    });
+    fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
       .then((response) => response.json())
-      .then((response) => {
-        console.log("response", response);
-        this.cart.renderContents(response);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      .then((response) => this.cart.renderContents(response))
+      .catch((error) => console.error(error));
   }
 }
 
 customElements.define("gift-with-purchase", GiftWithPurchase);
+
+class SaveWithSets extends HTMLElement {
+  constructor() {
+    super();
+
+    this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    this.button = this.querySelector("button");
+    this.button?.addEventListener("click", this.onButtonClick.bind(this));
+  }
+
+  onButtonClick() {
+    const body = JSON.stringify({
+      items: [
+        {
+          id: this.dataset.itemId,
+          quantity: 1,
+        },
+      ],
+    });
+    // TODO: Add code for removing root product
+
+    fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
+      .then((response) => response.json())
+      .then((response) => this.cart.renderContents(response))
+      .catch((error) => console.error(error));
+  }
+}
+
+customElements.define("save-with-sets", SaveWithSets);
 
 if (!customElements.get("cart-note")) {
   customElements.define(

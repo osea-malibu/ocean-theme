@@ -91,6 +91,28 @@
       window.accessibilityStrings = {
         shareSuccess: `{{ 'general.share.success_message' | t }}`,
       }
+
+      window.gwpSettings = {
+        enabled: {{ settings.enable_gwp }},
+        type: '{{ settings.gwp_type }}',
+        tiers: [
+          {
+            id: "tier3",
+            product: '{{ settings.gwp_tier3_product.id }}',
+            threshold: {{ settings.gwp_tier3_threshold | times: 100 }}
+          },
+          {
+            id: "tier2",
+            product: '{{ settings.gwp_tier2_product.id }}',
+            threshold: {{ settings.gwp_tier2_threshold | times: 100 }}
+          },
+          {
+            id: "tier1",
+            product: '{{ settings.gwp_tier1_product.id }}',
+            threshold: {{ settings.gwp_tier1_threshold | times: 100 }}
+          }
+        ]
+      }
     </script>
 
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>

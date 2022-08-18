@@ -75,43 +75,29 @@
       {%- liquid
         assign random_number = "now" | date: "%N"
         assign product_form_id = 'product-form-' | append: product_card_product.id | append: '-' | append: random_number
-        assign options = '' | split: ''
-
-        if subscription and product_card_product.selling_plan_groups.size > 0
-          assign options = product_card_product.selling_plan_groups[0].selling_plans
-        elsif product_card_product.has_only_default_variant == false
-          assign options = product_card_product.options_with_values
-        endif
       -%}
-      <script>console.log('options', {{ options | json }});</script>
       {%- if subscription and product_card_product.selling_plan_groups.size > 0 -%}
-        <variant-radios
-          class="no-js-hidden block mt-1"
-          data-section="{{ product_card_product.id }}-{{ random_number }}"
-          data-url="{{ product_card_product.url }}"
-        >
-          <fieldset class="js flex">
-            <legend class="hidden">{{ option.name }}</legend>
-            {%- for value in product_card_product.selling_plan_groups[0].selling_plans -%}
-              <div class="flex-grow{% unless forloop.last %} mr-2{% endunless %}">
-                <input type="radio"
-                  id="{{ product_card_product.id }}-{{ forloop.index0 }}-{{ random_number }}"
-                  class="peer hidden"
-                  name="selling_plan"
-                  value="{{ value | escape }}"
-                  form="{{ product_form_id }}"
-                  {% if option.selected_value == value %}checked{% endif %}
-                >
-                <label
-                  class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-wide w-full"
-                  for="{{ product_card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ random_number }}"
-                  tabindex="0"
-                >
-                  {{ value.name | replace: 'Delivery every ', '' }}
-              </div>
-            {%- endfor -%}
-          </fieldset>
-        </variant-radios>
+        <fieldset class="js flex">
+          <legend class="sr-only">Deliver every:</legend>
+          {%- for value in product_card_product.selling_plan_groups[0].selling_plans -%}
+            <div class="flex-grow{% unless forloop.last %} mr-2{% endunless %}">
+              <input type="radio"
+                id="{{ product_card_product.id }}-{{ forloop.index0 }}-{{ random_number }}"
+                class="peer hidden"
+                name="selling_plan"
+                value="{{ value.id | escape }}"
+                form="{{ product_form_id }}"
+                {% if option.selected_value == value %}checked{% endif %}
+              >
+              <label
+                class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-wide w-full"
+                for="{{ product_card_product.id }}-{{ forloop.index0 }}-{{ random_number }}"
+                tabindex="0"
+              >
+                {{ value.name | replace: 'Delivery every ', '' }}
+            </div>
+          {%- endfor -%}
+        </fieldset>
       {%- elsif product_card_product.has_only_default_variant == false -%}
         {%- if variant_picker_type == 'dropdown' -%}
           <variant-selects
@@ -122,7 +108,7 @@
           >
             {%- for option in product.options_with_values -%}
               <div>
-                <label class="form__label" for="Option-{{ product_card_product.id }}-{{ forloop.index0 }}-{{ random_number }}">
+                <label class="sr-only" for="Option-{{ product_card_product.id }}-{{ forloop.index0 }}-{{ random_number }}">
                   {{ option.name }}
                 </label>
                 <div class="select">
@@ -155,7 +141,7 @@
           >
             {%- for option in product_card_product.options_with_values -%}
               <fieldset class="js flex">
-                <legend class="hidden">{{ option.name }}</legend>
+                <legend class="sr-only">{{ option.name }}</legend>
                 {%- for value in option.values -%}
                   <div>
                     <input type="radio"
@@ -198,11 +184,10 @@
 
         {%- form 'product', product_card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
           <input type="hidden" name="id" value="{{ product_card_product.selected_or_first_available_variant.id }}" disabled>
-          {% comment %} <input type="radio" name="selling_plan" value="{{ selling_plan.id }}" disabled> {% endcomment %}
           <button
             type="submit"
             name="add"
-            class="button button-tertiary w-full transition flex justify-between mt-2 {{ button_class }}"
+            class="button button-tertiary w-full transition flex justify-between mt-2 disabled:opacity-50 {{ button_class }}"
             {% if product_card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
           >
             {%- if product_card_product.selected_or_first_available_variant.available -%}
@@ -216,7 +201,7 @@
                   product: product_card_product,
                   show_price_range: true,
                   use_variant: true,
-                  subscription: true
+                  subscription: subscription
                 %}
               </span>
             {%- else -%}
@@ -238,40 +223,31 @@
       >
         {%- if custom_default_image != nil -%}
           {% assign default_image = custom_default_image %}
+        {%- elsif product_card_product.selected_or_first_available_variant.featured_media != nil -%}
+          {% assign default_image = product_card_product.selected_or_first_available_variant.featured_media %}
         {%- else -%}
           {% assign default_image = product_card_product.featured_media %}
         {%- endif -%}
         <img
-          srcset="{%- if default_image.width >= 165 -%}{{ default_image | image_url: width: 165 }} 165w,{%- endif -%}
-            {%- if default_image.width >= 360 -%}{{ default_image | image_url: width: 360 }} 360w,{%- endif -%}
-            {%- if default_image.width >= 533 -%}{{ default_image | image_url: width: 533 }} 533w,{%- endif -%}
-            {%- if default_image.width >= 720 -%}{{ default_image | image_url: width: 720 }} 720w,{%- endif -%}
-            {%- if default_image.width >= 940 -%}{{ default_image | image_url: width: 940 }} 940w,{%- endif -%}
-            {%- if default_image.width >= 1066 -%}{{ default_image | image_url: width: 1066 }} 1066w,{%- endif -%}
-            {{ default_image | image_url: width: 5760 }} {{ default_image.width }}w"
-          src="{{ default_image | image_url: width: 533 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+          srcset="{{ default_image | image_url: width: 328 }} 1x,
+            {{ default_image | image_url: width: 656 }} 2x"
+          src="{{ default_image | image_url: width: 328 }}"
           alt="{{ default_image.alt | escape }}"
           loading="lazy"
           width="{{ default_image.width }}"
           height="{{ default_image.height }}"
+          id="ProductCard-DefaultImage-{{ product_card_product.id }}"
         >
         {%- if product_card_product.media[1] != nil and show_secondary_image_on_hover -%}
           <img
-            srcset="{%- if product_card_product.media[1].width >= 165 -%}{{ product_card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
-              {%- if product_card_product.media[1].width >= 360 -%}{{ product_card_product.media[1] | image_url: width: 360 }} 360w,{%- endif -%}
-              {%- if product_card_product.media[1].width >= 533 -%}{{ product_card_product.media[1] | image_url: width: 533 }} 533w,{%- endif -%}
-              {%- if product_card_product.media[1].width >= 720 -%}{{ product_card_product.media[1] | image_url: width: 720 }} 720w,{%- endif -%}
-              {%- if product_card_product.media[1].width >= 940 -%}{{ product_card_product.media[1] | image_url: width: 940 }} 940w,{%- endif -%}
-              {%- if product_card_product.media[1].width >= 1066 -%}{{ product_card_product.media[1] | image_url: width: 1066 }} 1066w,{%- endif -%}
-              {{ product_card_product.media[1] | image_url: width: 5760 }} {{ product_card_product.media[1].width }}w"
-            src="{{ product_card_product.media[1] | image_url: width: 533 }}"
-            sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+            srcset="{{ product_card_product.media[1] | image_url: width: 328 }} 1x,
+              {{ product_card_product.media[1] | image_url: width: 656 }} 2x"
+            src="{{ product_card_product.media[1] | image_url: width: 328 }}"
             alt="{{ product_card_product.media[1].alt | escape }}"
             loading="lazy"
             class="{% if show_secondary_image_on_hover %}absolute inset-0 opacity-0 group-hover:opacity-100 motion-reduce:transition-none transition-opacity{% endif %} duration-300"
-          width="{{ product_card_product.media[1].width }}"
-          height="{{ product_card_product.media[1].height }}"
+            width="{{ product_card_product.media[1].width }}"
+            height="{{ product_card_product.media[1].height }}"
           >
         {%- endif -%}
       </a>

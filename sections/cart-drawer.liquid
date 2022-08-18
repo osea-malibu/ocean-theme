@@ -39,12 +39,25 @@
         </div>
       {%- endif -%}
 
+      {%- liquid
+        for item in cart.items
+          if item.product.metafields.my_fields.save_with_sets != nil
+            assign first_item_with_set = item
+          endif
+        endfor
+
+        assign first_set = first_item_with_set.product.metafields.my_fields.save_with_sets.value | first
+        assign cart_ids = cart.items | map: 'product_id'
+      -%}
+      <script>
+        console.log("first_item_with_set", {{ first_item_with_set | json }});
+      </script>
+
       <div>
         <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
         {% comment %} Gift with purchase {% endcomment %}
         {%- if settings.enable_gwp and settings.gwp_type == 'banner' -%}
           {%- liquid
-            assign unique_cart_ids = cart.items | map: 'product_id'| uniq
             assign hide_gwp = false
 
             assign tier1_product = all_products[settings.gwp_tier1_product]
@@ -57,9 +70,9 @@
             assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
             assign gwp_button_id = tier1_product.selected_or_first_available_variant.id
 
-            if unique_cart_ids contains tier3_product.id
+            if cart_ids contains tier3_product.id
               assign hide_gwp = true
-            elsif unique_cart_ids contains tier2_product.id
+            elsif cart_ids contains tier2_product.id
               if settings.gwp_tier3_product != nil
                 assign tier3_product = all_products[settings.gwp_tier3_product]
                 assign gwp_threshold = settings.gwp_tier3_threshold | times: 100
@@ -68,7 +81,7 @@
               else 
                 assign hide_gwp = true
               endif
-            elsif unique_cart_ids contains tier1_product.id
+            elsif cart_ids contains tier1_product.id
               if settings.gwp_tier2_product != nil
                 assign gwp_threshold = settings.gwp_tier2_threshold | times: 100
                 assign countdown_text = settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - '
@@ -79,12 +92,6 @@
             endif
 
           -%}
-          {% comment %} <script>
-            console.log("gwp_threshold: ", {{gwp_threshold}});
-            console.log("remaining_amount: ", "{{remaining_amount}}");
-            console.log("countdown_text: ", '{{countdown_text}}');
-            console.log("gwp_button_id: ", "{{gwp_button_id}}");
-          </script> {% endcomment %}
 
           {%- unless settings.gwp_tier1_product == nil or hide_gwp -%}
             <gift-with-purchase class="block bg-seafoam-100">
@@ -106,10 +113,14 @@
                       {{ settings.gwp_success_text }}
                     {%- endif -%}
                   </h3>
-                  <button
-                    class="button button-xs button-secondary"
-                    data-id="{{ gwp_button_id }}"
-                  >Add to cart</button>
+
+                  {%- if remaining_amount <= 0 -%}
+                    <button
+                      class="button button-xs button-secondary"
+                      id="GwpButton"
+                      data-id="{{ gwp_button_id }}"
+                    >Add to cart</button>
+                  {%- endif -%}
                 </figcaption>
               </figure>
             </gift-with-purchase>
@@ -132,8 +143,6 @@
           </div>
         </shipping-countdown>
 
-        {% comment %} Save with sets upsell {% endcomment %}
-
         {% comment %} Close button {% endcomment %}
         <button
           class="drawer__close absolute top-0 right-0 p-2 sm:p-4"
@@ -146,8 +155,34 @@
       </div>
 
       <div class="flex-grow overflow-y-auto px-6 pb-12">
+        {% comment %} Save with sets upsell {% endcomment %}
+        {%- if first_item_with_set != nil -%}
+          <script>console.log("first_set", {{ first_set.selected_or_first_available_variant.id | json }});</script>
+          <save-with-sets data-item-id="{{ first_set.selected_or_first_available_variant.id }}">
+            <div class="relative rounded-sm bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center">
+              <img
+                srcset="{{ first_set.featured_media | image_url: width: 60 }} 1x,
+                  {{ first_set.featured_media | image_url: width: 120 }} 2x"
+                src="{{ first_set.featured_media | image_url: width: 120 }}"
+                loading="lazy"
+                width="60"
+                height="{{ 60 | divided_by: first_set.featured_media.aspect_ratio | ceil }}"
+                alt="{{ first_set.featured_media.alt }}"
+              >
+              <div>
+                <h3 class="leading-tight font-medium text-sm">Save $64 with {{ first_set.title }}</h3>
+                <p class="text-sm leading-tight">An item in your cart comes in a set!</p>
+                <button class="button button-xs button-secondary">Upgrade to set</button>
+              </div>
+            </div>
+          </save-with-sets>
+        {%- endif -%}
+
         {% comment %} Cart items {% endcomment %}
-        <cart-drawer-items class="block mx-auto max-w-md mb-6{% if cart == empty %} is-empty{% endif %}">
+        <cart-drawer-items
+          class="block mx-auto max-w-md mb-6{% if cart == empty %} is-empty{% endif %}"
+          data-cart-ids="{{ cart_ids | json }}"
+        >
           <form action="{{ routes.cart_url }}" id="CartDrawer-Form" class="flex-grow flex flex-wrap" method="post">
             <div id="CartDrawer-CartItems" class="js-contents flex flex-col flex-grow transition-opacity">
               {%- if cart != empty -%}
@@ -245,7 +280,7 @@
                           </td>
 
                           <td class="cart-item__quantity p-0 [grid-area:quant]" role="cell" headers="CartDrawer-ColumnQuantity">
-                            <div class="flex items-center{% if item.product.type != 'Sample' and item.product.has_only_default_variant or item.properties.size == 0 %} -mt-2 sm:-mt-[14px]{% endif %}">
+                            <div class="flex items-center{% if item.product.type != 'Sample' and item.product.has_only_default_variant or item.properties.size == 0 %} sm:mt-[-14px] -mt-2{% endif %}">
                               {%- unless item.product.type == 'Sample' or item.product.type == 'Free Gift' -%}
                                 <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-sm mr-1">
                                   <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
@@ -422,7 +457,7 @@
               <ul class="grid gap-2" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
                 {%- for sample in settings.cart_samples_collection.products -%}
                   {%- if sample.available and sample.price == 0 -%}
-                    {%- unless unique_cart_ids contains sample.id -%}
+                    {%- unless cart_ids contains sample.id -%}
                       {% render 'product-card-mini',
                         product_card_product: sample,
                         hide_price: true,

@@ -515,7 +515,6 @@ class VariantSelects extends HTMLElement {
       this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
-      this.updateShareUrl();
     }
   }
 
@@ -536,34 +535,34 @@ class VariantSelects extends HTMLElement {
   updateMedia() {
     if (!this.currentVariant) return;
     if (!this.currentVariant.featured_media) return;
-    const newMedia = document.querySelector(`[data-media-id="${this.dataset.section}-${this.currentVariant.featured_media.id}"]`);
+    if (window.location.pathname.includes("/products/")) {
+      // change first image in product page image gallery
+      const newMedia = document.querySelector(`[data-media-id="${this.dataset.section}-${this.currentVariant.featured_media.id}"]`);
+      if (!newMedia) return;
 
-    if (!newMedia) return;
-    const modalContent = document.querySelector(`#ProductModal-${this.dataset.section} .product-media-modal__content`);
-    const newMediaModal = modalContent.querySelector(`[data-media-id="${this.currentVariant.featured_media.id}"]`);
-    const parent = newMedia.parentElement;
-    if (parent.firstChild == newMedia) return;
-    modalContent.prepend(newMediaModal);
-    parent.prepend(newMedia);
-    this.stickyHeader = this.stickyHeader || document.querySelector("sticky-header");
-    if (this.stickyHeader) {
-      this.stickyHeader.dispatchEvent(new Event("preventHeaderReveal"));
+      const modalContent = document.querySelector(`#ProductModal-${this.dataset.section} .product-media-modal__content`);
+      const newMediaModal = modalContent.querySelector(`[data-media-id="${this.currentVariant.featured_media.id}"]`);
+      const parent = newMedia.parentElement;
+      if (parent.firstChild == newMedia) return;
+      modalContent.prepend(newMediaModal);
+      parent.prepend(newMedia);
+      // TODO: this will be removed when the final gallery is built
+      /* window.setTimeout(() => {
+        parent.scrollLeft = 0;
+        parent.querySelector("li.product__media-item").scrollIntoView({ behavior: "smooth" });
+      }); */
+    } else {
+      // change image in product card
+      const imageElement = document.getElementById(`ProductCard-DefaultImage-${this.dataset.section.split("-")[0]}`);
+      const newImageSrc = this.currentVariant.featured_media.preview_image.src;
+      imageElement.srcset = `${newImageSrc}&width=328 1x, ${newImageSrc}&width=656 2x`;
+      imageElement.src = newImageSrc;
     }
-    window.setTimeout(() => {
-      parent.scrollLeft = 0;
-      parent.querySelector("li.product__media-item").scrollIntoView({ behavior: "smooth" });
-    });
   }
 
   updateURL() {
     if (!this.currentVariant || this.dataset.updateUrl === "false") return;
     window.history.replaceState({}, "", `${this.dataset.url}?variant=${this.currentVariant.id}`);
-  }
-
-  updateShareUrl() {
-    const shareButton = document.getElementById(`Share-${this.dataset.section}`);
-    if (!shareButton) return;
-    shareButton.updateUrl(`${window.shopUrl}${this.dataset.url}?variant=${this.currentVariant.id}`);
   }
 
   updateVariantInput() {
@@ -584,21 +583,14 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
-    const isCollection = window.location.pathname.includes("/products/");
     fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
       .then((response) => response.text())
       .then((responseText) => {
-        const id = `price-${this.dataset.section}`;
-        const html = new DOMParser().parseFromString(responseText, "text/html");
-        console.log("html", html.querySelector(".price"));
-        const destination = document.getElementById(id);
-        const source = isCollection ? html.querySelector(".price").parentElement : html.getElementById(id);
-
+        const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
+        const destination = document.getElementById(`price-${this.dataset.section}`);
+        const source = responseHTML.querySelector(".product .price").parentElement;
         if (source && destination) destination.innerHTML = source.innerHTML;
 
-        const price = document.getElementById(`price-${this.dataset.section}`);
-
-        if (price) price.classList.remove("visibility-hidden");
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
   }
@@ -650,26 +642,10 @@ class VariantRadios extends VariantSelects {
     this.options = fieldsets.map((fieldset) => {
       return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
     });
-    console.log("this.options", this.options);
   }
 }
 
 customElements.define("variant-radios", VariantRadios);
-
-class SellingPlanRadios extends VariantSelects {
-  constructor() {
-    super();
-  }
-
-  updateOptions() {
-    const fieldsets = Array.from(this.querySelectorAll("fieldset"));
-    this.options = fieldsets.map((fieldset) => {
-      return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
-    });
-  }
-}
-
-customElements.define("selling-plan-radios", SellingPlanRadios);
 
 class TabController extends HTMLElement {
   constructor() {
@@ -970,13 +946,6 @@ class SliderComponent extends HTMLElement {
 }
 
 customElements.define("slider-component", SliderComponent);
-
-/* window.slider = slider;
-if (!document.currentScript.hasAttribute("data-noinit")) {
-  window.addEventListener("load", () => {
-    slider.init();
-  });
-} */
 
 // add shadow to header when #MainContent reaches top of window
 let observer = new IntersectionObserver((entries) => {

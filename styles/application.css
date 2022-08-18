@@ -28,18 +28,12 @@
 
 @layer components {
   /* Cart drawer */
-  /* cart-drawer {
-    @apply invisible;
-  } */
   cart-drawer .cart-drawer__overlay {
     @apply opacity-0 motion-safe:transition-opacity;
   }
   cart-drawer .drawer__inner {
     @apply translate-x-full motion-safe:transition-transform;
   }
-  /* cart-drawer.active {
-    @apply visible;
-  } */
   cart-drawer.active .cart-drawer__overlay {
     @apply opacity-100;
   }
@@ -111,6 +105,21 @@
   .button-icon-right.button-lg svg,
   .button-icon-right.button-xl svg {
     @apply ml-3;
+  }
+  .button-group .button {
+    @apply rounded-none relative;
+  }
+  .button-group .button:focus {
+    @apply z-10;
+  }
+  .button-group .button:first-of-type {
+    @apply rounded-l-sm;
+  }
+  .button-group .button:last-of-type {
+    @apply rounded-r-sm;
+  }
+  .button-group .button:not(:first-of-type) {
+    @apply -ml-px;
   }
 
   /* Inputs */
