@@ -598,6 +598,12 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
+/* TEMP: class for system sans serif, overrides missing symbols, remove with font license */
+
+.system-sans {
+  font-family: sans-serif;
+}
+
 /* Handle no-js visibility */
 
 .no-js:not(html) {
@@ -3705,6 +3711,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-bottom: 0.25rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -3827,10 +3837,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .ml-0 {
   margin-left: 0px;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
 }
 
 .mt-0 {
@@ -9668,10 +9674,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
      object-position: top;
 }
 
-.p-4 {
-  padding: 1rem;
-}
-
 .p-2 {
   padding: 0.5rem;
 }
@@ -9682,6 +9684,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .p-1 {
   padding: 0.25rem;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .p-3 {
@@ -10116,6 +10122,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-bottom: 0.875rem;
 }
 
+.pt-4 {
+  padding-top: 1rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .pb-12 {
   padding-bottom: 3rem;
 }
@@ -10126,10 +10140,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pl-\[5rem\] {
   padding-left: 5rem;
-}
-
-.pt-4 {
-  padding-top: 1rem;
 }
 
 .pl-4 {
@@ -10178,10 +10188,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pb-6 {
   padding-bottom: 1.5rem;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
 }
 
 .pt-6 {
@@ -12093,6 +12099,11 @@ strong.highlight {
 .peer:checked ~ .peer-checked\:bg-wave-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 244 / var(--tw-bg-opacity));
+}
+
+.child\:underline > * {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
 }
 
 @media (prefers-reduced-motion: no-preference) {
