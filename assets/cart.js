@@ -248,11 +248,9 @@ class CartRecommendations extends HTMLElement {
   }
 
   getRecommendations(productId) {
-    fetch(window.Shopify.routes.root + `recommendations/products?product_id=${productId}&limit=3&section_id=cart-recommendations`)
+    fetch(window.Shopify.routes.root + `recommendations/products?product_id=${productId}&limit=6&section_id=cart-recommendations`)
       .then((response) => response.text())
-      .then((text) => {
-        this.destination.innerHTML = text;
-      });
+      .then((text) => (this.destination.innerHTML = text));
   }
 }
 
@@ -290,25 +288,54 @@ class SaveWithSets extends HTMLElement {
     super();
 
     this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    this.lineItemStatusElement = document.getElementById("shopping-cart-line-item-status") || document.getElementById("CartDrawer-LineItemStatus");
     this.button = this.querySelector("button");
     this.button?.addEventListener("click", this.onButtonClick.bind(this));
   }
 
   onButtonClick() {
-    const body = JSON.stringify({
-      items: [
-        {
-          id: this.dataset.itemId,
-          quantity: 1,
-        },
-      ],
-    });
-    // TODO: Add code for removing root product
+    this.enableLoading(this.dataset.itemToRemove);
 
-    fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
-      .then((response) => response.json())
-      .then((response) => this.cart.renderContents(response))
+    const removeBody = JSON.stringify({
+      line: this.dataset.itemToRemove,
+      quantity: 0,
+    });
+    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body: removeBody } })
+      .then(() => {
+        const addBody = JSON.stringify({
+          items: [
+            {
+              id: this.dataset.itemToAdd,
+              quantity: 1,
+            },
+          ],
+        });
+        fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body: addBody } })
+          .then((res) => res.json())
+          .then((res) => this.cart.renderContents(res))
+          .catch((error) => console.error(error));
+
+        this.disableLoading();
+      })
       .catch((error) => console.error(error));
+  }
+
+  enableLoading(line) {
+    const mainCartItems = document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
+    mainCartItems.classList.add("pointer-events-none");
+
+    const cartItemElements = this.cart.querySelectorAll(`#CartItem-${line} .loading-overlay`);
+    const cartDrawerItemElements = this.cart.querySelectorAll(`#CartDrawer-Item-${line} .loading-overlay`);
+
+    [...cartItemElements, ...cartDrawerItemElements].forEach((overlay) => overlay.classList.remove("hidden"));
+
+    document.activeElement.blur();
+    this.lineItemStatusElement.setAttribute("aria-hidden", false);
+  }
+
+  disableLoading() {
+    const mainCartItems = document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
+    mainCartItems.classList.remove("pointer-events-none");
   }
 }
 
