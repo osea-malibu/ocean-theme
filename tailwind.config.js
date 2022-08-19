@@ -30,8 +30,8 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl", "2xl"],
     },
     {
-      pattern: /(h|p|px|py|pb|pt|pl|pr|m|mx|my|mt|mb|ml|mr|bottom|top|left|right|gap|gap-x|gap-y)-(0|1|2|3|4|5|6|7|8|10|12|16|20|24|26|32|36|40|44|48|52|56|60|64|72|80)/,
-      variants: ["xs", "sm", "md", "lg", "xl"],
+      pattern: /(w|h|p|px|py|pb|pt|pl|pr|m|mx|my|mt|mb|ml|mr|bottom|top|left|right|gap|gap-x|gap-y)-(0|1|2|3|4|5|6|7|8|10|12|16|20|24|26|32|36|40|44|48|52|56|60|64|72|80)/,
+      variants: ["xs", "sm", "md", "lg", "xl", "2xl"],
     },
     {
       pattern: /hidden/,

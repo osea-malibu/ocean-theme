@@ -376,14 +376,14 @@
                                     <span class="sr-only">
                                       {{ 'products.product.price.regular_price' | t }}
                                     </span>
-                                    <s class="text-wave-600 mr-1">
+                                    <s class="text-wave-600 mr-1 whitespace-nowrap">
                                       {% comment %} {{ item.selling_plan_allocation.compare_at_price | times: item.quantity | money }} {% endcomment %}
                                       <span class="system-sans">$</span>{{ item.selling_plan_allocation.compare_at_price | times: item.quantity | divided_by: 100 }}
                                     </s>
                                     <span class="sr-only">
                                       {{ 'products.product.price.sale_price' | t }}
                                     </span>
-                                    <span>
+                                    <span class="whitespace-nowrap">
                                       {% comment %} {{ item.selling_plan_allocation.per_delivery_price | times: item.quantity | money }} {% endcomment %}
                                       {%- liquid
                                         assign price_split = item.selling_plan_allocation.compare_at_price | times: item.quantity | times: 0.9 | divided_by: 100 | round: 2 | split: "."
