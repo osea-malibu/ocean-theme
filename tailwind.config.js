@@ -23,11 +23,11 @@ module.exports = {
     },
     {
       pattern: /(text|w|max-w)-(xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)/,
-      variants: ["xs", "sm", "md", "lg"],
+      variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
       pattern: /(w|max-w|min-w|h|max-h|min-h|bottom|top|left|right)-(1\/4|1\/3|1\/2|2\/3|3\/4|full|screen)/,
-      variants: ["xs", "sm", "md", "lg"],
+      variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
       pattern: /(h|p|px|py|pb|pt|pl|pr|m|mx|my|mt|mb|ml|mr|bottom|top|left|right|gap|gap-x|gap-y)-(0|1|2|3|4|5|6|7|8|10|12|16|20|24|26|32|36|40|44|48|52|56|60|64|72|80)/,
