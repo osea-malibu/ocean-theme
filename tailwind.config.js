@@ -5,7 +5,7 @@ module.exports = {
   safelist: [
     "[--swiffy-slider-item-reveal:12rem]",
     "bg-[#ffb545]",
-    "bg-seafoam-100/50",
+    "bg-gradient-radial",
     "icon-list-check",
     "lg:[--swiffy-slider-item-count:4]",
     "lg:[--swiffy-slider-item-count:5]",
@@ -14,7 +14,7 @@ module.exports = {
     "sm:[--swiffy-slider-item-count:3]",
     "xl:[--swiffy-slider-item-count:5]",
     {
-      pattern: /(bg|text)-(seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
+      pattern: /(bg|text|from|to)-(seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800|transparent)/,
       variants: ["xs", "sm", "md", "lg", "hover"],
     },
     {
