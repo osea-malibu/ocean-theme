@@ -6,6 +6,7 @@ module.exports = {
     "[--swiffy-slider-item-reveal:12rem]",
     "bg-[#ffb545]",
     "bg-gradient-radial",
+    "from-seaweed-800/30",
     "icon-list-check",
     "lg:[--swiffy-slider-item-count:4]",
     "lg:[--swiffy-slider-item-count:5]",
@@ -14,7 +15,7 @@ module.exports = {
     "sm:[--swiffy-slider-item-count:3]",
     "xl:[--swiffy-slider-item-count:5]",
     {
-      pattern: /(bg|text|from|to)-(seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800|transparent)/,
+      pattern: /(bg|text|from|to)-(seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
       variants: ["xs", "sm", "md", "lg", "hover"],
     },
     {
@@ -26,7 +27,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
-      pattern: /(w|max-w|min-w|h|max-h|min-h|bottom|top|left|right)-(1\/4|1\/3|1\/2|2\/3|3\/4|full|screen)/,
+      pattern: /(w|max-w|min-w|h|max-h|min-h|bottom|top|left|right|basis)-(1\/5|1\/4|1\/3|2\/5|1\/2|3\/5|2\/3|3\/4|4\/5|full|screen)/,
       variants: ["xs", "sm", "md", "lg", "xl", "2xl"],
     },
     {
