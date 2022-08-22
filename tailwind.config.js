@@ -13,6 +13,7 @@ module.exports = {
     "max-w-[85%]",
     "md:[--swiffy-slider-item-count:3]",
     "sm:[--swiffy-slider-item-count:3]",
+    "system-serif",
     "xl:[--swiffy-slider-item-count:5]",
     {
       pattern: /(bg|text|from|to)-(seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
