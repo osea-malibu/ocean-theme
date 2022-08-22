@@ -628,7 +628,7 @@
         "166118087041a292b1-0": {
           "type": "column",
           "settings": {
-            "column_classes": "flex-1",
+            "column_classes": "basis-1\/5",
             "image": "shopify:\/\/shop_images\/uabb-all-frames-500-lossless.gif",
             "is_bg_image": false,
             "image_classes": "w-full",
@@ -645,7 +645,7 @@
         "ab15d5c5-8dba-4fad-b956-f80101a49133": {
           "type": "column",
           "settings": {
-            "column_classes": "flex-1",
+            "column_classes": "basis-1\/5",
             "image": "shopify:\/\/shop_images\/beach-lifestyle-1.jpg",
             "is_bg_image": false,
             "image_classes": "w-full",
@@ -662,7 +662,7 @@
         "a3014058-0f10-4632-b07e-f0ca0f6f0aea": {
           "type": "column",
           "settings": {
-            "column_classes": "flex-1",
+            "column_classes": "basis-1\/5",
             "image": "shopify:\/\/shop_images\/hss-lifestyle-1.jpg",
             "is_bg_image": false,
             "image_classes": "w-full",
@@ -679,7 +679,7 @@
         "e220d5a1-f406-401d-bcca-86dd0c50d735": {
           "type": "column",
           "settings": {
-            "column_classes": "flex-1",
+            "column_classes": "basis-1\/5",
             "image": "shopify:\/\/shop_images\/uao-all-frames-64.gif",
             "is_bg_image": false,
             "image_classes": "w-full",
@@ -696,7 +696,7 @@
         "f3e9641e-1553-4b11-a51a-a1f6bd6e9ffe": {
           "type": "column",
           "settings": {
-            "column_classes": "flex-1",
+            "column_classes": "basis-1\/5",
             "image": "shopify:\/\/shop_images\/bathroom-lifestyle-1.jpg",
             "is_bg_image": false,
             "image_classes": "w-full",
@@ -727,92 +727,6 @@
         "slider_classes": ""
       }
     },
-    "16611998297b7d0e37": {
-      "type": "multicolumn",
-      "blocks": {
-        "16611998295c12eaff-0": {
-          "type": "column",
-          "settings": {
-            "column_classes": "bg-sand-300 py-4 flex-2",
-            "is_bg_image": false,
-            "image_classes": "",
-            "text_classes": "",
-            "heading": "I love OSEA so much, it's a borderline obsession. Their new Dayglow face oil is DIVINE! BUY IT!",
-            "heading_classes": "",
-            "paragraph": "",
-            "paragraph_classes": "",
-            "button_label": "",
-            "link": "",
-            "button_classes": ""
-          }
-        },
-        "0f51bf4e-5752-466b-bdf9-7e4bc391b3e9": {
-          "type": "column",
-          "settings": {
-            "column_classes": "flex-1",
-            "image": "shopify:\/\/shop_images\/bathroom-lifestyle-1.jpg",
-            "is_bg_image": false,
-            "image_classes": "",
-            "text_classes": "",
-            "heading": "",
-            "heading_classes": "",
-            "paragraph": "",
-            "paragraph_classes": "",
-            "button_label": "",
-            "link": "",
-            "button_classes": ""
-          }
-        },
-        "92afae24-d431-40e1-b4e9-1d3a61722bc0": {
-          "type": "column",
-          "settings": {
-            "column_classes": "flex-1",
-            "image": "shopify:\/\/shop_images\/hss-lifestyle-1.jpg",
-            "is_bg_image": false,
-            "image_classes": "",
-            "text_classes": "",
-            "heading": "",
-            "heading_classes": "",
-            "paragraph": "",
-            "paragraph_classes": "",
-            "button_label": "",
-            "link": "",
-            "button_classes": ""
-          }
-        },
-        "ca87c905-ba61-4ba4-a05a-3490d7c9cecf": {
-          "type": "column",
-          "settings": {
-            "column_classes": "flex-1",
-            "image": "shopify:\/\/shop_images\/beach-lifestyle-1.jpg",
-            "is_bg_image": false,
-            "image_classes": "",
-            "text_classes": "",
-            "heading": "",
-            "heading_classes": "",
-            "paragraph": "",
-            "paragraph_classes": "",
-            "button_label": "",
-            "link": "",
-            "button_classes": ""
-          }
-        }
-      },
-      "block_order": [
-        "16611998295c12eaff-0",
-        "0f51bf4e-5752-466b-bdf9-7e4bc391b3e9",
-        "92afae24-d431-40e1-b4e9-1d3a61722bc0",
-        "ca87c905-ba61-4ba4-a05a-3490d7c9cecf"
-      ],
-      "settings": {
-        "multicolumn_classes": "container mx-auto px-6 mb-12",
-        "row_classes": "gap-2",
-        "is_slider": false,
-        "slider_indicator_count": 3,
-        "slider_breakpoint_limit": "none",
-        "slider_classes": ""
-      }
-    },
     "16582489124cf1fa2c": {
       "type": "rich-text",
       "blocks": {
@@ -820,7 +734,7 @@
           "type": "heading",
           "settings": {
             "heading_text": "Featured in",
-            "heading_classes": "uppercase tracking-widest font-bold text-lg"
+            "heading_classes": "uppercase tracking-widest font-bold text-lg bg-wave-100 text-center pb-6 pt-8"
           }
         }
       },
@@ -828,7 +742,7 @@
         "1658248912415edab4-0"
       ],
       "settings": {
-        "section_classes": "px-6 bg-wave-100 text-center pb-6 pt-8"
+        "section_classes": "container mx-auto px-6"
       }
     },
     "16582483865111dba7": {
@@ -923,12 +837,98 @@
         "a90241b6-0013-43d0-88b7-3bb5fa96afa0"
       ],
       "settings": {
-        "multicolumn_classes": "bg-wave-100 pb-10",
-        "row_classes": "lg:justify-center",
+        "multicolumn_classes": "container mx-auto px-6 mb-2",
+        "row_classes": "lg:justify-center bg-wave-100 pb-10",
         "is_slider": true,
         "slider_indicator_count": 5,
         "slider_breakpoint_limit": "lg",
         "slider_classes": "slider-nav-hide-ends slider-item-reveal [--swiffy-slider-item-reveal:12rem] [--swiffy-slider-item-count:1] sm:[--swiffy-slider-item-count:2] md:[--swiffy-slider-item-count:3] lg:[--swiffy-slider-item-count:4] xl:[--swiffy-slider-item-count:5]"
+      }
+    },
+    "16611998297b7d0e37": {
+      "type": "multicolumn",
+      "blocks": {
+        "16611998295c12eaff-0": {
+          "type": "column",
+          "settings": {
+            "column_classes": "bg-sand-300 py-4 basis-2\/5",
+            "is_bg_image": false,
+            "image_classes": "",
+            "text_classes": "",
+            "heading": "I love OSEA so much, it's a borderline obsession. Their new Dayglow face oil is DIVINE! BUY IT!",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "link": "",
+            "button_classes": ""
+          }
+        },
+        "0f51bf4e-5752-466b-bdf9-7e4bc391b3e9": {
+          "type": "column",
+          "settings": {
+            "column_classes": "basis-1\/5",
+            "image": "shopify:\/\/shop_images\/bathroom-lifestyle-1.jpg",
+            "is_bg_image": false,
+            "image_classes": "",
+            "text_classes": "",
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "link": "",
+            "button_classes": ""
+          }
+        },
+        "92afae24-d431-40e1-b4e9-1d3a61722bc0": {
+          "type": "column",
+          "settings": {
+            "column_classes": "basis-1\/5",
+            "image": "shopify:\/\/shop_images\/hss-lifestyle-1.jpg",
+            "is_bg_image": false,
+            "image_classes": "",
+            "text_classes": "",
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "link": "",
+            "button_classes": ""
+          }
+        },
+        "ca87c905-ba61-4ba4-a05a-3490d7c9cecf": {
+          "type": "column",
+          "settings": {
+            "column_classes": "basis-1\/5",
+            "image": "shopify:\/\/shop_images\/beach-lifestyle-1.jpg",
+            "is_bg_image": false,
+            "image_classes": "",
+            "text_classes": "",
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "link": "",
+            "button_classes": ""
+          }
+        }
+      },
+      "block_order": [
+        "16611998295c12eaff-0",
+        "0f51bf4e-5752-466b-bdf9-7e4bc391b3e9",
+        "92afae24-d431-40e1-b4e9-1d3a61722bc0",
+        "ca87c905-ba61-4ba4-a05a-3490d7c9cecf"
+      ],
+      "settings": {
+        "multicolumn_classes": "container mx-auto px-6 mb-12",
+        "row_classes": "gap-2",
+        "is_slider": false,
+        "slider_indicator_count": 3,
+        "slider_breakpoint_limit": "none",
+        "slider_classes": ""
       }
     }
   },
@@ -948,8 +948,8 @@
     "1658238545f0d2803c",
     "1658241870695593c7",
     "1661180870956f93d6",
-    "16611998297b7d0e37",
     "16582489124cf1fa2c",
-    "16582483865111dba7"
+    "16582483865111dba7",
+    "16611998297b7d0e37"
   ]
 }
