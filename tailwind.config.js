@@ -13,7 +13,6 @@ module.exports = {
     "lg:[--swiffy-slider-item-count:5]",
     "max-w-[85%]",
     "md:[--swiffy-slider-item-count:3]",
-    "order-none",
     "rotate-180",
     "sm:[--swiffy-slider-item-count:3]",
     "system-serif",
@@ -60,7 +59,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg"],
     },
     {
-      pattern: /(grid-cols|grid-rows|col-span|row-span|order)-(1|2|3|4|5|6|7|8|9|10|11|12)/,
+      pattern: /(grid-cols|grid-rows|col-span|row-span|order)-(1|2|3|4|5|6|7|8|9|10|11|12|none)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
   ],
