@@ -28,14 +28,17 @@
                   <a href="{{ block.settings.image_link }}">
                 {%- endif -%}
                   <picture>
-                    <source
-                      {%- if block.settings.image_desktop != nil -%}
+                    {%- if block.settings.image_desktop != nil -%}
+                      <source
                         srcset="{{ block.settings.image_desktop | image_url: width: 800 }} 1x, {{ block.settings.image_desktop | image_url: width: 1600 }} 2x"
-                      {%- else -%}
+                        media="(min-width: 640px)"
+                      >
+                    {%- else -%}
+                      <source
                         srcset="{{ block.settings.image | image_url: width: 800 }} 1x, {{ block.settings.image | image_url: width: 1600 }} 2x"
-                      {%- endif -%}
-                      media="(min-width: 640px)"
-                    >
+                        media="(min-width: 640px)"
+                      >
+                    {%- endif -%}
                     <source
                       srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
                       media="(min-width: 0px)"
