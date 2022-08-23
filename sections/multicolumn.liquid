@@ -1,5 +1,5 @@
 <div class="{{ section.settings.multicolumn_classes }}">
-  {%- if section.settings.is_slider  -%}
+  {%- if section.settings.is_slider -%}
     <slider-component
       class="
         {% if section.settings.is_slider and section.blocks.size > 1 %}slider{% endif %} 
@@ -43,13 +43,16 @@
               {%- endif -%}
               <div class="{{ block.settings.text_classes }}">
                 {%- if block.settings.heading != blank -%}
-                  <div class="{{ block.settings.heading_classes }}">{{ block.settings.heading }}</div>
+                  <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
                 {%- endif -%}
                 {%- if block.settings.paragraph != blank -%}
-                  <div class="{{ block.settings.paragraph_classes }}">{{ block.settings.paragraph }}</div>
+                  <div class="{{ block.settings.paragraph_classes }}">{{- block.settings.paragraph -}}</div>
                 {%- endif -%}
                 {%- if block.settings.button_label != blank -%}
-                  <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{ block.settings.button_label | escape }}</a>
+                  <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
+                {%- endif -%}
+                {%- if block.settings.liquid != blank -%}
+                  {{- block.setting.liquid -}}
                 {%- endif -%}
               </div>
             {%- when 'product' %}
@@ -224,6 +227,11 @@
           "type": "textarea",
           "id": "button_classes",
           "label": "Button classes"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid",
+          "label": "Liquid"
         }
       ]
     },
