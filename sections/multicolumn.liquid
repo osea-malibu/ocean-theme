@@ -23,23 +23,36 @@
         >
           {%- case block.type -%}
             {%- when 'column' %}
-              {%- if block.settings.image != blank and block.settings.is_bg_image == false -%}
-                <img
-                  srcset="{%- if block.settings.image.width >= 275 -%}{{ block.settings.image | image_url: width: 275 }} 275w,{%- endif -%}
-                    {%- if block.settings.image.width >= 550 -%}{{ block.settings.image | image_url: width: 550 }} 550w,{%- endif -%}
-                    {%- if block.settings.image.width >= 710 -%}{{ block.settings.image | image_url: width: 710 }} 710w,{%- endif -%}
-                    {%- if block.settings.image.width >= 1420 -%}{{ block.settings.image | image_url: width: 1420 }} 1420w,{%- endif -%}
-                    {{ block.settings.image | image_url: width: 5760 }} {{ block.settings.image.width }}w"
-                  src="{{ block.settings.image | image_url: width: 550 }}"
-                  sizes="(min-width: 990px) {% if section.blocks.size <= 2 %}710px{% else %}550px{% endif %},
-                    (min-width: 750px) {% if section.blocks.size == 1 %}710px{% else %}550px{% endif %},
-                    calc(100vw - 30px)"
-                  class="{{ block.settings.image_classes }}"
-                  alt="{{ block.settings.image.alt }}"
-                  height="{{ block.settings.image.height }}"
-                  width="{{ block.settings.image.width }}"
-                  loading="lazy"
-                >
+              {%- if block.settings.image != nil and block.settings.is_bg_image == false -%}
+                {%- if block.settings.image_link != nil -%}
+                  <a href="{{ block.settings.image_link }}">
+                {%- endif -%}
+                  <picture>
+                    <source
+                      {%- if block.settings.image_desktop != nil -%}
+                        srcset="{{ block.settings.image_desktop | image_url: width: 800 }} 1x, {{ block.settings.image_desktop | image_url: width: 1600 }} 2x"
+                      {%- else -%}
+                        srcset="{{ block.settings.image | image_url: width: 800 }} 1x, {{ block.settings.image | image_url: width: 1600 }} 2x"
+                      {%- endif -%}
+                      media="(min-width: 640px)"
+                    >
+                    <source
+                      srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
+                      media="(min-width: 0px)"
+                    >
+                    <img
+                      srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
+                      src="{{ block.settings.image | image_url: width: 800 }}"
+                      class="{{ block.settings.image_classes }}"
+                      alt="{{ block.settings.image.alt }}"
+                      height="{{ block.settings.image.height }}"
+                      width="{{ block.settings.image.width }}"
+                      loading="lazy"
+                    >
+                  </picture>
+                {%- if block.settings.image_link != nil -%}
+                  </a>
+                {%- endif -%}
               {%- endif -%}
               <div class="{{ block.settings.text_classes }}">
                 {%- if block.settings.heading != blank -%}
@@ -50,9 +63,6 @@
                 {%- endif -%}
                 {%- if block.settings.button_label != blank -%}
                   <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
-                {%- endif -%}
-                {%- if block.settings.liquid != blank -%}
-                  {{- block.setting.liquid -}}
                 {%- endif -%}
               </div>
             {%- when 'product' %}
@@ -167,9 +177,17 @@
       "name": "Column",
       "settings": [
         {
+          "type": "header",
+          "content": "General settings"
+        },
+        {
           "type": "textarea",
           "id": "column_classes",
           "label": "Column classes"
+        },
+        {
+          "type": "header",
+          "content": "Image settings"
         },
         {
           "type": "image_picker",
@@ -177,14 +195,29 @@
           "label": "t:sections.multicolumn.blocks.column.settings.image.label"
         },
         {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "info": "Provide a different image for desktop view",
+          "label": "Image (desktop)"
+        },
+        {
           "type": "checkbox",
           "id": "is_bg_image",
           "label": "Background image"
         },
         {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image link (optional)"
+        },
+        {
           "type": "textarea",
           "id": "image_classes",
           "label": "Image classes"
+        },
+        {
+          "type": "header",
+          "content": "Text settings"
         },
         {
           "type": "textarea",
@@ -227,11 +260,6 @@
           "type": "textarea",
           "id": "button_classes",
           "label": "Button classes"
-        },
-        {
-          "type": "liquid",
-          "id": "liquid",
-          "label": "Liquid"
         }
       ]
     },
