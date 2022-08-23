@@ -6,6 +6,7 @@ module.exports = {
     "[--swiffy-slider-item-reveal:12rem]",
     "bg-[#ffb545]",
     "bg-gradient-radial",
+    "font-thin",
     "from-seaweed-800/30",
     "icon-list-check",
     "lg:[--swiffy-slider-item-count:4]",
