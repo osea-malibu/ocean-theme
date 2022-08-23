@@ -41,6 +41,10 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
+      pattern: /leading-(none|tight|snug|normal|relaxed|loose)/,
+      variants: ["xs", "sm", "md", "lg", "xl"],
+    },
+    {
       pattern: /button-(xs|sm|lg|xl|primary|secondary|tertiary|white)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
