@@ -15,6 +15,7 @@ module.exports = {
     "rotate-180",
     "sm:[--swiffy-slider-item-count:3]",
     "system-serif",
+    "text-right",
     "xl:[--swiffy-slider-item-count:5]",
     {
       pattern: /(bg|text|from|to)-(seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
