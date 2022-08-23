@@ -12,6 +12,7 @@ module.exports = {
     "lg:[--swiffy-slider-item-count:5]",
     "max-w-[85%]",
     "md:[--swiffy-slider-item-count:3]",
+    "rotate-180",
     "sm:[--swiffy-slider-item-count:3]",
     "system-serif",
     "xl:[--swiffy-slider-item-count:5]",
