@@ -58,6 +58,10 @@ module.exports = {
       pattern: /flex-(row|row-reverse|col|col-reverse)/,
       variants: ["xs", "sm", "md", "lg"],
     },
+    {
+      pattern: /(grid-cols|grid-rows|col-span|row-span)-(1|2|3|4|5|6|7|8|9|10|11|12)/,
+      variants: ["xs", "sm", "md", "lg", "xl"],
+    },
   ],
   theme: {
     colors: {
