@@ -59,7 +59,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg"],
     },
     {
-      pattern: /(grid-cols|grid-rows|col-span|row-span)-(1|2|3|4|5|6|7|8|9|10|11|12)/,
+      pattern: /(grid-cols|grid-rows|col-span|row-span|order)-(1|2|3|4|5|6|7|8|9|10|11|12)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
   ],
