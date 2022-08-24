@@ -1556,8 +1556,8 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   top: 50%;
 }
 
-.-top-64 {
-  top: -16rem;
+.-top-48 {
+  top: -12rem;
 }
 
 .left-1\/2 {
@@ -1812,10 +1812,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   top: -11rem;
 }
 
-.-top-48 {
-  top: -12rem;
-}
-
 .-top-52 {
   top: -13rem;
 }
@@ -1826,6 +1822,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .-top-60 {
   top: -15rem;
+}
+
+.-top-64 {
+  top: -16rem;
 }
 
 .-top-72 {
@@ -5034,12 +5034,12 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   height: 2.5rem;
 }
 
-.h-48 {
-  height: 12rem;
-}
-
 .h-20 {
   height: 5rem;
+}
+
+.h-12 {
+  height: 3rem;
 }
 
 .h-5 {
@@ -5052,10 +5052,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .h-7 {
   height: 1.75rem;
-}
-
-.h-12 {
-  height: 3rem;
 }
 
 .h-3 {
@@ -5104,6 +5100,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .h-44 {
   height: 11rem;
+}
+
+.h-48 {
+  height: 12rem;
 }
 
 .h-52 {
@@ -5390,6 +5390,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   width: calc(100% + 1.5rem);
 }
 
+.w-12 {
+  width: 3rem;
+}
+
 .w-1\/2 {
   width: 50%;
 }
@@ -5432,10 +5436,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .w-11 {
   width: 2.75rem;
-}
-
-.w-12 {
-  width: 3rem;
 }
 
 .w-14 {
@@ -9328,6 +9328,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   overflow: hidden;
 }
 
+.overflow-visible {
+  overflow: visible;
+}
+
 .overflow-x-auto {
   overflow-x: auto;
 }
@@ -10983,6 +10987,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-bottom: 0.75rem;
 }
 
+.pt-6 {
+  padding-top: 1.5rem;
+}
+
+.pb-32 {
+  padding-bottom: 8rem;
+}
+
 .pb-20 {
   padding-bottom: 5rem;
 }
@@ -10995,8 +11007,8 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-top: 0px;
 }
 
-.pt-36 {
-  padding-top: 9rem;
+.pt-20 {
+  padding-top: 5rem;
 }
 
 .pt-8 {
@@ -11021,10 +11033,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pb-6 {
   padding-bottom: 1.5rem;
-}
-
-.pt-6 {
-  padding-top: 1.5rem;
 }
 
 .pr-8 {
@@ -11067,10 +11075,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-top: 4rem;
 }
 
-.pt-20 {
-  padding-top: 5rem;
-}
-
 .pt-24 {
   padding-top: 6rem;
 }
@@ -11081,6 +11085,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pt-32 {
   padding-top: 8rem;
+}
+
+.pt-36 {
+  padding-top: 9rem;
 }
 
 .pt-40 {
@@ -11289,10 +11297,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pb-28 {
   padding-bottom: 7rem;
-}
-
-.pb-32 {
-  padding-bottom: 8rem;
 }
 
 .pb-36 {
@@ -11955,6 +11959,11 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.subpixel-antialiased {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
 }
 
 .placeholder-seafoam-100::-moz-placeholder {
@@ -23099,6 +23108,11 @@ strong.highlight {
     line-height: 1.25rem;
   }
 
+  .xs\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .xs\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
@@ -27406,6 +27420,10 @@ strong.highlight {
 
   .sm\:-ml-3\.5 {
     margin-left: -0.875rem;
+  }
+
+  .sm\:block {
+    display: block;
   }
 
   .sm\:hidden {
@@ -33616,6 +33634,11 @@ strong.highlight {
     line-height: 1rem;
   }
 
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .sm\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
@@ -37922,6 +37945,10 @@ strong.highlight {
 
   .md\:-ml-3\.5 {
     margin-left: -0.875rem;
+  }
+
+  .md\:block {
+    display: block;
   }
 
   .md\:hidden {
@@ -44135,6 +44162,11 @@ strong.highlight {
     line-height: 1.25rem;
   }
 
+  .md\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .md\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
@@ -48464,10 +48496,6 @@ strong.highlight {
     display: none;
   }
 
-  .lg\:h-28 {
-    height: 7rem;
-  }
-
   .lg\:h-10 {
     height: 2.5rem;
   }
@@ -48530,6 +48558,10 @@ strong.highlight {
 
   .lg\:h-24 {
     height: 6rem;
+  }
+
+  .lg\:h-28 {
+    height: 7rem;
   }
 
   .lg\:h-32 {
@@ -54683,6 +54715,11 @@ strong.highlight {
   .lg\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .lg\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 
   .lg\:text-lg {

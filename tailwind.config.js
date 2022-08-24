@@ -27,7 +27,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg"],
     },
     {
-      pattern: /(text|w|max-w)-(xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)/,
+      pattern: /(text|w|max-w)-(xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl|base)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {

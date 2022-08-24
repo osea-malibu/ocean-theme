@@ -1,0 +1,15 @@
+{% comment %}
+    Accepts:
+    - classes: {String} sting of TailwindCSS classnames
+    - stroke_width: {Number} SVG stroke line thickness. Default: 1 (optional)
+    - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
+
+    Usage:
+    {% render 'icon-values-california', classes: 'w-10 h-10 text-seaweed-700' %}
+{% endcomment %}
+
+<svg {% if aria_hidden %}aria-hidden="true"{% endif %} class="{{ classes }}" viewBox="0 0 161 161" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="79.36" cy="79.36" r="78.61"/>
+  <polygon points="40.28 44.35 66.91 44.35 66.91 69.52 106.42 104.63 107.59 124.49 87.98 124.49 80.37 113.71 63.05 110.17 59.3 101.12 48.18 87.69 48.47 78.29 40.28 69.22"/>
+  <path d="M96.69,48.45 C96.06,47.26 95.22,46.31 94.13,45.6 C92.62,44.61 90.94,44.27 89.17,44.39 C86.99,44.53 85.11,45.37 83.75,47.11 C81.74,49.68 81.27,52.59 82.09,55.71 C82.72,58.08 84.04,60.1 85.52,62.01 C87.6,64.69 90.02,67.04 92.62,69.2 C93.93,70.3 95.3,71.33 96.63,72.39 C96.77,72.3 96.85,72.25 96.93,72.2 C99.75,70.16 102.41,67.93 104.84,65.44 C106.91,63.32 108.8,61.06 110.2,58.42 C111.47,56.02 112.03,53.52 111.41,50.82 C110.01,44.64 104.21,43.27 100.14,45.1 C98.62,45.79 97.5,46.92 96.69,48.45 Z"/>
+</svg>

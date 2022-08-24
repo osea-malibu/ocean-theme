@@ -1,0 +1,16 @@
+{% comment %}
+    Accepts:
+    - classes: {String} sting of TailwindCSS classnames
+    - stroke_width: {Number} SVG stroke line thickness. Default: 1 (optional)
+    - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
+
+    Usage:
+    {% render 'icon-values-female', classes: 'w-10 h-10 text-seaweed-700' %}
+{% endcomment %}
+
+<svg {% if aria_hidden %}aria-hidden="true"{% endif %} class="{{ classes }}" viewBox="0 0 161 161" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="79.36" cy="79.36" r="78.61"/>
+  <circle cx="79.36" cy="65.38" r="27.81"/>
+  <line x1="79.36" x2="79.36" y1="125.78" y2="94.14"/>
+  <line x1="95.17" x2="63.54" y1="111.1" y2="111.1"/>
+</svg>
