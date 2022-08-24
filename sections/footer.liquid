@@ -54,7 +54,7 @@
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'link_list' -%}
-              <div class="flex-grow" {{ block.shopify_attributes }}>
+              <div class="flex-grow" class="{{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
                 {%- if block.settings.heading != blank -%}
                   <h2 class="font-serif text-4xl tracking-tight mb-4">{{- block.settings.heading | escape -}}</h2>
                 {%- endif -%}
@@ -261,27 +261,11 @@
           "default": "footer",
           "label": "t:sections.footer.blocks.link_list.settings.menu.label",
           "info": "t:sections.footer.blocks.link_list.settings.menu.info"
-        }
-      ]
-    },
-    {
-      "type": "image",
-      "name": "Image",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "html",
-          "id": "image_svg",
-          "label": "SVG code (optional)"
         },
         {
           "type": "textarea",
-          "label": "Image classes",
-          "id": "image_classes"
+          "id": "menu_classes",
+          "label": "Menu classes"
         }
       ]
     }
