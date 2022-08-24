@@ -48,18 +48,18 @@
       "footer": {
         "type": "footer",
         "blocks": {
-          "footer-0": {
-            "type": "link_list",
-            "settings": {
-              "heading": "Help",
-              "menu": "footer-help-menu"
-            }
-          },
           "3fb731dc-023e-4356-823c-228a53615b6c": {
             "type": "link_list",
             "settings": {
               "heading": "About",
               "menu": "footer-about-menu"
+            }
+          },
+          "footer-0": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Help",
+              "menu": "footer-help-menu"
             }
           },
           "e83d6505-468a-44e2-9bb7-89278bc47843": {
@@ -92,8 +92,8 @@
           }
         },
         "block_order": [
-          "footer-0",
           "3fb731dc-023e-4356-823c-228a53615b6c",
+          "footer-0",
           "e83d6505-468a-44e2-9bb7-89278bc47843",
           "638ff012-d83d-4830-99e7-c748b9e248e2",
           "3b322b10-fc15-4f78-9df6-27c7814768ec",
@@ -101,6 +101,7 @@
         ],
         "settings": {
           "text_ticker": "Ocean • Sun • Earth • Atmosphere •",
+          "legal_links": "",
           "newsletter_enable": true,
           "newsletter_heading": "Connect with Us",
           "newsletter_paragraph": "Get news and offers to your inbox"
