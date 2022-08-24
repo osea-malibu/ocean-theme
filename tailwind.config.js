@@ -4,6 +4,7 @@ module.exports = {
   content: ["./layout/*.liquid", "./templates/*.liquid", "./sections/*.liquid", "./snippets/*.liquid", "./assets/*.js"],
   safelist: [
     "[--swiffy-slider-item-reveal:12rem]",
+    "animate-ping",
     "bg-[#ffb545]",
     "bg-gradient-radial",
     "font-thin",
