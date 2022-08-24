@@ -1490,6 +1490,17 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   border-width: 0;
 }
 
+.not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
@@ -1554,6 +1565,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .top-1\/2 {
   top: 50%;
+}
+
+.-top-64 {
+  top: -16rem;
 }
 
 .left-1\/2 {
@@ -1822,10 +1837,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .-top-60 {
   top: -15rem;
-}
-
-.-top-64 {
-  top: -16rem;
 }
 
 .-top-72 {
@@ -3974,6 +3985,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-right: -1.5rem;
 }
 
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -4016,10 +4031,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .mt-4 {
   margin-top: 1rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
 }
 
 .mr-8 {
@@ -8773,12 +8784,12 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .grid-cols-4 {
@@ -11008,14 +11019,19 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-right: 0.75rem;
 }
 
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .px-11 {
@@ -11156,11 +11172,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-}
-
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
 }
 
 .py-7 {
@@ -11310,8 +11321,8 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-top: 1.5rem;
 }
 
-.pb-32 {
-  padding-bottom: 8rem;
+.pb-28 {
+  padding-bottom: 7rem;
 }
 
 .pb-20 {
@@ -11328,14 +11339,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pt-40 {
   padding-top: 10rem;
-}
-
-.pt-8 {
-  padding-top: 2rem;
-}
-
-.pb-8 {
-  padding-bottom: 2rem;
 }
 
 .pt-12 {
@@ -11372,6 +11375,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pt-7 {
   padding-top: 1.75rem;
+}
+
+.pt-8 {
+  padding-top: 2rem;
 }
 
 .pt-10 {
@@ -11594,6 +11601,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-bottom: 1.75rem;
 }
 
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
 .pb-11 {
   padding-bottom: 2.75rem;
 }
@@ -11610,8 +11621,8 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-bottom: 6rem;
 }
 
-.pb-28 {
-  padding-bottom: 7rem;
+.pb-32 {
+  padding-bottom: 8rem;
 }
 
 .pb-36 {
@@ -14402,6 +14413,29 @@ strong.highlight {
 
   .button-icon-right.button-lg svg, .button-icon-right.xs\:button-xl svg {
     margin-left: 0.75rem;
+  }
+
+  .xs\:sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .xs\:not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
   }
 
   .xs\:right-2 {
@@ -25723,6 +25757,29 @@ strong.highlight {
 
   .button-icon-right.button-lg svg, .button-icon-right.sm\:button-xl svg {
     margin-left: 0.75rem;
+  }
+
+  .sm\:sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sm\:not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
   }
 
   .sm\:top-0 {
@@ -37054,6 +37111,29 @@ strong.highlight {
     margin-left: 0.75rem;
   }
 
+  .md\:sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .md\:not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
   .md\:relative {
     position: relative;
   }
@@ -48381,6 +48461,29 @@ strong.highlight {
 
   .button-icon-right.button-lg svg, .button-icon-right.lg\:button-xl svg {
     margin-left: 0.75rem;
+  }
+
+  .lg\:sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .lg\:not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
   }
 
   .lg\:absolute {
@@ -59744,6 +59847,29 @@ strong.highlight {
 
   .button-icon-right.button-lg svg, .button-icon-right.xl\:button-xl svg {
     margin-left: 0.75rem;
+  }
+
+  .xl\:sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .xl\:not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
   }
 
   .xl\:top-0 {

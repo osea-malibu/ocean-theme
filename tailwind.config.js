@@ -41,7 +41,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl", "2xl"],
     },
     {
-      pattern: /(hidden|block|flex)/,
+      pattern: /(hidden|block|flex|sr-only|not-sr-only)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
