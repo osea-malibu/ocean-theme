@@ -68,6 +68,10 @@ module.exports = {
       pattern: /opacity-(0|5|10|20|25|30|40|50|60|70|75|80|90|100)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
+    {
+      pattern: /bg-(auto|contain|cover)/,
+      variants: ["xs", "sm", "md", "lg", "xl"],
+    },
   ],
   theme: {
     colors: {
