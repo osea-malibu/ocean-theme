@@ -63,6 +63,10 @@ module.exports = {
       pattern: /(grid-cols|grid-rows|col-span|row-span|order)-(1|2|3|4|5|6|7|8|9|10|11|12|none)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
+    {
+      pattern: /opacity-(0|5|10|20|25|30|40|50|60|70|75|80|90|100)/,
+      variants: ["xs", "sm", "md", "lg", "xl"],
+    },
   ],
   theme: {
     colors: {
