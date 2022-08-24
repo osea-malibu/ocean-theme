@@ -57,7 +57,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg"],
     },
     {
-      pattern: /flex-(row|row-reverse|col|col-reverse)/,
+      pattern: /flex-(row|row-reverse|col|col-reverse|grow|shrink)/,
       variants: ["xs", "sm", "md", "lg"],
     },
     {

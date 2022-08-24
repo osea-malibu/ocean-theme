@@ -49,12 +49,12 @@
 
   <div class="bg-seafoam-200 pt-40 lg:pt-12 pb-12">
     {%- if section.blocks.size > 0 -%}
-      <div class="relative container lg:max-w-6xl mx-auto px-6 py-8 gap-2 grid grid-cols-2">
+      <div class="relative container lg:max-w-6xl mx-auto px-6 py-8 gap-2 flex justify-center">
         {% comment %} Menus {% endcomment %}
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'link_list' -%}
-              <div class="flex-grow" class="{{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
+              <div class="{{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
                 {%- if block.settings.heading != blank -%}
                   <h2 class="font-serif text-4xl tracking-tight mb-4">{{- block.settings.heading | escape -}}</h2>
                 {%- endif -%}
@@ -174,7 +174,7 @@
     {%- endif -%}
 
     <div class="container mx-auto px-6">
-      <div class="flex items-center justify-between gap-6 mb-10 max-w-sm mx-auto">
+      <div class="flex items-center justify-between gap-6 mb-10 max-w-xs mx-auto">
         {% render 'logo-ocean-positive' %}
         {% render 'logo-climate-neutral' %}
         {% render 'logo-cruelty-free' %}
