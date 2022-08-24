@@ -27,7 +27,7 @@
                 {%- if block.settings.image_link != nil -%}
                   <a href="{{ block.settings.image_link }}">
                 {%- endif -%}
-                  <picture>
+                  <picture class="{{ block.settings.image_wrapper_classes }}">
                     {%- if block.settings.image_desktop != nil -%}
                       <source
                         srcset="{{ block.settings.image_desktop | image_url: width: 800 }} 1x, {{ block.settings.image_desktop | image_url: width: 1600 }} 2x"
@@ -46,10 +46,10 @@
                     <img
                       srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
                       src="{{ block.settings.image | image_url: width: 800 }}"
-                      class="{{ block.settings.image_classes }}"
                       alt="{{ block.settings.image.alt }}"
                       height="{{ block.settings.image.height }}"
                       width="{{ block.settings.image.width }}"
+                      class="{{ block.settings.image_classes }}"
                       loading="lazy"
                     >
                   </picture>
@@ -57,17 +57,19 @@
                   </a>
                 {%- endif -%}
               {%- endif -%}
-              <div class="{{ block.settings.text_classes }}">
-                {%- if block.settings.heading != blank -%}
-                  <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
-                {%- endif -%}
-                {%- if block.settings.paragraph != blank -%}
-                  <div class="{{ block.settings.paragraph_classes }}">{{- block.settings.paragraph -}}</div>
-                {%- endif -%}
-                {%- if block.settings.button_label != blank -%}
-                  <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
-                {%- endif -%}
-              </div>
+              {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
+                <div class="{{ block.settings.text_classes }}">
+                  {%- if block.settings.heading != "" -%}
+                    <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
+                  {%- endif -%}
+                  {%- if block.settings.paragraph != "" -%}
+                    <div class="{{ block.settings.paragraph_classes }}">{{- block.settings.paragraph -}}</div>
+                  {%- endif -%}
+                  {%- if block.settings.button_label != "" -%}
+                    <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
             {%- when 'product' %}
               {%- if block.settings.product -%}
                 {% render 'product-card',
@@ -217,6 +219,11 @@
           "type": "textarea",
           "id": "image_classes",
           "label": "Image classes"
+        },
+        {
+          "type": "textarea",
+          "id": "image_wrapper_classes",
+          "label": "Image wrapper classes"
         },
         {
           "type": "header",
