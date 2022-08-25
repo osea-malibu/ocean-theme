@@ -25,6 +25,7 @@
 
       {% render 'meta-tags' %}
 
+      <script src="{{ 'slider.js' | asset_url }}" defer></script>
       <script src="{{ 'global.js' | asset_url }}" defer></script>
       <script src="{{ 'yotpo-widgets.js' | asset_url }}" async></script>
       
@@ -116,6 +117,7 @@
     </script>
 
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    
     {%- if template.name == 'index' -%}
       <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}

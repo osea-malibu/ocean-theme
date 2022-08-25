@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   content: ["./layout/*.liquid", "./templates/*.liquid", "./sections/*.liquid", "./snippets/*.liquid", "./assets/*.js"],
@@ -194,5 +195,11 @@ module.exports = {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
     },
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".backface-visible": { "backface-visibility": "visible" },
+        ".backface-hidden": { "backface-visibility": "hidden" },
+      });
+    }),
   ],
 };

@@ -426,6 +426,46 @@
       --swiffy-slider-snap-align: unset;
     }
   }
+
+  /* Glide.js slider */
+  .glide {
+    @apply relative block w-full box-border;
+  }
+  .glide * {
+    @apply box-border;
+  }
+  .glide__track {
+    @apply overflow-hidden;
+  }
+  .glide__slides {
+    @apply relative w-full list-none overflow-hidden p-0 whitespace-nowrap flex flex-nowrap backface-hidden will-change-transform touch-pan-y;
+    transform-style: preserve-3d;
+  }
+  .glide__slides--dragging {
+    @apply select-none;
+  }
+  .glide__slide {
+    @apply w-full h-full shrink-0 whitespace-normal select-none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .glide__slide a {
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+  .glide__arrows,
+  .glide__bullets {
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+  .glide__bullet {
+    @apply opacity-50;
+  }
+  .glide__bullet--active {
+    @apply opacity-100;
+  }
 }
 
 @layer utilities {

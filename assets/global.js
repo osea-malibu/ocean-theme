@@ -537,20 +537,10 @@ class VariantSelects extends HTMLElement {
     if (!this.currentVariant.featured_media) return;
     if (window.location.pathname.includes("/products/")) {
       // change first image in product page image gallery
-      const newMedia = document.querySelector(`[data-media-id="${this.dataset.section}-${this.currentVariant.featured_media.id}"]`);
-      if (!newMedia) return;
-
-      const modalContent = document.querySelector(`#ProductModal-${this.dataset.section} .product-media-modal__content`);
-      const newMediaModal = modalContent.querySelector(`[data-media-id="${this.currentVariant.featured_media.id}"]`);
-      const parent = newMedia.parentElement;
-      if (parent.firstChild == newMedia) return;
-      modalContent.prepend(newMediaModal);
-      parent.prepend(newMedia);
-      // TODO: this will be removed when the final gallery is built
-      /* window.setTimeout(() => {
-        parent.scrollLeft = 0;
-        parent.querySelector("li.product__media-item").scrollIntoView({ behavior: "smooth" });
-      }); */
+      const variantImageEl = document.querySelector("#Product-VariantImage");
+      const newImageSrc = this.currentVariant.featured_image.src;
+      variantImageEl.srcset = `${newImageSrc}&width=600 1x, ${newImageSrc}&width=1200 2x`;
+      variantImageEl.src = newImageSrc;
     } else {
       // change image in product card
       const imageElement = document.getElementById(`ProductCard-DefaultImage-${this.dataset.section.split("-")[0]}`);
@@ -946,6 +936,33 @@ class SliderComponent extends HTMLElement {
 }
 
 customElements.define("slider-component", SliderComponent);
+
+// Glide.js: https://glidejs.com/docs/
+class GlideSlider extends HTMLElement {
+  constructor() {
+    super();
+
+    this.id = this.getAttribute("id");
+
+    this.initSlider();
+  }
+
+  initSlider() {
+    let options = {};
+
+    if (this.id === "Product-Slider") {
+      options = {
+        type: "carousel",
+        gap: 4,
+        peek: { before: 0, after: 140 },
+      };
+    }
+
+    new Glide(`#${this.id}`, options).mount();
+  }
+}
+
+customElements.define("glide-slider", GlideSlider);
 
 // add shadow to header when #MainContent reaches top of window
 let observer = new IntersectionObserver((entries) => {

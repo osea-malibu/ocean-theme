@@ -19,7 +19,6 @@
               <a href="{{ routes.all_products_collection_url }}" class="button">
                 {{ 'general.continue_shopping' | t }}
               </a>
-
               {%- if shop.customer_accounts_enabled and customer == nil -%}
                 <p class="cart__login-title h3">{{ 'sections.cart.login.title' | t }}</p>
                 <p class="cart__login-paragraph">
@@ -62,12 +61,11 @@
         {% comment %} Gift with purchase {% endcomment %}
         {%- if settings.enable_gwp and settings.gwp_type == 'banner' -%}
           {%- liquid
-            assign hide_gwp = false
-
             assign tier1_product = all_products[settings.gwp_tier1_product]
             assign tier2_product = all_products[settings.gwp_tier2_product]
             assign tier3_product = all_products[settings.gwp_tier2_product]
 
+            assign hide_gwp = false
             assign gwp_threshold = settings.gwp_tier1_threshold | times: 100
             assign remaining_amount = gwp_threshold | minus: cart.total_price
             assign remaining_amount_money = remaining_amount | money
@@ -94,7 +92,6 @@
                 assign hide_gwp = true
               endif
             endif
-
           -%}
 
           {%- unless settings.gwp_tier1_product == nil or hide_gwp -%}
@@ -228,7 +225,7 @@
                                   width="60"
                                   height="{{ 60 | divided_by: item.image.aspect_ratio | ceil }}"
                                 >
-                                </div>
+                              </div>
                             {% endif %}
                           </td>
 
@@ -415,14 +412,14 @@
                                     <span class="sr-only">
                                       {{ 'products.product.price.regular_price' | t }}
                                     </span>
-                                    <s class="text-wave-600 mr-1">
+                                    <s class="text-wave-600 mr-1 whitespace-nowrap">
                                       {% comment %} {{ item.variant.compare_at_price | times: item.quantity | money }} {% endcomment %}
                                       <span class="system-sans">$</span>{{ item.variant.compare_at_price | times: item.quantity | divided_by: 100 }}
                                     </s>
                                     <span class="sr-only">
                                       {{ 'products.product.price.sale_price' | t }}
                                     </span>
-                                    <span class="price price--end">
+                                    <span class="whitespace-nowrap">
                                       {% comment %} {{ item.variant.price | times: item.quantity | money }} {% endcomment %}
                                       <span class="system-sans">$</span>{{ item.variant.price | times: item.quantity | divided_by: 100 }}
                                     </span>
@@ -521,8 +518,6 @@
             </details>
           {%- endif -%}
 
-          <!-- Start blocks-->
-
           <!-- Subtotals-->
           <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
             <div class="flex justify-between items-center w-full" role="status">
@@ -562,7 +557,6 @@
                 {{ 'sections.cart.update' | t }}
               </button>
             </noscript>
-
             <button
               type="submit"
               id="CartDrawer-Checkout"
@@ -592,10 +586,8 @@
       const ua = window.navigator.userAgent;
       const msie = ua.indexOf('MSIE ');
       const trident = ua.indexOf('Trident/');
-
       return (msie > 0 || trident > 0);
     }
-
     if (!isIE()) return;
     const cartSubmitInput = document.createElement('input');
     cartSubmitInput.setAttribute('name', 'checkout');
