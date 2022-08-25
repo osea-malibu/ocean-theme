@@ -13,11 +13,16 @@
           "type": "text",
           "settings": {
             "text": "{{ product.metafields.custom_fields.short_description.value }}",
-            "text_style": "subtitle"
+            "text_classes": ""
           }
         },
         "price": {
           "type": "price",
+          "settings": {
+          }
+        },
+        "6a44c417-fd63-4240-a103-3540393f4f89": {
+          "type": "rating",
           "settings": {
           }
         },
@@ -54,6 +59,7 @@
         "title",
         "subtitle",
         "price",
+        "6a44c417-fd63-4240-a103-3540393f4f89",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
