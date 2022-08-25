@@ -12,7 +12,7 @@
         "subtitle": {
           "type": "text",
           "settings": {
-            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text": "{{ product.metafields.custom_fields.short_description.value }}",
             "text_style": "subtitle"
           }
         },
