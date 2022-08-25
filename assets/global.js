@@ -954,7 +954,7 @@ class GlideSlider extends HTMLElement {
       options = {
         type: "carousel",
         gap: 4,
-        peek: { before: 0, after: 140 },
+        peek: { before: 0, after: 120 },
       };
     }
 

@@ -47,6 +47,7 @@
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     <glide-slider class="glide mb-6" id="Product-Slider">
+      {% render 'product-badge', product: product, classes: 'z-10' %}
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
           {%- for media in product.media limit: 4 -%}
@@ -87,7 +88,7 @@
               {{- block.settings.text -}}
             </p>
           {%- when 'title' -%}
-            <h1 class="product__title" {{ block.shopify_attributes }}>
+            <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
               {{ product.title | escape }}
             </h1>
           {%- when 'price' -%}
@@ -467,7 +468,14 @@
     {
       "type": "title",
       "name": "t:sections.main-product.blocks.title.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "title_classes",
+          "label": "Title classes"
+        }
+      ]
     },
     {
       "type": "price",

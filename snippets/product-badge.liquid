@@ -3,6 +3,7 @@
 
     Accepts:
     - product: {Object} Product Liquid object
+    - classes: {Object} Tailwind CSS classes
 
     Usage:
     {% render 'product-badge', product: product %}
@@ -37,7 +38,7 @@
 -%}
 
 {%- if badge_text != '' -%}
-  <div class="badge absolute top-1 left-1 mb-1 text-xs {{ badge_class }}">
+  <div class="badge absolute top-1 left-1 mb-1 text-xs {{ badge_class }}{% if classes != nil %} {{ classes }}{% endif %}">
     {{ badge_text }}
   </div>
 {%- endif -%}
