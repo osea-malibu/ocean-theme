@@ -287,7 +287,7 @@
                               {%- unless item.product.type == 'Sample' or item.product.type == 'Free Gift' -%}
                                 <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-sm mr-1">
                                   <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
-                                    <span class="hidden">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
+                                    <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
                                     {% render 'icon-minus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                                   </button>
                                   <input class="quantity__input w-8 h-6 border-0 p-1"
@@ -300,7 +300,7 @@
                                     data-index="{{ item.index | plus: 1 }}"
                                   >
                                   <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -mr-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
-                                    <span class="hidden">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
+                                    <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
                                     {% render 'icon-plus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                                   </button>
                                 </quantity-input>

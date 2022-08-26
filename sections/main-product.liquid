@@ -11,38 +11,6 @@
 
 <section id="main-product">
   <div class="product">
-    {% comment %} <slider-component class="slider-mobile-gutter">
-      <a class="skip-to-content-link button visually-hidden" href="#ProductInfo-{{ section.id }}">
-        {{ "accessibility.skip_to_product_info" | t }}
-      </a>
-      <ul class="product__media-list grid grid--peek list-unstyled slider slider--mobile" role="list">
-        {%- assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' -%}
-        {%- if product.selected_or_first_available_variant.featured_media != null -%}
-          {%- assign media = product.selected_or_first_available_variant.featured_media -%}
-          <li class="product__media-item grid__item slider__slide{% if media.media_type != 'image' %} product__media-item--full{% endif %}{% if section.settings.hide_variants and variant_images contains media.src %} product__media-item--variant{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
-            {% render 'product-thumbnail', media: media, position: 'featured', loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true %}
-          </li>
-        {%- endif -%}
-        {%- for media in product.media -%}
-          {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
-            <li class="product__media-item grid__item slider__slide{% if media.media_type != 'image' %} product__media-item--full{% endif %}{% if section.settings.hide_variants and variant_images contains media.src %} product__media-item--variant{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
-              {% render 'product-thumbnail', media: media, position: forloop.index, loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true %}
-            </li>
-          {%- endunless -%}
-        {%- endfor -%}
-      </ul>
-      {%- assign filtered_media_size = product.media.size | minus: variant_images.size | plus: 1 -%}
-      <div class="slider-buttons no-js-hidden{% if product.media.size < 2 or section.settings.hide_variants and filtered_media_size < 2 %} small-hide{% endif %}">
-        <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'accessibility.previous_slide' | t }}">{% render 'icon-caret' %}</button>
-        <div class="slider-counter caption">
-          <span class="slider-counter--current">1</span>
-          <span aria-hidden="true"> / </span>
-          <span class="visually-hidden">{{ 'accessibility.of' | t }}</span>
-          <span class="slider-counter--total">{% if section.settings.hide_variants %}{{ filtered_media_size }}{% else %}{{ product.media.size }}{% endif %}</span>
-        </div>
-        <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'accessibility.next_slide' | t }}">{% render 'icon-caret' %}</button>
-      </div>
-    </slider-component> {% endcomment %}
     <a class="skip-to-content-link button visually-hidden" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
@@ -67,7 +35,7 @@
         </ul>
         <div class="glide__bullets flex absolute bottom-0 left-0" data-glide-el="controls[nav]">
           {%- for media in product.media limit: 4 -%}
-            <button class="glide__bullet p-2" data-glide-dir="={{ forloop.index | minus: 1 }}">
+            <button class="glide__bullet p-2" data-glide-dir="={{ forloop.index0 }}">
               <span class="sr-only">Go to slide {{ forloop.index }}</span>
               <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
             </button>
@@ -76,7 +44,7 @@
       </div>
     </glide-slider>
     <div class="container mx-auto px-6">
-      <div id="ProductInfo-{{ section.id }}" class="">
+      <div id="ProductInfo-{{ section.id }}" class="{{ section.settings.product_info_classes }}">
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
         {%- for block in section.blocks -%}
@@ -97,27 +65,7 @@
             </div>
           {%- when 'rating' -%}
             {%- if product.metafields.reviews.rating.value != blank -%}
-              {% liquid
-               assign rating_decimal = 0
-               assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
-               if decimal >= 0.3 and decimal <= 0.7
-                assign rating_decimal = 0.5
-              elsif decimal > 0.7
-                assign rating_decimal = 1
-               endif
-              %}
-              <div class="{{ block.settings.rating_classes }}">
-                <div class="rating" role="img" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}">
-                  <span aria-hidden="true" class="rating-star color-icon-{{ settings.accent_icons }}" style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"></span>
-                </div>
-                <p class="rating-text caption">
-                  <span aria-hidden="true">{{ product.metafields.reviews.rating.value }} / {{ product.metafields.reviews.rating.value.scale_max }}</span>
-                </p>
-                <p class="rating-count caption">
-                  <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
-                  <span class="visually-hidden">{{ product.metafields.reviews.rating_count }} {{ "accessibility.total_reviews" | t }}</span>
-                </p>
-              </div>
+              {% render 'product-rating', product: product %}
             {%- endif -%}
           {%- when 'description' -%}
             {%- if product.description != blank -%}
@@ -146,17 +94,16 @@
               </details>
             </div>
           {%- when 'quantity_selector' -%}
-            <div class="product-form__input product-form__quantity" {{ block.shopify_attributes }}>
-              <label class="form__label" for="Quantity-{{ section.id }}">
+            <div {{ block.shopify_attributes }}>
+              <label class="sr-only" for="Quantity-{{ section.id }}">
                 {{ 'products.product.quantity.label' | t }}
               </label>
-
-              <quantity-input class="quantity">
-                <button class="quantity__button no-js-hidden" name="minus" type="button">
-                  <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-                  {% render 'icon-minus' %}
+              <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-sm mr-1">
+                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border p-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
+                  <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+                  {% render 'icon-minus', classes: 'h-6 w-6 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
-                <input class="quantity__input"
+                <input class="quantity__input w-8 h-6 border-0 p-1"
                     type="number"
                     name="quantity"
                     id="Quantity-{{ section.id }}"
@@ -164,9 +111,9 @@
                     value="1"
                     form="{{ product_form_id }}"
                   >
-                <button class="quantity__button no-js-hidden" name="plus" type="button">
-                  <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-                  {% render 'icon-plus' %}
+                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border p-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
+                  <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+                  {% render 'icon-plus', classes: 'h-6 w-6 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
               </quantity-input>
             </div>
@@ -215,37 +162,43 @@
           {%- when 'variant_picker' -%}
             {%- unless product.has_only_default_variant -%}
               {%- if block.settings.picker_type == 'button' -%}
-                <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                <variant-radios class="no-js-hidden block mt-2" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
-                      <fieldset class="js product-form__input">
-                        <legend class="form__label">{{ option.name }}</legend>
-                        {%- for value in option.values -%}
-                          <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                name="{{ option.name }}"
-                                value="{{ value | escape }}"
-                                form="{{ product_form_id }}"
-                                {% if option.selected_value == value %}checked{% endif %}
+                    <fieldset class="js flex">
+                      <legend class="sr-only">{{ option.name }}</legend>
+                      {%- for value in option.values -%}
+                        <div>
+                          <input type="radio"
+                            id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                            class="peer hidden"
+                            name="{{ option.name }}"
+                            value="{{ value | escape }}"
+                            form="{{ product_form_id }}"
+                            {% if option.selected_value == value %}checked{% endif %}
                           >
-                          <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                          <label
+                            class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2"
+                            for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                          >
                             {{ value }}
                           </label>
-                        {%- endfor -%}
-                      </fieldset>
+                        </div>
+                      {%- endfor -%}
+                    </fieldset>
                   {%- endfor -%}
                   <script type="application/json">
                     {{ product.variants | json }}
                   </script>
                 </variant-radios>
               {%- else -%}
-                <variant-selects class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                <variant-selects class="no-js-hidden block mt-2" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
-                    <div class="product-form__input product-form__input--dropdown">
-                      <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+                    <div>
+                      <label class="sr-only" for="Option-{{ section.id }}-{{ forloop.index0 }}">
                         {{ option.name }}
                       </label>
                       <div class="select">
                         <select id="Option-{{ section.id }}-{{ forloop.index0 }}"
-                          class="select__select"
                           name="options[{{ option.name | escape }}]"
                           form="{{ product_form_id }}"
                         >
@@ -307,7 +260,7 @@
                     <button
                       type="submit"
                       name="add"
-                      class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout and product.selling_plan_groups == empty %}button--secondary{% else %}button--primary{% endif %}"
+                      class="product-form__submit button button-primary button-md {% if block.settings.show_dynamic_checkout and product.selling_plan_groups == empty %}button--secondary{% else %}button--primary{% endif %}"
                       {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                     >
                         <span>
@@ -714,16 +667,9 @@
       "info": "t:sections.main-product.settings.header.info"
     },
     {
-      "type": "checkbox",
-      "id": "hide_variants",
-      "default": false,
-      "label": "t:sections.main-product.settings.hide_variants.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_video_looping",
-      "default": false,
-      "label": "t:sections.main-product.settings.enable_video_looping.label"
+      "type": "textarea",
+      "id": "product_info_classes",
+      "label": "Product info wrapper classes"
     }
   ]
 }
