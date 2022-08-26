@@ -6,26 +6,26 @@
         "title": {
           "type": "title",
           "settings": {
-            "title_classes": "text-2xl tracking-wide"
+            "title_classes": "text-2xl tracking-wide col-span-4"
           }
         },
         "subtitle": {
           "type": "text",
           "settings": {
             "text": "{{ product.metafields.custom_fields.short_description.value }}",
-            "text_classes": ""
+            "text_classes": "col-span-4"
           }
         },
         "price": {
           "type": "price",
           "settings": {
-            "price_classes": ""
+            "price_classes": "col-span-2"
           }
         },
         "6a44c417-fd63-4240-a103-3540393f4f89": {
           "type": "rating",
           "settings": {
-            "rating_classes": ""
+            "rating_classes": "col-span-2"
           }
         },
         "variant_picker": {
