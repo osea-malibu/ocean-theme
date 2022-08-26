@@ -38,17 +38,20 @@
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {
+            "qty_classes": "col-span-1"
           }
         },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true
+            "show_dynamic_checkout": true,
+            "atc_classes": "col-span-3"
           }
         },
         "description": {
           "type": "description",
           "settings": {
+            "description_classes": "col-span-4"
           }
         },
         "share": {
