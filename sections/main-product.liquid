@@ -69,7 +69,7 @@
             {%- endif -%}
           {%- when 'description' -%}
             {%- if product.description != blank -%}
-              <div class="product__description rte">
+              <div class="{{ block.settings.description_classes }}">
                 {{ product.description }}
               </div>
             {%- endif -%}
@@ -94,7 +94,7 @@
               </details>
             </div>
           {%- when 'quantity_selector' -%}
-            <div {{ block.shopify_attributes }}>
+            <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
               <label class="sr-only" for="Quantity-{{ section.id }}">
                 {{ 'products.product.quantity.label' | t }}
               </label>
@@ -162,7 +162,7 @@
           {%- when 'variant_picker' -%}
             {%- unless product.has_only_default_variant -%}
               {%- if block.settings.picker_type == 'button' -%}
-                <variant-radios class="no-js-hidden block mt-2" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                <variant-radios class="no-js-hidden block mt-2 {{ block.settings.variant_classes }}" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
                     <fieldset class="js flex">
                       <legend class="sr-only">{{ option.name }}</legend>
@@ -242,7 +242,7 @@
               </div>
             </noscript>
           {%- when 'buy_buttons' -%}
-            <div {{ block.shopify_attributes }}>
+            <div class="{{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
               <product-form class="product-form" data-cart-type="{{ settings.cart_type }}">
                 <div class="product-form__error-message-wrapper" role="alert" hidden>
                   <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-error" viewBox="0 0 13 13">
@@ -416,7 +416,14 @@
     {
       "type": "quantity_selector",
       "name": "t:sections.main-product.blocks.quantity_selector.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "qty_classes",
+          "label": "Quantity classes"
+        }
+      ]
     },
     {
       "type": "variant_picker",
@@ -457,13 +464,25 @@
           "default": true,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.info"
+        },
+        {
+          "type": "textarea",
+          "id": "atc_classes",
+          "label": "ATC button classes"
         }
       ]
     },
     {
       "type": "description",
       "name": "t:sections.main-product.blocks.description.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "description_classes",
+          "label": "Description classes"
+        }
+      ]
     },
     {
       "type": "share",
