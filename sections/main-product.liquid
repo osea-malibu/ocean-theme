@@ -65,7 +65,7 @@
             </div>
           {%- when 'rating' -%}
             {%- if product.metafields.reviews.rating.value != blank -%}
-              {% render 'product-rating', product: product %}
+              {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
             {%- endif -%}
           {%- when 'description' -%}
             {%- if product.description != blank -%}
