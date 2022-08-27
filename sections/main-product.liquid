@@ -97,12 +97,12 @@
               <label class="sr-only" for="Quantity-{{ section.id }}">
                 {{ 'products.product.quantity.label' | t }}
               </label>
-              <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-sm mr-1">
-                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border p-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
+              <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-sm w-full">
+                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border py-1 pr-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
                   <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
                   {% render 'icon-minus', classes: 'h-6 w-6 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
-                <input class="quantity__input w-8 h-6 border-0 p-1"
+                <input class="quantity__input w-8 h-8 border-0 p-1 grow"
                     type="number"
                     name="quantity"
                     id="Quantity-{{ section.id }}"
@@ -110,7 +110,7 @@
                     value="1"
                     form="{{ product_form_id }}"
                   >
-                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border p-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
+                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border py-1 pr-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
                   <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
                   {% render 'icon-plus', classes: 'h-6 w-6 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
