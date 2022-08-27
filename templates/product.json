@@ -6,14 +6,15 @@
         "title": {
           "type": "title",
           "settings": {
-            "title_classes": "text-2xl tracking-wide col-span-4"
+            "title_classes": "text-2xl tracking-wide col-span-6"
           }
         },
         "subtitle": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "{{ product.metafields.custom_fields.short_description.value }}",
-            "text_classes": "col-span-4"
+            "text_classes": "col-span-6"
           }
         },
         "price": {
@@ -25,7 +26,7 @@
         "6a44c417-fd63-4240-a103-3540393f4f89": {
           "type": "rating",
           "settings": {
-            "rating_classes": "col-span-2"
+            "rating_classes": "col-span-4 text-right"
           }
         },
         "variant_picker": {
@@ -38,14 +39,14 @@
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {
-            "qty_classes": "col-span-1"
+            "qty_classes": "col-span-2"
           }
         },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
-            "atc_classes": "col-span-3"
+            "atc_classes": "col-span-2"
           }
         },
         "description": {
@@ -74,7 +75,7 @@
       ],
       "settings": {
         "enable_sticky_info": true,
-        "product_info_classes": "grid grid-cols-4"
+        "product_info_classes": "grid grid-cols-6"
       }
     },
     "product-recommendations": {
