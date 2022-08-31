@@ -943,35 +943,49 @@ class GlideSlider extends HTMLElement {
     super();
 
     this.id = this.getAttribute("id");
-    this.perView = this.dataset.perView;
-    console.log("this.perView", this.perView);
 
     this.initSlider();
+  }
+
+  camelize(string) {
+    return string.replace(/-./g, (x) => x[1].toUpperCase());
   }
 
   initSlider() {
     let options = {};
 
-    const twBreakpoints = {
-      "2xs": 400,
-      xs: 475,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-      "2xl": 1536,
-    };
-    //console.log("twBreakpoints", twBreakpoints);
-    //console.log("classes", this.classList);
-    const formattedClasses = this.classList.value.replace("per-view-", "perView:");
-    console.log("formattedClasses", formattedClasses);
-    this.classList.forEach((className) => {
-      const formattedClassName = className.replace("per-view-", "perView:");
-      console.log("formattedClassName", formattedClassName);
-      if (formattedClassName.includes("2xs:")) {
-      }
-    });
-    //per-view-1 sm:per-view-2 md:per-view-3 lg:per-view-4 xl:per-view-5
+    if (this.dataset.isCarousel) {
+      options.type = "carousel";
+    }
+
+    const classes = Array.from(this.classList);
+    if (classes.length > 0) {
+      const twBreakpoints = JSON.parse('{"2xs":400,"xs":475,"sm":640,"md":768,"lg":1024,"xl":1280,"2xl":1536}');
+      const optionTypes = ["per-view", "peek"];
+
+      optionTypes.forEach((type) => {
+        const typeClasses = classes.filter((i) => i.includes(type));
+
+        if (typeClasses.length > 0) {
+          const key = this.camelize(type);
+          typeClasses.forEach((className) => {
+            if (className.includes(":")) {
+              const splitClass = className.split(`:${type}-`);
+              console.log("splitClass", splitClass);
+              if (!options.breakpoints) {
+                options.breakpoints = {};
+              }
+              options.breakpoints[twBreakpoints[splitClass[0]]] = { [key]: parseInt(splitClass[1]) };
+            } else {
+              const value = parseInt(className.replace(`${type}-`, ""));
+              options[key] = value;
+            }
+          });
+        }
+      });
+    }
+
+    console.log("options", options);
 
     if (this.id === "Product-Slider") {
       options = {

@@ -6,12 +6,13 @@
         {{ section.settings.slider_classes }}
       "
       id="slider-{{ section.id }}"
-      data-per-view="{{ section.settings.slider_per_view | replace: " ", "" | replace: "'", '"' | escape }}"
+      data-per-view="{{ section.settings.slider_per_view | escape }}"
+      data-is-carousel="{{ section.settings.is_carousel }}"
     >
-      <div class="glide__track" data-glide-el="track">
+      <div class="glide__track {{ section.settings.row_classes }}" data-glide-el="track">
   {%- endif -%}
     <ul
-      class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0{% endif %} {{ section.settings.row_classes }}"
+      class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.row_classes }}{% endif %}"
       role="list"
       {% if section.settings.row_bg_image != blank %}
         style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"
@@ -174,6 +175,13 @@
       "label": "Slider"
     },
     {
+      "type": "checkbox",
+      "id": "is_carousel",
+      "info": "Carousels scroll infinitely",
+      "default": true,
+      "label": "Is carousel"
+    },
+    {
       "type": "number",
       "default": 3,
       "id": "slider_indicator_count",
@@ -212,12 +220,6 @@
       "type": "textarea",
       "id": "slider_classes",
       "label": "Slider classes"
-    },
-    {
-      "type": "html",
-      "id": "slider_per_view",
-      "info": "Display multiple slides per view. Format: JSON object, nested by breakpoint. Template: {\"475\": 1, \"640\": 1, \"768\": 1, \"1024\": 1, \"default\": 1}",
-      "label": "Slides per view"
     }
   ],
   "blocks": [
