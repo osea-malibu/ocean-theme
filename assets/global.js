@@ -942,6 +942,16 @@ class GlideSlider extends HTMLElement {
   constructor() {
     super();
 
+    this.id = this.getAttribute("id");
+    this.perView = this.dataset.perView;
+    console.log("this.perView", this.perView);
+
+    this.initSlider();
+  }
+
+  initSlider() {
+    let options = {};
+
     const twBreakpoints = {
       "2xs": 400,
       xs: 475,
@@ -951,13 +961,17 @@ class GlideSlider extends HTMLElement {
       xl: 1280,
       "2xl": 1536,
     };
-    console.log("twBreakpoints", twBreakpoints);
-
-    this.initSlider();
-  }
-
-  initSlider() {
-    let options = {};
+    //console.log("twBreakpoints", twBreakpoints);
+    //console.log("classes", this.classList);
+    const formattedClasses = this.classList.value.replace("per-view-", "perView:");
+    console.log("formattedClasses", formattedClasses);
+    this.classList.forEach((className) => {
+      const formattedClassName = className.replace("per-view-", "perView:");
+      console.log("formattedClassName", formattedClassName);
+      if (formattedClassName.includes("2xs:")) {
+      }
+    });
+    //per-view-1 sm:per-view-2 md:per-view-3 lg:per-view-4 xl:per-view-5
 
     if (this.id === "Product-Slider") {
       options = {

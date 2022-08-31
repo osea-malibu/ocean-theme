@@ -6,6 +6,7 @@
         {{ section.settings.slider_classes }}
       "
       id="slider-{{ section.id }}"
+      data-per-view="{{ section.settings.slider_per_view | replace: " ", "" | replace: "'", '"' | escape }}"
     >
       <div class="glide__track" data-glide-el="track">
   {%- endif -%}
@@ -215,7 +216,7 @@
     {
       "type": "html",
       "id": "slider_per_view",
-      "info": "Display multiple slides per view. Format: JSON object, nested by breakpoint. Template: {475: 1, 640: 1, 768: 1, 1024: 1, 1280: 1}",
+      "info": "Display multiple slides per view. Format: JSON object, nested by breakpoint. Template: {'475': 1, '640': 1, '768': 1, '1024': 1, 'default': 1}",
       "label": "Slides per view"
     }
   ],
