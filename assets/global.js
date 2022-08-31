@@ -954,7 +954,9 @@ class GlideSlider extends HTMLElement {
   initSlider() {
     let options = {};
 
-    if (this.dataset.isCarousel) {
+    console.log("this.dataset.isCarousel", this.dataset.isCarousel);
+    console.log("this.dataset.isCarousel type", typeof this.dataset.isCarousel);
+    if (this.dataset.isCarousel === "true") {
       options.type = "carousel";
     }
 
