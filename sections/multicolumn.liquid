@@ -1,15 +1,16 @@
 <div class="{{ section.settings.multicolumn_classes }}">
-  {%- if section.settings.is_slider -%}
-    <slider-component
-      class="
-        {% if section.settings.is_slider and section.blocks.size > 1 %}slider{% endif %} 
+  {%- if section.settings.is_slider and section.blocks.size > 1 -%}
+    <glide-slider
+      class="glide
         {% if section.settings.slider_breakpoint_limit != 'none' %}{{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %} 
         {{ section.settings.slider_classes }}
       "
+      id="slider-{{ section.id }}"
     >
+      <div class="glide__track" data-glide-el="track">
   {%- endif -%}
     <ul
-      class="{% if section.settings.is_slider %}slider-container{% else %}flex md:flex-shrink-0{% endif %} {{ section.settings.row_classes }}"
+      class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0{% endif %} {{ section.settings.row_classes }}"
       role="list"
       {% if section.settings.row_bg_image != blank %}
         style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"
@@ -17,7 +18,7 @@
     >
       {%- for block in section.blocks -%}
         <li
-          class="{{ block.settings.column_classes }}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
+          class="{{ block.settings.column_classes }}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
           {% if block.settings.is_bg_image %}style="background-image: url({{ block.settings.image | image_url: width: 1420 }})"{% endif %}
           {{ block.shopify_attributes }}
         >
@@ -85,23 +86,59 @@
       {%- endfor -%}
     </ul>
   {%- if section.settings.is_slider -%}
-    <button type="button" class="slider-nav slider-nav-prev{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}" aria-label="Go to previous">
-      <svg aria-hidden="true" class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6" />
-      </svg>
-    </button>
-    <button type="button" class="slider-nav slider-nav-next xs:right-2{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}" aria-label="Go to next">
-      <svg aria-hidden="true" class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-l-2 border-r-6 border-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6" />
-      </svg>
-    </button>
+      </div>
+      <button
+        type="button"
+        class="slider-nav slider-nav-prev{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+        aria-label="Go to previous"
+      >
+        <svg
+          aria-hidden="true"
+          class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="slider-nav slider-nav-next xs:right-2{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+        aria-label="Go to next"
+      >
+        <svg
+          aria-hidden="true"
+          class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-l-2 border-r-6 border-white"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
 
-    <ol class="slider-indicators{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}">
-      {%- for dot in (1..section.settings.slider_indicator_count) -%}
-        <li {% if forloop.first %}class="active"{% endif %}></li>
-      {%- endfor -%}
-    </ol>
-    </slider-component>
+      <ol
+        class="glide__bullets flex absolute bottom-0 left-1/2 -translate-x-1/2{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+        data-glide-el="controls[nav]"
+      >
+        {%- for dot in (1..section.settings.slider_indicator_count) -%}
+          <button
+            class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
+            data-glide-dir="={{ forloop.index0 }}"
+          >
+            <span class="sr-only">Go to slide {{ forloop.index }}</span>
+            <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
+          </button>
+        {%- endfor -%}
+      </ol>
+    </glide-slider>
   {%- endif -%}
 </div>
 
@@ -174,6 +211,12 @@
       "type": "textarea",
       "id": "slider_classes",
       "label": "Slider classes"
+    },
+    {
+      "type": "html",
+      "id": "slider_per_view",
+      "info": "Display multiple slides per view. Format: JSON object, nested by breakpoint. Template: {475: 1, 640: 1, 768: 1, 1024: 1, 1280: 1}",
+      "label": "Slides per view"
     }
   ],
   "blocks": [

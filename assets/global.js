@@ -942,7 +942,16 @@ class GlideSlider extends HTMLElement {
   constructor() {
     super();
 
-    this.id = this.getAttribute("id");
+    const twBreakpoints = {
+      "2xs": 400,
+      xs: 475,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      "2xl": 1536,
+    };
+    console.log("twBreakpoints", twBreakpoints);
 
     this.initSlider();
   }

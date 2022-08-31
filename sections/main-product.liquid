@@ -32,14 +32,14 @@
             </li>
           {%- endfor -%}
         </ul>
-        <div class="glide__bullets flex absolute bottom-0 left-0" data-glide-el="controls[nav]">
-          {%- for media in product.media limit: 4 -%}
-            <button class="glide__bullet p-2" data-glide-dir="={{ forloop.index0 }}">
-              <span class="sr-only">Go to slide {{ forloop.index }}</span>
-              <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
-            </button>
-          {%- endfor -%}
-        </div>
+      </div>
+      <div class="glide__bullets flex absolute bottom-0 left-0" data-glide-el="controls[nav]">
+        {%- for media in product.media limit: 4 -%}
+          <button class="glide__bullet p-2" data-glide-dir="={{ forloop.index0 }}">
+            <span class="sr-only">Go to slide {{ forloop.index }}</span>
+            <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
+          </button>
+        {%- endfor -%}
       </div>
     </glide-slider>
     <div class="container mx-auto px-6">
@@ -100,9 +100,9 @@
               <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-sm w-full">
                 <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border py-1 pr-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
                   <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-                  {% render 'icon-minus', classes: 'h-6 w-6 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                  {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
-                <input class="quantity__input w-8 h-8 border-0 p-1 grow"
+                <input class="quantity__input w-8 h-10 border-0 py-1 text-xl grow"
                     type="number"
                     name="quantity"
                     id="Quantity-{{ section.id }}"
@@ -110,9 +110,9 @@
                     value="1"
                     form="{{ product_form_id }}"
                   >
-                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border py-1 pr-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
+                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border py-1 pr-1 -mt-px -mb-px -mr-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
                   <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-                  {% render 'icon-plus', classes: 'h-6 w-6 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                  {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
               </quantity-input>
             </div>
@@ -363,7 +363,7 @@
 {
   "name": "t:sections.main-product.name",
   "tag": "section",
-  "class": "product-section spaced-section",
+  "class": "product-section",
   "blocks": [
     {
       "type": "@app"
