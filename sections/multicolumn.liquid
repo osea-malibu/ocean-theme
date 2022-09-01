@@ -90,57 +90,62 @@
     </ul>
   {%- if section.settings.is_slider -%}
       </div>
-      <button
-        type="button"
-        class="slider-nav slider-nav-prev{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
-        aria-label="Go to previous"
-      >
-        <svg
-          aria-hidden="true"
-          class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+      
+      {%- if section.settings.show_arrow_nav -%}
+        <button
+          type="button"
+          class="slider-nav slider-nav-prev{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+          aria-label="Go to previous"
         >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="slider-nav slider-nav-next xs:right-2{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
-        aria-label="Go to next"
-      >
-        <svg
-          aria-hidden="true"
-          class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-l-2 border-r-6 border-white"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
-      </button>
-
-      <ol
-        class="glide__bullets flex absolute bottom-0 left-1/2 -translate-x-1/2{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
-        data-glide-el="controls[nav]"
-      >
-        {%- for dot in (1..section.settings.slider_indicator_count) -%}
-          <button
-            class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
-            data-glide-dir="={{ forloop.index0 }}"
+          <svg
+            aria-hidden="true"
+            class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <span class="sr-only">Go to slide {{ forloop.index }}</span>
-            <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
-          </button>
-        {%- endfor -%}
-      </ol>
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="slider-nav slider-nav-next xs:right-2{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+          aria-label="Go to next"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-l-2 border-r-6 border-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      {%- endif -%}
+
+      {%- if section.settings.show_dot_nav -%}
+        <ol
+          class="glide__bullets flex absolute bottom-0 left-1/2 -translate-x-1/2{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+          data-glide-el="controls[nav]"
+        >
+          {%- for dot in (1..section.settings.slider_indicator_count) -%}
+            <button
+              class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
+              data-glide-dir="={{ forloop.index0 }}"
+            >
+              <span class="sr-only">Go to slide {{ forloop.index }}</span>
+              <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
+            </button>
+          {%- endfor -%}
+        </ol>
+      {%- endif -%}
     </glide-slider>
   {%- endif -%}
 </div>
