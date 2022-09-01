@@ -12,96 +12,96 @@
     >
       <div class="glide__track {{ section.settings.row_classes }}" data-glide-el="track">
   {%- endif -%}
-    <ul
-      class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.row_classes }}{% endif %}"
-      role="list"
-      {% if section.settings.row_bg_image != blank %}
-        style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"
-      {% endif %}
-    >
-      {%- for block in section.blocks -%}
-        <li
-          class="{{ block.settings.column_classes }}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
-          {% if block.settings.is_bg_image %}style="background-image: url({{ block.settings.image | image_url: width: 1420 }})"{% endif %}
-          {{ block.shopify_attributes }}
+        <ul
+          class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.row_classes }}{% endif %}"
+          role="list"
+          {% if section.settings.row_bg_image != blank %}
+            style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"
+          {% endif %}
         >
-          {%- case block.type -%}
-            {%- when 'column' %}
-              {%- if block.settings.image != nil and block.settings.is_bg_image == false -%}
-                {%- if block.settings.image_link != nil -%}
-                  <a href="{{ block.settings.image_link }}">
-                {%- endif -%}
-                  <picture class="{{ block.settings.image_wrapper_classes }}">
-                    {%- if block.settings.image_desktop != nil -%}
-                      <source
-                        srcset="{{ block.settings.image_desktop | image_url: width: 800 }} 1x, {{ block.settings.image_desktop | image_url: width: 1600 }} 2x"
-                        media="(min-width: 640px)"
-                      >
-                    {%- else -%}
-                      <source
-                        srcset="{{ block.settings.image | image_url: width: 800 }} 1x, {{ block.settings.image | image_url: width: 1600 }} 2x"
-                        media="(min-width: 640px)"
-                      >
+          {%- for block in section.blocks -%}
+            <li
+              class="{{ block.settings.column_classes }}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
+              {% if block.settings.is_bg_image %}style="background-image: url({{ block.settings.image | image_url: width: 1420 }})"{% endif %}
+              {{ block.shopify_attributes }}
+            >
+              {%- case block.type -%}
+                {%- when 'column' %}
+                  {%- if block.settings.image != nil and block.settings.is_bg_image == false -%}
+                    {%- if block.settings.image_link != nil -%}
+                      <a href="{{ block.settings.image_link }}">
                     {%- endif -%}
-                    <source
-                      srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
-                      media="(min-width: 0px)"
-                    >
-                    <img
-                      srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
-                      src="{{ block.settings.image | image_url: width: 800 }}"
-                      alt="{{ block.settings.image.alt }}"
-                      height="{{ block.settings.image.height }}"
-                      width="{{ block.settings.image.width }}"
-                      class="{{ block.settings.image_classes }}"
-                      loading="lazy"
-                    >
-                  </picture>
-                {%- if block.settings.image_link != nil -%}
-                  </a>
-                {%- endif -%}
-              {%- endif -%}
-              {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
-                <div class="{{ block.settings.text_classes }}">
-                  {%- if block.settings.heading != "" -%}
-                    <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
+                      <picture class="{{ block.settings.image_wrapper_classes }}">
+                        {%- if block.settings.image_desktop != nil -%}
+                          <source
+                            srcset="{{ block.settings.image_desktop | image_url: width: 800 }} 1x, {{ block.settings.image_desktop | image_url: width: 1600 }} 2x"
+                            media="(min-width: 640px)"
+                          >
+                        {%- else -%}
+                          <source
+                            srcset="{{ block.settings.image | image_url: width: 800 }} 1x, {{ block.settings.image | image_url: width: 1600 }} 2x"
+                            media="(min-width: 640px)"
+                          >
+                        {%- endif -%}
+                        <source
+                          srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
+                          media="(min-width: 0px)"
+                        >
+                        <img
+                          srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
+                          src="{{ block.settings.image | image_url: width: 800 }}"
+                          alt="{{ block.settings.image.alt }}"
+                          height="{{ block.settings.image.height }}"
+                          width="{{ block.settings.image.width }}"
+                          class="{{ block.settings.image_classes }}"
+                          loading="lazy"
+                        >
+                      </picture>
+                    {%- if block.settings.image_link != nil -%}
+                      </a>
+                    {%- endif -%}
                   {%- endif -%}
-                  {%- if block.settings.paragraph != "" -%}
-                    <div class="{{ block.settings.paragraph_classes }}">{{- block.settings.paragraph -}}</div>
+                  {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
+                    <div class="{{ block.settings.text_classes }}">
+                      {%- if block.settings.heading != "" -%}
+                        <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
+                      {%- endif -%}
+                      {%- if block.settings.paragraph != "" -%}
+                        <div class="{{ block.settings.paragraph_classes }}">{{- block.settings.paragraph -}}</div>
+                      {%- endif -%}
+                      {%- if block.settings.button_label != "" -%}
+                        <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
+                      {%- endif -%}
+                    </div>
                   {%- endif -%}
-                  {%- if block.settings.button_label != "" -%}
-                    <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
+                {%- when 'product' %}
+                  {%- if block.settings.product -%}
+                    {% render 'product-card',
+                      product_card_product: all_products[block.settings.product],
+                      show_secondary_image_on_hover: true,
+                      custom_default_image: block.settings.custom_product_image
+                      hide_badge: block.settings.hide_badge,
+                      subscription: block.settings.subscription
+                    %}
                   {%- endif -%}
-                </div>
-              {%- endif -%}
-            {%- when 'product' %}
-              {%- if block.settings.product -%}
-                {% render 'product-card',
-                  product_card_product: all_products[block.settings.product],
-                  show_secondary_image_on_hover: true,
-                  custom_default_image: block.settings.custom_product_image
-                  hide_badge: block.settings.hide_badge,
-                  subscription: block.settings.subscription
-                %}
-              {%- endif -%}
-          {%- endcase -%}
-        </li>
-      {%- endfor -%}
-    </ul>
+              {%- endcase -%}
+            </li>
+          {%- endfor -%}
+        </ul>
   {%- if section.settings.is_slider -%}
       </div>
       
       {%- if section.settings.show_arrow_nav -%}
         <div class="glide__arrows" data-glide-el="controls">
           <button
-            class="glide__arrow glide__arrow--left{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+            class="glide__arrow glide__arrow--left {{ section.settings.arrow_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
             aria-label="Go to previous"
             data-glide-dir="<"
           >
             {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white' %}
           </button>
           <button
-            class="glide__arrow glide__arrow--right{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+            class="glide__arrow glide__arrow--right {{ section.settings.arrow_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
             aria-label="Go to next"
             data-glide-dir=">"
           >
@@ -112,7 +112,7 @@
 
       {%- if section.settings.show_dot_nav -%}
         <ol
-          class="glide__bullets flex absolute bottom-0 left-1/2 -translate-x-1/2{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+          class="glide__bullets flex {{ section.settings.dot_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
           data-glide-el="controls[nav]"
         >
           {%- for dot in (1..section.settings.slider_indicator_count) -%}
@@ -215,10 +215,22 @@
       "label": "Show arrow nav"
     },
     {
+      "type": "textarea",
+      "default": "top-1/2 -translate-y-1/2",
+      "id": "arrow_nav_classes",
+      "label": "Arrow nav classes"
+    },
+    {
       "type": "checkbox",
       "id": "show_dot_nav",
       "default": false,
       "label": "Show dot nav"
+    },
+    {
+      "type": "textarea",
+      "default": "absolute bottom-1 left-1/2 -translate-x-1/2",
+      "id": "dot_nav_classes",
+      "label": "Dot nav classes"
     }
   ],
   "blocks": [
