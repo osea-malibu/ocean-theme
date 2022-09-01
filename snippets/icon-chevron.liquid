@@ -5,8 +5,9 @@
   - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
 
   Usage:
-  {% render 'icon-', classes: 'w-10 h-10 text-seaweed-700' %}
+  {% render 'icon-chevron', classes: 'w-10 h-10 text-seaweed-700' %}
 {% endcomment %}
 
 <svg{% if aria_hidden %} aria-hidden="true"{% endif %} focusable="false" class="{{ classes }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="15 18 9 12 15 6" />
 </svg>

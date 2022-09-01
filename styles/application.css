@@ -450,21 +450,34 @@
     -webkit-tap-highlight-color: transparent;
   }
   .glide__slide a {
-    user-select: none;
+    @apply select-none;
     -webkit-user-drag: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
   }
   .glide__arrows,
   .glide__bullets {
+    @apply select-none;
     -webkit-touch-callout: none;
-    user-select: none;
   }
   .glide__bullet {
     @apply opacity-50;
   }
   .glide__bullet--active {
     @apply opacity-100;
+  }
+  .glide.arrows-on-hover .glide__arrows {
+    @apply invisible;
+  }
+  .glide.arrows-on-hover:hover .glide__arrows {
+    @apply visible;
+  }
+  .glide__arrow {
+    @apply absolute top-1/2 -translate-y-1/2 opacity-80 hover:opacity-100;
+  }
+  .glide__arrow--left {
+    @apply left-2;
+  }
+  .glide__arrow--right {
+    @apply right-2;
   }
 }
 

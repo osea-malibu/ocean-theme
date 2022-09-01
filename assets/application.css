@@ -1527,19 +1527,18 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .glide__slide a {
   -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
   -webkit-user-drag: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
-.glide__arrows,
-  .glide__bullets {
-  -webkit-touch-callout: none;
+.glide__arrows, .glide__bullets {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .glide__bullet {
@@ -1548,6 +1547,34 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .glide__bullet--active {
   opacity: 1;
+}
+
+.glide.arrows-on-hover .glide__arrows {
+  visibility: hidden;
+}
+
+.glide.arrows-on-hover:hover .glide__arrows {
+  visibility: visible;
+}
+
+.glide__arrow {
+  position: absolute;
+  top: 50%;
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  opacity: 0.8;
+}
+
+.glide__arrow:hover {
+  opacity: 1;
+}
+
+.glide__arrow--left {
+  left: 0.5rem;
+}
+
+.glide__arrow--right {
+  right: 0.5rem;
 }
 
 .sr-only {
@@ -10026,11 +10053,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   background-color: rgb(250 249 241 / var(--tw-bg-opacity));
 }
 
-.bg-seaweed-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(110 149 139 / var(--tw-bg-opacity));
-}
-
 .bg-coral-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(255 111 97 / var(--tw-bg-opacity));
@@ -10059,6 +10081,11 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 .bg-seaweed-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(160 190 183 / var(--tw-bg-opacity));
+}
+
+.bg-seaweed-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(110 149 139 / var(--tw-bg-opacity));
 }
 
 .bg-seaweed-600 {
@@ -11447,6 +11474,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-right: 2rem;
 }
 
+.pr-1 {
+  padding-right: 0.25rem;
+}
+
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -11553,10 +11584,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pr-0 {
   padding-right: 0px;
-}
-
-.pr-1 {
-  padding-right: 0.25rem;
 }
 
 .pr-2 {
@@ -14533,10 +14560,6 @@ strong.highlight {
     white-space: normal;
   }
 
-  .xs\:right-2 {
-    right: 0.5rem;
-  }
-
   .xs\:top-0 {
     top: 0px;
   }
@@ -14859,6 +14882,10 @@ strong.highlight {
 
   .xs\:right-1 {
     right: 0.25rem;
+  }
+
+  .xs\:right-2 {
+    right: 0.5rem;
   }
 
   .xs\:right-3 {
