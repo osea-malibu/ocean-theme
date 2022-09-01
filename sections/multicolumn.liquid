@@ -8,6 +8,7 @@
       id="slider-{{ section.id }}"
       data-per-view="{{ section.settings.slider_per_view | escape }}"
       data-is-carousel="{{ section.settings.is_carousel }}"
+      data-breakpoint-limit="{{ section.settings.slider_breakpoint_limit }}"
     >
       <div class="glide__track {{ section.settings.row_classes }}" data-glide-el="track">
   {%- endif -%}
@@ -220,6 +221,18 @@
       "type": "textarea",
       "id": "slider_classes",
       "label": "Slider classes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow_nav",
+      "default": true,
+      "label": "Show arrow nav"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dot_nav",
+      "default": false,
+      "label": "Show dot nav"
     }
   ],
   "blocks": [

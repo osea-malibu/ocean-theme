@@ -954,8 +954,6 @@ class GlideSlider extends HTMLElement {
   initSlider() {
     let options = {};
 
-    console.log("this.dataset.isCarousel", this.dataset.isCarousel);
-    console.log("this.dataset.isCarousel type", typeof this.dataset.isCarousel);
     if (this.dataset.isCarousel === "true") {
       options.type = "carousel";
     }
@@ -963,7 +961,7 @@ class GlideSlider extends HTMLElement {
     const classes = Array.from(this.classList);
     if (classes.length > 0) {
       const twBreakpoints = JSON.parse('{"2xs":400,"xs":475,"sm":640,"md":768,"lg":1024,"xl":1280,"2xl":1536}');
-      const optionTypes = ["per-view", "peek"];
+      const optionTypes = ["per-view", "peek", "focus-at"];
 
       optionTypes.forEach((type) => {
         const typeClasses = classes.filter((i) => i.includes(type));
@@ -977,9 +975,13 @@ class GlideSlider extends HTMLElement {
               if (!options.breakpoints) {
                 options.breakpoints = {};
               }
-              options.breakpoints[twBreakpoints[splitClass[0]]] = { [key]: parseInt(splitClass[1]) };
+              options.breakpoints[twBreakpoints[splitClass[0]]] = {
+                ...options.breakpoints[twBreakpoints[splitClass[0]]],
+                [key]: isNaN(splitClass[1]) ? splitClass[1] : parseInt(splitClass[1]),
+              };
             } else {
-              const value = parseInt(className.replace(`${type}-`, ""));
+              const classNameValue = className.replace(`${type}-`, "");
+              const value = isNaN(classNameValue) ? classNameValue : parseInt(classNameValue);
               options[key] = value;
             }
           });
