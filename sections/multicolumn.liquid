@@ -1,13 +1,8 @@
 <div class="{{ section.settings.multicolumn_classes }}">
   {%- if section.settings.is_slider and section.blocks.size > 1 -%}
     <glide-slider
-      class="glide
-        {% if section.settings.slider_breakpoint_limit != 'none' %}{{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %} 
-        {{ section.settings.slider_classes }}
-      "
+      class="glide{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %}{% if section.settings.slider_classes != '' %} {{ section.settings.slider_classes }}{% endif %}"
       id="slider-{{ section.id }}"
-      data-per-view="{{ section.settings.slider_per_view | escape }}"
-      data-is-carousel="{{ section.settings.is_carousel }}"
       data-breakpoint-limit="{{ section.settings.slider_breakpoint_limit }}"
     >
       <div class="glide__track {{ section.settings.row_classes }}" data-glide-el="track">
@@ -160,13 +155,6 @@
       "id": "is_slider",
       "default": false,
       "label": "Slider"
-    },
-    {
-      "type": "checkbox",
-      "id": "is_carousel",
-      "info": "Carousels scroll infinitely",
-      "default": true,
-      "label": "Is carousel"
     },
     {
       "type": "number",

@@ -943,63 +943,64 @@ class GlideSlider extends HTMLElement {
     super();
 
     this.id = this.getAttribute("id");
+    this.options = {};
 
     this.initSlider();
   }
 
-  camelize(string) {
-    return string.replace(/-./g, (x) => x[1].toUpperCase());
-  }
-
   initSlider() {
-    let options = {};
-
-    if (this.dataset.isCarousel === "true") {
-      options.type = "carousel";
-    }
-
     const classes = Array.from(this.classList);
+
     if (classes.length > 0) {
       const twBreakpoints = JSON.parse('{"2xs":400,"xs":475,"sm":640,"md":768,"lg":1024,"xl":1280,"2xl":1536}');
-      const optionTypes = ["per-view", "peek", "focus-at"];
+      const optionTypes = ["perView", "peek", "focusAt", "type"];
+      const optionClasses = classes.filter((className) => optionTypes.some((optionType) => className.includes(optionType)));
 
-      optionTypes.forEach((type) => {
-        const typeClasses = classes.filter((i) => i.includes(type));
+      if (optionClasses.length > 0) {
+        optionClasses.forEach((className) => {
+          const splitClass = className.split(/[\:\.\-]/);
+          const valueString = splitClass[splitClass.length - 1];
+          const value = isNaN(valueString) ? valueString : parseInt(valueString);
 
-        if (typeClasses.length > 0) {
-          const key = this.camelize(type);
-          typeClasses.forEach((className) => {
-            if (className.includes(":")) {
-              const splitClass = className.split(`:${type}-`);
-              console.log("splitClass", splitClass);
-              if (!options.breakpoints) {
-                options.breakpoints = {};
-              }
-              options.breakpoints[twBreakpoints[splitClass[0]]] = {
-                ...options.breakpoints[twBreakpoints[splitClass[0]]],
-                [key]: isNaN(splitClass[1]) ? splitClass[1] : parseInt(splitClass[1]),
-              };
-            } else {
-              const classNameValue = className.replace(`${type}-`, "");
-              const value = isNaN(classNameValue) ? classNameValue : parseInt(classNameValue);
-              options[key] = value;
+          // if class has breakpoint modifier
+          if (className.includes(":")) {
+            if (!this.options.breakpoints) {
+              this.options.breakpoints = {};
             }
-          });
-        }
-      });
+
+            const breakpointInt = twBreakpoints[splitClass[0]];
+            this.options.breakpoints[breakpointInt] = {
+              ...this.options.breakpoints[breakpointInt],
+              [splitClass[1]]: splitClass[3]
+                ? {
+                    ...this.options.breakpoints[breakpointInt][splitClass[1]],
+                    [splitClass[2]]: value,
+                  }
+                : value,
+            };
+          } else {
+            this.options[splitClass[0]] = splitClass[2]
+              ? {
+                  ...this.options[splitClass[0]],
+                  [splitClass[1]]: value,
+                }
+              : value;
+          }
+        });
+      }
     }
 
-    console.log("options", options);
+    console.log("options", this.options);
 
     if (this.id === "Product-Slider") {
-      options = {
+      this.options = {
         type: "carousel",
         gap: 4,
         peek: { before: 0, after: 120 },
       };
     }
 
-    new Glide(`#${this.id}`, options).mount();
+    new Glide(`#${this.id}`, this.options).mount();
   }
 }
 
