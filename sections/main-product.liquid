@@ -68,7 +68,23 @@
           {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
-                {{ product.description }}
+                {%- if block.settings.is_collapsible -%}
+                  <details id="Details-{{ block.id }}-{{ section.id }}">
+                    <summary>
+                      <div class="summary__title">
+                        <h2 class="h4 accordion__title">
+                          Product description
+                        </h2>
+                      </div>
+                      {% render 'icon-caret' %}
+                    </summary>
+                    <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                      {{ product.description }}
+                    </div>
+                  </details>
+                {%- else -%}
+                  {{ product.description }}
+                {%- endif -%}
               </div>
             {%- endif -%}
           {%- when 'collapsible_tab' -%}
@@ -83,7 +99,7 @@
                   {% render 'icon-caret' %}
                 </summary>
                 <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                  {{ block.settings.content | escape }}
+                  {{ block.settings.content }}
                   {{ block.settings.page.content }}
                 </div>
               </details>
@@ -429,6 +445,11 @@
           "type": "textarea",
           "id": "description_classes",
           "label": "Description classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_collapsible",
+          "label": "Is collapsible tab"
         }
       ]
     },
