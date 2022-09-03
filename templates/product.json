@@ -61,7 +61,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Ingredients",
-            "content": "",
+            "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}<\/p>",
             "page": "",
             "tab_classes": "col-span-6"
           }
