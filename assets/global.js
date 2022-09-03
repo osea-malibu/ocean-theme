@@ -948,56 +948,78 @@ class GlideSlider extends HTMLElement {
     this.initSlider();
   }
 
+  getPath(currentBreakpoint) {
+    return currentBreakpoint ? this.options.breakpoints[currentBreakpoint] : this.options;
+  }
+
+  addOtherPeek(currentPeek, currentBreakpoint) {
+    const otherPeek = ["before", "after"].filter((i) => i !== currentPeek)[0];
+    const path = this.getPath(currentBreakpoint);
+
+    return path?.peek?.[otherPeek] ? {} : { [otherPeek]: 0 };
+  }
+
+  parseValue(valueString) {
+    let value;
+    if (isNaN(valueString)) {
+      value = ["true", "false"].includes(valueString) ? valueString === "true" : valueString;
+    } else {
+      value = parseInt(valueString);
+    }
+
+    return value;
+  }
+
+  buildOptionObject(level1, level2, level3, currentBreakpoint) {
+    return {
+      [level1]: level3
+        ? {
+            ...[this.getPath(currentBreakpoint)]?.[level1],
+            [level2]: this.parseValue(level3),
+            // fixes bug: property fails when only before/after is present
+            ...(level1 === "peek" && this.addOtherPeek(level2, currentBreakpoint)),
+          }
+        : this.parseValue(level2),
+    };
+  }
+
+  getOptions(optionClasses) {
+    const twBreakpoints = JSON.parse('{"2xs":400,"xs":475,"sm":640,"md":768,"lg":1024,"xl":1280,"2xl":1536}');
+
+    optionClasses.forEach((className) => {
+      const splitClass = className.split(/[\:\.\-]/);
+
+      // if class has breakpoint modifier
+      if (className.includes(":")) {
+        const breakpointInt = twBreakpoints[splitClass[0]];
+
+        if (!this.options.breakpoints) {
+          this.options.breakpoints = {};
+        }
+
+        this.options.breakpoints[breakpointInt] = {
+          ...this.options.breakpoints?.[breakpointInt],
+          ...this.buildOptionObject(splitClass[1], splitClass[2], splitClass[3], breakpointInt),
+        };
+      } else {
+        this.options = {
+          ...this.options,
+          ...this.buildOptionObject(splitClass[0], splitClass[1], splitClass[2]),
+        };
+      }
+    });
+  }
+
   initSlider() {
     const classes = Array.from(this.classList);
 
     if (classes.length > 0) {
-      const twBreakpoints = JSON.parse('{"2xs":400,"xs":475,"sm":640,"md":768,"lg":1024,"xl":1280,"2xl":1536}');
-      const optionTypes = ["perView", "peek", "focusAt", "type"];
+      const optionTypes = ["perView", "peek", "focusAt", "type", "bound", "gap"];
       const optionClasses = classes.filter((className) => optionTypes.some((optionType) => className.includes(optionType)));
 
       if (optionClasses.length > 0) {
-        optionClasses.forEach((className) => {
-          const splitClass = className.split(/[\:\.\-]/);
-          const valueString = splitClass[splitClass.length - 1];
-          const value = isNaN(valueString) ? valueString : parseInt(valueString);
-
-          // if class has breakpoint modifier
-          if (className.includes(":")) {
-            if (!this.options.breakpoints) {
-              this.options.breakpoints = {};
-            }
-
-            const breakpointInt = twBreakpoints[splitClass[0]];
-            this.options.breakpoints[breakpointInt] = {
-              ...this.options.breakpoints[breakpointInt],
-              [splitClass[1]]: splitClass[3]
-                ? {
-                    ...this.options.breakpoints[breakpointInt][splitClass[1]],
-                    [splitClass[2]]: value,
-                  }
-                : value,
-            };
-          } else {
-            this.options[splitClass[0]] = splitClass[2]
-              ? {
-                  ...this.options[splitClass[0]],
-                  [splitClass[1]]: value,
-                }
-              : value;
-          }
-        });
+        this.getOptions(optionClasses);
       }
-    }
-
-    console.log("options", this.options);
-
-    if (this.id === "Product-Slider") {
-      this.options = {
-        type: "carousel",
-        gap: 4,
-        peek: { before: 0, after: 120 },
-      };
     }
 
     new Glide(`#${this.id}`, this.options).mount();
