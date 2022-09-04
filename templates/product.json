@@ -36,6 +36,12 @@
             "variant_classes": "col-span-6 mb-2"
           }
         },
+        "b1cbaec2-3770-42c2-906e-d3f144bcda1f": {
+          "type": "subscription_picker",
+          "settings": {
+            "subscription_classes": "col-span-6"
+          }
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {
@@ -60,7 +66,6 @@
           "settings": {
             "heading": "Ingredients",
             "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}<\/p>",
-            "page": "",
             "tab_classes": "col-span-6"
           }
         },
@@ -69,7 +74,6 @@
           "settings": {
             "heading": "Skin types & concerns",
             "content": "",
-            "page": "",
             "tab_classes": "col-span-6"
           }
         },
@@ -78,7 +82,6 @@
           "settings": {
             "heading": "How to use",
             "content": "",
-            "page": "",
             "tab_classes": "col-span-6"
           }
         },
@@ -87,7 +90,6 @@
           "settings": {
             "heading": "Clinical & consumer results",
             "content": "",
-            "page": "",
             "tab_classes": "col-span-6"
           }
         },
@@ -96,7 +98,6 @@
           "settings": {
             "heading": "Scent profile",
             "content": "",
-            "page": "",
             "tab_classes": "col-span-6"
           }
         }
@@ -107,6 +108,7 @@
         "price",
         "6a44c417-fd63-4240-a103-3540393f4f89",
         "variant_picker",
+        "b1cbaec2-3770-42c2-906e-d3f144bcda1f",
         "quantity_selector",
         "buy_buttons",
         "78213a32-85e6-43d2-af28-5f9cb45c2e0c",
