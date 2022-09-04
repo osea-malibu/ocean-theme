@@ -192,7 +192,7 @@
             </noscript>
           {%- when 'subscription_picker' -%}
             {%- unless product.selling_plan_groups.size == 0 -%}
-              <fieldset class="js flex">
+              <fieldset class="js flex {{ block.settings.subscription_classes }}">
                 <legend class="sr-only">Deliver every:</legend>
                 {%- for value in product.selling_plan_groups[0].selling_plans -%}
                   <script>console.log("value", {{value}});</script>
