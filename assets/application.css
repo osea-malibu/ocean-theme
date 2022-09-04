@@ -5835,6 +5835,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   flex-shrink: 0;
 }
 
+.shrink {
+  flex-shrink: 1;
+}
+
 .flex-grow {
   flex-grow: 1;
 }
@@ -5889,6 +5893,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .basis-full {
   flex-basis: 100%;
+}
+
+.origin-center {
+  transform-origin: center;
 }
 
 .-translate-y-1\/2 {
@@ -13327,6 +13335,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   transition-duration: 300ms;
 }
 
+.ease-out {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .backface-hidden {
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
@@ -14344,6 +14360,11 @@ strong.highlight {
 
 .disabled\:opacity-50:disabled {
   opacity: 0.5;
+}
+
+.group[open] .group-open\:rotate-90 {
+  --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .group:hover .group-hover\:underline {
