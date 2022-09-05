@@ -197,6 +197,17 @@
     @apply bg-seaweed-700;
   }
 
+  /* Modal dialog (popup modal) */
+  modal-dialog {
+    @apply fixed inset-0 bg-seaweed-700/50 z-50 p-6;
+  }
+  modal-dialog [role="dialog"] {
+    @apply absolute top-1/2 left-6 right-6 -translate-y-1/2 bg-white rounded-sm px-6 py-10 shadow-xl shadow-seaweed-800/20;
+  }
+  modal-dialog button[id^="ModalClose-"] {
+    @apply absolute top-2 right-2 text-seaweed-600;
+  }
+
   /* Slider */
   slider-component {
     @apply relative block w-full;

@@ -103,11 +103,6 @@
                 </button>
               </quantity-input>
             </div>
-          {%- when 'popup' -%}
-              <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#PopupModal-{{ block.id }}" {{ block.shopify_attributes }}>
-                <button id="ProductPopup-{{ block.id }}" class="product-popup-modal__button link" type="button" aria-haspopup="dialog">{{ block.settings.text | default: block.settings.page.title }}</button>
-              </modal-opener>
-              <a href="{{ block.settings.page.url }}" class="product-popup-modal__button link no-js">{{ block.settings.text }}</a>
           {%- when 'variant_picker' -%}
             {%- unless product.has_only_default_variant -%}
               {%- if block.settings.picker_type == 'button' -%}
@@ -191,10 +186,11 @@
               </div>
             </noscript>
           {%- when 'subscription_picker' -%}
-            <script>console.log("product", {{ product | json }});</script>
-            <script>console.log("selling_plan_groups", {{ product.selling_plan_groups | json }});
-            console.log("product.metafields.custom.subscription_interval", {{ product.metafields.custom.subscription_interval }});
-          </script>
+            <script>
+              console.log("product", {{ product | json }});
+              console.log("selling_plan_groups", {{ product.selling_plan_groups | json }});
+              console.log("product.metafields.custom.subscription_interval", {{ product.metafields.custom.subscription_interval }});
+            </script>
             {%- unless product.selling_plan_groups.size == 0 -%}
               {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
               <subscription-radios
@@ -223,7 +219,12 @@
                         <div class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 transition-transform"></div>
                       </div>
                       {%- if option == 'autodeliver' -%}
-                        <span class="text-xs 2xs:tracking-wide block leading-tight mt-1">Skip or cancel anytime, free US shipping. <a class="underline">Learn more</a></span>
+                        <span class="text-xs 2xs:tracking-wide block leading-tight mt-1">
+                          Skip or cancel anytime, free US shipping.
+                          <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+                            <a id="SubscriptionPopup-{{ block.id }}" class="product-popup-modal__button underline" type="button" aria-haspopup="dialog">Learn more</a>
+                          </modal-opener>
+                        </span>
                         <div class="overflow-hidden max-h-0 peer-checked:max-h-20 transition-max-height">
                           <fieldset class="js flex mt-3 mb-2">
                             <legend class="text-sm font-medium">Delivery every</legend>
@@ -250,6 +251,17 @@
                     </label>
                   {%- endfor -%}
                 </fieldset>
+                <modal-dialog id="SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+                  <div role="dialog" aria-label="{{ block.settings.text }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+                    <button id="ModalClose-{{ block.id }}" type="button" aria-label="{{ 'accessibility.close' | t }}">
+                      {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
+                    </button>
+                    <div class="w-full">
+                      <h1 class="font-serif text-3xl tracking-tight">{{ block.settings.subscription_modal_heading }}</h1>
+                      {{ block.settings.subscription_modal_content }}
+                    </div>
+                  </div>
+                </modal-dialog>
               </subscription-radios>
 
               <!-- Pass the product object as JSON so it can be used to update selling plan information using JavaScript -->
@@ -317,20 +329,7 @@
         {%- endfor -%}
       </div>
     </div>
-  </div> 
-
-  {% assign popups = section.blocks | where: "type", "popup" %}
-  {%- for block in popups -%}
-    <modal-dialog id="PopupModal-{{ block.id }}" class="product-popup-modal" {{ block.shopify_attributes }}>
-      <div role="dialog" aria-label="{{ block.settings.text }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
-        <button id="ModalClose-{{ block.id }}" type="button" class="product-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
-        <div class="product-popup-modal__content-info">
-          <h1 class="h2">{{ block.settings.page.title }}</h1>
-          {{ block.settings.page.content }}
-        </div>
-      </div>
-    </modal-dialog>
-  {%- endfor -%}
+  </div>
 </section>
 
 <script>
@@ -492,6 +491,21 @@
           "type": "textarea",
           "id": "subscription_classes",
           "label": "Subscription classes"
+        },
+        {
+          "type": "header",
+          "content": "Subscription information modal"
+        },
+        {
+          "type": "text",
+          "default": "Subscribe & Save 10%",
+          "id": "subscription_modal_heading",
+          "label": "Modal heading"
+        },
+        {
+          "type": "html",
+          "id": "subscription_modal_content",
+          "label": "Modal content"
         }
       ]
     },
@@ -544,23 +558,6 @@
           "type": "textarea",
           "id": "tab_classes",
           "label": "Collapsible tab classes"
-        }
-      ]
-    },
-    {
-      "type": "popup",
-      "name": "t:sections.main-product.blocks.popup.name",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "default": "Pop-up link text",
-          "label": "t:sections.main-product.blocks.popup.settings.link_label.label"
-        },
-        {
-          "id": "page",
-          "type": "page",
-          "label": "t:sections.main-product.blocks.popup.settings.page.label"
         }
       ]
     },
