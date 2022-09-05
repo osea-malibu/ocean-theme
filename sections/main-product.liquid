@@ -66,7 +66,25 @@
               {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
             {%- endif -%}
           {%- when 'benefits' -%}
-            <script>console.log("benefits", {{product.metafields.benefits}});</script>
+            {%- if product.metafields.custom.benefits.value.size > 0 -%}
+              <div class="{{ block.settings.benefits_classes }}">
+                <h2 class="font-medium tracking-wide mb-2">Benefits</h2>
+                <ul class="flex justify-between">
+                  {%- for benefit in product.metafields.custom.benefits.value limit: 4 -%}
+                    <li class="w-1/5 flex flex-col items-center">
+                      {%- assign benefit_icon = benefit | handle -%}
+                      {%- render 'icon-benefit', icon: benefit_icon, stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
+                      {%- assign benefit_title_array = benefit | split: ' ' -%}
+                      <span class="text-center text-sm font-book leading-none tracking-wide">
+                        {%- for string in benefit_title_array -%}
+                          {{ string }}{%- unless forloop.last -%}<br/>{%- endunless -%}
+                        {%- endfor -%}
+                      </span>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
           {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
@@ -299,6 +317,17 @@
                   </div>
                 {%- endform -%}
               </product-form>
+            </div>
+          {%- when 'upsells' -%}
+            <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
+              <script>console.log("block.settings.upsell_enable_sets", {{block.settings.upsell_enable_sets}});</script>
+              {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets.value.size > 0 -%}
+                {%- for set in product.metafields.my_fields.save_with_sets.value -%}
+                  <div>set</div>
+                {%- endfor -%}
+              {%- elsif block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
+                <div>partner</div>
+              {%- endif -%}
             </div>
           {%- endcase -%}
         {%- endfor -%}
@@ -538,7 +567,7 @@
     },
     {
       "type": "rating",
-      "name": "t:sections.main-product.blocks.rating.name",
+      "name": "Star rating",
       "limit": 1,
       "settings": [
         {
@@ -554,13 +583,35 @@
     },
     {
       "type": "benefits",
-      "name": "Product benefits",
+      "name": "Benefits",
       "limit": 1,
       "settings": [
         {
           "type": "textarea",
           "id": "benefits_classes",
           "label": "Benefits classes"
+        }
+      ]
+    },
+    {
+      "type": "upsells",
+      "name": "Product upsells",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "upsell_classes",
+          "label": "Upsell classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "upsell_enable_partner",
+          "label": "Pair with product"
+        },
+        {
+          "type": "checkbox",
+          "id": "upsell_enable_sets",
+          "label": "Save with sets"
         }
       ]
     }
