@@ -504,10 +504,16 @@
     @apply font-regular bg-seafoam-300;
   }
 
+  /* Icon lists */
   .icon-list-check {
     @apply pl-6;
   }
   .icon-list-check li {
     @apply before:content-['\2713'] before:inline-block before:mr-2 before:-ml-6 before:w-4;
+  }
+
+  /* Underline */
+  .underline {
+    @apply decoration-1 underline-offset-1;
   }
 }

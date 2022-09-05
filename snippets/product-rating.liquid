@@ -4,6 +4,7 @@
     Accepts:
     - product: {Object} Product Liquid object (optional)
     - classes: {Object} Tailwind CSS classes (optional)
+    - compact: {Boolean} Removes "reviews" from count string. Default: false (optional)
 
     Usage:
     {% render 'product-rating', product: product %}
@@ -37,7 +38,7 @@
     </svg>
   {%- endfor -%}
   <p class="text-xs ml-0.5{% if product.handle == 'undaria-algae-body-butter' %} 2xs:hidden xs:flex{% endif %}">
-    <span aria-hidden="true">{{ product.metafields.reviews.rating_count }}</span>
+    <span aria-hidden="true" class="underline">{{ product.metafields.reviews.rating_count }}{% unless compact %} reviews{% endunless %}</span>
     <span class="sr-only">{{ product.metafields.reviews.rating_count }} {{ "accessibility.total_reviews" | t }}</span>
   </p>
 </div>

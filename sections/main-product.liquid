@@ -65,6 +65,8 @@
             {%- if product.metafields.reviews.rating.value != blank -%}
               {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
             {%- endif -%}
+          {%- when 'benefits' -%}
+            <script>console.log("benefits", {{product.metafields.benefits}});</script>
           {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
@@ -85,7 +87,7 @@
                 {{ 'products.product.quantity.label' | t }}
               </label>
               <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-sm w-full">
-                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border py-1 pr-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
+                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
                   <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
                   {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
@@ -97,7 +99,7 @@
                     value="1"
                     form="{{ product_form_id }}"
                   >
-                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-8 h-8 border py-1 pr-1 -mt-px -mb-px -mr-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
+                <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -mr-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
                   <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
                   {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
@@ -547,6 +549,18 @@
           "type": "textarea",
           "id": "rating_classes",
           "label": "Rating classes"
+        }
+      ]
+    },
+    {
+      "type": "benefits",
+      "name": "Product benefits",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "benefits_classes",
+          "label": "Benefits classes"
         }
       ]
     }
