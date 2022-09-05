@@ -58,7 +58,7 @@
               {{ product.title | escape }}
             </h1>
           {%- when 'price' -%}
-            <div class="no-js-hidden {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+            <div class="no-js-hidden main-price {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
               {%- render 'price', product: product, use_variant: true -%}
             </div>
           {%- when 'rating' -%}
@@ -186,11 +186,6 @@
               </div>
             </noscript>
           {%- when 'subscription_picker' -%}
-            <script>
-              console.log("product", {{ product | json }});
-              console.log("selling_plan_groups", {{ product.selling_plan_groups | json }});
-              console.log("product.metafields.custom.subscription_interval", {{ product.metafields.custom.subscription_interval }});
-            </script>
             {%- unless product.selling_plan_groups.size == 0 -%}
               {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
               <subscription-radios
@@ -222,7 +217,7 @@
                         <span class="text-xs 2xs:tracking-wide block leading-tight mt-1">
                           Skip or cancel anytime, free US shipping.
                           <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                            <a id="SubscriptionPopup-{{ block.id }}" class="product-popup-modal__button underline" type="button" aria-haspopup="dialog">Learn more</a>
+                            <button class="product-popup-modal__button underline" type="button" aria-haspopup="dialog">Learn more</button>
                           </modal-opener>
                         </span>
                         <div class="overflow-hidden max-h-0 peer-checked:max-h-20 transition-max-height">
@@ -263,28 +258,6 @@
                   </div>
                 </modal-dialog>
               </subscription-radios>
-
-              <!-- Pass the product object as JSON so it can be used to update selling plan information using JavaScript -->
-              {% comment %} <fieldset class="selling-plan-fieldset" data-product={{ product | json }}>
-                <legend>Purchase options</legend>
-                {% unless product.requires_selling_plan %}
-                <input type="radio" name="purchase_option"> One-time purchase
-                {% endunless %}
-
-                {% for group in product.selling_plan_groups %}
-                  <input type="radio" name="purchase_option"> {{ group.name}}
-
-                  {% for option in group.options %}
-                    <label>{{ option.name }}</label>
-
-                    <select data-position="{{ option.position }}">
-                      {% for value in option.values %}
-                        <option>{{ value }}</option>
-                      {% endfor %}
-                    </select>
-                  {% endfor %}
-                {% endfor %}
-              </fieldset> {% endcomment %}
             {%- endunless -%}
           {%- when 'buy_buttons' -%}
             <div class="{{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>

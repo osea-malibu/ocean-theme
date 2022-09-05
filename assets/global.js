@@ -441,6 +441,7 @@ class ModalDialog extends HTMLElement {
 
   show(opener) {
     this.openedBy = opener;
+    console.log("this.openedBy", this.openedBy);
     const popup = this.querySelector(".template-popup");
     document.body.classList.add("overflow-hidden");
     this.setAttribute("open", "");
@@ -467,6 +468,7 @@ class ModalOpener extends HTMLElement {
     if (!button) return;
     button.addEventListener("click", () => {
       const modal = document.querySelector(this.getAttribute("data-modal"));
+      console.log("modal", modal);
       if (modal) modal.show(button);
     });
   }
@@ -643,7 +645,6 @@ class SubscriptionRadios extends HTMLElement {
 
     this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
     this.sellingPlanInputs = Array.from(this.querySelectorAll('input[name="selling_plan"]'));
-    this.recommendedInterval = this.dataset.recommendedInterval;
 
     this.purchaseOptionInputs.forEach((input) => input.addEventListener("change", this.onPurchaseOptionChange.bind(this)));
   }
@@ -652,130 +653,37 @@ class SubscriptionRadios extends HTMLElement {
     const { value, checked } = e.currentTarget;
 
     if (checked) {
-      this.purchaseOptionInputs.forEach((input) => input.closest("label").classList.toggle("bg-wave-200", input.checked));
+      this.setActiveState();
+      this.updateMainPrice(e.currentTarget);
 
       if (value === "onetime") {
-        this.sellingPlanInputs.forEach((input) => (input.checked = false));
+        this.clearSellingPlanValues();
       } else if (value === "autodeliver") {
-        const defaultSellingPlanInt = this.recommendedInterval || 2;
-        const defaultSellingPlanInput = this.sellingPlanInputs[defaultSellingPlanInt - 1];
-
-        defaultSellingPlanInput.checked = true;
+        this.setDefaultSellingPlan();
       }
     }
   }
 
-  onChange() {
-    /* this.updateMasterId();
-    this.toggleAddButton(true, "", false);
-    this.removeErrorMessage();
-
-    if (!this.currentVariant) {
-      this.toggleAddButton(true, "", true);
-      this.setUnavailable();
-    } else {
-      this.updateMedia();
-      this.updateURL();
-      this.updateVariantInput();
-      this.renderProductInfo();
-    } */
+  setActiveState() {
+    this.purchaseOptionInputs?.forEach((input) => input.closest("label").classList.toggle("bg-wave-200", input.checked));
   }
 
-  updateMasterId() {
-    this.currentVariant = this.getVariantData().find((variant) => {
-      return !variant.options
-        .map((option, index) => {
-          return this.options[index] === option;
-        })
-        .includes(false);
-    });
+  updateMainPrice(currentTarget) {
+    const currentPrice = currentTarget.closest("label").querySelector(".price");
+    const mainPrice = document.querySelector(".main-price .price");
+
+    mainPrice.innerHTML = currentPrice.innerHTML;
   }
 
-  updateMedia() {
-    if (!this.currentVariant) return;
-    if (!this.currentVariant.featured_media) return;
-    if (window.location.pathname.includes("/products/")) {
-      // change first image in product page image gallery
-      const variantImageEl = document.querySelector("#Product-VariantImage");
-      const newImageSrc = this.currentVariant.featured_image.src;
-      variantImageEl.srcset = `${newImageSrc}&width=600 1x, ${newImageSrc}&width=1200 2x`;
-      variantImageEl.src = newImageSrc;
-    } else {
-      // change image in product card
-      const imageElement = document.getElementById(`ProductCard-DefaultImage-${this.dataset.section.split("-")[0]}`);
-      const newImageSrc = this.currentVariant.featured_media.preview_image.src;
-      imageElement.srcset = `${newImageSrc}&width=328 1x, ${newImageSrc}&width=656 2x`;
-      imageElement.src = newImageSrc;
-    }
+  clearSellingPlanValues() {
+    this.sellingPlanInputs?.forEach((input) => (input.checked = false));
   }
 
-  updateURL() {
-    if (!this.currentVariant || this.dataset.updateUrl === "false") return;
-    window.history.replaceState({}, "", `${this.dataset.url}?variant=${this.currentVariant.id}`);
-  }
+  setDefaultSellingPlan() {
+    const defaultSellingPlanInt = this.dataset.recommendedInterval || 2;
+    const defaultSellingPlanInput = this.sellingPlanInputs[defaultSellingPlanInt - 1];
 
-  updateVariantInput() {
-    const productForms = document.querySelectorAll(`#product-form-${this.dataset.section}, #product-form-installment`);
-    productForms.forEach((productForm) => {
-      const input = productForm.querySelector('input[name="id"]');
-      input.value = this.currentVariant.id;
-      input.dispatchEvent(new Event("change", { bubbles: true }));
-    });
-  }
-
-  removeErrorMessage() {
-    const section = this.closest("section");
-    if (!section) return;
-
-    const productForm = section.querySelector("product-form");
-    if (productForm) productForm.handleErrorMessage();
-  }
-
-  renderProductInfo() {
-    fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
-      .then((response) => response.text())
-      .then((responseText) => {
-        const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
-        const destination = document.getElementById(`price-${this.dataset.section}`);
-        const source = responseHTML.querySelector(".product .price").parentElement;
-        if (source && destination) destination.innerHTML = source.innerHTML;
-
-        this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
-      });
-  }
-
-  toggleAddButton(disable = true, text, modifyClass = true) {
-    const productForm = document.getElementById(`product-form-${this.dataset.section}`);
-    if (!productForm) return;
-    const addButton = productForm.querySelector('[name="add"]');
-    const addButtonText = productForm.querySelector('[name="add"] > span');
-
-    if (!addButton) return;
-
-    if (disable) {
-      addButton.setAttribute("disabled", "disabled");
-      if (text) addButtonText.textContent = text;
-    } else {
-      addButton.removeAttribute("disabled");
-      addButtonText.textContent = window.variantStrings.addToCart;
-    }
-
-    if (!modifyClass) return;
-  }
-
-  setUnavailable() {
-    const button = document.getElementById(`product-form-${this.dataset.section}`);
-    const addButton = button.querySelector('[name="add"]');
-    const addButtonText = button.querySelector('[name="add"] > span');
-    const price = document.getElementById(`price-${this.dataset.section}`);
-    if (!addButton) return;
-    addButtonText.textContent = window.variantStrings.unavailable;
-    if (price) price.classList.add("visibility-hidden");
-  }
-
-  getVariantData() {
-    this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
-    return this.variantData;
+    defaultSellingPlanInput.checked = true;
   }
 }
 

@@ -185,6 +185,7 @@ module.exports = {
         "max-height": "max-height",
         spacing: "margin, padding",
         "transform-opacity": "transform, opacity",
+        visibility: "visibility, opacity",
       },
     },
   },

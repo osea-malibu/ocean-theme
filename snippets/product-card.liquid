@@ -26,7 +26,7 @@
         </h3>
 
         {%- if product_card_product.metafields.reviews.rating.value != blank -%}
-          {% render 'product-rating', product: product_card_product %}
+          {% render 'product-rating', product: product_card_product, classes: 'h-5' %}
         {%- endif -%}
       </div>
 
