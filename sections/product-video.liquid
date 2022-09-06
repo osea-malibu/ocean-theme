@@ -1,6 +1,5 @@
 {% comment %}theme-check-disable RemoteAsset{% endcomment %}
 {{ 'video-section.css' | asset_url | stylesheet_tag }}
-{{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
 {%- assign video_sources = product.metafields.my_fields.pdp_video -%}
 {%- if video_sources.value.size > 0 -%}
@@ -16,17 +15,11 @@
         endif
       endfor
     -%}
-    <script>
-      console.log("video_sources", {{video_sources}});
-      console.log("source_mp4", "{{source_mp4}}");
-      console.log("source_mp4", "{{source_webm}}");
-      console.log("source_mp4", "{{source_jpg}}");
-    </script>
     <noscript>
-      <div class="video-section__media"
-        {% if source_jpg != nil %} style="padding-bottom: 80%;"{% endif %}
+      <div class="relative"
+        {% if source_jpg != nil %} style="padding-bottom: 56%;"{% endif %}
       >
-        <a href="{{ source_webm }}" class="video-section__poster media media--transparent media--landscape{% if source_jpg == blank %} video-section__placeholder{% endif %}">
+        <a href="{{ source_webm }}" class="absolute w-full h-full media media--transparent media--landscape{% if source_jpg == blank %} video-section__placeholder{% endif %}">
           {%- if source_jpg != nil -%}
             <img
               srcset="{{ source_jpg | append: '&width=375' }} 375w,
@@ -47,12 +40,12 @@
         </a>
       </div>
     </noscript>
-    <deferred-media class="video-section__media deferred-media no-js-hidden" data-media-id="{{ section.id }}"
-      {% if source_jpg != nil %} style="padding-bottom: 80%;"{% endif %}
+    <deferred-media class="relative deferred-media no-js-hidden overflow-visible" data-media-id="{{ section.id }}"
+      {% if source_jpg != nil %} style="padding-bottom: 56%;"{% endif %}
     >
       <button
         id="Deferred-Poster-Modal-{{ section.id }}"
-        class="video-section__poster media deferred-media__poster media--landscape"
+        class="absolute w-full h-full deferred-media__poster"
         type="button"
       >
         {%- if source_jpg != nil -%}
@@ -72,12 +65,12 @@
         {%- else -%}
           {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
         {%- endif -%}
-        <span class="deferred-media__poster-button motion-reduce">
+        <span class="deferred-media__poster-button">
           {%- render 'icon-play' -%}
         </span>
       </button>
       <template>
-        <video autoplay controls loop muted playsinline poster="{{ source_jpg }}">
+        <video autoplay controls loop muted playsinline poster="{{ source_jpg }}" class="bg-wave-200 border-0 absolute w-full h-full">
           <source src="{{ source_mp4 }}">
           <source src="{{ source_webm }}">
         </video>
@@ -90,8 +83,11 @@
 {
   "name": "t:sections.video.name",
   "tag": "section",
-  "class": "spaced-section spaced-section--full-width",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "If the metafield 'PDP Video' has URLs added, the video displays here. This section cannot be removed, to remove the video for a product, remove the URLs from the metafield. When adding video URLs to the metafield, include and mp4, webm, and jpg poster file."
+    },
     {
       "type": "text",
       "id": "description",
