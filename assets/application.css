@@ -6110,6 +6110,18 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   max-width: 1536px;
 }
 
+.max-w-\[200px\] {
+  max-width: 200px;
+}
+
+.max-w-\[160px\] {
+  max-width: 160px;
+}
+
+.max-w-\[140px\] {
+  max-width: 140px;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -48417,6 +48429,11 @@ strong.highlight {
     position: relative;
   }
 
+  .md\:sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+
   .md\:top-0 {
     top: 0px;
   }
@@ -49743,6 +49760,22 @@ strong.highlight {
 
   .md\:-left-full {
     left: -100%;
+  }
+
+  .md\:top-\[124px\] {
+    top: 124px;
+  }
+
+  .md\:top-\[144px\] {
+    top: 144px;
+  }
+
+  .md\:top-\[146px\] {
+    top: 146px;
+  }
+
+  .md\:top-\[148px\] {
+    top: 148px;
   }
 
   .md\:order-1 {
@@ -73449,6 +73482,18 @@ strong.highlight {
     left: -100%;
   }
 
+  .xl\:left-\[120px\] {
+    left: 120px;
+  }
+
+  .xl\:left-\[90px\] {
+    left: 90px;
+  }
+
+  .xl\:left-\[70px\] {
+    left: 70px;
+  }
+
   .xl\:order-1 {
     order: 1;
   }
@@ -76445,6 +76490,10 @@ strong.highlight {
 
   .xl\:flex-shrink {
     flex-shrink: 1;
+  }
+
+  .xl\:shrink-0 {
+    flex-shrink: 0;
   }
 
   .xl\:flex-grow-0 {

@@ -3,16 +3,14 @@
 
     Accepts:
     - product: {Object} Product Liquid object (optional)
-    - card_class: {String} Tailwind styling classes (optional)
-    - button_class: {String} Tailwind styling classes (optional)
-    - price_class: {String} Tailwind styling classes (optional)
+    - classes: {String} Tailwind styling classes (optional)
     - hide_price: {Boolean} Removes price from button element. Default: false (optional)
 
     Usage:
     {% render 'product-card-mini', product: section.settings.product %}
 {% endcomment %}
 
-<div class="flex flex-row relative bg-wave-200 px-4 py-2 gap-3 items-center {{ card_class }}">
+<div class="flex flex-row relative bg-wave-200 px-4 py-2 gap-3 items-center {{ classes }}">
   <div class="w-full order-1 grow flex flex-col items-start">
     <a href="{{ product.url | default: '#' }}" class="group text-sm tracking-wide leading-tight">
       <h4 class="font-medium group-hover:underline mb-0.5">
@@ -28,13 +26,13 @@
         <button
           type="submit"
           name="add"
-          class="button button-xs button-secondary w-full transition flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %} {{ button_class }}"
+          class="button button-xs button-secondary w-full transition flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}"
           {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
         >
           {%- if product.selected_or_first_available_variant.available -%}
             <span>Add to cart</span>
             {%- unless hide_price -%}
-              <span id="price-{{ product.id }}-{{ random_number }}" class="{{ price_class }}">
+              <span id="price-{{ product.id }}-{{ random_number }}">
                 {% render 'price',
                   product: product,
                   show_price_range: false,
