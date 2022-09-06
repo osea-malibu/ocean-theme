@@ -1,26 +1,30 @@
 <div class="{{ section.settings.wrapper_classes }}">
-  <h2 class="product-reviews__title h2">{{ section.settings.heading }}</h2>
-  {%- if product.metafields.my_fields.reformulation_date != blank -%}
-    <div class="product-reviews__reform">
-      <h3>This product’s formula was upgraded on {{ product.metafields.my_fields.reformulation_date | date: "%B %d, %Y" }}</h3>
-      {%- if product.metafields.my_fields.reformulation_details != blank -%}
-        <p>{{ product.metafields.my_fields.reformulation_details }}</p>
-      {%- endif -%}
+  <div class="container mx-auto px-6">
+    <h2 class="product-reviews__title h2">{{ section.settings.heading }}</h2>
+    {%- if product.metafields.my_fields.reformulation_date != blank -%}
+      <div class="product-reviews__reform">
+        <h3>This product’s formula was upgraded on {{ product.metafields.my_fields.reformulation_date | date: "%B %d, %Y" }}</h3>
+        {%- if product.metafields.my_fields.reformulation_details != blank -%}
+          <p>{{ product.metafields.my_fields.reformulation_details }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    <div
+      id="stamped-main-widget"
+      data-product-id="{{ product.id }}"
+      data-name="{{ product.title | escape }}"
+      data-url="{{ shop.url }}{{ product.url }}"
+      data-image-url="{{ product.featured_image | image_url: "large" | replace: '?', '%3F' | replace: '&', '%26' }}"
+      data-description="{{ product.description | strip_html | strip_newlines }}"
+      data-product-sku="{{ product.handle }}"
+      data-product-title="{{ product.title }}"
+      data-product-type="{{ product.type }}"
+      data-widget-show-summary-photo={{ section.settings.show_user_photos }}
+    >
+      {% if product.metafields.stamped.reviews != blank %}
+        {{ product.metafields.stamped.reviews }}
+      {% endif %}
     </div>
-  {%- endif -%}
-  <div
-    id="stamped-main-widget"
-    data-product-id="{{ product.id }}"
-    data-name="{{ product.title | escape }}"
-    data-url="{{ shop.url }}{{ product.url }}"
-    data-image-url="{{ product.featured_image | image_url: "large" | replace: '?', '%3F' | replace: '&', '%26' }}"
-    data-description="{{ product.description | escape }}"
-    data-product-sku="{{ product.handle }}"
-    data-product-title="{{ product.title }}"
-    data-product-type="{{ product.type }}">
-    {% if product.metafields.stamped.reviews != blank %}
-      {{ product.metafields.stamped.reviews }}
-    {% endif %}
   </div>
 </div>
 
@@ -44,6 +48,12 @@
       "id": "wrapper_classes",
       "label": "Section classes",
       "default": "container mx-auto px-6"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_user_photos",
+      "default": false,
+      "label": "Show user photos"
     }
   ]
 }
