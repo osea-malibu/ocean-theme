@@ -1,27 +1,21 @@
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
-
 <link rel="stylesheet" href="{{ 'component-deferred-media.css' | asset_url }}" media="print" onload="this.media='all'">
-
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <section id="main-product">
-  <div class="product">
-    <a class="skip-to-content-link button visually-hidden" href="#ProductInfo-{{ section.id }}">
+  <div class="flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start">
+    <a class="skip-to-content-link button sr-only" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
-    <glide-slider class="glide type-carousel gap-4 peek.after-120 mb-6" id="Product-Slider">
+    <glide-slider class="glide type-carousel gap-4 sm:peek.after-120 md:peek.after-120 mb-6 overflow-hidden max-w-full sm:perView-1 md:perView-2 perView-1" id="Product-Slider">
       {% render 'product-badge', product: product, classes: 'z-10' %}
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
           {%- for media in product.media limit: 4 -%}
-            <li
-              class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}"
-              data-media-id="{{ section.id }}-{{ media.id }}"
-            >
+            <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
               <img
                 id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
-                srcset="{{ media | image_url: width: 600 }} 1x,
-                  {{ media | image_url: width: 1200 }} 2x"
+                srcset="{{ media | image_url: width: 600 }} 1x, {{ media | image_url: width: 1200 }} 2x"
                 src="{{ media | image_url: width: 600 }}"
                 loading="lazy"
                 alt="{{ media.alt | escape }}"
@@ -36,12 +30,22 @@
         {%- for media in product.media limit: 4 -%}
           <button class="glide__bullet p-2" data-glide-dir="={{ forloop.index0 }}">
             <span class="sr-only">Go to slide {{ forloop.index }}</span>
-            <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
+            <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
+            <img
+              id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
+              srcset="{{ media | image_url: width: 48 }} 1x, {{ media | image_url: width: 96 }} 2x"
+              src="{{ media | image_url: width: 48 }}"
+              loading="lazy"
+              alt="{{ media.alt | escape }}"
+              width="{{ media.width }}"
+              height="{{ media.width | divided_by: media.aspect_ratio }}"
+              class="hidden md:block w-12"
+            >
           </button>
         {%- endfor -%}
       </div>
     </glide-slider>
-    <div class="container mx-auto px-6">
+    <div class="container mx-auto px-6 md:px-0">
       <div id="ProductInfo-{{ section.id }}" class="{{ section.settings.product_info_classes }}">
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
@@ -69,7 +73,7 @@
             {%- if product.metafields.custom.benefits.value.size > 0 -%}
               <div class="{{ block.settings.benefits_classes }}">
                 <h2 class="font-medium tracking-wide mb-2{% if block.settings.hide_label %} sr-only{% endif %}">Benefits</h2>
-                <ul class="flex justify-between">
+                <ul class="flex justify-between max-w-sm">
                   {%- for benefit in product.metafields.custom.benefits.value limit: 4 -%}
                     <li class="w-1/5 flex flex-col items-center">
                       {%- assign benefit_icon = benefit | handle -%}
@@ -125,63 +129,34 @@
             </div>
           {%- when 'variant_picker' -%}
             {%- unless product.has_only_default_variant -%}
-              {%- if block.settings.picker_type == 'button' -%}
-                <variant-radios class="no-js-hidden block {{ block.settings.variant_classes }}" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
-                  {%- for option in product.options_with_values -%}
-                    <fieldset class="js flex">
-                      <legend class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</legend>
-                      {%- for value in option.values -%}
-                        <div>
-                          <input type="radio"
-                            id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                            class="peer hidden"
-                            name="{{ option.name }}"
-                            value="{{ value | escape }}"
-                            form="{{ product_form_id }}"
-                            {% if option.selected_value == value %}checked{% endif %}
-                          >
-                          <label
-                            class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2"
-                            for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                          >
-                            {{ value }}
-                          </label>
-                        </div>
-                      {%- endfor -%}
-                    </fieldset>
-                  {%- endfor -%}
-                  <script type="application/json">
-                    {{ product.variants | json }}
-                  </script>
-                </variant-radios>
-              {%- else -%}
-                <variant-selects class="no-js-hidden block mt-2" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
-                  {%- for option in product.options_with_values -%}
-                    <div>
-                      <label class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-                        {{ option.name }}
-                      </label>
-                      <div class="select">
-                        <select id="Option-{{ section.id }}-{{ forloop.index0 }}"
-                          name="options[{{ option.name | escape }}]"
+              <variant-radios class="no-js-hidden block {{ block.settings.variant_classes }}" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                {%- for option in product.options_with_values -%}
+                  <fieldset class="js flex">
+                    <legend class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</legend>
+                    {%- for value in option.values -%}
+                      <div>
+                        <input type="radio"
+                          id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                          class="peer hidden"
+                          name="{{ option.name }}"
+                          value="{{ value | escape }}"
                           form="{{ product_form_id }}"
+                          {% if option.selected_value == value %}checked{% endif %}
                         >
-                          {%- for value in option.values -%}
-                            <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
-                              {{ value }}
-                            </option>
-                          {%- endfor -%}
-                        </select>
-                        {% render 'icon-caret' %}
+                        <label
+                          class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2"
+                          for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                        >
+                          {{ value }}
+                        </label>
                       </div>
-                    </div>
-                  {%- endfor -%}
-
-                  <script type="application/json">
-                    {{ product.variants | json }}
-                  </script>
-                </variant-selects>
-              {%- endif -%}
+                    {%- endfor -%}
+                  </fieldset>
+                {%- endfor -%}
+                <script type="application/json">
+                  {{ product.variants | json }}
+                </script>
+              </variant-radios>
             {%- endunless -%}
 
             <noscript class="product-form__noscript-wrapper-{{ section.id }}">
@@ -466,22 +441,6 @@
       "limit": 1,
       "settings": [
         {
-          "type": "select",
-          "id": "picker_type",
-          "options": [
-            {
-              "value": "dropdown",
-              "label": "t:sections.main-product.blocks.variant_picker.settings.picker_type.options__1.label"
-            },
-            {
-              "value": "button",
-              "label": "t:sections.main-product.blocks.variant_picker.settings.picker_type.options__2.label"
-            }
-          ],
-          "default": "button",
-          "label": "t:sections.main-product.blocks.variant_picker.settings.picker_type.label"
-        },
-        {
           "type": "textarea",
           "id": "variant_classes",
           "label": "Variant classes"
@@ -630,15 +589,21 @@
   ],
   "settings": [
     {
+      "type": "textarea",
+      "id": "product_info_classes",
+      "label": "Product info wrapper classes"
+    },
+    {
       "type": "checkbox",
       "id": "enable_sticky_info",
       "default": true,
       "label": "t:sections.main-product.settings.enable_sticky_info.label"
     },
     {
-      "type": "textarea",
-      "id": "product_info_classes",
-      "label": "Product info wrapper classes"
+      "type": "number",
+      "id": "product_gallery_limit",
+      "default": 6,
+      "label": "Image gallery limit"
     }
   ]
 }
