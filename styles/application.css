@@ -481,6 +481,12 @@
   .glide__bullet--active {
     @apply opacity-100;
   }
+  .glide__bullet img {
+    @apply border border-transparent transition-colors;
+  }
+  .glide__bullet--active img {
+    @apply opacity-100 border-seaweed-500;
+  }
   .glide.arrows-on-hover .glide__arrows {
     @apply invisible;
   }

@@ -5,12 +5,13 @@
   - id: {String} id value (required)
   - summary: {String} Summary title text (required)
   - content: {String/Object} content to expand/callapse (optional)
+  - default_open: {Boolean} Expanded content by default. Default: false (optional)
 
   Usage:
   {% render 'search-card', product: product %}
 {% endcomment %}
 
-<details class="accordion group" id="Details-{{ id }}">
+<details class="accordion group" id="Details-{{ id }}" {% if default_open %}open{% endif %}>
   <summary class="w-full py-2 flex">
     <h2 class="font-medium tracking-wide grow">
       {{- summary -}}

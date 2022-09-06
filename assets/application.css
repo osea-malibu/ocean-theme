@@ -1623,6 +1623,22 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   opacity: 1;
 }
 
+.glide__bullet img {
+  border-width: 1px;
+  border-color: transparent;
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.glide__bullet--active img {
+  --tw-border-opacity: 1;
+  border-color: rgb(110 149 139 / var(--tw-border-opacity));
+  opacity: 1;
+}
+
 .glide.arrows-on-hover .glide__arrows {
   visibility: hidden;
 }
@@ -4346,6 +4362,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-left: 0px;
 }
 
+.mb-0\.5 {
+  margin-bottom: 0.125rem;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+}
+
 .mt-0 {
   margin-top: 0px;
 }
@@ -4846,10 +4870,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-right: -0.875rem;
 }
 
-.mb-0 {
-  margin-bottom: 0px;
-}
-
 .mb-5 {
   margin-bottom: 1.25rem;
 }
@@ -4940,10 +4960,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .mb-auto {
   margin-bottom: auto;
-}
-
-.mb-0\.5 {
-  margin-bottom: 0.125rem;
 }
 
 .mb-1\.5 {
@@ -5426,6 +5442,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   height: 0.5rem;
 }
 
+.h-14 {
+  height: 3.5rem;
+}
+
 .h-3 {
   height: 0.75rem;
 }
@@ -5444,10 +5464,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .h-11 {
   height: 2.75rem;
-}
-
-.h-14 {
-  height: 3.5rem;
 }
 
 .h-16 {
@@ -5798,6 +5814,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   width: 0.5rem;
 }
 
+.w-14 {
+  width: 3.5rem;
+}
+
+.w-1\/5 {
+  width: 20%;
+}
+
 .w-3 {
   width: 0.75rem;
 }
@@ -5820,10 +5844,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .w-11 {
   width: 2.75rem;
-}
-
-.w-14 {
-  width: 3.5rem;
 }
 
 .w-16 {
@@ -5926,10 +5946,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   width: 75%;
 }
 
-.w-1\/5 {
-  width: 20%;
-}
-
 .w-2\/5 {
   width: 40%;
 }
@@ -6030,16 +6046,16 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   max-width: 20rem;
 }
 
+.max-w-sm {
+  max-width: 24rem;
+}
+
 .max-w-\[85\%\] {
   max-width: 85%;
 }
 
 .max-w-0 {
   max-width: 0rem;
-}
-
-.max-w-sm {
-  max-width: 24rem;
 }
 
 .max-w-2xl {
@@ -36339,52 +36355,6 @@ strong.highlight {
 }
 
 @media (min-width: 640px) {
-  .sm\:container {
-    width: 100%;
-  }
-
-  @media (min-width: 400px) {
-    .sm\:container {
-      max-width: 400px;
-    }
-  }
-
-  @media (min-width: 475px) {
-    .sm\:container {
-      max-width: 475px;
-    }
-  }
-
-  @media (min-width: 640px) {
-    .sm\:container {
-      max-width: 640px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .sm\:container {
-      max-width: 768px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .sm\:container {
-      max-width: 1024px;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .sm\:container {
-      max-width: 1280px;
-    }
-  }
-
-  @media (min-width: 1536px) {
-    .sm\:container {
-      max-width: 1536px;
-    }
-  }
-
   .sm\:button-xs {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -50231,6 +50201,11 @@ strong.highlight {
     margin: -0.875rem;
   }
 
+  .md\:mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .md\:mx-0 {
     margin-left: 0px;
     margin-right: 0px;
@@ -50379,11 +50354,6 @@ strong.highlight {
   .md\:mx-96 {
     margin-left: 24rem;
     margin-right: 24rem;
-  }
-
-  .md\:mx-auto {
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .md\:mx-0\.5 {
@@ -56005,16 +55975,20 @@ strong.highlight {
     align-items: flex-start;
   }
 
+  .md\:gap-6 {
+    gap: 1.5rem;
+  }
+
+  .md\:gap-2 {
+    gap: 0.5rem;
+  }
+
   .md\:gap-0 {
     gap: 0px;
   }
 
   .md\:gap-1 {
     gap: 0.25rem;
-  }
-
-  .md\:gap-2 {
-    gap: 0.5rem;
   }
 
   .md\:gap-3 {
@@ -56027,10 +56001,6 @@ strong.highlight {
 
   .md\:gap-5 {
     gap: 1.25rem;
-  }
-
-  .md\:gap-6 {
-    gap: 1.5rem;
   }
 
   .md\:gap-7 {
@@ -57994,6 +57964,11 @@ strong.highlight {
     padding-right: 1.5rem;
   }
 
+  .md\:py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
   .md\:px-0 {
     padding-left: 0px;
     padding-right: 0px;
@@ -58182,11 +58157,6 @@ strong.highlight {
   .md\:py-5 {
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
-  }
-
-  .md\:py-6 {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
   }
 
   .md\:py-7 {

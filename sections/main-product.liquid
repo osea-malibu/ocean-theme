@@ -26,9 +26,9 @@
           {%- endfor -%}
         </ul>
       </div>
-      <div class="glide__bullets flex absolute bottom-0 left-0" data-glide-el="controls[nav]">
+      <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2" data-glide-el="controls[nav]">
         {%- for media in product.media limit: section.settings.gallery_limit -%}
-          <button class="glide__bullet p-2" data-glide-dir="={{ forloop.index0 }}">
+          <button class="glide__bullet p-2 md:px-0" data-glide-dir="={{ forloop.index0 }}">
             <span class="sr-only">Go to slide {{ forloop.index }}</span>
             <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
             <img
@@ -39,7 +39,7 @@
               alt="{{ media.alt | escape }}"
               width="{{ media.width }}"
               height="{{ media.width | divided_by: media.aspect_ratio }}"
-              class="hidden md:block w-12"
+              class="hidden md:block w-14"
             >
           </button>
         {%- endfor -%}
@@ -101,7 +101,7 @@
             {%- endif -%}
           {%- when 'collapsible_tab' -%}
             <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
-              {% render 'accordion', id: "Details-{{ block.id }}-{{ section.id }}", summary: block.settings.heading, content: block.settings.content %}
+              {% render 'accordion', id: "Details-{{ block.id }}-{{ section.id }}", summary: block.settings.heading, content: block.settings.content, default_open: block.settings.default_open %}
             </div>
           {%- when 'quantity_selector' -%}
             <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
@@ -528,6 +528,11 @@
           "type": "textarea",
           "id": "tab_classes",
           "label": "Collapsible tab classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "default_open",
+          "label": "Open by default"
         }
       ]
     },
