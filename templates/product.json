@@ -41,7 +41,7 @@
           "settings": {
             "subscription_classes": "col-span-8 mb-4 mt-1",
             "subscription_modal_heading": "Subscribe & Save 10%",
-            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, pause, or cancel at anytime through your OSEA account.</p>\n<ul class=\"leading-tight tracking-wide icon-list-check mb-4\">\n<li class=\"mb-2\">10<span class=\"system-sans\">%</span> off every order</li>\n<li class=\"mb-2\">Free shipping on recurring orders</li>\n<li class=\"mb-2\">Early access to new products</li>\n<li>Skip, edit or cancel anytime</li>\n</ul>\n<button href=\"/pages/subscribe\" class=\"button button-sm button-secondary mb-2\">Learn more</button>\n<small class=\"block\">Click here for our <a href=\"/pages/terms-of-use\" class=\"underline\">Terms of Use</a>.</small>"
+            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, pause, or cancel at anytime through your OSEA account.<\/p>\n<ul class=\"leading-tight tracking-wide icon-list-check mb-4\">\n<li class=\"mb-2\">10<span class=\"system-sans\">%<\/span> off every order<\/li>\n<li class=\"mb-2\">Free shipping on recurring orders<\/li>\n<li class=\"mb-2\">Early access to new products<\/li>\n<li>Skip, edit or cancel anytime<\/li>\n<\/ul>\n<button href=\"\/pages\/subscribe\" class=\"button button-sm button-secondary mb-2\">Learn more<\/button>\n<small class=\"block\">Click here for our <a href=\"\/pages\/terms-of-use\" class=\"underline\">Terms of Use<\/a>.<\/small>"
           }
         },
         "quantity_selector": {
@@ -82,7 +82,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Ingredients",
-            "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}</p>",
+            "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}<\/p>",
             "tab_classes": "col-span-8",
             "default_open": false
           }
@@ -164,8 +164,18 @@
       }
     },
     "product-reviews": {
-      "type": "product-reviews"
+      "type": "product-reviews",
+      "settings": {
+        "heading": "Customer Reviews",
+        "wrapper_classes": "container mx-auto px-6",
+        "show_user_photos": true
+      }
     }
   },
-  "order": ["main", "product-video", "product-recommendations", "product-reviews"]
+  "order": [
+    "main",
+    "product-video",
+    "product-recommendations",
+    "product-reviews"
+  ]
 }
