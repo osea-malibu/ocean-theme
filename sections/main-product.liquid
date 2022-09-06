@@ -68,7 +68,7 @@
           {%- when 'benefits' -%}
             {%- if product.metafields.custom.benefits.value.size > 0 -%}
               <div class="{{ block.settings.benefits_classes }}">
-                <h2 class="font-medium tracking-wide mb-2">Benefits</h2>
+                <h2 class="font-medium tracking-wide mb-2{% if block.settings.hide_label %} sr-only{% endif %}">Benefits</h2>
                 <ul class="flex justify-between">
                   {%- for benefit in product.metafields.custom.benefits.value limit: 4 -%}
                     <li class="w-1/5 flex flex-col items-center">
@@ -597,6 +597,11 @@
           "type": "textarea",
           "id": "benefits_classes",
           "label": "Benefits classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_label",
+          "label": "Hide label"
         }
       ]
     },
