@@ -129,7 +129,7 @@
                 <variant-radios class="no-js-hidden block {{ block.settings.variant_classes }}" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
                     <fieldset class="js flex">
-                      <legend class="sr-only">{{ option.name }}</legend>
+                      <legend class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</legend>
                       {%- for value in option.values -%}
                         <div>
                           <input type="radio"
@@ -158,7 +158,7 @@
                 <variant-selects class="no-js-hidden block mt-2" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
                     <div>
-                      <label class="sr-only" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+                      <label class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}" for="Option-{{ section.id }}-{{ forloop.index0 }}">
                         {{ option.name }}
                       </label>
                       <div class="select">
@@ -320,10 +320,6 @@
             </div>
           {%- when 'upsells' -%}
             <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
-              <script>
-                console.log("product.metafields.my_fields.pair_with_product", {{ product.metafields.my_fields.pair_with_product.value | json }});
-                console.log("block.settings.upsell_enable_partner", {{block.settings.upsell_enable_partner}});
-              </script>
               {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
                 <h2 class="font-medium tracking-wide mb-1">Save with sets</h2>
                 {%- for set in product.metafields.my_fields.save_with_sets.value -%}
@@ -489,6 +485,11 @@
           "type": "textarea",
           "id": "variant_classes",
           "label": "Variant classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_variant_label",
+          "label": "Hide label"
         }
       ]
     },
