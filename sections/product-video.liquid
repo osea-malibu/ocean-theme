@@ -1,81 +1,90 @@
+{% comment %}theme-check-disable RemoteAsset{% endcomment %}
 {{ 'video-section.css' | asset_url | stylesheet_tag }}
 {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
-<div class="video-section {{ section.settings.wrapper_classes }}">
-  <div{% if section.settings.full_width %} class="page-width"{% endif %}>
-    <h2 class="title">{{ section.settings.heading }}</h2>
-  </div>
-  <noscript>
-    <div class="video-section__media"
-      {% if section.settings.cover_image != blank %} style="padding-bottom: {{ 1 | divided_by: section.settings.cover_image.aspect_ratio | times: 100 }}%;"{% endif %}
+{%- assign video_sources = product.metafields.my_fields.pdp_video -%}
+{%- if video_sources.value.size > 0 -%}
+  <div class="video-section {{ section.settings.wrapper_classes }}">
+    {%- liquid
+      for source in video_sources.value
+        if source contains 'mp4'
+          assign source_mp4 = source
+        elsif source contains 'webm'
+          assign source_webm = source
+        elsif source contains 'jpg'
+          assign source_jpg = source
+        endif
+      endfor
+    -%}
+    <script>
+      console.log("video_sources", {{video_sources}});
+      console.log("source_mp4", "{{source_mp4}}");
+      console.log("source_mp4", "{{source_webm}}");
+      console.log("source_mp4", "{{source_jpg}}");
+    </script>
+    <noscript>
+      <div class="video-section__media"
+        {% if source_jpg != nil %} style="padding-bottom: 80%;"{% endif %}
+      >
+        <a href="{{ source_webm }}" class="video-section__poster media media--transparent media--landscape{% if source_jpg == blank %} video-section__placeholder{% endif %}">
+          {%- if source_jpg != nil -%}
+            <img
+              srcset="{{ source_jpg | append: '&width=375' }} 375w,
+                {{ source_jpg | append: '&width=750' }} 750w,
+                {{ source_jpg | append: '&width=1100' }} 1100w,
+                {{ source_jpg | append: '&width=1500' }} 1500w,
+                {{ source_jpg | append: '&width=1780' }} 1780w,
+                {{ source_jpg | append: '&width=2000' }} 2000w"
+              src="{{ source_jpg | append: '&width=1280' }}"
+              alt="Loading {{ section.settings.description | escape }}"
+              loading="lazy"
+              width="1280"
+              height="1000"
+            >
+          {%- else -%}
+            {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+          {%- endif -%}
+        </a>
+      </div>
+    </noscript>
+    <deferred-media class="video-section__media deferred-media no-js-hidden" data-media-id="{{ section.id }}"
+      {% if source_jpg != nil %} style="padding-bottom: 80%;"{% endif %}
     >
-      <a href="{{ section.settings.video_url }}" class="video-section__poster media media--transparent media--landscape{% if section.settings.cover_image == blank %} video-section__placeholder{% endif %}">
-        {%- if section.settings.cover_image != blank -%}
+      <button
+        id="Deferred-Poster-Modal-{{ section.id }}"
+        class="video-section__poster media deferred-media__poster media--landscape"
+        type="button"
+      >
+        {%- if source_jpg != nil -%}
           <img
-            srcset="{%- if section.settings.cover_image.width >= 375 -%}{{ section.settings.cover_image | image_url: width: 375 }} 375w,{%- endif -%}
-              {%- if section.settings.cover_image.width >= 750 -%}{{ section.settings.cover_image | image_url: width: 750 }} 750w,{%- endif -%}
-              {%- if section.settings.cover_image.width >= 1100 -%}{{ section.settings.cover_image | image_url: width: 1100 }} 1100w,{%- endif -%}
-              {%- if section.settings.cover_image.width >= 1500 -%}{{ section.settings.cover_image | image_url: width: 1500 }} 1500w,{%- endif -%}
-              {%- if section.settings.cover_image.width >= 1780 -%}{{ section.settings.cover_image | image_url: width: 1780 }} 1780w,{%- endif -%}
-              {%- if section.settings.cover_image.width >= 2000 -%}{{ section.settings.cover_image | image_url: width: 2000 }} 2000w,{%- endif -%}
-              {%- if section.settings.cover_image.width >= 3000 -%}{{ section.settings.cover_image | image_url: width: 3000 }} 3000w,{%- endif -%}
-              {%- if section.settings.cover_image.width >= 3840 -%}{{ section.settings.cover_image | image_url: width: 3840 }} 3840w,{%- endif -%}
-              {{ section.settings.cover_image | image_url: width: 5760 }} {{ section.settings.cover_image.width }}w"
-            src="{{ section.settings.cover_image | image_url: width: 1920 }}"
-            sizes="{% if section.settings.full_width %}100vw{% else %}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw{% endif %}"
-            alt="{{ 'sections.video.load_video' | t: description: section.settings.description | escape }}"
+            srcset="{{ source_jpg | append: '&width=375' }} 375w,
+              {{ source_jpg | append: '&width=750' }} 750w,
+              {{ source_jpg | append: '&width=1100' }} 1100w,
+              {{ source_jpg | append: '&width=1500' }} 1500w,
+              {{ source_jpg | append: '&width=1780' }} 1780w,
+              {{ source_jpg | append: '&width=2000' }} 2000w"
+            src="{{ source_jpg | append: '&width=1280' }}"
+            alt="Loading {{ section.settings.description | escape }}"
             loading="lazy"
-            width="{{ section.settings.cover_image.width }}"
-            height="{{ section.settings.cover_image.height }}"
+            width="1280"
+            height="1000"
           >
         {%- else -%}
           {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
         {%- endif -%}
-      </a>
-    </div>
-  </noscript>
-  <deferred-media class="video-section__media deferred-media no-js-hidden" data-media-id="{{ section.settings.video_url.id }}"
-    {% if section.settings.cover_image != blank %} style="padding-bottom: {{ 1 | divided_by: section.settings.cover_image.aspect_ratio | times: 100 }}%;"{% endif %}
-  >
-    <button
-      id="Deferred-Poster-Modal-{{ section.settings.video_url.id }}"
-      class="video-section__poster media deferred-media__poster media--landscape"
-      type="button"
-    >
-      {%- if section.settings.cover_image != blank -%}
-        <img
-          srcset="{%- if section.settings.cover_image.width >= 375 -%}{{ section.settings.cover_image | image_url: width: 375 }} 375w,{%- endif -%}
-            {%- if section.settings.cover_image.width >= 750 -%}{{ section.settings.cover_image | image_url: width: 750 }} 750w,{%- endif -%}
-            {%- if section.settings.cover_image.width >= 1100 -%}{{ section.settings.cover_image | image_url: width: 1100 }} 1100w,{%- endif -%}
-            {%- if section.settings.cover_image.width >= 1500 -%}{{ section.settings.cover_image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {%- if section.settings.cover_image.width >= 1780 -%}{{ section.settings.cover_image | image_url: width: 1780 }} 1780w,{%- endif -%}
-            {%- if section.settings.cover_image.width >= 2000 -%}{{ section.settings.cover_image | image_url: width: 2000 }} 2000w,{%- endif -%}
-            {%- if section.settings.cover_image.width >= 3000 -%}{{ section.settings.cover_image | image_url: width: 3000 }} 3000w,{%- endif -%}
-            {%- if section.settings.cover_image.width >= 3840 -%}{{ section.settings.cover_image | image_url: width: 3840 }} 3840w,{%- endif -%}
-            {{ section.settings.cover_image | image_url: width: 5760 }} {{ section.settings.cover_image.width }}w"
-          src="{{ section.settings.cover_image | image_url: width: 1920 }}"
-          sizes="{% if section.settings.full_width %}100vw{% else %}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw{% endif %}"
-          alt="{{ 'sections.video.load_video' | t: description: section.settings.description | escape }}"
-          loading="lazy"
-          width="{{ section.settings.cover_image.width }}"
-          height="{{ section.settings.cover_image.height }}"
-        >
-      {%- else -%}
-        {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
-      {%- endif -%}
-      <span class="deferred-media__poster-button motion-reduce">
-        {%- render 'icon-play' -%}
-      </span>
-    </button>
-    <template>
-      {%- if section.settings.video_url.type == 'youtube' -%}
-        <iframe src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?enablejsapi=1" class="js-youtube" allow="autoplay; encrypted-media" allowfullscreen title="{{ section.settings.description | escape }}"></iframe>
-      {%- else -%}
-        <iframe src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}" class="js-vimeo" allow="autoplay; encrypted-media" allowfullscreen title="{{ section.settings.description | escape }}"></iframe>
-      {%- endif -%}
-    </template>
-  </deferred-media>
-</div>
+        <span class="deferred-media__poster-button motion-reduce">
+          {%- render 'icon-play' -%}
+        </span>
+      </button>
+      <template>
+        <video autoplay controls loop muted playsinline poster="{{ source_jpg }}">
+          <source src="{{ source_mp4 }}">
+          <source src="{{ source_webm }}">
+        </video>
+      </template>
+    </deferred-media>
+  </div>
+{%- endif -%}
 
 {% schema %}
 {
