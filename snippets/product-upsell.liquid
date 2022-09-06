@@ -1,0 +1,72 @@
+{% comment %}
+    Renders a product card
+
+    Accepts:
+    - product: {Object} Product Liquid object (optional)
+    - card_class: {String} Tailwind styling classes (optional)
+    - button_class: {String} Tailwind styling classes (optional)
+    - price_class: {String} Tailwind styling classes (optional)
+    - hide_price: {Boolean} Removes price from button element. Default: false (optional)
+
+    Usage:
+    {% render 'product-card-mini', product: section.settings.product %}
+{% endcomment %}
+
+<div class="flex flex-row relative bg-wave-200 px-4 py-2 gap-3 items-center {{ card_class }}">
+  <div class="w-full order-1 grow flex flex-col items-start">
+    <a href="{{ product.url | default: '#' }}" class="group text-sm tracking-wide leading-tight">
+      <h4 class="font-medium group-hover:underline mb-0.5">
+        {{ product.title | replace: ' - Sample', '' | escape }}
+      </h4>
+      <p class="group-hover:underline mb-1">{{ product.metafields.custom_fields.short_description }}</p>
+    </a>
+
+    {%- assign product_form_id = 'product-upsell-' | append: product.id -%}
+    <product-form data-cart-type="{{ settings.cart_type }}">
+      {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+        <button
+          type="submit"
+          name="add"
+          class="button button-xs button-secondary w-full transition flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %} {{ button_class }}"
+          {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+        >
+          {%- if product.selected_or_first_available_variant.available -%}
+            <span>Add to cart</span>
+            {%- unless hide_price -%}
+              <span id="price-{{ product.id }}-{{ random_number }}" class="{{ price_class }}">
+                {% render 'price',
+                  product: product,
+                  show_price_range: false,
+                  use_variant: true,
+                %}
+              </span>
+            {%- endunless -%}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      {%- endform -%}
+    </product-form>
+  </div>
+
+  {%- if product.featured_media -%}
+    <a
+      aria-label="{{ product.title | escape }}"
+      href="{{ product.url | default: '#' }}"
+      class="group relative block mx-auto no-underline shrink-0"
+      tabindex="-1"
+    >
+      <img
+        srcset="{{ product.featured_media | image_url: width: 160 }} 2x,
+          {{ product.featured_media | image_url: width: 80 }}"
+        src="{{ product.featured_media | image_url: width: 160 }}"
+        alt="{{ product.featured_media.alt | escape }}"
+        loading="lazy"
+        width="72"
+        height="72"
+        class="mx-auto"
+      >
+    </a>
+  {%- endif -%}
+</div>
