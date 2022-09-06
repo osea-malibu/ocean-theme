@@ -11,7 +11,7 @@
       {% render 'product-badge', product: product, classes: 'z-10' %}
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
-          {%- for media in product.media limit: 4 -%}
+          {%- for media in product.media limit: section.settings.gallery_limit -%}
             <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
               <img
                 id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
@@ -27,7 +27,7 @@
         </ul>
       </div>
       <div class="glide__bullets flex absolute bottom-0 left-0" data-glide-el="controls[nav]">
-        {%- for media in product.media limit: 4 -%}
+        {%- for media in product.media limit: section.settings.gallery_limit -%}
           <button class="glide__bullet p-2" data-glide-dir="={{ forloop.index0 }}">
             <span class="sr-only">Go to slide {{ forloop.index }}</span>
             <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
@@ -601,7 +601,7 @@
     },
     {
       "type": "number",
-      "id": "product_gallery_limit",
+      "id": "gallery_limit",
       "default": 6,
       "label": "Image gallery limit"
     }
