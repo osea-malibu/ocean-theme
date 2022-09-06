@@ -1,9 +1,11 @@
+{{ 'section-product-reviews.css' | asset_url | stylesheet_tag }}
+
 <div class="{{ section.settings.wrapper_classes }}">
-  <div class="container mx-auto px-6">
-    <h2 class="product-reviews__title h2">{{ section.settings.heading }}</h2>
+  <div class="container mx-auto px-6 xl:max-w-screen-xl tracking-tight">
+    <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
     {%- if product.metafields.my_fields.reformulation_date != blank -%}
-      <div class="product-reviews__reform">
-        <h3>This product’s formula was upgraded on {{ product.metafields.my_fields.reformulation_date | date: "%B %d, %Y" }}</h3>
+      <div class="bg-seaweed-400/10 p-6 leading-tight tracking-wide max-w-2xl mx-auto">
+        <h3 class="font-medium mb-2">This product’s formula was upgraded on {{ product.metafields.my_fields.reformulation_date | date: "%B %d, %Y" }}</h3>
         {%- if product.metafields.my_fields.reformulation_details != blank -%}
           <p>{{ product.metafields.my_fields.reformulation_details }}</p>
         {%- endif -%}
@@ -19,7 +21,8 @@
       data-product-sku="{{ product.handle }}"
       data-product-title="{{ product.title }}"
       data-product-type="{{ product.type }}"
-      data-widget-show-summary-photo={{ section.settings.show_user_photos }}
+      data-widget-type="minimal"
+      data-sort="most-recent"
     >
       {% if product.metafields.stamped.reviews != blank %}
         {{ product.metafields.stamped.reviews }}
@@ -46,14 +49,7 @@
     {
       "type": "textarea",
       "id": "wrapper_classes",
-      "label": "Section classes",
-      "default": "container mx-auto px-6"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_user_photos",
-      "default": false,
-      "label": "Show user photos"
+      "label": "Section classes"
     }
   ]
 }

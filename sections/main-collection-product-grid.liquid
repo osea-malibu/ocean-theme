@@ -8,16 +8,21 @@
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
-  <div class="page-width" id="main-collection-filters" data-id="{{ section.id }}">
-    {% render 'facets', results: collection, enable_filtering: section.settings.enable_filtering, enable_sorting: section.settings.enable_sorting, collapse_on_larger_devices: section.settings.collapse_on_larger_devices %}
+  <div class="container mx-auto px-6" id="main-collection-filters" data-id="{{ section.id }}">
+    {% render 'facets',
+      results: collection,
+      enable_filtering: section.settings.enable_filtering,
+      enable_sorting: section.settings.enable_sorting,
+      collapse_on_larger_devices: section.settings.collapse_on_larger_devices
+    %}
   </div>
 {%- endif -%}
 
 <div id="ProductGridContainer">
   {%- paginate collection.products by section.settings.products_per_page -%}
     {%- if collection.products.size == 0 -%}
-      <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
-        <div class="loading-overlay gradient"></div>
+      <div class="collection collection--empty container mx-auto px-6" id="product-grid" data-id="{{ section.id }}">
+        <div class="loading-overlay"></div>
         <div class="title-wrapper center">
           <h2 class="title title--primary">
             {{ 'sections.collection_template.empty' | t }}<br>
@@ -26,19 +31,15 @@
         </div>
       </div>
     {%- else -%}
-      <div class="collection page-width">
-        <div class="loading-overlay gradient"></div>
+      <div class="collection container mx-auto px-6">
+        <div class="loading-overlay"></div>
 
-        <ul id="product-grid" data-id="{{ section.id }}" class="
-          grid grid--2-col negative-margin product-grid
-          {% if collection.products_count < 4 %} grid--{{ collection.products_count }}-col-tablet{% else %}
-            {% if collection.products_count == 4 %} grid--4-col-desktop{% else %} grid--3-col-tablet grid--one-third-max grid--4-col-desktop grid--quarter-max{% endif %}
-          {% endif %}">
+        <ul id="product-grid" data-id="{{ section.id }}" class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-8">
           {%- for product in collection.products -%}
             <li class="grid__item">
               {% render 'product-card',
                 product_card_product: product,
-                show_secondary_image: section.settings.show_secondary_image
+                button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal'
               %}
             </li>
           {%- endfor -%}
@@ -65,16 +66,6 @@
       "step": 4,
       "default": 16,
       "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.main-collection-product-grid.settings.header__3.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
     },
     {
       "type": "header",

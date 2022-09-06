@@ -1,4 +1,5 @@
 .facets-container {
+  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
@@ -103,31 +104,27 @@
 .mobile-facets__sort .select__select:focus-visible {
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   outline-offset: 0.3rem;
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)),
-    0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
 }
 
 .mobile-facets__sort .select__select.focused,
 .no-js .mobile-facets__sort .select__select:focus {
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   outline-offset: 0.3rem;
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)),
-    0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
 }
 
 .facet-filters__sort:focus-visible {
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   outline-offset: 1rem;
-  box-shadow: 0 0 0 1rem rgb(var(--color-background)),
-    0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
+  box-shadow: 0 0 0 1rem rgb(var(--color-background)), 0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
 }
 
 .facet-filters__sort.focused,
 .no-js .facet-filters__sort:focus {
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   outline-offset: 1rem;
-  box-shadow: 0 0 0 1rem rgb(var(--color-background)),
-    0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
+  box-shadow: 0 0 0 1rem rgb(var(--color-background)), 0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
 }
 
 .no-js .facet-filters__sort:focus:not(:focus-visible),
@@ -246,7 +243,7 @@
 }
 
 .facets__item label,
-.facets__item input[type='checkbox'] {
+.facets__item input[type="checkbox"] {
   cursor: pointer;
 }
 
@@ -259,7 +256,7 @@
   word-break: break-word;
 }
 
-.facet-checkbox input[type='checkbox'] {
+.facet-checkbox input[type="checkbox"] {
   position: absolute;
   opacity: 1;
   width: 1.6rem;
@@ -285,7 +282,7 @@
   top: 1.4rem;
 }
 
-.facet-checkbox > input[type='checkbox']:checked ~ .icon-checkmark {
+.facet-checkbox > input[type="checkbox"]:checked ~ .icon-checkmark {
   visibility: visible;
 }
 
@@ -295,7 +292,7 @@
     border: 0.1rem solid rgb(var(--color-background));
   }
 
-  .facet-checkbox > input[type='checkbox']:checked ~ .icon-checkmark {
+  .facet-checkbox > input[type="checkbox"]:checked ~ .icon-checkmark {
     border: none;
   }
 }
@@ -436,17 +433,13 @@ a.active-facets__button.focused,
 }
 
 a.active-facets__button:focus-visible .active-facets__button-inner {
-  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.2),
-    0 0 0 0.2rem rgb(var(--color-background)),
-    0 0 0 0.4rem rgb(var(--color-foreground));
+  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.2), 0 0 0 0.2rem rgb(var(--color-background)), 0 0 0 0.4rem rgb(var(--color-foreground));
   outline: none;
 }
 
 a.active-facets__button.focused .active-facets__button-inner,
 .no-js a.active-facets__button:focus .active-facets__button-inner {
-  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.2),
-    0 0 0 0.2rem rgb(var(--color-background)),
-    0 0 0 0.4rem rgb(var(--color-foreground));
+  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.2), 0 0 0 0.2rem rgb(var(--color-background)), 0 0 0 0.4rem rgb(var(--color-foreground));
   outline: none;
 }
 
@@ -717,8 +710,7 @@ details.menu-opening .mobile-facets__close svg {
 }
 
 .js details[open] > .mobile-facets__submenu {
-  transition: transform 0.4s cubic-bezier(0.29, 0.63, 0.44, 1),
-    visibility 0.4s cubic-bezier(0.29, 0.63, 0.44, 1);
+  transition: transform 0.4s cubic-bezier(0.29, 0.63, 0.44, 1), visibility 0.4s cubic-bezier(0.29, 0.63, 0.44, 1);
 }
 
 .js details[open].menu-opening > .mobile-facets__submenu {
@@ -771,7 +763,7 @@ input.mobile-facets__checkbox {
   visibility: hidden;
 }
 
-.mobile-facets__label > input[type='checkbox']:checked ~ .icon-checkmark {
+.mobile-facets__label > input[type="checkbox"]:checked ~ .icon-checkmark {
   visibility: visible;
 }
 

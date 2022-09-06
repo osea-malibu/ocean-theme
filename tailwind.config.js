@@ -21,6 +21,7 @@ module.exports = {
     "system-serif",
     "text-right",
     "xl:[--swiffy-slider-item-count:5]",
+    "stamped-container",
     {
       pattern: /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
       variants: ["xs", "sm", "md", "lg", "hover"],

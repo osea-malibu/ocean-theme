@@ -24,7 +24,8 @@
 
 <div class="facets-container">
   {%- unless collapse_on_larger_devices -%}
-    <facet-filters-form class="facets small-hide">
+  {%- endunless -%}
+    <facet-filters-form class="facets">
       <form id="FacetFiltersForm" class="facets__form">
 
         {%- if results.terms -%}
@@ -248,9 +249,8 @@
         </div>          
       </form>
     </facet-filters-form>
-  {%- endunless -%}
 
-  <menu-drawer class="mobile-facets__wrapper {% unless collapse_on_larger_devices %} medium-hide large-up-hide{% endunless %}" data-breakpoint="mobile">
+  {% comment %} <menu-drawer class="mobile-facets__wrapper {% unless collapse_on_larger_devices %} medium-hide large-up-hide{% endunless %}" data-breakpoint="mobile">
     <details class="mobile-facets__disclosure disclosure-has-popup">
       <summary class="mobile-facets__open-wrapper focus-offset">
         <span class="mobile-facets__open">
@@ -451,7 +451,7 @@
         </form>
       </facet-filters-form>
     </details>
-  </menu-drawer>
+  </menu-drawer> {% endcomment %}
 
   <div class="active-facets active-facets-mobile {% unless collapse_on_larger_devices %} medium-hide large-up-hide{% endunless %}">
     {%- for filter in results.filters -%}
