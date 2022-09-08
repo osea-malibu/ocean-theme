@@ -3359,6 +3359,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   grid-row: span 6 / span 6;
 }
 
+.float-right {
+  float: right;
+}
+
 .m-0 {
   margin: 0px;
 }
@@ -24204,6 +24208,10 @@ strong.highlight {
 
   .\32xs\:tracking-wide {
     letter-spacing: .025em;
+  }
+
+  .\32xs\:tracking-widest {
+    letter-spacing: .1em;
   }
 
   .\32xs\:text-seafoam-100 {

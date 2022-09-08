@@ -20,14 +20,14 @@
 <div class="flex flex-col relative grow h-full">
   <div class="w-full order-1 grow flex flex-col">
     <a href="{{ product_card_product.url | default: '#' }}" class="group">
-      <div class="flex justify-between items-start">
+      <div class="">
+        {%- if product_card_product.metafields.reviews.rating.value != blank -%}
+          {% render 'product-rating', product: product_card_product, compact: true, classes: 'h-5 float-right' %}
+        {%- endif -%}
+
         <h3 class="text-lg font-medium leading-5 group-hover:underline underline-offset-1 decoration-1 tracking-wide{% if product_card_product.handle == 'undaria-algae-body-butter' %} xs:tracking-normal sm:tracking-wide{% endif %}">
           {{ product_card_product.title | escape }}
         </h3>
-
-        {%- if product_card_product.metafields.reviews.rating.value != blank -%}
-          {% render 'product-rating', product: product_card_product, compact: true, classes: 'h-5' %}
-        {%- endif -%}
       </div>
 
       <p class="text-sm group-hover:underline underline-offset-1 decoration-1 tracking-wide{% if product_card_product.handle == 'undaria-algae-oil' %} tracking-normal{% endif %} leading-tight">
@@ -121,7 +121,7 @@
                       {% if option.selected_value == value %}checked{% endif %}
                     >
                     <label
-                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2"
+                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-1 xs:mr-2 px-2.5 xs:px-3"
                       for="{{ product_card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ random_number }}"
                       tabindex="0"
                     >
