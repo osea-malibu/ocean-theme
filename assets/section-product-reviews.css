@@ -4,6 +4,7 @@ div#stamped-main-widget {
 }
 div#stamped-main-widget .stamped-container {
   font-family: "Circular", sans-serif;
+  max-width: 976px;
 }
 div#stamped-main-widget .summary-overview {
   margin-bottom: 1rem;
@@ -220,5 +221,8 @@ div#stamped-main-widget .stamped-fa-thumbs-up {
   }
   div#stamped-main-widget .stamped-filter-select {
     margin-bottom: 0;
+  }
+  #stamped-main-widget #stamped-sort-select2 {
+    max-width: 280px;
   }
 }

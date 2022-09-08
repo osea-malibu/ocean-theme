@@ -1,14 +1,14 @@
-<div class="{{ section.settings.multicolumn_classes }}">
+<div class="{{ section.settings.section_classes }}">
   {%- if section.settings.is_slider and section.blocks.size > 1 -%}
     <glide-slider
       class="glide{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %}{% if section.settings.slider_classes != '' %} {{ section.settings.slider_classes }}{% endif %}"
       id="slider-{{ section.id }}"
       data-breakpoint-limit="{{ section.settings.slider_breakpoint_limit }}"
     >
-      <div class="glide__track {{ section.settings.row_classes }}" data-glide-el="track">
+      <div class="glide__track {{ section.settings.container_classes }}" data-glide-el="track">
   {%- endif -%}
         <ul
-          class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.row_classes }}{% endif %}"
+          class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
           role="list"
           {% if section.settings.row_bg_image != blank %}
             style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"
@@ -133,13 +133,13 @@
   "settings": [
     {
       "type": "textarea",
-      "id": "multicolumn_classes",
-      "label": "Wrapper classes"
+      "id": "section_classes",
+      "label": "Section classes"
     },
     {
       "type": "textarea",
-      "id": "row_classes",
-      "label": "Row classes"
+      "id": "container_classes",
+      "label": "Container classes"
     },
     {
       "type": "image_picker",

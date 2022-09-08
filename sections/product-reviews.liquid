@@ -1,6 +1,7 @@
 {{ 'section-product-reviews.css' | asset_url | stylesheet_tag }}
 
 <div class="{{ section.settings.wrapper_classes }}">
+  <span class="block relative -top-32 invisible" id="reviews"></span>
   <div class="container mx-auto px-6 xl:max-w-screen-xl tracking-tight">
     <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
     {%- if product.metafields.my_fields.reformulation_date != blank -%}

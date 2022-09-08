@@ -1,10 +1,7 @@
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-price.css' | asset_url | stylesheet_tag }}
-{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
 
-{%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+{% comment %} {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
@@ -16,7 +13,7 @@
       collapse_on_larger_devices: section.settings.collapse_on_larger_devices
     %}
   </div>
-{%- endif -%}
+{%- endif -%} {% endcomment %}
 
 <div id="ProductGridContainer">
   {%- paginate collection.products by section.settings.products_per_page -%}
@@ -34,7 +31,7 @@
       <div class="collection container mx-auto px-6">
         <div class="loading-overlay"></div>
 
-        <ul id="product-grid" data-id="{{ section.id }}" class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-8">
+        <ul id="product-grid" data-id="{{ section.id }}" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
           {%- for product in collection.products -%}
             <li class="grid__item">
               {% render 'product-card',

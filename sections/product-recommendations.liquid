@@ -1,17 +1,19 @@
-<product-recommendations class="product-recommendations block container mx-auto px-6" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=5">
-  {% if recommendations.performed and recommendations.products_count > 0 %}
-    <h2 class="product-recommendations__heading">{{ section.settings.heading | escape }}</h2>
-    <ul class="grid grid-cols-5 gap-4" role="list">
-      {% for recommendation in recommendations.products %}
-        <li class="grid__item">
-          {% render 'product-card',
-            product_card_product: recommendation,
-            show_secondary_image: section.settings.show_secondary_image
-          %}
-        </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+<product-recommendations class="product-recommendations block {{ section.settings.section_classes }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=5">
+  <div class="{{ section.settings.container_classes }}">
+    {% if recommendations.performed and recommendations.products_count > 0 %}
+      <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
+      <ul class="grid grid-cols-5 gap-4" role="list">
+        {% for recommendation in recommendations.products %}
+          <li class="grid__item">
+            {% render 'product-card',
+              product_card_product: recommendation,
+              show_secondary_image: section.settings.show_secondary_image
+            %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
 </product-recommendations>
 
 {% javascript %}
@@ -56,10 +58,25 @@
       "content": "t:sections.product-recommendations.settings.paragraph__1.content"
     },
     {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Section classes"
+    },
+    {
+      "type": "textarea",
+      "id": "container_classes",
+      "label": "Container classes"
+    },
+    {
       "type": "text",
       "id": "heading",
       "default": "You may also like",
       "label": "t:sections.product-recommendations.settings.heading.label"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_classes",
+      "label": "Heading classes"
     },
     {
       "type": "header",
