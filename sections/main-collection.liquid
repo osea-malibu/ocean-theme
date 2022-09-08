@@ -1,4 +1,3 @@
-{{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
 
 {% comment %} {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
@@ -21,6 +20,7 @@
   {% else %}
     <h1>NOT SUBCOLLECTIONS</h1>
   {% endif %}
+
   {%- paginate collection.products by section.settings.products_per_page -%}
     {%- if collection.products.size == 0 -%}
       <div class="collection collection--empty container mx-auto px-6" id="product-grid" data-id="{{ section.id }}">
@@ -36,6 +36,7 @@
       <div class="collection container mx-auto px-6">
         <div class="loading-overlay"></div>
 
+        {% comment %} THIS SHOULD BE ITS OWN COMPONENT {% endcomment %}
         <ul id="product-grid" data-id="{{ section.id }}" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-4">
           {%- for product in collection.products -%}
             <li class="grid__item">
@@ -58,7 +59,6 @@
 {% schema %}
 {
   "name": "t:sections.main-collection-product-grid.name",
-  "class": "spaced-section collection-grid-section",
   "settings": [
     {
       "type": "range",

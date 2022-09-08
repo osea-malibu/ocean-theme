@@ -121,7 +121,7 @@
                       {% if option.selected_value == value %}checked{% endif %}
                     >
                     <label
-                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-1 xs:mr-2 px-2.5 xs:px-3"
+                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
                       for="{{ product_card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ random_number }}"
                       tabindex="0"
                     >
