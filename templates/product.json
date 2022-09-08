@@ -155,27 +155,25 @@
         "wrapper_classes": "container mx-auto px-6 xl:max-w-screen-xl mb-12"
       }
     },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "disabled": true,
-      "settings": {
-        "heading": "You may also like",
-        "show_secondary_image": false
-      }
-    },
     "product-reviews": {
       "type": "product-reviews",
       "settings": {
         "heading": "Customer Reviews",
-        "wrapper_classes": "",
-        "show_user_photos": true
+        "wrapper_classes": ""
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You may also like",
+        "show_secondary_image": false
       }
     }
   },
   "order": [
     "main",
     "product-video",
-    "product-recommendations",
-    "product-reviews"
+    "product-reviews",
+    "product-recommendations"
   ]
 }
