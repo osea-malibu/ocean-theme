@@ -451,7 +451,7 @@
         </form>
       </facet-filters-form>
     </details>
-  </menu-drawer> {% endcomment %}
+  </menu-drawer>
 
   <div class="active-facets active-facets-mobile {% unless collapse_on_larger_devices %} medium-hide large-up-hide{% endunless %}">
     {%- for filter in results.filters -%}
@@ -486,7 +486,8 @@
         <span>{{ 'products.facets.clear_all' | t }}</span>
       </a>
     </facet-remove>
-  </div>
+  </div> {% endcomment %}
+
   <div class="product-count light{% unless collapse_on_larger_devices %} medium-hide large-up-hide{% endunless %}" role="status">
     <h2 class="product-count__text font-sans">
       <span id="ProductCount">

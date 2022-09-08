@@ -1086,6 +1086,7 @@ class Accordion {
     this.el = el;
     this.summary = el.querySelector("summary");
     this.content = el.querySelector(".content");
+    this.duration = parseInt(el.dataset.duration);
 
     this.animation = null;
     this.isClosing = false;
@@ -1119,7 +1120,7 @@ class Accordion {
         height: [startHeight, endHeight],
       },
       {
-        duration: 400,
+        duration: this.duration,
         easing: "ease-in-out",
       }
     );
@@ -1148,7 +1149,7 @@ class Accordion {
         height: [startHeight, endHeight],
       },
       {
-        duration: 400,
+        duration: this.duration,
         easing: "ease-in-out",
       }
     );

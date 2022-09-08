@@ -4,7 +4,7 @@
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
-  <div class="container mx-auto px-6" id="main-collection-filters" data-id="{{ section.id }}">
+  <div class="container mx-auto px-6 relative z-10" id="main-collection-filters" data-id="{{ section.id }}">
     {% render 'facets',
       results: collection,
       enable_filtering: section.settings.enable_filtering,
@@ -13,38 +13,34 @@
     %}
   </div>
 {%- endif -%} {% endcomment %}
-<div id="ProductGridContainer">
+
+<div id="ProductGridContainer" class="container mx-auto px-6">
   {% assign subcollections = collection.metafields.my_fields.subcollections %}
   {% if subcollections and subcollections.value.size > 0 %}
-    <h1>SUBCOLLECTIONS</h1>
+    {% for subcollection in subcollections.value %}
+      {%- liquid
+        assign summary = collections[subcollection].title | replace: "Section: ", ""
+        capture subcollection_grid
+          render 'collection-product-grid', collection: collections[subcollection], id: section.id
+        endcapture
+
+        if collection.metafields.my_fields.featured_products == nil and forloop.first
+          assign is_default_open = true
+        else
+          assign is_default_open = false
+        endif
+      -%}
+      {% render 'accordion',
+        id: "Subcollection-{{ collections[subcollection].id }}",
+        summary: summary,
+        content: subcollection_grid,
+        default_open: is_default_open,
+        transition_duration: 800
+      %}
+    {% endfor %}
   {% else %}
-    <h1>NOT SUBCOLLECTIONS</h1>
+    {% render 'collection-product-grid', collection: collection, id: section.id %}
   {% endif %}
-
-  {%- paginate collection.products by section.settings.products_per_page -%}
-    {%- if collection.products.size == 0 -%}
-      <div class="collection collection--empty container mx-auto px-6" id="product-grid" data-id="{{ section.id }}">
-        <div class="loading-overlay"></div>
-        <div class="title-wrapper center">
-          <h2 class="title title--primary">
-            {{ 'sections.collection_template.empty' | t }}<br>
-            {{ 'sections.collection_template.use_fewer_filters_html' | t: link: collection.url, class: "underlined-link link" }}
-          </h2>
-        </div>
-      </div>
-    {%- else -%}
-      <div class="collection container mx-auto px-6">
-        <div class="loading-overlay"></div>
-
-        {% comment %} THIS SHOULD BE ITS OWN COMPONENT {% endcomment %}
-        
-
-        {%- if paginate.pages > 1 -%}
-          {% render 'pagination', paginate: paginate, anchor: '' %}
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-  {%- endpaginate -%}
 </div>
 
 {% schema %}
