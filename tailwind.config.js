@@ -9,6 +9,7 @@ module.exports = {
     "bg-[#ffb545]",
     "bg-[length:200%]",
     "bg-gradient-radial",
+    "border-b",
     "font-thin",
     "from-seaweed-800/30",
     "icon-list-check",
@@ -67,7 +68,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
-      pattern: /opacity-(0|5|10|20|25|30|40|50|60|70|75|80|90|100)/,
+      pattern: /(opacity|scale)-(0|5|10|20|25|30|40|50|60|70|75|80|90|100)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {

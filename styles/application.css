@@ -560,4 +560,21 @@
   .underline {
     @apply decoration-1 underline-offset-1;
   }
+
+  /* fancy scrollbars */
+  .scrollbar {
+    @apply pb-2;
+  }
+  .scrollbar::-webkit-scrollbar {
+    @apply w-1 h-1;
+  }
+  .scrollbar::-webkit-scrollbar-track {
+    @apply bg-seafoam-200 rounded-full;
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-seafoam-400 rounded-full;
+  }
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-seafoam-500;
+  }
 }

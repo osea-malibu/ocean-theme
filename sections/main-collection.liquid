@@ -14,33 +14,73 @@
   </div>
 {%- endif -%} {% endcomment %}
 
-<div id="ProductGridContainer" class="container mx-auto px-6">
-  {% assign subcollections = collection.metafields.my_fields.subcollections %}
-  {% if subcollections and subcollections.value.size > 0 %}
-    {% for subcollection in subcollections.value %}
+<div id="ProductGridContainer" class="container mx-auto px-6 mb-12">
+  {%- liquid
+    assign subcollections = collection.metafields.my_fields.subcollections
+    assign featured_products = collection.metafields.my_fields.featured_products
+  -%}
+  {%- if subcollections and subcollections.value.size > 0 -%}
+    <div class="flex overflow-x-auto scrollbar mb-4">
+      {%- if featured_products -%}
+        <a href="#Featured" aria-label="Jump to featured products section" class="button button-xs button-secondary mr-2">Featured</a>
+      {%- endif -%}
+      {%- for subcollection in subcollections.value -%}
+        {%- assign subcollection_title = collections[subcollection].title | replace: "Section: ", "" -%}
+        <a href="#{{ subcollection_title | handle }}" aria-label="Jump to {{ subcollection_title }} section" class="button button-xs button-secondary mr-2">{{ subcollection_title }}</a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+  {%- if featured_products -%}
+    {%- capture featured_products_grid -%}
+      <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-4">
+        {%- for product in featured_products.value -%}
+          <li>
+            {% render 'product-card',
+              product_card_product: product,
+              button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal',
+              badge_class: 'scale-[0.8] sm:scale-100 origin-top-left'
+            %}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endcapture -%}
+    {% render 'accordion',
+      id: 'Featured',
+      summary: 'Featured',
+      content: featured_products_grid,
+      default_open: true,
+      transition_duration: 800
+    %}
+  {%- endif -%}
+  {%- if subcollections and subcollections.value.size > 0 -%}
+    {%- for subcollection in subcollections.value -%}
       {%- liquid
         assign summary = collections[subcollection].title | replace: "Section: ", ""
+        assign summary_handle = summary | handle
+
         capture subcollection_grid
-          render 'collection-product-grid', collection: collections[subcollection], id: section.id
+          render 'collection-product-grid', products: collections[subcollection].value, id: section.id, url: collection.url
         endcapture
 
+        comment
         if collection.metafields.my_fields.featured_products == nil and forloop.first
           assign is_default_open = true
         else
           assign is_default_open = false
         endif
+        endcomment
       -%}
       {% render 'accordion',
-        id: "Subcollection-{{ collections[subcollection].id }}",
+        id: summary_handle,
         summary: summary,
         content: subcollection_grid,
-        default_open: is_default_open,
+        default_open: true,
         transition_duration: 800
       %}
-    {% endfor %}
-  {% else %}
-    {% render 'collection-product-grid', collection: collection, id: section.id %}
-  {% endif %}
+    {%- endfor -%}
+  {%- else -%}
+    {% render 'collection-product-grid', products: collection, id: section.id, url: collection.url %}
+  {%- endif -%}
 </div>
 
 {% schema %}

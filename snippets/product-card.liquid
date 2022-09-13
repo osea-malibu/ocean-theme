@@ -8,6 +8,7 @@
     - variant_picker_type: {'button' or 'dropdown'} Display mode of variant options, default: 'button' (optional)
     - button_class: {String} Tailwind styling classes (optional)
     - price_class: {String} Tailwind styling classes (optional)
+    - badge_class: {String} Tailwind styling classes (optional)
     - hide_badge: {Boolean}
     - subscription: {Boolean}
 
@@ -25,12 +26,12 @@
           {% render 'product-rating', product: product_card_product, compact: true, classes: 'h-5 float-right' %}
         {%- endif -%}
 
-        <h3 class="text-lg font-medium leading-5 group-hover:underline underline-offset-1 decoration-1 tracking-wide{% if product_card_product.handle == 'undaria-algae-body-butter' %} xs:tracking-normal sm:tracking-wide{% endif %}">
+        <h3 class="text-lg font-medium leading-5 hover:underline tracking-wide{% if product_card_product.handle == 'undaria-algae-body-butter' %} xs:tracking-normal sm:tracking-wide{% endif %}">
           {{ product_card_product.title | escape }}
         </h3>
       </div>
 
-      <p class="text-sm group-hover:underline underline-offset-1 decoration-1 tracking-wide{% if product_card_product.handle == 'undaria-algae-oil' %} tracking-normal{% endif %} leading-tight">
+      <p class="text-sm tracking-wide{% if product_card_product.handle == 'undaria-algae-oil' %} tracking-normal{% endif %} leading-tight">
         {%- if product_card_product.metafields.custom_fields.short_description == 'Daily moisturizer that creates a hydrating barrier' -%}
           Daily moisturizer for a hydrating barrier
         {%- else -%}
@@ -227,6 +228,6 @@
       </h2>
     {%- endif -%}
 
-    {% if hide_badge != true %}{% render 'product-badge', product: product_card_product %}{% endif %}
+    {% if hide_badge != true %}{% render 'product-badge', product: product_card_product, classes: badge_class %}{% endif %}
   </div>
 </div>

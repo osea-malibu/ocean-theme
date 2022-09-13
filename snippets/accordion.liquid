@@ -12,7 +12,7 @@
   {% render 'search-card', product: product %}
 {% endcomment %}
 
-<details class="accordion group" id="Details-{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
+<details class="accordion group" id="{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
   <summary class="w-full py-2 flex">
     <h2 class="font-medium tracking-wide grow">
       {{- summary -}}
