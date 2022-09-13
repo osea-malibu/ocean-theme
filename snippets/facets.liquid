@@ -5,9 +5,10 @@
     - results: {Object} Collection or Search object
     - enable_filtering: {Boolean} Show filtering when true
     - enable_sorting: {Boolean} Show sorting when true
+    - enable_anchors: {Boolean} Show section anchors when true
 
     Usage:
-    {% render 'facets', results: collection, enable_filtering: true, enable_sorting: true %}
+    {% render 'facets', results: collection, enable_filtering: true, enable_sorting: true, enable_anchors: true %}
 {% endcomment %}
 
 {%- liquid
