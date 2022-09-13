@@ -10,11 +10,11 @@
 
   <div class="container mx-auto px-6 relative z-10" id="main-collection-filters" data-id="{{ section.id }}">
     {%- liquid
-      if section.settings.enable_sorting and subcollections and subcollections.value.size > 0
+      unless section.settings.enable_sorting == false or subcollections or subcollections.value.size > 0
         assign enable_sorting = true
       else
         assign enable_sorting = false
-      endif
+      endunless
     -%}
     {% render 'facets',
       results: collection,
