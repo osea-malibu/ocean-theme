@@ -3,11 +3,17 @@
     "banner": {
       "type": "collection-banner",
       "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false
       }
     },
     "product-grid": {
       "type": "main-collection",
       "settings": {
+        "products_per_page": 16,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "enable_anchors": true
       }
     }
   },
