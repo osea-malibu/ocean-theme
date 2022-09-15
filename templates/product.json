@@ -6,7 +6,7 @@
         "title": {
           "type": "title",
           "settings": {
-            "title_classes": "text-2xl tracking-wider col-span-8"
+            "title_classes": "text-2xl tracking-wider col-span-12"
           }
         },
         "subtitle": {
@@ -14,32 +14,32 @@
           "disabled": true,
           "settings": {
             "text": "{{ product.metafields.custom_fields.short_description.value }}",
-            "text_classes": "col-span-8"
+            "text_classes": "col-span-12"
           }
         },
         "price": {
           "type": "price",
           "settings": {
-            "price_classes": "col-span-2 md:col-span-4 text-lg"
+            "price_classes": "col-span-4 md:col-span-6 text-lg"
           }
         },
         "6a44c417-fd63-4240-a103-3540393f4f89": {
           "type": "rating",
           "settings": {
-            "rating_classes": "col-span-6 md:col-span-4 ml-auto h-full"
+            "rating_classes": "col-span-8 md:col-span-6 ml-auto h-full"
           }
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "variant_classes": "col-span-8 my-4",
+            "variant_classes": "col-span-12 my-4",
             "hide_label": false
           }
         },
         "b1cbaec2-3770-42c2-906e-d3f144bcda1f": {
           "type": "subscription_picker",
           "settings": {
-            "subscription_classes": "col-span-8 mb-4 mt-1",
+            "subscription_classes": "col-span-12 mb-4 mt-1",
             "subscription_modal_heading": "Subscribe & Save 10%",
             "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, pause, or cancel at anytime through your OSEA account.<\/p>\n<ul class=\"leading-tight tracking-wide icon-list-check mb-4\">\n<li class=\"mb-2\">10<span class=\"system-sans\">%<\/span> off every order<\/li>\n<li class=\"mb-2\">Free shipping on recurring orders<\/li>\n<li class=\"mb-2\">Early access to new products<\/li>\n<li>Skip, edit or cancel anytime<\/li>\n<\/ul>\n<button href=\"\/pages\/subscribe\" class=\"button button-sm button-secondary mb-2\">Learn more<\/button>\n<small class=\"block\">Click here for our <a href=\"\/pages\/terms-of-use\" class=\"underline\">Terms of Use<\/a>.<\/small>"
           }
@@ -47,26 +47,26 @@
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {
-            "qty_classes": "col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-2 mr-2"
+            "qty_classes": "col-span-4 lg:col-span-3 mr-2"
           }
         },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "atc_classes": "col-span-5 sm:col-span-6 md:col-span-5 lg:col-span-6"
+            "atc_classes": "col-span-8 lg:col-span-9"
           }
         },
         "ab50b385-6599-4b94-8014-2dd6ab1517d4": {
           "type": "benefits",
           "settings": {
-            "benefits_classes": "col-span-8 mt-6",
+            "benefits_classes": "col-span-12 mt-6",
             "hide_label": false
           }
         },
         "f8ca449b-3a83-411f-ac44-40e011b825f3": {
           "type": "upsells",
           "settings": {
-            "upsell_classes": "col-span-8 mt-6",
+            "upsell_classes": "col-span-12 mt-6",
             "upsell_enable_sets": true,
             "upsell_enable_partner": true
           }
@@ -74,7 +74,7 @@
         "78213a32-85e6-43d2-af28-5f9cb45c2e0c": {
           "type": "description",
           "settings": {
-            "description_classes": "col-span-8 mt-6",
+            "description_classes": "col-span-12 mt-6",
             "is_collapsible": true
           }
         },
@@ -83,7 +83,7 @@
           "settings": {
             "heading": "Ingredients",
             "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}<\/p>",
-            "tab_classes": "col-span-8",
+            "tab_classes": "col-span-12",
             "default_open": false
           }
         },
@@ -92,7 +92,7 @@
           "settings": {
             "heading": "Skin types & concerns",
             "content": "",
-            "tab_classes": "col-span-8",
+            "tab_classes": "col-span-12",
             "default_open": false
           }
         },
@@ -101,7 +101,7 @@
           "settings": {
             "heading": "How to use",
             "content": "",
-            "tab_classes": "col-span-8",
+            "tab_classes": "col-span-12",
             "default_open": false
           }
         },
@@ -110,7 +110,7 @@
           "settings": {
             "heading": "Clinical & consumer results",
             "content": "",
-            "tab_classes": "col-span-8",
+            "tab_classes": "col-span-12",
             "default_open": false
           }
         },
@@ -119,7 +119,7 @@
           "settings": {
             "heading": "Scent profile",
             "content": "",
-            "tab_classes": "col-span-8",
+            "tab_classes": "col-span-12",
             "default_open": false
           }
         }
@@ -143,7 +143,7 @@
         "2be71f88-a851-442c-a3db-86272956d562"
       ],
       "settings": {
-        "product_info_classes": "grid grid-cols-8 mb-8 pb-8 border-b border-seaweed-400",
+        "product_info_classes": "grid grid-cols-12 mb-8 pb-8 border-b border-seaweed-400",
         "enable_sticky_info": true,
         "gallery_limit": 6
       }
