@@ -79,7 +79,6 @@
                             <summary class="menu-drawer__menu-item flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}">
                               <span class="mr-3">{{ link.title | escape }}</span>
                               {% render 'icon-arrow', variant: 'short', aria_hidden: true classes: 'h-6 w-6', stroke_width: '1.5' %}
-                              {% render 'icon-caret' %}
                             </summary>
                             {% comment %} L2 Drawer {% endcomment %}
                             <div id="link-{{ link.title | escape }}" class="menu-drawer__submenu motion-reduce absolute inset-x-0 top-0 bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
