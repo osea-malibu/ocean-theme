@@ -78,12 +78,7 @@
                           <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
                             <summary class="menu-drawer__menu-item flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}">
                               <span class="mr-3">{{ link.title | escape }}</span>
-                              <svg class="icon-arrow h-6 w-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z"/>
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                                <line x1="13" y1="18" x2="19" y2="12" />
-                                <line x1="13" y1="6" x2="19" y2="12" />
-                              </svg>
+                              {% render 'icon-arrow', variant: 'short', aria_hidden: true classes: 'h-6 w-6', stroke_width: '1.5' %}
                               {% render 'icon-caret' %}
                             </summary>
                             {% comment %} L2 Drawer {% endcomment %}
