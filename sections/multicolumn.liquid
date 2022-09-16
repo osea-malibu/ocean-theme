@@ -79,6 +79,10 @@
                       subscription: block.settings.subscription
                     %}
                   {%- endif -%}
+                {%- when 'code' -%}
+                  {%- if block.settings.code != "" -%}
+                    {{- block.settings.code -}}
+                  {%- endif -%}
               {%- endcase -%}
             </li>
           {%- endfor -%}
@@ -351,6 +355,23 @@
           "type": "checkbox",
           "id": "subscription",
           "label": "Subscription tile"
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "name": "Code block",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "column_classes",
+          "label": "Column classes"
+        },
+        {
+          "type": "html",
+          "id": "code",
+          "info": "This field takes HTML.",
+          "label": "Code block"
         }
       ]
     }
