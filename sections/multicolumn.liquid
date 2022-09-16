@@ -9,7 +9,7 @@
   {%- endif -%}
         <ul
           class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
-          role="list"
+          role="presentation"
           {% if section.settings.row_bg_image != blank %}
             style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"
           {% endif %}
@@ -362,6 +362,11 @@
       "type": "code",
       "name": "Code block",
       "settings": [
+        {
+          "type": "textarea",
+          "id": "column_classes",
+          "label": "Column classes"
+        },
         {
           "type": "html",
           "id": "code",
