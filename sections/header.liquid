@@ -30,27 +30,20 @@
       {% comment %} Hamburger menu {% endcomment %}
       {%- if section.settings.hamburger_menu != blank -%}
         {%- assign menu_link_styles = 'px-8 py-3 text-xl tracking-wide font-regular cursor-pointer' -%}
-        <header-drawer data-breakpoint="tablet" class="mr-1 md:mr-4 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
+        <menu-drawer class="mr-1 md:mr-4 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="menu-drawer-container">
             {% comment %} Hamburger icon {% endcomment %}
             <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-1 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
               <span class="flex items-center justify-center h-full">
-                <svg class="icon-hamburger h-8 w-8 block absolute opacity-100 transition-transform-opacity scale-100" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="3" y1="12" x2="21" y2="12" /> 
-                  <line x1="3" y1="6" x2="21" y2="6" /> 
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
+                {% render 'icon-hamburger', classes: 'icon-hamburger h-8 w-8 block absolute opacity-100 transition-transform-opacity scale-100', aria_hidden: true, stroke_width: 1.5 %}
                 {% comment %} Close icon - replaces hamburger when drawer is open {% endcomment %}
-                <svg class="icon-close h-8 w-8 block absolute opacity-100 transition-transform-opacity scale-100" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
+                {% render 'icon-close', classes: 'icon-close h-8 w-8 block absolute opacity-100 transition-transform-opacity scale-100', aria-hidden: true, stroke_width: 1.5 %}
               </span>
             </summary>
             {% comment %} Scrim - closes menu on click {% endcomment %}
-            <div id="menu-scrim" class="block fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 transition-opacity"></div>
+            <div class="menu-scrim block fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 transition-opacity"></div>
             {% comment %} L1 Drawer {% endcomment %}
-            <div id="menu-drawer" class="menu-drawer motion-reduce fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-24 overyflow-y-auto" tabindex="-1">
+            <div class="menu-drawer fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-24 overyflow-y-auto" tabindex="-1">
               <div class="relative flex flex-col justify-between">
                 <nav class="pt-12 pb-6">
                   <ul role="list">
@@ -97,7 +90,7 @@
                             <div id="link-{{ link.title | escape }}" class="menu-drawer__submenu motion-reduce absolute inset-x-0 top-0 bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
                               <div class="pb-10">
                                 {% comment %} Back button {% endcomment %}
-                                <button class="flex items-center px-8 pt-6 pb-2 w-full text-sm leading-6 font-bold uppercase tracking-wider" aria-expanded="true">
+                                <button class="submenu-close flex items-center px-8 pt-6 pb-2 w-full text-sm leading-6 font-bold uppercase tracking-wider" aria-expanded="true">
                                   <svg class="h-6 w-6 mr-2" aria-hidden="true" focusable="false" role="presentation" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                     <line x1="5" y1="12" x2="9" y2="16" />
@@ -170,7 +163,7 @@
               </div>
             </div>
           </details>
-        </header-drawer>
+        </menu-drawer>
       {%- endif -%}
 
       {% comment %} Predictive search {% endcomment %}
@@ -213,7 +206,7 @@
                     >
                     <label class="hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
                     <input type="hidden" name="options[prefix]" value="last">
-                    <button class="cursor-pointer w-10 h-10 flex items-center justify-center ml-3 md:ml-4 shrink-0" aria-label="{{ 'general.search.search' | t }}">
+                    <button class="cursor-pointer w-10 h-10 flex items-center justify-center ml-2 md:ml-4 shrink-0" aria-label="{{ 'general.search.search' | t }}">
                       <svg class="h-7 w-7 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"> 
                         <circle cx="11" cy="11" r="8" /> 
                         <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -230,7 +223,7 @@
                   <span class="predictive-search-status hidden" role="status" aria-hidden="true"></span>
                 </form>
               </predictive-search>
-              <button type="button" class="cursor-pointer ml-1 md:ml-4 -mr-1 w-10 h-10 flex items-center justify-center shrink-0" aria-label="{{ 'accessibility.close' | t }}">
+              <button type="button" class="cursor-pointer ml-0.5 md:ml-4 -mr-1 w-10 h-10 flex items-center justify-center shrink-0" aria-label="{{ 'accessibility.close' | t }}">
                 <svg class="h-8 w-8 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />

@@ -5,23 +5,18 @@
 -%}
 
 {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-  {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+  {%- unless subcollections or subcollections.value.size > 0 -%}
+    {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
-  <div class="container mx-auto px-6 relative z-10" id="main-collection-filters" data-id="{{ section.id }}">
-    {%- liquid
-      unless section.settings.enable_sorting == false or subcollections or subcollections.value.size > 0
-        assign enable_sorting = true
-      else
-        assign enable_sorting = false
-      endunless
-    -%}
-    {% render 'facets',
-      results: collection,
-      enable_filtering: section.settings.enable_filtering,
-      enable_sorting: enable_sorting
-    %}
-  </div>
+    <div class="container mx-auto px-6 mb-6" id="main-collection-filters" data-id="{{ section.id }}">
+      {% render 'facets',
+        results: collection,
+        enable_filtering: section.settings.enable_filtering,
+        enable_sorting: section.settings.enable_filtering
+      %}
+    </div>
+  {%- endunless -%}
 {%- endif -%}
 
 <div id="ProductGridContainer" class="container mx-auto px-6 mb-12">
@@ -65,7 +60,7 @@
         assign summary_handle = summary | handle
 
         capture subcollection_grid
-          render 'collection-product-grid', products: collections[subcollection].value, id: section.id, url: collection.url
+          render 'collection-product-grid', products: collections[subcollection].value, id: section.id, url: collection.url, products_per_page: section.settings.products_per_page
         endcapture
 
         comment
@@ -85,7 +80,7 @@
       %}
     {%- endfor -%}
   {%- else -%}
-    {% render 'collection-product-grid', products: collection, id: section.id, url: collection.url %}
+    {% render 'collection-product-grid', products: collection, id: section.id, url: collection.url, products_per_page: section.settings.products_per_page %}
   {%- endif -%}
 </div>
 

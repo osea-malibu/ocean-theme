@@ -293,11 +293,10 @@ class MenuDrawer extends HTMLElement {
 
   bindEvents() {
     this.querySelectorAll("summary").forEach((summary) => summary.addEventListener("click", this.onSummaryClick.bind(this)));
-    this.querySelector("#menu-scrim").addEventListener("click", this.onSummaryClick.bind(this));
-    // TODO: this closes menu when any action is taken
-    //this.querySelectorAll("button").forEach((button) => button.addEventListener("click", this.onCloseButtonClick.bind(this)));
+    this.querySelector(".menu-scrim").addEventListener("click", this.onSummaryClick.bind(this));
+    this.querySelectorAll(".submenu-close").forEach((button) => button.addEventListener("click", this.onCloseSubmenu.bind(this)));
 
-    const closeButton = this.querySelector("#menu-close");
+    const closeButton = this.querySelector(".menu-close");
     closeButton && closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
   }
 
@@ -313,6 +312,7 @@ class MenuDrawer extends HTMLElement {
   onSummaryClick(event) {
     const summaryElement = event.currentTarget;
     const detailsElement = summaryElement.parentNode;
+    const drawerElement = this.querySelector(".menu-drawer");
     const isOpen = detailsElement.hasAttribute("open");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -323,31 +323,35 @@ class MenuDrawer extends HTMLElement {
 
     if (detailsElement === this.mainDetailsToggle) {
       if (isOpen) event.preventDefault();
-      isOpen ? this.closeMenuDrawer(event, summaryElement) : this.openMenuDrawer(summaryElement);
+      isOpen ? this.closeMenuDrawer(event, summaryElement, drawerElement) : this.openMenuDrawer(summaryElement, drawerElement);
     } else {
       setTimeout(() => {
         detailsElement.classList.add("menu-opening");
+        drawerElement.classList.remove("invisible");
         summaryElement.setAttribute("aria-expanded", true);
         !reducedMotion || reducedMotion.matches ? addTrapFocus() : summaryElement.nextElementSibling.addEventListener("transitionend", addTrapFocus);
       }, 100);
     }
   }
 
-  openMenuDrawer(summaryElement) {
+  openMenuDrawer(summaryElement, drawerElement) {
     setTimeout(() => {
       this.mainDetailsToggle.classList.add("menu-opening");
     });
+    drawerElement.classList.remove("invisible");
     summaryElement.setAttribute("aria-expanded", true);
     trapFocus(this.mainDetailsToggle, summaryElement);
     document.body.classList.add("overflow-hidden");
   }
 
-  closeMenuDrawer(event, elementToFocus = false) {
+  closeMenuDrawer(event, elementToFocus = false, drawerElement) {
     if (event !== undefined) {
       this.mainDetailsToggle.classList.remove("menu-opening");
+      setTimeout(() => drawerElement.classList.add("invisible"), 300);
       this.mainDetailsToggle.querySelectorAll("details").forEach((details) => {
         details.removeAttribute("open");
         details.classList.remove("menu-opening");
+        setTimeout(() => drawerElement.classList.add("invisible"), 300);
       });
       document.body.classList.remove("overflow-hidden");
       removeTrapFocus(elementToFocus);
@@ -361,7 +365,7 @@ class MenuDrawer extends HTMLElement {
     });
   }
 
-  onCloseButtonClick(event) {
+  onCloseSubmenu(event) {
     const detailsElement = event.currentTarget.closest("details");
     this.closeSubmenu(detailsElement);
   }
@@ -398,28 +402,6 @@ class MenuDrawer extends HTMLElement {
 }
 
 customElements.define("menu-drawer", MenuDrawer);
-
-class HeaderDrawer extends MenuDrawer {
-  constructor() {
-    super();
-  }
-
-  openMenuDrawer(summaryElement) {
-    this.header = this.header || document.getElementById("shopify-section-header");
-    document.documentElement.style.setProperty("--header-bottom-position", `${parseInt(this.header.getBoundingClientRect().bottom)}px`);
-
-    setTimeout(() => {
-      this.mainDetailsToggle.classList.add("menu-opening");
-    });
-
-    summaryElement.setAttribute("aria-expanded", true);
-    trapFocus(this.mainDetailsToggle, summaryElement);
-    // TODO: replace with tailwind class
-    document.body.classList.add("overflow-hidden");
-  }
-}
-
-customElements.define("header-drawer", HeaderDrawer);
 
 class ModalDialog extends HTMLElement {
   constructor() {

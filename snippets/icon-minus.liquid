@@ -8,6 +8,6 @@
     {% render 'icon-minus', classes: 'w-10 h-10 text-seaweed-700' %}
 {% endcomment %}
 
-<svg {% if aria_hidden %}aria-hidden="true"{% endif %} class="{{ classes }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+<svg{% if aria_hidden %} aria-hidden="true" focusable="false"{% endif %} class="{{ classes }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
   <line x1="5" y1="12" x2="19" y2="12" />
 </svg>

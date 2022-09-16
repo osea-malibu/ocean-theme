@@ -5,8 +5,11 @@
   - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
 
   Usage:
-  {% render 'icon-', classes: 'w-10 h-10 text-seaweed-700' %}
+  {% render 'icon-hamburger', classes: 'w-10 h-10 text-seaweed-700' %}
 {% endcomment %}
 
 <svg{% if aria_hidden %} aria-hidden="true" focusable="false"{% endif %} class="{{ classes }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="3" y1="12" x2="21" y2="12" /> 
+  <line x1="3" y1="6" x2="21" y2="6" /> 
+  <line x1="3" y1="18" x2="21" y2="18" />
 </svg>

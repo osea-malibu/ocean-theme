@@ -6,11 +6,11 @@
   - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
 
   Usage:
-  {% render 'icon-benefit-absorbs-quickly', classes: 'w-10 h-10 text-seaweed-700' %}
+  {% render 'icon-benefit', icon: 'anti-aging', classes: 'w-10 h-10 text-seaweed-700' %}
 {% endcomment %}
 
 {%- if icon != nil -%}
-<svg{% if aria_hidden %} aria-hidden="true"{% endif %} focusable="false" class="overflow-visible {{ classes }}" viewBox="0 0 161 161" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+<svg{% if aria_hidden %} aria-hidden="true" focusable="false"{% endif %} class="overflow-visible {{ classes }}" viewBox="0 0 161 161" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="79.36" cy="79.36" r="78.61"/>
   {%- case icon -%}
     {%- when 'absorbs-quickly'%}

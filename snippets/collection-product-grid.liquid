@@ -4,12 +4,13 @@
   Accepts:
   - collection: {Object} Collection or Search object (required)
   - id: {String} Section id of parent (required)
+  - products_per_page: {Number} Number of products to display before paginating (required)
 
   Usage:
   {% render 'collection-product-grid', collection: collection, id: section.id %}
 {% endcomment %}
 
-{%- paginate collection.products by section.settings.products_per_page -%}
+{%- paginate collection.products by products_per_page -%}
   {%- if collection.products.size == 0 -%}
     <div class="collection collection--empty relative" id="product-grid" data-id="{{ id }}">
       <div class="loading-overlay"></div>
@@ -25,7 +26,7 @@
       <div class="loading-overlay"></div>
 
       <div id="product-grid" data-id="{{ id }}">
-        <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-4">
+        <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-8 sm:gap-x-4">
           {%- for product in collection.products -%}
             <li class="grid__item">
               {% render 'product-card',

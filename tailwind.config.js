@@ -28,7 +28,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "hover"],
     },
     {
-      pattern: /(bg|object)-(bottom|center|left|right|top)/,
+      pattern: /(bg|object|text)-(bottom|center|left|right|top)/,
       variants: ["xs", "sm", "md", "lg"],
     },
     {
@@ -68,7 +68,7 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
-      pattern: /(opacity|scale)-(0|5|10|20|25|30|40|50|60|70|75|80|90|100)/,
+      pattern: /(opacity)-(0|5|10|20|25|30|40|50|60|70|75|80|90|100)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
@@ -165,7 +165,7 @@ module.exports = {
       "2/75": "2.75px",
     },
     screens: {
-      "2xs": "400px",
+      "2xs": "414px",
       xs: "475px",
       ...defaultTheme.screens,
     },
@@ -189,19 +189,39 @@ module.exports = {
         "transform-opacity": "transform, opacity",
         visibility: "visibility, opacity",
       },
+      zIndex: {
+        60: "60",
+        70: "70",
+        80: "80",
+        90: "90",
+        100: "100",
+      },
     },
+    groups: ["child"],
   },
   plugins: [
     require("@tailwindcss/forms"),
     require("@tailwindcss/typography"),
+    // target child elements (helpful in targeting liquid generated children)
     function ({ addVariant }) {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
     },
+    // add backface classes
     plugin(function ({ addUtilities }) {
       addUtilities({
         ".backface-visible": { "backface-visibility": "visible" },
         ".backface-hidden": { "backface-visibility": "hidden" },
+      });
+    }),
+    // add named groups: https://github.com/tailwindlabs/tailwindcss/issues/1192#issuecomment-1069149920
+    plugin(({ addVariant, theme }) => {
+      const groups = theme("groups") || [];
+
+      groups.forEach((group) => {
+        addVariant(`group-${group}-hover`, () => {
+          return `:merge(.group-${group}):hover &`;
+        });
       });
     }),
   ],
