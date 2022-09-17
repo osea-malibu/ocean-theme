@@ -1,8 +1,8 @@
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 
-<cart-drawer class="drawer fixed z-100 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
+<cart-drawer class="drawer fixed z-100 top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
-    <div id="CartDrawer-Overlay" class="cart-drawer__overlay block fixed inset-0 bg-seaweed-800/50"></div>
+    <div class="cart-scrim block fixed inset-0 bg-seaweed-800/50"></div>
     <div
       class="drawer__inner bg-white fixed right-0 inset-y-0 w-[40rem] max-w-full overflow-hidden flex flex-col"
       role="dialog"
@@ -11,30 +11,23 @@
       tabindex="-1"
     >
       {%- if cart == empty -%}
-        <div class="drawer__inner-empty">
+        <div class="cart-empty h-full overflow-hidden flex flex-col">
           <div class="cart-drawer__warnings center{% if settings.cart_drawer_collection != blank %} cart-drawer__warnings--has-collection{% endif %}">
             <div class="cart-drawer__empty-content">
               <h2 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h2>
-              <button class="drawer__close" type="button" onclick="this.closest('cart-drawer').close()" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+              <button class="drawer__close" type="button" onclick="this.closest('cart-drawer').close()" aria-label="{{ 'accessibility.close' | t }}">
+                {% render 'icon-close' %}
+              </button>
               <a href="{{ routes.all_products_collection_url }}" class="button">
                 {{ 'general.continue_shopping' | t }}
               </a>
-              {%- if shop.customer_accounts_enabled and customer == nil -%}
-                <p class="cart__login-title h3">{{ 'sections.cart.login.title' | t }}</p>
-                <p class="cart__login-paragraph">
-                  {{ 'sections.cart.login.paragraph_html' | t: link: routes.account_login_url }}
-                </p>
-              {%- endif -%}
             </div>
           </div>
-          {% comment %} {%- if settings.cart_drawer_collection != blank -%}
-            <div class="cart-drawer__collection">
-              {% render 'card-collection',
-                card_collection: settings.cart_drawer_collection,
-                columns: 1
-              %}
-            </div>
-          {%- endif -%} {% endcomment %}
+          {%- if settings.cart_empty_state_links != blank -%}
+            {%- for link in settings.cart_empty_state_links -%}
+              <a href="{{ link.url }}" class="button button-secondary">{{ link.title }}</a>
+            {%- endfor -%}
+          {%- endif -%}
         </div>
       {%- endif -%}
 
@@ -55,7 +48,6 @@
           endif
         endfor
       -%}
-
       <div>
         <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
         {% comment %} Gift with purchase {% endcomment %}
@@ -129,20 +121,22 @@
         {%- endif -%}
 
         {% comment %} Shipping countdown {% endcomment %}
-        <shipping-countdown data-threshold="{{ settings.shipping_countdown_threshold }}">
-          {%- assign remaining_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price -%}
-          <div class="px-4 pt-4 pb-2 text-center">
-            <h3 class="mb-1">
-              {%- if remaining_amount > 0 -%}
-                {%- assign formatted_remaining_amount = remaining_amount | money %}
-                {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
-              {%- else -%}
-                {{ settings.shipping_countdown_text_success }}
-              {%- endif -%}
-            </h3>
-            <progress max="100" value="0" class="progress-bar block mx-auto max-w-md transition-all">0%</progress>
-          </div>
-        </shipping-countdown>
+        {%- if cart != empty -%}
+          <shipping-countdown data-threshold="{{ settings.shipping_countdown_threshold }}">
+            {%- assign remaining_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price -%}
+            <div class="px-4 pt-4 pb-2 text-center">
+              <h3 class="mb-1">
+                {%- if remaining_amount > 0 -%}
+                  {%- assign formatted_remaining_amount = remaining_amount | money %}
+                  {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
+                {%- else -%}
+                  {{ settings.shipping_countdown_text_success }}
+                {%- endif -%}
+              </h3>
+              <progress max="100" value="0" class="progress-bar block mx-auto max-w-md transition-all">0%</progress>
+            </div>
+          </shipping-countdown>
+        {%- endif -%}
 
         {% comment %} Close button {% endcomment %}
         <button
@@ -465,7 +459,7 @@
 
         {% comment %} Free samples {% endcomment %}
         {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
-        {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 -%}
+        {%- if cart != empty and samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 -%}
           <div class="max-w-md mx-auto mb-6 bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
             <h3 class="tracking-wide font-medium text-sm mb-1">Select up to 3 free samples</h3>
             <div class="overflow-x-auto pb-3">
@@ -501,81 +495,83 @@
         </cart-recommendations>
       </div>
 
-      <div class="drawer__footer bg-seafoam-200 flex-shrink-0 px-6 py-4">
-        <div class="max-w-md mx-auto">
-          {%- if settings.show_cart_note -%}
-            <details id="Details-CartDrawer">
-              <summary>
-                <span class="summary__title">
-                  {{ 'sections.cart.note' | t }}
-                  {% render 'icon-caret' %}
-                </span>
-              </summary>
-              <cart-note class="cart__note field">
-                <label class="visually-hidden" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
-                <textarea id="CartDrawer-Note" class="text-area text-area--resize-vertical field__input" name="note" placeholder="{{ 'sections.cart.note' | t }}">{{ cart.note }}</textarea>
-              </cart-note>
-            </details>
-          {%- endif -%}
+      {%- if cart != empty -%}
+        <div class="bg-seafoam-200 flex-shrink-0 px-6 py-4">
+          <div class="max-w-md mx-auto">
+            {%- if settings.show_cart_note -%}
+              <details id="Details-CartDrawer">
+                <summary>
+                  <span class="summary__title">
+                    {{ 'sections.cart.note' | t }}
+                    {% render 'icon-caret' %}
+                  </span>
+                </summary>
+                <cart-note class="cart__note field">
+                  <label class="visually-hidden" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
+                  <textarea id="CartDrawer-Note" class="text-area text-area--resize-vertical field__input" name="note" placeholder="{{ 'sections.cart.note' | t }}">{{ cart.note }}</textarea>
+                </cart-note>
+              </details>
+            {%- endif -%}
 
-          <!-- Subtotals-->
-          <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
-            <div class="flex justify-between items-center w-full" role="status">
-              <h3>{{ 'sections.cart.subtotal' | t }}</h3>
-              {% comment %} <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p> {% endcomment %}
-              {%- liquid
-                assign price_split = cart.total_price | plus: 0.00001 | divided_by: 100 | round: 2 | split: "."
-                assign integral = price_split[0]
-                assign fractional = price_split[1] | append: "00" | truncate: 2, ""
-              -%}
-              <p id="CartDrawer-Total" data-total="{{ cart.total_price }}"><span class="system-sans">$</span>{{ integral }}.{{ fractional }}</p>
+            <!-- Subtotals-->
+            <div {{ block.shopify_attributes }}>
+              <div class="flex justify-between items-center w-full" role="status">
+                <h3>{{ 'sections.cart.subtotal' | t }}</h3>
+                {% comment %} <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p> {% endcomment %}
+                {%- liquid
+                  assign price_split = cart.total_price | plus: 0.00001 | divided_by: 100 | round: 2 | split: "."
+                  assign integral = price_split[0]
+                  assign fractional = price_split[1] | append: "00" | truncate: 2, ""
+                -%}
+                <p id="CartDrawer-Total" data-total="{{ cart.total_price }}"><span class="system-sans">$</span>{{ integral }}.{{ fractional }}</p>
+              </div>
+
+              <div>
+                {%- if cart.cart_level_discount_applications.size > 0 -%}
+                  <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                    {%- for discount in cart.cart_level_discount_applications -%}
+                      <li class="discounts__discount discounts__discount--end">
+                        {%- render 'icon-discount' -%}
+                        {{ discount.title }}
+                        (-{{ discount.total_allocated_amount | money }})
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
             </div>
 
-            <div>
-              {%- if cart.cart_level_discount_applications.size > 0 -%}
-                <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
-                  {%- for discount in cart.cart_level_discount_applications -%}
-                    <li class="discounts__discount discounts__discount--end">
-                      {%- render 'icon-discount' -%}
-                      {{ discount.title }}
-                      (-{{ discount.total_allocated_amount | money }})
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}
-            </div>
-          </div>
-
-          <!-- CTAs -->
-          <div class="mb-2" {{ block.shopify_attributes }}>
-            <noscript>
+            <!-- CTAs -->
+            <div class="mb-2" {{ block.shopify_attributes }}>
+              <noscript>
+                <button
+                  type="submit"
+                  class="cart__update-button button button-primary w-full mb-2"
+                  form="CartDrawer-Form"
+                >
+                  {{ 'sections.cart.update' | t }}
+                </button>
+              </noscript>
               <button
                 type="submit"
-                class="cart__update-button button button-primary w-full mb-2"
+                id="CartDrawer-Checkout"
+                class="cart__checkout-button button button-primary w-full"
+                name="checkout"
                 form="CartDrawer-Form"
+                {% if cart == empty %}disabled{% endif %}
               >
-                {{ 'sections.cart.update' | t }}
+                {{ 'sections.cart.checkout' | t }}
               </button>
-            </noscript>
-            <button
-              type="submit"
-              id="CartDrawer-Checkout"
-              class="cart__checkout-button button button-primary w-full"
-              name="checkout"
-              form="CartDrawer-Form"
-              {% if cart == empty %}disabled{% endif %}
-            >
-              {{ 'sections.cart.checkout' | t }}
-            </button>
-          </div>
+            </div>
 
-          <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline">
-            {%- if settings.cart_disclaimer != blank -%}
-              {{ settings.cart_disclaimer }}
-            {%- endif -%}
-          </small>
+            <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline">
+              {%- if settings.cart_disclaimer != blank -%}
+                {{ settings.cart_disclaimer }}
+              {%- endif -%}
+            </small>
+          </div>
         </div>
-      </div>
+      {%- endif %}
     </div>
   </div>
 </cart-drawer>

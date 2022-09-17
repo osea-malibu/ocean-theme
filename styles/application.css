@@ -37,31 +37,30 @@
 }
 
 @layer components {
-  /* Cart drawer */
-  cart-drawer .cart-drawer__overlay {
+  /* Cart + menu drawers */
+  menu-drawer .menu-scrim,
+  cart-drawer .cart-scrim {
     @apply opacity-0 motion-safe:transition-opacity;
   }
+  menu-drawer details.menu-opening .menu-scrim,
+  cart-drawer.active .cart-scrim {
+    @apply opacity-100;
+  }
+
   cart-drawer .drawer__inner {
     @apply translate-x-full motion-safe:transition-transform;
-  }
-  cart-drawer.active .cart-drawer__overlay {
-    @apply opacity-100;
   }
   cart-drawer.active .drawer__inner {
     @apply translate-x-0;
   }
-  /* Menu drawer */
-  menu-drawer .menu-scrim {
-    @apply opacity-0 motion-safe:transition-opacity;
+
+  menu-drawer .menu-drawer,
+  menu-drawer .menu-submenu {
+    @apply motion-safe:transition-transform-visibility md:w-[40rem];
   }
-  menu-drawer .menu-drawer {
-    @apply motion-safe:transition-transform;
-  }
-  menu-drawer details.menu-opening .menu-scrim {
-    @apply opacity-100;
-  }
-  menu-drawer details.menu-opening .menu-drawer {
-    @apply translate-x-0;
+  menu-drawer details.menu-opening > .menu-drawer,
+  menu-drawer details[open].menu-opening > .menu-submenu {
+    @apply translate-x-0 visible;
   }
 
   /* Buttons */
@@ -184,7 +183,7 @@
 
   /* Badge */
   .badge {
-    @apply inline-block px-2 py-1 uppercase font-black tracking-widest bg-coral-600 text-white;
+    @apply inline-block px-2 py-1 uppercase font-bold tracking-widest bg-coral-600 text-white;
   }
 
   /* Predictive search */

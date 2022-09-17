@@ -312,7 +312,6 @@ class MenuDrawer extends HTMLElement {
   onSummaryClick(event) {
     const summaryElement = event.currentTarget;
     const detailsElement = summaryElement.parentNode;
-    const drawerElement = this.querySelector(".menu-drawer");
     const isOpen = detailsElement.hasAttribute("open");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -323,35 +322,31 @@ class MenuDrawer extends HTMLElement {
 
     if (detailsElement === this.mainDetailsToggle) {
       if (isOpen) event.preventDefault();
-      isOpen ? this.closeMenuDrawer(event, summaryElement, drawerElement) : this.openMenuDrawer(summaryElement, drawerElement);
+      isOpen ? this.closeMenuDrawer(event, summaryElement) : this.openMenuDrawer(summaryElement);
     } else {
       setTimeout(() => {
         detailsElement.classList.add("menu-opening");
-        drawerElement.classList.remove("invisible");
         summaryElement.setAttribute("aria-expanded", true);
         !reducedMotion || reducedMotion.matches ? addTrapFocus() : summaryElement.nextElementSibling.addEventListener("transitionend", addTrapFocus);
       }, 100);
     }
   }
 
-  openMenuDrawer(summaryElement, drawerElement) {
+  openMenuDrawer(summaryElement) {
     setTimeout(() => {
       this.mainDetailsToggle.classList.add("menu-opening");
     });
-    drawerElement.classList.remove("invisible");
     summaryElement.setAttribute("aria-expanded", true);
     trapFocus(this.mainDetailsToggle, summaryElement);
     document.body.classList.add("overflow-hidden");
   }
 
-  closeMenuDrawer(event, elementToFocus = false, drawerElement) {
+  closeMenuDrawer(event, elementToFocus = false) {
     if (event !== undefined) {
       this.mainDetailsToggle.classList.remove("menu-opening");
-      setTimeout(() => drawerElement.classList.add("invisible"), 300);
       this.mainDetailsToggle.querySelectorAll("details").forEach((details) => {
         details.removeAttribute("open");
         details.classList.remove("menu-opening");
-        setTimeout(() => drawerElement.classList.add("invisible"), 300);
       });
       document.body.classList.remove("overflow-hidden");
       removeTrapFocus(elementToFocus);

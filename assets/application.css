@@ -729,18 +729,22 @@ html.no-js .no-js-hidden {
   }
 }
 
-/* Cart drawer */
+/* Cart + menu drawers */
 
-cart-drawer .cart-drawer__overlay {
+menu-drawer .menu-scrim, cart-drawer .cart-scrim {
   opacity: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  cart-drawer .cart-drawer__overlay {
+  menu-drawer .menu-scrim, cart-drawer .cart-scrim {
     transition-property: opacity;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
   }
+}
+
+menu-drawer details.menu-opening .menu-scrim, cart-drawer.active .cart-scrim {
+  opacity: 1;
 }
 
 cart-drawer .drawer__inner {
@@ -756,40 +760,27 @@ cart-drawer .drawer__inner {
   }
 }
 
-cart-drawer.active .cart-drawer__overlay {
-  opacity: 1;
-}
-
 cart-drawer.active .drawer__inner {
   --tw-translate-x: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-/* Menu drawer */
-
-menu-drawer .menu-scrim {
-  opacity: 0;
-}
-
 @media (prefers-reduced-motion: no-preference) {
-  menu-drawer .menu-scrim {
-    transition-property: opacity;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
-  }
-
-  menu-drawer .menu-drawer {
-    transition-property: transform;
+  menu-drawer .menu-drawer, menu-drawer .menu-submenu {
+    transition-property: transform, visibility;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
   }
 }
 
-menu-drawer details.menu-opening .menu-scrim {
-  opacity: 1;
+@media (min-width: 768px) {
+  menu-drawer .menu-drawer, menu-drawer .menu-submenu {
+    width: 40rem;
+  }
 }
 
-menu-drawer details.menu-opening .menu-drawer {
+menu-drawer details.menu-opening > .menu-drawer, menu-drawer details[open].menu-opening > .menu-submenu {
+  visibility: visible;
   --tw-translate-x: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
@@ -1123,7 +1114,7 @@ select.input-sm {
   padding-right: 0.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .1em;
   --tw-text-opacity: 1;
@@ -1874,6 +1865,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   top: 0px;
 }
 
+.left-0 {
+  left: 0px;
+}
+
 .right-0 {
   right: 0px;
 }
@@ -1904,10 +1899,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .bottom-0 {
   bottom: 0px;
-}
-
-.left-0 {
-  left: 0px;
 }
 
 .top-16 {
@@ -6367,6 +6358,11 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.translate-x-full {
+  --tw-translate-x: 100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .-translate-y-6 {
   --tw-translate-y: -1.5rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -6374,11 +6370,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .-translate-x-2\/4 {
   --tw-translate-x: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-x-full {
-  --tw-translate-x: 100%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -12734,14 +12725,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   line-height: 1.75rem;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-xl {
@@ -12793,10 +12784,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .font-bold {
   font-weight: 700;
-}
-
-.font-thin {
-  font-weight: 200;
 }
 
 .uppercase {

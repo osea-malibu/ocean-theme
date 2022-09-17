@@ -1,12 +1,3 @@
-.drawer__inner-empty {
-  height: 100%;
-  padding: 0 1.5rem;
-  background-color: rgb(var(--color-background));
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
 .cart-drawer__warnings {
   display: flex;
   flex-direction: column;
@@ -28,26 +19,6 @@ cart-drawer:not(.is-empty) .cart-drawer__collection {
 
 .cart-drawer__warnings--has-collection .cart__login-title {
   margin-top: 2.5rem;
-}
-
-cart-drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100%;
-}
-
-.cart-drawer__overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.cart-drawer__overlay:empty {
-  display: block;
 }
 
 .cart-drawer__collection {

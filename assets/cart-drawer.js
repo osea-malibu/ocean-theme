@@ -2,7 +2,7 @@ class CartDrawer extends HTMLElement {
   constructor() {
     super();
 
-    this.overlay = this.querySelector("#CartDrawer-Overlay");
+    this.overlay = this.querySelector(".cart-scrim");
     this.drawer = this.querySelector(".drawer__inner");
 
     this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
@@ -39,7 +39,7 @@ class CartDrawer extends HTMLElement {
     this.addEventListener(
       "transitionend",
       () => {
-        const containerToTrapFocusOn = this.classList.contains("is-empty") ? this.querySelector(".drawer__inner-empty") : document.getElementById("CartDrawer");
+        const containerToTrapFocusOn = this.classList.contains("is-empty") ? this.querySelector(".cart-empty") : document.getElementById("CartDrawer");
         const focusElement = this.drawer || this.querySelector(".drawer__close");
         trapFocus(containerToTrapFocusOn, focusElement);
       },
@@ -91,7 +91,7 @@ class CartDrawer extends HTMLElement {
           });
 
           setTimeout(() => {
-            this.querySelector("#CartDrawer-Overlay").addEventListener("click", this.close.bind(this));
+            this.querySelector(".cart-scrim").addEventListener("click", this.close.bind(this));
             this.open();
           });
         })
@@ -105,7 +105,7 @@ class CartDrawer extends HTMLElement {
       });
 
       setTimeout(() => {
-        this.querySelector("#CartDrawer-Overlay").addEventListener("click", this.close.bind(this));
+        this.querySelector(".menu-scrim").addEventListener("click", this.close.bind(this));
         this.open();
       });
     }

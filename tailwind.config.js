@@ -136,13 +136,13 @@ module.exports = {
       serif: "Canela, serif",
     },
     fontWeight: {
-      thin: 200,
+      //thin: 200,
       light: 300,
       regular: 400,
       book: 500,
       medium: 600,
       bold: 700,
-      black: 800,
+      //black: 800,
     },
     letterSpacing: {
       tightest: "-.075em",
@@ -188,6 +188,7 @@ module.exports = {
         spacing: "margin, padding",
         "transform-opacity": "transform, opacity",
         visibility: "visibility, opacity",
+        "transform-visibility": "transform, visibility",
       },
       zIndex: {
         60: "60",
