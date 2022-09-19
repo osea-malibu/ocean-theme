@@ -334,32 +334,58 @@
 {% comment %} Navbar menu {% endcomment %}
 {%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
   <nav class="overflow-x-auto bg-white -mt-2">
-    <ul class="flex lg:justify-center" role="list">
+    <ul class="flex md:justify-center" role="list">
       {%- for link in section.settings.navbar_menu.links -%}
         <li class="first:pl-1">
           <a href="{{ link.url }}" class="block whitespace-nowrap text-sm xl:text-base py-2 px-2 lg:px-3 font-book tracking-wide{% if link.links != blank %} peer{% endif %}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
-          {%- if link.links != blank and link.levels >= 2 -%}
-            <ul role="list" class="invisible peer-hover:visible absolute z-100 block bg-sand-200{% if link.levels >= 2 %} inset-x-0 top-24{% endif %}">
-              {%- if link.levels >= 2 -%}<div class="container mx-auto px-6 py-4 flex gap-6">{%- endif -%}
+          {%- if link.links != blank -%}
+            <ul role="list" class="invisible peer-hover:visible hidden sm:block absolute z-100 bg-sand-200 py-1 shadow-md shadow-seaweed-400/10{% if link.levels >= 2 %} inset-x-0 top-24{% endif %}">
+              {%- if link.levels >= 2 -%}<div class="max-w-screen-lg mx-auto px-6 py-4 flex flex-col sm:flex-row justify-center gap-4">{%- endif -%}
               {%- for childlink in link.links -%}
                 {%- if childlink.links != blank -%}
-                  <li>
-                    <p class="font-serif text-2xl tracking-tight mb-2">{{ childlink.title | escape }}</p>
+                  <li class="grow">
+                    <h2 class="font-serif text-3xl tracking-tight mb-1">{{ childlink.title | escape }}</h2>
                     <ul role="list">
                       {%- for grandchildlink in childlink.links -%}
                         <li>
-                          <a href="{{ grandchildlink.url }}" class="block text-lg py-1"{% if childlink.current %} aria-current="page"{% endif %}>{{ grandchildlink.title | escape }}</a>
+                          <a href="{{ grandchildlink.url }}" class="block text-lg py-1 leading-snug"{% if childlink.current %} aria-current="page"{% endif %}>{{ grandchildlink.title | escape }}</a>
                         </li>
                       {%- endfor -%}
                     </ul>
                   </li>
                 {%- else -%}
                   <li>
-                    <a href="{{ childlink.url }}"{% if childlink.current %} aria-current="page"{% endif %}>{{ childlink.title | escape }}</a>
+                    <a href="{{ childlink.url }}" class="block px-4 py-1 leading-snug"{% if childlink.current %} aria-current="page"{% endif %}>{{ childlink.title | escape }}</a>
                   </li>
                 {%- endif -%}
               {%- endfor -%}
-              {%- if link.levels >= 2 -%}</div>{%- endif -%}
+              {%- if link.levels >= 2 -%}
+                  <div class="shrink-0 tracking-wide">
+                    {%- if section.settings.promo_image != nil -%}
+                      {%- if section.settings.promo_link != nil -%}<a href="{{ section.settings.promo_link.url }}">{%- endif -%}
+                        <img
+                          srcset="{{ section.settings.promo_image | image_url: width: 250 }} 1x, {{ section.settings.promo_image | image_url: width: 500 }} 2x"
+                          src="{{ section.settings.promo_image | image_url: width: 250 }}"
+                          width="250"
+                          height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio }}"
+                          alt="{{ section.settings.promo_heading }}"
+                          loading="lazy"
+                          class="mb-2"
+                        >
+                      {%- if section.settings.promo_link != nil -%}</a>{%- endif -%}
+                    {%- endif -%}
+                    {%- if section.settings.promo_heading != blank -%}
+                      <h3 class="text-xl font-medium">{{ section.settings.promo_heading }}</h3>
+                    {%- endif -%}
+                    {%- if section.settings.promo_paragraph != blank -%}
+                      {{ section.settings.promo_paragraph }}
+                    {%- endif -%}
+                    {%- if section.settings.promo_link != nil -%}
+                      <a href="{{ section.settings.promo_link.url }}" class="button button-secondary button-sm mt-2">{{ section.settings.promo_button }}</a>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
             </ul>
           {%- endif -%}
         </li>
@@ -478,6 +504,7 @@
     {
       "type": "text",
       "id": "promo_button",
+      "default": "Shop now",
       "label": "Button text"
     }
   ]
