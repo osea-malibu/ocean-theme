@@ -47,10 +47,10 @@
     @apply opacity-100;
   }
 
-  cart-drawer .drawer__inner {
+  cart-drawer .cart-drawer {
     @apply translate-x-full motion-safe:transition-transform;
   }
-  cart-drawer.active .drawer__inner {
+  cart-drawer.active .cart-drawer {
     @apply translate-x-0;
   }
 

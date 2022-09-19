@@ -3,14 +3,12 @@
   display: block;
 }
 
-.cart__empty-text,
 .is-empty .cart__contents,
 cart-items.is-empty .title-wrapper-with-link,
 .is-empty .cart__footer {
   display: none;
 }
 
-.is-empty .cart__empty-text,
 .is-empty .cart__warnings {
   display: block;
 }
@@ -20,17 +18,9 @@ cart-items.is-empty .title-wrapper-with-link,
   text-align: center;
 }
 
-.cart__empty-text {
-  margin: 4.5rem 0 2rem;
-}
-
 @media screen and (min-width: 990px) {
   .cart__warnings {
     padding: 7rem 0 1rem;
-  }
-
-  .cart__empty-text {
-    margin: 0 0 3rem;
   }
 }
 

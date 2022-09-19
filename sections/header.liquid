@@ -5,7 +5,6 @@
   <link rel="stylesheet" href="{{ 'component-loading-overlay.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
 {%- if settings.cart_type == "drawer" -%}
-  {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
   {{ 'component-cart.css' | asset_url | stylesheet_tag }}
   {{ 'component-totals.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -42,7 +41,7 @@
             <div class="menu-scrim block fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 transition-opacity"></div>
             {% comment %} L1 Drawer {% endcomment %}
             <div class="menu-drawer fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-24 overyflow-y-auto" tabindex="-1">
-              <div class="relative flex flex-col justify-between">
+              <div class="relative flex flex-col h-full">
                 <nav class="pt-12 pb-6">
                   <ul role="list">
                     {%- for link in section.settings.hamburger_menu.links -%}
@@ -79,7 +78,7 @@
                               {% render 'icon-arrow', variant: 'short', aria_hidden: true, classes: 'h-6 w-6', stroke_width: '1.5' %}
                             </summary>
                             {% comment %} L2 Drawer {% endcomment %}
-                            <div id="link-{{ link.title | escape }}" class="menu-submenu translate-x-full invisible absolute inset-x-0 top-0 bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
+                            <div id="link-{{ link.title | escape }}" class="menu-submenu translate-x-full invisible absolute inset-0 overflow-y-auto bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
                               <div class="pb-10">
                                 {% comment %} Back button {% endcomment %}
                                 <button class="submenu-close flex items-center px-8 pt-6 pb-2 w-full text-sm leading-6 font-bold uppercase tracking-wider" aria-expanded="true">
@@ -96,19 +95,24 @@
                                         </a>
                                       {% comment %} L2 - Link with sub menu {% endcomment %}
                                       {%- else -%}
-                                        <p class="px-8 py-0 mt-3 mb-2 text-2xl tracking-wide cursor-pointer font-medium">
-                                          {{ childlink.title | escape }}
-                                        </p>
-                                        {% comment %} L3 menu {% endcomment %}
-                                        <ul id="childlink-{{ childlink.title | escape }}" role="list" tabindex="-1" class="mb-6">
-                                          {%- for grandchildlink in childlink.links -%}
-                                            <li>
-                                              <a href="{{ grandchildlink.url }}" class="block {{ menu_link_styles }}{% if grandchildlink.current %} text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
-                                                {{ grandchildlink.title | escape }}
-                                              </a>
-                                            </li>
-                                          {%- endfor -%}
-                                        </ul>
+                                        <details class="group" open>
+                                          <summary class="flex items-center px-8 mt-3 mb-2">
+                                            {% render 'icon-caret', classes: 'w-5 h-5 mr-2 -rotate-90 group-open:rotate-0 motion-safe:transition-transform' %}
+                                            <p class="text-2xl tracking-wide cursor-pointer font-medium">
+                                              {{ childlink.title | escape }}
+                                            </p>
+                                          </summary>
+                                          {% comment %} L3 menu {% endcomment %}
+                                          <ul id="childlink-{{ childlink.title | escape }}" role="list" tabindex="-1" class="mb-6 pl-7">
+                                            {%- for grandchildlink in childlink.links -%}
+                                              <li>
+                                                <a href="{{ grandchildlink.url }}" class="block relative -mt-1 {{ menu_link_styles }}{% if grandchildlink.current %} text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                                  {{ grandchildlink.title | escape }}
+                                                </a>
+                                              </li>
+                                            {%- endfor -%}
+                                          </ul>
+                                        </details>
                                       {%- endif -%}
                                     </li>
                                   {%- endfor -%}
@@ -330,10 +334,34 @@
 {% comment %} Navbar menu {% endcomment %}
 {%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
   <nav class="overflow-x-auto bg-white -mt-2">
-    <ul class="flex lg:justify-center">
+    <ul class="flex lg:justify-center" role="list">
       {%- for link in section.settings.navbar_menu.links -%}
         <li class="first:pl-1">
-          <a href="{{ link.url }}" class="block whitespace-nowrap text-sm xl:text-base py-2 px-2 lg:px-3 font-book tracking-wide">{{ link.title | escape }}</a>
+          <a href="{{ link.url }}" class="block whitespace-nowrap text-sm xl:text-base py-2 px-2 lg:px-3 font-book tracking-wide{% if link.links != blank %} peer{% endif %}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+          {%- if link.links != blank and link.levels >= 2 -%}
+            <ul role="list" class=" peer-hover:visible absolute z-100 block bg-sand-200{% if link.levels >= 2 %} inset-x-0 top-24{% endif %}">
+              {%- if link.levels >= 2 -%}<div class="container mx-auto px-6 py-4 flex gap-6">{%- endif -%}
+              {%- for childlink in link.links -%}
+                {%- if childlink.links != blank -%}
+                  <li>
+                    <p class="font-serif text-2xl tracking-tight mb-2">{{ childlink.title | escape }}</p>
+                    <ul role="list">
+                      {%- for grandchildlink in childlink.links -%}
+                        <li>
+                          <a href="{{ grandchildlink.url }}" class="block text-lg py-1"{% if childlink.current %} aria-current="page"{% endif %}>{{ grandchildlink.title | escape }}</a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </li>
+                {%- else -%}
+                  <li>
+                    <a href="{{ childlink.url }}"{% if childlink.current %} aria-current="page"{% endif %}>{{ childlink.title | escape }}</a>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if link.levels >= 2 -%}</div>{%- endif -%}
+            </ul>
+          {%- endif -%}
         </li>
       {%- endfor -%}
     </ul>
@@ -396,6 +424,10 @@
       "label": "t:sections.header.settings.logo.label"
     },
     {
+      "type": "header",
+      "content": "Menus"
+    },
+    {
       "type": "link_list",
       "id": "inline_menu",
       "default": "main-menu",
@@ -418,6 +450,35 @@
       "id": "navbar_menu",
       "default": "main-menu",
       "label": "Navbar Menu"
+    },
+    {
+      "type": "header",
+      "content": "Promo block"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "promo_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "promo_paragraph",
+      "label": "Paragraph"
+    },
+    {
+      "type": "url",
+      "id": "promo_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "promo_button",
+      "label": "Button text"
     }
   ]
 }

@@ -17,6 +17,8 @@
       %}
     </div>
   {%- endunless -%}
+{%- else -%}
+  <div class="sr-only container mx-auto px-6 whitespace-nowrap leading-relaxed mb-0.5">{{ collection.products_count }} items</div>
 {%- endif -%}
 
 <div id="ProductGridContainer" class="container mx-auto px-6 mb-12">
@@ -31,6 +33,7 @@
       {%- endfor -%}
     </div>
   {%- endif -%}
+
   {%- if featured_products -%}
     {%- capture featured_products_grid -%}
       <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-4">
@@ -53,6 +56,7 @@
       transition_duration: 800
     %}
   {%- endif -%}
+
   {%- if subcollections and subcollections.value.size > 0 -%}
     {%- for subcollection in subcollections.value -%}
       {%- liquid
@@ -81,6 +85,12 @@
     {%- endfor -%}
   {%- else -%}
     {% render 'collection-product-grid', products: collection, id: section.id, url: collection.url, products_per_page: section.settings.products_per_page %}
+  {%- endif -%}
+
+  {%- if collection.metafields.custom.seo_description != nil -%}
+    <div class="mt-10 max-w-screen-md md:text-center mx-auto">
+      {{ collection.metafields.custom.seo_description }}
+    </div>
   {%- endif -%}
 </div>
 

@@ -15,7 +15,7 @@
   </div>
 
   <div class="cart__warnings">
-    <h1 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h1>
+    <h1>{{ 'sections.cart.empty' | t }}</h1>
     <a href="{{ routes.all_products_collection_url }}" class="button">
       {{ 'general.continue_shopping' | t }}
     </a>
@@ -47,8 +47,7 @@
                 <tr class="cart-item" id="CartItem-{{ item.index | plus: 1 }}">
                   <td class="cart-item__media">
                     {% if item.image %}
-                      {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
-                      <a href="{{ item.url }}" class="cart-item__link" aria-hidden="true" tabindex="-1"> </a>
+                      <a href="{{ item.url }}" class="sr-only" aria-hidden="true" tabindex="-1"> </a>
                       <img class="cart-item__image"
                         src="{{ item.image | image_url: width: 300 }}"
                         alt="{{ item.image.alt | escape }}"

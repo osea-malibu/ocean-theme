@@ -3,7 +3,7 @@ class CartDrawer extends HTMLElement {
     super();
 
     this.overlay = this.querySelector(".cart-scrim");
-    this.drawer = this.querySelector(".drawer__inner");
+    this.drawer = this.querySelector(".cart-drawer");
 
     this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
     this.overlay.addEventListener("click", this.close.bind(this));
@@ -40,7 +40,7 @@ class CartDrawer extends HTMLElement {
       "transitionend",
       () => {
         const containerToTrapFocusOn = this.classList.contains("is-empty") ? this.querySelector(".cart-empty") : document.getElementById("CartDrawer");
-        const focusElement = this.drawer || this.querySelector(".drawer__close");
+        const focusElement = this.drawer || this.querySelector(".cart-close");
         trapFocus(containerToTrapFocusOn, focusElement);
       },
       { once: true }
@@ -144,7 +144,7 @@ class CartDrawerItems extends CartItems {
       {
         id: "CartDrawer",
         section: "cart-drawer",
-        selector: ".drawer__inner",
+        selector: ".cart-drawer",
       },
       {
         id: "cart-icon-bubble",

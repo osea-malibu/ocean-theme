@@ -14,16 +14,13 @@
           {%- if section.settings.image.width >= 1100 -%}{{ section.settings.image | image_url: width: 1100 }} 1100w,{%- endif -%}
           {%- if section.settings.image.width >= 1500 -%}{{ section.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
           {%- if section.settings.image.width >= 1780 -%}{{ section.settings.image | image_url: width: 1780 }} 1780w,{%- endif -%}
-          {%- if section.settings.image.width >= 2000 -%}{{ section.settings.image | image_url: width: 2000 }} 2000w,{%- endif -%}
-          {%- if section.settings.image.width >= 3000 -%}{{ section.settings.image | image_url: width: 3000 }} 3000w,{%- endif -%}
-          {%- if section.settings.image.width >= 3840 -%}{{ section.settings.image | image_url: width: 3840 }} 3840w,{%- endif -%}
-          {{ section.settings.image | image_url: width: 5760 }} {{ section.settings.image.width }}w"
+          {{ section.settings.image | image_url: width: 2000 }} 2000w"
         src="{{ section.settings.image | image_url: width: 1500 }}"
         loading="lazy"
         alt="{{ section.settings.image.alt | escape }}"
         width="{{ section.settings.image.width }}"
         height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
-        class="{{ section.settings.image_classes }}"
+        class="{{ section.settings.image_classes }} block"
       >
     </picture>
   {%- endif -%}

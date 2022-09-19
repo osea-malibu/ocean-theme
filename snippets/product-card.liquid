@@ -156,7 +156,7 @@
           <button
             type="submit"
             name="add"
-            class="button button-tertiary w-full transition flex justify-between mt-2 disabled:opacity-50 {{ button_class }}"
+            class="button button-tertiary w-full transition flex mt-2 disabled:opacity-50 {% if product_card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
             {% if product_card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
           >
             {%- if product_card_product.selected_or_first_available_variant.available -%}

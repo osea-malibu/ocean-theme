@@ -445,30 +445,8 @@ a.active-facets__button.focused .active-facets__button-inner,
   display: flex;
 }
 
-.mobile-facets__wrapper .disclosure-has-popup[open] > summary::before {
-  height: 100vh;
-  z-index: 3;
-}
-
-.mobile-facets__inner {
-  background-color: rgb(var(--color-background));
-  width: calc(100% - 5rem);
-  margin-left: auto;
-  height: 100%;
-  overflow-y: auto;
-  pointer-events: all;
-  transition: transform var(--duration-short) ease;
-  max-width: 37.5rem;
-  display: flex;
-  flex-direction: column;
-}
-
 .menu-opening .mobile-facets__inner {
   transform: translateX(0);
-}
-
-.js .disclosure-has-popup:not(.menu-opening) .mobile-facets__inner {
-  transform: translateX(105vw);
 }
 
 .mobile-facets__header {
@@ -550,15 +528,6 @@ details.menu-opening .mobile-facets__close svg {
 .mobile-facets__close-button .icon-arrow {
   transform: rotate(180deg);
   margin-right: 1rem;
-}
-
-.mobile-facets__main {
-  padding: 2.7rem 0 0;
-  position: relative;
-  z-index: 1;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 .mobile-facets__details[open] .icon-caret {

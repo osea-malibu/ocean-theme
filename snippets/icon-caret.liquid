@@ -1,3 +1,12 @@
-<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6">
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+{% comment %}
+  Accepts:
+  - classes: {String} string of TailwindCSS classnames
+  - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
+
+  Usage:
+  {% render 'icon-caret', classes: 'w-10 h-10 text-seaweed-700' %}
+{% endcomment %}
+
+<svg{% if aria_hidden %} aria-hidden="true" focusable="false"{% endif %} class="{{ classes }}" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+  <path d="M4.97,9.05l6.79,7.92c.13,.15,.36,.15,.48,0l6.79-7.92c.18-.21,.03-.53-.24-.53H5.21c-.27,0-.42,.32-.24,.53Z"/>
 </svg>

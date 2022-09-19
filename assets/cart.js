@@ -217,7 +217,8 @@ class ShippingCountdown extends HTMLElement {
   constructor() {
     super();
 
-    this.total = document.getElementById("CartDrawer-Total").dataset.total;
+    this.totalEl = document.getElementById("CartDrawer-Total");
+    this.total = this.totalEl ? this.totalEl.dataset.total : 0;
     this.threshold = this.dataset.threshold * 100;
 
     this.percentComplete = (this.total / this.threshold) * 100;
