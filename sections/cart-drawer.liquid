@@ -130,6 +130,31 @@
         -%}
 
         <div class="flex-grow overflow-y-auto px-6 pb-12">
+          {% comment %} Save with sets upsell {% endcomment %}
+          {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or cart_ids contains first_set.id -%}
+            <save-with-sets
+              data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
+              data-item-to-remove="{{ item_with_set_line }}"
+            >
+              <div class="relative rounded-sm bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
+                <img
+                  srcset="{{ first_set.featured_media | image_url: width: 60 }} 1x,
+                    {{ first_set.featured_media | image_url: width: 120 }} 2x"
+                  src="{{ first_set.featured_media | image_url: width: 120 }}"
+                  loading="lazy"
+                  width="60"
+                  height="{{ 60 | divided_by: first_set.featured_media.aspect_ratio | ceil }}"
+                  alt="{{ first_set.featured_media.alt }}"
+                >
+                <div>
+                  <h3 class="leading-tight font-medium text-sm">Save{{ set_save_amount }} with {{ first_set.title }}</h3>
+                  <p class="text-sm leading-tight">An item in your cart comes in a set!</p>
+                  <button class="button button-xs button-secondary">Upgrade to set</button>
+                </div>
+              </div>
+            </save-with-sets>
+          {%- endunless -%}
+
           {% comment %} Cart items {% endcomment %}
           <cart-drawer-items
             class="block mx-auto max-w-md mb-6{% if cart == empty %} is-empty{% endif %}"
@@ -411,28 +436,6 @@
             </form>
           </cart-drawer-items>
 
-          {% comment %} Free samples {% endcomment %}
-          {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
-          {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 -%}
-            <div class="max-w-md mx-auto mb-6 bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
-              <h3 class="tracking-wide font-medium text-sm mb-1">Select up to 3 free samples</h3>
-              <div class="overflow-x-auto pb-3">
-                <ul class="grid gap-2" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
-                  {%- for sample in settings.cart_samples_collection.products -%}
-                    {%- if sample.available and sample.price == 0 -%}
-                      {%- unless cart_ids contains sample.id -%}
-                        {% render 'product-card-mini',
-                          product_card_product: sample,
-                          hide_price: true,
-                          button_class: 'button-secondary'
-                        -%}
-                      {%- endunless -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                </ul>
-              </div>
-            </div>
-          {%- endif -%}
 
           {% comment %} Product recommendations {% endcomment %}
           {%- liquid
