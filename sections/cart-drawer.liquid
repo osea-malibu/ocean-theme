@@ -436,20 +436,28 @@
             </form>
           </cart-drawer-items>
 
-
-          {% comment %} Product recommendations {% endcomment %}
-          {%- liquid
-            assign filtered_items = null | sort
-            for item in cart.items
-              unless item.product.type == 'Sample' or item.product.type == 'Free Gift'
-                assign item_array = item | sort
-                assign filtered_items = filtered_items | concat: item_array
-              endunless
-            endfor 
-          -%}
-          <cart-recommendations data-ids="{{ filtered_items | map: 'product_id' | escape }}">
-            <div id="CartDrawer-Recommendations"></div>
-          </cart-recommendations>
+          {% comment %} Free samples {% endcomment %}
+          {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
+          {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 -%}
+            <div class="max-w-md mx-auto mb-6 bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
+              <h3 class="tracking-wide font-medium text-sm mb-1">Select up to 3 free samples</h3>
+              <div class="overflow-x-auto pb-3">
+                <ul class="grid gap-2" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
+                  {%- for sample in settings.cart_samples_collection.products -%}
+                    {%- if sample.available and sample.price == 0 -%}
+                      {%- unless cart_ids contains sample.id -%}
+                        {% render 'product-card-mini',
+                          product_card_product: sample,
+                          hide_price: true,
+                          button_class: 'button-secondary'
+                        -%}
+                      {%- endunless -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </div>
+          {%- endif -%}
         </div>
 
         <div class="bg-seafoam-200 flex-shrink-0 px-6 py-4">
