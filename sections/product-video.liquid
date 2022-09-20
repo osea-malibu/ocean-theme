@@ -1,5 +1,4 @@
 {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-{{ 'video-section.css' | asset_url | stylesheet_tag }}
 
 {%- assign video_sources = product.metafields.my_fields.pdp_video -%}
 {%- if video_sources.value.size > 0 -%}

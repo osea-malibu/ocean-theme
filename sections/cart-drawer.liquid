@@ -131,7 +131,7 @@
 
         <div class="flex-grow overflow-y-auto px-6 pb-12">
           {% comment %} Save with sets upsell {% endcomment %}
-          {%- unless settings.enable_sets_upsell == false or item_with_set == nil or cart_ids contains first_set.id -%}
+          {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or cart_ids contains first_set.id -%}
             <save-with-sets
               data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
               data-item-to-remove="{{ item_with_set_line }}"

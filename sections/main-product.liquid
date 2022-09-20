@@ -303,25 +303,15 @@
               </product-form>
             </div>
           {%- when 'upsells' -%}
-            {%- liquid
-              assign has_set_upsell = false
-              assign has_pair_upsell = false
-              if product.metafields.my_fields.save_with_sets != nil and product.metafields.my_fields.save_with_sets.value.size > 0
-                assign has_set_upsell = true
-              endif
-              if product.metafields.my_fields.pair_with_product != nil
-                assign has_pair_upsell = true
-              endif
-            -%}
-            {%- if has_set_upsell or has_pair_upsell -%}
+            {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
               <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
-                {%- if block.settings.upsell_enable_sets and has_set_upsell -%}
-                  <h2 class="font-medium tracking-wide mb-1">Save with sets</h2>
+                {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
                   {%- for set in product.metafields.my_fields.save_with_sets.value -%}
+                    {%- if forloop.first %}<h2 class="font-medium tracking-wide mb-1">Save with sets</h2>{%- endif -%}
                     {%- render 'product-upsell', product: set -%}
                   {%- endfor -%}
                 {%- endif -%}
-                {%- if block.settings.upsell_enable_partner and has_pair_upsell -%}
+                {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
                   <h2 class="font-medium tracking-wide mb-1">Pairs well with</h2>
                   {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
                 {%- endif -%}
