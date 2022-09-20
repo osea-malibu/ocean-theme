@@ -38,15 +38,6 @@
           >
             {%- if product_card_product.selected_or_first_available_variant.available -%}
               <span>Add</span>
-              {%- unless hide_price -%}
-                <span id="price-{{ product_card_product.id }}-{{ random_number }}" class="{{ price_class }}">
-                  {% render 'price',
-                    product: product_card_product,
-                    show_price_range: false,
-                    use_variant: true,
-                  %}
-                </span>
-              {%- endunless -%}
             {%- else -%}
               {{ 'products.product.sold_out' | t }}
             {%- endif -%}
@@ -71,7 +62,7 @@
         {%- endif -%}
         <img
           srcset="{{ default_image | image_url: width: 144 }} 2x,
-            {{ default_image | image_url: width: 72 }}"
+            {{ default_image | image_url: width: 72 }} 1x"
           src="{{ default_image | image_url: width: 144 }}"
           alt="{{ default_image.alt | escape }}"
           loading="lazy"
