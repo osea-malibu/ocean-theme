@@ -458,6 +458,18 @@
               </div>
             </div>
           {%- endif -%}
+
+          {% comment %} Product recommendations {% endcomment %}
+          {%- liquid
+            assign filtered_items = null | sort
+            for item in cart.items
+              unless item.product.type == 'Sample' or item.product.type == 'Free Gift'
+                assign item_array = item | sort
+                assign filtered_items = filtered_items | concat: item_array
+              endunless
+            endfor 
+          -%}
+          
         </div>
 
         <div class="bg-seafoam-200 flex-shrink-0 px-6 py-4">
