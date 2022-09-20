@@ -458,11 +458,6 @@
               </div>
             </div>
           {%- endif -%}
-
-          {% comment %} Product recommendations {% endcomment %}
-          <cart-recommendations data-ids="{{ cart.items | map: 'product_id' | escape }}">
-            <div id="CartDrawer-Recommendations"></div>
-          </cart-recommendations>
         </div>
 
         <div class="bg-seafoam-200 flex-shrink-0 px-6 py-4">
