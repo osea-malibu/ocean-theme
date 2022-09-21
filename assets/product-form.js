@@ -45,7 +45,7 @@ if (!customElements.get("product-form")) {
             if (response.status) {
               this.handleErrorMessage(response.description);
 
-              /* Sold out message handling - might replace with klaviyo */
+              // Sold out message handling - might replace with klaviyo
               const soldOutMessage = this.submitButton.querySelector(".sold-out-message");
               if (!soldOutMessage) return;
               this.submitButton.setAttribute("aria-disabled", true);

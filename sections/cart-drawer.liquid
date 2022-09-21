@@ -448,6 +448,7 @@
                       {%- unless cart_ids contains sample.id -%}
                         {% render 'product-card-mini',
                           product_card_product: sample,
+                          section_id: section.id,
                           hide_price: true,
                           button_class: 'button-secondary'
                         -%}

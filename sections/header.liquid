@@ -42,7 +42,7 @@
             {% comment %} L1 Drawer {% endcomment %}
             <div class="menu-drawer fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-24 overyflow-y-auto" tabindex="-1">
               <div class="relative flex flex-col h-full">
-                <nav class="pt-12 pb-6">
+                <nav class="pt-8 pb-6">
                   <ul role="list">
                     {%- for link in section.settings.hamburger_menu.links -%}
                       <li>
@@ -88,8 +88,36 @@
                                 <ul role="list" tabindex="-1">
                                   {%- for childlink in link.links -%}
                                     <li>
+                                      {% comment %} Convert childlinklink with title 'PromoBlock' into promo block {% endcomment %}
+                                      {%- if childlink.title == 'PromoBlock' -%}
+                                        <figure class="shrink-0 tracking-wide px-8 mt-6">
+                                          {%- if section.settings.promo_image != nil -%}
+                                            {%- if section.settings.promo_link != nil -%}<a href="{{ section.settings.promo_link.url }}">{%- endif -%}
+                                              <img
+                                                srcset="{{ section.settings.promo_image | image_url: width: 250 }} 1x, {{ section.settings.promo_image | image_url: width: 500 }} 2x"
+                                                src="{{ section.settings.promo_image | image_url: width: 250 }}"
+                                                width="250"
+                                                height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio }}"
+                                                alt="{{ section.settings.promo_heading }}"
+                                                loading="lazy"
+                                                class="mb-2"
+                                              >
+                                            {%- if section.settings.promo_link != nil -%}</a>{%- endif -%}
+                                          {%- endif -%}
+                                          <figcaption>
+                                            {%- if section.settings.promo_heading != blank -%}
+                                              <h3 class="text-xl font-medium">{{ section.settings.promo_heading }}</h3>
+                                            {%- endif -%}
+                                            {%- if section.settings.promo_paragraph != blank -%}
+                                              {{ section.settings.promo_paragraph }}
+                                            {%- endif -%}
+                                            {%- if section.settings.promo_link != nil -%}
+                                              <a href="{{ section.settings.promo_link.url }}" class="button button-secondary button-sm mt-2">{{ section.settings.promo_button }}</a>
+                                            {%- endif -%}
+                                          </figcaption>
+                                        </figure>
                                       {% comment %} L2 - Link without sub menu {% endcomment %}
-                                      {%- if childlink.links == blank -%}
+                                      {%- elsif childlink.links == blank -%}
                                         <a href="{{ childlink.url }}" class="block {{ menu_link_styles }}{% if childlink.current %} text-seaweed-800{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
                                           {{ childlink.title | escape }}
                                         </a>
@@ -360,7 +388,7 @@
                 {%- endif -%}
               {%- endfor -%}
               {%- if link.levels >= 2 -%}
-                  <div class="shrink-0 tracking-wide">
+                  <figure class="shrink-0 tracking-wide">
                     {%- if section.settings.promo_image != nil -%}
                       {%- if section.settings.promo_link != nil -%}<a href="{{ section.settings.promo_link.url }}">{%- endif -%}
                         <img
@@ -374,16 +402,18 @@
                         >
                       {%- if section.settings.promo_link != nil -%}</a>{%- endif -%}
                     {%- endif -%}
-                    {%- if section.settings.promo_heading != blank -%}
-                      <h3 class="text-xl font-medium">{{ section.settings.promo_heading }}</h3>
-                    {%- endif -%}
-                    {%- if section.settings.promo_paragraph != blank -%}
-                      {{ section.settings.promo_paragraph }}
-                    {%- endif -%}
-                    {%- if section.settings.promo_link != nil -%}
-                      <a href="{{ section.settings.promo_link.url }}" class="button button-secondary button-sm mt-2">{{ section.settings.promo_button }}</a>
-                    {%- endif -%}
-                  </div>
+                    <figcaption>
+                      {%- if section.settings.promo_heading != blank -%}
+                        <h3 class="text-xl font-medium">{{ section.settings.promo_heading }}</h3>
+                      {%- endif -%}
+                      {%- if section.settings.promo_paragraph != blank -%}
+                        {{ section.settings.promo_paragraph }}
+                      {%- endif -%}
+                      {%- if section.settings.promo_link != nil -%}
+                        <a href="{{ section.settings.promo_link.url }}" class="button button-secondary button-sm mt-2">{{ section.settings.promo_button }}</a>
+                      {%- endif -%}
+                    </figcaption>
+                  </figure>
                 </div>
               {%- endif -%}
             </ul>

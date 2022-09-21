@@ -63,8 +63,14 @@
                       {%- if block.settings.heading != "" -%}
                         <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
                       {%- endif -%}
-                      {%- if block.settings.paragraph != "" -%}
-                        <div class="{{ block.settings.paragraph_classes }}">{{- block.settings.paragraph -}}</div>
+                      {%- if block.settings.paragraph != "" or block.settings.paragraph_data != "" -%}
+                        <div class="{{ block.settings.paragraph_classes }}">
+                          {%- if block.settings.paragraph_data != "" -%}
+                            {{- block.settings.paragraph_data -}}
+                          {%- elsif block.settings.paragraph != "" -%}
+                            {{- block.settings.paragraph -}}
+                          {%- endif -%}
+                        </div>
                       {%- endif -%}
                       {%- if block.settings.button_label != "" -%}
                         <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
@@ -75,6 +81,7 @@
                   {%- if block.settings.product -%}
                     {% render 'product-card',
                       product_card_product: all_products[block.settings.product],
+                      section_id: section.id,
                       show_secondary_image_on_hover: true,
                       custom_default_image: block.settings.custom_product_image
                       hide_badge: block.settings.hide_badge,
@@ -301,6 +308,12 @@
           "id": "paragraph",
           "info": "This field takes HTML.",
           "label": "Paragraph"
+        },
+        {
+          "type": "text",
+          "id": "paragraph_data",
+          "info": "Overrides paragraph input with data source.",
+          "label": "Paragraph data source"
         },
         {
           "type": "textarea",

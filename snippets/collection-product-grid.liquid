@@ -1,23 +1,22 @@
 {% comment %}
-  Renders facets (filtering and sorting)
+  Renders product grid for collection page
 
   Accepts:
   - collection: {Object} Collection or Search object (required)
-  - id: {String} Section id of parent (required)
   - products_per_page: {Number} Number of products to display before paginating (required)
 
   Usage:
-  {% render 'collection-product-grid', collection: collection, id: section.id %}
+  {% render 'collection-product-grid', collection: collection %}
 {% endcomment %}
 
 {%- paginate collection.products by products_per_page -%}
   {%- if collection.products.size == 0 -%}
-    <div class="collection collection--empty relative" id="product-grid" data-id="{{ id }}">
+    <div class="collection collection--empty relative" id="product-grid" data-id="{{ collection.id }}">
       <div class="loading-overlay"></div>
       <div class="title-wrapper center">
         <h2 class="title title--primary">
           {{ 'sections.collection_template.empty' | t }}<br>
-          {{ 'sections.collection_template.use_fewer_filters_html' | t: link: collection.url, class: "underlined-link link" }}
+          {{ 'sections.collection_template.use_fewer_filters_html' | t: link: collection.url, class: "underline" }}
         </h2>
       </div>
     </div>
@@ -25,12 +24,14 @@
     <div class="collection relative">
       <div class="loading-overlay"></div>
 
-      <div id="product-grid" data-id="{{ id }}">
+      <div id="product-grid" data-id="{{ collection.id }}">
         <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-8 sm:gap-x-4">
           {%- for product in collection.products -%}
-            <li class="grid__item">
+            <li>
               {% render 'product-card',
                 product_card_product: product,
+                section_id: collection.id,
+                show_secondary_image_on_hover: true,
                 button_class: 'flex-col sm:flex-row h-10 py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal tracking-wide sm:tracking-widest'
               %}
             </li>

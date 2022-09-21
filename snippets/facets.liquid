@@ -231,10 +231,10 @@
     <menu-drawer>
       <details class="mobile-facets__disclosure menu-drawer-container">
         {% comment %} Filter / sort icon {% endcomment %}
-        <summary class="group-child">
+        <summary class="group">
           <span class="mobile-facets__open flex items-center">
-            {% render 'icon-filter', stroke_width: 1.5, classes: 'w-6 h-6 group-child-hover:text-seaweed-500 transition-colors' %}
-            <span class="group-child-hover:text-seaweed-500 ml-2 transition-colors font-book text-sm">
+            {% render 'icon-filter', stroke_width: 1.5, classes: 'w-6 h-6 group-hover:text-seaweed-500 transition-colors' %}
+            <span class="group-hover:text-seaweed-500 ml-2 transition-colors font-book text-sm">
               {%- if enable_filtering and enable_sorting -%}
                 {{ 'products.facets.filter_and_sort' | t }}
               {%- elsif enable_filtering -%}

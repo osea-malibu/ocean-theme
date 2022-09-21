@@ -199,7 +199,7 @@ module.exports = {
         100: "100",
       },
     },
-    groups: ["child"],
+    groups: ["accordion"],
   },
   plugins: [
     require("@tailwindcss/forms"),

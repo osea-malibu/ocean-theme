@@ -13,13 +13,13 @@
   {% render 'search-card', product: product %}
 {% endcomment %}
 
-<details class="accordion group" id="{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
+<details class="accordion group-accordion" id="{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
   <summary class="w-full py-2 flex">
     <h2 class="font-medium tracking-wide grow">
       {{- summary -}}
     </h2>
     <svg class="h-5 w-5 text-seaweed-500 shrink-0" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line class="group-open:rotate-90 origin-center transition-transform duration-300" x1="12" y1="5" x2="12" y2="19" />
+      <line class="group-accordion-open:rotate-90 origin-center transition-transform duration-300" x1="12" y1="5" x2="12" y2="19" />
       <line x1="5" y1="12" x2="19" y2="12" />
     </svg>
   </summary>

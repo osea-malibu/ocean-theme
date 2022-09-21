@@ -1,4 +1,6 @@
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
 {%- liquid
   assign subcollections = collection.metafields.my_fields.subcollections
   assign featured_products = collection.metafields.my_fields.featured_products
@@ -41,6 +43,7 @@
           <li>
             {% render 'product-card',
               product_card_product: product,
+              section_id: section.id
               button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal',
               badge_class: 'scale-[0.8] sm:scale-100 origin-top-left'
             %}
@@ -64,7 +67,7 @@
         assign summary_handle = summary | handle
 
         capture subcollection_grid
-          render 'collection-product-grid', products: collections[subcollection].value, id: section.id, url: collection.url, products_per_page: section.settings.products_per_page
+          render 'collection-product-grid', collection: collections[subcollection], products_per_page: 200
         endcapture
 
         comment
@@ -84,7 +87,7 @@
       %}
     {%- endfor -%}
   {%- else -%}
-    {% render 'collection-product-grid', products: collection, id: section.id, url: collection.url, products_per_page: section.settings.products_per_page %}
+    {% render 'collection-product-grid', collection: collection, products_per_page: section.settings.products_per_page %}
   {%- endif -%}
 
   {%- if collection.metafields.custom.seo_description != nil -%}
