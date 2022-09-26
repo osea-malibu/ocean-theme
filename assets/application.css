@@ -4396,8 +4396,8 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-top: 0.5rem;
 }
 
-.mb-6 {
-  margin-bottom: 1.5rem;
+.mb-12 {
+  margin-bottom: 3rem;
 }
 
 .mr-1 {
@@ -4428,6 +4428,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-right: 0.5rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -4454,6 +4458,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .mr-3 {
   margin-right: 0.75rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
 }
 
 .mt-3 {
@@ -4504,10 +4512,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-bottom: 0px;
 }
 
-.mb-12 {
-  margin-bottom: 3rem;
-}
-
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -4542,10 +4546,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .mt-5 {
   margin-top: 1.25rem;
-}
-
-.mt-6 {
-  margin-top: 1.5rem;
 }
 
 .mt-7 {
@@ -5536,8 +5536,8 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   display: none;
 }
 
-.h-32 {
-  height: 8rem;
+.h-\[124px\] {
+  height: 124px;
 }
 
 .h-full {
@@ -5622,6 +5622,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .h-28 {
   height: 7rem;
+}
+
+.h-32 {
+  height: 8rem;
 }
 
 .h-40 {
@@ -5742,10 +5746,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[124px\] {
-  height: 124px;
 }
 
 .max-h-0 {
@@ -9827,9 +9827,9 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   gap: 0.875rem;
 }
 
-.gap-x-3 {
-  -moz-column-gap: 0.75rem;
-       column-gap: 0.75rem;
+.gap-x-2 {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
 }
 
 .gap-y-8 {
@@ -9846,9 +9846,9 @@ slider-component ::-webkit-scrollbar-thumb:hover {
        column-gap: 0.25rem;
 }
 
-.gap-x-2 {
-  -moz-column-gap: 0.5rem;
-       column-gap: 0.5rem;
+.gap-x-3 {
+  -moz-column-gap: 0.75rem;
+       column-gap: 0.75rem;
 }
 
 .gap-x-4 {
@@ -12199,8 +12199,8 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-top: 10rem;
 }
 
-.pt-12 {
-  padding-top: 3rem;
+.pt-8 {
+  padding-top: 2rem;
 }
 
 .pb-6 {
@@ -12255,10 +12255,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding-top: 1.75rem;
 }
 
-.pt-8 {
-  padding-top: 2rem;
-}
-
 .pt-9 {
   padding-top: 2.25rem;
 }
@@ -12269,6 +12265,10 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .pt-11 {
   padding-top: 2.75rem;
+}
+
+.pt-12 {
+  padding-top: 3rem;
 }
 
 .pt-14 {
@@ -15203,11 +15203,6 @@ strong.highlight {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.group[open] .group-open\:rotate-90 {
-  --tw-rotate: 90deg;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
 .group:hover .group-hover\:visible {
   visibility: visible;
 }
@@ -15248,6 +15243,10 @@ strong.highlight {
 .peer:checked ~ .peer-checked\:bg-wave-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 244 / var(--tw-bg-opacity));
+}
+
+.child\:mb-1 > * {
+  margin-bottom: 0.25rem;
 }
 
 .child\:underline > * {
@@ -35476,10 +35475,6 @@ strong.highlight {
     line-height: 2;
   }
 
-  .xs\:tracking-normal {
-    letter-spacing: 0;
-  }
-
   .xs\:tracking-tightest {
     letter-spacing: -.075em;
   }
@@ -35490,6 +35485,10 @@ strong.highlight {
 
   .xs\:tracking-tight {
     letter-spacing: -.02em;
+  }
+
+  .xs\:tracking-normal {
+    letter-spacing: 0;
   }
 
   .xs\:tracking-wide {
@@ -47328,6 +47327,10 @@ strong.highlight {
     line-height: 1.5;
   }
 
+  .sm\:leading-5 {
+    line-height: 1.25rem;
+  }
+
   .sm\:leading-none {
     line-height: 1;
   }
@@ -47348,16 +47351,8 @@ strong.highlight {
     line-height: 2;
   }
 
-  .sm\:leading-5 {
-    line-height: 1.25rem;
-  }
-
   .sm\:tracking-widest {
     letter-spacing: .1em;
-  }
-
-  .sm\:tracking-wide {
-    letter-spacing: .025em;
   }
 
   .sm\:tracking-tightest {
@@ -47374,6 +47369,10 @@ strong.highlight {
 
   .sm\:tracking-normal {
     letter-spacing: 0;
+  }
+
+  .sm\:tracking-wide {
+    letter-spacing: .025em;
   }
 
   .sm\:tracking-wider {
