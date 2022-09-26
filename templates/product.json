@@ -161,37 +161,18 @@
         "16637820579654b4e5-0": {
           "type": "column",
           "settings": {
-            "column_classes": "",
+            "column_classes": "p-6",
             "image": "{{ product.metafields.custom.key_ingredients_image.value }}",
-            "is_bg_image": false,
-            "image_link": "",
-            "image_classes": "",
-            "image_wrapper_classes": "",
-            "text_classes": "",
-            "heading": "",
-            "heading_classes": "",
-            "paragraph": "",
-            "paragraph_data": "{{ product.metafields.custom.key_ingredients_text.value }}",
-            "paragraph_classes": "",
-            "button_label": "",
-            "link": "",
-            "button_classes": ""
-          }
-        },
-        "eb69fde1-14cf-4def-8a98-7912e65c4719": {
-          "type": "column",
-          "settings": {
-            "column_classes": "",
-            "is_bg_image": false,
+            "is_bg_image": true,
             "image_link": "",
             "image_classes": "",
             "image_wrapper_classes": "",
             "text_classes": "",
             "heading": "Key Ingredients",
-            "heading_classes": "text-xl tracking-wide font-medium",
+            "heading_classes": "text-xl tracking-wide font-medium mb-2",
             "paragraph": "",
-            "paragraph_data": "",
-            "paragraph_classes": "",
+            "paragraph_data": "{{ product.metafields.custom.key_ingredients_text.value }}",
+            "paragraph_classes": "text-sm child:mb-1",
             "button_label": "",
             "link": "",
             "button_classes": ""
@@ -199,8 +180,7 @@
         }
       },
       "block_order": [
-        "16637820579654b4e5-0",
-        "eb69fde1-14cf-4def-8a98-7912e65c4719"
+        "16637820579654b4e5-0"
       ],
       "settings": {
         "section_classes": "container mx-auto px-6 mb-12",
