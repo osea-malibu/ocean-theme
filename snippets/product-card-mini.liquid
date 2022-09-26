@@ -18,7 +18,7 @@
   <div class="w-full order-1 grow flex flex-col">
     <a href="{{ product_card_product.url | default: '#' }}" class="group">
       <h4
-        class="text-xs font-book group-hover:underline underline-offset-1 decoration-1 tracking-wide text-center {% if product_card_product.title.size > 30 %}leading-none{% else %}leading-tight{% endif %}"
+        class="text-xs font-book group-hover:underline underline-offset-1 decoration-1 tracking-wide text-center {% if product_card_product.title.size >= 28 %}leading-none{% else %}leading-tight{% endif %}"
         id="title-{{ section_id }}-{{ product_card_product.id }}"
       >
         {{ product_card_product.title | replace: ' - Sample', '' | escape }}

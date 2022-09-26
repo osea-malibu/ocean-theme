@@ -15240,6 +15240,11 @@ strong.highlight {
   border-color: rgb(110 149 139 / var(--tw-border-opacity));
 }
 
+.peer:checked ~ .peer-checked\:border-seaweed-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(160 190 183 / var(--tw-border-opacity));
+}
+
 .peer:checked ~ .peer-checked\:bg-wave-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 244 / var(--tw-bg-opacity));
@@ -47341,6 +47346,10 @@ strong.highlight {
 
   .sm\:leading-loose {
     line-height: 2;
+  }
+
+  .sm\:leading-5 {
+    line-height: 1.25rem;
   }
 
   .sm\:tracking-widest {

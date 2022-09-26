@@ -157,7 +157,7 @@
 
           {% comment %} Cart items {% endcomment %}
           <cart-drawer-items
-            class="block mx-auto max-w-md mb-6{% if cart == empty %} is-empty{% endif %}"
+            class="block mx-auto max-w-md mb-12{% if cart == empty %} is-empty{% endif %}"
             data-cart-ids="{{ cart_ids | json }}"
           >
             <form action="{{ routes.cart_url }}" id="CartDrawer-Form" class="grow flex flex-wrap" method="post">

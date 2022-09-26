@@ -38,7 +38,7 @@
 
   {%- if featured_products -%}
     {%- capture featured_products_grid -%}
-      <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-4">
+      <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-8 sm:gap-x-4">
         {%- for product in featured_products.value -%}
           <li>
             {% render 'product-card',
