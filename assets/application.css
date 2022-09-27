@@ -10764,10 +10764,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   background-color: rgb(255 181 69 / var(--tw-bg-opacity));
 }
 
-.bg-\[\#f6e7ea\]\/50 {
-  background-color: rgb(246 231 234 / 0.5);
-}
-
 .bg-seaweed-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(246 252 250 / var(--tw-bg-opacity));
@@ -11017,6 +11013,15 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 
 .bg-opacity-100 {
   --tw-bg-opacity: 1;
+}
+
+.bg-gradient-radial {
+  background-image: radial-gradient(var(--tw-gradient-stops));
+}
+
+.from-\[\#f6e7ea\]\/50 {
+  --tw-gradient-from: rgb(246 231 234 / 0.5);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(246 231 234 / 0));
 }
 
 .from-seaweed-800\/30 {
