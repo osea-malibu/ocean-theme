@@ -228,7 +228,7 @@
     @apply visible opacity-100;
   }
   modal-dialog [role="dialog"] {
-    @apply absolute top-1/2 left-6 right-6 -translate-y-1/2 bg-white rounded-sm px-6 sm:px-8 py-8 shadow-xl shadow-seaweed-800/20 max-w-md mx-auto scale-0 origin-center transition-transform duration-200 delay-200;
+    @apply absolute top-1/2 left-6 right-6 -translate-y-1/2 bg-white rounded-sm px-6 sm:px-8 py-10 shadow-xl shadow-seaweed-800/20 max-w-md mx-auto scale-0 origin-center transition-transform duration-200 delay-200;
   }
   modal-dialog[open] [role="dialog"] {
     @apply scale-100;
