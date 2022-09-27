@@ -13,7 +13,7 @@ module.exports = {
     "bg-origin-content",
     "border-b",
     "font-thin",
-    "from-[#f6e7ea]/50",
+    "from-[#f6e7ea]/75",
     "from-seaweed-800/30",
     "icon-list-check",
     "lg:[--swiffy-slider-item-count:4]",
