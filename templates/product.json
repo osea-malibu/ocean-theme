@@ -155,46 +155,6 @@
         "wrapper_classes": "container mx-auto px-6 xl:max-w-screen-xl mb-12"
       }
     },
-    "1663782057ba86ff0e": {
-      "type": "multicolumn",
-      "blocks": {
-        "16637820579654b4e5-0": {
-          "type": "column",
-          "settings": {
-            "column_classes": "",
-            "image": "{{ product.metafields.custom.key_ingredients_image.value }}",
-            "is_bg_image": true,
-            "image_link": "",
-            "image_classes": "",
-            "image_wrapper_classes": "",
-            "text_classes": "p-6",
-            "heading": "Key Ingredients",
-            "heading_classes": "text-xl tracking-wide font-medium mb-3",
-            "paragraph": "",
-            "paragraph_data": "{{ product.metafields.custom.key_ingredients_text.value }}",
-            "paragraph_classes": "text-sm",
-            "button_label": "",
-            "link": "",
-            "button_classes": ""
-          }
-        }
-      },
-      "block_order": [
-        "16637820579654b4e5-0"
-      ],
-      "settings": {
-        "section_classes": "container mx-auto px-6 mb-12 xl:max-w-screen-xl",
-        "container_classes": "flex flex-col gap-4",
-        "is_slider": false,
-        "slider_indicator_count": 3,
-        "slider_breakpoint_limit": "none",
-        "slider_classes": "",
-        "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
-        "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
-      }
-    },
     "key-ingredients": {
       "type": "product-key-ingredients",
       "settings": {
@@ -228,7 +188,6 @@
   "order": [
     "main",
     "product-video",
-    "1663782057ba86ff0e",
     "key-ingredients",
     "product-reviews",
     "product-recommendations"
