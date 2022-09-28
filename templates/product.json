@@ -41,7 +41,7 @@
           "settings": {
             "subscription_classes": "col-span-12 mb-4 mt-1",
             "subscription_modal_heading": "Subscribe & Save 10%",
-            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, pause, or cancel at anytime through your OSEA account.<\/p>\n<ul class=\"leading-tight tracking-wide icon-list-check mb-4\">\n<li class=\"mb-2\">10<span class=\"system-sans\">%<\/span> off every order<\/li>\n<li class=\"mb-2\">Free shipping on recurring orders<\/li>\n<li class=\"mb-2\">Early access to new products<\/li>\n<li>Skip, edit or cancel anytime<\/li>\n<\/ul>\n<button href=\"\/pages\/subscribe\" class=\"button button-sm button-secondary mb-2\">Learn more<\/button>\n<small class=\"block\">Click here for our <a href=\"\/pages\/terms-of-use\" class=\"underline\">Terms of Use<\/a>.<\/small>"
+            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, pause, or cancel at anytime through your OSEA account.</p>\n<ul class=\"leading-tight tracking-wide icon-list-check mb-4\">\n<li class=\"mb-2\">10<span class=\"system-sans\">%</span> off every order</li>\n<li class=\"mb-2\">Free shipping on recurring orders</li>\n<li class=\"mb-2\">Early access to new products</li>\n<li>Skip, edit or cancel anytime</li>\n</ul>\n<button href=\"/pages/subscribe\" class=\"button button-sm button-secondary mb-2\">Learn more</button>\n<small class=\"block\">Click here for our <a href=\"/pages/terms-of-use\" class=\"underline\">Terms of Use</a>.</small>"
           }
         },
         "quantity_selector": {
@@ -82,7 +82,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Ingredients",
-            "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}<\/p>",
+            "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}</p>",
             "tab_classes": "col-span-12",
             "default_open": false
           }
@@ -179,9 +179,7 @@
           }
         }
       },
-      "block_order": [
-        "16637820579654b4e5-0"
-      ],
+      "block_order": ["16637820579654b4e5-0"],
       "settings": {
         "section_classes": "container mx-auto px-6 mb-12 xl:max-w-screen-xl",
         "container_classes": "flex flex-col gap-4",
@@ -190,10 +188,14 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
+    },
+    "key-ingredients": {
+      "type": "product-key-ingredients",
+      "settings": {}
     },
     "product-reviews": {
       "type": "product-reviews",
@@ -216,11 +218,5 @@
       }
     }
   },
-  "order": [
-    "main",
-    "product-video",
-    "1663782057ba86ff0e",
-    "product-reviews",
-    "product-recommendations"
-  ]
+  "order": ["main", "product-video", "1663782057ba86ff0e", "key-ingredients", "product-reviews", "product-recommendations"]
 }

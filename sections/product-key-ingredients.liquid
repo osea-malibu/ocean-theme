@@ -1,0 +1,47 @@
+{%- if section.settings.image_mobile != nil and section.settings.paragraph and section.settings.paragraph != blank -%}
+  <div class="container mx-auto px-6">
+    <div class="bg-cover"{% if section.settings.image_mobile != nil %} style="background-image: url('{{ section.settings.image_mobile | image_url: width: 800 }}')"{% endif %}>
+      <h3>{{ section.settings.header }}</h3>
+      {%- if section.settings.paragraph and section.settings.paragraph != blank -%}
+        <p>{{ section.settings.paragraph }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.video.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section is powered by the product metafields labeled 'Key ingredients'."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (mobile)",
+      "info": "Size: 800w x 800h. Connect data source 'Key ingredients: Image (mobile)'"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Image (desktop)",
+      "info": "Size: 2000w x 800h. Connect data source 'Key ingredients: Image (desktop)'."
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "Key ingredients"
+    },
+    {
+      "type": "text",
+      "id": "paragraph",
+      "label": "Paragraph",
+      "info": "Connect data source 'Key ingredients: Text'"
+    }
+  ]
+}
+{% endschema %}
