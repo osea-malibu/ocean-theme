@@ -2,12 +2,22 @@
   <h1 class="sr-only">
     {{ page.title | escape }}
   </h1>
-  {%- for block in section.blocks -%}
-    {% render 'accordion',
-      id: "Details-{{ section.id }}-{{ block.id }}",
-      summary: block.settings.accordion_summary,
-      content: block.settings.accordion_content %}
-  {%- endfor -%}
+  <div class="container mx-auto px-6 flex">
+    <aside>
+      {%- for block in section.blocks -%}
+        <a>{{ section.settings.accordion_group_heading }}</a>
+      {%- endfor -%}
+    </aside>
+    <article>
+      <h2>{{ section.settings.accordion_group_heading }}</h2>
+      {%- for block in section.blocks -%}
+        {% render 'accordion',
+          id: "Details-{{ section.id }}-{{ block.id }}",
+          summary: block.settings.accordion_summary,
+          content: block.settings.accordion_content %}
+      {%- endfor -%}
+    </article>
+  </div>
 </div>
 
 {% schema %}
