@@ -24,12 +24,12 @@
             >
               {%- case block.type -%}
                 {%- when 'column' %}
-                  {%- if block.settings.image != nil and block.settings.is_bg_image == false -%}
-                    {%- if block.settings.image_link != nil -%}
+                  {%- if block.settings.image != blank and block.settings.is_bg_image == false -%}
+                    {%- if block.settings.image_link != blank -%}
                       <a href="{{ block.settings.image_link }}">
                     {%- endif -%}
                       <picture class="{{ block.settings.image_wrapper_classes }}">
-                        {%- if block.settings.image_desktop != nil -%}
+                        {%- if block.settings.image_desktop != blank -%}
                           <source
                             srcset="{{ block.settings.image_desktop | image_url: width: 800 }} 1x, {{ block.settings.image_desktop | image_url: width: 1600 }} 2x"
                             media="(min-width: 640px)"
@@ -54,7 +54,7 @@
                           loading="lazy"
                         >
                       </picture>
-                    {%- if block.settings.image_link != nil -%}
+                    {%- if block.settings.image_link != blank -%}
                       </a>
                     {%- endif -%}
                   {%- endif -%}
@@ -63,11 +63,9 @@
                       {%- if block.settings.heading != "" -%}
                         <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
                       {%- endif -%}
-                      {%- if block.settings.paragraph != "" or block.settings.paragraph_data != "" -%}
+                      {%- if block.settings.paragraph != blank -%}
                         <div class="{{ block.settings.paragraph_classes }}">
-                          {%- if block.settings.paragraph_data != "" -%}
-                            {{- block.settings.paragraph_data -}}
-                          {%- elsif block.settings.paragraph != "" -%}
+                          {%- if block.settings.paragraph != blank -%}
                             {{- block.settings.paragraph -}}
                           {%- endif -%}
                         </div>
@@ -308,12 +306,6 @@
           "id": "paragraph",
           "info": "This field takes HTML.",
           "label": "Paragraph"
-        },
-        {
-          "type": "text",
-          "id": "paragraph_data",
-          "info": "Overrides paragraph input with data source.",
-          "label": "Paragraph data source"
         },
         {
           "type": "textarea",

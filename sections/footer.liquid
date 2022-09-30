@@ -86,7 +86,7 @@
               {%- endif -%}
               {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
               <tab-controller id="footer-newsletter-tabs">
-                <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-center mb-1 button-group">
+                <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex justify-center mb-1 button-group">
                   {%- for tab in newsletter_tabs -%}
                     <li
                       role="tab"
@@ -107,7 +107,7 @@
                       <div class="w-full">
                         <div class="relative">
                           <input
-                            id="NewsletterForm--{{ section.id }}"
+                            id="NewsletterForm-{{ tab }}-{{ section.id }}"
                             type="{%- if tab == 'Email' -%}email{%- else -%}tel{%- endif -%}"
                             name="contact[{{- tab | downcase -}}]"
                             class="input w-full px-11"
