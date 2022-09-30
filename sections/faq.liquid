@@ -22,20 +22,21 @@
 
 {% schema %}
 {
-  "name": "Accordion group",
+  "name": "FAQ",
   "tag": "section",
   "settings": [
-    {
-      "type": "text",
-      "label": "Heading",
-      "id": "accordion_group_heading"
-    }
   ],
   "blocks": [
     {
       "type": "accordion",
       "name": "Accordion",
       "settings": [
+        {
+          "type": "text",
+          "id": "accordion_group",
+          "label": "Group name",
+          "info": "Any accordions with this group name will be combined "
+        },
         {
           "type": "html",
           "id": "accordion_summary",
