@@ -1,10 +1,13 @@
 <div class="accordion-group">
-  <h1 class="main-page-title page-title h0">
+  <h1 class="sr-only">
     {{ page.title | escape }}
   </h1>
-  <div class="rte">
-    {{ page.content }}
-  </div>
+  {%- for block in section.blocks -%}
+    {% render 'accordion',
+      id: "Details-{{ section.id }}-{{ block.id }}",
+      summary: block.settings.accordion_summary,
+      content: block.settings.accordion_content %}
+  {%- endfor -%}
 </div>
 
 {% schema %}
@@ -25,13 +28,13 @@
       "settings": [
         {
           "type": "html",
-          "id": "accordion_question",
-          "label": "Question"
+          "id": "accordion_summary",
+          "label": "Summary"
         },
         {
           "type": "html",
-          "id": "accordion_answer",
-          "label": "Answer"
+          "id": "accordion_content",
+          "label": "Content"
         }
       ]
     }
