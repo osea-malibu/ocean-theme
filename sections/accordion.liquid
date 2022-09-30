@@ -2,14 +2,14 @@
   <h1 class="sr-only">
     {{ page.title | escape }}
   </h1>
-  <div class="container mx-auto px-6 flex">
-    <aside>
+  <div class="container mx-auto px-6 my-12 flex flex-col sm:flex-row gap-6 items-start">
+    <aside class="w-1/4 bg-wave-100 p-6">
       {%- for block in section.blocks -%}
-        <a>{{ section.settings.accordion_group_heading }}</a>
+        <a class="font-book tracking-wide">{{ section.settings.accordion_group_heading }}</a>
       {%- endfor -%}
     </aside>
-    <article>
-      <h2>{{ section.settings.accordion_group_heading }}</h2>
+    <article class="w-3/4">
+      <h2 class="text-xl sm:text-2xl tracking-wide font-medium mb-4">{{ section.settings.accordion_group_heading }}</h2>
       {%- for block in section.blocks -%}
         {% render 'accordion',
           id: "Details-{{ section.id }}-{{ block.id }}",
