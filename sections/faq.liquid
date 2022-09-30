@@ -1,4 +1,4 @@
-<div class="accordion-group">
+<div class="faq">
   <h1 class="sr-only">
     {{ page.title | escape }}
   </h1>
@@ -25,29 +25,11 @@
   "name": "FAQ",
   "tag": "section",
   "settings": [
-  ],
-  "blocks": [
     {
-      "type": "accordion",
-      "name": "Accordion",
-      "settings": [
-        {
-          "type": "text",
-          "id": "accordion_group",
-          "label": "Group name",
-          "info": "Any accordions with this group name will be combined "
-        },
-        {
-          "type": "html",
-          "id": "accordion_summary",
-          "label": "Summary"
-        },
-        {
-          "type": "html",
-          "id": "accordion_content",
-          "label": "Content"
-        }
-      ]
+      "type": "text",
+      "label": "JSON FAQ data",
+      "id": "json_data",
+      "info": "Connect a data source that contains a JSON file of FAQ data."
     }
   ]
 }
