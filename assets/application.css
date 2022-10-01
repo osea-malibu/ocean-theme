@@ -598,18 +598,6 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
-/* TEMP: class for system sans serif, overrides missing symbols, remove with font license */
-
-.system-sans {
-  font-family: sans-serif;
-  transform: scale(0.9);
-  display: inline-block;
-}
-
-.system-serif {
-  font-family: serif;
-}
-
 /* Handle no-js visibility */
 
 .no-js:not(html) {
@@ -3704,6 +3692,11 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   margin-bottom: 1.5rem;
 }
 
+.my-12 {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -4097,11 +4090,6 @@ slider-component ::-webkit-scrollbar-thumb:hover {
 .my-11 {
   margin-top: 2.75rem;
   margin-bottom: 2.75rem;
-}
-
-.my-12 {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
 }
 
 .my-14 {
@@ -5940,6 +5928,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   width: 2.5rem;
 }
 
+.w-1\/4 {
+  width: 25%;
+}
+
+.w-3\/4 {
+  width: 75%;
+}
+
 .w-\[calc\(100\%\+1\.5rem\)\] {
   width: calc(100% + 1.5rem);
 }
@@ -6084,16 +6080,8 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   width: 66.666667%;
 }
 
-.w-1\/4 {
-  width: 25%;
-}
-
 .w-2\/4 {
   width: 50%;
-}
-
-.w-3\/4 {
-  width: 75%;
 }
 
 .w-2\/5 {
@@ -9703,12 +9691,12 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   gap: 1rem;
 }
 
-.gap-8 {
-  gap: 2rem;
-}
-
 .gap-6 {
   gap: 1.5rem;
+}
+
+.gap-8 {
+  gap: 2rem;
 }
 
 .gap-3 {
@@ -11688,12 +11676,12 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   padding: 1rem;
 }
 
-.p-2 {
-  padding: 0.5rem;
-}
-
 .p-6 {
   padding: 1.5rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .p-3 {
@@ -12761,14 +12749,14 @@ slider-component ::-webkit-scrollbar-thumb:hover {
   line-height: 2.5rem;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-2xl {
@@ -47271,6 +47259,11 @@ strong.highlight {
     vertical-align: text-bottom;
   }
 
+  .sm\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -47294,11 +47287,6 @@ strong.highlight {
   .sm\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
-  }
-
-  .sm\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
   }
 
   .sm\:text-3xl {

@@ -340,27 +340,19 @@
                                   </svg>
                                 </div>
                                 <div class="cart-item__price-wrapper h-full flex items-center justify-end transition-opacity">
-                                  {% comment %} TODO: Uncomment money lines when we have full font license {% endcomment %}
                                   {%- if item.selling_plan_allocation != nil -%}
                                     <div class="flex">
                                       <span class="sr-only">
                                         {{ 'products.product.price.regular_price' | t }}
                                       </span>
                                       <s class="text-wave-600 mr-1 whitespace-nowrap">
-                                        {% comment %} {{ item.selling_plan_allocation.compare_at_price | times: item.quantity | money }} {% endcomment %}
-                                        <span class="system-sans">$</span>{{ item.selling_plan_allocation.compare_at_price | times: item.quantity | divided_by: 100 }}
+                                        {{ item.selling_plan_allocation.compare_at_price | times: item.quantity | money_without_trailing_zeros }}
                                       </s>
                                       <span class="sr-only">
                                         {{ 'products.product.price.sale_price' | t }}
                                       </span>
                                       <span class="whitespace-nowrap">
-                                        {% comment %} {{ item.selling_plan_allocation.per_delivery_price | times: item.quantity | money }} {% endcomment %}
-                                        {%- liquid
-                                          assign price_split = item.selling_plan_allocation.compare_at_price | times: item.quantity | times: 0.9 | divided_by: 100 | round: 2 | split: "."
-                                          assign integral = price_split[0]
-                                          assign fractional = price_split[1] | append: "00" | truncate: 2, ""
-                                        -%}
-                                        <span class="system-sans">$</span>{{ integral }}.{{ fractional }}
+                                        {{ item.selling_plan_allocation.per_delivery_price | times: item.quantity | money }}
                                       </span>
                                     </div>
                                   {%- elsif item.original_line_price != item.final_line_price -%}
@@ -369,15 +361,13 @@
                                         {{ 'products.product.price.regular_price' | t }}
                                       </span>
                                       <s class="text-wave-600 mr-1">
-                                        {% comment %} {{ item.original_line_price | money }} {% endcomment %}
-                                        <span class="system-sans">$</span>{{ item.original_line_price | divided_by: 100 }}
+                                        {{ item.original_line_price | money }}
                                       </s>
                                       <span class="sr-only">
                                         {{ 'products.product.price.sale_price' | t }}
                                       </span>
                                       <span>
-                                        {% comment %} {{ item.final_line_price | money }} {% endcomment %}
-                                        <span class="system-sans">$</span>{{ item.final_line_price | money }}
+                                        {{ item.final_line_price | money }}
                                       </span>
                                     </div>
                                   {%- elsif item.product.has_only_default_variant != true and item.variant.compare_at_price > item.variant.price -%}
@@ -386,15 +376,13 @@
                                         {{ 'products.product.price.regular_price' | t }}
                                       </span>
                                       <s class="text-wave-600 mr-1 whitespace-nowrap">
-                                        {% comment %} {{ item.variant.compare_at_price | times: item.quantity | money }} {% endcomment %}
-                                        <span class="system-sans">$</span>{{ item.variant.compare_at_price | times: item.quantity | divided_by: 100 }}
+                                        {{ item.variant.compare_at_price | times: item.quantity | money }}
                                       </s>
                                       <span class="sr-only">
                                         {{ 'products.product.price.sale_price' | t }}
                                       </span>
                                       <span class="whitespace-nowrap">
-                                        {% comment %} {{ item.variant.price | times: item.quantity | money }} {% endcomment %}
-                                        <span class="system-sans">$</span>{{ item.variant.price | times: item.quantity | divided_by: 100 }}
+                                        {{ item.variant.price | times: item.quantity | money }}
                                       </span>
                                     </div>
                                   {%- else -%}
@@ -403,8 +391,7 @@
                                       {%- elsif item.product.type == 'Free Gift' -%}
                                         <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">Free Gift</span>
                                       {%- else -%}
-                                        {% comment %} <span class="flex">{{ item.original_line_price | money }}</span> {% endcomment %}
-                                        <span class="flex"><span class="system-sans">$</span>{{ item.original_line_price | divided_by: 100 }}</span>
+                                        <span class="flex">{{ item.original_line_price | money }}</span>
                                       {%- endif -%}
                                   {%- endif -%}
 
@@ -496,13 +483,7 @@
             <div {{ block.shopify_attributes }}>
               <div class="flex justify-between items-center w-full" role="status">
                 <h3>{{ 'sections.cart.subtotal' | t }}</h3>
-                {% comment %} <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p> {% endcomment %}
-                {%- liquid
-                  assign price_split = cart.total_price | plus: 0.00001 | divided_by: 100 | round: 2 | split: "."
-                  assign integral = price_split[0]
-                  assign fractional = price_split[1] | append: "00" | truncate: 2, ""
-                -%}
-                <p id="CartDrawer-Total" data-total="{{ cart.total_price }}"><span class="system-sans">$</span>{{ integral }}.{{ fractional }}</p>
+                <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p>
               </div>
 
               <div>

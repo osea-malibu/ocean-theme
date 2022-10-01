@@ -140,13 +140,11 @@ module.exports = {
       serif: "Canela, serif",
     },
     fontWeight: {
-      //thin: 200,
       light: 300,
       regular: 400,
       book: 500,
       medium: 600,
       bold: 700,
-      //black: 800,
     },
     letterSpacing: {
       tightest: "-.075em",

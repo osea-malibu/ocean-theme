@@ -3,16 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  /* TEMP: class for system sans serif, overrides missing symbols, remove with font license */
-  .system-sans {
-    font-family: sans-serif;
-    transform: scale(0.9);
-    display: inline-block;
-  }
-  .system-serif {
-    font-family: serif;
-  }
-
   /* Handle no-js visibility */
   .no-js:not(html) {
     @apply hidden;

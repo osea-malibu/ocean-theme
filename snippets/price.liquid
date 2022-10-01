@@ -23,21 +23,12 @@
 
   assign compare_at_price = target.compare_at_price
   assign price = target.price | default: 1999
-  assign available = target.available | default: false
-  comment
-  assign money_price = price | money
+  assign money_price = price | money_without_trailing_zeros
   if settings.currency_code_enabled
     assign money_price = price | money_with_currency
   endif
-  endcomment
-  assign money_price = price | divided_by: 100
-
-  if target == product and product.price_varies
-    assign money_price = 'products.product.price.from_price_html' | t: price: money_price
-  endif
 -%}
 
-{% comment %} TODO: Uncomment money lines when we have full font license {% endcomment %}
 <div
   class="price whitespace-nowrap
   {%- if price_class %} {{ price_class }}{% endif -%}
@@ -47,51 +38,37 @@
     <div class="flex-row">
       <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
       <span>
-        {% comment %} <s class="text-wave-600 mr-1">{{ money_price }}</s> {% endcomment %}
-        <s class="text-wave-600 mr-1"><span class="system-sans">$</span>{{ money_price }}</s>
+        <s class="text-wave-600 mr-1">{{ money_price }}</s>
       </span>
       <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
-      {% comment %} <span>{{ price | times: 0.9 | money }}</span> {% endcomment %}
-      {%- liquid
-        assign price_split = price | times: 0.9 | divided_by: 100 | round: 2 | split: "."
-        assign integral = price_split[0]
-        assign fractional = price_split[1] | append: "00" | truncate: 2, ""
-      -%}
-      <span><span class="system-sans">$</span>{{ integral }}.{{ fractional }}</span>
+      <span>{{ price | times: 0.9 | money }}</span>
     </div>
   {%- elsif show_price_range -%}
     {%- if product.price_varies -%}
-      {% comment %} {{ min_price | money }} - {{ max_price | money }} {% endcomment %}
-      <span><span class="system-sans">$</span>{{ min_price | divided_by: 100 }} - <span class="system-sans">$</span>{{ max_price | divided_by: 100 }}</span>
+      {{ min_price | money_without_trailing_zeros }} - {{ max_price | money_without_trailing_zeros }}
     {%- else -%}
-      {% comment %} {{ money_price }} {% endcomment %}
-      <span><span class="system-sans">$</span>{{ money_price }}</span>
+      {{ money_price }}
     {%- endif -%}
   {%- else -%}
     <div class="{%- if compare_at_price > price %} hidden{% else %} flex{% endif -%}">
       <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
-      {% comment %} <span>{{ money_price }}</span> {% endcomment %}
-      <span><span class="system-sans">$</span>{{ money_price }}</span>
+      <span>{{ money_price }}</span>
     </div>
     <div class="flex-row flex-wrap{%- if compare_at_price > price %} flex{% else %} hidden{% endif -%}">
       {%- unless product.price_varies == false and product.compare_at_price_varies %}
         <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
         <span>
-          {% comment %} <s class="text-wave-600 mr-1">
+          <s class="text-wave-600 mr-1">
             {% if settings.currency_code_enabled %}
               {{ compare_at_price | money_with_currency }}
             {% else %}
               {{ compare_at_price | money }}
             {% endif %}
-          </s> {% endcomment %}
-          <s class="text-wave-600 mr-1">
-            <span class="system-sans">$</span>{{ compare_at_price | divided_by: 100 }}
           </s>
         </span>
       {%- endunless -%}
       <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
-      {% comment %} <span>{{ money_price }}</span> {% endcomment %}
-      <span><span class="system-sans">$</span>{{ money_price }}</span>
+      <span>{{ money_price }}</span>
     </div>
   {%- endif -%}
 </div>
