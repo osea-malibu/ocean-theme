@@ -11,7 +11,7 @@
       id="faq-tabs"
       class="flex flex-col sm:flex-row gap-6 items-start"
     >
-      <aside class="w-1/4 bg-wave-100 py-6 px-4">
+      <aside class="w-full sm:w-1/3 lg:w-1/4 bg-wave-100 py-6 px-4">
         {%- if categories.size > 0 -%}
           <ul aria-controls="faq-tabs" role="tablist">
             {%- for category in categories -%}
@@ -28,7 +28,7 @@
           </ul>
         {%- endif -%}
       </aside>
-      <article class="w-3/4">
+      <article class="w-full sm:w-2/3 lg:w-3/4">
         {%- if categories.size > 0 -%}
           {%- for category in categories -%}
             <div
