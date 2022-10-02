@@ -2,7 +2,7 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <section id="main-product">
-  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start xl:gap-10 xl:max-w-screen-xl">
+  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start xl:gap-10 xl:max-w-screen-lg">
     <a class="skip-to-content-link button sr-only" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
@@ -102,7 +102,14 @@
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
                 {%- if block.settings.is_collapsible -%}
-                  {% render 'accordion', id: "Details-{{ block.id }}-{{ section.id }}", summary: "Product description", content: product.description, default_open: true %}
+                  {%- assign description_id = "Details-{{ block.id }}-{{ section.id }}" -%}
+                  {% render 'accordion-item',
+                    id: description_id,
+                    summary: "Product description",
+                    content: product.description,
+                    default_open: true,
+                    content_classes: 'max-h-80 overflow-y-auto pr-4'
+                  %}
                 {%- else -%}
                   {{ product.description }}
                 {%- endif -%}
@@ -110,7 +117,14 @@
             {%- endif -%}
           {%- when 'collapsible_tab' -%}
             <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
-              {% render 'accordion', id: "Details-{{ block.id }}-{{ section.id }}", summary: block.settings.heading, content: block.settings.content, default_open: block.settings.default_open %}
+              {%- assign tab_id = "Details-{{ block.id }}-{{ section.id }}" -%}
+              {% render 'accordion-item',
+                id: tab_id,
+                summary: block.settings.heading,
+                content: block.settings.content,
+                default_open: block.settings.default_open
+                content_classes: 'max-h-80 overflow-y-auto pr-4'
+              %}
             </div>
           {%- when 'quantity_selector' -%}
             <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>

@@ -3,27 +3,28 @@
 
   Accepts:
   - id: {String} id value (required)
-  - summary: {String} Summary title text (required)
-  - content: {String/Object} content to expand/callapse (optional)
+  - items: {Array} array of accordion item objects (required)
   - default_open: {Boolean} Expanded content by default. Default: false (optional)
   - transition_duration: {Number} Duration of opening transition in ms. Default: 400 (optional)
   - icon_type: {plus|caret} Use plus/minus icon or turning caret for expand/collapse. Default: plus (optional)
 
   Usage:
-  {% render 'search-card', product: product %}
+  {% render 'accordion', id: block.id %}
 {% endcomment %}
 
-<details class="accordion group-accordion" id="{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
-  <summary class="w-full py-2 flex">
-    <h2 class="font-medium tracking-wide grow">
-      {{- summary -}}
-    </h2>
-    <svg class="h-5 w-5 text-seaweed-500 shrink-0" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line class="group-accordion-open:rotate-90 origin-center transition-transform duration-300" x1="12" y1="5" x2="12" y2="19" />
-      <line x1="5" y1="12" x2="19" y2="12" />
-    </svg>
-  </summary>
-  <div class="content tracking-wide py-2" id="ProductAccordion-{{ id }}">
-    {{ content }}
-  </div>
-</details>
+{%- if items.size > 0 -%}
+  <ul class="accordion">
+    {%- for item in items -%}
+      {%- assign item_id = "{{ id }}-{{ forloop.index }}" -%}
+      <li class="border-seaweed-400{% unless forloop.last %} border-b{% endunless %}">
+        {% render 'accordion-item',
+          id: item_id,
+          summary: item.summary,
+          content: item.content,
+          summary_classes: 'py-3',
+          content_classes: 'pb-6 px-4'
+        %}
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

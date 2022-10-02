@@ -22,7 +22,6 @@ module.exports = {
     "md:[--swiffy-slider-item-count:3]",
     "rotate-180",
     "sm:[--swiffy-slider-item-count:3]",
-    "system-serif",
     "text-right",
     "xl:[--swiffy-slider-item-count:5]",
     "stamped-container",
@@ -224,6 +223,9 @@ module.exports = {
       groups.forEach((group) => {
         addVariant(`group-${group}-hover`, () => {
           return `:merge(.group-${group}):hover &`;
+        });
+        addVariant(`group-${group}-open`, () => {
+          return `:merge(.group-${group})[open] &`;
         });
       });
     }),

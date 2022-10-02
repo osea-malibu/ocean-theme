@@ -703,12 +703,14 @@ class TabController extends HTMLElement {
           this.setActiveTab(this.tabs[0].getAttribute("aria-controls"));
           break;
         case 37: // left arrow
+        case 38: // up arrow
           e.preventDefault();
           let previous = [...this.tabs].indexOf(this.activeTab) - 1;
           previous = previous >= 0 ? previous : this.tabs.length - 1;
           this.setActiveTab(this.tabs[previous].getAttribute("aria-controls"));
           break;
         case 39: // right arrow
+        case 40: // right arrow
           e.preventDefault();
           let next = [...this.tabs].indexOf(this.activeTab) + 1;
           next = next < this.tabs.length ? next : 0;
@@ -734,7 +736,11 @@ class TabController extends HTMLElement {
     }
     for (let tabpanel of this.tabpanels) {
       if (tabpanel.getAttribute("id") == id) {
-        tabpanel.setAttribute("aria-expanded", "true");
+        if (tabpanel.getAttribute("aria-expanded") === "true") {
+          tabpanel.focus();
+        } else {
+          tabpanel.setAttribute("aria-expanded", "true");
+        }
       } else {
         tabpanel.setAttribute("aria-expanded", "false");
       }

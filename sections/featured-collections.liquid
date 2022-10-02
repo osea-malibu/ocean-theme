@@ -17,7 +17,11 @@
     {%- endif -%}
 
     {%- for block in section.blocks -%}
-      <div id="tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+      <div
+        id="tab-{{ forloop.index }}"
+        role="tabpanel"
+        aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+      >
         <slider-component class="
           slider 
           slider-item-reveal 

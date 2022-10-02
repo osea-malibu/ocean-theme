@@ -20,19 +20,27 @@
       >
         <a href="{{ source_webm }}" class="absolute w-full h-full media media--transparent media--landscape{% if source_jpg == blank %} video-section__placeholder{% endif %}">
           {%- if source_jpg != nil -%}
-            <img
-              srcset="{{ source_jpg | append: '&width=375' }} 375w,
-                {{ source_jpg | append: '&width=750' }} 750w,
-                {{ source_jpg | append: '&width=1100' }} 1100w,
-                {{ source_jpg | append: '&width=1500' }} 1500w,
-                {{ source_jpg | append: '&width=1780' }} 1780w,
-                {{ source_jpg | append: '&width=2000' }} 2000w"
-              src="{{ source_jpg | append: '&width=1280' }}"
-              alt="Loading {{ section.settings.description | escape }}"
-              loading="lazy"
-              width="1280"
-              height="1000"
-            >
+            <picture>
+              <source
+                srcset="{{ source_jpg | append: '&width=976' }} 1x,
+                  {{ source_jpg | append: '&width=1400' }} 2x"
+                media="(min-width: 640px)"
+              >
+              <source
+                srcset="{{ source_jpg | append: '&width=366' }} 1x,
+                  {{ source_jpg | append: '&width=732' }} 2x"
+                media="(min-width: 0)"
+              >
+              <img
+                srcset="{{ source_jpg | append: '&width=366' }} 1x,
+                  {{ source_jpg | append: '&width=732' }} 2x"
+                src="{{ source_jpg | append: '&width=732' }}"
+                alt="Loading {{ section.settings.description | escape }}"
+                loading="lazy"
+                width="1280"
+                height="1000"
+              >
+            </picture>
           {%- else -%}
             {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
           {%- endif -%}
@@ -48,19 +56,27 @@
         type="button"
       >
         {%- if source_jpg != nil -%}
-          <img
-            srcset="{{ source_jpg | append: '&width=375' }} 375w,
-              {{ source_jpg | append: '&width=750' }} 750w,
-              {{ source_jpg | append: '&width=1100' }} 1100w,
-              {{ source_jpg | append: '&width=1500' }} 1500w,
-              {{ source_jpg | append: '&width=1780' }} 1780w,
-              {{ source_jpg | append: '&width=2000' }} 2000w"
-            src="{{ source_jpg | append: '&width=1280' }}"
-            alt="Loading {{ section.settings.description | escape }}"
-            loading="lazy"
-            width="1280"
-            height="1000"
-          >
+          <picture>
+            <source
+              srcset="{{ source_jpg | append: '&width=976' }} 1x,
+                {{ source_jpg | append: '&width=1400' }} 2x"
+              media="(min-width: 640px)"
+            >
+            <source
+              srcset="{{ source_jpg | append: '&width=366' }} 1x,
+                {{ source_jpg | append: '&width=732' }} 2x"
+              media="(min-width: 0)"
+            >
+            <img
+              srcset="{{ source_jpg | append: '&width=366' }} 1x,
+                {{ source_jpg | append: '&width=732' }} 2x"
+              src="{{ source_jpg | append: '&width=732' }}"
+              alt="Loading {{ section.settings.description | escape }}"
+              loading="lazy"
+              width="1280"
+              height="1000"
+            >
+          </picture>
         {%- else -%}
           {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
         {%- endif -%}

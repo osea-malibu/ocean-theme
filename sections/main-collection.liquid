@@ -51,7 +51,7 @@
         {%- endfor -%}
       </ul>
     {%- endcapture -%}
-    {% render 'accordion',
+    {% render 'accordion-item',
       id: 'Featured',
       summary: 'Featured',
       content: featured_products_grid,
@@ -78,7 +78,7 @@
         endif
         endcomment
       -%}
-      {% render 'accordion',
+      {% render 'accordion-item',
         id: summary_handle,
         summary: summary,
         content: subcollection_grid,
