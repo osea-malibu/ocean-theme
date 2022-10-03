@@ -15179,9 +15179,77 @@ strong.highlight {
   text-underline-offset: 1px;
 }
 
+.focus\:button-secondary:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(160 190 183 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.focus\:button-secondary:focus:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(110 149 139 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 249 241 / var(--tw-bg-opacity));
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+.focus\:fixed:focus {
+  position: fixed;
+}
+
+.focus\:top-4:focus {
+  top: 1rem;
+}
+
+.focus\:left-4:focus {
+  left: 1rem;
+}
+
+.focus\:z-100:focus {
+  z-index: 100;
+}
+
+.focus\:border:focus {
+  border-width: 1px;
+}
+
 .focus\:border-seaweed-700:focus {
   --tw-border-opacity: 1;
   border-color: rgb(29 77 65 / var(--tw-border-opacity));
+}
+
+.focus\:p-2:focus {
+  padding: 0.5rem;
+}
+
+.focus\:p-1:focus {
+  padding: 0.25rem;
+}
+
+.focus\:px-4:focus {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.focus\:px-2:focus {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.focus\:py-1:focus {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .focus\:ring:focus {
@@ -15201,6 +15269,11 @@ strong.highlight {
 
 .group[open] .group-open\:rotate-0 {
   --tw-rotate: 0deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group[open] .group-open\:rotate-180 {
+  --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -48511,6 +48584,10 @@ strong.highlight {
 
   .sm\:\[--swiffy-slider-item-count\:3\] {
     --swiffy-slider-item-count: 3;
+  }
+
+  .group[open] .sm\:group-open\:block {
+    display: block;
   }
 }
 

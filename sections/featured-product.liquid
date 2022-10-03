@@ -18,7 +18,7 @@
   <div class="page-width">
     <div class="featured-product product grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
-        <a class="skip-to-content-link button visually-hidden" href="#ProductInfo-{{ section.id }}">
+        <a class="sr-only button button-secondary focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
           {{ "accessibility.skip_to_product_info" | t }}
         </a>
         <div class="product__media-list">

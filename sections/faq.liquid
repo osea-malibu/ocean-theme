@@ -7,50 +7,53 @@
     assign categories = json_data | map: 'group' | uniq
   -%}
   <div class="container mx-auto px-6 my-12">
-    <tab-controller
-      id="faq-tabs"
-      class="flex flex-col sm:flex-row gap-6 items-start"
-    >
-      <aside class="w-full sm:w-1/3 lg:w-1/4 bg-wave-100 py-6 px-4">
-        {%- if categories.size > 0 -%}
-          <ul aria-controls="faq-tabs" role="tablist">
-            {%- for category in categories -%}
-              <li
-                role="tab"
-                aria-controls="tab-{{ forloop.index }}"
-                tabindex="0"
-                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                class="px-2 {% if forloop.first %} bg-wave-200{% endif %}"
-              >
-                <a class="block font-book tracking-wide py-2">{{ category }}</a>
-              </li>
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
-      </aside>
-      <article class="w-full sm:w-2/3 lg:w-3/4">
-        {%- if categories.size > 0 -%}
-          {%- for category in categories -%}
-            <div
-              id="tab-{{ forloop.index }}"
-              role="tabpanel"
-              tabindex="0"
-              aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-            >
-              <h2 class="text-xl sm:text-2xl tracking-wide font-medium mb-4">
-                {{- category -}}
-              </h2>
-              {%- assign accordion_data = json_data | where: 'group', category -%}
-              <div class="accordion mb-12">
-                {% render 'accordion',
-                  id: "Accordion-{{ category }}",
-                  items: accordion_data %}
-              </div>
+    {%- if categories.size > 0 -%}
+      <tab-controller
+        id="faq-tabs"
+        class="flex flex-col sm:flex-row gap-6 items-start"
+      >
+        <nav class="w-full sm:w-1/3 lg:w-1/4 bg-wave-100">
+          <details class="group" open>
+            <summary class="p-4 flex justify-between">
+              <h3 class="tracking-wide font-medium">Browse by topic</h3>
+              {% render 'icon-caret', classes: 'w-4 h-4 transition-transform group-open:rotate-180 sm:hidden' %}
+            </summary>
+            <ul aria-controls="faq-tabs" role="tablist" class="px-4 pb-4">
+              {%- for category in categories -%}
+                <li
+                  role="tab"
+                  aria-controls="tab-{{ forloop.index }}"
+                  tabindex="0"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  class="px-2 rounded-sm {% if forloop.first %} bg-wave-200{% endif %}"
+                >
+                  <a class="block font-book tracking-wide py-1 sm:py-2">{{ category }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </details>
+        </nav>
+        {%- for category in categories -%}
+          <article
+            id="tab-{{ forloop.index }}"
+            role="tabpanel"
+            tabindex="0"
+            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+            class="w-full sm:w-2/3 lg:w-3/4"
+          >
+            <h2 class="text-xl sm:text-2xl tracking-wide font-medium mb-4">
+              {{- category -}}
+            </h2>
+            {%- assign accordion_data = json_data | where: 'group', category -%}
+            <div class="accordion mb-12">
+              {% render 'accordion',
+                id: "Accordion-{{ category }}",
+                items: accordion_data %}
             </div>
-          {%- endfor -%}
-        {%- endif -%}
-      </article>
-    </tab-controller>
+          </article>
+        {%- endfor -%}
+      </tab-controller>
+    {%- endif -%}
   </div>
 </div>
 
