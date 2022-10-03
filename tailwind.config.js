@@ -1,4 +1,3 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
@@ -80,6 +79,9 @@ module.exports = {
     },
   ],
   theme: {
+    container: {
+      center: true,
+    },
     colors: {
       black: "#000",
       white: "#FFF",
@@ -166,9 +168,12 @@ module.exports = {
       "2/75": "2.75px",
     },
     screens: {
-      "2xs": "414px",
-      xs: "475px",
-      ...defaultTheme.screens,
+      "2xs": "412px",
+      xs: "472px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
     },
     extend: {
       animation: {
