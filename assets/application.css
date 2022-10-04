@@ -14151,9 +14151,10 @@ strong.highlight {
 
 .icon-list-check li::before {
   margin-right: 0.5rem;
-  margin-left: -1.5rem;
+  margin-left: -1.75rem;
   display: inline-block;
   width: 1rem;
+  font-weight: 700;
   --tw-content: '\2713';
   content: var(--tw-content);
 }
@@ -15301,6 +15302,10 @@ strong.highlight {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.li\:mb-2 > li {
+  margin-bottom: 0.5rem;
 }
 
 .group-accordion[open] .group-accordion-open\:rotate-90 {

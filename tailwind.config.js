@@ -17,6 +17,7 @@ module.exports = {
     "icon-list-check",
     "lg:[--swiffy-slider-item-count:4]",
     "lg:[--swiffy-slider-item-count:5]",
+    "li:mb-2",
     "max-w-[85%]",
     "md:[--swiffy-slider-item-count:3]",
     "rotate-180",
