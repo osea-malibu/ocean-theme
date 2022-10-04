@@ -186,6 +186,13 @@
             "is_atc_button": false,
             "atc_button_product": ""
           }
+        },
+        "cbe853c0-5ec7-4450-a929-3f01c0f890a0": {
+          "type": "code",
+          "settings": {
+            "column_classes": "",
+            "code": "<video autoplay=\"\" controls=\"\" loop=\"\" muted=\"\" playsinline=\"\" poster=\"https:\/\/cdn.shopify.com\/s\/files\/1\/1368\/9993\/files\/poster-2.jpg?v=1655249263\" class=\"max-width-100p\">\n  <source src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/1368\/9993\/files\/OSEA-Web-UAO-PDP_16x9_v1_1_1.webm?v=1655248816\" type=\"video\/webm\">\n  <source src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/1368\/9993\/files\/OSEA-Web-UAO-PDP_16x9_v1_1_1.mp4?v=1655248787\" type=\"video\/mp4\">\n  <p>Your browser cannot play the provided video file.<\/p>\n<\/source><\/source><\/video>"
+          }
         }
       },
       "block_order": [
@@ -193,11 +200,12 @@
         "af795190-bcdc-4792-bd58-4bc5e26d6150",
         "20efa74c-cf97-4670-99ce-8a0e98901ef7",
         "d97a210c-a966-4a7e-b8b2-d9ec439e9b88",
-        "159c57ab-31ab-4833-a07e-c9fe0e348648"
+        "159c57ab-31ab-4833-a07e-c9fe0e348648",
+        "cbe853c0-5ec7-4450-a929-3f01c0f890a0"
       ],
       "settings": {
         "section_classes": "container mx-auto px-6 mb-12",
-        "container_classes": "bg-cover bg-center relative overflow-hidden",
+        "container_classes": "bg-cover bg-center relative overflow-hidden grid grid-cols-1",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -210,6 +218,7 @@
     },
     "1664484701f3eff161": {
       "type": "multicolumn",
+      "disabled": true,
       "blocks": {
         "6644695e-dfc7-4db2-872e-4110ac78e60c": {
           "type": "code",
