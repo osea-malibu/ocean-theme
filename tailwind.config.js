@@ -214,6 +214,7 @@ module.exports = {
     function ({ addVariant }) {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
+      addVariant("li", "& > li");
     },
     // add backface classes
     plugin(function ({ addUtilities }) {
