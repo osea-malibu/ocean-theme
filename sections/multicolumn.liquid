@@ -70,8 +70,42 @@
                           {%- endif -%}
                         </div>
                       {%- endif -%}
-                      {%- if block.settings.button_label != "" -%}
-                        <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
+                      {%- if block.settings.button_label != "" or block.settings.is_atc_button -%}
+                        {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
+                          <product-form data-cart-type="{{ settings.cart_type }}">
+                            <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
+                              <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
+                            </div>
+
+                            {%- form 'product', block.settings.atc_button_product, id: block.id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                              <input type="hidden" name="id" value="{{ block.settings.atc_button_product.selected_or_first_available_variant.id }}" disabled>
+                              <button
+                                id="{{ block.id }}-submit"
+                                type="submit"
+                                name="add"
+                                aria-haspopup="dialog"
+                                aria-live="polite"
+                                class="button button-tertiary w-full transition flex mt-2 disabled:opacity-50 {% if block.settings.atc_button_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ block.settings.button_classes }}"
+                                {% if block.settings.atc_button_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                              >
+                                {%- if block.settings.atc_button_product.selected_or_first_available_variant.available -%}
+                                  <span>{{ 'products.product.add_to_cart' | t }}</span>
+                                  <span id="price-{{ block.settings.atc_button_product.id }}" class="whitespace-nowrap">
+                                    {% render 'price',
+                                      product: block.settings.atc_button_product,
+                                      show_price_range: true,
+                                      use_variant: true
+                                    %}
+                                  </span>
+                                {%- else -%}
+                                  {{ 'products.product.sold_out' | t }}
+                                {%- endif -%}
+                              </button>
+                            {%- endform -%}
+                          </product-form>
+                        {%- else -%}
+                          <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
+                        {%- endif -%}
                       {%- endif -%}
                     </div>
                   {%- endif -%}
