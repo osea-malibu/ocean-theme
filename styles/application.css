@@ -16,7 +16,8 @@
   html.no-js .no-js-inline {
     @apply inline-block;
   }
-  html.no-js .no-js-hidden {
+  html.no-js .no-js-hidden,
+  html.no-js .predictive-search {
     @apply hidden;
   }
 
@@ -27,7 +28,15 @@
 }
 
 @layer components {
-  /* Cart + menu drawers */
+  /* Base details / summary */
+  summary {
+    @apply cursor-pointer list-none relative;
+  }
+  summary::-webkit-details-marker {
+    @apply hidden;
+  }
+
+  /* Cart + header +  menu drawers */
   menu-drawer .menu-scrim,
   cart-drawer .cart-scrim {
     @apply opacity-0 motion-safe:transition-opacity;
@@ -52,10 +61,16 @@
   menu-drawer details[open].menu-opening > .menu-submenu {
     @apply translate-x-0 visible;
   }
+  .js details[open]:not(.menu-opening) > .header__icon--menu .icon-close {
+    @apply invisible;
+  }
+  .js details[open]:not(.menu-opening) > .header__icon--menu .icon-hamburger {
+    @apply visible opacity-100 scale-105;
+  }
 
   /* Buttons */
   .button {
-    @apply cursor-pointer inline-flex items-center justify-center border px-6 py-2 rounded-sm font-bold tracking-widest uppercase whitespace-nowrap text-center transition-colors motion-reduce:transition-none;
+    @apply cursor-pointer inline-flex items-center justify-center border px-6 py-2 rounded-sm font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-colors;
   }
   .button-xs {
     @apply px-3 py-0.5 text-xs;
@@ -177,6 +192,10 @@
   }
 
   /* Predictive search */
+  [type="search"]::-webkit-search-cancel-button {
+    @apply appearance-none h-5 w-[60px] text-wave-400;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='20px' width='60px'><text x='6' y='15' fill='%23818181' font-size='14' font-family='neuzeit-grotesk, sans-serif' style='text-transform: uppercase; letter-spacing: 0.25px;'>Clear</text></svg>");
+  }
   predictive-search[open] .predictive-search,
   predictive-search[loading] .predictive-search {
     @apply max-h-[calc(100vh-96px)];
@@ -212,13 +231,13 @@
 
   /* Modal dialog (popup modal) */
   modal-dialog {
-    @apply fixed inset-0 bg-seaweed-700/50 z-50 p-6 invisible opacity-0 transition-[visibility_0s,opacity_200ms];
+    @apply fixed inset-0 bg-seaweed-700/50 z-50 p-6 invisible opacity-0 motion-safe:transition-[visibility_0s,opacity_200ms];
   }
   modal-dialog[open] {
     @apply visible opacity-100;
   }
   modal-dialog [role="dialog"] {
-    @apply absolute top-1/2 left-6 right-6 -translate-y-1/2 bg-white rounded-sm px-6 sm:px-8 py-10 shadow-xl shadow-seaweed-800/20 max-w-md mx-auto scale-0 origin-center transition-transform duration-200 delay-200;
+    @apply absolute top-1/2 left-6 right-6 -translate-y-1/2 bg-white rounded-sm px-6 sm:px-8 py-10 shadow-xl shadow-seaweed-800/20 max-w-md mx-auto scale-0 origin-center motion-safe:transition-transform duration-200 delay-200;
   }
   modal-dialog[open] [role="dialog"] {
     @apply scale-100;
@@ -345,7 +364,7 @@
     @apply mb-0;
   }
   .slider-indicators > * {
-    @apply box-content flex-initial w-8 h-1 p-0 cursor-pointer bg-white bg-clip-padding opacity-50 transition-opacity border-8 border-transparent;
+    @apply box-content flex-initial w-8 h-1 p-0 cursor-pointer bg-white bg-clip-padding opacity-50 motion-safe:transition-opacity border-8 border-transparent;
   }
   .slider-indicators-square .slider-indicators > *,
   .slider-indicators-square.slider-indicators > * {
@@ -360,7 +379,7 @@
     @apply border-4 border-transparent p-px;
   }
   .slider-nav {
-    @apply absolute inset-y-0 bg-transparent cursor-pointer p-0 invisible opacity-80 transition-opacity flex items-center py-0 px-2;
+    @apply absolute inset-y-0 bg-transparent cursor-pointer p-0 invisible opacity-80 motion-safe:transition-opacity flex items-center py-0 px-2;
     transition: visibility 0.1s, opacity 0.2s linear;
     margin-bottom: var(--swiffy-slider-track-height);
   }
@@ -530,7 +549,7 @@
     @apply opacity-100;
   }
   .glide__bullet img {
-    @apply border border-transparent transition-colors;
+    @apply border border-transparent motion-safe:transition-colors;
   }
   .glide__bullet--active img {
     @apply opacity-100 border-seaweed-500;
@@ -542,7 +561,7 @@
     @apply visible;
   }
   .glide__arrow {
-    @apply absolute opacity-80 hover:opacity-100 transition-opacity;
+    @apply absolute opacity-80 hover:opacity-100 motion-safe:transition-opacity;
   }
   .glide__arrow--left {
     @apply left-2;

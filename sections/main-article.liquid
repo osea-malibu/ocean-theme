@@ -4,7 +4,7 @@
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when '@app' -%}
-        <div class="page-width page-width--narrow">
+        <div class="container">
           {% render block %}
         </div>
       {%- when 'featured_image'-%}
@@ -33,25 +33,25 @@
         {%- endif -%}
 
         {%- when 'title'-%}
-          <header class="page-width page-width--narrow" {{ block.shopify_attributes }}>
+          <header class="container" {{ block.shopify_attributes }}>
             <h1 class="article-template__title" itemprop="headline">{{ article.title | escape }}</h1>
             {%- if block.settings.blog_show_date -%}
-              <span class="circle-divider caption-with-letter-spacing" itemprop="dateCreated pubdate datePublished">{{ article.published_at | time_tag: format: 'date' }}</span>
+              <span itemprop="dateCreated pubdate datePublished">{{ article.published_at | time_tag: format: 'date' }}</span>
             {%- endif -%}
             {%- if block.settings.blog_show_author -%}
-              <span class="caption-with-letter-spacing" itemprop="author" itemscope itemtype="http://schema.org/Person">
+              <span itemprop="author" itemscope itemtype="http://schema.org/Person">
                 <span itemprop="name">{{ article.author }}</span>
               </span>
             {%- endif -%}
           </header>
 
         {%- when 'content'-%}
-          <div class="article-template__content page-width page-width--narrow rte" itemprop="articleBody" {{ block.shopify_attributes }}>
+          <div class="article-template__content container" itemprop="articleBody" {{ block.shopify_attributes }}>
               {{ article.content }}
           </div>
 
         {%- when 'share' -%}
-          <div class="article-template__social-sharing page-width page-width--narrow" {{ block.shopify_attributes }}>
+          <div class="article-template__social-sharing container" {{ block.shopify_attributes }}>
             <share-button class="share-button" {{ block.shopify_attributes }}>
               <button class="share-button__button hidden">
                 {% render 'icon-share' %}
@@ -93,14 +93,14 @@
   {%- endfor -%}
 
   <div class="center">
-    <a href="{{ blog.url }}" class="article-template__link link animate-arrow{% if blog.comments_enabled? == false %} spaced-section{% endif %}">
+    <a href="{{ blog.url }}" class="article-template__link">
       <span class="icon-wrap">{% render 'icon-arrow' %}</span>
       {{ 'blogs.article.back_to_blog' | t: title: blog.title }}
     </a>
   </div>
   {%- if blog.comments_enabled? -%}
     <div class="article-template__comment-wrapper">
-      <div id="comments" class="page-width page-width--narrow">
+      <div id="comments" class="container">
         {%- if article.comments_count > 0 -%}
           {%- assign anchorId = '#Comments-' | append: article.id -%}
 
@@ -111,7 +111,7 @@
                 <article id="{{ comment.id }}" class="article-template__comments-comment">
                   {{ comment.content }}
                   <footer class="right">
-                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span>
+                    <span>{{ comment.author }}</span>
                   </footer>
                 </article>
               {%- endif -%}
@@ -120,7 +120,7 @@
                 <article id="{{ comment.id }}" class="article-template__comments-comment">
                   {{ comment.content }}
                   <footer class="right">
-                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span><span class="caption-with-letter-spacing">{{ comment.created_at | time_tag: format: 'date' }}</span>
+                    <span>{{ comment.author }}</span><span>{{ comment.created_at | time_tag: format: 'date' }}</span>
                   </footer>
                 </article>
               {%- endfor -%}

@@ -59,7 +59,7 @@
                     {%- endif -%}
                   {%- endif -%}
                   {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
-                    <div class="{{ block.settings.text_classes }}">
+                    <div {% if block.settings.text_classes != blank %}class="{{ block.settings.text_classes }}"{% endif %}>
                       {%- if block.settings.heading != "" -%}
                         <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
                       {%- endif -%}

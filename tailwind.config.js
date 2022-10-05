@@ -1,31 +1,8 @@
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
-  content: ["./layout/*.liquid", "./templates/*.liquid", "./sections/*.liquid", "./snippets/*.liquid", "./assets/*.js"],
+  content: ["./layout/*.liquid", "./templates/*.liquid", "./templates/*.json", "./sections/*.liquid", "./snippets/*.liquid", "./assets/*.js"],
   safelist: [
-    "[--swiffy-slider-item-reveal:12rem]",
-    "animate-pulse",
-    "bg-[#ffb545]",
-    "bg-[length:200%]",
-    "bg-gradient-radial",
-    "bg-no-repeat",
-    "bg-origin-content",
-    "border-b",
-    "font-thin",
-    "from-[#f6e7ea]",
-    "from-seaweed-800/30",
-    "icon-list-check",
-    "lg:[--swiffy-slider-item-count:4]",
-    "lg:[--swiffy-slider-item-count:5]",
-    "li:mb-2",
-    "max-w-[85%]",
-    "md:[--swiffy-slider-item-count:3]",
-    "rotate-180",
-    "sm:[--swiffy-slider-item-count:3]",
-    "text-right",
-    "xl:[--swiffy-slider-item-count:5]",
-    "stamped-container",
-    "child:mb-2",
     {
       pattern: /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
       variants: ["xs", "sm", "md", "lg", "hover"],
@@ -206,7 +183,7 @@ module.exports = {
         100: "100",
       },
     },
-    groups: ["accordion"],
+    groups: ["accordion", "child"],
   },
   plugins: [
     require("@tailwindcss/forms"),

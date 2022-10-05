@@ -16,7 +16,7 @@
           <details class="group" open>
             <summary class="p-4 flex justify-between">
               <h3 class="tracking-wide font-bold">Browse by topic</h3>
-              {% render 'icon-caret', classes: 'w-4 h-4 transition-transform group-open:rotate-180 sm:hidden' %}
+              {% render 'icon-caret', classes: 'w-4 h-4 motion-safe:transition-transform group-open:rotate-180 sm:hidden' %}
             </summary>
             <ul aria-controls="faq-tabs" role="tablist" class="px-4 pb-4">
               {%- for category in categories -%}

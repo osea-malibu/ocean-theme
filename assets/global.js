@@ -590,7 +590,7 @@ class VariantSelects extends HTMLElement {
     const price = document.getElementById(`price-${this.dataset.section}`);
     if (!addButton) return;
     addButtonText.textContent = window.variantStrings.unavailable;
-    if (price) price.classList.add("visibility-hidden");
+    if (price) price.classList.add("invisible");
   }
 
   getVariantData() {
@@ -979,8 +979,19 @@ class GlideSlider extends HTMLElement {
 
     this.id = this.getAttribute("id");
     this.options = {};
+    this.twBreakpoints = JSON.parse('{"2xs":412,"xs":472,"sm":640,"md":768,"lg":1024,"xl":1280,"2xl":1536}');
 
-    this.initSlider();
+    const { breakpointLimit } = this.dataset;
+    const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    if (breakpointLimit === "none") {
+      this.initSlider();
+    } else {
+      if (viewportWidth <= this.twBreakpoints[breakpointLimit]) {
+        this.initSlider();
+      } else {
+        this.classList.remove("glide");
+      }
+    }
   }
 
   getPath(currentBreakpoint) {
@@ -1019,14 +1030,12 @@ class GlideSlider extends HTMLElement {
   }
 
   getOptions(optionClasses) {
-    const twBreakpoints = JSON.parse('{"2xs":400,"xs":475,"sm":640,"md":768,"lg":1024,"xl":1280,"2xl":1536}');
-
     optionClasses.forEach((className) => {
       const splitClass = className.split(/[\:\.\-]/);
 
       // if class has breakpoint modifier
       if (className.includes(":")) {
-        const breakpointInt = twBreakpoints[splitClass[0]];
+        const breakpointInt = this.twBreakpoints[splitClass[0]];
 
         if (!this.options.breakpoints) {
           this.options.breakpoints = {};

@@ -52,7 +52,7 @@
       {%- endif -%}
     </div>
   {%- endif -%}
-  <div class="banner__content banner__content--{{ section.settings.desktop_text_box_position }} page-width">
+  <div class="banner__content banner__content--{{ section.settings.desktop_text_box_position }} container">
     <div class="email-signup-banner__box banner__box newsletter newsletter__wrapper color-{{ section.settings.color_scheme }}">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -112,7 +112,6 @@
 {
   "name": "t:sections.email-signup-banner.name",
   "tag": "section",
-  "class": "spaced-section spaced-section--full-width",
   "settings": [
     {
       "type": "paragraph",

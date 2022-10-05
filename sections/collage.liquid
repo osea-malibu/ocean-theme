@@ -3,7 +3,7 @@
 
 <link rel="stylesheet" href="{{ 'component-deferred-media.css' | asset_url }}" media="print" onload="this.media='all'">
 
-<div class="collage-wrapper page-width{% if section.settings.heading == blank %} no-heading{% endif %}">
+<div class="collage-wrapper container{% if section.settings.heading == blank %} no-heading{% endif %}">
   <h2 class="collage-wrapper-title">{{ section.settings.heading | escape }}</h2>
 
   <div class="collage collage--{{ section.settings.desktop_layout }}{% if section.settings.mobile_layout == 'collage' %} collage--mobile{% endif %}">
@@ -52,7 +52,7 @@
               <div class="collage-content card{% if block.settings.secondary_background %} card-colored{% endif %}{% if block.settings.image_padding %} collage-card-spacing{% endif %}" {{ block.shopify_attributes }}>
                 {%- if featured_media != blank -%}
                   <div class="collage-content__info card-information card-information__wrapper">
-                    <h3 class="card-information__text h4"><a href="{{ block.settings.product.url }}" class="full-unstyled-link">{{ block.settings.product.title | escape }}</a></h3>
+                    <h3 class="card-information__text h4"><a href="{{ block.settings.product.url }}">{{ block.settings.product.title | escape }}</a></h3>
                     <span class="price">{% render 'price', product: block.settings.product %}</span>
                   </div>
                   
@@ -112,7 +112,7 @@
                   </div>
                 {%- else -%}
                   <div class="collage-card__no-image card-colored card__text-spacing center">
-                    <h3 class="h2"><a href="{{ block.settings.product.url }}" class="full-unstyled-link">{{ block.settings.product.title | escape }}</a></h3>
+                    <h3 class="h2"><a href="{{ block.settings.product.url }}">{{ block.settings.product.title | escape }}</a></h3>
                   </div>
                   <div class="collage-product__badge">
                     <div class="card__badge">
@@ -147,7 +147,7 @@
         {%- when 'collection'-%}
           <div class="collage-card collage-collection color-{{ block.settings.color_scheme }}{% if focus_card_left %} collage-card--left{% elsif focus_card_right %} collage-card--right{% endif %}" {{ block.shopify_attributes }}>
               {%- if block.settings.collection != blank -%}
-                <a href="{{ block.settings.collection.url }}" class="card animate-arrow">
+                <a href="{{ block.settings.collection.url }}" class="card">
                   <div class="collage-content card-colored color-{{ block.settings.color_scheme }}{% if block.settings.image_padding %} collage-card-spacing{% endif %}">
                     {%- if block.settings.collection.featured_image != blank -%}
                       <div class="collage-card__image-wrapper media media--transparent media--hover-effect">
@@ -290,7 +290,7 @@
                   {% elsif block.settings.cover_image != blank and focus_card_right and forloop.last %}
                     style="padding-bottom: {{ 1 | divided_by: block.settings.cover_image.aspect_ratio | times: 100 }}%;"
                   {% endif %}>
-                  <button class="collage-content collage-card__image-wrapper media deferred-media__poster full-unstyled-link{% if block.settings.image_padding %} collage-card-spacing{% endif %}" type="button" aria-haspopup="dialog" data-media-id="{{ block.settings.video_url.id }}">
+                  <button class="collage-content collage-card__image-wrapper media deferred-media__poster{% if block.settings.image_padding %} collage-card-spacing{% endif %}" type="button" aria-haspopup="dialog" data-media-id="{{ block.settings.video_url.id }}">
                     <span class="deferred-media__poster-button motion-reduce">
                       {%- render 'icon-play' -%}
                     </span>
@@ -347,7 +347,7 @@
 {
   "name": "t:sections.collage.name",
   "tag": "section",
-  "class": "spaced-section collage-section",
+  "class": "collage-section",
   "settings": [
     {
       "type": "text",

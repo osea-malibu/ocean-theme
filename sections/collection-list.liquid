@@ -5,12 +5,12 @@
 
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 
-<div class="collection-list-wrapper page-width{% if section.settings.swipe_on_mobile == true %} page-width-desktop{% endif %}{% if section.settings.title == blank %} no-heading{% endif %}{% if section.settings.show_view_all == false or section.blocks.size > collections.size %} no-mobile-link{% endif %}">
+<div class="collection-list-wrapper container{% if section.settings.title == blank %} no-heading{% endif %}{% if section.settings.show_view_all == false or section.blocks.size > collections.size %} no-mobile-link{% endif %}">
   <div class="title-wrapper-with-link{% if section.settings.swipe_on_mobile == true %} title-wrapper--self-padded-tablet-down{% else %} title-wrapper--self-padded-mobile{% endif %}{% if section.settings.title == blank %} title-wrapper-with-link--no-heading{% endif %}">
     <h2 class="collection-list-title">{{ section.settings.title | escape }}</h2>
 
     {%- if section.settings.show_view_all and section.settings.swipe_on_mobile -%}
-      <a href="{{ routes.collections_url }}" class="link underlined-link large-up-hide">{{ 'sections.collection_list.view_all' | t }}</a>
+      <a href="{{ routes.collections_url }}" class="large-up-hide">{{ 'sections.collection_list.view_all' | t }}</a>
     {%- endif -%}
   </div>
 
@@ -30,7 +30,7 @@
       {%- for block in section.blocks -%}
         <li class="collection-list__item grid__item{% if section.settings.swipe_on_mobile %} slider__slide{% endif %}" {{ block.shopify_attributes }}>
           <a{% if block.settings.collection != blank and block.settings.collection.all_products_count > 0 %} href="{{ block.settings.collection.url }}"{% else %} role="link" aria-disabled="true"{% endif %}
-            class="card animate-arrow link{% if block.settings.collection.featured_image != blank %} card--media{% else %}{% if section.settings.image_ratio != 'adapt' %} card--stretch{% endif %}{% endif %}{% unless section.settings.image_padding %} card--light-border{% endunless %}"
+            class="card{% if block.settings.collection.featured_image != blank %} card--media{% else %}{% if section.settings.image_ratio != 'adapt' %} card--stretch{% endif %}{% endif %}{% unless section.settings.image_padding %} card--light-border{% endunless %}"
           >
             <div class="card--stretch card-colored color-{{ section.settings.color_scheme }}">
               {%- if block.settings.collection.featured_image != blank -%}
@@ -121,7 +121,7 @@
 {
   "name": "t:sections.collection-list.name",
   "tag": "section",
-  "class": "spaced-section collection-list-section",
+  "class": "collection-list-section",
   "max_blocks": 15,
   "settings": [
     {

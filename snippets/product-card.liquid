@@ -214,7 +214,7 @@
             src="{{ product_card_product.media[1] | image_url: width: 328 }}"
             alt="{{ product_card_product.media[1].alt | escape }}"
             loading="lazy"
-            class="{% if show_secondary_image_on_hover %}absolute inset-0 opacity-0 group-hover:opacity-100 motion-reduce:transition-none transition-opacity{% endif %} duration-300"
+            class="{% if show_secondary_image_on_hover %}absolute inset-0 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity{% endif %} duration-300"
             width="{{ product_card_product.media[1].width }}"
             height="{{ product_card_product.media[1].height }}"
           >

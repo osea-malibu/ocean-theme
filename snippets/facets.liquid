@@ -53,7 +53,7 @@
                     <div class="facets__header">
                       <span class="facets__selected no-js-hidden">{{ 'products.facets.filters_selected' | t: count: filter.active_values.size }}</span>
                       <facet-remove>
-                        <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link">
+                        <a href="{{ filter.url_to_remove }}" class="facets__reset">
                           {{ 'products.facets.reset' | t }}
                         </a>
                       </facet-remove>
@@ -116,7 +116,7 @@
                       {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
                       <span class="facets__selected">{{ "products.facets.max_price" | t: price: max_price_amount }}</span>
                       <facet-remove>
-                        <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link" >
+                        <a href="{{ filter.url_to_remove }}" class="facets__reset" >
                           {{ 'products.facets.reset' | t }}
                         </a>
                       </facet-remove>
@@ -194,7 +194,7 @@
               {% endif %}
             {%- endfor -%}
             <facet-remove class="active-facets__button-wrapper">
-              <a href="{{ results_url }}" class="active-facets__button-remove underlined-link">
+              <a href="{{ results_url }}" class="active-facets__button-remove">
                 <span>{{ 'products.facets.clear_all' | t }}</span>
               </a>
             </facet-remove>
@@ -233,8 +233,8 @@
         {% comment %} Filter / sort icon {% endcomment %}
         <summary class="group">
           <span class="mobile-facets__open flex items-center">
-            {% render 'icon-filter', stroke_width: 1.5, classes: 'w-6 h-6 group-hover:text-seaweed-500 transition-colors' %}
-            <span class="group-hover:text-seaweed-500 ml-2 transition-colors font-book text-sm">
+            {% render 'icon-filter', stroke_width: 1.5, classes: 'w-6 h-6 group-hover:text-seaweed-500 motion-safe:transition-colors' %}
+            <span class="group-hover:text-seaweed-500 ml-2 motion-safe:transition-colors font-book text-sm">
               {%- if enable_filtering and enable_sorting -%}
                 {{ 'products.facets.filter_and_sort' | t }}
               {%- elsif enable_filtering -%}
@@ -287,7 +287,7 @@
                         </div>
                       </summary>
                       <div id="FacetMobile-{{ forloop.index }}-{{ section.id }}" class="mobile-facets__submenu">
-                        <button class="mobile-facets__close-button link link--text focus-inset" aria-expanded="true" type="button">
+                        <button class="mobile-facets__close-button" aria-expanded="true" type="button">
                           {% render 'icon-arrow' %}
                           {{ filter.label | escape }}
                         </button>
@@ -318,7 +318,7 @@
 
                         <div class="no-js-hidden mobile-facets__footer">
                           <facet-remove class="mobile-facets__clear-wrapper">
-                            <a href="{{ results_url }}" class="mobile-facets__clear underlined-link">{{ 'products.facets.clear' | t }}</a>
+                            <a href="{{ results_url }}" class="mobile-facets__clear">{{ 'products.facets.clear' | t }}</a>
                           </facet-remove>
                           <button type="button" class="no-js-hidden button button--primary" onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()">{{ 'products.facets.apply' | t }}</button>
                           <noscript><button class="button button--primary">{{ 'products.facets.apply' | t }}</button></noscript>
@@ -327,7 +327,7 @@
                     </details>
                   {% when 'price_range' %}
                     <details id="Details-Mobile-{{ forloop.index }}-{{ section.id }}" class="mobile-facets__details js-filter" data-index="mobile-{{ forloop.index }}">
-                      <summary class="mobile-facets__summary focus-inset">
+                      <summary class="mobile-facets__summary">
                         <div>
                           <span>{{ filter.label | escape }}</span>
                           <span class="mobile-facets__arrow no-js-hidden">{% render 'icon-arrow' %}</span>
@@ -335,7 +335,7 @@
                         </div>
                       </summary>
                       <div id="FacetMobile-{{ forloop.index }}-{{ section.id }}" class="mobile-facets__submenu">
-                        <button class="mobile-facets__close-button link link--text focus-inset" aria-expanded="true" type="button">
+                        <button class="mobile-facets__close-button" aria-expanded="true" type="button">
                           {% render 'icon-arrow' %}
                           {{ filter.label | escape }}
                         </button>
@@ -384,7 +384,7 @@
                         </price-range>
                         <div class="no-js-hidden mobile-facets__footer">
                           <facet-remove class="mobile-facets__clear-wrapper">
-                            <a href="{{ results_url }}" class="mobile-facets__clear underlined-link">{{ 'products.facets.clear' | t }}</a>
+                            <a href="{{ results_url }}" class="mobile-facets__clear">{{ 'products.facets.clear' | t }}</a>
                           </facet-remove>
                           <button type="button" class="no-js-hidden button button--primary" onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()">{{ 'products.facets.apply' | t }}</button>
                           <noscript><button class="button button--primary">{{ 'products.facets.apply' | t }}</button></noscript>
@@ -414,7 +414,7 @@
 
                 <div class="mobile-facets__footer">
                   <facet-remove class="mobile-facets__clear-wrapper">
-                    <a href="{{ results_url }}" class="mobile-facets__clear underlined-link">{{ 'products.facets.clear_all' | t }}</a>
+                    <a href="{{ results_url }}" class="mobile-facets__clear">{{ 'products.facets.clear_all' | t }}</a>
                   </facet-remove>
                   <button type="button" class="no-js-hidden button button--primary" onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()">{{ 'products.facets.apply' | t }}</button>
                   <noscript><button class="button button--primary">{{ 'products.facets.apply' | t }}</button></noscript>
@@ -484,7 +484,7 @@
       {%- endif -%}
     {%- endfor -%}
     <facet-remove class="active-facets__button-wrapper">
-      <a href="{{ results_url }}" class="active-facets__button-remove underlined-link">
+      <a href="{{ results_url }}" class="active-facets__button-remove">
         <span>{{ 'products.facets.clear_all' | t }}</span>
       </a>
     </facet-remove>

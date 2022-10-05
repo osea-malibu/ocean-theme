@@ -93,7 +93,7 @@
             {{ settings.shipping_countdown_text_success }}
           {%- endif -%}
         </h3>
-        <progress max="100" value="0" class="progress-bar block mx-auto max-w-md transition-all">0%</progress>
+        <progress max="100" value="0" class="progress-bar block mx-auto max-w-md motion-safe:transition-all">0%</progress>
       </shipping-countdown>
 
       {% comment %} Close button {% endcomment %}
@@ -161,7 +161,7 @@
             data-cart-ids="{{ cart_ids | json }}"
           >
             <form action="{{ routes.cart_url }}" id="CartDrawer-Form" class="grow flex flex-wrap" method="post">
-              <div id="CartDrawer-CartItems" class="js-contents flex flex-col grow transition-opacity">
+              <div id="CartDrawer-CartItems" class="js-contents flex flex-col grow motion-safe:transition-opacity">
                 {%- if cart != empty -%}
                   <div class="grow">
                     <table class="cart-items block w-full" role="table">
@@ -339,7 +339,7 @@
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                   </svg>
                                 </div>
-                                <div class="cart-item__price-wrapper h-full flex items-center justify-end transition-opacity">
+                                <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity">
                                   {%- if item.selling_plan_allocation != nil -%}
                                     <div class="flex">
                                       <span class="sr-only">

@@ -25,17 +25,17 @@
       {%- if section.settings.hamburger_menu != blank -%}
         {%- assign menu_link_styles = 'px-8 py-3 text-xl tracking-wide font-regular cursor-pointer' -%}
         <menu-drawer class="mr-1 md:mr-4 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
-          <details id="Details-menu-drawer-container" class="menu-drawer-container">
+          <details id="Details-menu-drawer-container" class="group">
             {% comment %} Hamburger icon {% endcomment %}
             <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-1 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
               <span class="flex items-center justify-center h-full">
-                {% render 'icon-hamburger', classes: 'icon-hamburger h-8 w-8 block absolute opacity-100 transition-transform-opacity scale-100', aria_hidden: true, stroke_width: 1.5 %}
+                {% render 'icon-hamburger', classes: 'icon-hamburger h-8 w-8 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 group-open:invisible group-open:opacity-0 group-open:scale-75', aria_hidden: true, stroke_width: 1.5 %}
                 {% comment %} Close icon - replaces hamburger when drawer is open {% endcomment %}
-                {% render 'icon-close', classes: 'icon-close h-8 w-8 block absolute opacity-100 transition-transform-opacity scale-100', aria-hidden: true, stroke_width: 1.5 %}
+                {% render 'icon-close', classes: 'icon-close h-8 w-8 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 invisible group-open:visible opacity-0 group-open:opacity-100 scale-75 group-open:scale-100', aria-hidden: true, stroke_width: 1.5 %}
               </span>
             </summary>
             {% comment %} Scrim - closes menu on click {% endcomment %}
-            <div class="menu-scrim block fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 transition-opacity"></div>
+            <div class="menu-scrim block fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 motion-safe:transition-opacity"></div>
             {% comment %} L1 Drawer {% endcomment %}
             <div class="menu-drawer fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-24 overyflow-y-auto" tabindex="-1">
               <div class="relative flex flex-col h-full">
@@ -52,11 +52,11 @@
                             <summary class="flex items-center justify-start {{ menu_link_styles }}">
                               <span class="mr-2">{{ link.title | replace: 'Accordion - ', '' }}</span>
                               <div class="w-6 h-6 flex items-center justify-center">
-                                <svg class="absolute icon-expand h-5 w-5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="absolute icon-expand h-5 w-5 motion-safe:transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                   <line x1="12" y1="5" x2="12" y2="19" />
                                   <line x1="5" y1="12" x2="19" y2="12" />
                                 </svg>
-                                <svg class="absolute icon-collapse h-5 w-5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="absolute icon-collapse h-5 w-5 motion-safe:transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                   <line x1="5" y1="12" x2="19" y2="12" />
                                 </svg>
                               </div>
@@ -185,8 +185,12 @@
 
       {% comment %} Predictive search {% endcomment %}
       <details-modal class="header__search flex justify-center items-center">
-        <details>
-          <summary class="header__icon header__icon--search cursor-pointer modal__toggle{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3 lg:w-10 lg:h-10{% endunless %}" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+        <details class="group">
+          <summary
+            class="header__icon--search cursor-pointer{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3 lg:w-10 lg:h-10{% endunless %}"
+            aria-haspopup="dialog"
+            aria-label="{{ 'general.search.search' | t }}"
+          >
             <span class="flex items-center justify-center h-full">
               <svg class="modal__toggle-open icon icon-search h-7 w-7 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"> 
                 <circle cx="11" cy="11" r="8" /> 
@@ -198,13 +202,21 @@
               </svg>
             </span>
           </summary>
-          <div class="search-modal absolute inset-0 z-40 opacity-0 h-full transition-opacity" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+          <div class="search-modal absolute inset-0 z-40 opacity-0 h-full motion-safe:transition-opacity group-open:opacity-100" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
             <div class="modal-overlay fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50"></div>
-            <div class="search-modal__content bg-white flex items-center justify-center w-full h-full px-6 -translate-y-6" tabindex="-1">
-              <predictive-search class="w-full md:relative" data-loading-text="{{ 'accessibility.loading' | t }}">
-                <form action="{{ routes.search_url }}" method="get" role="search" class="search w-full">
+            <div class="search-modal__content bg-white flex items-center justify-center w-full h-full px-6 opacity-0 group-open:opacity-100 motion-safe:transition-opacity" tabindex="-1">
+              <predictive-search
+                class="w-full md:relative"
+                data-loading-text="{{ 'accessibility.loading' | t }}"
+              >
+                <form
+                  action="{{ routes.search_url }}"
+                  method="get"
+                  role="search"
+                  class="search w-full relative -translate-y-6 group-open:translate-y-0 tranition-transform duration-300"
+                >
                   <div class="relative flex items-center w-full">
-                    <input class="border-seaweed-500 rounded-sm w-full h-10 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible transition-all"
+                    <input class="border-seaweed-500 rounded-sm w-full h-10 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
                       id="Search-In-Modal"
                       type="search"
                       name="q"
@@ -230,7 +242,11 @@
                       </svg>
                     </button>
                   </div>
-                  <div class=" predictive-search fixed top-16 left-1/2 -translate-x-2/4 bg-wave-200 z-30 max-h-0 w-screen shadow-md shadow-seaweed-700/10 transition-max-height overflow-y-auto" tabindex="-1" data-predictive-search>
+                  <div
+                    class="predictive-search fixed top-[52px] left-1/2 -translate-x-1/2 bg-wave-200 z-30 max-h-0 w-screen shadow-md shadow-seaweed-700/10 motion-safe:transition-max-height overflow-y-auto"
+                    tabindex="-1"
+                    data-predictive-search
+                  >
                     <div class="predictive-search__loading-state justify-center p-4">
                       <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
                         <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
@@ -260,27 +276,27 @@
                 <li>
                   {%- if link.links != blank -%}
                     <details-disclosure>
-                      <details id="Details-HeaderMenu-{{ forloop.index }}">
+                      <details class="relative group" id="Details-HeaderMenu-{{ forloop.index }}">
                         <summary class="tracking-wide leading-6 py-3 pl-4 pr-8 font-book">
-                          <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                          <span {%- if link.child_active %} class="underline"{% endif %}>{{ link.title | escape }}</span>
                         </summary>
-                        <ul id="HeaderMenu-MenuList-{{ forloop.index }}" class="header__submenu motion-reduce absolute bg-wave-200" role="list" tabindex="-1">
+                        <ul id="HeaderMenu-MenuList-{{ forloop.index }}" class="opacity-0 -translate-y-6 group-open:opacity-100 group-open:translate-y-0 absolute bg-wave-200 motion-safe:transition-transform-opacity" role="list" tabindex="-1">
                           {%- for childlink in link.links -%}
                             <li>
                               {%- if childlink.links == blank -%}
-                                <a href="{{ childlink.url }}" class="header__menu-item link link--text caption-large{% if childlink.current %} list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                                <a href="{{ childlink.url }}" class="header__menu-item caption-large{% if childlink.current %} list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
                                   {{ childlink.title | escape }}
                                 </a>
                               {%- else -%}
-                                <details id="Details-HeaderSubMenu-{{ forloop.index }}">
-                                  <summary class="header__menu-item link link--text caption-large">
+                                <details class="group-child" id="Details-HeaderSubMenu-{{ forloop.index }}">
+                                  <summary class="header__menu-item caption-large">
                                     {{ childlink.title | escape }}
-                                    {% render 'icon-caret' %}
+                                    {% render 'icon-caret', classes: 'w-6 h-6' %}
                                   </summary>
-                                  <ul id="HeaderMenu-SubMenuList-{{ forloop.index }}" class="header__submenu list-menu motion-reduce">
+                                  <ul id="HeaderMenu-SubMenuList-{{ forloop.index }}" class="opacity-0 -translate-y-6 group-child-open:opacity-100 group-child-open:translate-y-0 motion-safe:transition-transform-opacity">
                                     {%- for grandchildlink in childlink.links -%}
                                       <li>
-                                        <a href="{{ grandchildlink.url }}" class="header__menu-item link link--text focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                        <a href="{{ grandchildlink.url }}" class="header__menu-item focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
                                           {{ grandchildlink.title | escape }}
                                         </a>
                                       </li>
@@ -295,7 +311,7 @@
                     </details-disclosure>
                   {%- else -%}
                     <a href="{{ link.url }}" class="block tracking-wide leading-6 py-3 pl-4 pr-8 font-book whitespace-nowrap"{% if link.current %} aria-current="page"{% endif %}>
-                      <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                      <span {%- if link.current %} class="underline"{% endif %}>{{ link.title | escape }}</span>
                     </a>
                   {%- endif -%}
                 </li>
@@ -308,10 +324,10 @@
 
     {% comment %} OSEA logo {% endcomment %}
     {%- if request.page_type == 'index' -%}
-      <h1 class="header__heading flex-initial">
+      <h1 class="flex-initial">
     {%- endif -%}
-        <a href="{{ routes.root_url }}" class="header__heading-link cursor-pointer flex-initial">
-          <svg class="mx-auto h-12 w-24" viewBox="0 0 586 290" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <a href="{{ routes.root_url }}" class="cursor-pointer flex-initial hover:text-seaweed-500">
+          <svg class="mx-auto h-12 w-24 motion-safe:transition-colors" viewBox="0 0 586 290" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g fill="currentColor" fill-rule="evenodd" stroke="none" stroke-width="1">
               <path d="M77.748,88.935 C61.3,88.935 47.781,94.078 37.194,104.359 C26.604,114.639 21.312,127.765 21.312,143.736 C21.312,159.229 26.621,172.117 37.244,182.397 C47.867,192.678 61.161,197.819 77.132,197.819 C93.165,197.819 106.545,192.575 117.271,182.087 C127.996,171.602 133.36,158.544 133.36,142.915 C133.36,127.699 127.996,114.9 117.271,104.514 C106.545,94.128 93.37,88.935 77.748,88.935 Z M76.872,69.311 C99.068,69.311 117.551,76.347 132.316,90.412 C147.08,104.481 154.462,122.117 154.462,143.317 C154.462,164.524 147.01,182.074 132.107,195.968 C117.205,209.862 98.418,216.809 75.74,216.809 C54.088,216.809 36.054,209.862 21.632,195.968 C7.21,182.074 0,164.659 0,143.729 C0,122.252 7.26,104.481 21.787,90.412 C36.31,76.347 54.672,69.311 76.872,69.311 Z" id="Fill-3"></path>
               <path d="M143.023,290 L140.909,269.951 C145.041,269.515 149.364,267.8 153.941,265.986 C155.581,265.336 157.276,264.664 159.013,264.03 C201.699,248.463 212.874,225.326 217.068,193.041 C219.479,174.488 217.37,152.81 215.331,131.846 C210.332,80.448 204.666,22.193 268.193,0.9 L274.6,20.015 C226.284,36.209 230.507,79.624 235.396,129.894 C237.544,151.979 239.766,174.815 237.06,195.638 C232.712,229.107 221.085,262.851 165.92,282.969 C164.447,283.506 162.954,284.099 161.372,284.726 C155.996,286.858 149.903,289.274 143.023,290" id="Fill-1"></path>
@@ -345,7 +361,7 @@
       {%- endif -%}
 
       {% comment %} Cart menu {% endcomment %}
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble">
+      <a href="{{ routes.cart_url }}" class="header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble">
         <span class="hidden">Cart</span>
         <div class="w-8 h-8 bg-seafoam-300 rounded-full flex justify-center items-center">
           <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
