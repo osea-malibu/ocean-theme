@@ -1,0 +1,83 @@
+<div class="{{ section.settings.section_classes }}">
+  <ul
+    class="flex md:flex-shrink-0 {{ section.settings.container_classes }}"
+    {% if section.settings.bg_image != blank %}
+      style="background-image: url({{ section.settings.bg_image | image_url: width: 1420 }})"
+    {% endif %}
+  >
+    {%- for block in section.blocks -%}
+      <li class="border-seaweed-400{% unless forloop.last %} border-b{% endunless %}">
+        {% render 'accordion-item',
+          id: block.id,
+          summary: block.summary,
+          content: block.content,
+          summary_classes: block.summary_classes,
+          content_classes: block.content_classes
+        %}
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Accordion",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Section classes"
+    },
+    {
+      "type": "textarea",
+      "id": "container_classes",
+      "label": "Container classes"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (optional)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Accordion item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "summary",
+          "label": "Summary"
+        },
+        {
+          "type": "textarea",
+          "id": "summary_classes",
+          "label": "Summary classes"
+        },
+        {
+          "type": "html",
+          "id": "content",
+          "info": "This field takes HTML.",
+          "label": "Content"
+        },
+        {
+          "type": "textarea",
+          "id": "content_classes",
+          "label": "Content classes"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion",
+      "blocks": [
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
