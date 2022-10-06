@@ -9,10 +9,10 @@
       <li class="border-seaweed-400{% unless forloop.last %} border-b{% endunless %}">
         {% render 'accordion-item',
           id: block.id,
-          summary: block.summary,
-          content: block.content,
-          summary_classes: block.summary_classes,
-          content_classes: block.content_classes
+          summary: block.settings.summary,
+          content: block.settings.content,
+          summary_classes: block.settings.summary_classes,
+          content_classes: block.settings.content_classes
         %}
       </li>
     {%- endfor -%}
