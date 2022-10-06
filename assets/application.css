@@ -12027,14 +12027,14 @@ table.comparison-matrix td.unchecked {
   padding-bottom: 0.75rem;
 }
 
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .py-2 {
@@ -14304,20 +14304,22 @@ strong.highlight {
 }
 
 .icon-list li::before {
-  margin-right: 0.5rem;
   margin-left: -1.75rem;
   display: inline-block;
-  content: var(--tw-content);
   width: 1rem;
+  content: var(--tw-content);
+  text-align: center;
 }
 
 .icon-list.check li::before {
+  margin-right: 0.5rem;
   font-weight: 700;
   --tw-content: '\2713';
   content: var(--tw-content);
 }
 
 .icon-list.bullet li::before {
+  margin-right: 0.75rem;
   --tw-content: '\2022';
   content: var(--tw-content);
 }
@@ -15494,6 +15496,14 @@ strong.highlight {
 
 .li\:mb-2 > li {
   margin-bottom: 0.5rem;
+}
+
+.li\:mb-1 > li {
+  margin-bottom: 0.25rem;
+}
+
+.li\:leading-tight > li {
+  line-height: 1.25;
 }
 
 .group-accordion[open] .group-accordion-open\:rotate-90 {

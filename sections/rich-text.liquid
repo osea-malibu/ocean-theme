@@ -1,16 +1,23 @@
 <div class="{{ section.settings.section_classes }}">
-  {%- for block in section.blocks -%}
-    {%- case block.type -%}
-      {%- when 'heading' -%}
-        <h2 class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.heading_text }}</h2>
-      {%- when 'paragraph' -%}
-        <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>{{ block.settings.paragraph_text }}</div>
-      {%- when 'button' -%}
-        <a {% if block.settings.button_link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link }}"{% endif %} class="{{ block.settings.button_classes }}" {{ block.shopify_attributes }}>
-          {{ block.settings.button_label | escape }}
-        </a>
-    {%- endcase -%}
-  {%- endfor -%}
+  <div
+    class="{{ section.settings.container_classes }}"
+    {% if section.settings.bg_image != blank %}
+      style="background-image: url({{ section.settings.bg_image | image_url: width: 1420 }})"
+    {% endif %}
+  >
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          <h2 class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.heading_text }}</h2>
+        {%- when 'paragraph' -%}
+          <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>{{ block.settings.paragraph_text }}</div>
+        {%- when 'button' -%}
+          <a {% if block.settings.button_link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link }}"{% endif %} class="{{ block.settings.button_classes }}" {{ block.shopify_attributes }}>
+            {{ block.settings.button_label | escape }}
+          </a>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
 </div>
 
 {% schema %}
@@ -21,7 +28,17 @@
     {
       "type": "textarea",
       "id": "section_classes",
-      "label": "Classes"
+      "label": "Section classes"
+    },
+    {
+      "type": "textarea",
+      "id": "container_classes",
+      "label": "Container classes"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (optional)"
     },
     {
       "type": "paragraph",

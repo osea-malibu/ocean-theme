@@ -615,13 +615,13 @@
     @apply pl-7;
   }
   .icon-list li {
-    @apply before:inline-block before:mr-2 before:-ml-7 before:w-4;
+    @apply before:inline-block before:-ml-7 before:w-4 before:text-center;
   }
   .icon-list.check li {
-    @apply before:content-['\2713'] before:font-bold;
+    @apply before:content-['\2713'] before:font-bold before:mr-2;
   }
   .icon-list.bullet li {
-    @apply before:content-['\2022'];
+    @apply before:content-['\2022'] before:mr-3;
   }
 
   /* Underline */
