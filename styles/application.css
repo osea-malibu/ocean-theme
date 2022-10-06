@@ -569,6 +569,39 @@
   .glide__arrow--right {
     @apply right-2;
   }
+
+  /* Comparison matrix */
+  table.comparison-matrix {
+    @apply bg-wave-200 border-collapse min-w-[300px] sm:min-w-[540px];
+  }
+  table.comparison-matrix th,
+  table.comparison-matrix td {
+    @apply border border-seaweed-400 px-2 sm:px-3 py-2;
+  }
+  table.comparison-matrix th span {
+    @apply font-bold uppercase tracking-wide;
+  }
+  table.comparison-matrix th small {
+    @apply block tracking-tight sm:tracking-normal font-regular whitespace-nowrap text-xs;
+  }
+  table.comparison-matrix td {
+    @apply text-center;
+  }
+  table.comparison-matrix .row-label {
+    @apply px-1 sm:px-3 max-w-[220px] text-right text-sm sm:text-base leading-tight tracking-tight xs:tracking-normal font-regular;
+  }
+  table.comparison-matrix .col-label {
+    @apply px-0.5 sm:px-3 text-center;
+  }
+  table.comparison-matrix td.text {
+    @apply bg-white px-0.5 sm:px-3 text-sm sm:text-base tracking-tight sm:tracking-normal;
+  }
+  table.comparison-matrix td.checked {
+    @apply bg-seafoam-100 text-lg font-bold;
+  }
+  table.comparison-matrix td.unchecked {
+    @apply bg-white/50;
+  }
 }
 
 @layer utilities {
@@ -578,11 +611,17 @@
   }
 
   /* Icon lists */
-  .icon-list-check {
+  .icon-list {
     @apply pl-7;
   }
-  .icon-list-check li {
-    @apply before:content-['\2713'] before:inline-block before:mr-2 before:-ml-7 before:w-4 before:font-bold;
+  .icon-list li {
+    @apply before:inline-block before:mr-2 before:-ml-7 before:w-4;
+  }
+  .icon-list.check li {
+    @apply before:content-['\2713'] before:font-bold;
+  }
+  .icon-list.bullet li {
+    @apply before:content-['\2022'];
   }
 
   /* Underline */

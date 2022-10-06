@@ -16,7 +16,7 @@
 {% endcomment %}
 
 <details class="accordion group-accordion" id="{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
-  <summary class="w-full py-2 flex {{ summary_classes }}">
+  <summary class="w-full flex {% if summary_classes != blank %}{{ summary_classes }}{% else %}py-2{% endif %}">
     <h2 class="font-medium tracking-wide grow">
       {{- summary -}}
     </h2>
