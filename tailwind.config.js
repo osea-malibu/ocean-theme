@@ -147,7 +147,7 @@ module.exports = {
       "2/75": "2.75px",
     },
     screens: {
-      "2xs": "412px",
+      "2xs": "414px",
       xs: "472px",
       sm: "640px",
       md: "768px",
