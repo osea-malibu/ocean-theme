@@ -646,3 +646,46 @@
     @apply bg-seafoam-500;
   }
 }
+
+/* this will always be included in your compiled CSS */
+
+/* Workable job listing */
+.whr-date {
+  @apply hidden;
+}
+ul.whr-items {
+  @apply p-0 list-none;
+}
+ul.whr-items .whr-item {
+  @apply py-6 px-8 leading-normal mx-0 mt-0 mb-6 border border-seaweed-400;
+}
+ul.whr-items .whr-item h3 {
+  @apply leading-normal m-0 relative;
+}
+ul.whr-items .whr-item h3::before {
+  @apply absolute top-4 right-2 w-4 h-1 bg-seaweed-500 block content-[''] rotate-45;
+}
+ul.whr-items .whr-item h3::after {
+  @apply absolute top-4 right-0 w-4 h-1 bg-seaweed-500 block content-[''] -rotate-45;
+}
+ul.whr-items .whr-item h3 a {
+  @apply text-lg border-0 block w-full;
+}
+ul.whr-items .whr-item h3 a::before {
+  @apply content-none;
+}
+ul.whr-items .whr-item .whr-info {
+  @apply m-0 list-none max-h-0 p-0 overflow-hidden transition-all;
+}
+ul.whr-items .whr-item .whr-more-detail {
+  @apply mb-0;
+}
+ul.whr-items .whr-item.active .whr-info {
+  @apply max-h-[200px] pt-8 px-0 pb-2;
+}
+ul.whr-items .whr-item.active h3::before {
+  @apply -rotate-45;
+}
+ul.whr-items .whr-item.active h3::after {
+  @apply rotate-45;
+}
