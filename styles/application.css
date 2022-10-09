@@ -657,19 +657,19 @@ ul.whr-items {
   @apply p-0 list-none;
 }
 ul.whr-items .whr-item {
-  @apply py-6 px-8 leading-normal mx-0 mt-0 mb-6 border border-seaweed-400;
+  @apply py-6 px-6 sm:px-8 leading-normal mx-0 mt-0 mb-6 border border-seaweed-400 rounded-sm;
 }
 ul.whr-items .whr-item h3 {
-  @apply leading-normal m-0 relative;
+  @apply m-0 relative;
 }
 ul.whr-items .whr-item h3::before {
-  @apply absolute top-4 right-2 w-4 h-1 bg-seaweed-500 block content-[''] rotate-45;
+  @apply absolute top-1/2 right-2 w-4 h-0.5 bg-seaweed-500 block content-[''] rotate-45;
 }
 ul.whr-items .whr-item h3::after {
-  @apply absolute top-4 right-0 w-4 h-1 bg-seaweed-500 block content-[''] -rotate-45;
+  @apply absolute top-1/2 -right-0.5 w-4 h-0.5 bg-seaweed-500 block content-[''] -rotate-45;
 }
 ul.whr-items .whr-item h3 a {
-  @apply text-lg border-0 block w-full;
+  @apply text-lg border-0 block w-full font-book tracking-wide leading-snug pr-6;
 }
 ul.whr-items .whr-item h3 a::before {
   @apply content-none;

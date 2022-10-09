@@ -4617,12 +4617,12 @@ table.comparison-matrix td.unchecked {
   margin-top: 2.5rem;
 }
 
-.mb-16 {
-  margin-bottom: 4rem;
-}
-
 .mb-5 {
   margin-bottom: 1.25rem;
+}
+
+.mb-16 {
+  margin-bottom: 4rem;
 }
 
 .mt-1 {
@@ -6389,12 +6389,12 @@ table.comparison-matrix td.unchecked {
   max-width: 24rem;
 }
 
-.max-w-3xl {
-  max-width: 48rem;
-}
-
 .max-w-prose {
   max-width: 65ch;
+}
+
+.max-w-3xl {
+  max-width: 48rem;
 }
 
 .max-w-full {
@@ -11858,6 +11858,10 @@ table.comparison-matrix td.unchecked {
   padding: 1.5rem;
 }
 
+.p-10 {
+  padding: 2.5rem;
+}
+
 .p-0 {
   padding: 0px;
 }
@@ -11884,10 +11888,6 @@ table.comparison-matrix td.unchecked {
 
 .p-9 {
   padding: 2.25rem;
-}
-
-.p-10 {
-  padding: 2.5rem;
 }
 
 .p-11 {
@@ -14413,28 +14413,35 @@ ul.whr-items .whr-item {
   margin-right: 0px;
   margin-top: 0px;
   margin-bottom: 1.5rem;
+  border-radius: 0.125rem;
   border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(160 190 183 / var(--tw-border-opacity));
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  ul.whr-items .whr-item {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 ul.whr-items .whr-item h3 {
   position: relative;
   margin: 0px;
-  line-height: 1.5;
 }
 
 ul.whr-items .whr-item h3::before {
   position: absolute;
-  top: 1rem;
+  top: 50%;
   right: 0.5rem;
   display: block;
-  height: 0.25rem;
+  height: 0.125rem;
   width: 1rem;
   --tw-rotate: 45deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -14446,10 +14453,10 @@ ul.whr-items .whr-item h3::before {
 
 ul.whr-items .whr-item h3::after {
   position: absolute;
-  top: 1rem;
-  right: 0px;
+  top: 50%;
+  right: -0.125rem;
   display: block;
-  height: 0.25rem;
+  height: 0.125rem;
   width: 1rem;
   --tw-rotate: -45deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -14463,8 +14470,12 @@ ul.whr-items .whr-item h3 a {
   display: block;
   width: 100%;
   border-width: 0px;
+  padding-right: 1.5rem;
   font-size: 1.125rem;
   line-height: 1.75rem;
+  font-weight: 500;
+  line-height: 1.375;
+  letter-spacing: .025em;
 }
 
 ul.whr-items .whr-item h3 a::before {
@@ -58684,14 +58695,14 @@ ul.whr-items .whr-item.active h3::after {
     padding-bottom: 2rem;
   }
 
-  .md\:px-5 {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-
   .md\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .md\:px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .md\:py-6 {
