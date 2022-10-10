@@ -11683,6 +11683,10 @@ table.comparison-matrix td.unchecked {
   background-size: auto;
 }
 
+.bg-\[length\:105\%\] {
+  background-size: 105%;
+}
+
 .bg-right {
   background-position: right;
 }
@@ -15621,6 +15625,10 @@ ul.whr-items .whr-item.active h3::after {
 
 .li\:mb-1 > li {
   margin-bottom: 0.25rem;
+}
+
+.li\:mb-3 > li {
+  margin-bottom: 0.75rem;
 }
 
 .li\:leading-tight > li {
@@ -49103,6 +49111,26 @@ ul.whr-items .whr-item.active h3::after {
     margin-left: 0.75rem;
   }
 
+  table.comparison-matrix td.md\:text {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    padding-left: 0.125rem;
+    padding-right: 0.125rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    letter-spacing: -.02em;
+  }
+
+  @media (min-width: 640px) {
+    table.comparison-matrix td.md\:text {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      letter-spacing: 0;
+    }
+  }
+
   .md\:sr-only {
     position: absolute;
     width: 1px;
@@ -72873,6 +72901,11 @@ ul.whr-items .whr-item.active h3::after {
     overflow: visible;
     clip: auto;
     white-space: normal;
+  }
+
+  .xl\:inset-x-6 {
+    left: 1.5rem;
+    right: 1.5rem;
   }
 
   .xl\:right-24 {
