@@ -598,6 +598,8 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
+/* System fonts */
+
 /* Handle no-js visibility */
 
 .no-js:not(html) {
@@ -2111,6 +2113,10 @@ table.comparison-matrix td.unchecked {
   left: 0px;
 }
 
+.top-2 {
+  top: 0.5rem;
+}
+
 .bottom-80 {
   bottom: 20rem;
 }
@@ -2153,10 +2159,6 @@ table.comparison-matrix td.unchecked {
 
 .left-1\/2 {
   left: 50%;
-}
-
-.top-2 {
-  top: 0.5rem;
 }
 
 .top-24 {
@@ -4613,20 +4615,28 @@ table.comparison-matrix td.unchecked {
   margin-bottom: 2.5rem;
 }
 
-.mt-10 {
-  margin-top: 2.5rem;
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.-mr-2 {
+  margin-right: -0.5rem;
 }
 
 .mb-5 {
   margin-bottom: 1.25rem;
 }
 
-.mb-16 {
-  margin-bottom: 4rem;
+.ml-2 {
+  margin-left: 0.5rem;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.mb-16 {
+  margin-bottom: 4rem;
 }
 
 .mr-2 {
@@ -4695,10 +4705,6 @@ table.comparison-matrix td.unchecked {
 
 .mr-0 {
   margin-right: 0px;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
 }
 
 .ml-0\.5 {
@@ -5103,10 +5109,6 @@ table.comparison-matrix td.unchecked {
 
 .-mr-0 {
   margin-right: -0px;
-}
-
-.-mr-2 {
-  margin-right: -0.5rem;
 }
 
 .-mr-3 {
@@ -9886,12 +9888,12 @@ table.comparison-matrix td.unchecked {
   gap: 2.5rem;
 }
 
-.gap-4 {
-  gap: 1rem;
-}
-
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
 }
 
 .gap-8 {
@@ -11683,16 +11685,16 @@ table.comparison-matrix td.unchecked {
   background-size: auto;
 }
 
-.bg-\[length\:105\%\] {
-  background-size: 105%;
-}
-
 .bg-right {
   background-position: right;
 }
 
 .bg-center {
   background-position: center;
+}
+
+.bg-right-top {
+  background-position: right top;
 }
 
 .bg-left {
@@ -11713,10 +11715,6 @@ table.comparison-matrix td.unchecked {
 
 .bg-right-bottom {
   background-position: right bottom;
-}
-
-.bg-right-top {
-  background-position: right top;
 }
 
 .bg-top {
@@ -15633,6 +15631,10 @@ ul.whr-items .whr-item.active h3::after {
 
 .li\:leading-tight > li {
   line-height: 1.25;
+}
+
+.li\:leading-none > li {
+  line-height: 1;
 }
 
 .group-accordion[open] .group-accordion-open\:rotate-90 {
@@ -37226,6 +37228,10 @@ ul.whr-items .whr-item.active h3::after {
     right: 3rem;
   }
 
+  .sm\:top-4 {
+    top: 1rem;
+  }
+
   .sm\:bottom-auto {
     bottom: auto;
   }
@@ -37248,10 +37254,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:top-3 {
     top: 0.75rem;
-  }
-
-  .sm\:top-4 {
-    top: 1rem;
   }
 
   .sm\:top-5 {
@@ -39696,6 +39698,10 @@ ul.whr-items .whr-item.active h3::after {
     margin-left: 0px;
   }
 
+  .sm\:mb-4 {
+    margin-bottom: 1rem;
+  }
+
   .sm\:mb-0 {
     margin-bottom: 0px;
   }
@@ -40258,10 +40264,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:mb-3 {
     margin-bottom: 0.75rem;
-  }
-
-  .sm\:mb-4 {
-    margin-bottom: 1rem;
   }
 
   .sm\:mb-5 {
@@ -44780,6 +44782,10 @@ ul.whr-items .whr-item.active h3::after {
     gap: 0.5rem;
   }
 
+  .sm\:gap-4 {
+    gap: 1rem;
+  }
+
   .sm\:gap-6 {
     gap: 1.5rem;
   }
@@ -44794,10 +44800,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:gap-3 {
     gap: 0.75rem;
-  }
-
-  .sm\:gap-4 {
-    gap: 1rem;
   }
 
   .sm\:gap-5 {
@@ -46765,6 +46767,11 @@ ul.whr-items .whr-item.active h3::after {
     padding-bottom: 5rem;
   }
 
+  .sm\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -46803,11 +46810,6 @@ ul.whr-items .whr-item.active h3::after {
   .sm\:px-7 {
     padding-left: 1.75rem;
     padding-right: 1.75rem;
-  }
-
-  .sm\:px-8 {
-    padding-left: 2rem;
-    padding-right: 2rem;
   }
 
   .sm\:px-9 {
@@ -47659,6 +47661,21 @@ ul.whr-items .whr-item.active h3::after {
     vertical-align: text-bottom;
   }
 
+  .sm\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .sm\:text-5xl {
     font-size: 3rem;
     line-height: 1;
@@ -47679,24 +47696,9 @@ ul.whr-items .whr-item.active h3::after {
     line-height: 1.25rem;
   }
 
-  .sm\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-  }
-
   .sm\:text-xs {
     font-size: 0.75rem;
     line-height: 1rem;
-  }
-
-  .sm\:text-base {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-
-  .sm\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
   }
 
   .sm\:text-3xl {
@@ -49111,26 +49113,6 @@ ul.whr-items .whr-item.active h3::after {
     margin-left: 0.75rem;
   }
 
-  table.comparison-matrix td.md\:text {
-    --tw-bg-opacity: 1;
-    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-    padding-left: 0.125rem;
-    padding-right: 0.125rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    letter-spacing: -.02em;
-  }
-
-  @media (min-width: 640px) {
-    table.comparison-matrix td.md\:text {
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-      font-size: 1rem;
-      line-height: 1.5rem;
-      letter-spacing: 0;
-    }
-  }
-
   .md\:sr-only {
     position: absolute;
     width: 1px;
@@ -49179,6 +49161,10 @@ ul.whr-items .whr-item.active h3::after {
     bottom: 1rem;
   }
 
+  .md\:top-8 {
+    top: 2rem;
+  }
+
   .md\:left-0 {
     left: 0px;
   }
@@ -49217,10 +49203,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .md\:top-7 {
     top: 1.75rem;
-  }
-
-  .md\:top-8 {
-    top: 2rem;
   }
 
   .md\:top-9 {
@@ -60869,6 +60851,15 @@ ul.whr-items .whr-item.active h3::after {
     line-height: 1.25rem;
   }
 
+  .lg\:button-md {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .lg\:button-lg {
     padding-left: 1.75rem;
     padding-right: 1.75rem;
@@ -61034,6 +61025,10 @@ ul.whr-items .whr-item.active h3::after {
     right: 2rem;
   }
 
+  .lg\:top-10 {
+    top: 2.5rem;
+  }
+
   .lg\:right-40 {
     right: 10rem;
   }
@@ -61092,10 +61087,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .lg\:top-9 {
     top: 2.25rem;
-  }
-
-  .lg\:top-10 {
-    top: 2.5rem;
   }
 
   .lg\:top-11 {
@@ -62466,16 +62457,16 @@ ul.whr-items .whr-item.active h3::after {
     order: 0;
   }
 
+  .lg\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+
   .lg\:col-span-3 {
     grid-column: span 3 / span 3;
   }
 
   .lg\:col-span-9 {
     grid-column: span 9 / span 9;
-  }
-
-  .lg\:col-span-1 {
-    grid-column: span 1 / span 1;
   }
 
   .lg\:col-span-2 {
@@ -63516,6 +63507,10 @@ ul.whr-items .whr-item.active h3::after {
     margin-bottom: 1rem;
   }
 
+  .lg\:mb-12 {
+    margin-bottom: 3rem;
+  }
+
   .lg\:mt-0 {
     margin-top: 0px;
   }
@@ -64108,10 +64103,6 @@ ul.whr-items .whr-item.active h3::after {
     margin-bottom: 2.75rem;
   }
 
-  .lg\:mb-12 {
-    margin-bottom: 3rem;
-  }
-
   .lg\:mb-14 {
     margin-bottom: 3.5rem;
   }
@@ -64636,6 +64627,10 @@ ul.whr-items .whr-item.active h3::after {
     height: 3rem;
   }
 
+  .lg\:h-80 {
+    height: 20rem;
+  }
+
   .lg\:h-10 {
     height: 2.5rem;
   }
@@ -64742,10 +64737,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .lg\:h-72 {
     height: 18rem;
-  }
-
-  .lg\:h-80 {
-    height: 20rem;
   }
 
   .lg\:h-96 {
@@ -70590,6 +70581,11 @@ ul.whr-items .whr-item.active h3::after {
     padding-bottom: 4rem;
   }
 
+  .lg\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .lg\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -70603,11 +70599,6 @@ ul.whr-items .whr-item.active h3::after {
   .lg\:py-4 {
     padding-top: 1rem;
     padding-bottom: 1rem;
-  }
-
-  .lg\:px-0 {
-    padding-left: 0px;
-    padding-right: 0px;
   }
 
   .lg\:px-3 {
@@ -72912,6 +72903,10 @@ ul.whr-items .whr-item.active h3::after {
     right: 6rem;
   }
 
+  .xl\:top-16 {
+    top: 4rem;
+  }
+
   .xl\:left-\[70px\] {
     left: 70px;
   }
@@ -72970,10 +72965,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .xl\:top-14 {
     top: 3.5rem;
-  }
-
-  .xl\:top-16 {
-    top: 4rem;
   }
 
   .xl\:top-20 {
