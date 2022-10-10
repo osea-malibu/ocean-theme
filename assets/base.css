@@ -126,10 +126,6 @@ html.no-js .no-js-hidden {
   margin: 0;
 }
 
-.title .link {
-  font-size: inherit;
-}
-
 .title-wrapper {
   margin-bottom: 3rem;
 }
@@ -658,26 +654,6 @@ deferred-media {
 
 .no-js details[open] .modal__toggle-open {
   display: none;
-}
-
-.no-js .modal__close-button.link {
-  display: none;
-}
-
-.modal__close-button.link {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 0rem;
-  height: 4.4rem;
-  width: 4.4rem;
-  background-color: transparent;
 }
 
 .modal__close-button .icon {
