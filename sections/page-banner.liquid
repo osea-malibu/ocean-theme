@@ -28,7 +28,7 @@
           alt="{{ section.settings.image.alt | escape }}"
           width="{{ section.settings.image.width }}"
           height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
-          class="block"
+          class="block w-full"
         >
       </picture>
     {%- endif -%}
@@ -37,7 +37,11 @@
         {%- case block.type -%}
           {%- when 'heading' -%}
             <h2 class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>
-              <span>{{ block.settings.heading }}</span>
+              {%- if block.settings.heading == blank -%}
+                {{- page.title -}}
+              {%- else -%}
+                {{- block.settings.heading -}}
+              {%- endif -%}
             </h2>
           {%- when 'paragraph' -%}
             <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>
@@ -80,7 +84,7 @@
     },
     {
       "type": "textarea",
-      "default": "container px-0 xs:px-6",
+      "default": "h-80 overflow-hidden",
       "id": "section_classes",
       "label": "Section classes"
     },
@@ -100,12 +104,13 @@
   "blocks": [
     {
       "type": "heading",
-      "name": "Heading",
+      "name": "Page title",
       "settings": [
         {
           "type": "html",
           "id": "heading",
-          "label": "Heading text"
+          "label": "Heading text (override)",
+          "info": "This displays the page title. Only use if page title needs to be overriden."
         },
         {
           "type": "textarea",
