@@ -471,7 +471,6 @@ class DeferredMedia extends HTMLElement {
     }
   }
 }
-
 customElements.define("deferred-media", DeferredMedia);
 
 class VariantSelects extends HTMLElement {
@@ -598,7 +597,6 @@ class VariantSelects extends HTMLElement {
     return this.variantData;
   }
 }
-
 customElements.define("variant-selects", VariantSelects);
 
 class VariantRadios extends VariantSelects {
@@ -613,7 +611,6 @@ class VariantRadios extends VariantSelects {
     });
   }
 }
-
 customElements.define("variant-radios", VariantRadios);
 
 class SubscriptionRadios extends HTMLElement {
@@ -663,7 +660,6 @@ class SubscriptionRadios extends HTMLElement {
     defaultSellingPlanInput.checked = true;
   }
 }
-
 customElements.define("subscription-radios", SubscriptionRadios);
 
 class TabController extends HTMLElement {
@@ -747,7 +743,6 @@ class TabController extends HTMLElement {
     }
   }
 }
-
 customElements.define("tab-controller", TabController);
 
 // TODO: replace instances with swiffy slider and delete
@@ -969,7 +964,6 @@ class SliderComponent extends HTMLElement {
     }
   }
 }
-
 customElements.define("slider-component", SliderComponent);
 
 // Glide.js: https://glidejs.com/docs/
@@ -1069,7 +1063,6 @@ class GlideSlider extends HTMLElement {
     new Glide(`#${this.id}`, this.options).mount();
   }
 }
-
 customElements.define("glide-slider", GlideSlider);
 
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
@@ -1081,7 +1074,7 @@ class Accordion {
     this.duration = parseInt(el.dataset.duration);
 
     this.animation = null;
-    this.isClosing = false;
+    this.isCollapsing = false;
     this.isExpanding = false;
 
     this.summary.addEventListener("click", (e) => this.onClick(e));
@@ -1090,7 +1083,7 @@ class Accordion {
   onClick(e) {
     e.preventDefault();
     this.el.style.overflow = "hidden";
-    if (this.isClosing || !this.el.open) {
+    if (this.isCollapsing || !this.el.open) {
       this.open();
     } else if (this.isExpanding || this.el.open) {
       this.shrink();
@@ -1098,7 +1091,7 @@ class Accordion {
   }
 
   shrink() {
-    this.isClosing = true;
+    this.isCollapsing = true;
 
     const startHeight = `${this.el.offsetHeight}px`;
     const endHeight = `${this.summary.offsetHeight}px`;
@@ -1118,7 +1111,7 @@ class Accordion {
     );
 
     this.animation.onfinish = () => this.onAnimationFinish(false);
-    this.animation.oncancel = () => (this.isClosing = false);
+    this.animation.oncancel = () => (this.isCollapsing = false);
   }
 
   open() {
@@ -1152,12 +1145,11 @@ class Accordion {
   onAnimationFinish(open) {
     this.el.open = open;
     this.animation = null;
-    this.isClosing = false;
+    this.isCollapsing = false;
     this.isExpanding = false;
     this.el.style.height = this.el.style.overflow = "";
   }
 }
-
 document.querySelectorAll("details.accordion").forEach((el) => {
   new Accordion(el);
 });

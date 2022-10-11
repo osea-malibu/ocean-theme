@@ -5730,6 +5730,10 @@ table.comparison-matrix td.unchecked {
   display: inline-block;
 }
 
+.inline {
+  display: inline;
+}
+
 .flex {
   display: flex;
 }
@@ -14297,6 +14301,12 @@ table.comparison-matrix td.unchecked {
   transition-duration: 150ms;
 }
 
+.transition-max-height {
+  transition-property: max-height;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .duration-300 {
   transition-duration: 300ms;
 }
@@ -14553,8 +14563,16 @@ ul.whr-items .whr-item.active h3::after {
   overflow: visible;
 }
 
+.first\:block:first-child {
+  display: block;
+}
+
 .first\:pl-1:first-child {
   padding-left: 0.25rem;
+}
+
+.last\:hidden:last-child {
+  display: none;
 }
 
 .hover\:border-seaweed-500:hover {
@@ -15608,6 +15626,18 @@ ul.whr-items .whr-item.active h3::after {
   text-underline-offset: 1px;
 }
 
+.peer:checked ~ .peer-checked\:block {
+  display: block;
+}
+
+.peer:checked ~ .peer-checked\:inline {
+  display: inline;
+}
+
+.peer:checked ~ .peer-checked\:hidden {
+  display: none;
+}
+
 .peer:checked ~ .peer-checked\:max-h-20 {
   max-height: 5rem;
 }
@@ -15631,6 +15661,14 @@ ul.whr-items .whr-item.active h3::after {
   background-color: rgb(241 245 244 / var(--tw-bg-opacity));
 }
 
+.peer:checked ~ .peer-checked\:first\:hidden:first-child {
+  display: none;
+}
+
+.peer:checked ~ .peer-checked\:last\:block:last-child {
+  display: block;
+}
+
 .child\:underline > * {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
@@ -15638,10 +15676,26 @@ ul.whr-items .whr-item.active h3::after {
   text-underline-offset: 1px;
 }
 
+.child\:first\:block:first-child > * {
+  display: block;
+}
+
+.child\:last\:hidden:last-child > * {
+  display: none;
+}
+
 .peer:checked ~ .peer-checked\:child\:scale-100 > * {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.peer:checked ~ .peer-checked\:child\:first\:hidden:first-child > * {
+  display: none;
+}
+
+.peer:checked ~ .peer-checked\:child\:last\:block:last-child > * {
+  display: block;
 }
 
 .li\:mb-2 > li {
