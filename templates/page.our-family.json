@@ -1,11 +1,5 @@
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
-      "settings": {
-      }
-    },
     "5d6f067d-4746-4bb6-950a-a77079000efe": {
       "type": "multicolumn",
       "blocks": {
@@ -13,8 +7,8 @@
           "type": "column",
           "settings": {
             "column_classes": "w-full h-80 bg-top",
-            "image": "shopify:\/\/shop_images\/our-family-banner.jpg",
-            "image_desktop": "shopify:\/\/shop_images\/our-family-banner-desktop-desktop.jpg",
+            "image": "shopify://shop_images/our-family-banner.jpg",
+            "image_desktop": "shopify://shop_images/our-family-banner-desktop-desktop.jpg",
             "is_bg_image": true,
             "image_link": "",
             "image_classes": "",
@@ -52,10 +46,7 @@
           }
         }
       },
-      "block_order": [
-        "template--15680827130039__5d6f067d-4746-4bb6-950a-a77079000efe-1665418454f341c59f-0",
-        "f0c40cbe-430d-43b7-839e-741098f27046"
-      ],
+      "block_order": ["template--15680827130039__5d6f067d-4746-4bb6-950a-a77079000efe-1665418454f341c59f-0", "f0c40cbe-430d-43b7-839e-741098f27046"],
       "settings": {
         "section_classes": "container px-0 sm:px-6 mb-6",
         "container_classes": "grid grid-cols-1 gap-6",
@@ -64,9 +55,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     },
     "bc4002ed-dfa8-4b65-a0d3-cdfa86687e56": {
@@ -75,23 +66,17 @@
         "template--15680827130039__bc4002ed-dfa8-4b65-a0d3-cdfa86687e56-16654184549113d686-1": {
           "type": "paragraph",
           "settings": {
-            "paragraph_text": "<input aria-hidden=\"true\" id=\"collapsible\" class=\"hidden peer\" type=\"checkbox\">\n<div class=\"overflow-hidden max-h-36 peer-checked:max-h-screen transition-max-height\">\n  <p>OSEA was founded three decades ago, but our story began over a century ago. My grandmother Elsa was a great believer in the power of the sea. When she was 44 years old, Elsa had a terrible fall, injuring her leg and leaving her bedridden. One night, a message came to her in a dream: The ocean will heal you. The next morning, she asked her husband to take her to the Long Island Sound and carry her into the water. She returned again the next day. And the next. Elsa swam in the frigid waters every day for weeks, and the dream became a prophecy: Her leg healed.<br><br>\nWhen I had a family of my own, we moved to Southern California, never straying far from the ocean. At the time, almost everything in the skincare world seemed to be made with artificial fragrances, dyes and synthetic ingredients, and none of it worked very well. I knew I could do better. Borrowing from my grandmother’s wisdom, I collected seaweed and started mixing my own formulas. That is how OSEA was born.<br><br>\nToday it’s called clean beauty, but in our family, it is what it has always been: a simple idea that the ocean should be part of everyone’s life—and the conviction that it already is.<\/p>\n<\/div>\n<label aria-hidden=\"true\" for=\"collapsible\" class=\"link mt-2 block peer-checked:hidden\">Read more<\/label>\n<label aria-hidden=\"true\" for=\"collapsible\" class=\"link mt-2 hidden peer-checked:block\">Read less<\/label>",
+            "paragraph_text": "<input aria-hidden=\"true\" id=\"collapsible\" class=\"hidden peer\" type=\"checkbox\">\n<div class=\"overflow-hidden max-h-36 peer-checked:max-h-screen transition-max-height\">\n  <p>OSEA was founded three decades ago, but our story began over a century ago. My grandmother Elsa was a great believer in the power of the sea. When she was 44 years old, Elsa had a terrible fall, injuring her leg and leaving her bedridden. One night, a message came to her in a dream: The ocean will heal you. The next morning, she asked her husband to take her to the Long Island Sound and carry her into the water. She returned again the next day. And the next. Elsa swam in the frigid waters every day for weeks, and the dream became a prophecy: Her leg healed.<br><br>\nWhen I had a family of my own, we moved to Southern California, never straying far from the ocean. At the time, almost everything in the skincare world seemed to be made with artificial fragrances, dyes and synthetic ingredients, and none of it worked very well. I knew I could do better. Borrowing from my grandmother’s wisdom, I collected seaweed and started mixing my own formulas. That is how OSEA was born.<br><br>\nToday it’s called clean beauty, but in our family, it is what it has always been: a simple idea that the ocean should be part of everyone’s life—and the conviction that it already is.</p>\n</div>\n<label aria-hidden=\"true\" for=\"collapsible\" class=\"link mt-2 block peer-checked:hidden\">Read more</label>\n<label aria-hidden=\"true\" for=\"collapsible\" class=\"link mt-2 hidden peer-checked:block\">Read less</label>",
             "paragraph_classes": "tracking-wide"
           }
         }
       },
-      "block_order": [
-        "template--15680827130039__bc4002ed-dfa8-4b65-a0d3-cdfa86687e56-16654184549113d686-1"
-      ],
+      "block_order": ["template--15680827130039__bc4002ed-dfa8-4b65-a0d3-cdfa86687e56-16654184549113d686-1"],
       "settings": {
         "section_classes": "container lg:max-w-screen-lg mb-12",
         "container_classes": ""
       }
     }
   },
-  "order": [
-    "main",
-    "5d6f067d-4746-4bb6-950a-a77079000efe",
-    "bc4002ed-dfa8-4b65-a0d3-cdfa86687e56"
-  ]
+  "order": ["5d6f067d-4746-4bb6-950a-a77079000efe", "bc4002ed-dfa8-4b65-a0d3-cdfa86687e56"]
 }

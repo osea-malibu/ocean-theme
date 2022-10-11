@@ -1,11 +1,5 @@
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
-      "settings": {
-      }
-    },
     "16627390702dc7a134": {
       "type": "rich-text",
       "blocks": {
@@ -17,9 +11,7 @@
           }
         }
       },
-      "block_order": [
-        "16627390707c02fb87-0"
-      ],
+      "block_order": ["16627390707c02fb87-0"],
       "settings": {
         "section_classes": "container mt-12 mb-8",
         "container_classes": ""
@@ -32,13 +24,11 @@
           "type": "code",
           "settings": {
             "column_classes": "w-full",
-            "code": "<!-- Start Stockist.co widget -->\n<div data-stockist-widget-tag=\"u9310\">Loading store locator\nfrom <a href=\"https:\/\/stockist.co\">Stockist store locator<\/a>...<\/div>\n<script>\n  (function(s,t,o,c,k){c=s.createElement(t);c.src=o;c.async=1;\n  k=s.getElementsByTagName(t)[0];k.parentNode.insertBefore(c,k);\n  })(document,'script','\/\/stockist.co\/embed\/v1\/widget.min.js');\n<\/script>\n<!-- End Stockist.co widget -->"
+            "code": "<!-- Start Stockist.co widget -->\n<div data-stockist-widget-tag=\"u9310\">Loading store locator\nfrom <a href=\"https://stockist.co\">Stockist store locator</a>...</div>\n<script>\n  (function(s,t,o,c,k){c=s.createElement(t);c.src=o;c.async=1;\n  k=s.getElementsByTagName(t)[0];k.parentNode.insertBefore(c,k);\n  })(document,'script','//stockist.co/embed/v1/widget.min.js');\n</script>\n<!-- End Stockist.co widget -->"
           }
         }
       },
-      "block_order": [
-        "2e8519ed-3ac4-4984-bbb7-30b7b376f163"
-      ],
+      "block_order": ["2e8519ed-3ac4-4984-bbb7-30b7b376f163"],
       "settings": {
         "section_classes": "container mb-12 relative",
         "container_classes": "w-full",
@@ -47,15 +37,11 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": false,
-        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     }
   },
-  "order": [
-    "main",
-    "16627390702dc7a134",
-    "1663344613c98ab491"
-  ]
+  "order": ["16627390702dc7a134", "1663344613c98ab491"]
 }
