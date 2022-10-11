@@ -45,7 +45,7 @@
             </h2>
           {%- when 'paragraph' -%}
             <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>
-              <span>{{ block.settings.paragraph }}</span>
+              {{- block.settings.paragraph -}}
             </div>
           {%- when 'button' -%}
             {%- if block.settings.button_label != blank -%}
