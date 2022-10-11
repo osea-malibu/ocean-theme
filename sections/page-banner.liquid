@@ -28,7 +28,7 @@
           alt="{{ section.settings.image.alt | escape }}"
           width="{{ section.settings.image.width }}"
           height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
-          class="block w-full"
+          class="block w-full object-cover"
         >
       </picture>
     {%- endif -%}
@@ -147,13 +147,9 @@
       "name": "Button",
       "settings": [
         {
-          "type": "paragraph",
-          "content": "The following settings are overrides for special use-cases only. Do not alter the default values for normal use."
-        },
-        {
           "type": "text",
           "id": "button_label",
-          "default": "Shop now",
+          "default": "Sign up",
           "label": "Button label"
         },
         {
