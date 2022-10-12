@@ -12,16 +12,36 @@
         "template--15166819565751__b16ece37-6cf1-4a1c-86f5-f3d323b933ce-1665608543f3c3b1be-0": {
           "type": "column",
           "settings": {
-            "column_classes": "",
+            "column_classes": "relative",
             "image": "shopify:\/\/shop_images\/subscribe-banner-1_f86eb293-4a8c-4aa8-b972-81a42f8f4db9.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "",
             "image_wrapper_classes": "",
-            "text_classes": "",
-            "heading": "",
-            "heading_classes": "",
+            "text_classes": "absolute z-10 inset-0 p-6",
+            "heading": "Subscribe &amp; Save 10%",
+            "heading_classes": "text-center tracking-widest uppercase font-bold text-lg",
             "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "link": "",
+            "button_classes": "",
+            "is_atc_button": false,
+            "atc_button_product": ""
+          }
+        },
+        "db577709-6d94-4f98-9662-fee3c82a589c": {
+          "type": "column",
+          "settings": {
+            "column_classes": "px-6 sm:px-0",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "text_classes": "",
+            "heading": "Never run out of your favorites again.",
+            "heading_classes": "font-serif text-3xl mb-3 tracking-tight text-center",
+            "paragraph": "<ul class=\"icon-list check li:mb-2 max-w-2xs mx-auto\">\n<li>10% off every order<\/li>\n<li>Free shipping on recurring orders<\/li>\n<li>Early access to new products<\/li>\n<li>Exclusive access to deluxe samples<\/li>\n<li>Skip, edit or cancel anytime<\/li>\n<\/ul>",
             "paragraph_classes": "",
             "button_label": "",
             "link": "",
@@ -32,11 +52,12 @@
         }
       },
       "block_order": [
-        "template--15166819565751__b16ece37-6cf1-4a1c-86f5-f3d323b933ce-1665608543f3c3b1be-0"
+        "template--15166819565751__b16ece37-6cf1-4a1c-86f5-f3d323b933ce-1665608543f3c3b1be-0",
+        "db577709-6d94-4f98-9662-fee3c82a589c"
       ],
       "settings": {
-        "section_classes": "",
-        "container_classes": "",
+        "section_classes": "container px-0 sm:px-6 mb-12",
+        "container_classes": "gap-6 grid grid-cols-1",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
