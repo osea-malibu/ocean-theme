@@ -5786,6 +5786,10 @@ table.comparison-matrix td.unchecked {
   height: 1.5rem;
 }
 
+.h-\[460px\] {
+  height: 460px;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -5960,10 +5964,6 @@ table.comparison-matrix td.unchecked {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[460px\] {
-  height: 460px;
 }
 
 .max-h-60 {
@@ -6420,6 +6420,10 @@ table.comparison-matrix td.unchecked {
 
 .max-w-prose {
   max-width: 65ch;
+}
+
+.max-w-2xs {
+  max-width: 18rem;
 }
 
 .max-w-3xl {
@@ -11888,12 +11892,12 @@ table.comparison-matrix td.unchecked {
   padding: 1rem;
 }
 
-.p-1 {
-  padding: 0.25rem;
-}
-
 .p-6 {
   padding: 1.5rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
 }
 
 .p-10 {
@@ -15691,26 +15695,6 @@ ul.whr-items .whr-item.active h3::after {
 
 .disabled\:opacity-50:disabled {
   opacity: 0.5;
-}
-
-.group:nth-child(odd) .group-odd\:left-auto {
-  left: auto;
-}
-
-.group:nth-child(odd) .group-odd\:-right-12 {
-  right: -3rem;
-}
-
-.group:nth-child(odd) .group-odd\:ml-auto {
-  margin-left: auto;
-}
-
-.group:nth-child(odd) .group-odd\:-mr-12 {
-  margin-right: -3rem;
-}
-
-.group:nth-child(odd) .group-odd\:flex-row {
-  flex-direction: row;
 }
 
 .group[open] .group-open\:visible {
@@ -19886,6 +19870,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .\32xs\:max-w-7xl {
     max-width: 80rem;
+  }
+
+  .\32xs\:max-w-2xs {
+    max-width: 18rem;
   }
 
   .\32xs\:shrink-0 {
@@ -29866,6 +29854,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .xs\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .xs\:max-w-2xs {
+    max-width: 18rem;
   }
 
   .xs\:flex-1 {
@@ -41728,6 +41720,10 @@ ul.whr-items .whr-item.active h3::after {
     max-width: 1280px;
   }
 
+  .sm\:max-w-2xs {
+    max-width: 18rem;
+  }
+
   .sm\:flex-1 {
     flex: 1 1 0%;
   }
@@ -46991,6 +46987,11 @@ ul.whr-items .whr-item.active h3::after {
     padding-right: 2rem;
   }
 
+  .sm\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .sm\:py-2 {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -46999,11 +47000,6 @@ ul.whr-items .whr-item.active h3::after {
   .sm\:px-3 {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
-  }
-
-  .sm\:px-0 {
-    padding-left: 0px;
-    padding-right: 0px;
   }
 
   .sm\:px-1 {
@@ -47323,10 +47319,6 @@ ul.whr-items .whr-item.active h3::after {
     padding-top: 2rem;
   }
 
-  .sm\:pt-4 {
-    padding-top: 1rem;
-  }
-
   .sm\:pt-0 {
     padding-top: 0px;
   }
@@ -47341,6 +47333,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:pt-3 {
     padding-top: 0.75rem;
+  }
+
+  .sm\:pt-4 {
+    padding-top: 1rem;
   }
 
   .sm\:pt-5 {
@@ -49153,26 +49149,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .group:nth-child(odd) .sm\:group-odd\:flex-row {
     flex-direction: row;
-  }
-
-  .sm\:odd\:i\:left-auto i:nth-child(odd) {
-    left: auto;
-  }
-
-  .sm\:odd\:i\:right-0 i:nth-child(odd) {
-    right: 0px;
-  }
-
-  .sm\:odd\:i\:-right-12 i:nth-child(odd) {
-    right: -3rem;
-  }
-
-  .sm\:odd\:i\:flex-row i:nth-child(odd) {
-    flex-direction: row;
-  }
-
-  .sm\:odd\:i\:flex-row-reverse i:nth-child(odd) {
-    flex-direction: row-reverse;
   }
 }
 
@@ -53718,6 +53694,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .md\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .md\:max-w-2xs {
+    max-width: 18rem;
   }
 
   .md\:flex-1 {
@@ -65596,6 +65576,10 @@ ul.whr-items .whr-item.active h3::after {
     max-width: 1280px;
   }
 
+  .lg\:max-w-2xs {
+    max-width: 18rem;
+  }
+
   .lg\:flex-1 {
     flex: 1 1 0%;
   }
@@ -76770,10 +76754,6 @@ ul.whr-items .whr-item.active h3::after {
     height: 4rem;
   }
 
-  .xl\:h-96 {
-    height: 24rem;
-  }
-
   .xl\:h-0 {
     height: 0px;
   }
@@ -76884,6 +76864,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .xl\:h-80 {
     height: 20rem;
+  }
+
+  .xl\:h-96 {
+    height: 24rem;
   }
 
   .xl\:h-auto {
@@ -77464,6 +77448,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .xl\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .xl\:max-w-2xs {
+    max-width: 18rem;
   }
 
   .xl\:flex-1 {
@@ -82396,10 +82384,6 @@ ul.whr-items .whr-item.active h3::after {
     padding-bottom: 0.875rem;
   }
 
-  .xl\:pt-6 {
-    padding-top: 1.5rem;
-  }
-
   .xl\:pt-0 {
     padding-top: 0px;
   }
@@ -82422,6 +82406,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .xl\:pt-5 {
     padding-top: 1.25rem;
+  }
+
+  .xl\:pt-6 {
+    padding-top: 1.5rem;
   }
 
   .xl\:pt-7 {

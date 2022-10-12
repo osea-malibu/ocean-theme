@@ -167,6 +167,9 @@ module.exports = {
           "100%": { transform: "translate3d(-50%, 0, 0)" },
         },
       },
+      maxWidth: {
+        "2xs": "18rem",
+      },
       transitionProperty: {
         height: "height",
         "max-height": "max-height",
