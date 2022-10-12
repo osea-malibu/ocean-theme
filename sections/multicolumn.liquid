@@ -76,7 +76,6 @@
                             <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
                               <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
                             </div>
-
                             {%- form 'product', block.settings.atc_button_product, id: block.id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                               <input type="hidden" name="id" value="{{ block.settings.atc_button_product.selected_or_first_available_variant.id }}" disabled>
                               <button
@@ -104,7 +103,19 @@
                             {%- endform -%}
                           </product-form>
                         {%- else -%}
-                          <a class="button {{ block.settings.button_classes }}" {% if block.settings.link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.link }}"{% endif %}>{{- block.settings.button_label | escape -}}</a>
+                          <a
+                            class="button {{ block.settings.button_classes }}"
+                            {% if block.settings.link == blank %}
+                              role="link" aria-disabled="true"
+                            {% else %}
+                              href="{{ block.settings.link }}"
+                            {% endif %}
+                          >
+                            {{- block.settings.button_label | escape -}}
+                            {%- if block.settings.button_icon -%}
+                              {{- block.settings.button_icon -}}
+                            {%- endif -%}
+                          </a>
                         {%- endif -%}
                       {%- endif -%}
                     </div>
