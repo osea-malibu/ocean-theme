@@ -1,4 +1,4 @@
-<div id="Banner-{{ section.id }}" class="relative {{ section.settings.section_classes }}">
+<div class="relative {{ section.settings.section_classes }}">
   {%- if section.settings.image != blank -%}
     <picture>
       {%- if section.settings.image_desktop == blank -%}
@@ -117,7 +117,7 @@
           "type": "textarea",
           "id": "heading_classes",
           "label": "Heading classes",
-          "default": "tracking-widest font-bold uppercase text-2xl lg:text-3xl pt-6 sm:pt-4 xl:pt-6"
+          "default": "tracking-widest font-bold uppercase text-xl xl:text-2xl pt-6 sm:pt-4 xl:pt-6"
         }
       ]
     },
