@@ -983,6 +983,7 @@ class GlideSlider extends HTMLElement {
       if (viewportWidth <= this.twBreakpoints[breakpointLimit]) {
         this.initSlider();
       } else {
+        console.log("smaller than breakpoint");
         this.classList.remove("glide");
       }
     }
