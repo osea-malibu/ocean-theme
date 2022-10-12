@@ -263,7 +263,7 @@
                                       <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
                                       {% render 'icon-minus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                                     </button>
-                                    <input class="quantity__input w-8 h-6 border-0 p-1"
+                                    <input class="quantity__input w-8 h-6 border-0 p-1 text-center"
                                       type="number"
                                       name="updates[]"
                                       value="{{ item.quantity }}"

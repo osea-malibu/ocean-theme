@@ -105,7 +105,7 @@ class CartDrawer extends HTMLElement {
       });
 
       setTimeout(() => {
-        this.querySelector(".menu-scrim").addEventListener("click", this.close.bind(this));
+        this.querySelector(".cart-scrim").addEventListener("click", this.close.bind(this));
         this.open();
       });
     }
