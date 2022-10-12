@@ -88,13 +88,14 @@
     },
     {
       "type": "textarea",
-      "default": "block object-cover object-top h-80 overflow-hidden",
+      "default": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
+      "info": "Normal height: h-80, Tall height: h-[460px]",
       "id": "image_classes",
       "label": "Image classes"
     },
     {
       "type": "textarea",
-      "default": "absolute top-0 inset-x-0 px-6 text-center",
+      "default": "absolute top-6 inset-x-0 px-6 text-center",
       "id": "text_block_classes",
       "label": "Text block classes"
     }
@@ -117,7 +118,7 @@
           "type": "textarea",
           "id": "heading_classes",
           "label": "Heading classes",
-          "default": "tracking-widest font-bold uppercase text-xl xl:text-2xl pt-6 sm:pt-4 xl:pt-6"
+          "default": "tracking-widest font-bold uppercase text-lg lg:text-xl"
         }
       ]
     },
