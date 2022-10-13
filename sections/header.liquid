@@ -380,7 +380,7 @@
         <li class="first:pl-1{% if link.links != blank %} group{% endif %}">
           <a href="{{ link.url }}" class="block whitespace-nowrap text-sm xl:text-base py-2 xl:py-1.5 px-2 lg:px-3 font-book tracking-wide"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
           {%- if link.links != blank -%}
-            <ul role="list" class="invisible group-hover:visible hidden sm:block absolute z-100 bg-sand-200 py-2 shadow-md shadow-seaweed-400/10 {% if link.levels >= 2 %}inset-x-0 top-24{% else %}px-2{% endif %}">
+            <ul role="list" class="invisible group-hover:visible hidden sm:block absolute z-100 bg-sand-200 py-2 shadow-md shadow-seaweed-400/10 {% if link.levels >= 2 %}inset-x-0 top-[88px]{% else %}px-2{% endif %}">
               {%- if link.levels >= 2 -%}<div class="max-w-screen-lg mx-auto px-6 py-4 flex flex-col sm:flex-row justify-center gap-4">{%- endif -%}
               {%- for childlink in link.links -%}
                 {%- if childlink.links != blank -%}

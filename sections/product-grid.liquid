@@ -5,7 +5,8 @@
         product_card_product: product,
         section_id: section.id
         button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal',
-        badge_class: 'scale-[0.8] sm:scale-100 origin-top-left'
+        badge_class: 'scale-[0.8] sm:scale-100 origin-top-left',
+        subscription: section.settings.is_subscription
       %}
     {%- endfor -%}
   </div>
@@ -32,6 +33,12 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_subscription",
+      "label": "Subscription card",
+      "default": false
     }
   ],
   "presets": [
