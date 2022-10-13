@@ -6,7 +6,8 @@
         section_id: section.id
         button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal',
         badge_class: 'scale-[0.8] sm:scale-100 origin-top-left',
-        subscription: section.settings.is_subscription
+        subscription: section.settings.is_subscription,
+        variant_picker_type: section.settings.variant_picker_type
       %}
     {%- endfor -%}
   </div>
@@ -39,6 +40,22 @@
       "id": "is_subscription",
       "label": "Subscription card",
       "default": false
+    },
+    {
+      "type": "select",
+      "id": "variant_picker_type",
+      "default": "button",
+      "label": "Variant picker type",
+      "options": [
+        {
+          "value": "button",
+          "label": "Buttons"
+        },
+        {
+          "value": "dropdown",
+          "label": "Dropdown"
+        }
+      ]
     }
   ],
   "presets": [

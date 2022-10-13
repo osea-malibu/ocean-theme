@@ -4,9 +4,6 @@
 @import "settings/variables.scss";
 @import "settings/utils.scss";
 
-// core
-@import "core/third-party.scss";
-
 :root {
   --duration-short: 100ms;
   --duration-default: 200ms;
@@ -451,23 +448,6 @@ deferred-media {
 
 .media-modal .deferred-media {
   cursor: initial;
-}
-
-.overflow-hidden-mobile,
-.overflow-hidden-tablet {
-  overflow: hidden;
-}
-
-@media screen and (min-width: 750px) {
-  .overflow-hidden-mobile {
-    overflow: auto;
-  }
-}
-
-@media screen and (min-width: 990px) {
-  .overflow-hidden-tablet {
-    overflow: auto;
-  }
 }
 
 .gradient {
