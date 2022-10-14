@@ -168,6 +168,15 @@
   }
 
   /* Inputs */
+  .field {
+    @apply block tracking-wide;
+  }
+  .field .label {
+    @apply font-medium mb-1;
+  }
+  .field .input {
+    @apply block w-full;
+  }
   .input {
     @apply cursor-text bg-white border border-seaweed-400 rounded-sm px-4 tracking-wide focus:ring-1;
   }
@@ -259,6 +268,26 @@
   }
   modal-dialog button[id^="ModalClose-"] {
     @apply absolute top-2 right-2 text-seaweed-600;
+  }
+
+  /* Modal dialog (popup modal) */
+  #recover,
+  #recover + div {
+    @apply hidden;
+  }
+  #recover:target {
+    @apply block;
+  }
+  #recover:target + div {
+    @apply block;
+  }
+  #recover:target ~ #login,
+  #recover:target ~ #login + div {
+    @apply hidden;
+  }
+  #recover,
+  #login {
+    @apply scroll-mt-40;
   }
 
   /* Deferred media (video poster) */
@@ -703,4 +732,15 @@ ul.whr-items .whr-item.active h3::before {
 }
 ul.whr-items .whr-item.active h3::after {
   @apply rotate-45;
+}
+
+/* ReCharge */
+#rc_login {
+  @apply mb-0;
+}
+#rc_login h5 {
+  @apply mb-2 tracking-wide;
+}
+#rc_login a {
+  @apply relative block items-center justify-center border px-6 py-2 rounded-sm font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-colors bg-white border-seaweed-400 hover:bg-seafoam-100 hover:border-seaweed-500 text-white before:cursor-pointer before:content-['Manage_subscription'] before:absolute before:inset-0 before:text-seaweed-700 before:flex before:items-center before:justify-center;
 }

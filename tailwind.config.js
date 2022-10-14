@@ -1,7 +1,7 @@
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
-  content: ["./layout/*.liquid", "./templates/*.liquid", "./templates/*.json", "./sections/*.liquid", "./snippets/*.liquid", "./assets/*.js"],
+  content: ["./layout/*.liquid", "./templates/customers/*.liquid", "./templates/*.json", "./sections/*.liquid", "./snippets/*.liquid", "./assets/*.js"],
   safelist: [
     {
       pattern: /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,

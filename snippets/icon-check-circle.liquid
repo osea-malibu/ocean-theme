@@ -1,0 +1,14 @@
+{% comment %}
+  Accepts:
+  - classes: {String} string of TailwindCSS classnames
+  - stroke_width: {Number} SVG stroke line thickness. Default: 1 (optional)
+  - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
+
+  Usage:
+  {% render 'icon-check-circle', classes: 'w-10 h-10 text-seaweed-700' %}
+{% endcomment %}
+
+<svg{% if aria_hidden %} aria-hidden="true" focusable="false"{% endif %} class="{{ classes }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+  <polyline points="22 4 12 14.01 9 11.01" />
+</svg>

@@ -2,9 +2,9 @@
   <div class="{{ section.settings.container_classes }}">
     {%- for product in section.settings.collection.products -%}
       {% render 'product-card',
-        product_card_product: product,
+        card_product: product,
         section_id: section.id
-        button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal',
+        button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 xl:px-6',
         badge_class: 'scale-[0.8] sm:scale-100 origin-top-left',
         subscription: section.settings.is_subscription,
         variant_picker_type: section.settings.variant_picker_type

@@ -6,7 +6,7 @@
         {% for recommendation in recommendations.products %}
           <li class="{{ section.settings.card_classes }}">
             {% render 'product-card',
-              product_card_product: recommendation,
+              card_product: recommendation,
               section_id: section.id,
               show_secondary_image_on_hover: section.settings.show_secondary_image
             %}

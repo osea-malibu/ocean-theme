@@ -10,7 +10,7 @@
         {%- unless cart_ids contains product.id or item_count >= 3 -%}
           {%- assign item_count = item_count | plus: 1 -%}
           {%- render 'product-card-mini',
-            product_card_product: product,
+            card_product: product,
             button_class: 'button-secondary'
           -%}
         {%- endunless -%}

@@ -161,57 +161,6 @@ deferred-media {
   display: block;
 }
 
-/* component-form */
-.field__input,
-.select__select,
-.customer .field input,
-.customer select {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: transparent;
-  border: 0.1rem solid transparent;
-  border-radius: 0;
-  color: rgb(var(--color-foreground));
-  font-size: 1.6rem;
-  width: 100%;
-  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.55);
-  height: toRem(60);
-  box-sizing: border-box;
-  transition: box-shadow var(--duration-short) ease;
-}
-
-.select__select {
-  font-family: var(--font-body-family);
-  font-style: var(--font-body-style);
-  font-weight: var(--font-body-weight);
-  font-size: 1.2rem;
-  color: rgba(var(--color-foreground), 0.75);
-}
-
-.field__input:hover,
-.select__select:hover,
-.customer .field input:hover,
-.customer select:hover,
-.localization-form__select:hover {
-  box-shadow: 0 0 0 0.2rem rgba(var(--color-foreground), 0.55);
-}
-
-.field__input:focus,
-.select__select:focus,
-.customer .field input:focus,
-.customer select:focus,
-.localization-form__select:focus {
-  box-shadow: 0 0 0 0.2rem rgba(var(--color-foreground), 0.75);
-  outline: transparent;
-}
-
-.text-area,
-.select {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-}
-
 /* Select */
 
 .select .icon-caret,
@@ -231,72 +180,6 @@ deferred-media {
 }
 
 /* Field */
-
-.field {
-  position: relative;
-  width: 100%;
-  display: flex;
-}
-
-.customer .field {
-  display: block;
-}
-
-.field--with-error {
-  flex-wrap: wrap;
-}
-
-.field__input,
-.customer .field input {
-  flex-grow: 1;
-  text-align: left;
-  padding: 1.25rem;
-}
-
-.field__label,
-.customer .field label {
-  font-size: 1.6rem;
-  left: 1.5rem;
-  top: 1rem;
-  margin-bottom: 0;
-  pointer-events: none;
-  position: absolute;
-  transition: top var(--duration-short) ease, font-size var(--duration-short) ease;
-  color: rgba(var(--color-foreground), 0.75);
-  letter-spacing: 0.1rem;
-  line-height: 1.5;
-}
-
-.field__input:focus ~ .field__label,
-.field__input:not(:placeholder-shown) ~ .field__label,
-.field__input:-webkit-autofill ~ .field__label,
-.customer .field input:focus ~ label,
-.customer .field input:not(:placeholder-shown) ~ label,
-.customer .field input:-webkit-autofill ~ label {
-  font-size: 1rem;
-  top: 0.3em;
-  letter-spacing: 0.04rem;
-}
-
-.field__input:focus,
-.field__input:not(:placeholder-shown),
-.field__input:-webkit-autofill,
-.customer .field input:focus,
-.customer .field input:not(:placeholder-shown),
-.customer .field input:-webkit-autofill {
-  padding: 2.2rem 1.5rem 0.8rem;
-}
-
-.field__input::-webkit-search-cancel-button,
-.customer .field input::-webkit-search-cancel-button {
-  display: none;
-}
-
-.field__input::placeholder,
-.customer .field input::placeholder {
-  opacity: 0;
-}
-
 .field__button {
   align-items: center;
   background-color: transparent;
@@ -314,75 +197,7 @@ deferred-media {
   width: 4.4rem;
 }
 
-.field__button > svg {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-.field__input:-webkit-autofill ~ .field__button,
-.field__input:-webkit-autofill ~ .field__label,
-.customer .field input:-webkit-autofill ~ label {
-  color: rgb(0, 0, 0);
-}
-
-/* Text area */
-
-.text-area {
-  font-family: var(--font-body-family);
-  font-style: var(--font-body-style);
-  font-weight: var(--font-body-weight);
-  padding: 1.2rem;
-  min-height: 10rem;
-  resize: none;
-}
-
-.text-area--resize-vertical {
-  resize: vertical;
-}
-
 /* Form global */
-
-.form__label {
-  display: block;
-  margin-bottom: 0.6rem;
-}
-
-.form__message {
-  align-items: center;
-  display: flex;
-  font-size: 1.4rem;
-  line-height: 1;
-  margin-top: 1rem;
-}
-
-.form__message--large {
-  font-size: 1.6rem;
-}
-
-.customer .field .form__message {
-  font-size: 1.4rem;
-  text-align: left;
-}
-
-.form__message .icon,
-.customer .form__message svg {
-  flex-shrink: 0;
-  height: 1.3rem;
-  margin-right: 0.5rem;
-  width: 1.3rem;
-}
-
-.form__message--large .icon,
-.customer .form__message svg {
-  height: 1.5rem;
-  width: 1.5rem;
-  margin-right: 1rem;
-}
-
-.customer .field .form__message svg {
-  align-self: start;
-}
-
 .form-status {
   margin: 0;
   font-size: 1.6rem;

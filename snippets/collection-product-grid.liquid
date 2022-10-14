@@ -29,7 +29,7 @@
           {%- for product in collection.products -%}
             <li>
               {% render 'product-card',
-                product_card_product: product,
+                card_product: product,
                 section_id: collection.id,
                 show_secondary_image_on_hover: true,
                 button_class: 'flex-col sm:flex-row h-10 py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal tracking-wide sm:tracking-widest'
