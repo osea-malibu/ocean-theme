@@ -9,7 +9,7 @@
     {%- form 'activate_customer_password' -%}
       {%- if form.errors -%}
         <h2 class="flex text-coral-800 font-medium tracking-wide leading-tight gap-2 mb-4" tabindex="-1" autofocus>
-          {% render 'icon-warning-circle', classes: 'w-5 h-5 shrink-0', stroke_width: 2, aria_hidden: true %}
+          {% render 'icon-error-circle', classes: 'w-5 h-5 shrink-0', stroke_width: 2, aria_hidden: true %}
           {{ 'templates.contact.form.error_heading' | t }}
         </h2>
         <ul class="sr-only text-coral-800 tracking-wide mb-4 pl-7">
@@ -45,7 +45,7 @@
         >
         {%- if form.errors contains 'password' -%}
           <small id="password-error" class="flex text-coral-800 mb-4 font-book tracking-wide leading-tight gap-1.5 mt-1">
-            {%- render 'icon-warning-circle', classes: 'w-4 h-4 shrink-0', stroke_width: 2.5, aria_hidden: true -%}
+            {%- render 'icon-error-circle', classes: 'w-4 h-4 shrink-0', stroke_width: 2.5, aria_hidden: true -%}
             {{- form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] -}}
           </small>
         {%- endif -%}
@@ -68,7 +68,7 @@
         >
         {%- if form.errors contains 'password_confirmation' -%}
           <small id="password_confirmation-error" class="flex text-coral-800 mb-4 font-book tracking-wide leading-tight gap-1.5 mt-1">
-            {%- render 'icon-warning-circle', classes: 'w-4 h-4 shrink-0', stroke_width: 2.5, aria_hidden: true -%}
+            {%- render 'icon-error-circle', classes: 'w-4 h-4 shrink-0', stroke_width: 2.5, aria_hidden: true -%}
             {{- form.errors.translated_fields['password_confirmation'] | capitalize }} {{ form.errors.messages['password_confirmation'] -}}
           </small>
         {%- endif -%}

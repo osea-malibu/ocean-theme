@@ -5,10 +5,11 @@
   - aria_hidden: {Boolean} adds the aria-hidden property. Default: false (optional)
 
   Usage:
-  {% render 'icon-account', classes: 'w-10 h-10 text-seaweed-700' %}
+  {% render 'icon-error-circle', classes: 'w-10 h-10 text-seaweed-700' %}
 {% endcomment %}
 
 <svg{% if aria_hidden %} aria-hidden="true" focusable="false"{% endif %} class="{{ classes }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-  <circle cx="12" cy="7" r="4" />
+  <circle cx="12" cy="12" r="10" />
+  <line x1="12" y1="8" x2="12" y2="12" />
+  <line x1="12" y1="16" x2="12.01" y2="16" />
 </svg>

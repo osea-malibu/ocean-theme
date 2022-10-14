@@ -245,47 +245,6 @@ deferred-media {
   display: block;
 }
 
-/* Select */
-.select .icon-caret,
-.customer select + svg {
-  height: 0.6rem;
-  pointer-events: none;
-  position: absolute;
-  top: calc(50% - 0.2rem);
-  right: 1.5rem;
-}
-
-.select__select,
-.customer select {
-  cursor: pointer;
-  line-height: calc(1 + 0.6 / var(--font-body-scale));
-  padding: 0 4rem 0 1.5rem;
-}
-
-/* Field */
-.field__button {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: transparent;
-  border: 0;
-  color: currentColor;
-  cursor: pointer;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 4.4rem;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 4.4rem;
-}
-
 /* Form global */
 .form-status {
   margin: 0;

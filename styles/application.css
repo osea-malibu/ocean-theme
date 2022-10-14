@@ -80,7 +80,7 @@
 
   /* Links */
   .link {
-    @apply underline underline-offset-4 hover:text-seaweed-500 transition-colors;
+    @apply underline !underline-offset-2 hover:text-seaweed-500 transition-colors;
   }
 
   /* Buttons */
@@ -169,7 +169,7 @@
 
   /* Inputs */
   .field {
-    @apply block tracking-wide;
+    @apply block w-full tracking-wide;
   }
   .field .label {
     @apply font-medium mb-1;
@@ -181,10 +181,10 @@
     @apply cursor-text bg-white border border-seaweed-400 rounded-sm px-4 tracking-wide focus:ring-1;
   }
   .input-xs {
-    @apply px-3 py-0.5 text-xs;
+    @apply px-1 py-0.5 text-xs;
   }
   .input-sm {
-    @apply px-4 py-1 text-sm leading-4;
+    @apply px-2 py-1 text-sm leading-4;
   }
   .input-lg {
     @apply px-7 py-3 text-lg;
@@ -213,6 +213,9 @@
   /* Badge */
   .badge {
     @apply inline-block px-2 py-1 uppercase font-bold tracking-widest bg-coral-600 text-white;
+  }
+  .badge-sm {
+    @apply text-sm py-0.5;
   }
 
   /* Predictive search */
@@ -268,26 +271,6 @@
   }
   modal-dialog button[id^="ModalClose-"] {
     @apply absolute top-2 right-2 text-seaweed-600;
-  }
-
-  /* Modal dialog (popup modal) */
-  #recover,
-  #recover + div {
-    @apply hidden;
-  }
-  #recover:target {
-    @apply block;
-  }
-  #recover:target + div {
-    @apply block;
-  }
-  #recover:target ~ #login,
-  #recover:target ~ #login + div {
-    @apply hidden;
-  }
-  #recover,
-  #login {
-    @apply scroll-mt-40;
   }
 
   /* Deferred media (video poster) */
@@ -645,6 +628,34 @@
   }
   table.comparison-matrix td.unchecked {
     @apply bg-white/50;
+  }
+
+  /* Recover password */
+  #recover,
+  #recover + div {
+    @apply hidden;
+  }
+  #recover:target {
+    @apply block;
+  }
+  #recover:target + div {
+    @apply block;
+  }
+  #recover:target ~ #login,
+  #recover:target ~ #login + div {
+    @apply hidden;
+  }
+  #recover,
+  #login {
+    @apply scroll-mt-40;
+  }
+
+  /* Addresses */
+  .addresses [aria-expanded="false"] ~ div[id] {
+    @apply hidden;
+  }
+  .addresses [aria-expanded="true"] ~ div[id] {
+    @apply block;
   }
 }
 

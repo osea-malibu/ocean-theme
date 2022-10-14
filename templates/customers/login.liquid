@@ -32,7 +32,7 @@
         </div>
         {%- if form.errors -%}
           <small id="RecoverEmail-email-error" class="flex text-coral-800 mb-4 font-book tracking-wide leading-tight gap-1.5 text-base">
-            {% render 'icon-warning-circle', classes: 'w-5 h-5 shrink-0', stroke_width: 2, aria_hidden: true %}
+            {% render 'icon-error-circle', classes: 'w-5 h-5 shrink-0', stroke_width: 2, aria_hidden: true %}
             {{ form.errors.messages['form'] }}
           </small>
         {%- endif -%}
@@ -72,7 +72,7 @@
         {%- if form.errors -%}
           <h2 class="flex text-coral-800 mb-4 font-book tracking-wide leading-tight gap-1.5" tabindex="-1" autofocus>
             <span class="sr-only">{{ 'accessibility.error' | t }} </span>
-            {% render 'icon-warning-circle', classes: 'w-5 h-5 shrink-0', stroke_width: 2, aria_hidden: true %}
+            {% render 'icon-error-circle', classes: 'w-5 h-5 shrink-0', stroke_width: 2, aria_hidden: true %}
             {{- form.errors | default_errors -}}
           </h2>
         {%- endif -%}

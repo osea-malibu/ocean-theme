@@ -1,8 +1,16 @@
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
-  content: ["./layout/*.liquid", "./templates/customers/*.liquid", "./templates/*.json", "./sections/*.liquid", "./snippets/*.liquid", "./assets/*.js"],
-  safelist: [
+  content: [
+    "./layout/*.liquid",
+    "./templates/customers/*.liquid",
+    "./templates/*.json",
+    "./sections/*.liquid",
+    "./snippets/*.liquid",
+    "./assets/*.js",
+    "./config/settings_data.json",
+  ],
+  /* safelist: [
     {
       pattern: /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
       variants: ["xs", "sm", "md", "lg", "hover"],
@@ -55,7 +63,7 @@ module.exports = {
       pattern: /bg-(auto|contain|cover)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
-  ],
+  ], */
   theme: {
     container: {
       center: true,
@@ -197,6 +205,8 @@ module.exports = {
       addVariant("child-hover", "& > *:hover");
       addVariant("li", "& > li");
       addVariant("i", "& i");
+      addVariant("td", "& > td");
+      addVariant("th", "& > th");
     },
     // add backface classes
     plugin(function ({ addUtilities }) {
