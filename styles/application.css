@@ -670,7 +670,7 @@
     @apply pl-7;
   }
   .icon-list li {
-    @apply before:inline-block before:-ml-7 before:w-4 before:text-center;
+    @apply before:inline-block before:-ml-7 before:w-4 before:text-center leading-tight;
   }
   .icon-list.check li {
     @apply before:content-['\2713'] before:font-bold before:mr-2;

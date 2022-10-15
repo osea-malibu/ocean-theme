@@ -984,6 +984,7 @@ class GlideSlider extends HTMLElement {
         this.initSlider();
       } else {
         this.classList.remove("glide");
+        this.classList.add("relative");
 
         const track = this.querySelector(".glide__track");
         const slides = this.querySelector(".glide__slides");
