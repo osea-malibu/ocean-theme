@@ -74,7 +74,7 @@
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
                           {%- if block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false -%}
                             <variant-radios
-                              class="no-js-hidden block mt-1"
+                              class="no-js-hidden block{% if block.settings.variant_classes != blank %}{{ block.settings.variant_classes }}{% endif %}"
                               data-section="{{ block.settings.atc_button_product.id }}-{{ block.id }}"
                               data-url="{{ block.settings.atc_button_product.url }}"
                               data-update-url="false"
@@ -425,14 +425,19 @@
           "label": "Add to cart button"
         },
         {
+          "type": "product",
+          "id": "atc_button_product",
+          "label": "Product to add"
+        },
+        {
           "type": "checkbox",
           "id": "show_variants",
           "label": "Show variant selector"
         },
         {
-          "type": "product",
-          "id": "atc_button_product",
-          "label": "Product to add"
+          "type": "textarea",
+          "id": "variant_classes",
+          "label": "Variant classes"
         }
       ]
     },
