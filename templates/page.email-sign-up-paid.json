@@ -1,51 +1,79 @@
 {
   "sections": {
-    "16627390702dc7a134": {
-      "type": "rich-text",
+    "1280fb70-09a1-41aa-98a0-7baeb1651a4b": {
+      "type": "page-banner",
+      "disabled": true,
       "blocks": {
-        "16627390707c02fb87-0": {
+        "template--15591149306039__1280fb70-09a1-41aa-98a0-7baeb1651a4b-166586670390045180-0": {
           "type": "heading",
           "settings": {
-            "heading_text": "Win $500 OSEA Gift Card",
-            "heading_classes": "text-center font-serif text-4xl md:text-5xl tracking-tight mb-2 md:mb-4 pt-10",
-            "subheading_text": "",
-            "subheading_classes": ""
+            "heading": "Win $500 OSEA Gift Card",
+            "heading_classes": "tracking-widest font-bold uppercase text-lg lg:text-xl"
           }
         },
-        "16627390707c02fb87-1": {
+        "7e965826-d9b1-4b9a-9667-6fc6ad55fd1a": {
           "type": "paragraph",
           "settings": {
-            "paragraph_text": "Sign-up to enter to win a $500 gift card &amp; treat yourself to clean, vegan, cruelty-free skincare. Plus, get 10% off for first time purchasers.",
-            "paragraph_classes": "text-center text-md mx-5"
+            "paragraph": "Sign-up to enter to win a $500 gift card &amp; treat yourself to clean, vegan, cruelty-free skincare. Plus, get 10% off for first time purchasers.",
+            "paragraph_classes": "mb-2  font-book tracking-wide max-w-md mx-auto"
           }
         }
       },
       "block_order": [
-        "16627390707c02fb87-0",
-        "16627390707c02fb87-1"
+        "template--15591149306039__1280fb70-09a1-41aa-98a0-7baeb1651a4b-166586670390045180-0",
+        "7e965826-d9b1-4b9a-9667-6fc6ad55fd1a"
       ],
       "settings": {
-        "section_classes": "mb-2 container mx-auto px-6",
-        "container_classes": ""
+        "is_text_only": true,
+        "section_classes": "relative px-6 bg-wave-100",
+        "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
+        "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
       }
     },
     "16633470744a7a7383": {
       "type": "multicolumn",
       "blocks": {
+        "1d6d263d-2a4a-4331-aa25-bebbd43a192e": {
+          "type": "column",
+          "settings": {
+            "column_classes": "",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "text_classes": "text-center",
+            "heading": "Win $500 OSEA Gift Card",
+            "heading_classes": "font-serif text-3xl lg:text-4xl tracking-tight mb-1",
+            "paragraph": "Sign-up to enter to win a $500 gift card &amp; treat yourself to clean, vegan, cruelty-free skincare. Plus, get 10% off for first time purchasers.",
+            "paragraph_classes": "leading-snug max-w-md mx-auto tracking-wide",
+            "button_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": ""
+          }
+        },
         "487a1302-f24e-4ef6-bd42-d292ef38c7c4": {
           "type": "code",
           "settings": {
-            "column_classes": "container mb-10 max-w-4xl mx-auto px-6",
+            "column_classes": "w-full",
             "code": "<div class=\"klaviyo-form-WTfj3m\"><\/div>"
           }
         }
       },
       "block_order": [
+        "1d6d263d-2a4a-4331-aa25-bebbd43a192e",
         "487a1302-f24e-4ef6-bd42-d292ef38c7c4"
       ],
       "settings": {
-        "section_classes": "",
-        "container_classes": "",
+        "section_classes": "bg-wave-100 py-12 px-6",
+        "container_classes": "bg-white max-w-lg mx-auto flex flex-col px-6 pt-8 shadow-md shadow-seaweed-700\/50",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -58,7 +86,7 @@
     }
   },
   "order": [
-    "16627390702dc7a134",
+    "1280fb70-09a1-41aa-98a0-7baeb1651a4b",
     "16633470744a7a7383"
   ]
 }
