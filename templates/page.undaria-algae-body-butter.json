@@ -260,7 +260,7 @@
         "96663307-878f-4002-86ca-a8fae0fdca92"
       ],
       "settings": {
-        "section_classes": "container lg:max-w-screen-lg mb-12 pr-0 :pr-6",
+        "section_classes": "container lg:max-w-screen-lg mb-12 pr-0 sm:pr-6",
         "container_classes": "grid grid-cols-1 sm:grid-cols-3 gap-4",
         "is_slider": true,
         "slider_indicator_count": 3,
@@ -289,8 +289,8 @@
         "15015aeb-6ffe-411c-9e2e-e7c73e3b7b39"
       ],
       "settings": {
-        "section_classes": "container lg:max-w-screen-lg bg-sand-200 pt-8 pb-2",
-        "container_classes": ""
+        "section_classes": "container lg:max-w-screen-lg",
+        "container_classes": "bg-sand-200 pt-8 pb-2"
       }
     },
     "1664294923e71e201f": {
@@ -404,12 +404,12 @@
         "8004a43e-e0b9-4ced-a8f3-82299f837d15"
       ],
       "settings": {
-        "section_classes": "container xl:max-w-screen-lg bg-sand-200",
-        "container_classes": "bg-sand-200",
+        "section_classes": "container xl:max-w-screen-lg",
+        "container_classes": "bg-sand-200 md:px-6",
         "is_slider": true,
         "slider_indicator_count": 4,
-        "slider_breakpoint_limit": "lg",
-        "slider_classes": "perView-1 type-carousel pb-8",
+        "slider_breakpoint_limit": "md",
+        "slider_classes": "type-carousel perView-1 relative pb-8",
         "show_arrow_nav": false,
         "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": true,
