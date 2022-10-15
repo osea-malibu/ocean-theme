@@ -72,6 +72,43 @@
                       {%- endif -%}
                       {%- if block.settings.button_label != "" or block.settings.is_atc_button -%}
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
+                          {%- if block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false -%}
+                            <variant-radios
+                              class="no-js-hidden block mt-1"
+                              data-section="{{ block.settings.atc_button_product.id }}-{{ block.id }}"
+                              data-url="{{ block.settings.atc_button_product.url }}"
+                              data-update-url="false"
+                            >
+                              {%- for option in block.settings.atc_button_product.options_with_values -%}
+                                <fieldset class="js flex">
+                                  <legend class="sr-only">{{ option.name }}</legend>
+                                  {%- for value in option.values -%}
+                                    <div>
+                                      <input type="radio"
+                                        id="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
+                                        class="peer hidden"
+                                        name="{{ option.name }}"
+                                        value="{{ value | escape }}"
+                                        form="{{ block.id }}"
+                                        {% if option.selected_value == value %}checked{% endif %}
+                                      >
+                                      <label
+                                        class="button button-xs lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
+                                        for="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
+                                        tabindex="0"
+                                      >
+                                        {{ value }}
+                                      </label>
+                                    </div>
+                                  {%- endfor -%}
+                                </fieldset>
+                              {%- endfor -%}
+
+                              <script type="application/json">
+                                {{ block.settings.atc_button_product.variants | json }}
+                              </script>
+                            </variant-radios>
+                          {%- endif -%}
                           <product-form data-cart-type="{{ settings.cart_type }}">
                             <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
                               <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
@@ -123,7 +160,7 @@
                 {%- when 'product' %}
                   {%- if block.settings.product -%}
                     {% render 'product-card',
-                      card_product: all_products[block.settings.product],
+                      block.settings.atc_button_product: all_products[block.settings.product],
                       section_id: section.id,
                       show_secondary_image_on_hover: true,
                       custom_default_image: block.settings.custom_product_image
@@ -386,6 +423,11 @@
           "type": "checkbox",
           "id": "is_atc_button",
           "label": "Add to cart button"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_variants",
+          "label": "Show variant selector"
         },
         {
           "type": "product",
