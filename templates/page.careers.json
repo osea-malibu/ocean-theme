@@ -1,32 +1,32 @@
 {
   "sections": {
-    "16627390702dc7a134": {
-      "type": "rich-text",
+    "419edbb0-74f3-411a-9a6d-f60c168f3bdb": {
+      "type": "page-banner",
       "blocks": {
-        "16627390707c02fb87-0": {
+        "template--15591530201271__419edbb0-74f3-411a-9a6d-f60c168f3bdb-16658674938058d1a8-0": {
           "type": "heading",
           "settings": {
-            "heading_text": "Join Our Team",
-            "heading_classes": "text-center font-serif text-4xl md:text-5xl tracking-tight mb-2 md:mb-4 pt-10",
-            "subheading_text": "",
-            "subheading_classes": ""
+            "heading": "",
+            "heading_classes": "tracking-widest font-bold uppercase text-lg lg:text-xl"
           }
         },
-        "16627390707c02fb87-1": {
+        "d61e4a59-f058-4ea5-8f59-ad7641142f44": {
           "type": "paragraph",
           "settings": {
-            "paragraph_text": "OSEA is a small, family business that is growing fast - and with gratitude! We are looking for savvy, passionate individuals that believe in our mission of creating pure, results driven skincare and bodycare.  Don’t see what you’re looking for but still want to get involved? Get in touch at <a class=\"underline\" href=\"mailto:workwithus@oseamalibu.com\">workwithus@oseamalibu.com<\/a>.",
-            "paragraph_classes": "text-center text-md tracking-wide"
+            "paragraph": "OSEA is a small, family business that is growing fast - and with gratitude! We are looking for savvy, passionate individuals that believe in our mission of creating pure, results driven skincare and bodycare.  Don’t see what you’re looking for but still want to get involved? Get in touch at <a class=\"underline\" href=\"mailto:workwithus@oseamalibu.com\">workwithus@oseamalibu.com<\/a>.",
+            "paragraph_classes": "mt-1 mb-2  font-book tracking-wide"
           }
         }
       },
       "block_order": [
-        "16627390707c02fb87-0",
-        "16627390707c02fb87-1"
+        "template--15591530201271__419edbb0-74f3-411a-9a6d-f60c168f3bdb-16658674938058d1a8-0",
+        "d61e4a59-f058-4ea5-8f59-ad7641142f44"
       ],
       "settings": {
-        "section_classes": "container lg:max-w-screen-lg mb-12",
-        "container_classes": ""
+        "is_text_only": true,
+        "section_classes": "relative container lg:max-w-screen-lg",
+        "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
+        "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
       }
     },
     "16633470744a7a7383": {
@@ -74,10 +74,15 @@
             "paragraph_classes": "font-semibold pb-4 font-medium text-xl",
             "button_label": "Take The Quiz",
             "link": "shopify:\/\/pages\/quiz",
+            "target_blank": false,
             "button_classes": "button button-primary",
             "button_icon": "",
             "is_atc_button": false,
-            "atc_button_product": ""
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": ""
           }
         },
         "f6f52be1-e824-4f3f-9ff9-395bbdfb343d": {
@@ -95,10 +100,15 @@
             "paragraph_classes": "",
             "button_label": "",
             "link": "",
+            "target_blank": false,
             "button_classes": "",
             "button_icon": "",
             "is_atc_button": false,
-            "atc_button_product": ""
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": ""
           }
         }
       },
@@ -121,7 +131,7 @@
     }
   },
   "order": [
-    "16627390702dc7a134",
+    "419edbb0-74f3-411a-9a6d-f60c168f3bdb",
     "16633470744a7a7383",
     "16633471229f9c2ba0"
   ]
