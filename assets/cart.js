@@ -2,7 +2,7 @@ class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
 
-    this.button = this.querySelector("button");
+    this.button = this.querySelector(".button");
 
     this.button.addEventListener("click", (event) => {
       event.preventDefault();

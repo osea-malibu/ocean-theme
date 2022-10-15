@@ -983,9 +983,18 @@ class GlideSlider extends HTMLElement {
       if (viewportWidth <= this.twBreakpoints[breakpointLimit]) {
         this.initSlider();
       } else {
-        console.log("smaller than breakpoint", this.twBreakpoints[breakpointLimit]);
-        console.log("viewportWidth", viewportWidth);
         this.classList.remove("glide");
+
+        const track = this.querySelector(".glide__track");
+        const slides = this.querySelector(".glide__slides");
+
+        track.classList.forEach((i) => {
+          if (i !== "glide__track") {
+            slides.classList.add(i);
+          }
+        });
+
+        track.replaceWith(...track.childNodes);
       }
     }
   }
