@@ -252,7 +252,8 @@
                       custom_default_image: block.settings.custom_product_image
                       hide_badge: block.settings.hide_badge,
                       subscription: block.settings.subscription,
-                      image_class: block.settings.image_classes
+                      image_class: block.settings.image_classes,
+                      button_class: block.settings.button_classes
                     %}
                   {%- endif -%}
                 {%- when 'code' -%}
@@ -582,6 +583,11 @@
           "type": "checkbox",
           "id": "subscription",
           "label": "Subscription tile"
+        },
+        {
+          "type": "textarea",
+          "id": "button_classes",
+          "label": "Button classes"
         }
       ]
     },
