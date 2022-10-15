@@ -13,7 +13,13 @@
         {%- when 'paragraph' -%}
           <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>{{ block.settings.paragraph_text }}</div>
         {%- when 'button' -%}
-          <a {% if block.settings.button_link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link }}"{% endif %} class="{{ block.settings.button_classes }}" {{ block.shopify_attributes }}>
+          <a
+            {% if block.settings.button_link == blank %}role="link" aria-disabled="true"
+            {% else %}href="{{ block.settings.button_link }}"{% endif %}
+            {% if block.settings.target_blank %}target="_blank"{% endif %}
+            class="{{ block.settings.button_classes }}"
+            {{ block.shopify_attributes }}
+          >
             {{ block.settings.button_label | escape }}
           </a>
       {%- endcase -%}
@@ -115,6 +121,11 @@
           "type": "url",
           "id": "button_link",
           "label": "Button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "target_blank",
+          "label": "Open in new tab"
         },
         {
           "default": "button button-primary",
