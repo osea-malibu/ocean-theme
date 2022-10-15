@@ -80,7 +80,7 @@
 
   /* Links */
   .link {
-    @apply underline !underline-offset-2 hover:text-seaweed-500 transition-colors;
+    @apply underline underline-offset-2 decoration-1 hover:text-seaweed-500 transition-colors;
   }
 
   /* Buttons */
@@ -677,11 +677,6 @@
   }
   .icon-list.bullet li {
     @apply before:content-['\2022'] before:mr-3;
-  }
-
-  /* Underline */
-  .underline {
-    @apply decoration-1 underline-offset-1;
   }
 
   /* fancy scrollbars */
