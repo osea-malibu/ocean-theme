@@ -229,7 +229,7 @@
             src="{{ card_product.media[1] | image_url: width: 328 }}"
             alt="{{ card_product.media[1].alt | escape }}"
             loading="lazy"
-            class="{% if show_secondary_image_on_hover %}absolute inset-0 bg-cover bg-center opacity-0 group-hover:opacity-100 motion-safe:transition-opacity{% endif %} duration-300"
+            class="{% if show_secondary_image_on_hover %}absolute inset-x-0 top-1/2 -translate-y-1/2 bg-cover bg-center opacity-0 group-hover:opacity-100 motion-safe:transition-opacity{% endif %} duration-300"
             width="{{ card_product.media[1].width }}"
             height="{{ card_product.media[1].height }}"
           >
