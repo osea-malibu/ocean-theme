@@ -201,7 +201,7 @@
                                   aria-haspopup="dialog"
                                   aria-labelledby="{{ product_form_id }}-submit title-{{ block.id }}-{{ block.settings.atc_button_product.id }}"
                                   aria-live="polite"
-                                  class="button button-tertiary w-full transition flex mt-2 disabled:opacity-50 {% if block.settings.atc_button_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ block.settings.button_classes }}"
+                                  class="button w-full transition flex mt-2 disabled:opacity-50 {% if block.settings.atc_button_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ block.settings.button_classes }}"
                                   {% if block.settings.atc_button_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                                 >
                                   {%- if block.settings.atc_button_product.selected_or_first_available_variant.available -%}
