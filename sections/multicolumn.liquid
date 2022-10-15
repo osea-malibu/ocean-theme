@@ -125,7 +125,7 @@
                                   data-updateUrl="false"
                                 >
                                   {%- for option in block.settings.atc_button_product.options_with_values -%}
-                                    <div class="relative block">
+                                    <div class="relative block{% if block.settings.variant_classes != blank %} {{ block.settings.variant_classes }}{% endif %}">
                                       <label class="absolute top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}">
                                         {{- option.name -}}
                                       </label>
