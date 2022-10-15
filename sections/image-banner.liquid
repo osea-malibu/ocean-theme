@@ -37,7 +37,15 @@
           </div>
         {%- when 'button' -%}
           {%- if block.settings.button_label != blank -%}
-            <a{% if block.settings.button_link == blank %} role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link }}"{% endif %} class="button {{ block.settings.button_classes }}" {{ block.shopify_attributes }}>{{ block.settings.button_label | escape }}</a>
+            <a
+              {% if block.settings.button_link == blank %}role="link" aria-disabled="true"
+              {% else %}href="{{ block.settings.button_link }}"{% endif %}
+              {% if block.settings.target_blank %}target="_blank"{% endif %}
+              class="button {{ block.settings.button_classes }}"
+              {{ block.shopify_attributes }}
+            >
+              {{- block.settings.button_label | escape -}}
+            </a>
           {%- endif -%}
       {%- endcase -%}
     {%- endfor -%}
@@ -135,6 +143,11 @@
           "type": "url",
           "id": "button_link",
           "label": "Button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "target_blank",
+          "label": "Open in new tab"
         },
         {
           "type": "textarea",
