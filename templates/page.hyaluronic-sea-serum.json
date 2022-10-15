@@ -279,7 +279,7 @@
           "type": "heading",
           "settings": {
             "heading_text": "Real Consumer Results",
-            "heading_classes": "text-center text-3xl tracking-wide font-serif py-6",
+            "heading_classes": "text-center text-3xl lg:text-4xl tracking-tight font-serif",
             "subheading_text": "",
             "subheading_classes": ""
           }
@@ -289,8 +289,8 @@
         "15015aeb-6ffe-411c-9e2e-e7c73e3b7b39"
       ],
       "settings": {
-        "section_classes": "container bg-sand-200",
-        "container_classes": ""
+        "section_classes": "container lg:max-w-screen-lg",
+        "container_classes": "bg-sand-200 pt-8 pb-2 px-6"
       }
     },
     "1664294923e71e201f": {
@@ -404,12 +404,12 @@
         "8004a43e-e0b9-4ced-a8f3-82299f837d15"
       ],
       "settings": {
-        "section_classes": "container xl:max-w-screen-lg bg-sand-200",
-        "container_classes": "bg-sand-200",
+        "section_classes": "container lg:max-w-screen-lg",
+        "container_classes": "bg-sand-200 md:px-6 md:grid md:grid-cols-4 md:gap-4",
         "is_slider": true,
         "slider_indicator_count": 4,
-        "slider_breakpoint_limit": "lg",
-        "slider_classes": "perView-1 type-carousel relative",
+        "slider_breakpoint_limit": "md",
+        "slider_classes": "type-carousel perView-1",
         "show_arrow_nav": false,
         "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": true,
