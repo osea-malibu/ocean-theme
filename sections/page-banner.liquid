@@ -1,4 +1,4 @@
-<div class="{% if section.settings.is_text_only %}py-6{% else %}{{ section.settings.section_classes }}{% endif %}">
+<div class="{{ section.settings.section_classes }}">
   {%- if section.settings.image != blank and section.settings.is_text_only == false -%}
     <picture>
       {%- if section.settings.image_desktop == blank -%}
@@ -31,7 +31,7 @@
       >
     </picture>
   {%- endif -%}
-  <div class="{{ section.settings.text_block_classes }}">
+  <div class="{% if section.settings.is_text_only %}py-6{% else %}{{ section.settings.text_block_classes }}{% endif %}">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when 'heading' -%}
