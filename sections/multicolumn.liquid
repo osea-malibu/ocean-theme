@@ -74,13 +74,13 @@
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
                           {%- if block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false -%}
                             <variant-radios
-                              class="no-js-hidden block{% if block.settings.variant_classes != blank %}{{ block.settings.variant_classes }}{% endif %}"
+                              class="no-js-hidden block"
                               data-section="{{ block.settings.atc_button_product.id }}-{{ block.id }}"
                               data-url="{{ block.settings.atc_button_product.url }}"
                               data-update-url="false"
                             >
                               {%- for option in block.settings.atc_button_product.options_with_values -%}
-                                <fieldset class="js flex">
+                                <fieldset class="js flex{% if block.settings.variant_classes != blank %}{{ block.settings.variant_classes }}{% endif %}">
                                   <legend class="sr-only">{{ option.name }}</legend>
                                   {%- for value in option.values -%}
                                     <div>
