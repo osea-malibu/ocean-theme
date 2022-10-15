@@ -72,73 +72,159 @@
                       {%- endif -%}
                       {%- if block.settings.button_label != "" or block.settings.is_atc_button -%}
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
-                          {%- if block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false -%}
-                            <variant-radios
-                              class="no-js-hidden block"
-                              data-section="{{ block.settings.atc_button_product.id }}-{{ block.id }}"
-                              data-url="{{ block.settings.atc_button_product.url }}"
-                              data-update-url="false"
-                            >
-                              {%- for option in block.settings.atc_button_product.options_with_values -%}
-                                <fieldset class="js flex{% if block.settings.variant_classes != blank %} {{ block.settings.variant_classes }}{% endif %}">
-                                  <legend class="sr-only">{{ option.name }}</legend>
-                                  {%- for value in option.values -%}
-                                    <div>
+                          <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+                          <div class="overflow-hidden">
+                            {%- assign product_form_id = 'product-form-' | append: block.settings.atc_button_product.id | append: '-' | append: block.id -%}
+                            {%- if block.settings.is_subscription and block.settings.atc_button_product.selling_plan_groups.size > 0 -%}
+                              {%- if block.settings.variant_picker_type == 'button' -%}
+                                <fieldset class="js flex">
+                                  <legend class="sr-only">Deliver every:</legend>
+                                  {%- for value in block.settings.atc_button_product.selling_plan_groups[0].selling_plans -%}
+                                    <div class="flex-grow{% unless forloop.last %} mr-1 sm:mr-2{% endunless %}">
                                       <input type="radio"
-                                        id="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
+                                        id="SubscriptionOption-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}"
                                         class="peer hidden"
-                                        name="{{ option.name }}"
-                                        value="{{ value | escape }}"
-                                        form="{{ block.id }}"
-                                        {% if option.selected_value == value %}checked{% endif %}
+                                        name="selling_plan"
+                                        value="{{ value.id | escape }}"
+                                        form="{{ product_form_id }}"
+                                        {% if option.selected_value == value.id %}checked{% endif %}
                                       >
                                       <label
-                                        class="button button-xs lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
-                                        for="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
+                                        class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-normal w-full text-left"
+                                        for="{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}"
                                         tabindex="0"
                                       >
-                                        {{ value }}
-                                      </label>
+                                        {{ value.name | replace: 'Delivery every ', '' }}
                                     </div>
                                   {%- endfor -%}
                                 </fieldset>
-                              {%- endfor -%}
+                              {%- else -%}
+                                <div class="relative block mt-0.5 tracking-wide">
+                                  <label class="absolute top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}">
+                                    Deliver every:
+                                  </label>
+                                  <select id="SubscriptionOption-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}"
+                                    class="block input input-xs w-full pl-24"
+                                    name="selling_plan"
+                                    form="{{ product_form_id }}"
+                                  >
+                                    {%- for value in block.settings.atc_button_product.selling_plan_groups[0].selling_plans -%}
+                                      <option value="{{ value.id | escape }}" {% if option.selected_value == value.id %}selected="selected"{% endif %}>
+                                        {{ value.name | replace: 'Delivery every ', '' }}
+                                      </option>
+                                    {%- endfor -%}
+                                  </select>
+                                </div>
+                              {%- endif -%}
+                            {%- elsif block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false -%}
+                              {%- if block.settings.variant_picker_type == 'dropdown' or block.settings.atc_button_product.handle == 'gift-card' -%}
+                                <variant-selects
+                                  class="no-js-hidden block mt-2"
+                                  data-section="{{ block.settings.atc_button_product.id }}-{{ block.id }}"
+                                  data-url="{{ block.settings.atc_button_product.url }}"
+                                  data-updateUrl="false"
+                                >
+                                  {%- for option in block.settings.atc_button_product.options_with_values -%}
+                                    <div class="relative block">
+                                      <label class="absolute top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}">
+                                        {{- option.name -}}
+                                      </label>
+                                      <select id="Option-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}"
+                                        class="block input input-xs w-full pl-16"
+                                        name="options[{{ option.name | escape }}]"
+                                        form="{{ product_form_id }}"
+                                      >
+                                        {%- for value in option.values -%}
+                                          <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                                            {{ value }}
+                                          </option>
+                                        {%- endfor -%}
+                                      </select>
+                                    </div>
+                                  {%- endfor -%}
 
-                              <script type="application/json">
-                                {{ block.settings.atc_button_product.variants | json }}
-                              </script>
-                            </variant-radios>
-                          {%- endif -%}
-                          <product-form data-cart-type="{{ settings.cart_type }}">
-                            <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
-                              <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
-                            </div>
-                            {%- form 'product', block.settings.atc_button_product, id: block.id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                              <input type="hidden" name="id" value="{{ block.settings.atc_button_product.selected_or_first_available_variant.id }}" disabled>
-                              <button
-                                id="{{ block.id }}-submit"
-                                type="submit"
-                                name="add"
-                                aria-haspopup="dialog"
-                                aria-live="polite"
-                                class="button button-tertiary w-full transition flex mt-2 disabled:opacity-50 {% if block.settings.atc_button_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ block.settings.button_classes }}"
-                                {% if block.settings.atc_button_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                              >
-                                {%- if block.settings.atc_button_product.selected_or_first_available_variant.available -%}
-                                  <span>{{ 'products.product.add_to_cart' | t }}</span>
-                                  <span id="price-{{ block.settings.atc_button_product.id }}" class="whitespace-nowrap">
-                                    {% render 'price',
-                                      product: block.settings.atc_button_product,
-                                      show_price_range: true,
-                                      use_variant: true
-                                    %}
-                                  </span>
-                                {%- else -%}
-                                  {{ 'products.product.sold_out' | t }}
-                                {%- endif -%}
-                              </button>
-                            {%- endform -%}
-                          </product-form>
+                                  <script type="application/json">
+                                    {{ block.settings.atc_button_product.variants | json }}
+                                  </script>
+                                </variant-selects>
+                              {%- else -%}
+                                <variant-radios
+                                  class="no-js-hidden block mt-1"
+                                  data-section="{{ block.settings.atc_button_product.id }}-{{ block.id }}"
+                                  data-url="{{ block.settings.atc_button_product.url }}"
+                                  data-update-url="false"
+                                >
+                                  {%- for option in block.settings.atc_button_product.options_with_values -%}
+                                    <fieldset class="js flex{% if block.settings.variant_classes != blank %} {{ block.settings.variant_classes }}{% endif %}">
+                                      <legend class="sr-only">{{ option.name }}</legend>
+                                      {%- for value in option.values -%}
+                                        <div>
+                                          <input type="radio"
+                                            id="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
+                                            class="peer hidden"
+                                            name="{{ option.name }}"
+                                            value="{{ value | escape }}"
+                                            form="{{ product_form_id }}"
+                                            {% if option.selected_value == value %}checked{% endif %}
+                                          >
+                                          <label
+                                            class="button button-xs lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
+                                            for="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
+                                            tabindex="0"
+                                          >
+                                            {{ value }}
+                                          </label>
+                                        </div>
+                                      {%- endfor -%}
+                                    </fieldset>
+                                  {%- endfor -%}
+
+                                  <script type="application/json">
+                                    {{ block.settings.atc_button_product.variants | json }}
+                                  </script>
+                                </variant-radios>
+                              {%- endif -%}
+                            {%- endif -%}
+
+                            <product-form data-cart-type="{{ settings.cart_type }}">
+                              <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
+                                {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
+                                <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
+                              </div>
+
+                              {%- form 'product', block.settings.atc_button_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                                <input type="hidden" name="id" value="{{ block.settings.atc_button_product.selected_or_first_available_variant.id }}" disabled>
+                                <button
+                                  id="{{ product_form_id }}-submit"
+                                  type="submit"
+                                  name="add"
+                                  aria-haspopup="dialog"
+                                  aria-labelledby="{{ product_form_id }}-submit title-{{ block.id }}-{{ block.settings.atc_button_product.id }}"
+                                  aria-live="polite"
+                                  class="button button-tertiary w-full transition flex mt-2 disabled:opacity-50 {% if block.settings.atc_button_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ block.settings.button_classes }}"
+                                  {% if block.settings.atc_button_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                                >
+                                  {%- if block.settings.atc_button_product.selected_or_first_available_variant.available -%}
+                                    {%- if block.settings.is_subscription -%}
+                                      <span>Subscribe</span>
+                                    {%- else -%}
+                                      <span>{{ 'products.product.add_to_cart' | t }}</span>
+                                    {%- endif -%}
+                                    <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
+                                      {% render 'price',
+                                        product: block.settings.atc_button_product,
+                                        show_price_range: true,
+                                        use_variant: true,
+                                        subscription: block.settings.is_subscription
+                                      %}
+                                    </span>
+                                  {%- else -%}
+                                    {{ 'products.product.sold_out' | t }}
+                                  {%- endif -%}
+                                </button>
+                              {%- endform -%}
+                            </product-form>
+                          </div>
                         {%- else -%}
                           <a
                             class="button {{ block.settings.button_classes }}"
@@ -425,6 +511,11 @@
           "label": "Add to cart button"
         },
         {
+          "type": "checkbox",
+          "id": "is_subscription",
+          "label": "Subscription"
+        },
+        {
           "type": "product",
           "id": "atc_button_product",
           "label": "Product to add"
@@ -433,6 +524,22 @@
           "type": "checkbox",
           "id": "show_variants",
           "label": "Show variant selector"
+        },
+        {
+          "type": "select",
+          "id": "variant_picker_type",
+          "label": "Variant picker",
+          "default": "button",
+          "options": [
+            {
+              "value": "button",
+              "label": "Buttons"
+            },
+            {
+              "value": "dropdown",
+              "label": "Dropdown"
+            }
+          ]
         },
         {
           "type": "textarea",
