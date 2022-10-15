@@ -80,7 +80,7 @@
                               data-update-url="false"
                             >
                               {%- for option in block.settings.atc_button_product.options_with_values -%}
-                                <fieldset class="js flex{% if block.settings.variant_classes != blank %}{{ block.settings.variant_classes }}{% endif %}">
+                                <fieldset class="js flex{% if block.settings.variant_classes != blank %} {{ block.settings.variant_classes }}{% endif %}">
                                   <legend class="sr-only">{{ option.name }}</legend>
                                   {%- for value in option.values -%}
                                     <div>
