@@ -7,6 +7,7 @@
     - custom_default_image: {Boolean} Make the secondary image appear first. Default: false (optional)
     - variant_picker_type: {'button' or 'dropdown'} Display mode of variant options, default: 'button' (optional)
     - button_class: {String} Tailwind styling classes (optional)
+    - image_class: {String} Tailwind styling classes (optional)
     - price_class: {String} Tailwind styling classes (optional)
     - badge_class: {String} Tailwind styling classes (optional)
     - hide_badge: {Boolean}
@@ -201,7 +202,7 @@
       <a
         aria-label="{{ card_product.title | escape }}"
         href="{{ card_product.url | default: '#' }}"
-        class="group block bg-wave-100 mb-2"
+        class="group block bg-wave-100 mb-2{% if image_class != blank %} {{ image_class }}{% endif %}"
         tabindex="-1"
       >
         {%- if custom_default_image != nil -%}
