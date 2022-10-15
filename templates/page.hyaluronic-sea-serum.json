@@ -260,15 +260,15 @@
         "96663307-878f-4002-86ca-a8fae0fdca92"
       ],
       "settings": {
-        "section_classes": "container mb-12",
-        "container_classes": "",
+        "section_classes": "container lg:max-w-screen-lg mb-12 pr-0 sm:pr-6",
+        "container_classes": "grid grid-cols-1 sm:grid-cols-3 gap-4",
         "is_slider": true,
         "slider_indicator_count": 3,
-        "slider_breakpoint_limit": "none",
-        "slider_classes": "xs:peek.after-80 xs:perView-1 sm:peek.after-120 sm:perView-1 md:perView-2 md:peek.after-60 lg:perView-2 lg:peek.after-100 xl:perView-3 perView-4 peek.after-128 bound-true",
+        "slider_breakpoint_limit": "sm",
+        "slider_classes": "type-carousel peek.after-80 perView-1 bound-true relative pb-8",
         "show_arrow_nav": false,
         "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
-        "show_dot_nav": false,
+        "show_dot_nav": true,
         "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
