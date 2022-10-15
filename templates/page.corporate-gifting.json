@@ -1,5 +1,42 @@
 {
   "sections": {
+    "af52d554-5167-49d2-b9f6-ff68e5029829": {
+      "type": "page-banner",
+      "blocks": {
+        "template--15591227621559__af52d554-5167-49d2-b9f6-ff68e5029829-1665871798a1182899-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Corporate Gifting",
+            "heading_classes": "tracking-widest font-bold uppercase text-lg lg:text-xl"
+          }
+        },
+        "5fbdbc9d-bae2-4195-864f-b1bdcf87b229": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Looking to gift your employees or clients? Fill out the form below and we’ll be in touch with a tailored proposal!",
+            "paragraph_classes": "font-book tracking-wide"
+          }
+        },
+        "be05e783-f3dd-4663-9b55-d08aa63f1f8e": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "We offer corporate\/company gifting at wholesale pricing. For general brand gifting inquiries, please email <a href=\"mailto:%20partnerships@oseamalibu.com\" style=\"color:#1d4d41; text-decoration:underline;\"> partnerships@oseamalibu.com<\/a>",
+            "paragraph_classes": "mb-2  font-book tracking-wide"
+          }
+        }
+      },
+      "block_order": [
+        "template--15591227621559__af52d554-5167-49d2-b9f6-ff68e5029829-1665871798a1182899-0",
+        "5fbdbc9d-bae2-4195-864f-b1bdcf87b229",
+        "be05e783-f3dd-4663-9b55-d08aa63f1f8e"
+      ],
+      "settings": {
+        "is_text_only": true,
+        "section_classes": "relative bg-seafoam-100 px-6",
+        "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
+        "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
+      }
+    },
     "16627390702dc7a134": {
       "type": "rich-text",
       "blocks": {
@@ -82,10 +119,15 @@
             "paragraph_classes": "font-semibold pb-4 font-medium text-xl",
             "button_label": "Take The Quiz",
             "link": "shopify:\/\/pages\/quiz",
+            "target_blank": false,
             "button_classes": "button button-primary",
             "button_icon": "",
             "is_atc_button": false,
-            "atc_button_product": ""
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": ""
           }
         },
         "f6f52be1-e824-4f3f-9ff9-395bbdfb343d": {
@@ -103,10 +145,15 @@
             "paragraph_classes": "",
             "button_label": "",
             "link": "",
+            "target_blank": false,
             "button_classes": "",
             "button_icon": "",
             "is_atc_button": false,
-            "atc_button_product": ""
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": ""
           }
         }
       },
@@ -129,6 +176,7 @@
     }
   },
   "order": [
+    "af52d554-5167-49d2-b9f6-ff68e5029829",
     "16627390702dc7a134",
     "16633470744a7a7383",
     "16633471229f9c2ba0"
