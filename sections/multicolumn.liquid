@@ -254,6 +254,14 @@
                       button_class: block.settings.button_classes
                     %}
                   {%- endif -%}
+                {%- when 'article' -%}
+                  {% render 'article-card'
+                    blog: block.settings.blog,
+                    article: block.settings.article,
+                    show_image: block.settings.show_image,
+                    show_date: block.settings.show_date,
+                    show_author: block.settings.show_author
+                  %}
                 {%- when 'code' -%}
                   {%- if block.settings.code != "" -%}
                     {{- block.settings.code -}}
@@ -591,6 +599,55 @@
           "type": "textarea",
           "id": "button_classes",
           "label": "Button classes"
+        }
+      ]
+    },
+    {
+      "type": "article",
+      "name": "Article Tile",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "column_classes",
+          "label": "Column classes"
+        },
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Blog"
+        },
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Article"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_image",
+          "label": "Show image",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_article_image",
+          "label": "Custom image"
+        },
+        {
+          "type": "textarea",
+          "id": "image_classes",
+          "label": "Image classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_date",
+          "label": "Show date",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_author",
+          "label": "Show author",
+          "default": true
         }
       ]
     },
