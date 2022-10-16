@@ -2,7 +2,6 @@
     Renders an article card for a given blog with settings to either show the image or not.
 
     Accepts:
-    - blog: {Object} Blog object
     - article: {Object} Article object
     - image_height: {String} The setting changes the height of the article image, if shown
     - show_image: {String} The setting either show the article image or not. If it's not included it will show the image by default
@@ -10,7 +9,7 @@
     - show_author: {String} The setting either show the article author or not. If it's not included it will not show the author by default
 
     Usage:
-    {% render 'article-card' blog: blog, article: article, show_image: section.settings.show_image %}
+    {% render 'article-card', article: article, show_image: section.settings.show_image %}
 {% endcomment %}
 
 <article class="article-card{% if article.image == blank or show_image == false %} article-card--no-image{% endif %}" aria-labelledby="Article-{{ article.id }}">
@@ -61,11 +60,6 @@
           {%- endif -%}
         </p>
       {%- endif -%}
-      <div class="article-card__footer">
-        {%- if article.comments_count > 0 and blog.comments_enabled? -%}
-          <span>{{ 'blogs.article.comments' | t: count: article.comments_count }}</span>
-        {%- endif -%}
-      </div>
     </div>
   </a>
 </article>

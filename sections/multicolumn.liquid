@@ -256,7 +256,6 @@
                   {%- endif -%}
                 {%- when 'article' -%}
                   {% render 'article-card'
-                    blog: block.settings.blog,
                     article: block.settings.article,
                     show_image: block.settings.show_image,
                     show_date: block.settings.show_date,
@@ -610,11 +609,6 @@
           "type": "textarea",
           "id": "column_classes",
           "label": "Column classes"
-        },
-        {
-          "type": "blog",
-          "id": "blog",
-          "label": "Blog"
         },
         {
           "type": "article",
