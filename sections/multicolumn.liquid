@@ -257,7 +257,9 @@
                 {%- when 'article' -%}
                   {% render 'article-card'
                     article: block.settings.article,
+                    card_classes: block.settings.card_classes,
                     show_image: block.settings.show_image,
+                    image_classes: block.settings.image_classes,
                     show_date: block.settings.show_date,
                     show_author: block.settings.show_author
                   %}
@@ -614,6 +616,11 @@
           "type": "article",
           "id": "article",
           "label": "Article"
+        },
+        {
+          "type": "textarea",
+          "id": "card_classes",
+          "label": "Card classes"
         },
         {
           "type": "checkbox",
