@@ -260,8 +260,10 @@
                     card_classes: block.settings.card_classes,
                     show_image: block.settings.show_image,
                     image_classes: block.settings.image_classes,
-                    show_date: block.settings.show_date,
-                    show_author: block.settings.show_author
+                    date_classes: block.settings.date_classes,
+                    author_classes: block.settings.author_classes,
+                    title_classes: block.settings.title_classes,
+                    excerpt_classes: block.settings.excerpt_classes
                   %}
                 {%- when 'code' -%}
                   {%- if block.settings.code != "" -%}
@@ -655,6 +657,12 @@
           "id": "title_classes",
           "label": "Title classes",
           "default": "font-medium"
+        },
+        {
+          "type": "textarea",
+          "id": "excerpt_classes",
+          "label": "Excerpt classes",
+          "default": "text-sm"
         }
       ]
     },
