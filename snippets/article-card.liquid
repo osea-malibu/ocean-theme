@@ -10,14 +10,15 @@
     - image_classes: {String} Tailwind CSS classes
     - title_classes: {String} Tailwind CSS classes
     - excerpt_classes: {String} Tailwind CSS classes
+    - link_classes: {String} Tailwind CSS classes
 
     Usage:
     {% render 'article-card', article: article, show_image: section.settings.show_image %}
 {% endcomment %}
 
 <article class="article-card{% if card_classes != blank %} {{ card_classes }}{% endif %}" aria-labelledby="Article-{{ article.id }}">
-  <a href="{{ article.url }}" class="block">
-    {%- if show_image == true and article.image -%}
+  {%- if show_image == true and article.image -%}
+    <a href="{{ article.url }}" class="block">
       <img
         srcset="{%- if article.image.src.width >= 165 -%}{{ article.image.src | image_url: width: 165 }} 165w,{%- endif -%}
           {%- if article.image.src.width >= 360 -%}{{ article.image.src | image_url: width: 360 }} 360w,{%- endif -%}
@@ -34,7 +35,8 @@
         loading="lazy"
         class="{{ image_classes }}"
       >
-    {%- endif -%}
+    </a>
+  {%- endif -%}
 
     <div class="article-card__info">
       <header class="article-card__header">
@@ -55,6 +57,6 @@
           {%- endif -%}
         </p>
       {%- endif -%}
+      <a class="{{ link_classes }}" href="{{ article.url }}">Read more</a>
     </div>
-  </a>
 </article>

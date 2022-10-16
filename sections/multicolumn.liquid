@@ -263,7 +263,8 @@
                     date_classes: block.settings.date_classes,
                     author_classes: block.settings.author_classes,
                     title_classes: block.settings.title_classes,
-                    excerpt_classes: block.settings.excerpt_classes
+                    excerpt_classes: block.settings.excerpt_classes,
+                    link_classes: block.settings.link_classes
                   %}
                 {%- when 'code' -%}
                   {%- if block.settings.code != "" -%}
@@ -663,7 +664,13 @@
           "type": "textarea",
           "id": "excerpt_classes",
           "label": "Excerpt classes",
-          "default": "text-sm leading-snug"
+          "default": "sr-only text-sm leading-snug"
+        },
+        {
+          "type": "textarea",
+          "id": "link_classes",
+          "label": "Link classes",
+          "default": "button button-tertiary button-xs"
         }
       ]
     },
