@@ -19,7 +19,8 @@
           show_image: true,
           card_classes: 'flex flex-col text-center',
           image_classes: 'mb-3',
-          title_classes: 'font-serif text-3xl tracking-tight text-center mb-2',
+          title_classes: 'font-serif text-3xl tracking-tight mb-2',
+          tag_classes: 'sr-only',
           date_classes: 'sr-only',
           author_classes: 'sr-only',
           excerpt_classes: 'text-sm leading-snug mb-4',
@@ -41,22 +42,41 @@
             assign secondary_featured_articles = secondary_featured_articles | concat: third_article
           endif
         -%}
-        {%- for featured_article in secondary_featured_articles -%}
-          {{ featured_article.title }}
-        {%- endfor -%}
-        <glide-slider
-          class="glide{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %}{% if section.settings.slider_classes != '' %} {{ section.settings.slider_classes }}{% endif %}"
-          id="slider-{{ section.id }}"
-          data-breakpoint-limit="{{ section.settings.slider_breakpoint_limit }}"
-        >
-          <div class="glide__track {{ section.settings.container_classes }}" data-glide-el="track">
-            <ul
-              class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
-              role="presentation"
+        {%- if secondary_featured_articles.size > 0 -%}
+          <div class="mt-6 pt-6 border-t border-seaweed-400">
+            <h2 class=" mb-2 font-serif text-3xl tracking-tight">Featured Journals</h2>
+            <glide-slider
+              class="glide sm:peek.after-120 sm:perView-1 perView-3 peek.after-0 bound-true"
+              id="slider-{{ section.id }}"
+              data-breakpoint-limit="lg"
             >
-            </ul>
+              <div class="glide__track" data-glide-el="track">
+                <ul
+                  class="glide__slides sm:grid sm:grid-cols-3 sm:gap-2 lg:gap-6"
+                  role="presentation"
+                >
+                  {%- for featured_article in secondary_featured_articles -%}
+                    <li>
+                      {%- render 'article-card',
+                        article: featured_article,
+                        show_image: true,
+                        card_classes: 'flex flex-col',
+                        image_classes: 'mb-2',
+                        title_classes: 'text-sm tracking-wide font-medium',
+                        tag_classes: '',
+                        date_classes: 'sr-only',
+                        author_classes: 'sr-only',
+                        excerpt_classes: 'sr-only',
+                        link_classes: 'link font-bold uppercase tracking-widest text-xs',
+                        exceprt_length: 15
+                      -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </glide-slider>
           </div>
-        </glide-slider>
+        {%- endif -%}
       </div>
     </div>
 

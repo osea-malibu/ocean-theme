@@ -264,7 +264,8 @@
                     author_classes: block.settings.author_classes,
                     title_classes: block.settings.title_classes,
                     excerpt_classes: block.settings.excerpt_classes,
-                    link_classes: block.settings.link_classes
+                    link_classes: block.settings.link_classes,
+                    tag_classes: block.settings.tag_classes
                   %}
                 {%- when 'code' -%}
                   {%- if block.settings.code != "" -%}
@@ -645,14 +646,20 @@
         {
           "type": "textarea",
           "id": "date_classes",
-          "label": "Show date",
+          "label": "Date classes",
           "default": "sr-only"
         },
         {
           "type": "textarea",
           "id": "author_classes",
-          "label": "Show author",
+          "label": "Author classes",
           "default": "sr-only"
+        },
+        {
+          "type": "textarea",
+          "id": "tag_classes",
+          "label": "Tag classes",
+          "default": "uppercase text-xs font-bold tracking-widest mb-1"
         },
         {
           "type": "textarea",

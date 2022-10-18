@@ -9,6 +9,7 @@
     - card_classes: {String} Tailwind CSS classes
     - image_classes: {String} Tailwind CSS classes
     - title_classes: {String} Tailwind CSS classes
+    - tag_classes: {String} Tailwind CSS classes
     - excerpt_classes: {String} Tailwind CSS classes
     - link_classes: {String} Tailwind CSS classes
     - exceprt_length: {Number} Length to truncate exceprt to, default: 20
@@ -34,6 +35,9 @@
 
     <div>
       <header>
+        <span class="{{ tag_classes }}">
+          {{ article.tags | join: ', ' }}
+        </span>
         <h2 class="{{ title_classes }}" id="Article-{{ article.id }}">
           {{ article.title | escape }}
         </h2>
