@@ -15,39 +15,41 @@
 <noscript>{{ 'component-pagination.css' | asset_url | stylesheet_tag }}</noscript>
 
 {%- if paginate.parts.size > 0 -%}
-  <div class="pagination-wrapper">
-    <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
-      <ul class="pagination__list list-unstyled" role="list">
-      {%- if paginate.previous -%}
-        <li>
-          <a href="{{ paginate.previous.url }}{{ anchor }}" class="pagination__item pagination__item--next pagination__item-arrow link motion-reduce" aria-label="{{ 'general.pagination.previous' | t }}">
-            {% render 'icon-chevron' %}
-          </a>
-        </li>
-      {%- endif -%}
+  <nav class="pagination mt-6" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+    <ul role="list" class="flex justify-center gap-2">
+      <li>
+        <a
+          class="button button-sm button-white w-8 h-8 pr-1.5 pl-0.5 mr-2{% unless paginate.previous %} opacity-50 cursor-not-allowed{% endunless %}"
+          {% if paginate.previous %} href="{{ paginate.previous.url }}{{ anchor }}"{% endif %}
+          aria-label="{{ 'general.pagination.previous' | t }}"
+        >
+          {% render 'icon-chevron', classes: 'w-6 h-6', stroke_width: 2, aria_hidden: true %}
+        </a>
+      </li>
 
       {%- for part in paginate.parts -%}
         <li>
           {%- if part.is_link -%}
-            <a href="{{ part.url }}{{ anchor }}" class="pagination__item link" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
+            <a class="button button-sm button-tertiary w-8 h-8" href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
           {%- else -%}
             {%- if part.title == paginate.current_page -%}
-              <span class="pagination__item pagination__item--current" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</span>
+              <span class="button button-sm button-primary w-8 h-8" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</span>
             {%- else -%}
-              <span class="pagination__item">{{ part.title }}</span>
+              <span class="button button-sm button-tertiary w-8 h-8">{{ part.title }}</span>
             {%- endif -%}
           {%- endif -%}
         </li>
       {%- endfor -%}
 
-      {%- if paginate.next -%}
-        <li>
-          <a href="{{ paginate.next.url }}{{ anchor }}" class="pagination__item pagination__item--prev pagination__item-arrow link motion-reduce" aria-label="{{ 'general.pagination.next' | t }}" >
-            {%- render 'icon-chevron' -%}
-          </a>
-        </li>
-      {%- endif -%}
-      </ul>
-    </nav>
-  </div>
+      <li>
+        <a
+          class="button button-sm button-white w-8 h-8 pr-0.5 pl-1.5 ml-2{% unless paginate.next %} opacity-50 cursor-not-allowed{% endunless %}"
+          {% if paginate.next %} href="{{ paginate.next.url }}{{ anchor }}"{% endif %}
+          aria-label="{{ 'general.pagination.next' | t }}"
+        >
+          {% render 'icon-chevron', classes: 'w-6 h-6 rotate-180', stroke_width: 2, aria_hidden: true %}
+        </a>
+      </li>
+    </ul>
+  </nav>
 {%- endif -%}

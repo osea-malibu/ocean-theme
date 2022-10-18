@@ -35,6 +35,11 @@
   #HeaderScrollPixel {
     @apply absolute w-px h-px bg-transparent top-24;
   }
+
+  /* RTE content */
+  .rte img {
+    @apply !max-w-full;
+  }
 }
 
 @layer components {
