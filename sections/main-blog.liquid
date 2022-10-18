@@ -120,10 +120,10 @@
       </nav>
     </div>
 
-    <div class="blog-articles container mb-12 lg:max-w-screen-lg grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+    <ul class="blog-articles container mb-12 lg:max-w-screen-lg grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
       {%- for article in blog.articles -%}
         {%- unless current_tags == nil and section.settings.main_featured_article == blank and forloop.first -%}
-          <div class="article">
+          <li class="article">
             {%- render 'article-card',
               article: article,
               show_image: true,
@@ -137,10 +137,28 @@
               excerpt_classes: 'sr-only',
               link_classes: 'link font-bold uppercase tracking-widest text-xs'
             -%}
-          </div>
+            </li>
         {%- endunless -%}
+        {%- if forloop.index == 3 -%}
+          {%- liquid
+            assign brand_articles = '' | split: ''
+            if section.settings.brand_article_one != blank
+              assign first_article = section.settings.brand_article_one | sort
+              assign brand_articles = brand_articles | concat: first_article
+            endif
+            if section.settings.brand_article_two != blank
+              assign second_article = section.settings.brand_article_two | sort
+              assign brand_articles = brand_articles | concat: second_article
+            endif
+          -%}
+          {{ brand_articles }}
+          {%- if brand_articles -%}
+            <li class="bg-sand-100">
+            </li>
+          {%- endif -%}
+        {%- endif -%}
       {%- endfor -%}
-    </div>
+    </ul>
 
     {%- if paginate.pages > 1 -%}
       {%- render 'pagination', paginate: paginate -%}
@@ -184,7 +202,17 @@
     },
     {
       "type": "header",
-      "content": "t:sections.main-blog.settings.header.content"
+      "content": "Brand section"
+    },
+    {
+      "type": "article",
+      "id": "brand_article_one",
+      "label": "Brand article 1"
+    },
+    {
+      "type": "article",
+      "id": "brand_article_two",
+      "label": "Brand article 2"
     },
     {
       "type": "paragraph",
