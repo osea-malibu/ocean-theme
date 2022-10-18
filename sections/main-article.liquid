@@ -1,14 +1,14 @@
-<article class="container" itemscope itemtype="http://schema.org/BlogPosting">
+<article class="container grid grid-cols-1 md:grid-cols-3" itemscope itemtype="http://schema.org/BlogPosting">
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when '@app' -%}
-        <div class="container">
+        <div>
           {% render block %}
         </div>
 
       {%- when 'featured_image'-%}
         {%- if article.image -%}
-          <div class="-mx-6 xs:mx-0" {{ block.shopify_attributes }}>
+          <div class="{{ block.settings.image_classes }}" {{ block.shopify_attributes }}>
             <div itemprop="image">
               <picture class="block relative pt-[80%]">
                 <source
@@ -34,7 +34,7 @@
         {%- endif -%}
 
       {%- when 'title'-%}
-        <header class="bg-shell-200 -mx-6 xs:mx-0 px-6 pt-6 pb-8 text-center" {{ block.shopify_attributes }}>
+        <header class="bg-shell-200 {{ block.settings.header_classes }}" {{ block.shopify_attributes }}>
           <span class="{{ block.settings.tag_classes }}">
             {{ article.tags | join: ', ' }}
           </span>
@@ -46,12 +46,12 @@
         </header>
 
       {%- when 'content'-%}
-        <div class="article-template__content rte" itemprop="articleBody" {{ block.shopify_attributes }}>
+        <div class="rte {{ block.settings.content_classes }}" itemprop="articleBody" {{ block.shopify_attributes }}>
           {{ article.content }}
         </div>
 
       {%- when 'share' -%}
-        <div class="article-template__social-sharing container" {{ block.shopify_attributes }}>
+        <div class="{{ block.settings.share_classes }}" {{ block.shopify_attributes }}>
           <share-button class="share-button" {{ block.shopify_attributes }}>
             <button class="share-button__button hidden">
               {% render 'icon-share' %}
@@ -92,9 +92,9 @@
     {%- endcase -%}
   {%- endfor -%}
 
-  <div class="center">
-    <a href="{{ blog.url }}" class="article-template__link">
-      <span class="icon-wrap">{% render 'icon-arrow' %}</span>
+  <div class="my-6">
+    <a href="{{ blog.url }}" class="button button-secondary button-sm">
+      {% render 'icon-arrow', variant: 'long', classes: 'w-5 h-5 rotate-180 -ml-1.5 mr-1.5', aria_hidden: true, stroke_width: 2 %}
       {{ 'blogs.article.back_to_blog' | t: title: blog.title }}
     </a>
   </div>
@@ -240,7 +240,7 @@
           <input type="submit" class="button" value="{{ 'blogs.article.post' | t }}">
         {% endform %}
       </div>
-  </div>
+    </div>
   {%- endif -%}
 </article>
 
@@ -283,7 +283,7 @@
       "name": {{ shop.name | json }}
     }
   }
-  </script>
+</script>
 
 
 {% schema %}
@@ -297,13 +297,27 @@
     {
       "type": "featured_image",
       "name": "t:sections.main-article.blocks.featured_image.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "image_classes",
+          "label": "Image classes",
+          "default": "-mx-6 xs:mx-0 md:col-span-2"
+        }
+      ]
     },
     {
       "type": "title",
       "name": "t:sections.main-article.blocks.title.name",
       "limit": 1,
       "settings": [
+        {
+          "type": "textarea",
+          "id": "header_classes",
+          "label": "Wrapper classes",
+          "default": "-mx-6 xs:mx-0 px-6 pt-6 pb-8 text-center mb-6"
+        },
         {
           "type": "textarea",
           "id": "date_classes",
@@ -333,7 +347,15 @@
     {
       "type": "content",
       "name": "t:sections.main-article.blocks.content.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "content_classes",
+          "label": "Image classes",
+          "default": "col-span-3"
+        }
+      ]
     },
     {
       "type": "share",
@@ -345,6 +367,12 @@
           "id": "share_label",
           "label": "t:sections.main-article.blocks.share.settings.text.label",
           "default": "Share"
+        },
+        {
+          "type": "textarea",
+          "id": "share_classes",
+          "label": "Share classes",
+          "default": "col-span-3"
         },
         {
           "type": "paragraph",

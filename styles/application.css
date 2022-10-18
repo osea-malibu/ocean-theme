@@ -40,6 +40,19 @@
   .rte img {
     @apply !max-w-full;
   }
+  .rte hr {
+    @apply border-seaweed-400 pt-6 mt-6;
+  }
+  .rte h2 {
+    @apply text-3xl font-serif tracking-tight leading-tight;
+  }
+  .rte h5 {
+    /* this will need to be changed to h3 in many cases */
+    @apply text-lg tracking-wide font-medium leading-tight;
+  }
+  .rte p {
+    @apply mb-4;
+  }
 }
 
 @layer components {
