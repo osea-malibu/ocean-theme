@@ -1,17 +1,36 @@
 {{ 'component-article-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
 
 
 {%- paginate blog.articles by 6 -%}
 
-  <div class="main-blog container">
-    <h1 class="title--primary">{{ blog.title | escape }}</h1>
+  <div class="blog">
+    <h1 class="sr-only">{{ blog.title | escape }}</h1>
+
+    <div class="bg-seafoam-100">
+      {%- liquid
+        if section.settings.main_featured_article == blank
+          assign main_featured_article = blog.articles.first.title
+        else
+          assign main_featured_article = section.settings.main_featured_article
+        endif
+      -%}
+      <div class="container py-6">
+        {%- render 'article-card',
+          article: main_featured_article,
+          show_image: true,
+        %}
+      </div>
+    </div>
 
     <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
       {%- for article in blog.articles -%}
         <div class="blog-articles__article article">
-          {%- render 'article-card', article: article, image_height: section.settings.image_height, show_image: section.settings.show_image, show_date: section.settings.show_date, show_author: section.settings.show_author -%}
+          {%- render 'article-card',
+            article: article,
+            show_image: true,
+            
+          -%}
         </div>
       {%- endfor -%}
     </div>
@@ -29,66 +48,36 @@
   "settings": [
     {
       "type": "header",
+      "content": "Featured articles"
+    },
+    {
+      "type": "article",
+      "id": "main_featured_article",
+      "label": "Main featured article",
+      "info": "This overrides the default (most recent post)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Choose up to 3 posts to feature in header of blog landing page."
+    },
+    {
+      "type": "article",
+      "id": "featured_article_one",
+      "label": "Featured article 1"
+    },
+    {
+      "type": "article",
+      "id": "featured_article_two",
+      "label": "Featured article 2"
+    },
+    {
+      "type": "article",
+      "id": "featured_article_three",
+      "label": "Featured article 3"
+    },
+    {
+      "type": "header",
       "content": "t:sections.main-blog.settings.header.content"
-    },
-    {
-      "type": "select",
-      "id": "layout",
-      "options": [
-        {
-          "value": "grid",
-          "label": "t:sections.main-blog.settings.layout.options__1.label"
-        },
-        {
-          "value": "collage",
-          "label": "t:sections.main-blog.settings.layout.options__2.label"
-        }
-      ],
-      "default": "collage",
-      "label": "t:sections.main-blog.settings.layout.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_image",
-      "default": true,
-      "label": "t:sections.main-blog.settings.show_image.label"
-    },
-    {
-      "type": "select",
-      "id": "image_height",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.main-blog.settings.image_height.options__1.label"
-        },
-        {
-          "value": "small",
-          "label": "t:sections.main-blog.settings.image_height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.main-blog.settings.image_height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.main-blog.settings.image_height.options__4.label"
-        }
-      ],
-      "default": "medium",
-      "label": "t:sections.main-blog.settings.image_height.label",
-      "info": "t:sections.main-blog.settings.image_height.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_date",
-      "default": true,
-      "label": "t:sections.main-blog.settings.show_date.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_author",
-      "default": false,
-      "label": "t:sections.main-blog.settings.show_author.label"
     },
     {
       "type": "paragraph",
