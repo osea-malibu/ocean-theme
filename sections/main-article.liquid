@@ -9,11 +9,8 @@
       {%- when 'featured_image'-%}
         {%- if article.image -%}
           <div class="-mx-6 xs:mx-0" {{ block.shopify_attributes }}>
-            <div class="article-template__hero-{{ block.settings.image_height }} media"
-              itemprop="image"
-              {% if block.settings.image_height == 'adapt' and article.image %} style="padding-bottom: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"{% endif %}
-            >
-              <picture>
+            <div itemprop="image">
+              <picture class="block relative pt-[80%]">
                 <source
                   srcset="{{ article.image | image_url: width: 400 }} 1x, {{ article.image | image_url: width: 800 }} 2x"
                   media="(min-width: 0)"
@@ -29,6 +26,7 @@
                   width="{{ article.image.width }}"
                   height="{{ article.image.height }}"
                   alt="{{ article.image.alt | escape }}"
+                  class="absolute inset-0 object-cover min-w-full min-h-full"
                 >
               </picture>
             </div>
@@ -36,16 +34,15 @@
         {%- endif -%}
 
       {%- when 'title'-%}
-        <header class="container" {{ block.shopify_attributes }}>
-          <h1 class="article-template__title" itemprop="headline">{{ article.title | escape }}</h1>
-          {%- if block.settings.blog_show_date -%}
-            <span itemprop="dateCreated pubdate datePublished">{{ article.published_at | time_tag: format: 'date' }}</span>
-          {%- endif -%}
-          {%- if block.settings.blog_show_author -%}
-            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <span itemprop="name">{{ article.author }}</span>
-            </span>
-          {%- endif -%}
+        <header class="bg-shell-200 -mx-6 xs:mx-0 px-6 pt-6 pb-8 text-center" {{ block.shopify_attributes }}>
+          <span class="{{ block.settings.tag_classes }}">
+            {{ article.tags | join: ', ' }}
+          </span>
+          <h1 class="{{ block.settings.title_classes }}" itemprop="headline">{{ article.title | escape }}</h1>
+          <span class="{{ block.settings.date_classes }}" itemprop="dateCreated pubdate datePublished">{{ article.published_at | time_tag: format: 'date' }}</span>
+          <span class="{{ block.settings.author_classes }}" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">{{ article.author }}</span>
+          </span>
         </header>
 
       {%- when 'content'-%}
@@ -300,34 +297,7 @@
     {
       "type": "featured_image",
       "name": "t:sections.main-article.blocks.featured_image.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "select",
-          "id": "image_height",
-          "options": [
-            {
-              "value": "adapt",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__1.label"
-            },
-            {
-              "value": "small",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__2.label"
-            },
-            {
-              "value": "medium",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__3.label"
-            },
-            {
-              "value": "large",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__4.label"
-            }
-          ],
-          "default": "adapt",
-          "label": "t:sections.main-article.blocks.featured_image.settings.image_height.label",
-          "info": "t:sections.main-article.blocks.featured_image.settings.image_height.info"
-        }
-      ]
+      "limit": 1
     },
     {
       "type": "title",
@@ -335,16 +305,28 @@
       "limit": 1,
       "settings": [
         {
-          "type": "checkbox",
-          "id": "blog_show_date",
-          "default": true,
-          "label": "t:sections.main-article.blocks.title.settings.blog_show_date.label"
+          "type": "textarea",
+          "id": "date_classes",
+          "label": "Date classes",
+          "default": "sr-only"
         },
         {
-          "type": "checkbox",
-          "id": "blog_show_author",
-          "default": false,
-          "label": "t:sections.main-article.blocks.title.settings.blog_show_author.label"
+          "type": "textarea",
+          "id": "author_classes",
+          "label": "Author classes",
+          "default": "sr-only"
+        },
+        {
+          "type": "textarea",
+          "id": "tag_classes",
+          "label": "Tag classes",
+          "default": "block uppercase font-bold tracking-widest mb-3"
+        },
+        {
+          "type": "textarea",
+          "id": "title_classes",
+          "label": "Title classes",
+          "default": "text-4xl font-serif tracking-tight"
         }
       ]
     },
