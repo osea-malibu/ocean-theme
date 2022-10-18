@@ -29,7 +29,16 @@
         {%- liquid
           assign secondary_featured_articles = '' | split: ''
           if section.settings.featured_article_one != blank
-            assign secondary_featured_articles = secondary_featured_articles | concat: section.settings.featured_article_one
+            assign first_article = section.settings.featured_article_one | sort
+            assign secondary_featured_articles = secondary_featured_articles | concat: first_article
+          endif
+          if section.settings.featured_article_two != blank
+            assign second_article = section.settings.featured_article_two | sort
+            assign secondary_featured_articles = secondary_featured_articles | concat: second_article
+          endif
+          if section.settings.featured_article_three != blank
+            assign third_article = section.settings.featured_article_three | sort
+            assign secondary_featured_articles = secondary_featured_articles | concat: third_article
           endif
         -%}
         {%- for featured_article in secondary_featured_articles -%}
