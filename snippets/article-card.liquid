@@ -11,6 +11,7 @@
     - title_classes: {String} Tailwind CSS classes
     - excerpt_classes: {String} Tailwind CSS classes
     - link_classes: {String} Tailwind CSS classes
+    - exceprt_length: {Number} Length to truncate exceprt to, default: 20
 
     Usage:
     {% render 'article-card', article: article, show_image: section.settings.show_image %}
@@ -31,8 +32,8 @@
     </a>
   {%- endif -%}
 
-    <div class="article-card__info">
-      <header class="article-card__header">
+    <div>
+      <header>
         <h2 class="{{ title_classes }}" id="Article-{{ article.id }}">
           {{ article.title | escape }}
         </h2>
@@ -43,10 +44,17 @@
       </header>
       {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
         <p class="{{ excerpt_classes }}">
+          {%- liquid
+            if exceprt_length == blank
+              assign truncate_length = 20
+            else
+              assign truncate_length = exceprt_length
+            endif
+          -%}
           {%- if article.excerpt.size > 0 -%}
-            {{ article.excerpt | strip_html | truncatewords: 20 }}
+            {{ article.excerpt | strip_html | truncatewords: truncate_length }}
           {%- else -%}
-            {{ article.content | strip_html | truncatewords: 20 }}
+            {{ article.content | strip_html | truncatewords: truncate_length }}
           {%- endif -%}
         </p>
       {%- endif -%}

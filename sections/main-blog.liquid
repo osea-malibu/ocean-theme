@@ -1,16 +1,14 @@
-{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
-
 
 {%- paginate blog.articles by 6 -%}
 
   <div class="blog">
     <h1 class="sr-only">{{ blog.title | escape }}</h1>
 
-    <div class="bg-seafoam-100">
+    <div class="bg-seafoam-200 mb-6">
       {%- liquid
         if section.settings.main_featured_article == blank
-          assign main_featured_article = blog.articles.first.title
+          assign main_featured_article = blog.articles.first
         else
           assign main_featured_article = section.settings.main_featured_article
         endif
@@ -19,7 +17,37 @@
         {%- render 'article-card',
           article: main_featured_article,
           show_image: true,
-        %}
+          card_classes: 'flex flex-col text-center',
+          image_classes: 'mb-3',
+          title_classes: 'font-serif text-3xl tracking-tight text-center mb-2',
+          date_classes: 'sr-only',
+          author_classes: 'sr-only',
+          excerpt_classes: 'text-sm leading-snug mb-4',
+          link_classes: 'button button-primary button-sm',
+          exceprt_length: 15
+        -%}
+        {%- liquid
+          assign secondary_featured_articles = '' | split: ''
+          if section.settings.featured_article_one != blank
+            assign secondary_featured_articles = secondary_featured_articles | concat: section.settings.featured_article_one
+          endif
+        -%}
+        {%- for featured_article in secondary_featured_articles -%}
+          {{ featured_article.title }}
+        {%- endfor -%}
+        <glide-slider
+          class="glide{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %}{% if section.settings.slider_classes != '' %} {{ section.settings.slider_classes }}{% endif %}"
+          id="slider-{{ section.id }}"
+          data-breakpoint-limit="{{ section.settings.slider_breakpoint_limit }}"
+        >
+          <div class="glide__track {{ section.settings.container_classes }}" data-glide-el="track">
+            <ul
+              class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
+              role="presentation"
+            >
+            </ul>
+          </div>
+        </glide-slider>
       </div>
     </div>
 
