@@ -1,96 +1,105 @@
-<article class="container grid grid-cols-1 md:grid-cols-3" itemscope itemtype="http://schema.org/BlogPosting">
-  {%- for block in section.blocks -%}
-    {%- case block.type -%}
-      {%- when '@app' -%}
-        <div>
-          {% render block %}
-        </div>
-
-      {%- when 'featured_image'-%}
-        {%- if article.image -%}
-          <div class="{{ block.settings.image_classes }}" {{ block.shopify_attributes }}>
-            <div itemprop="image">
-              <picture class="block relative pt-[80%]">
-                <source
-                  srcset="{{ article.image | image_url: width: 400 }} 1x, {{ article.image | image_url: width: 800 }} 2x"
-                  media="(min-width: 0)"
-                >
-                <source
-                  srcset="{{ article.image | image_url: width: 800 }} 1x, {{ article.image | image_url: width: 1600 }} 2x"
-                  media="(min-width: 800px)"
-                >
-                <img
-                  srcset="{{ article.image | image_url: width: 400 }} 1x, {{ article.image | image_url: width: 800 }} 2x"
-                  src="{{ article.image | image_url: width: 800 }}"
-                  loading="lazy"
-                  width="{{ article.image.width }}"
-                  height="{{ article.image.height }}"
-                  alt="{{ article.image.alt | escape }}"
-                  class="absolute inset-0 object-cover min-w-full min-h-full"
-                >
-              </picture>
-            </div>
+<article class="container lg:max-w-screen-lg" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="md:grid md:grid-cols-5">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when '@app' -%}
+          <div>
+            {% render block %}
           </div>
-        {%- endif -%}
 
-      {%- when 'title'-%}
-        <header class="bg-shell-200 {{ block.settings.header_classes }}" {{ block.shopify_attributes }}>
-          <span class="{{ block.settings.tag_classes }}">
-            {{ article.tags | join: ', ' }}
-          </span>
-          <h1 class="{{ block.settings.title_classes }}" itemprop="headline">{{ article.title | escape }}</h1>
-          <span class="{{ block.settings.date_classes }}" itemprop="dateCreated pubdate datePublished">{{ article.published_at | time_tag: format: 'date' }}</span>
-          <span class="{{ block.settings.author_classes }}" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            <span itemprop="name">{{ article.author }}</span>
-          </span>
-        </header>
+        {%- when 'featured_image'-%}
+          {%- if article.image -%}
+            <div class="{{ block.settings.image_classes }}" {{ block.shopify_attributes }}>
+              <div class="w-full" itemprop="image">
+                <picture class="block relative pt-[80%]">
+                  <source
+                    srcset="{{ article.image | image_url: width: 400 }} 1x, {{ article.image | image_url: width: 800 }} 2x"
+                    media="(min-width: 0)"
+                  >
+                  <source
+                    srcset="{{ article.image | image_url: width: 800 }} 1x, {{ article.image | image_url: width: 1600 }} 2x"
+                    media="(min-width: 800px)"
+                  >
+                  <img
+                    srcset="{{ article.image | image_url: width: 400 }} 1x, {{ article.image | image_url: width: 800 }} 2x"
+                    src="{{ article.image | image_url: width: 800 }}"
+                    loading="lazy"
+                    width="{{ article.image.width }}"
+                    height="{{ article.image.height }}"
+                    alt="{{ article.image.alt | escape }}"
+                    class="absolute inset-0 object-cover min-w-full min-h-full"
+                  >
+                </picture>
+              </div>
+            </div>
+          {%- endif -%}
 
-      {%- when 'content'-%}
-        <div class="rte {{ block.settings.content_classes }}" itemprop="articleBody" {{ block.shopify_attributes }}>
-          {{ article.content }}
-        </div>
+        {%- when 'title'-%}
+          <header class="bg-shell-200 {{ block.settings.header_classes }}" {{ block.shopify_attributes }}>
+            <span class="{{ block.settings.tag_classes }}">
+              {{ article.tags | join: ', ' }}
+            </span>
+            <h1 class="{{ block.settings.title_classes }}" itemprop="headline">{{ article.title | escape }}</h1>
+            <span class="{{ block.settings.date_classes }}" itemprop="dateCreated pubdate datePublished">{{ article.published_at | time_tag: format: 'date' }}</span>
+            <span class="{{ block.settings.author_classes }}" itemprop="author" itemscope itemtype="http://schema.org/Person">
+              <span itemprop="name">{{ article.author }}</span>
+            </span>
+          </header>
 
-      {%- when 'share' -%}
-        <div class="{{ block.settings.share_classes }}" {{ block.shopify_attributes }}>
-          <share-button class="share-button" {{ block.shopify_attributes }}>
-            <button class="share-button__button hidden">
-              {% render 'icon-share' %}
-              {{ block.settings.share_label | escape }}
-            </button>
-            <details id="Details-{{ block.id }}-{{ section.id }}">
-              <summary class="share-button__button">
+        {%- when 'content'-%}
+          <div class="{{ block.settings.content_classes }}">
+            <div class="rte" itemprop="articleBody" {{ block.shopify_attributes }}>
+              {{ article.content }}
+            </div>
+            <aside class="md:w-80 md:shrink-0">
+              <div class="bg-seafoam-100 p-4">
+                <h3 class="font-serif text-2xl tracking-tight text-center">Connect with us</h3>
+              </div>
+            </aside>
+          </div>
+
+        {%- when 'share' -%}
+          <div class="{{ block.settings.share_classes }}" {{ block.shopify_attributes }}>
+            <share-button class="share-button" {{ block.shopify_attributes }}>
+              <button class="share-button__button hidden">
                 {% render 'icon-share' %}
                 {{ block.settings.share_label | escape }}
-              </summary>
-              <div id="Article-share-{{ section.id }}" class="share-button__fallback motion-reduce">
-                <div class="field">
-                  <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status">
-                  </span>
-                  <input type="text"
-                        class="field__input"
-                        id="url"
-                        value="{{ shop.url | append: article.url }}"
-                        placeholder="{{ 'general.share.share_url' | t }}"
-                        onclick="this.select();"
-                        readonly
-                  >
-                  <label class="field__label" for="url">{{ 'general.share.share_url' | t }}</label>
+              </button>
+              <details id="Details-{{ block.id }}-{{ section.id }}">
+                <summary class="share-button__button">
+                  {% render 'icon-share' %}
+                  {{ block.settings.share_label | escape }}
+                </summary>
+                <div id="Article-share-{{ section.id }}" class="share-button__fallback motion-reduce">
+                  <div class="field">
+                    <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status">
+                    </span>
+                    <input type="text"
+                          class="field__input"
+                          id="url"
+                          value="{{ shop.url | append: article.url }}"
+                          placeholder="{{ 'general.share.share_url' | t }}"
+                          onclick="this.select();"
+                          readonly
+                    >
+                    <label class="field__label" for="url">{{ 'general.share.share_url' | t }}</label>
+                  </div>
+                  <button class="share-button__close hidden no-js-hidden">
+                    {% render 'icon-close' %}
+                    <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
+                  </button>
+                  <button class="share-button__copy no-js-hidden">
+                    {% render 'icon-clipboard' %}
+                    <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
+                  </button>
                 </div>
-                <button class="share-button__close hidden no-js-hidden">
-                  {% render 'icon-close' %}
-                  <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
-                </button>
-                <button class="share-button__copy no-js-hidden">
-                  {% render 'icon-clipboard' %}
-                  <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
-                </button>
-              </div>
-            </details>
-          </share-button>
-          <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
-        </div>
-    {%- endcase -%}
-  {%- endfor -%}
+              </details>
+            </share-button>
+            <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
 
   <div class="my-6">
     <a href="{{ blog.url }}" class="button button-secondary button-sm">
@@ -303,7 +312,7 @@
           "type": "textarea",
           "id": "image_classes",
           "label": "Image classes",
-          "default": "-mx-6 xs:mx-0 md:col-span-2"
+          "default": "-mx-6 xs:mx-0 col-span-1 md:col-span-3 md:mb-6 md:order-2"
         }
       ]
     },
@@ -316,7 +325,7 @@
           "type": "textarea",
           "id": "header_classes",
           "label": "Wrapper classes",
-          "default": "-mx-6 xs:mx-0 px-6 pt-6 pb-8 text-center mb-6"
+          "default": "-mx-6 xs:mx-0 px-6 pt-6 pb-8 text-center mb-6 col-span-1 md:col-span-2 md:order-1 md:flex md:flex-col md:items-center md:justify-center"
         },
         {
           "type": "textarea",
@@ -353,7 +362,7 @@
           "type": "textarea",
           "id": "content_classes",
           "label": "Image classes",
-          "default": "col-span-3"
+          "default": "md:col-span-5 md:order-3 flex flex-col md:flex-row md:gap-6"
         }
       ]
     },
@@ -372,7 +381,7 @@
           "type": "textarea",
           "id": "share_classes",
           "label": "Share classes",
-          "default": "col-span-3"
+          "default": "md:col-span-5 md:order-4"
         },
         {
           "type": "paragraph",
