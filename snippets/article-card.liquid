@@ -8,6 +8,7 @@
     - author_classes: {String} Tailwind CSS classes
     - card_classes: {String} Tailwind CSS classes
     - image_classes: {String} Tailwind CSS classes
+    - image_aspect: {String} Percent-based (in X:X format, divide 2nd value by 1st)
     - title_classes: {String} Tailwind CSS classes
     - tag_classes: {String} Tailwind CSS classes
     - excerpt_classes: {String} Tailwind CSS classes
@@ -20,15 +21,18 @@
 
 <article class="article-card{% if card_classes != blank %} {{ card_classes }}{% endif %}" aria-labelledby="Article-{{ article.id }}">
   {%- if show_image == true and article.image -%}
-    <a href="{{ article.url }}" class="block">
+    <a
+      href="{{ article.url }}"
+      class="block{% if image_aspect != blank %} w-full relative {{ image_aspect }}{% endif %}"
+    >
       <img
-        srcset="{{ article.image.src | image_url: width: 200 }} 1x, {{ article.image.src | image_url: width: 400 }} 2x"
-        src="{{ article.image.src | image_url: width: 400 }}"
+        srcset="{{ article.image.src | image_url: width: 300 }} 1x, {{ article.image.src | image_url: width: 600 }} 2x"
+        src="{{ article.image.src | image_url: width: 600 }}"
         alt="{{ article.image.src.alt | escape }}"
         width="{{ article.image.width }}"
         height="{{ article.image.height }}"
         loading="lazy"
-        class="{{ image_classes }}"
+        class="{{ image_classes }}{% if image_aspect != blank %} absolute inset-0 object-cover min-w-full min-h-full{% endif %}"
       >
     </a>
   {%- endif -%}
