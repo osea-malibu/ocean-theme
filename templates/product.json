@@ -93,7 +93,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Skin types & concerns",
-            "content": "",
+            "content": "<p>{{ product.metafields.custom_fields.skin_types | metafield_tag }}<\/p>",
             "tab_classes": "col-span-12",
             "default_open": false
           }
