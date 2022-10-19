@@ -85,7 +85,32 @@
                 <p class="text-center text-md tracking-wide leading-tight mb-4">{{ section.settings.newsletter_paragraph }}</p>
               {%- endif -%}
               {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
-              <tab-controller id="footer-newsletter-tabs">
+              <div>
+                {%- for tab in newsletter_tabs -%}
+                  <input class="peer absolute opacity-0" name="tabs" tabindex="1" type="radio" id="{{ tab }}" checked="checked">
+                  <label
+                    for="{{ tab }}"
+                    class="button button-xs button-secondary px-3 sm:px-4 peer-checked:bg-wave-200"
+                  >
+                    {{ tab }}
+                  </label>
+                  {%- if tab == 'Email' -%}
+                    <div class="klaviyo-email-form relative">
+                      {% render 'icon-email',
+                        aria_hidden: true,
+                        classes: "h-6 w-6 text-seaweed-400 absolute top-2.5 left-3 z-10",
+                        stroke_width: 2
+                      %}
+                      <div class="klaviyo-form-T3gN5Z"></div>
+                    </div>
+                  {%- else -%}
+                    <div class="klaviyo-phone-form relative">
+                      <div class="klaviyo-form-TA8JnT"></div>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+              {% comment %} <tab-controller id="footer-newsletter-tabs">
                 <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex justify-center mb-1 button-group">
                   {%- for tab in newsletter_tabs -%}
                     <li
@@ -102,65 +127,28 @@
 
                 {%- for tab in newsletter_tabs -%}
                   <div id="tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
-                    {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
-                      <input type="hidden" name="contact[tags]" value="newsletter">
-                      <div class="w-full">
-                        <div class="relative">
-                          <input
-                            id="NewsletterForm-{{ tab }}-{{ section.id }}"
-                            type="{%- if tab == 'Email' -%}email{%- else -%}tel{%- endif -%}"
-                            name="contact[{{- tab | downcase -}}]"
-                            class="input w-full px-11"
-                            value="{{ form.email }}"
-                            aria-required="true"
-                            autocorrect="off"
-                            autocapitalize="off"
-                            autocomplete="email"
-                            {% if form.errors %}
-                              autofocus
-                              aria-invalid="true"
-                              aria-describedby="ContactFooter-error"
-                            {% elsif form.posted_successfully? %}
-                              aria-describedby="ContactFooter-success"
-                            {% endif %}
-                            placeholder="{%- if tab == 'Email' -%}Email address{%- else -%}Phone number{%- endif -%}"
-                            required
-                          >
-                          <label class="sr-only" for="NewsletterForm--{{ section.id }}">
-                            {%- if tab == 'Email' -%}Email address{%- else -%}Phone number{%- endif -%}
-                          </label>
-                          <button
-                            type="submit"
-                            class="px-2 absolute right-0 inset-y-0"
-                            name="commit"
-                            id="Subscribe"
-                            aria-label="{{ 'newsletter.button_label' | t }}"
-                          >
-                            <span class="hidden">Sign up</span>
-                            {% render 'icon-arrow', variant: 'long', aria_hidden: true, classes: "h-8 w-8", stroke_width: 1.5 %}
-                          </button>
-                          {%- if tab == 'Email' -%}
-                            {% render 'icon-email', aria_hidden: true, classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3", stroke_width: 2 %}
-                          {%- else -%}
-                            {% render 'icon-phone', aria_hidden: true, classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3", stroke_width: 2 %}
-                          {%- endif -%}
-                        </div>
-                        {%- if form.errors -%}
-                          <small class="newsletter-form__message form__message" id="ContactFooter-error">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</small>
-                        {%- endif -%}
+                    {%- if tab == 'Email' -%}
+                      <div class="klaviyo-email-form relative">
+                        {% render 'icon-email',
+                          aria_hidden: true,
+                          classes: "h-6 w-6 text-seaweed-400 absolute top-2.5 left-3 z-10",
+                          stroke_width: 2
+                        %}
+                        <div class="klaviyo-form-T3gN5Z"></div>
                       </div>
-                      {%- if form.posted_successfully? -%}
-                        <h3
-                          class="newsletter-form__message newsletter-form__message--success form__message"
-                          id="ContactFooter-success"
-                          tabindex="-1"
-                          autofocus
-                        >{% render 'icon-success' %}{{ 'newsletter.success' | t }}</h3>
-                      {%- endif -%}
-                    {%- endform -%}
+                    {%- else -%}
+                      <div class="klaviyo-email-form relative">
+                        {% render 'icon-phone',
+                          aria_hidden: true,
+                          classes: "h-6 w-6 text-seaweed-400 absolute top-2.5 left-3 z-10",
+                          stroke_width: 2
+                        %}
+                        <div class="klaviyo-form-XTGe8m"></div>
+                      </div>
+                    {%- endif -%}
                   </div>
                 {%- endfor -%}
-              </tab-controller>
+              </tab-controller> {% endcomment %}
             </div>
             
             {% comment %} Social media icons {% endcomment %}
