@@ -85,33 +85,8 @@
                 <p class="text-center text-md tracking-wide leading-tight mb-4">{{ section.settings.newsletter_paragraph }}</p>
               {%- endif -%}
               {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
-              <div>
-                {%- for tab in newsletter_tabs -%}
-                  <input class="peer absolute opacity-0" name="tabs" tabindex="1" type="radio" id="{{ tab }}" checked="checked">
-                  <label
-                    for="{{ tab }}"
-                    class="button button-xs button-secondary px-3 sm:px-4 peer-checked:bg-wave-200"
-                  >
-                    {{ tab }}
-                  </label>
-                  {%- if tab == 'Email' -%}
-                    <div class="klaviyo-email-form relative">
-                      {% render 'icon-email',
-                        aria_hidden: true,
-                        classes: "h-6 w-6 text-seaweed-400 absolute top-2.5 left-3 z-10",
-                        stroke_width: 2
-                      %}
-                      <div class="klaviyo-form-T3gN5Z"></div>
-                    </div>
-                  {%- else -%}
-                    <div class="klaviyo-phone-form relative">
-                      <div class="klaviyo-form-TA8JnT"></div>
-                    </div>
-                  {%- endif -%}
-                {%- endfor -%}
-              </div>
-              {% comment %} <tab-controller id="footer-newsletter-tabs">
-                <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex justify-center mb-1 button-group">
+              <tab-controller id="footer-newsletter-tabs">
+                <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex justify-center button-group">
                   {%- for tab in newsletter_tabs -%}
                     <li
                       role="tab"
@@ -128,7 +103,7 @@
                 {%- for tab in newsletter_tabs -%}
                   <div id="tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
                     {%- if tab == 'Email' -%}
-                      <div class="klaviyo-email-form relative">
+                      <div class="klaviyo-email-form relative mt-1">
                         {% render 'icon-email',
                           aria_hidden: true,
                           classes: "h-6 w-6 text-seaweed-400 absolute top-2.5 left-3 z-10",
@@ -137,18 +112,13 @@
                         <div class="klaviyo-form-T3gN5Z"></div>
                       </div>
                     {%- else -%}
-                      <div class="klaviyo-email-form relative">
-                        {% render 'icon-phone',
-                          aria_hidden: true,
-                          classes: "h-6 w-6 text-seaweed-400 absolute top-2.5 left-3 z-10",
-                          stroke_width: 2
-                        %}
-                        <div class="klaviyo-form-XTGe8m"></div>
+                      <div class="klaviyo-phone-form relative mt-[5px] mb-px">
+                        <div class="klaviyo-form-TA8JnT"></div>
                       </div>
                     {%- endif -%}
                   </div>
                 {%- endfor -%}
-              </tab-controller> {% endcomment %}
+              </tab-controller>
             </div>
             
             {% comment %} Social media icons {% endcomment %}
