@@ -6,6 +6,7 @@
     - show_secondary_image_on_hover: {Boolean} Show the secondary image on hover. Default: false (optional)
     - custom_default_image: {Boolean} Make the secondary image appear first. Default: false (optional)
     - variant_picker_type: {'button' or 'dropdown'} Display mode of variant options, default: 'button' (optional)
+    - card_class: {String} Tailwind styling classes (optional)
     - button_class: {String} Tailwind styling classes (optional)
     - image_class: {String} Tailwind styling classes (optional)
     - price_class: {String} Tailwind styling classes (optional)
@@ -18,7 +19,7 @@
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
 {% endcomment %}
 
-<div class="flex flex-col relative grow h-full">
+<div class="{% if card_class == blank %}flex flex-col relative grow h-full{% else %}{{ card_class }}{% endif %}">
   <div class="w-full order-1 grow flex flex-col">
       <div>
         {% comment %} {%- if card_product.metafields.reviews.rating.value != blank -%}

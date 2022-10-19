@@ -100,24 +100,27 @@
                   {%- endfor -%}
                 </ul>
 
-                {%- for tab in newsletter_tabs -%}
-                  <div id="tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
-                    {%- if tab == 'Email' -%}
-                      <div class="klaviyo-email-form relative mt-1">
-                        {% render 'icon-email',
-                          aria_hidden: true,
-                          classes: "h-6 w-6 text-seaweed-400 absolute top-2.5 left-3 z-10",
-                          stroke_width: 2
-                        %}
-                        <div class="klaviyo-form-T3gN5Z"></div>
-                      </div>
-                    {%- else -%}
-                      <div class="klaviyo-phone-form relative mt-[5px] mb-px">
-                        <div class="klaviyo-form-TA8JnT"></div>
-                      </div>
-                    {%- endif -%}
-                  </div>
-                {%- endfor -%}
+                <div class="relative">
+                  {%- for tab in newsletter_tabs -%}
+                    <div class="absolute z-10 inset-0" id="tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                      {%- if tab == 'Email' -%}
+                        <div class="klaviyo-email-form relative">
+                          {% render 'icon-email',
+                            aria_hidden: true,
+                            classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3 z-10",
+                            stroke_width: 2
+                          %}
+                          <div class="klaviyo-form-T3gN5Z"></div>
+                        </div>
+                      {%- else -%}
+                        <div class="klaviyo-phone-form relative">
+                          <div class="klaviyo-form-TA8JnT"></div>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                  <div class="animate-pulse z-0 w-full h-10 bg-wave-400 rounded-sm mt-1.5"></div>
+                </div>
               </tab-controller>
             </div>
             

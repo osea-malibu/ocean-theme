@@ -51,7 +51,13 @@
     @apply text-lg tracking-wide font-medium leading-tight;
   }
   .rte p {
-    @apply mb-4;
+    @apply mb-4 tracking-wide;
+  }
+  .rte ul {
+    @apply pl-7;
+  }
+  .rte li {
+    @apply before:content-['\2022'] before:mr-3 before:inline-block before:-ml-7 before:w-4 before:text-center leading-tight block mb-2;
   }
 }
 

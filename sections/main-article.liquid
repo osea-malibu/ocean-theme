@@ -35,7 +35,8 @@
           {%- endif -%}
 
         {%- when 'title'-%}
-          <header class="bg-shell-200 {{ block.settings.header_classes }}" {{ block.shopify_attributes }}>
+          {%- assign bg_color = article.tags.first | replace: 'How-To', 'bg-wave-200' | replace: 'Ingredients', 'bg-sand-300' | replace: 'Inside-Osea', 'bg-seaweed-200' | replace: 'Products', 'bg-shell-200' | replace: 'Profiles', 'bg-coral-100' | replace: 'Wellness', 'bg-seafoam-200' -%}
+          <header class="{{ bg_color }} {{ block.settings.header_classes }}" {{ block.shopify_attributes }}>
             <span class="{{ block.settings.tag_classes }}">
               {{ article.tags | join: ', ' }}
             </span>
@@ -48,12 +49,76 @@
 
         {%- when 'content'-%}
           <div class="{{ block.settings.content_classes }}">
-            <div class="rte" itemprop="articleBody" {{ block.shopify_attributes }}>
-              {{ article.content }}
+            <div class="rte mb-8" itemprop="articleBody" {{ block.shopify_attributes }}>
+              {%- liquid
+                assign new_content = article.content
+                for product in collections['shop'].products limit: 80
+                  if article.content contains product.handle
+                    assign product_tag = '[product-block product="' | append: product.handle | append: '"]'
+                    capture product_card
+                      render 'product-card', card_product: all_products[product.handle], card_class: 'flex flex-col relative max-w-2xs mx-auto'
+                    endcapture
+                    assign new_content = new_content | replace: product_tag, product_card
+                  endif
+                endfor
+              -%}
+
+              {{ new_content }}
             </div>
             <aside class="md:w-80 md:shrink-0">
-              <div class="bg-seafoam-100 p-4">
-                <h3 class="font-serif text-2xl tracking-tight text-center">Connect with us</h3>
+              <div class="md:sticky top-36">
+                <div class="hidden md:block bg-seafoam-100 px-4 pt-4 pb-6 mb-8">
+                  <h3 class="font-serif text-3xl tracking-tight text-center mb-2">Connect With Us</h3>
+                  {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
+                  <tab-controller id="article-newsletter-tabs">
+                    <ul aria-controls="article-newsletter-tabs" role="tablist" class="flex justify-center button-group">
+                      {%- for tab in newsletter_tabs -%}
+                        <li
+                          role="tab"
+                          aria-controls="tab-{{ forloop.index }}"
+                          tabindex="0"
+                          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                          class="button button-xs button-secondary px-3 sm:px-4{% if forloop.first %} bg-wave-200{% endif %}"
+                        >
+                          {{ tab }}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+
+                    <div class="relative">
+                      {%- for tab in newsletter_tabs -%}
+                        <div class="absolute z-10 inset-0" id="tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                          {%- if tab == 'Email' -%}
+                            <div class="klaviyo-email-form relative">
+                              {% render 'icon-email',
+                                aria_hidden: true,
+                                classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3 z-10",
+                                stroke_width: 2
+                              %}
+                              <div class="klaviyo-form-T3gN5Z"></div>
+                            </div>
+                          {%- else -%}
+                            <div class="klaviyo-phone-form relative">
+                              <div class="klaviyo-form-TA8JnT"></div>
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      {%- endfor -%}
+                      <div class="animate-pulse z-0 w-full h-10 bg-wave-400 rounded-sm mt-1.5"></div>
+                    </div>
+                  </tab-controller>
+                </div>
+
+                {%- if article.metafields.custom.shop_the_story.value != blank -%}
+                  <div class="bg-sand-200 px-6 py-6">
+                    <h3 class="font-serif text-3xl tracking-tight text-center mb-2">Shop the Story</h3>
+                    <div class="grid grid-cols-2 gap-6">
+                      {%- for product in article.metafields.custom.shop_the_story.value -%}
+                        {% render 'product-card-mini', card_product: product, button_class: 'button-secondary' %}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endif -%}
               </div>
             </aside>
           </div>
@@ -101,7 +166,7 @@
     {%- endfor -%}
   </div>
 
-  <div class="my-6">
+  <div class="my-12">
     <a href="{{ blog.url }}" class="button button-secondary button-sm">
       {% render 'icon-arrow', variant: 'long', classes: 'w-5 h-5 rotate-180 -ml-1.5 mr-1.5', aria_hidden: true, stroke_width: 2 %}
       {{ 'blogs.article.back_to_blog' | t: title: blog.title }}

@@ -120,16 +120,24 @@
               </div>
             {%- endif -%}
           {%- when 'collapsible_tab' -%}
-            <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
-              {%- assign tab_id = "Details-{{ block.id }}-{{ section.id }}" -%}
-              {% render 'accordion-item',
-                id: tab_id,
-                summary: block.settings.heading,
-                content: block.settings.content,
-                default_open: block.settings.default_open
-                content_classes: 'max-h-80 overflow-y-auto pr-4'
-              %}
-            </div>
+            {%- if block.settings.content != blank -%}
+              <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
+                {%- capture p_tag_open -%}<p class="mb-4">{%- endcapture -%}
+                {%- capture p_tag_close -%}</p>{%- endcapture -%}
+                {%- capture em_tag_open -%}<em>{%- endcapture -%}
+                {%- capture em_tag_close -%}</em>{%- endcapture -%}
+                {%- capture br_tag -%}<br />{%- endcapture -%}
+                {%- assign content_html = block.settings.content | strip_html | strip | replace: '&lt;p&gt;', p_tag_open | replace: '&lt;/p&gt;', p_tag_close | replace: '&lt;em&gt;', em_tag_open | replace: '&lt;/em&gt;', em_tag_close | replace: '&lt;br /&gt;', br_tag | replace: '&amp;', '&' -%}
+                {%- assign tab_id = "Details-{{ block.id }}-{{ section.id }}" -%}
+                {%- render 'accordion-item',
+                  id: tab_id,
+                  summary: block.settings.heading,
+                  content: content_html,
+                  default_open: block.settings.default_open
+                  content_classes: 'max-h-80 overflow-y-auto pr-4'
+                -%}
+              </div>
+            {%- endif -%}
           {%- when 'quantity_selector' -%}
             <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
               <label class="sr-only" for="Quantity-{{ section.id }}">

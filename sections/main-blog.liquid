@@ -1,11 +1,10 @@
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-
 {%- paginate blog.articles by 11 -%}
 
   <div class="blog mb-6">
     <h1 class="sr-only">{{ blog.title | escape }}</h1>
 
-    <div class="bg-seafoam-200 mb-8">
+    {%- assign category_color = current_tags.first | replace: 'How-To', 'bg-wave-200' | replace: 'Ingredients', 'bg-sand-300' | replace: 'Inside-Osea', 'bg-seaweed-200' | replace: 'Products', 'bg-shell-200' | replace: 'Profiles', 'bg-coral-100' | replace: 'Wellness', 'bg-seafoam-200' -%}
+    <div class="{% if category_color != blank %}{{ category_color }}{% else %}bg-seafoam-200{% endif %} mb-8">
       {%- liquid
         if section.settings.main_featured_article == blank
           assign main_featured_article = blog.articles.first
@@ -112,7 +111,7 @@
             <li>
               <a
                 href="{% if tag == 'All' %}{{ blog.url | append: '#nav' }}{% else %}{{ blog.url | append: '/tagged/' | append: tag_handle | append: '#nav' }}{% endif %}"
-                class="block py-1 px-3 tracking-wide whitespace-nowrap hover:text-seaweed-500 motion-safe:transition-colors{% if current_tags contains tag %} bg-seafoam-200 font-medium{% endif %}{% if current_tags == nil and tag == 'All' %} bg-seafoam-200 font-medium{% endif %}"
+                class="block py-1 px-3 tracking-wide whitespace-nowrap hover:text-seaweed-500 motion-safe:transition-colors{% if current_tags contains tag %} {{ category_color }} font-medium{% endif %}{% if current_tags == nil and tag == 'All' %} bg-seafoam-200 font-medium{% endif %}"
               >
                 {{- tag | replace: '-', ' ' | replace: 'How To', 'How-To' -}}
               </a>
