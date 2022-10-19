@@ -71,11 +71,13 @@
             "upsell_enable_partner": true
           }
         },
-        "78213a32-85e6-43d2-af28-5f9cb45c2e0c": {
-          "type": "description",
+        "b8e1b69d-3824-4a7b-b330-2ce69f67159c": {
+          "type": "collapsible_tab",
           "settings": {
-            "description_classes": "col-span-12 mt-6",
-            "is_collapsible": true
+            "heading": "Product description",
+            "content": "<p>{{ product.metafields.custom_fields.description | metafield_tag }}<\/p>",
+            "tab_classes": "col-span-12",
+            "default_open": false
           }
         },
         "ed9f21c8-82b0-4c60-8717-bc6a7e417428": {
@@ -135,7 +137,7 @@
         "buy_buttons",
         "ab50b385-6599-4b94-8014-2dd6ab1517d4",
         "f8ca449b-3a83-411f-ac44-40e011b825f3",
-        "78213a32-85e6-43d2-af28-5f9cb45c2e0c",
+        "b8e1b69d-3824-4a7b-b330-2ce69f67159c",
         "ed9f21c8-82b0-4c60-8717-bc6a7e417428",
         "831925fc-94e3-4711-a5f3-84a1ed980d42",
         "1d1eb74a-bad3-4c59-84b1-94797c19dd10",
