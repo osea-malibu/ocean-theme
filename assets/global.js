@@ -489,6 +489,7 @@ class VariantSelects extends HTMLElement {
       this.toggleAddButton(true, "", true);
       this.setUnavailable();
     } else {
+      this.updateSubscription();
       this.updateMedia();
       this.updateURL();
       this.updateVariantInput();
@@ -561,6 +562,23 @@ class VariantSelects extends HTMLElement {
 
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
+  }
+
+  updateSubscription() {
+    let isTravelSized = false;
+    if (["dayglow-face-oil", "essential-hydrating-oil-1"].includes(this.currentVariant.handle)) {
+      isTravelSized = this.variant.title === "0.34 oz";
+    } else {
+      isTravelSized = ["1.7 oz", "1 oz", "0.6 oz"].includes(this.currentVariant.title);
+    }
+
+    if (isTravelSized || this.currentVariant.sku === "UAO-1" || this.currentVariant.sku === "UAO-H22") {
+      document.querySelector("subscription-radios").classList.add("h-0");
+      document.querySelector("subscription-radios").classList.remove("h-28");
+    } else {
+      document.querySelector("subscription-radios").classList.remove("h-0");
+      document.querySelector("subscription-radios").classList.add("h-28");
+    }
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {

@@ -52,15 +52,17 @@
             <div class="rte mb-8" itemprop="articleBody" {{ block.shopify_attributes }}>
               {%- liquid
                 assign new_content = article.content
-                for product in collections['shop'].products limit: 80
-                  if article.content contains product.handle
-                    assign product_tag = '[product-block product="' | append: product.handle | append: '"]'
-                    capture product_card
-                      render 'product-card', card_product: all_products[product.handle], card_class: 'flex flex-col relative max-w-2xs mx-auto'
-                    endcapture
-                    assign new_content = new_content | replace: product_tag, product_card
-                  endif
-                endfor
+                paginate collections['shop'].products by 50
+                  for product in collections['shop'].products
+                    if article.content contains product.handle
+                      assign product_tag = '[product-block product="' | append: product.handle | append: '"]'
+                      capture product_card
+                        render 'product-card', card_product: all_products[product.handle], card_class: 'flex flex-col relative max-w-2xs mx-auto'
+                      endcapture
+                      assign new_content = new_content | replace: product_tag, product_card
+                    endif
+                  endfor
+                endpaginate
               -%}
 
               {{ new_content }}

@@ -148,7 +148,7 @@
                   <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
                   {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
-                <input class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
+                <input class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center "
                     type="number"
                     name="quantity"
                     id="Quantity-{{ section.id }}"
@@ -179,7 +179,7 @@
                           {% if option.selected_value == value %}checked{% endif %}
                         >
                         <label
-                          class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2"
+                          class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2{% if value == '9.6 oz Holiday' %} tracking-wide{% endif %}"
                           for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                         >
                           {{ value }}
@@ -216,16 +216,29 @@
               </div>
             </noscript>
           {%- when 'subscription_picker' -%}
+            {%- liquid
+              assign hide_subscription = false
+              if product.handle == 'dayglow-face-oil' or product.handle == 'essential-hydrating-oil-1'
+                if product.selected_or_first_available_variant.title == '0.34oz'
+                  assign hide_subscription = true
+                endif
+              else
+                assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 9.6 oz Holiday' | split: ', '
+                if travel_sizes contains product.selected_or_first_available_variant.title
+                  assign hide_subscription = true
+                endif
+              endif
+            -%}
             {%- unless product.selling_plan_groups.size == 0 -%}
               {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
               <subscription-radios
-                class="subscription {{ block.settings.subscription_classes }}"
+                class="subscription transition-height overflow-hidden {{ block.settings.subscription_classes }}{% if hide_subscription %} h-0{% endif %}"
                 data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
               >
                 <fieldset>
                   <legend class="sr-only">Purchase options</legend>
                   {%- for option in purchase_options -%}
-                    <label class="relative block w-full pl-9 2xs:pl-10 py-3 pr-2 2xs:pr-3 xs:pr-4 motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200{% else %}bg-white{% endif %}">
+                    <label class="relative block w-full pl-9 2xs:pl-10 py-3 pr-2 2xs:pr-3 xs:pr-4 motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200{% else %}bg-white{% endif %}{% if forloop.last %} mb-4{% endif %}">
                       <span class="flex justify-between">
                         <span class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</span>
                         {%- if option == 'onetime' -%}

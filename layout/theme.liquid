@@ -1,43 +1,61 @@
 <!doctype html>
-  <html class="no-js" lang="{{ request.locale.iso_code }}">
-    <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta name="theme-color" content="">
-      <link rel="canonical" href="{{ canonical_url }}">
-      <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
-      {%- if settings.favicon != blank -%}
-        <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-      {%- endif -%}
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
 
-      <title>
-        {{ page_title }}
-        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-      </title>
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
 
-      {% if page_description %}
-        <meta name="description" content="{{ page_description | escape }}">
-      {% endif %}
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
 
-      {% render 'meta-tags' %}
+    {% render 'meta-tags' %}
 
-      <script src="{{ 'slider.js' | asset_url }}" defer></script>
-      <script src="{{ 'global.js' | asset_url }}" defer></script>
-      
+    <script src="{{ 'slider.js' | asset_url }}" defer></script>
+    <script src="{{ 'global.js' | asset_url }}" defer></script>
+    
+    {% if template contains 'product' or template contains 'login' %}
       {{ content_for_header }}
+    {% else %}
+      {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' }}
+    {% endif %}
 
-      {% style %}
-        {% render 'font-face' %}
-      {% endstyle %}
+    {% style %}
+      {% render 'font-face' %}
+    {% endstyle %}
 
-      {{ 'application.css' | asset_url | stylesheet_tag }}
-      {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'application.css' | asset_url | stylesheet_tag }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
 
-      <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+    
+    <!--Gorgias Chat Widget Start-->
+    <script id="gorgias-chat-widget-install-v2" src="https://config.gorgias.chat/gorgias-chat-bundle-loader.js?applicationId=17101"></script>
+    <script>
+      GorgiasChat.init().then(function () {
+          GorgiasChat.hidePoweredBy(true)
+          GorgiasChat.setCustomBusinessHours({
+              timezone: "America/Los_Angeles",
+              businessHours: [
+                  { days: [1, 2, 3, 4, 5], fromTime: "08:00", toTime: "17:00" }
+              ]
+          })
+      });
+    </script>
   </head>
 
   <body class="antialiased text-seaweed-700">
