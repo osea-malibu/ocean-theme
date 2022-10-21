@@ -3,13 +3,22 @@
     <h1 class="text-center font-serif text-4xl tracking-tight mb-6">
       {{- 'customer.register.title' | t -}}
     </h1>
+    <div class="flex mb-6 gap-4 tracking-wide">
+      <a  href="{{ routes.account_login_url }}" aria-label="You are on sign in tab" class="flex-1 button button-sm button-white">
+        {{ 'customer.login_page.sign_in' | t }}
+      </a>
+
+      <a aria-label="Go to create account tab" href="#" class="flex-1 button button-sm button-tertiary bg-wave-200 border-wave-200">
+        {{ 'customer.login_page.create_account' | t }}
+      </a>
+    </div>
     {%- form 'create_customer', novalidate: 'novalidate' -%}
       {%- if form.errors -%}
         <h2 class="flex text-coral-800 font-medium tracking-wide leading-tight gap-2 mb-4" tabindex="-1" autofocus>
           {%- render 'icon-error-circle', classes: 'w-5 h-5 shrink-0', stroke_width: 2, aria_hidden: true -%}
           {{- 'templates.contact.form.error_heading' | t -}}
         </h2>
-        <ul class="sr-only text-coral-800 tracking-wide mb-4 pl-7"> 
+        <ul class="text-coral-800 tracking-wide mb-4 text-sm"> 
           {%- for field in form.errors -%}
             <li>
               {%- if field == 'form' -%}
