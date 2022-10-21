@@ -10,6 +10,7 @@
     <div id="events" class="relative py-6">
       {%- for block in section.blocks -%}
         <div class="
+          {{ block.settings.card_classes }}
           mx-6 bg-white p-4 mb-8 sm:w-[calc(50%-1.5rem)] sm:mx-0 sm:even:ml-auto group
           before:absolute before:-left-px sm:before:left-1/2 before:-top-0.5 before:-bottom-10 before:w-0.5 before:bg-seaweed-400 sm:before:-ml-px
         ">
@@ -68,6 +69,11 @@
       "name": "Event",
       "type": "event",
       "settings": [
+        {
+          "id": "card_classes",
+          "label": "Card classes",
+          "type": "textarea"
+        },
         {
           "content": "Image settings",
           "type": "header"

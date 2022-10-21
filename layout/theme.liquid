@@ -28,7 +28,13 @@
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.js' | asset_url }}" defer></script>
     
-    {{ content_for_header }}
+    {% if template contains 'product' or template contains 'login' %}
+      {{ content_for_header }}
+    {% else %}
+    {% comment %}theme-check-disable ContentForHeaderModification{% endcomment %}
+      {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' }}
+    {% comment %}theme-check-enable ContentForHeaderModification{% endcomment %}
+    {% endif %}
 
     {% style %}
       {% render 'font-face' %}
@@ -40,8 +46,8 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
     
     <!--Gorgias Chat Widget Start-->
-    <script id="gorgias-chat-widget-install-v2" src="https://config.gorgias.chat/gorgias-chat-bundle-loader.js?applicationId=17101"></script>
-    <script>
+    <script id="gorgias-chat-widget-install-v2" src="{{ 'gorgias.js' | asset_url }}" async></script>
+    <script async>
       GorgiasChat.init().then(function () {
           GorgiasChat.hidePoweredBy(true)
           GorgiasChat.setCustomBusinessHours({

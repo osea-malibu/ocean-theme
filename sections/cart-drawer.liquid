@@ -430,7 +430,7 @@
               <h3 class="tracking-wide font-medium text-sm mb-1">Select up to 3 free samples</h3>
               <div class="overflow-x-auto pb-3">
                 <ul class="grid gap-2" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
-                  {%- for sample in settings.cart_samples_collection.products limit: 5 -%}
+                  {%- for sample in settings.cart_samples_collection.products limit: 6 -%}
                     {%- if sample.available and sample.price == 0 -%}
                       {%- unless cart_ids contains sample.id -%}
                         {% render 'product-card-mini',
@@ -462,7 +462,7 @@
           </cart-recommendations>
         </div>
 
-        <div class="bg-seafoam-200 flex-shrink-0 px-6 py-4">
+        <div class="bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-4">
           <div class="max-w-md mx-auto">
             {%- if settings.show_cart_note -%}
               <details id="Details-CartDrawer">
@@ -524,7 +524,7 @@
               </button>
             </div>
 
-            <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline">
+            <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
               {%- if settings.cart_disclaimer != blank -%}
                 {{ settings.cart_disclaimer }}
               {%- endif -%}
