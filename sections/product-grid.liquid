@@ -7,7 +7,6 @@
         section_id: section.id
         button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 xl:px-6',
         badge_class: 'scale-[0.8] sm:scale-100 origin-top-left',
-        image_class: section.settings.card_image_classes,
         subscription: section.settings.is_subscription,
         variant_picker_type: section.settings.variant_picker_type
       %}
@@ -42,11 +41,6 @@
       "id": "is_subscription",
       "label": "Subscription card",
       "default": false
-    },
-    {
-      "type": "textarea",
-      "id": "card_image_classes",
-      "label": "Product card image classes"
     },
     {
       "type": "select",
