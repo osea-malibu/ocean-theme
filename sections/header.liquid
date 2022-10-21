@@ -378,11 +378,11 @@
               {%- for childlink in link.links -%}
                 {%- if childlink.links != blank -%}
                   <li class="grow">
-                    <h2 class="font-serif text-3xl tracking-tight mb-1">{{ childlink.title | escape }}</h2>
+                    <h2 class="tracking-wide font-medium text-lg leading-none mb-2">{{ childlink.title | escape }}</h2>
                     <ul role="list">
                       {%- for grandchildlink in childlink.links -%}
                         <li>
-                          <a href="{{ grandchildlink.url }}" class="block text-lg px-3 py-1 -ml-3 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors"{% if childlink.current %} aria-current="page"{% endif %}>{{ grandchildlink.title | escape }}</a>
+                          <a href="{{ grandchildlink.url }}" class="block px-3 py-1 -ml-3 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors"{% if childlink.current %} aria-current="page"{% endif %}>{{ grandchildlink.title | escape }}</a>
                         </li>
                       {%- endfor -%}
                     </ul>
