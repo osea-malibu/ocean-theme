@@ -16,25 +16,15 @@
         <ul class="glide__slides">
           {%- for media in product.media limit: section.settings.gallery_limit -%}
             <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
-              <picture>
-                <source
-                  srcset="{{ media | image_url: width: 600 }} 1x, {{ media | image_url: width: 1200 }} 2x"
-                  media="(min-width: 640px)"
-                >
-                <source
-                  srcset="{{ media | image_url: width: 294 }} 1x, {{ media | image_url: width: 588 }} 2x"
-                  media="(min-width: 0px)"
-                >
-                <img
-                  id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
-                  srcset="{{ media | image_url: width: 294 }} 1x, {{ media | image_url: width: 588 }} 2x"
-                  src="{{ media | image_url: width: 588 }}"
-                  loading="lazy"
-                  alt="{{ media.alt | escape }}"
-                  width="{{ media.width }}"
-                  height="{{ media.width | divided_by: media.aspect_ratio }}"
-                >
-              </picture>
+              <img
+                id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
+                srcset="{{ media | image_url: width: 294 }} 1x, {{ media | image_url: width: 588 }} 2x"
+                src="{{ media | image_url: width: 588 }}"
+                loading="lazy"
+                alt="{{ media.alt | escape }}"
+                width="{{ media.width }}"
+                height="{{ media.width | divided_by: media.aspect_ratio }}"
+              >
             </li>
           {%- endfor -%}
         </ul>

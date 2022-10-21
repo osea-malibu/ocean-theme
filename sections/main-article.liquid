@@ -1,3 +1,4 @@
+{% comment %}theme-check-disable PaginationSize{% endcomment %}
 <article class="container lg:max-w-screen-lg" itemscope itemtype="http://schema.org/BlogPosting">
   <div class="md:grid md:grid-cols-5">
     {%- for block in section.blocks -%}
@@ -52,7 +53,7 @@
             <div class="rte mb-8" itemprop="articleBody" {{ block.shopify_attributes }}>
               {%- liquid
                 assign new_content = article.content
-                paginate collections['shop'].products by 50
+                paginate collections['shop'].products by 80
                   for product in collections['shop'].products
                     if article.content contains product.handle
                       assign product_tag = '[product-block product="' | append: product.handle | append: '"]'

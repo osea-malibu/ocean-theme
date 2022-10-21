@@ -489,7 +489,9 @@ class VariantSelects extends HTMLElement {
       this.toggleAddButton(true, "", true);
       this.setUnavailable();
     } else {
-      this.updateSubscription();
+      if (window.location.pathname.includes("/products/")) {
+        this.updateSubscription();
+      }
       this.updateMedia();
       this.updateURL();
       this.updateVariantInput();
@@ -518,7 +520,7 @@ class VariantSelects extends HTMLElement {
       // change first image in product page image gallery
       const variantImageEl = document.querySelector("#Product-VariantImage");
       const newImageSrc = this.currentVariant.featured_image.src;
-      variantImageEl.srcset = `${newImageSrc}&width=600 1x, ${newImageSrc}&width=1200 2x`;
+      variantImageEl.srcset = `${newImageSrc}&width=294 1x, ${newImageSrc}&width=588 2x`;
       variantImageEl.src = newImageSrc;
     } else {
       // change image in product card

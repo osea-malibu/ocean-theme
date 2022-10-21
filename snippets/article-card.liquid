@@ -4,6 +4,7 @@
     Accepts:
     - article: {Object} Article object
     - show_image: {String} The setting either show the article image or not. If it's not included it will show the image by default
+    - large_image: {Boolean} Show a larger image (for main featured article)
     - date_classes: {String} Tailwind CSS classes
     - author_classes: {String} Tailwind CSS classes
     - card_classes: {String} Tailwind CSS classes
@@ -25,9 +26,18 @@
       href="{{ article.url }}"
       class="cursor-pointer hover:opacity-80 motion-safe:transition-opacity block{% if image_aspect != blank %} w-full relative {{ image_aspect }}{% endif %}"
     >
+      {%- liquid
+        if large_image
+          assign image_2x_size = 1200
+          assign image_1x_size = 600
+        else
+          assign image_2x_size = 600
+          assign image_1x_size = 300
+        endif
+      -%}
       <img
-        srcset="{{ article.image.src | image_url: width: 300 }} 1x, {{ article.image.src | image_url: width: 600 }} 2x"
-        src="{{ article.image.src | image_url: width: 600 }}"
+        srcset="{{ article.image.src | image_url: width: image_1x_size }} 1x, {{ article.image.src | image_url: width: image_2x_size }} 2x"
+        src="{{ article.image.src | image_url: width: image_2x_size }}"
         alt="{{ article.image.src.alt | escape }}"
         width="{{ article.image.width }}"
         height="{{ article.image.height }}"
