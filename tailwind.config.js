@@ -204,12 +204,13 @@ module.exports = {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
       addVariant("li", "& > li");
+      addVariant("td", "& > td");
+      addVariant("th", "& > th");
+      addVariant("h1", "& h1");
       addVariant("a", "& a");
       addVariant("b", "& b");
       addVariant("i", "& i");
       addVariant("p", "& p");
-      addVariant("td", "& > td");
-      addVariant("th", "& > th");
     },
     // add backface classes
     plugin(function ({ addUtilities }) {
