@@ -26,10 +26,15 @@
             "paragraph_classes": "",
             "button_label": "View products",
             "link": "#shop",
+            "target_blank": false,
             "button_classes": "button-link button-xs bg-white\/50 gap-1 pr-2 border-none underline flex-col sm:hidden",
             "button_icon": "<svg class=\"h-4 w-4\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"><\/line><polyline points=\"19 12 12 19 5 12\"><\/polyline><\/svg>",
             "is_atc_button": false,
-            "atc_button_product": ""
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": ""
           }
         },
         "db577709-6d94-4f98-9662-fee3c82a589c": {
@@ -47,10 +52,15 @@
             "paragraph_classes": "",
             "button_label": "",
             "link": "",
+            "target_blank": false,
             "button_classes": "",
             "button_icon": "",
             "is_atc_button": false,
-            "atc_button_product": ""
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": ""
           }
         }
       },
@@ -230,6 +240,15 @@
             "content": "While we do our best to keep every product in stock, there may be instances where we run out of inventory. In these cases, we'll notify you ahead of time to let you know that your upcoming delivery is on hold. You will not be charged until we are ready to ship your product.",
             "content_classes": "pb-6"
           }
+        },
+        "9a2a0425-fb8e-4425-806b-3c42519d039c": {
+          "type": "item",
+          "settings": {
+            "summary": "What is the cancelation policy on my subscription?",
+            "summary_classes": "py-3",
+            "content": "You can cancel your subscription at any time before your next order ships, as follows:\n<br>\n\nii) By reaching out to customer support via chat\/email\/telephone; OR\n<br>\niii) By accessing your subscription account on the OSEA website and cancelling in your account.",
+            "content_classes": "pb-6"
+          }
         }
       },
       "block_order": [
@@ -241,7 +260,8 @@
         "ee6739d1-2354-49e0-96a1-4f33fdae18ef",
         "8b99e34d-bf7c-431f-98d4-8f706a681372",
         "3b4df8e1-56fe-4f18-96b2-3721b9c8f502",
-        "9f89f02e-721e-485e-98c5-8a2822d2c33e"
+        "9f89f02e-721e-485e-98c5-8a2822d2c33e",
+        "9a2a0425-fb8e-4425-806b-3c42519d039c"
       ],
       "settings": {
         "section_classes": "container lg:max-w-screen-lg mb-12",
