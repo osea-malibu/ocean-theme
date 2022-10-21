@@ -48,7 +48,7 @@
           </div>
         {%- when 'button' -%}
           {%- if block.settings.button_label != blank -%}
-            <a{% if block.settings.button_link == blank %} role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link }}"{% endif %} class="button {{ block.settings.button_classes }}" {{ block.shopify_attributes }}>{{ block.settings.button_label | escape }}</a>
+            <a{% if block.settings.button_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ block.settings.button_link }}"{% endif %} class="button {{ block.settings.button_classes }}" {{ block.shopify_attributes }}>{{ block.settings.button_label | escape }}</a>
           {%- endif -%}
       {%- endcase -%}
     {%- endfor -%}
