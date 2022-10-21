@@ -69,9 +69,7 @@
               {%- render 'price', product: product, use_variant: true -%}
             </div>
           {%- when 'rating' -%}
-            {%- if product.metafields.reviews.rating.value != blank -%}
-              {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
-            {%- endif -%}
+            {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
           {%- when 'benefits' -%}
             {%- if product.metafields.custom.benefits.value.size > 0 -%}
               <div class="{{ block.settings.benefits_classes }}">
