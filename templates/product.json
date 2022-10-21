@@ -77,7 +77,8 @@
             "heading": "Product description",
             "content": "<p>{{ product.metafields.custom_fields.description | metafield_tag }}<\/p>",
             "tab_classes": "col-span-12 mt-6",
-            "default_open": false
+            "default_open": false,
+            "namespace": "custom_fields.description"
           }
         },
         "ed9f21c8-82b0-4c60-8717-bc6a7e417428": {
@@ -86,7 +87,8 @@
             "heading": "Ingredients",
             "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}<\/p>",
             "tab_classes": "col-span-12",
-            "default_open": false
+            "default_open": false,
+            "namespace": "custom_fields.ingredients"
           }
         },
         "831925fc-94e3-4711-a5f3-84a1ed980d42": {
@@ -95,7 +97,8 @@
             "heading": "Skin types & concerns",
             "content": "<p>{{ product.metafields.custom_fields.skin_types | metafield_tag }}<\/p>",
             "tab_classes": "col-span-12",
-            "default_open": false
+            "default_open": false,
+            "namespace": "custom_fields.skin_types"
           }
         },
         "1d1eb74a-bad3-4c59-84b1-94797c19dd10": {
@@ -104,7 +107,8 @@
             "heading": "How to use",
             "content": "<p>{{ product.metafields.custom_fields.how_it_works | metafield_tag }}<\/p>",
             "tab_classes": "col-span-12",
-            "default_open": false
+            "default_open": false,
+            "namespace": "custom_fields.how_it_works"
           }
         },
         "40abb365-da00-4d8c-a3a8-4c6aa168fca5": {
@@ -113,7 +117,8 @@
             "heading": "Clinical & consumer results",
             "content": "<p>{{ product.metafields.custom_fields.clinical_consumer_results | metafield_tag }}<\/p>",
             "tab_classes": "col-span-12",
-            "default_open": false
+            "default_open": false,
+            "namespace": "custom_fields.clinical_consumer_results"
           }
         },
         "2be71f88-a851-442c-a3db-86272956d562": {
@@ -122,7 +127,8 @@
             "heading": "Scent profile",
             "content": "<p>{{ product.metafields.custom.scent_profile | metafield_tag }}<\/p>",
             "tab_classes": "col-span-12",
-            "default_open": false
+            "default_open": false,
+            "namespace": "custom.scent_profile"
           }
         }
       },
