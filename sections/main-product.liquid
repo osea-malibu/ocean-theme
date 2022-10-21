@@ -110,17 +110,11 @@
           {%- when 'collapsible_tab' -%}
             {%- if block.settings.content != blank -%}
               <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
-                {%- capture p_tag_open -%}<p class="mb-4">{%- endcapture -%}
-                {%- capture p_tag_close -%}</p>{%- endcapture -%}
-                {%- capture em_tag_open -%}<em>{%- endcapture -%}
-                {%- capture em_tag_close -%}</em>{%- endcapture -%}
-                {%- capture br_tag -%}<br />{%- endcapture -%}
-                {%- assign content_html = block.settings.content | strip_html | strip | replace: '&lt;p&gt;', p_tag_open | replace: '&lt;/p&gt;', p_tag_close | replace: '&lt;em&gt;', em_tag_open | replace: '&lt;/em&gt;', em_tag_close | replace: '&lt;br /&gt;', br_tag | replace: '&amp;', '&' -%}
                 {%- assign tab_id = "Details-{{ block.id }}-{{ section.id }}" -%}
                 {%- render 'accordion-item',
                   id: tab_id,
                   summary: block.settings.heading,
-                  content: content_html,
+                  content: block.settings.content,
                   default_open: block.settings.default_open
                   content_classes: 'max-h-80 overflow-y-auto pr-4'
                 -%}
@@ -571,6 +565,41 @@
           "type": "checkbox",
           "id": "default_open",
           "label": "Open by default"
+        },
+        {
+          "type": "paragraph",
+          "content": "The following is a temporary workaround for a known bug in shopify with rendering HTML in a multi-line input."
+        },
+        {
+          "type": "select",
+          "id": "namespace",
+          "label": "Tab content",
+          "options": [
+            {
+              "label": "Long description",
+              "value": "custom_fields.description"
+            },
+            {
+              "label": "Ingredients",
+              "value": "custom_fields.ingredients"
+            },
+            {
+              "label": "Skin types & concerns",
+              "value": "custom_fields.skin_types"
+            },
+            {
+              "label": "How to use",
+              "value": "custom_fields.how_it_works"
+            },
+            {
+              "label": "Clinical & consumer results",
+              "value": "custom_fields.clinical_consumer_results"
+            },
+            {
+              "label": "Scent profile",
+              "value": "custom.scent_profile"
+            }
+          ]
         }
       ]
     },
