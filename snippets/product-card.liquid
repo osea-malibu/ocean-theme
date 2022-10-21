@@ -65,23 +65,23 @@
                   for="{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
                   tabindex="0"
                 >
-                  {{ value.name | replace: 'Delivery every ', '' }}
+                  {{ value.name | replace: 'Deliver every ', '' }}
               </div>
             {%- endfor -%}
           </fieldset>
         {%- else -%}
           <div class="relative block mt-0.5 tracking-wide">
-            <label class="absolute top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
+            <label class="absolute top-px left-2 xs:left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
               Deliver every:
             </label>
             <select id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-              class="block input input-xs w-full pl-24"
+              class="block input input-xs w-full pl-[92px] xs:pl-24 !pr-4 xs:!pr-8 bg-right xs:bg-unset"
               name="selling_plan"
               form="{{ product_form_id }}"
             >
               {%- for value in card_product.selling_plan_groups[0].selling_plans -%}
                 <option value="{{ value.id | escape }}" {% if option.selected_value == value.id %}selected="selected"{% endif %}>
-                  {{ value.name | replace: 'Delivery every ', '' }}
+                  {{ value.name | replace: 'Deliver every ', '' }}
                 </option>
               {%- endfor -%}
             </select>
