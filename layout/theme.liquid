@@ -28,11 +28,7 @@
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.js' | asset_url }}" defer></script>
     
-    {% if template contains 'product' or template contains 'login' %}
       {{ content_for_header }}
-    {% else %}
-      {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' }}
-    {% endif %}
 
     {% style %}
       {% render 'font-face' %}
@@ -73,7 +69,6 @@
           GorgiasChat.updateSSPTexts(sspDict)
       });
     </script>
-    <script async="" id="cfl561scr" src="//embed.cartfulsolutions.com/osea-malibu-quiz/recommendation.min.js"></script>
   </head>
 
   <body class="antialiased text-seaweed-700">
