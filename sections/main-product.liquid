@@ -110,13 +110,21 @@
           {%- when 'collapsible_tab' -%}
             {%- if block.settings.content != blank -%}
               <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
-                {%- assign tab_id = "Details-{{ block.id }}-{{ section.id }}" -%}
+                {%- liquid
+                  assign tab_id = "Details-{{ block.id }}-{{ section.id }}"
+                  comment
+                    workaround for shopify data source multi-line rendering bug
+                    replace with block.setting.content when resolved
+                  endcomment
+                  assign split_id = block.settings.namespace | split: '.'
+                  assign tab_content = product.metafields[split_id[0]][split_id[1]].value
+                -%}
                 {%- render 'accordion-item',
                   id: tab_id,
                   summary: block.settings.heading,
-                  content: block.settings.content,
+                  content: tab_content,
                   default_open: block.settings.default_open
-                  content_classes: 'max-h-80 overflow-y-auto pr-4'
+                  content_classes: 'max-h-80 overflow-y-auto pr-4 a:link b:font-bold p:mb-4'
                 -%}
               </div>
             {%- endif -%}

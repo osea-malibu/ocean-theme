@@ -204,7 +204,10 @@ module.exports = {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
       addVariant("li", "& > li");
+      addVariant("a", "& a");
+      addVariant("b", "& b");
       addVariant("i", "& i");
+      addVariant("p", "& p");
       addVariant("td", "& > td");
       addVariant("th", "& > th");
     },
