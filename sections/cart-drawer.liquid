@@ -129,7 +129,7 @@
           endfor
         -%}
 
-        <div class="flex-grow overflow-y-auto px-6 pb-12">
+        <div class="flex-grow overflow-y-auto px-4 2xs:px-6 pb-12">
           {% comment %} Save with sets upsell {% endcomment %}
           {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or cart_ids contains first_set.id -%}
             <save-with-sets
@@ -209,7 +209,7 @@
                                 {%- endif -%}
 
                                 <a {% unless item.product.type == 'Sample' or item.product.type == 'Free Gift' %}href="{{ item.url }}"{% endunless %}
-                                  class="block leading-none"
+                                  class="block leading-none 2xs:w-full {% if item.selling_plan_allocation %}w-52{% else %}w-60{% endif %}"
                                 >
                                   {{ item.product.title |
                                     replace: 'Eye Serum', 'Serum' |
