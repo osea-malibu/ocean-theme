@@ -322,7 +322,7 @@
                                         data-index="{{ item.index | plus: 1 }}"
                                       >
                                         {%- for option in item.product.selling_plan_groups[0].selling_plans -%}
-                                          <option value="{{ option.id }}" {% if option.id == item.selling_plan_allocation.selling_plan.id %}selected{% endif %}>{{ option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' }}</option>
+                                          <option value="{{ option.id }}" {% if option.id == item.selling_plan_allocation.selling_plan.id %}selected{% endif %}>{{ option.name | replace: 'Ship every ', '' | replace: 'Month', 'month' }}</option>
                                         {%- endfor -%}
                                       </select>
                                     {%- endif -%}
