@@ -54,8 +54,26 @@
                   { days: [1, 2, 3, 4, 5], fromTime: "08:00", toTime: "17:00" }
               ]
           })
+          
+          var chatDict = {
+            emailCaptureInputLabel: "Your Email",
+            emailCaptureOnlineTriggerText: "We'll be right with you! In the meantime, leave us your email in case we need to follow up."
+          }
+
+          var sspDict = {
+            noINeedMoreHelp: "Yes, I need more help.",
+            wasThisRelevant: "Do you need more help?",
+            sorryToHearThatOnlineEmailCaptured: "We’re on it - someone will be with you soon. In the meantime, leave us your email in case we need to follow up.",
+            yesThankYou: "No, thank you",
+            yourEmail: "Your email"
+          }
+
+          window.GORGIAS_CHAT_TEXTS = chatDict
+          GorgiasChat.updateTexts(chatDict)
+          GorgiasChat.updateSSPTexts(sspDict)
       });
     </script>
+    <script async="" id="cfl561scr" src="//embed.cartfulsolutions.com/osea-malibu-quiz/recommendation.min.js"></script>
   </head>
 
   <body class="antialiased text-seaweed-700">
