@@ -2,7 +2,7 @@
   <div class="video-section {{ section.settings.section_classes }}">
     <noscript>
       <div class="relative {{ section.settings.container_classes }}"
-        {% if section.settings.cover_image != nil %} style="padding-bottom: 56%;"{% endif %}
+        {% if section.settings.cover_image != nil %} style="padding-bottom: 44%;"{% endif %}
       >
         <a href="{{ section.settings.video_webm }}" class="absolute w-full h-full media media--transparent media--landscape{% if section.settings.cover_image == blank %} video-section__placeholder{% endif %}">
           {%- if section.settings.cover_image != nil -%}
@@ -35,7 +35,7 @@
     </noscript>
     <div class="{{ section.settings.container_classes }}">
       <deferred-media class="relative deferred-media no-js-hidden overflow-visible" data-media-id="{{ section.id }}"
-        {% if section.settings.cover_image != nil %} style="padding-bottom: 56%;"{% endif %}
+        {% if section.settings.cover_image != nil %} style="padding-bottom: 44%;"{% endif %}
       >
         <button
           id="Deferred-Poster-Modal-{{ section.id }}"
@@ -73,9 +73,9 @@
           </span>
         </button>
         <template>
-          <video autoplay controls loop muted playsinline poster="{{ section.settings.cover_image }}" class="bg-wave-200 border-0 absolute w-full h-full">
-            <source src="{{ section.settings.video_mp4 }}">
-            <source src="{{ section.settings.video_webm }}">
+          <video autoplay controls loop playsinline poster="{{ section.settings.cover_image }}" class="bg-wave-200 border-0 absolute w-full h-full border-none object-cover">
+            <source src="{{ section.settings.video_mp4.sources.first.url }}">
+            <source src="{{ section.settings.video_webm.sources.first.url }}">
           </video>
         </template>
       </deferred-media>
