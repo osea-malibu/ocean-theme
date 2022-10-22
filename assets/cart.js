@@ -78,7 +78,7 @@ class CartItems extends HTMLElement {
       ...(!["subscribe", "selling_plan"].includes(name) && { quantity: value }),
       ...(["subscribe", "selling_plan"].includes(name) && { selling_plan }),
     });
-    console.log("body", body);
+    console.log("body", JSON.parse(body));
 
     fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
       .then((response) => response.text())
