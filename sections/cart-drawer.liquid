@@ -122,14 +122,10 @@
         {%- liquid
           for item in cart.items
             assign hide_upsell = false
-            if small_products contains item.handle
-              if item.variant.title == '0.34oz'
-                assign hide_upsell = true
-              endif
-            else
-              if travel_sizes contains item.variant.title
-                assign hide_upsell = true
-              endif
+            if small_products contains item.handle and item.variant.title == '0.34oz'
+              assign hide_upsell = true
+            elsif travel_sizes contains item.variant.title
+              assign hide_upsell = true
             endif
 
             if item.product.metafields.my_fields.save_with_sets != nil and item.selling_plan_allocation == nil and hide_upsell == false
@@ -317,18 +313,25 @@
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
                               {%- liquid
                                 assign hide_subscription = false
-                                if small_products contains item.handle
-                                  if item.variant.title == '0.34oz'
-                                    assign hide_subscription = true
-                                  endif
-                                else
-                                  if travel_sizes contains item.variant.title
-                                    assign hide_subscription = true
-                                  endif
+                                if small_products contains item.handle and item.variant.title == '0.34oz'
+                                  assign hide_subscription = true
+                                elsif travel_sizes contains item.variant.title
+                                  assign hide_subscription = true
                                 endif
                               -%}
                               {%- if item.product.selling_plan_groups.size > 0 and hide_subscription == false -%}
                                 <div class="cart-subscibe flex flex-col items-end h-full">
+                                  {%- liquid
+                                    assign selling_plans = item.product.selling_plan_groups[0].selling_plans
+                                    assign default_option = selling_plans[1].id
+                                    if item.product.metafields.custom.subscription_interval != blank
+                                      for plan in selling_plans
+                                        if plan.name contains item.product.metafields.custom.subscription_interval
+                                          assign default_option = plan.id
+                                        endif
+                                      endfor
+                                    endif
+                                  -%}
                                   <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
                                     <input
                                       id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
@@ -336,7 +339,7 @@
                                       class="w-4 h-4 box-content mr-1 input"
                                       name="subscribe"
                                       data-index="{{ item.index | plus: 1 }}"
-                                      data-default="{{ item.product.selling_plan_groups[0].selling_plans[0].id }}"
+                                      data-default="{{ default_option }}"
                                       {% if item.selling_plan_allocation %}checked{% endif %}
                                     >
                                     <span id="CartSubscribeCheckbox-label" class="whitespace-nowrap">{% if item.selling_plan_allocation != nil %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
@@ -350,8 +353,10 @@
                                         name="selling_plan"
                                         data-index="{{ item.index | plus: 1 }}"
                                       >
-                                        {%- for option in item.product.selling_plan_groups[0].selling_plans -%}
-                                          <option value="{{ option.id }}" {% if option.id == item.selling_plan_allocation.selling_plan.id %}selected{% endif %}>{{ option.name | replace: 'Ship every ', '' | replace: 'Month', 'month' }}</option>
+                                        {%- for option in selling_plans -%}
+                                          <option value="{{ option.id }}" {%- if option.id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}>
+                                            {{- option.name | replace: 'Ship every ', '' | replace: 'Month', 'month' -}}
+                                          </option>
                                         {%- endfor -%}
                                       </select>
                                     {%- endif -%}

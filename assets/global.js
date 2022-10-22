@@ -640,7 +640,15 @@ class SubscriptionRadios extends HTMLElement {
     this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
     this.sellingPlanInputs = Array.from(this.querySelectorAll('input[name="selling_plan"]'));
 
-    this.purchaseOptionInputs.forEach((input) => input.addEventListener("change", this.onPurchaseOptionChange.bind(this)));
+    this.purchaseOptionInputs.forEach((input) => {
+      if (document.referrer.includes("/pages/subscribe") && input.value === "autodeliver") {
+        input.checked = true;
+        this.setActiveState();
+        this.updateMainPrice(input);
+        this.setDefaultSellingPlan();
+      }
+      input.addEventListener("change", this.onPurchaseOptionChange.bind(this));
+    });
   }
 
   onPurchaseOptionChange(e) {

@@ -82,9 +82,9 @@
                 <option
                   value="{{ value.id | escape }}"
                   {%- if card_product.metafields.custom.subscription_interval != blank and value.name contains card_product.metafields.custom.subscription_interval -%}
-                    selected="selected"
+                    selected
                   {%- elsif forloop.index == 2 -%}
-                    selected="selected"
+                    selected
                   {%- endif -%}
                 >
                   {{ value.name | replace: 'Ship every ', '' }}

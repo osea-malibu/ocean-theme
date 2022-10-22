@@ -16,8 +16,7 @@
   /* Remove number input controls on quantity */
   input.quantity__input::-webkit-outer-spin-button,
   input.quantity__input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+    @apply appearance-none m-0;
   }
 
   /* Handle no-js visibility */
