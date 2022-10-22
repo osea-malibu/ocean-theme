@@ -30,8 +30,6 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    console.log("document.activeElement.getAttribute('name')", document.activeElement.getAttribute("name"));
-    console.log("event.target.getAttribute('name')", event.target.getAttribute("name"));
     this.updateCartItem(event.target.dataset.index, event.target.value, event.target.getAttribute("name"), event.target);
   }
 
@@ -80,8 +78,6 @@ class CartItems extends HTMLElement {
       ...(!["subscribe", "selling_plan"].includes(name) && { quantity: value }),
       ...(["subscribe", "selling_plan"].includes(name) && { selling_plan }),
     });
-    console.log("body", JSON.parse(body));
-    console.log("name", name);
 
     fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
       .then((response) => response.text())
