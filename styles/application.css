@@ -13,6 +13,13 @@
     @apply invisible relative -top-32;
   }
 
+  /* Remove number input controls on quantity */
+  input.quantity__input::-webkit-outer-spin-button,
+  input.quantity__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   /* Handle no-js visibility */
   .no-js:not(html) {
     @apply hidden;
