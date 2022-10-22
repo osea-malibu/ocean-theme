@@ -8,19 +8,19 @@
           {%- if section.settings.cover_image != nil -%}
             <picture>
               <source
-                srcset="{{ section.settings.cover_image | append: '&width=976' }} 1x,
-                  {{ section.settings.cover_image | append: '&width=1400' }} 2x"
+                srcset="{{ section.settings.cover_image | image_url: width: 976 }} 1x,
+                  {{ section.settings.cover_image | image_url: width: 1400 }} 2x"
                 media="(min-width: 640px)"
               >
               <source
-                srcset="{{ section.settings.cover_image | append: '&width=366' }} 1x,
-                  {{ section.settings.cover_image | append: '&width=732' }} 2x"
+                srcset="{{ section.settings.cover_image | image_url: width: 366 }} 1x,
+                  {{ section.settings.cover_image | image_url: width: 732 }} 2x"
                 media="(min-width: 0)"
               >
               <img
-                srcset="{{ section.settings.cover_image | append: '&width=366' }} 1x,
-                  {{ section.settings.cover_image | append: '&width=732' }} 2x"
-                src="{{ section.settings.cover_image | append: '&width=732' }}"
+                srcset="{{ section.settings.cover_image | image_url: width: 366 }} 1x,
+                  {{ section.settings.cover_image | image_url: width: 732 }} 2x"
+                src="{{ section.settings.cover_image | image_url: width: 732 }}"
                 alt="Loading {{ section.settings.description | escape }}"
                 loading="lazy"
                 width="1280"
@@ -45,23 +45,24 @@
           {%- if section.settings.cover_image != nil -%}
             <picture>
               <source
-                srcset="{{ section.settings.cover_image | append: '&width=976' }} 1x,
-                  {{ section.settings.cover_image | append: '&width=1400' }} 2x"
+                srcset="{{ section.settings.cover_image | image_url: width: 976 }} 1x,
+                  {{ section.settings.cover_image | image_url: width: 1400 }} 2x"
                 media="(min-width: 640px)"
               >
               <source
-                srcset="{{ section.settings.cover_image | append: '&width=366' }} 1x,
-                  {{ section.settings.cover_image | append: '&width=732' }} 2x"
+                srcset="{{ section.settings.cover_image | image_url: width: 366 }} 1x,
+                  {{ section.settings.cover_image | image_url: width: 732 }} 2x"
                 media="(min-width: 0)"
               >
               <img
-                srcset="{{ section.settings.cover_image | append: '&width=366' }} 1x,
-                  {{ section.settings.cover_image | append: '&width=732' }} 2x"
-                src="{{ section.settings.cover_image | append: '&width=732' }}"
+                srcset="{{ section.settings.cover_image | image_url: width: 366 }} 1x,
+                  {{ section.settings.cover_image | image_url: width: 732 }} 2x"
+                src="{{ section.settings.cover_image | image_url: width: 732 }}"
                 alt="Loading {{ section.settings.description | escape }}"
                 loading="lazy"
                 width="1280"
                 height="1000"
+                class="object-cover"
               >
             </picture>
           {%- else -%}
