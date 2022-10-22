@@ -8,7 +8,8 @@
     - button_class: {String} Tailwind styling classes (optional)
     - price_class: {String} Tailwind styling classes (optional)
     - hide_price: {Boolean} Removes price from button element. Default: false (optional)
-    - section_id: {String} Unique id of section that card is in (required)
+    - section_id: {String} Unique id of section that card is in (required),
+    - disable_links: {Boolean} remove link on image / title. Default: false (optional)
 
     Usage:
     {% render 'product-card-mini', card_product: section.settings.product %}
@@ -16,14 +17,14 @@
 
 <li class="flex flex-col relative grow h-full {{ card_class }}">
   <div class="w-full order-1 grow flex flex-col">
-    <a href="{{ card_product.url | default: '#' }}" class="group">
+    {%- if disable_links == false or disable_links == nil -%}<a href="{{ card_product.url | default: '#' }}" class="group">{%- endif -%}
       <h4
         class="text-xs font-book group-hover:underline underline-offset-1 decoration-1 tracking-wide text-center {% if card_product.title.size >= 28 %}leading-none{% else %}leading-tight{% endif %}"
         id="title-{{ section_id }}-{{ card_product.id }}"
       >
         {{ card_product.title | replace: ' - Sample', '' | escape }}
       </h4>
-    </a>
+    {%- if disable_links == false or disable_links == nil -%}</a>{%- endif -%}
 
     <div class="mt-auto">
       {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
@@ -60,12 +61,14 @@
 
   <div class="relative block overflow-hidden no-underline" tabindex="-1">
     {%- if card_product.featured_media -%}
-      <a
-        aria-label="{{ card_product.title | escape }}"
-        href="{{ card_product.url | default: '#' }}"
-        class="group block mx-auto"
-        tabindex="-1"
-      >
+      {%- if disable_links == false or disable_links == nil -%}
+        <a
+          aria-label="{{ card_product.title | escape }}"
+          href="{{ card_product.url | default: '#' }}"
+          class="group block mx-auto"
+          tabindex="-1"
+        >
+      {%- endif -%}
         {%- if custom_default_image != nil -%}
           {% assign default_image = custom_default_image %}
         {%- else -%}
@@ -81,7 +84,9 @@
           height="72"
           class="mx-auto"
         >
-      </a>
+      {%- if disable_links == false or disable_links == nil -%}
+        </a>
+      {%- endif -%}
     {%- endif -%}
   </div>
 </li>

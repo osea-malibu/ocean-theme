@@ -10,8 +10,13 @@
       aria-label="{{ 'sections.cart.title' | t }}"
       tabindex="-1"
     >
-      {%- assign cart_ids = cart.items | map: 'product_id' -%}
+      {%- liquid
+        assign cart_ids = cart.items | map: 'product_id'
+        assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 9.6 oz Holiday' | split: ', '
+        assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1' | split: ', '
+      -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
+
       {% comment %} Gift with purchase {% endcomment %}
       {%- if settings.enable_gwp and settings.gwp_type == 'banner' -%}
         {%- liquid
@@ -105,6 +110,7 @@
       >
         {% render 'icon-close', classes: 'w-8 h-8', stroke_width: 1.5, aria_hidden: true %}
       </button>
+
       {%- if cart == empty -%}
         <div class="cart-empty h-full overflow-hidden flex flex-col items-center justify-center w-60 mx-auto">
           <h2 class="text-lg tracking-wide font-book mb-4">{{ 'sections.cart.empty' | t }}</h2>
@@ -115,7 +121,18 @@
       {%- else -%}
         {%- liquid
           for item in cart.items
-            if item.product.metafields.my_fields.save_with_sets != nil and item.selling_plan_allocation == nil
+            assign hide_upsell = false
+            if small_products contains item.handle
+              if item.variant.title == '0.34oz'
+                assign hide_upsell = true
+              endif
+            else
+              if travel_sizes contains item.variant.title
+                assign hide_upsell = true
+              endif
+            endif
+
+            if item.product.metafields.my_fields.save_with_sets != nil and item.selling_plan_allocation == nil and hide_upsell == false
               assign item_with_set = item
               assign item_with_set_line = forloop.index
             endif
@@ -300,13 +317,12 @@
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
                               {%- liquid
                                 assign hide_subscription = false
-                                if product.handle == 'dayglow-face-oil' or product.handle == 'essential-hydrating-oil-1'
-                                  if product.selected_or_first_available_variant.title == '0.34oz'
+                                if small_products contains item.handle
+                                  if item.variant.title == '0.34oz'
                                     assign hide_subscription = true
                                   endif
                                 else
-                                  assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 9.6 oz Holiday' | split: ', '
-                                  if travel_sizes contains product.selected_or_first_available_variant.title
+                                  if travel_sizes contains item.variant.title
                                     assign hide_subscription = true
                                   endif
                                 endif
@@ -450,7 +466,8 @@
                           card_product: sample,
                           section_id: section.id,
                           hide_price: true,
-                          button_class: 'button-secondary'
+                          button_class: 'button-secondary',
+                          disable_links: true
                         -%}
                       {%- endunless -%}
                     {%- endif -%}

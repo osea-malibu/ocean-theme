@@ -119,8 +119,12 @@ div#stamped-main-widget .stamped-reviews .stamped-review-options ul {
   flex-direction: column;
 }
 div#stamped-main-widget .stamped-reviews .stamped-review-options ul li {
-  flex-direction: row;
   margin-bottom: 4px;
+}
+@media only screen and (min-width: 640px) {
+  div#stamped-main-widget .stamped-reviews .stamped-review-options ul li {
+    flex-direction: row;
+  }
 }
 div#stamped-main-widget .stamped-reviews .stamped-review-options strong,
 div#stamped-main-widget .stamped-reviews .stamped-review-options li span {
@@ -128,6 +132,7 @@ div#stamped-main-widget .stamped-reviews .stamped-review-options li span {
   margin-right: 4px;
   font-size: 14px;
   border-bottom: none;
+  white-space: normal;
 }
 div#stamped-main-widget .stamped-review {
   margin-bottom: 1.5rem;
