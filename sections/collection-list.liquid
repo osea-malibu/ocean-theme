@@ -1,10 +1,3 @@
-{{ 'section-collection-list.css' | asset_url | stylesheet_tag }}
-<link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}" media="print" onload="this.media='all'">
-
-<noscript>{{ 'component-slider.css' | asset_url | stylesheet_tag }}</noscript>
-
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-
 <div class="collection-list-wrapper container{% if section.settings.title == blank %} no-heading{% endif %}{% if section.settings.show_view_all == false or section.blocks.size > collections.size %} no-mobile-link{% endif %}">
   <div class="title-wrapper-with-link{% if section.settings.swipe_on_mobile == true %} title-wrapper--self-padded-tablet-down{% else %} title-wrapper--self-padded-mobile{% endif %}{% if section.settings.title == blank %} title-wrapper-with-link--no-heading{% endif %}">
     <h2 class="collection-list-title">{{ section.settings.title | escape }}</h2>
@@ -14,7 +7,6 @@
     {%- endif -%}
   </div>
 
-  <slider-component class="slider-mobile-gutter">
     <ul class="collection-list grid grid--1-col{% if section.blocks.size < 5 %} grid--{{ section.blocks.size }}-col-tablet{% else %} grid--3-col-tablet{% endif %}{% if section.settings.swipe_on_mobile %} slider slider--tablet grid--peek{% endif %} collection-list--{{ section.blocks.size }}-items{% if section.settings.show_view_all == false or section.blocks.size > collections.size %} negative-margin--small{% endif %}"
       id="Slider-{{ section.id }}"
       role="list"
@@ -102,13 +94,12 @@
         <div class="slider-counter caption">
           <span class="slider-counter--current">1</span>
             <span aria-hidden="true"> / </span>
-            <span class="visually-hidden">{{ 'accessibility.of' | t }}</span>
+            <span class="sr-only">{{ 'accessibility.of' | t }}</span>
           <span class="slider-counter--total">{{ section.blocks.size }}</span>
         </div>
         <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'accessibility.next_slide' | t }}">{% render 'icon-caret' %}</button>
       </div>
     {%- endif -%}
-  </slider-component>
 
   {%- if section.settings.show_view_all and section.blocks.size < collections.size -%}
     <div class="center{% if section.settings.swipe_on_mobile %} small-hide medium-hide{% endif %}">

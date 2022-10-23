@@ -1,6 +1,4 @@
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
 
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 
@@ -99,7 +97,7 @@
                 </div>
               </div>
   
-              <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span> 
+              <span class="predictive-search-status sr-only" role="status" aria-hidden="true"></span> 
             {%- endif -%}
                 
             <button type="submit" class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
@@ -165,7 +163,7 @@
                         <div class="card card--search card--soft{% unless item.image %} card--text-only{% endunless %}">
                           <div class="card__inner">
                             {%- if item.image -%}
-                              <div class="media media--cropped">
+                              <div class="media media-square">
                                 <img
                                   srcset="{%- if item.image.src.width >= 165 -%}{{ item.image.src | image_url: width: 165 }} 165w,{%- endif -%}
                                     {%- if item.image.src.width >= 360 -%}{{ item.image.src | image_url: width: 360 }} 360w,{%- endif -%}

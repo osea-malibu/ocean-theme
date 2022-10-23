@@ -177,7 +177,7 @@
               <div id="CartDrawer-CartItems" class="js-contents flex flex-col grow motion-safe:transition-opacity">
                 {%- if cart != empty -%}
                   <div class="grow">
-                    <table class="cart-items block w-full" role="table">
+                    <table class="cart-items block w-full cell" role="table">
                       <thead role="rowgroup" class="hidden">
                         <tr role="row">
                           <th id="CartDrawer-ColumnImage" role="columnheader" scope="col">Image</th>
@@ -193,7 +193,7 @@
                         {%- for item in cart.items -%}
                           <tr
                             id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                            class="cart-item align-top my-6 grid grid-cols-7 grid-rows-auto [grid-template-areas:'image_name_name_name_name_name_price''image_size_size_sub_sub_sub_sub''image_quant_quant_sub_sub_sub_sub']"
+                            class="cart-item align-top my-6 grid grid-cols-7 grid-rows-auto [grid-template-areas:'image_name_name_name_name_name_price''image_size_size_sub_sub_sub_sub''image_quant_quant_sub_sub_sub_sub'] td:border-collapse td:border-spacing-0 td:border-0"
                             role="row"
                           >
                             <td class="cart-item__media p-0 [grid-area:image]" role="cell" headers="CartDrawer-ColumnImage">
@@ -242,7 +242,7 @@
                                     {%- for option in item.options_with_values -%}
                                       <div class="product-option flex">
                                         <dt class="mr-1">{{ option.name }}: </dt>
-                                        <dd>{{ option.value }}{% unless forloop.last %}, {% endunless %}</dd>
+                                        <dd class="whitespace-nowrap">{{ option.value }}{% unless forloop.last %}, {% endunless %}</dd>
                                       </div>
                                     {%- endfor -%}
                                   {%- endif -%}
@@ -252,7 +252,7 @@
                                     {%- if property.last != blank and property_first_char != '_' -%}
                                       <div class="product-option flex">
                                         <dt class="mr-1">{{ property.first }}: </dt>
-                                        <dd>
+                                        <dd class="whitespace-nowrap">
                                           {%- if property.last contains '/uploads/' -%}
                                             <a href="{{ property.last }}" class="link" target="_blank" aria-describedby="a11y-new-window-message">
                                               {{ property.last | split: '/' | last }}
@@ -508,7 +508,7 @@
                   </span>
                 </summary>
                 <cart-note class="cart__note field">
-                  <label class="visually-hidden" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
+                  <label class="sr-only" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
                   <textarea id="CartDrawer-Note" class="text-area text-area--resize-vertical field__input" name="note" placeholder="{{ 'sections.cart.note' | t }}">{{ cart.note }}</textarea>
                 </cart-note>
               </details>

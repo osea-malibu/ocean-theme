@@ -21,20 +21,20 @@
 
   /* Handle no-js visibility */
   .no-js:not(html) {
-    @apply hidden;
+    @apply !hidden;
   }
   html.no-js .no-js:not(html) {
-    @apply block;
+    @apply !block;
   }
   .no-js-inline {
-    @apply hidden;
+    @apply !hidden;
   }
   html.no-js .no-js-inline {
-    @apply inline-block;
+    @apply !inline-block;
   }
   html.no-js .no-js-hidden,
   html.no-js .predictive-search {
-    @apply hidden;
+    @apply !hidden;
   }
 
   /* Invisible pixel to track scroll for header shadow */
@@ -106,6 +106,23 @@
   }
   .js details[open]:not(.menu-opening) > .header__icon--menu .icon-hamburger {
     @apply visible opacity-100 scale-105;
+  }
+
+  /* Modal toggle */
+  .no-js details[open] .modal__toggle {
+    @apply absolute z-0;
+  }
+  .modal__toggle-close {
+    @apply hidden;
+  }
+  .no-js details[open] svg.modal__toggle-close {
+    @apply flex z-10;
+  }
+  .modal__toggle-open {
+    @apply flex;
+  }
+  .no-js details[open] .modal__toggle-open {
+    @apply hidden;
   }
 
   /* Links */
@@ -256,7 +273,7 @@
   }
   predictive-search[open] .predictive-search,
   predictive-search[loading] .predictive-search {
-    @apply max-h-[calc(100vh-96px)];
+    @apply max-h-[calc(100vh-96px)] ml-[26px];
   }
   predictive-search:not([loading]) .loading-spinner,
   predictive-search:not([loading]) .predictive-search__loading-state,
@@ -305,14 +322,14 @@
   }
 
   /* Deferred media (video poster) */
+  deferred-media {
+    @apply block;
+  }
   .deferred-media__poster {
     @apply bg-transparent border-0 cursor-pointer m-0 p-0 h-full w-full;
   }
-  .media > .deferred-media__poster {
-    @apply flex items-center justify-center;
-  }
   .deferred-media__poster img {
-    @apply w-auto h-full;
+    @apply w-full h-full;
   }
   .deferred-media {
     @apply overflow-hidden;

@@ -18,7 +18,7 @@
       <div class="relative"
         {% if source_jpg != nil %} style="padding-bottom: 56%;"{% endif %}
       >
-        <a href="{{ source_webm }}" class="absolute w-full h-full media media--transparent media--landscape{% if source_jpg == blank %} video-section__placeholder{% endif %}">
+        <a href="{{ source_webm }}" class="absolute w-full h-full media media-transparent media-landscape{% if source_jpg == blank %} video-section__placeholder{% endif %}">
           {%- if source_jpg != nil -%}
             <picture>
               <source
@@ -81,7 +81,7 @@
           {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
         {%- endif -%}
         <span class="deferred-media__poster-button">
-          {%- render 'icon-play' -%}
+          {%- render 'icon-play', classes: 'w-10 h-10 text-white -mr-1' -%}
         </span>
       </button>
       <template>
