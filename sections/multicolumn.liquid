@@ -234,6 +234,9 @@
                             {% if block.settings.button_aria_label != blank %}aria-label="{{ block.settings.button_aria_label }}"{% endif %}
                           >
                             {{- block.settings.button_label | escape -}}
+                            {%- if block.settings.button_aria_label != blank -%}
+                              <span class="sr-only">{{ block.settings.button_aria_label }}</span>
+                            {%- endif -%}
                             {%- if block.settings.button_icon -%}
                               {{- block.settings.button_icon -}}
                             {%- endif -%}
