@@ -19,7 +19,7 @@
       <img
         srcset="{{ section.settings.image | image_url: width: 800 }} 1x, {{ section.settings.image | image_url: width: 1600 }} 2x"
         src="{{ section.settings.image | image_url: width: 1600 }}"
-        {% if section.settings.iz_lazy %}loading="lazy"{% endif %}
+        {% if section.settings.is_lazy %}loading="lazy"{% endif %}
         alt="{{ section.settings.image.alt | escape }}"
         width="{{ section.settings.image.width }}"
         height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"

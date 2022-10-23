@@ -19,16 +19,18 @@
           {{ section.settings.image | image_url: width: 800 }} 2x"
         media="(min-width: 0)"
       >
+      {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
       <img
         srcset="{{ section.settings.image | image_url: width: 400 }} 1x,
           {{ section.settings.image | image_url: width: 800 }} 2x"
         src="{{ section.settings.image | image_url: width: 800 }}"
-        loading="lazy"
+        {% if section.settings.is_lazy %}loading="lazy"{% endif %}
         alt="{{ section.settings.image.alt | escape }}"
         width="{{ section.settings.image.width }}"
         height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
         class="{{ section.settings.image_classes }}"
       >
+      {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
     </picture>
   {%- endif -%}
   <div class="{% if section.settings.is_text_only %}py-6 text-center{% else %}{{ section.settings.text_block_classes }}{% endif %}">
@@ -81,6 +83,11 @@
       "id": "image_desktop",
       "info": "Recommended image size: 1600 x 800px (height is flexible)",
       "label": "Image (desktop)"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_lazy",
+      "label": "Lazy load image"
     },
     {
       "type": "paragraph",
