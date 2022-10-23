@@ -78,7 +78,7 @@
                       {%- for tab in newsletter_tabs -%}
                         <li
                           role="tab"
-                          aria-controls="tab-{{ forloop.index }}"
+                          aria-controls="article-aside-tab-{{ forloop.index }}"
                           tabindex="0"
                           aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
                           class="button button-xs button-secondary px-3 sm:px-4{% if forloop.first %} bg-wave-200{% endif %}"
@@ -90,7 +90,7 @@
 
                     <div class="relative">
                       {%- for tab in newsletter_tabs -%}
-                        <div class="absolute z-10 inset-0" id="tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                        <div class="absolute z-10 inset-0" id="article-aside-tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
                           {%- if tab == 'Email' -%}
                             <div class="klaviyo-email-form relative">
                               {% render 'icon-email',

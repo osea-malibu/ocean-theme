@@ -5,7 +5,7 @@
         {%- for block in section.blocks -%}
           <li
             role="tab"
-            aria-controls="tab-{{ forloop.index }}"
+            aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
             tabindex="0"
             aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
             class="button button-sm button-secondary px-3 sm:px-4{% unless forloop.last %} mr-2 xs:mr-3{% endunless %}{% if forloop.first %} bg-wave-200{% endif %}"
@@ -18,7 +18,7 @@
 
     {%- for block in section.blocks -%}
       <div
-        id="tab-{{ forloop.index }}"
+        id="tab-{{ forloop.index }}-{{ block.id }}"
         role="tabpanel"
         aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
       >
@@ -41,9 +41,10 @@
           <ul class="slider-container -mr-6 w-[calc(100%+1.5rem)] xs:w-full xs:mr-0" role="list">
             {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
               <li>
+                {%- assign section_id = section.id | append: block.id -%}
                 {% render 'product-card',
                   card_product: product,
-                  section_id: section.id,
+                  section_id: section_id,
                   show_secondary_image_on_hover: true,
                   button_class: 'sm:px-3 md:px-5 sm:text-sm md',
                 %}

@@ -2,7 +2,7 @@
   {%- if section.settings.image != blank -%}
     {%- if section.settings.image_link != blank -%}
       <a
-        href="{{ block.settings.image_link }}"
+        href="{{ section.settings.image_link }}"
         class="block"
       >
     {%- endif -%}
@@ -26,7 +26,7 @@
       >
       {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
     </picture>
-    {%- if block.settings.button_link != blank -%}
+    {%- if section.settings.image_link != blank -%}
       </a>
     {%- endif -%}
   {%- endif -%}
