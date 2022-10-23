@@ -231,6 +231,7 @@
                             {% if block.settings.link == blank %}role="link" aria-disabled="true"
                             {% else %}href="{{ block.settings.link }}"{% endif %}
                             {% if block.settings.target_blank %}target="_blank"{% endif %}
+                            {% if block.settings.button_aria_label != blank %}aria-label="{{ block.settings.button_aria_label }}"{% endif %}
                           >
                             {{- block.settings.button_label | escape -}}
                             {%- if block.settings.button_icon -%}
@@ -501,6 +502,11 @@
           "type": "text",
           "id": "button_label",
           "label": "Button label"
+        },
+        {
+          "type": "text",
+          "id": "button_aria_label",
+          "label": "ARIA label"
         },
         {
           "type": "url",
