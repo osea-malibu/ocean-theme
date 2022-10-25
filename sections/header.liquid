@@ -365,15 +365,21 @@
     <ul class="flex md:justify-center" role="list">
       {%- for link in section.settings.navbar_menu.links -%}
         <li class="first:pl-1{% if link.links != blank %} group{% endif %}">
-          <a href="{{ link.url }}" class="block whitespace-nowrap text-sm py-1.5 px-2 lg:px-3 font-book tracking-wide"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+          <a
+            href="{{ link.url }}"
+            class="block whitespace-nowrap text-sm py-1.5 px-2 lg:px-3 font-book tracking-wide{% if link.title contains 'Mobile' %} hidden sm:block{% endif %}"
+            {% if link.current %} aria-current="page"{% endif %}
+          >
+            {{- link.title | replace: 'Mobile - ', '' | escape -}}
+          </a>
           {%- if link.links != blank -%}
             <ul role="list" class="invisible group-hover:visible hidden sm:block absolute z-100 bg-sand-200 py-2 shadow-md shadow-seaweed-400/10 {% if link.levels >= 2 %}inset-x-0 top-[88px]{% else %}px-2{% endif %}">
               {%- if link.levels >= 2 -%}<div class="mx-auto px-6 py-4 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">{%- endif -%}
               {%- for childlink in link.links -%}
                 {%- if childlink.links != blank -%}
                   <li>
-                    <h2 class="tracking-wide font-medium text-lg leading-none mb-2{% if childlink.title contains 'Mobile' %} hidden sm:block{% endif %}">
-                      {{- childlink.title | replace: 'Mobile - ', '' | escape -}}
+                    <h2 class="tracking-wide font-medium text-lg leading-none mb-2">
+                      {{- childlink.title | escape -}}
                     </h2>
                     <ul role="list">
                       {%- for grandchildlink in childlink.links -%}
@@ -393,10 +399,10 @@
                   <li>
                     <a
                       href="{{ childlink.url }}"
-                      class="block px-4 py-1.5 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors{% if childlink.title contains 'Mobile' %} hidden sm:block{% endif %}"
+                      class="block px-4 py-1.5 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors"
                       {% if childlink.current %} aria-current="page"{% endif %}
                     >
-                      {{- childlink.title | replace: 'Mobile - ', '' | escape -}}
+                      {{- childlink.title | escape -}}
                     </a>
                   </li>
                 {%- endif -%}
