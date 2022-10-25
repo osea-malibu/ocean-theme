@@ -18,7 +18,7 @@
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
 
       {% comment %} Gift with purchase {% endcomment %}
-      {%- if settings.enable_gwp and settings.gwp_type == 'banner' -%}
+      {%- if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto' -%}
         {%- liquid
           assign tier1_product = all_products[settings.gwp_tier1_product]
           assign tier2_product = all_products[settings.gwp_tier2_product]
@@ -74,7 +74,7 @@
                   {%- endif -%}
                 </h3>
 
-                {%- if remaining_amount <= 0 -%}
+                {%- if remaining_amount <= 0 and settings.gwp_type == 'banner' -%}
                   <button
                     class="button button-xs button-secondary mt-1"
                     id="GwpButton"
