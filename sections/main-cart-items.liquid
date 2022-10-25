@@ -10,7 +10,7 @@
     <a class="button button-secondary button-sm" href="/collections/shop">{{ 'general.continue_shopping' | t }}</a>
   </div>
 
-  <div class="cart__warnings flex flex-col justify-center text-center mb-8 {% if cart == empty %} block{% else %}hidden{% endif %}">
+  <div class="cart__warnings mb-8 {% if cart == empty %} block{% else %}hidden{% endif %}">
     <h1 class="font-medium text-lg">{{ 'sections.cart.empty' | t }}</h1>
 
     {%- if shop.customer_accounts_enabled -%}
