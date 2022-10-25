@@ -38,7 +38,7 @@
           lg:[--swiffy-slider-item-count:3] 
           xl:[--swiffy-slider-item-count:4] 
         ">
-          <ul class="slider-container -mr-6 w-[calc(100%+1.5rem)] xs:w-full xs:mr-0" role="list">
+          <ul class="slider-container -mr-4 2xs:-mr-6 w-[calc(100%+1rem)] 2xs:w-[calc(100%+1.5rem)] xs:w-full xs:mr-0" role="list">
             {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
               <li>
                 {%- assign section_id = section.id | append: block.id -%}
