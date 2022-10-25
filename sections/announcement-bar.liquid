@@ -11,6 +11,7 @@
       assign remaining_amount = gwp_threshold | minus: cart.total_price
       assign remaining_amount_money = remaining_amount | money
       assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
+      assign countdown_text_mobile = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', 'gift' | replace: 'Free Gift - '
 
       if cart_ids contains tier2_product.id
         if settings.gwp_tier3_product != nil
@@ -29,7 +30,8 @@
     {%- unless settings.gwp_tier1_product == nil -%}
       <p class="text-white font-book text-center py-1 tracking-wide">
         {%- if remaining_amount > 0 -%}
-          {{ countdown_text }}
+          <span class="hidden sm:block">{{ countdown_text }}</span>
+          <span class="sm:hidden">{{ countdown_text_mobile }}</span>
         {%- else -%}
           {{ settings.gwp_success_text }}
         {%- endif -%}
