@@ -127,8 +127,6 @@
                         description: article_description
                       %}
                     {%- when 'page' -%}
-
-                      <script>console.log("page", {{ item | escape }});</script>
                       {%- liquid
                         assign page_title = item.title | truncate: 50
                         assign page_description = item.content | strip_html | truncate: 75

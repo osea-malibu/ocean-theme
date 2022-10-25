@@ -801,7 +801,10 @@ ul.whr-items .whr-item.active h3::after {
 
 /* Klaviyo - Footer Form */
 .klaviyo-email-form form.klaviyo-form input {
-  @apply cursor-text border !border-seaweed-400 !rounded-sm !pl-11 !tracking-wide;
+  @apply cursor-text border !border-seaweed-400 !rounded-sm !pl-11;
+}
+.klaviyo-email-form form.klaviyo-form input[type="email"] {
+  @apply !text-sm;
 }
 .klaviyo-email-form button,
 .klaviyo-phone-form [data-testid="form-row"] > div > button {
