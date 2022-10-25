@@ -1,0 +1,33 @@
+{% comment %} Gorgias Chat Widget Start {% endcomment %}
+  {% comment %}theme-check-disable ParserBlockingJavaScript{% endcomment %}
+  <script id="gorgias-chat-widget-install-v2" src="{{ 'gorgias.js' | asset_url }}"></script>
+  {% comment %}theme-check-enable ParserBlockingJavaScript{% endcomment %}
+  <script async>
+    GorgiasChat.init().then(function () {
+      GorgiasChat.hidePoweredBy(true)
+      GorgiasChat.setCustomBusinessHours({
+        timezone: "America/Los_Angeles",
+        businessHours: [
+          { days: [1, 2, 3, 4, 5], fromTime: "08:00", toTime: "17:00" }
+        ]
+      })
+      
+      var chatDict = {
+        emailCaptureInputLabel: "Your Email",
+        emailCaptureOnlineTriggerText: "We'll be right with you! In the meantime, leave us your email in case we need to follow up."
+      }
+
+      var sspDict = {
+        noINeedMoreHelp: "Yes, I need more help.",
+        wasThisRelevant: "Do you need more help?",
+        sorryToHearThatOnlineEmailCaptured: "We’re on it - someone will be with you soon. In the meantime, leave us your email in case we need to follow up.",
+        yesThankYou: "No, thank you",
+        yourEmail: "Your email"
+      }
+
+      window.GORGIAS_CHAT_TEXTS = chatDict
+      GorgiasChat.updateTexts(chatDict)
+      GorgiasChat.updateSSPTexts(sspDict)
+    });
+  </script>
+{% comment %} Gorgias Chat Widget End {% endcomment %}
