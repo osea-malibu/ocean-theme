@@ -307,11 +307,11 @@
 
                 {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-                  <div class="product-form__buttons">
+                  <div class="product-form__buttons" id="AddToCart">
                     <button
                       type="submit"
                       name="add"
-                      class="product-form__submit pdp-atc-btn button button-primary button-md w-full"
+                      class="product-form__submit button button-primary button-md w-full"
                       {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                     >
                         <span>
