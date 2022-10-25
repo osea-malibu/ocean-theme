@@ -5,27 +5,46 @@
       "blocks": {
         "featured_image": {
           "type": "featured_image",
-          "settings": {}
+          "settings": {
+            "image_classes": "-mx-4 2xs:-mx-6 xs:mx-0 col-span-1 md:col-span-3 md:mb-6 md:order-2"
+          }
         },
         "title": {
           "type": "title",
-          "settings": {}
+          "settings": {
+            "header_classes": "-mx-4 2xs:-mx-6 xs:mx-0 px-6 pt-6 pb-8 text-center mb-6 col-span-1 md:col-span-2 md:order-1 md:flex md:flex-col md:items-center md:justify-center",
+            "date_classes": "sr-only",
+            "author_classes": "sr-only",
+            "tag_classes": "block uppercase font-bold tracking-widest mb-3",
+            "title_classes": "text-4xl font-serif tracking-tight"
+          }
         },
         "share": {
           "type": "share",
           "disabled": true,
           "settings": {
-            "share_label": "Share"
+            "share_label": "Share",
+            "share_classes": "md:col-span-5 md:order-4"
           }
         },
         "content": {
           "type": "content",
-          "settings": {}
+          "settings": {
+            "content_classes": "md:col-span-5 md:order-3 flex flex-col md:flex-row md:gap-6"
+          }
         }
       },
-      "block_order": ["featured_image", "title", "share", "content"],
-      "settings": {}
+      "block_order": [
+        "featured_image",
+        "title",
+        "share",
+        "content"
+      ],
+      "settings": {
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
