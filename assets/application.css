@@ -2293,8 +2293,16 @@ table.comparison-matrix td.unchecked {
   position: absolute;
 }
 
+.\!absolute {
+  position: absolute !important;
+}
+
 .relative {
   position: relative;
+}
+
+.\!relative {
+  position: relative !important;
 }
 
 .inset-0 {
@@ -2302,6 +2310,13 @@ table.comparison-matrix td.unchecked {
   right: 0px;
   bottom: 0px;
   left: 0px;
+}
+
+.\!inset-0 {
+  top: 0px !important;
+  right: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
 }
 
 .inset-x-0 {
@@ -2926,6 +2941,10 @@ table.comparison-matrix td.unchecked {
   margin-left: -1.25rem;
 }
 
+.\!-ml-0 {
+  margin-left: -0px !important;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -3192,6 +3211,14 @@ table.comparison-matrix td.unchecked {
 
 .w-36 {
   width: 9rem;
+}
+
+.\!w-auto {
+  width: auto !important;
+}
+
+.\!w-full {
+  width: 100% !important;
 }
 
 .min-w-\[68px\] {
@@ -4588,6 +4615,10 @@ table.comparison-matrix td.unchecked {
 
 .opacity-50 {
   opacity: 0.5;
+}
+
+.\!opacity-100 {
+  opacity: 1 !important;
 }
 
 .shadow-none {
@@ -6005,6 +6036,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:h-auto {
     height: auto;
+  }
+
+  .sm\:h-\[42px\] {
+    height: 42px;
   }
 
   .sm\:w-16 {

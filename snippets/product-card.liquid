@@ -178,7 +178,7 @@
             aria-haspopup="dialog"
             aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ card_product.id }}"
             aria-live="polite"
-            class="plp-atc-btn button button-tertiary w-full transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
+            class="button button-tertiary w-full transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
             {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
           >
             {%- if card_product.selected_or_first_available_variant.available -%}
@@ -199,6 +199,17 @@
               {{ 'products.product.sold_out' | t }}
             {%- endif -%}
           </button>
+          {%- if card_product.selected_or_first_available_variant.available == false -%}
+            <div class="absolute z-10 inset-x-0 bottom-0 h-10 sm:h-[42px]">
+              <div
+                class="klaviyo-product-container"
+                data-klaviyo-handle="{{ card_product.handle }}"
+                id="klaviyo-data-handle-{{ card_product.handle }}"
+              >
+                <div class="klaviyo-button-container !inset-0 !w-full !opacity-100 !-ml-0"></div>
+              </div>
+            </div>
+          {%- endif -%}
         {%- endform -%}
       </product-form>
     </div>

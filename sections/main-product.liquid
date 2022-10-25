@@ -311,7 +311,7 @@
                     <button
                       type="submit"
                       name="add"
-                      class="product-form__submit button button-primary button-md w-full"
+                      class="product-form__submit button button-primary button-md w-full disabled:opacity-50"
                       {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                     >
                         <span>
