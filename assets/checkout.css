@@ -1,0 +1,51 @@
+h2.section__title {
+  color: #1d4d41;
+  font-family: "Canela", serif;
+  font-weight: 600;
+}
+
+.btn {
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: 0.3s ease all;
+  text-decoration: none;
+  white-space: nowrap;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  border: none;
+  height: 42px;
+  line-height: 42px;
+  padding: 0 30px;
+  border-radius: 0;
+}
+
+.product__description__property {
+  display: none;
+}
+
+button#continue_button {
+  background-color: #1d4d41;
+  font-family: "futura-pt", sans-serif;
+  font-size: 16px;
+  padding: 10px 48px 14px;
+  line-height: 20px;
+  font-weight: 400;
+  border: 1px solid #000000;
+  text-transform: none;
+}
+
+button#continue_button:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.field__input-wrapper select,
+.field__input-wrapper input {
+  border-radius: 0;
+}
+
+.step__footer__previous-link-content:hover {
+  color: #f5a0bc;
+}
