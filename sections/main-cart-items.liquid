@@ -4,27 +4,24 @@
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
 {%- assign cart_ids = cart.items | map: 'product_id' -%}
-<cart-items data-cart-ids="{{ cart_ids | json }}" class="block container pt-12{% if cart == empty %} is-empty{% endif %}">
+<cart-items data-cart-ids="{{ cart_ids | json }}" class="block container pt-12">
   <div class="flex justify-between items-center mb-6">
     <h1 class="font-serif text-4xl tracking-tight">{{ 'sections.cart.title' | t }}</h1>
     <a class="button button-secondary button-sm" href="/collections/shop">{{ 'general.continue_shopping' | t }}</a>
   </div>
 
-  <div class="cart__warnings">
-    <h1>{{ 'sections.cart.empty' | t }}</h1>
-    <a href="{{ routes.all_products_collection_url }}" class="button">
-      {{ 'general.continue_shopping' | t }}
-    </a>
+  <div class="cart__warnings flex flex-col justify-center text-center mb-8 {% if cart == empty %} block{% else %}hidden{% endif %}">
+    <h1 class="font-medium text-lg">{{ 'sections.cart.empty' | t }}</h1>
 
     {%- if shop.customer_accounts_enabled -%}
-      <h2 class="cart__login-title">{{ 'sections.cart.login.title' | t }}</h2>
+      <h2>{{ 'sections.cart.login.title' | t }}</h2>
       <p class="cart__login-paragraph">
         {{ 'sections.cart.login.paragraph_html' | t: link: routes.account_login_url }}
       </p>
     {%- endif -%}
   </div>
 
-  <form action="{{ routes.cart_url }}" class="cart__contents critical-hidden" method="post" id="cart">
+  <form action="{{ routes.cart_url }}" class="cart__contents{% if cart == empty %} hidden{% else %}block{% endif %}" method="post" id="cart">
     <div class="cart__items" id="main-cart-items" data-id="{{ section.id }}">
       <div class="js-contents">
         {%- if cart != empty -%}
