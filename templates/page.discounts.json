@@ -11,11 +11,14 @@
           }
         }
       },
-      "block_order": ["template--15591258718391__3ac41f92-aa2a-4710-a4d8-7928a8db03c8-1665872666f3fb3b1c-0"],
+      "block_order": [
+        "template--15591258718391__3ac41f92-aa2a-4710-a4d8-7928a8db03c8-1665872666f3fb3b1c-0"
+      ],
       "settings": {
         "is_text_only": false,
-        "image": "shopify://shop_images/discounts-banner-mobile.jpg",
-        "image_desktop": "shopify://shop_images/ws.png",
+        "image": "shopify:\/\/shop_images\/discounts-banner-mobile.jpg",
+        "image_desktop": "shopify:\/\/shop_images\/ws.png",
+        "is_lazy": false,
         "section_classes": "relative container lg:max-w-screen-lg px-0 sm:px-6 mb-8",
         "image_classes": "block object-cover object-bottom sm:object-center md:object-right h-80 overflow-hidden min-w-full",
         "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
@@ -38,7 +41,8 @@
             "paragraph": "Take 10% off your first order when signing up to our email newsletter. Discount codes are valid for new email subscribers &amp; on first purchase only. Offer not valid on gift cards, shipping, or tax. Offer cannot be combined with any other promotional offer or added to an existing purchase after it has been placed.",
             "paragraph_classes": "text-sm leading-normal mb-4",
             "button_label": "Sign up for email",
-            "link": "shopify://pages/newsletter-signup",
+            "button_aria_label": "",
+            "link": "shopify:\/\/pages\/newsletter-signup",
             "target_blank": false,
             "button_classes": "button-sm button-secondary",
             "button_icon": "",
@@ -64,7 +68,8 @@
             "paragraph": "Get an additional 10% off your next order when signing up to receive SMS alerts. Offer not valid on gift cards, shipping, or tax. Offer cannot be combined with any other promotional offer or added to an existing purchase after it has been placed.",
             "paragraph_classes": "text-sm leading-normal mb-4",
             "button_label": "Sign Up for SMS",
-            "link": "shopify://pages/sms",
+            "button_aria_label": "",
+            "link": "shopify:\/\/pages\/sms",
             "target_blank": false,
             "button_classes": "button-sm button-secondary",
             "button_icon": "",
@@ -90,7 +95,8 @@
             "paragraph": "Subscribe to eligible products and get 10% off every order, plus free shipping on recurring orders, early access to new products, and exclusive access to deluxe samples.",
             "paragraph_classes": "text-sm leading-normal mb-4",
             "button_label": "Learn More",
-            "link": "shopify://pages/subscribe",
+            "button_aria_label": "",
+            "link": "shopify:\/\/pages\/subscribe",
             "target_blank": false,
             "button_classes": "button-sm button-secondary",
             "button_icon": "",
@@ -116,7 +122,8 @@
             "paragraph": "Get 10% back on all U.S. orders when you pay with your preferred bank account using Catch. Plus, get a $10 bonus credit to use after your first order.",
             "paragraph_classes": "text-sm leading-normal mb-4",
             "button_label": "Learn More",
-            "link": "shopify://pages/pay-with-catch",
+            "button_aria_label": "",
+            "link": "shopify:\/\/pages\/pay-with-catch",
             "target_blank": false,
             "button_classes": "button-sm button-secondary",
             "button_icon": "",
@@ -142,7 +149,8 @@
             "paragraph": "Give your friends $20 off on their first order of $80+ and get $20 off your next order of $80+ for each successful referral.",
             "paragraph_classes": "text-sm leading-normal mb-4",
             "button_label": "Refer a Friend",
-            "link": "shopify://pages/refer",
+            "button_aria_label": "",
+            "link": "shopify:\/\/pages\/refer",
             "target_blank": false,
             "button_classes": "button-sm button-secondary",
             "button_icon": "",
@@ -168,6 +176,7 @@
             "paragraph": "Free Standard Shipping on orders over $50. Flat Rate Shipping is $7.95 on all orders $0-$49.99. These rates are not applicable for orders shipped outside of the US. Taxes and Gift Cards do not count toward the Free Shipping total.",
             "paragraph_classes": "text-sm leading-normal mb-4",
             "button_label": "",
+            "button_aria_label": "",
             "link": "",
             "target_blank": false,
             "button_classes": "",
@@ -197,14 +206,13 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": false,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "1663343635340aebb2": {
       "type": "rich-text",
-      "disabled": true,
       "blocks": {
         "166334363559999d43-0": {
           "type": "heading",
@@ -218,7 +226,7 @@
         "1b79f4a8-8746-4316-bfd4-2e9446aa68b4": {
           "type": "heading",
           "settings": {
-            "heading_text": "Free Mini Firming Eye Cream with Purchase of $75+",
+            "heading_text": "Free Mystery Gift with Purchase of $100+",
             "heading_classes": "text-xl tracking-wide font-medium text-left",
             "subheading_text": "",
             "subheading_classes": ""
@@ -227,17 +235,25 @@
         "3604649e-6971-4fc6-b006-307ddb3c4062": {
           "type": "paragraph",
           "settings": {
-            "paragraph_text": "While supplies last, eligible customers will receive a free Mini Blemish Prone Trio (3.7 ml Essential Complex Corrective, 18 ml Blemish Balm, Ocean Cleansing Mudd Sample Packette) with purchase of $75 or more (less applicable taxes, shipping and handling).  No code necessary. Must add in cart in order to redeem offer. Offer only available on www.oseamalibu.com. Offer cannot be combined and is not valid on previous purchases.",
+            "paragraph_text": "From 10\/25\/22 until 10\/31\/22 at 11:59 PM, or while supplies last, customers who spend $100+ (USD) or more (less applicable taxes, shipping and handling) will receive a free mystery gift. No code necessary. Automatically added at checkout. Offer only available on www.oseamalibu.com. Offer cannot be combined and is not valid on previous purchases.",
             "paragraph_classes": "text-left text-sm leading-relaxed pb-6"
           }
         }
       },
-      "block_order": ["166334363559999d43-0", "1b79f4a8-8746-4316-bfd4-2e9446aa68b4", "3604649e-6971-4fc6-b006-307ddb3c4062"],
+      "block_order": [
+        "166334363559999d43-0",
+        "1b79f4a8-8746-4316-bfd4-2e9446aa68b4",
+        "3604649e-6971-4fc6-b006-307ddb3c4062"
+      ],
       "settings": {
         "section_classes": "container lg:max-w-screen-lg",
         "container_classes": "text-center"
       }
     }
   },
-  "order": ["3ac41f92-aa2a-4710-a4d8-7928a8db03c8", "1662745507c50e4715", "1663343635340aebb2"]
+  "order": [
+    "3ac41f92-aa2a-4710-a4d8-7928a8db03c8",
+    "1662745507c50e4715",
+    "1663343635340aebb2"
+  ]
 }
