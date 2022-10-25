@@ -17,7 +17,15 @@
       endunless
     endfor
 
-    assign allResults = pageList | concat: productList | concat: predictive_search.resources.articles | concat: predictive_search.resources.collections
+    assign collectionList = null | sort
+    for collection in predictive_search.resources.collections
+      unless collection.metafields.custom.hide_from_search
+        assign collectionItem = collection | sort
+        assign collectionList = collectionList | concat: collectionItem
+      endunless
+    endfor
+
+    assign allResults = pageList | concat: productList | concat: predictive_search.resources.articles | concat: collectionList
     
     assign article_title = article.title | truncate: 55
     assign article_description = article.excerpt | truncate: 75
@@ -84,12 +92,12 @@
           </div>
           {% comment %} Result links column {% endcomment %}
           <div class="block sm:mr-4 md:min-w-[220px] lg:min-w-[240px]">
-            {%- if predictive_search.resources.collections.size > 0 -%}
+            {%- if collectionList > 0 -%}
               <h2 id="predictive-search-collections" class="{{ header_styles }}">
                 Collections
               </h2>
               <ul class="mb-6" role="listbox" aria-labelledby="predictive-search-collections">
-                {%- for collection in predictive_search.resources.collections -%}
+                {%- for collection in collectionList -%}
                   <li id="predictive-search-page-{{ forloop.index }}" role="option" aria-selected="false">
                     <a href="{{ collection.url }}" class="{{ link_styles }}" tabindex="-1">
                       {{ collection.title | highlight: predictive_search.terms }}
@@ -152,7 +160,7 @@
     {%- endif -%}
   </div>
 
-  <span class="hidden" data-predictive-search-live-region-count-value>
+  <span class="sr-only" data-predictive-search-live-region-count-value>
     {%- if search.results_count == 0 -%}
       {{ 'templates.search.no_results' | t: terms: predictive_search.terms }}
     {%- else -%}
