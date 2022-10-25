@@ -372,18 +372,32 @@
               {%- for childlink in link.links -%}
                 {%- if childlink.links != blank -%}
                   <li>
-                    <h2 class="tracking-wide font-medium text-lg leading-none mb-2">{{ childlink.title | escape }}</h2>
+                    <h2 class="tracking-wide font-medium text-lg leading-none mb-2{% if childlink.title contains 'Mobile' %} hidden sm:block{% endif %}">
+                      {{- childlink.title | replace: 'Mobile - ', '' | escape -}}
+                    </h2>
                     <ul role="list">
                       {%- for grandchildlink in childlink.links -%}
                         <li>
-                          <a href="{{ grandchildlink.url }}" class="block px-3 py-1 -ml-3 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors"{% if childlink.current %} aria-current="page"{% endif %}>{{ grandchildlink.title | escape }}</a>
+                          <a
+                            href="{{ grandchildlink.url }}"
+                            class="block px-3 py-1 -ml-3 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors"
+                            {% if childlink.current %} aria-current="page"{% endif %}
+                          >
+                            {{- grandchildlink.title | escape -}}
+                          </a>
                         </li>
                       {%- endfor -%}
                     </ul>
                   </li>
                 {%- else -%}
                   <li>
-                    <a href="{{ childlink.url }}" class="block px-4 py-1.5 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors"{% if childlink.current %} aria-current="page"{% endif %}>{{ childlink.title | escape }}</a>
+                    <a
+                      href="{{ childlink.url }}"
+                      class="block px-4 py-1.5 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors{% if childlink.title contains 'Mobile' %} hidden sm:block{% endif %}"
+                      {% if childlink.current %} aria-current="page"{% endif %}
+                    >
+                      {{- childlink.title | replace: 'Mobile - ', '' | escape -}}
+                    </a>
                   </li>
                 {%- endif -%}
               {%- endfor -%}
