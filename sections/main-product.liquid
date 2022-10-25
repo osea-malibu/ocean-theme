@@ -18,12 +18,12 @@
             <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
               <img
                 id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
-                srcset="{{ media | image_url: width: 294 }} 1x, {{ media | image_url: width: 588 }} 2x"
-                src="{{ media | image_url: width: 588 }}"
+                srcset="{{ media | image_url: width: 300, height: 375, crop: 'center' }} 1x, {{ media | image_url: width: 600, height: 750, crop: 'center' }} 2x"
+                src="{{ media | image_url: width: 600, height: 750, crop: 'center' }}"
                 loading="lazy"
                 alt="{{ media.alt | escape }}"
                 width="{{ media.width }}"
-                height="{{ media.width | divided_by: media.aspect_ratio }}"
+                height="{{ media.width | divided_by: 0.8 }}"
               >
             </li>
           {%- endfor -%}
