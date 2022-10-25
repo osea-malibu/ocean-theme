@@ -55,6 +55,11 @@ class CartItems extends HTMLElement {
         section: document.getElementById("main-cart-footer").dataset.id,
         selector: ".js-contents",
       },
+      {
+        id: "shopify-section-announcement-bar",
+        section: "announcement-bar",
+        selector: ".shopify-section",
+      },
     ];
   }
 
@@ -93,6 +98,10 @@ class CartItems extends HTMLElement {
               if (cartIdArray.includes(tier.product) && parsedState.total_price < tier.threshold) {
                 const line = cartIdArray.findIndex((i) => i === tier.product) + 1;
                 this.removeGift(line);
+              }
+              if (window.gwpSettings.type === "auto" && !cartIdArray.includes(tier.product) && parsedState.total_price >= tier.threshold) {
+                this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+                this.cart.addFreeGift(tier.variant);
               }
             }
           });

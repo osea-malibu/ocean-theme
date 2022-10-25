@@ -3,8 +3,8 @@
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
-
-<cart-items class="block container pt-12{% if cart == empty %} is-empty{% endif %}">
+{%- assign cart_ids = cart.items | map: 'product_id' -%}
+<cart-items data-cart-ids="{{ cart_ids | json }}" class="block container pt-12{% if cart == empty %} is-empty{% endif %}">
   <div class="flex justify-between items-center mb-6">
     <h1 class="font-serif text-4xl tracking-tight">{{ 'sections.cart.title' | t }}</h1>
     <a class="button button-secondary button-sm" href="/collections/shop">{{ 'general.continue_shopping' | t }}</a>

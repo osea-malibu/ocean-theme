@@ -111,6 +111,14 @@ class CartDrawer extends HTMLElement {
     }
   }
 
+  addFreeGift(product) {
+    const body = JSON.stringify({ items: [{ id: product, quantity: 1 }] });
+    fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
+      .then((response) => response.json())
+      .then((response) => this.renderContents(response))
+      .catch((error) => console.error(error));
+  }
+
   getSectionInnerHTML(html, selector = ".shopify-section") {
     return new DOMParser().parseFromString(html, "text/html").querySelector(selector).innerHTML;
   }
@@ -123,6 +131,10 @@ class CartDrawer extends HTMLElement {
       },
       {
         id: "cart-icon-bubble",
+      },
+      {
+        id: "announcement-bar",
+        selector: "#AnnouncementBar",
       },
     ];
   }
@@ -149,6 +161,11 @@ class CartDrawerItems extends CartItems {
       {
         id: "cart-icon-bubble",
         section: "cart-icon-bubble",
+        selector: ".shopify-section",
+      },
+      {
+        id: "shopify-section-announcement-bar",
+        section: "announcement-bar",
         selector: ".shopify-section",
       },
     ];
