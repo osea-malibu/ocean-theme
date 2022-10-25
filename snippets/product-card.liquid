@@ -28,7 +28,7 @@
 
         <a href="{{ card_product.url | default: '#' }}">
           <h3
-            class="sm:text-lg font-medium leading-none sm:leading-5 hover:underline"
+            class="text-sm 2xs:text-base sm:text-lg font-bold 2xs:font-medium !leading-none hover:underline mb-1"
             id="title-{{ section_id }}-{{ card_product.id }}"
           >
             {{ card_product.title | escape }}
@@ -126,7 +126,7 @@
           </variant-selects>
         {%- else -%}
           <variant-radios
-            class="no-js-hidden block mt-1"
+            class="no-js-hidden block sm:mt-1"
             data-section="{{ card_product.id }}-{{ section_id }}"
             data-url="{{ card_product.url }}"
             data-update-url="false"

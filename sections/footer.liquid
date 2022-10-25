@@ -23,7 +23,7 @@
       </div>
     {%- endif -%}
     {% endcomment %}
-    <ul class="container mx-auto px-6 flex justify-between sm:max-w-lg lg:max-w-4xl">
+    <ul class="container flex justify-between sm:max-w-lg lg:max-w-4xl">
       <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
         {%- render 'icon-value', icon: 'clean-ingredients', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
         <span><span class="whitespace-nowrap">Clean Beauty</span> <br />Since 1996</span>
@@ -75,7 +75,7 @@
           {%- endfor -%}
         {%- endif -%}
         {%- if section.settings.newsletter_enable -%}
-          <div class="absolute -top-64 left-1/2 -translate-x-1/2 mx-auto px-6 w-full max-w-lg lg:px-0 lg:w-1/3 lg:relative lg:-top-6 lg:left-0 lg:translate-x-0">
+          <div class="absolute -top-64 left-1/2 -translate-x-1/2 w-full max-w-lg lg:px-0 lg:w-1/3 lg:relative lg:-top-6 lg:left-0 lg:translate-x-0">
             {% comment %} Newsletter form {% endcomment %}
             <div class="bg-seafoam-300 px-4 md:px-6 py-6 flex flex-col justify-center mb-6">
               {%- if section.settings.newsletter_heading != blank -%}
@@ -134,7 +134,7 @@
       </div>
     {%- endif -%}
 
-    <div class="container mx-auto px-6">
+    <div class="container">
       <div class="flex items-center justify-between gap-6 mb-4 max-w-xs mx-auto scale-75 sm:scale-90">
         {% render 'logo-ocean-positive' %}
         {% render 'logo-climate-neutral' %}

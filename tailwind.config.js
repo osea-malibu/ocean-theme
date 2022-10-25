@@ -67,7 +67,10 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: "1.5rem",
+      padding: {
+        DEFAULT: "1rem",
+        "2xs": "1.5rem",
+      },
     },
     colors: {
       black: "#000",

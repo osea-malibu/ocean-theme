@@ -11,7 +11,7 @@
     {{ 'component-facets.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
-    <div class="container mx-auto px-6 mb-6" id="main-collection-filters" data-id="{{ section.id }}">
+    <div class="container mb-6" id="main-collection-filters" data-id="{{ section.id }}">
       {% render 'facets',
         results: collection,
         enable_filtering: section.settings.enable_filtering,
@@ -20,10 +20,10 @@
     </div>
   {%- endunless -%}
 {%- else -%}
-  <div class="sr-only container mx-auto px-6 whitespace-nowrap leading-relaxed mb-0.5">{{ collection.products_count }} items</div>
+  <div class="sr-only container whitespace-nowrap leading-relaxed mb-0.5">{{ collection.products_count }} items</div>
 {%- endif -%}
 
-<div id="ProductGridContainer" class="container mx-auto px-6 mb-12">
+<div id="ProductGridContainer" class="container mb-12">
   {%- if section.settings.enable_anchors and subcollections and subcollections.value.size > 0 -%}
     <div class="flex overflow-x-auto scrollbar mb-4">
       {%- if featured_products -%}
@@ -39,6 +39,25 @@
   {%- if featured_products -%}
     {%- capture featured_products_grid -%}
       <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
+        {%- if collection.metafields.custom.promo_tile_image != blank -%}
+          <li class="relative overflow-hidden">
+            {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
+              <a href="{{ collection.metafields.custom_fields.promo_tile_url }}" class="block">
+            {%- endif -%}
+            <img
+              srcset="{{ collection.metafields.custom.promo_tile_image | image_url: width: 300 }} 1x, {{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }} 2x"
+              src="{{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }}"
+              alt="{{ collection.metafields.custom.promo_tile_image.value.alt }}"
+              width="{{ collection.metafields.custom.promo_tile_image.value.width }}"
+              height="{{ collection.metafields.custom.promo_tile_image.value.width | divided_by: collection.metafields.custom.promo_tile_image.value.aspect_ratio }}"
+              loading=lazy
+              class="absolute inset-0 object-cover object-center min-h-full"
+            >
+            {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
         {%- for product in featured_products.value -%}
           <li>
             {% render 'product-card',

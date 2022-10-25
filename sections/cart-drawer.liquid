@@ -292,7 +292,11 @@
                                   </quantity-input>
                                 {%- endunless -%}
 
-                                <cart-remove-button id="CartDrawer-Remove-{{ item.index | plus: 1 }}" data-index="{{ item.index | plus: 1 }}" class="{% if item.product.type == 'Sample' %}block{% else %}hidden xs:block{% endif %}">
+                                <cart-remove-button
+                                  id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
+                                  data-index="{{ item.index | plus: 1 }}"
+                                  class="{% if item.product.type == 'Sample' or item.product.type == 'Free Gift' %}block{% else %}hidden xs:block{% endif %}"
+                                >
                                   <button class="block button button-secondary button-sm px-2" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}" name="remove" type="button">
                                     {% render 'icon-remove', classes: 'w-4 h-4 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                                   </button>
