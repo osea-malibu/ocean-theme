@@ -9,7 +9,7 @@
 
       assign gwp_threshold = settings.gwp_tier1_threshold | times: 100
       assign remaining_amount = gwp_threshold | minus: cart.total_price
-      assign remaining_amount_money = remaining_amount | money
+      assign remaining_amount_money = remaining_amount | money_without_trailing_zeros
       assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
       assign countdown_text_mobile = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', 'gift' | replace: 'Free Gift - '
 
