@@ -6,14 +6,11 @@
         "featured_image": {
           "type": "featured_image",
           "settings": {
-            "image_height": "adapt"
           }
         },
         "title": {
           "type": "title",
           "settings": {
-            "blog_show_date": false,
-            "blog_show_author": false
           }
         },
         "share": {
@@ -25,12 +22,21 @@
         },
         "content": {
           "type": "content",
-          "settings": {}
+          "settings": {
+          }
         }
       },
-      "block_order": ["featured_image", "title", "share", "content"],
-      "settings": {}
+      "block_order": [
+        "featured_image",
+        "title",
+        "share",
+        "content"
+      ],
+      "settings": {
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
