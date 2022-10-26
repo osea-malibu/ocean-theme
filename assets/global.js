@@ -489,7 +489,7 @@ class VariantSelects extends HTMLElement {
       this.toggleAddButton(true, "", true);
       this.setUnavailable();
     } else {
-      if (window.location.pathname.includes("/products/")) {
+      if (window.location.pathname.includes("/products/") && this.currentVariant.selling_plan_allocations.length > 0) {
         this.updateSubscription();
       }
       this.updateMedia();

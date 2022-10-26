@@ -156,7 +156,7 @@
             {%- unless product.has_only_default_variant -%}
               <variant-radios class="no-js-hidden block {{ block.settings.variant_classes }}" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                 {%- for option in product.options_with_values -%}
-                  <fieldset class="js flex">
+                  <fieldset class="js flex flex-wrap">
                     <legend class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</legend>
                     {%- for value in option.values -%}
                       <div>
@@ -169,7 +169,7 @@
                           {% if option.selected_value == value %}checked{% endif %}
                         >
                         <label
-                          class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2{% if value == '9.6 oz Holiday' %} tracking-wide{% endif %}"
+                          class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2 mb-1{% if value == '9.6 oz Holiday' %} tracking-wide{% endif %}"
                           for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                         >
                           {{ value }}
