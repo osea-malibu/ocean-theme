@@ -14,6 +14,7 @@
 	will be taken. Just don't do it.
 {%- endcomment -%}
 
+{% comment %} theme-check-disable LiquidTag {% endcomment %}
 {%- layout none -%}
 
 {%- for collection in collections -%}
@@ -35,4 +36,5 @@
 		{%- endif -%}
 	{%- endif -%}
 {%- endfor -%}
-{"tags":[{{results}}]}
+{"tags":[{{ results }}]}
+{% comment %} theme-check-enable LiquidTag {% endcomment %}

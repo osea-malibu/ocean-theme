@@ -59,7 +59,7 @@
     var paymentForm = document.querySelector("form[data-payment-form]");
     if (paymentForm) {
     	{% for attribute in checkout.attributes %}
-    	var inputHtml = '<input type=hidden name="checkout[attributes][{{ attribute.first }}]" value="{{ attribute.last  }}" />';
+    	var inputHtml = '<input type=hidden name="checkout[attributes][{{ attribute.first }}]" value="{{ attribute.last }}" />';
  		paymentForm.insertAdjacentHTML('beforeend', inputHtml);
     	{% endfor %}
     }

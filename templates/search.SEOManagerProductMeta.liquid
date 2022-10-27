@@ -13,19 +13,21 @@
 	will be taken. Just don't do it.
 {%- endcomment -%}
 
-{%- layout none -%}
+{%- liquid
+	layout none
 
-{%- assign collection = collections['all'] -%}
+	assign collection = collections['all'] 
 
-{%- if collection.products_count == 0 -%}
-    {%- assign collection = collections['allproducts'] -%}
-{%- endif -%}
+  if collection.products_count == 0
+    assign collection = collections['allproducts']
+  endif
 
-{% assign searchTermsNumber = search.terms | plus: 0 %}
+  assign searchTermsNumber = search.terms | plus: 0
 
-{%- if searchTermsNumber > collection.products_count -%}
-    {%- assign searchTermsNumber = collection.products_count -%}
-{%- endif -%}
+  if searchTermsNumber > collection.products_count
+    assign searchTermsNumber = collection.products_count
+  endif
+-%}
 
 {%- paginate  collection.products by searchTermsNumber -%}
 
@@ -33,14 +35,16 @@
 
 	{%- capture results -%}
 		{%- for item in collection.products -%}
-			{%- assign product			= item -%}
-			{%- assign meta_title		= product.metafields.global.title_tag -%}
-			{%- assign meta_description = product.metafields.global.description_tag -%}
-			{%- assign seoDone			= product.metafields.SEOMetaManager.seoDone -%}
+			{%- liquid
+        assign product = item
+			  assign meta_title	= product.metafields.global.title_tag
+			  assign meta_description = product.metafields.global.description_tag
+			  assign seoDone = product.metafields.SEOMetaManager.seoDone
 
-			{%- if meta_title == null -%}
-				{%- assign meta_title = product.title -%}
-			{%- endif -%}
+        if meta_title == null
+          assign meta_title = product.title
+        endif 
+      -%}
 
 			{%- if meta_description == null -%}
 				{%- capture meta_description -%}{{ product.description | strip_html | strip_newlines | truncate: 160 }} {% endcapture %}
@@ -51,12 +55,12 @@
 			{%- endif -%}
 
 			{
-				"productID"			: {{ product.id | JSON }},
+				"productID"			: {{ product.id | json }},
 				"title"				: {{ product.title | json }},
 				"meta_title"		: {{ meta_title | json }},
 				"meta_description"	: {{ meta_description | json }},
 				"seo_done"			: {{ seoDone }},
-				"thumbnail"			: {{ product.featured_image.src | img_url : '100x100' | json }},
+				"thumbnail"			: {{ product.featured_image.src | image_url : width: 100, height: 100 | json }},
 				"handle"			: {{ product.handle | json }}
 			}
 			{%- unless forloop.last -%},{%- endunless -%}
