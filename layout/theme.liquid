@@ -159,12 +159,16 @@
       <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {%- render 'klaviyo-back-in-stock' -%}
+    {%- liquid
+      render 'klaviyo-back-in-stock'
 
-    {%- if template.name == 'product' -%}
-      {%- render 'klaviyo-add-to-cart' -%}
-    {%- endif -%}
+      if template.name == 'product'
+        render 'klaviyo-add-to-cart'
+      endif
     
-    {%- render 'gorgias-chat-widget' -%}
+      render 'gorgias-chat-widget'
+
+      render 'bazaarvoice'
+    -%}
   </body>
 </html>
