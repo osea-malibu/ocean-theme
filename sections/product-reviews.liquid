@@ -1,6 +1,6 @@
 {{ 'section-product-reviews.css' | asset_url | stylesheet_tag }}
 
-{%- if product.metafields.stamped.reviews -%}
+{%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
   <div class="{{ section.settings.wrapper_classes }}">
     <span class="block relative -top-32 invisible" id="reviews"></span>
     <div class="container xl:max-w-screen-lg tracking-tight">

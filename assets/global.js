@@ -417,7 +417,6 @@ class ModalDialog extends HTMLElement {
 
   show(opener) {
     this.openedBy = opener;
-    console.log("this.openedBy", this.openedBy);
     const popup = this.querySelector(".template-popup");
     document.body.classList.add("overflow-hidden");
     this.setAttribute("open", "");
@@ -444,7 +443,6 @@ class ModalOpener extends HTMLElement {
     if (!button) return;
     button.addEventListener("click", () => {
       const modal = document.querySelector(this.getAttribute("data-modal"));
-      console.log("modal", modal);
       if (modal) modal.show(button);
     });
   }
@@ -1046,7 +1044,6 @@ class GiftWithPurchaseUrl extends HTMLElement {
   constructor() {
     super();
 
-    this.hasBeenAdded = false;
     this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
     const { threshold, productId, variantId } = this.dataset;
 
@@ -1055,30 +1052,22 @@ class GiftWithPurchaseUrl extends HTMLElement {
     });
     let gwpParam = params.gwp;
 
-    if (gwpParam === productId && !this.hasBeenAdded) {
+    if (gwpParam === productId) {
       if (Number(threshold) === 0) {
-        this.addGiftToCart(variantId);
+        this.isGiftInCart(variantId);
       }
     }
   }
 
-  addGiftToCart(variantId) {
+  isGiftInCart(variantId) {
     fetch(window.Shopify.routes.root + "cart.js")
       .then((response) => response.json())
       .then((data) => {
         if (!data.items.map((i) => i.id).includes(variantId)) {
-          const body = JSON.stringify({
-            items: [{ id: variantId, quantity: 1 }],
-          });
-          fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
-            .then((response) => response.json())
-            .then((response) => {
-              this.hasBeenAdded = true;
-              this.cart.renderContents(response);
-            })
-            .catch((error) => console.error(error));
+          this.cart.addFreeGift(variantId);
         }
-      });
+      })
+      .catch((error) => console.error(error));
   }
 }
 customElements.define("gift-with-purchase-url", GiftWithPurchaseUrl);
