@@ -452,18 +452,20 @@
             "label": "Cart banner"
           },
           {
-            "value": "coupon",
-            "label": "Coupon code"
+            "value": "url",
+            "label": "URL parameter"
           }
         ],
         "default": "auto",
-        "label": "How to add gift to cart"
+        "label": "How to add gift to cart",
+        "info": "With URL param type, link will be: oseamalibu.com?gwp=PRODUCT_ID"
       },
       {
-        "type": "text",
-        "id": "gwp_coupon_code",
-        "info": "Use with Coupon Code add type",
-        "label": "Coupon code"
+        "default": 0,
+        "type": "number",
+        "id": "gwp_url_threshold",
+        "info": "Use with URL parameter type. Values > 0 trigger modal prompts, 0 triggers automatic add to cart.",
+        "label": "URL parameter threshold"
       },
       {
         "type": "textarea",

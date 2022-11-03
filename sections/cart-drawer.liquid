@@ -54,7 +54,7 @@
         -%}
 
         {%- unless settings.gwp_tier1_product == nil or hide_gwp -%}
-          <gift-with-purchase class="block bg-seafoam-100">
+          <gift-with-purchase-banner class="block bg-seafoam-100">
             <figure class="flex items-center max-w-md pl-6 pr-8 xs:pr-6 mx-auto gap-2">
               <img
                 srcset="{{ settings.gwp_tier1_product.featured_media | image_url: width: 128 }} 2x,
@@ -83,7 +83,7 @@
                 {%- endif -%}
               </figcaption>
             </figure>
-          </gift-with-purchase>
+          </gift-with-purchase-banner>
         {%- endunless -%}
       {%- endif -%}
 

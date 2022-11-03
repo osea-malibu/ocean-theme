@@ -266,7 +266,7 @@ class CartRecommendations extends HTMLElement {
 
 customElements.define("cart-recommendations", CartRecommendations);
 
-class GiftWithPurchase extends HTMLElement {
+class GiftWithPurchaseBanner extends HTMLElement {
   constructor() {
     super();
 
@@ -291,7 +291,7 @@ class GiftWithPurchase extends HTMLElement {
   }
 }
 
-customElements.define("gift-with-purchase", GiftWithPurchase);
+customElements.define("gift-with-purchase-banner", GiftWithPurchaseBanner);
 
 class SaveWithSets extends HTMLElement {
   constructor() {

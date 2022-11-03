@@ -395,7 +395,6 @@ class MenuDrawer extends HTMLElement {
     window.requestAnimationFrame(handleAnimation);
   }
 }
-
 customElements.define("menu-drawer", MenuDrawer);
 
 class ModalDialog extends HTMLElement {
@@ -1042,6 +1041,47 @@ class GlideSlider extends HTMLElement {
   }
 }
 customElements.define("glide-slider", GlideSlider);
+
+class GiftWithPurchaseUrl extends HTMLElement {
+  constructor() {
+    super();
+
+    this.hasBeenAdded = false;
+    this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    const { threshold, productId, variantId } = this.dataset;
+
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+    let gwpParam = params.gwp;
+
+    if (gwpParam === productId && !this.hasBeenAdded) {
+      if (Number(threshold) === 0) {
+        this.addGiftToCart(variantId);
+      }
+    }
+  }
+
+  addGiftToCart(variantId) {
+    fetch(window.Shopify.routes.root + "cart.js")
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.items.map((i) => i.id).includes(variantId)) {
+          const body = JSON.stringify({
+            items: [{ id: variantId, quantity: 1 }],
+          });
+          fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
+            .then((response) => response.json())
+            .then((response) => {
+              this.hasBeenAdded = true;
+              this.cart.renderContents(response);
+            })
+            .catch((error) => console.error(error));
+        }
+      });
+  }
+}
+customElements.define("gift-with-purchase-url", GiftWithPurchaseUrl);
 
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {
