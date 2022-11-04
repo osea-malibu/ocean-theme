@@ -1,36 +1,39 @@
 <div class="{{ section.settings.section_classes }}">
   {%- if section.settings.image != blank and section.settings.is_text_only == false -%}
     <picture>
+      {%- liquid
+        assign mobile_image_src = section.settings.image | image_url: width: 400
+        assign mobile_image_src_2x = section.settings.image | image_url: width: 800
+        assign mobile_image_src_4x = section.settings.image | image_url: width: 1600
+        assign desktop_image_src = section.settings.image_desktop | image_url: width: 800
+        assign desktop_image_src_2x = section.settings.image_desktop | image_url: width: 1600
+      -%}
       {%- if section.settings.image_desktop == blank -%}
         <source
-          srcset="{{ section.settings.image | image_url: width: 800 }} 1x,
-            {{ section.settings.image | image_url: width: 1600 }} 2x"
+          srcset="{% render 'imgix', src: mobile_image_src_2x %} 1x, {% render 'imgix', src: mobile_image_src_4x %} 2x"
           media="(min-width: 640px)"
         >
       {%- else -%}
         <source
-          srcset="{{ section.settings.image_desktop | image_url: width: 800 }} 1x,
-            {{ section.settings.image_desktop | image_url: width: 1600 }} 2x"
+          srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
           media="(min-width: 640px)"
         >
       {%- endif %}
       <source
-        srcset="{{ section.settings.image | image_url: width: 400 }} 1x,
-          {{ section.settings.image | image_url: width: 800 }} 2x"
-        media="(min-width: 0)"
+        srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+        media="(max-width: 639px)"
       >
-      {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+      {% comment %} theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
       <img
-        srcset="{{ section.settings.image | image_url: width: 400 }} 1x,
-          {{ section.settings.image | image_url: width: 800 }} 2x"
-        src="{{ section.settings.image | image_url: width: 800 }}"
+        srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+        src="{% render 'imgix', src: mobile_image_src_2x %}"
         {% if section.settings.is_lazy %}loading="lazy"{% endif %}
         alt="{{ section.settings.image.alt | escape }}"
         width="{{ section.settings.image.width }}"
         height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
         class="{{ section.settings.image_classes }}"
       >
-      {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
+      {% comment %} theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
     </picture>
   {%- endif -%}
   <div class="{% if section.settings.is_text_only %}py-6 text-center{% else %}{{ section.settings.text_block_classes }}{% endif %}">

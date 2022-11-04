@@ -16,15 +16,21 @@
         <ul class="glide__slides">
           {%- for media in product.media limit: section.settings.gallery_limit -%}
             <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
+              {%- liquid
+                assign main_image_src = media | image_url: width: 300, height: 375, crop: 'center'
+                assign main_image_src_2x = media | image_url: width: 600, height: 750, crop: 'center'
+              -%}
+              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img
                 id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
-                srcset="{{ media | image_url: width: 300, height: 375, crop: 'center' }} 1x, {{ media | image_url: width: 600, height: 750, crop: 'center' }} 2x"
-                src="{{ media | image_url: width: 600, height: 750, crop: 'center' }}"
+                srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
+                src="{% render 'imgix', src: main_image_src_2x %}"
                 loading="lazy"
                 alt="{{ media.alt | escape }}"
                 width="{{ media.width }}"
                 height="{{ media.width | divided_by: 0.8 }}"
               >
+              {% comment %} theme-check-enable RemoteAsset {% endcomment %}
             </li>
           {%- endfor -%}
         </ul>
@@ -34,16 +40,22 @@
           <button class="glide__bullet p-2 md:px-0 xl:py-0" data-glide-dir="={{ forloop.index0 }}">
             <span class="sr-only">Go to slide {{ forloop.index }}</span>
             <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
+            {%- liquid
+              assign thumb_image_src = media | image_url: width: 48
+              assign thumb_image_src_2x = media | image_url: width: 96
+            -%}
+            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
             <img
               id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
-              srcset="{{ media | image_url: width: 48 }} 1x, {{ media | image_url: width: 96 }} 2x"
-              src="{{ media | image_url: width: 48 }}"
+              srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
+              src="{% render 'imgix', src: thumb_image_src_2x %}"
               loading="lazy"
               alt="{{ media.alt | escape }}"
               width="{{ media.width }}"
               height="{{ media.width | divided_by: media.aspect_ratio }}"
               class="hidden md:block w-14 h-20 object-cover"
             >
+            {% comment %} theme-check-enable RemoteAsset {% endcomment %}
           </button>
         {%- endfor -%}
       </div>

@@ -8,24 +8,36 @@
       >
     {%- endif -%}
     <picture>
+      {%- liquid
+        assign mobile_image_src = section.settings.image_mobile | image_url: width: 400
+        assign mobile_image_src_2x = section.settings.image_mobile | image_url: width: 800
+        assign desktop_image_src = section.settings.image | image_url: width: 800
+        assign desktop_image_src_2x = section.settings.image | image_url: width: 1600
+      -%}
+
       {%- if section.settings.image_mobile != blank -%}
         <source
-          srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 1x,
-            {{ section.settings.image_mobile | image_url: width: 800 }} 2x"
-          media="(max-width: 640px)"
+          srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+          media="(max-width: 639px)"
         >
       {%- endif %}
-      {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+      {%- if section.settings.image != blank -%}
+        <source
+          srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+          media="(min-width: 640px)"
+        >
+      {%- endif %}
+      {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
       <img
-        srcset="{{ section.settings.image | image_url: width: 800 }} 1x, {{ section.settings.image | image_url: width: 1600 }} 2x"
-        src="{{ section.settings.image | image_url: width: 1600 }}"
+        srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+        src="{% render 'imgix', src: mobile_image_src_2x %}"
         {% if section.settings.is_lazy %}loading="lazy"{% endif %}
         alt="{{ section.settings.image.alt | escape }}"
         width="{{ section.settings.image.width }}"
         height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
         class="{{ section.settings.image_classes }} block"
       >
-      {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
+      {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
     </picture>
     {%- if section.settings.image_link != blank -%}
       </a>
@@ -70,15 +82,15 @@
     },
     {
       "type": "image_picker",
-      "id": "image",
-      "info": "Recommended image size: 1600 x 800px (height is flexible)",
-      "label": "Image (desktop)"
-    },
-    {
-      "type": "image_picker",
       "id": "image_mobile",
       "info": "Recommended image size: 800 x 1000px (height is flexible)",
       "label": "Image (mobile)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "info": "Recommended image size: 1600 x 800px (height is flexible)",
+      "label": "Image (desktop)"
     },
     {
       "type": "checkbox",

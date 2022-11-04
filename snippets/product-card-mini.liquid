@@ -69,21 +69,27 @@
           tabindex="-1"
         >
       {%- endif -%}
-        {%- if custom_default_image != nil -%}
-          {% assign default_image = custom_default_image %}
-        {%- else -%}
-          {% assign default_image = card_product.featured_media %}
-        {%- endif -%}
+        {%- liquid
+          if custom_default_image != nil
+            assign default_image = custom_default_image
+          else
+            assign default_image = card_product.featured_media
+          endif
+
+          assign default_image_src = default_image | image_url: width: 72
+          assign default_image_src_2x = default_image | image_url: width: 144
+        -%}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
-          srcset="{{ default_image | image_url: width: 144 }} 2x,
-            {{ default_image | image_url: width: 72 }} 1x"
-          src="{{ default_image | image_url: width: 144 }}"
+          srcset="{% render 'imgix', src: default_image_src_2x %} 2x, {% render 'imgix', src: default_image_src %} 1x"
+          src="{% render 'imgix', src: default_image_src_2x %}"
           alt="{{ default_image.alt | escape }}"
           loading="lazy"
           width="72"
           height="72"
           class="mx-auto"
         >
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       {%- if disable_links == false or disable_links == nil -%}
         </a>
       {%- endif -%}

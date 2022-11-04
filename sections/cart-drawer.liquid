@@ -3,8 +3,7 @@
 <cart-drawer class="fixed z-100 top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer">
     <div class="cart-scrim block fixed inset-0 bg-seaweed-800/50"></div>
-    <div
-      class="cart-drawer bg-white fixed right-0 inset-y-0 w-[40rem] max-w-full overflow-hidden flex flex-col"
+    <div class="cart-drawer bg-white fixed right-0 inset-y-0 w-[40rem] max-w-full overflow-hidden flex flex-col"
       role="dialog"
       aria-modal="true"
       aria-label="{{ 'sections.cart.title' | t }}"
@@ -16,7 +15,6 @@
         assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1' | split: ', '
       -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
-
       {% comment %} Gift with purchase {% endcomment %}
       {%- if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto' -%}
         {%- liquid
@@ -56,15 +54,20 @@
         {%- unless settings.gwp_tier1_product == nil or hide_gwp -%}
           <gift-with-purchase-banner class="block bg-seafoam-100">
             <figure class="flex items-center max-w-md pl-6 pr-8 xs:pr-6 mx-auto gap-2">
+              {%- liquid
+                assign gwp_image_src = settings.gwp_tier1_product.featured_media | image_url: width: 64
+                assign gwp_image_src_2x = settings.gwp_tier1_product.featured_media | image_url: width: 128
+              -%}
+              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img
-                srcset="{{ settings.gwp_tier1_product.featured_media | image_url: width: 128 }} 2x,
-                  {{ settings.gwp_tier1_product.featured_media | image_url: width: 64 }}"
-                src="{{ settings.gwp_tier1_product.featured_media | image_url: width: 128 }}"
+                srcset="{% render 'imgix', src: gwp_image_src_2x %} 2x, {% render 'imgix', src: gwp_image_src %} 1x"
+                src="{% render 'imgix', src: gwp_image_src_2x %}"
                 alt="{{ settings.gwp_tier1_product.alt | escape }}"
                 loading="lazy"
                 width="64"
                 height="82"
               >
+              {% comment %} theme-check-enable RemoteAsset {% endcomment %}
               <figcaption>
                 <h3 class="leading-tight">
                   {%- if remaining_amount > 0 -%}
@@ -73,7 +76,6 @@
                     {{ settings.gwp_success_text }}
                   {%- endif -%}
                 </h3>
-
                 {%- if remaining_amount <= 0 and settings.gwp_type == 'banner' -%}
                   <button
                     class="button button-xs button-secondary mt-1"
@@ -150,15 +152,20 @@
               data-item-to-remove="{{ item_with_set_line }}"
             >
               <div class="relative rounded-sm bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
+                {%- liquid
+                  assign sws_image_src = first_set.featured_media | image_url: width: 60
+                  assign sws_image_src_2x = first_set.featured_media | image_url: width: 120
+                -%}
+                {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                 <img
-                  srcset="{{ first_set.featured_media | image_url: width: 60 }} 1x,
-                    {{ first_set.featured_media | image_url: width: 120 }} 2x"
-                  src="{{ first_set.featured_media | image_url: width: 120 }}"
+                  srcset="{% render 'imgix', src: sws_image_src_2x %} 2x, {% render 'imgix', src: sws_image_src %} 1x"
+                  src="{% render 'imgix', src: sws_image_src_2x %}"
                   loading="lazy"
                   width="60"
                   height="{{ 60 | divided_by: first_set.featured_media.aspect_ratio | ceil }}"
                   alt="{{ first_set.featured_media.alt }}"
                 >
+                {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                 <div>
                   <h3 class="leading-tight font-medium text-sm">Save{{ set_save_amount }} with {{ first_set.title }}</h3>
                   <p class="text-sm leading-tight">An item in your cart comes in a set!</p>
@@ -169,10 +176,7 @@
           {%- endunless -%}
 
           {% comment %} Cart items {% endcomment %}
-          <cart-drawer-items
-            class="block mx-auto max-w-md mb-12{% if cart == empty %} is-empty{% endif %}"
-            data-cart-ids="{{ cart_ids | json }}"
-          >
+          <cart-drawer-items class="block mx-auto max-w-md mb-12{% if cart == empty %} is-empty{% endif %}" data-cart-ids="{{ cart_ids | json }}">
             <form action="{{ routes.cart_url }}" id="CartDrawer-Form" class="grow flex flex-wrap" method="post">
               <div id="CartDrawer-CartItems" class="js-contents flex flex-col grow motion-safe:transition-opacity">
                 {%- if cart != empty -%}
@@ -204,13 +208,20 @@
                                     tabindex="-1"
                                     aria-hidden="true"
                                   ></a>
+                                  {%- liquid
+                                    assign main_image_src = item.image | image_url: width: 60
+                                    assign main_image_src_2x = item.image | image_url: width: 120
+                                  -%}
+                                  {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                                   <img class="cart-item__image max-w-full"
-                                    src="{{ item.image | image_url: width: 120 }}"
+                                    srcset="{% render 'imgix', src: main_image_src_2x %} 2x, {% render 'imgix', src: main_image_src %} 1x"
+                                    src="{% render 'imgix', src: main_image_src_2x %}"
                                     alt="{{ item.image.alt | escape }}"
                                     loading="lazy"
                                     width="60"
                                     height="{{ 60 | divided_by: item.image.aspect_ratio | ceil }}"
                                   >
+                                  {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                                 </div>
                               {% endif %}
                             </td>
@@ -546,10 +557,7 @@
                 <button
                   type="submit"
                   class="cart__update-button button button-primary w-full mb-2"
-                  form="CartDrawer-Form"
-                >
-                  {{ 'sections.cart.update' | t }}
-                </button>
+                  form="CartDrawer-Form">{{ 'sections.cart.update' | t }}</button>
               </noscript>
               <button
                 type="submit"
@@ -557,16 +565,11 @@
                 class="cart__checkout-button button button-primary w-full"
                 name="checkout"
                 form="CartDrawer-Form"
-                {% if cart == empty %}disabled{% endif %}
-              >
-                {{ 'sections.cart.checkout' | t }}
-              </button>
+                {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
 
             <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
-              {%- if settings.cart_disclaimer != blank -%}
-                {{ settings.cart_disclaimer }}
-              {%- endif -%}
+              {%- if settings.cart_disclaimer != blank -%}{{ settings.cart_disclaimer }}{%- endif -%}
             </small>
           </div>
         </div>

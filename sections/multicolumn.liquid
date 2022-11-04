@@ -17,9 +17,10 @@
           role="presentation"
         >
           {%- for block in section.blocks -%}
+            {%- assign bg_image_src = block.settings.image | image_url: width: 1420 -%}
             <li
               class="{{ block.settings.column_classes }}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
-              {% if block.settings.is_bg_image %}style="background-image: url({{ block.settings.image | image_url: width: 1420 }})"{% endif %}
+              {% if block.settings.is_bg_image %}style="background-image: url({% render 'imgix', src: bg_image_src %})"{% endif %}
               {{ block.shopify_attributes }}
             >
               {%- case block.type -%}
@@ -28,32 +29,53 @@
                     {%- if block.settings.image_link != blank -%}
                       <a href="{{ block.settings.image_link }}">
                     {%- endif -%}
-                      <picture class="{{ block.settings.image_wrapper_classes }}">
-                        {%- if block.settings.image_desktop != blank -%}
-                          <source
-                            srcset="{{ block.settings.image_desktop | image_url: width: 800 }} 1x, {{ block.settings.image_desktop | image_url: width: 1600 }} 2x"
-                            media="(min-width: 640px)"
-                          >
-                        {%- else -%}
-                          <source
-                            srcset="{{ block.settings.image | image_url: width: 800 }} 1x, {{ block.settings.image | image_url: width: 1600 }} 2x"
-                            media="(min-width: 640px)"
-                          >
-                        {%- endif -%}
-                        <source
-                          srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
-                          media="(min-width: 0px)"
-                        >
+                      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                      {%- liquid
+                        assign mobile_image_src = block.settings.image | image_url: width: 400
+                        assign mobile_image_src_2x = block.settings.image | image_url: width: 800
+                        assign mobile_image_src_4x = block.settings.image | image_url: width: 1600
+                        assign desktop_image_src = block.settings.image_desktop | image_url: width: 800
+                        assign desktop_image_src_2x = block.settings.image_desktop | image_url: width: 1600
+                      -%}
+                      {%- if block.settings.image contains '.gif' -%}
                         <img
-                          srcset="{{ block.settings.image | image_url: width: 400 }} 1x, {{ block.settings.image | image_url: width: 800 }} 2x"
-                          src="{{ block.settings.image | image_url: width: 800 }}"
+                          srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
+                          src="{{ mobile_image_src }}"
                           alt="{{ block.settings.image.alt }}"
                           height="{{ block.settings.image.height }}"
                           width="{{ block.settings.image.width }}"
                           class="{{ block.settings.image_classes }}"
                           loading="lazy"
                         >
-                      </picture>
+                      {%- else -%}
+                        <picture class="{{ block.settings.image_wrapper_classes }}">
+                          {%- if block.settings.image_desktop != blank -%}
+                            <source
+                              srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+                              media="(min-width: 640px)"
+                            >
+                          {%- else -%}
+                            <source
+                              srcset="{% render 'imgix', src: mobile_image_src_2x %} 1x, {% render 'imgix', src: mobile_image_src_4x %} 2x"
+                              media="(min-width: 640px)"
+                            >
+                          {%- endif -%}
+                          <source
+                            srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+                            media="(min-width: 0px)"
+                          >
+                          <img
+                            srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+                            src="{% render 'imgix', src: mobile_image_src %}"
+                            alt="{{ block.settings.image.alt }}"
+                            height="{{ block.settings.image.height }}"
+                            width="{{ block.settings.image.width }}"
+                            class="{{ block.settings.image_classes }}"
+                            loading="lazy"
+                          >
+                        </picture>
+                      {%- endif -%}
+                      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                     {%- if block.settings.image_link != blank -%}
                       </a>
                     {%- endif -%}
