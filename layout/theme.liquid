@@ -42,13 +42,18 @@
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
     
-    {% if template contains 'product' or template contains 'login' %}
+    {%- if template contains 'product' or template contains 'login' -%}
       {{ content_for_header }}
-    {% else %}
+      {%- unless content_for_header contains 'https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com' -%}
+        {% comment %}theme-check-disable RemoteAsset{% endcomment %}
+        <script type="text/javascript" src="https://static.rechargecdn.com/assets/js/widget.min.js?shop=osea-malibu.myshopify.com" defer></script>
+        {% comment %}theme-check-enable RemoteAsset{% endcomment %}
+      {%- endunless -%}
+    {%- else -%}
     {% comment %}theme-check-disable ContentForHeaderModification{% endcomment %}
       {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' }}
     {% comment %}theme-check-enable ContentForHeaderModification{% endcomment %}
-    {% endif %}
+    {%- endif -%}
 
     {% style %}
       {% render 'font-face' %}
