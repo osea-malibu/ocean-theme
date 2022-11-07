@@ -1,5 +1,5 @@
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
-
+<script>console.log('cart', {{ cart | json }});</script>
 <cart-drawer class="fixed z-100 top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer">
     <div class="cart-scrim block fixed inset-0 bg-seaweed-800/50"></div>

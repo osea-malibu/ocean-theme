@@ -70,8 +70,14 @@ class CartItems extends HTMLElement {
     }
 
     let selling_plan = null;
-    if (name === "subscribe" && target.checked) {
-      selling_plan = target.dataset.default;
+    let properties = null;
+    if (name === "subscribe") {
+      if (target.checked) {
+        selling_plan = target.dataset.default;
+        properties = { _is_subscription: true };
+      } else {
+        properties = { _is_subscription: false };
+      }
     } else if (name === "selling_plan") {
       selling_plan = value;
     }
@@ -82,6 +88,7 @@ class CartItems extends HTMLElement {
       sections_url: window.location.pathname,
       ...(!["subscribe", "selling_plan"].includes(name) && { quantity: value }),
       ...(["subscribe", "selling_plan"].includes(name) && { selling_plan }),
+      ...(properties && { properties }),
     });
 
     fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
