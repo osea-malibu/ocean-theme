@@ -171,6 +171,7 @@
 
         {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
           <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}" disabled>
+          <input type="hidden" name="properties[_is_subscription]" value="{% if subscription %}true{% else %}false{% endif %}">
           <button
             id="{{ product_form_id }}-submit"
             type="submit"

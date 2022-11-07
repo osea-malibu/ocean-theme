@@ -634,6 +634,7 @@ class SubscriptionRadios extends HTMLElement {
   constructor() {
     super();
 
+    this.isSubscriptionInput = document.querySelector('input[name="properties[_is_subscription]"]');
     this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
     this.sellingPlanInputs = Array.from(this.querySelectorAll('input[name="selling_plan"]'));
 
@@ -657,8 +658,10 @@ class SubscriptionRadios extends HTMLElement {
 
       if (value === "onetime") {
         this.clearSellingPlanValues();
+        this.isSubscriptionInput.value = false;
       } else if (value === "autodeliver") {
         this.setDefaultSellingPlan();
+        this.isSubscriptionInput.value = true;
       }
     }
   }
