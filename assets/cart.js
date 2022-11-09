@@ -64,6 +64,18 @@ class CartItems extends HTMLElement {
   }
 
   updateCartItem(line, value, name, target) {
+    const lineItemSubscription = document.getElementById(`CartSubscribeCheckbox-${line}`);
+    if (lineItemSubscription.checked && name === "updates[]" && value > 4) {
+      const quantityElement = document.getElementById(`Quantity-${line}`) || document.getElementById(`Drawer-quantity-${line}`);
+      const errors = document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
+
+      quantityElement.value = 4;
+      errors.textContent = "You may not subscribe to more than 4 of this product.";
+      setTimeout(() => (errors.textContent = ""), 5000);
+
+      return;
+    }
+
     this.enableLoading(line);
     if (window.gwpSettings.enabled && window.gwpSettings.type === "banner") {
       document.getElementById("GwpButton")?.remove();
@@ -71,6 +83,7 @@ class CartItems extends HTMLElement {
 
     let selling_plan = null;
     let properties = null;
+
     if (name === "subscribe") {
       if (target.checked) {
         selling_plan = target.dataset.default;

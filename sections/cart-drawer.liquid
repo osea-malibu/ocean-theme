@@ -296,7 +296,12 @@
                                       id="Drawer-quantity-{{ item.index | plus: 1 }}"
                                       data-index="{{ item.index | plus: 1 }}"
                                     >
-                                    <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -mr-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="plus" type="button">
+                                    <button
+                                      class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -mr-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent"
+                                      name="plus"
+                                      type="button"
+                                      {% if item.selling_plan_allocation and item.quantity > 3 %}disabled{% endif %}
+                                    >
                                       <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
                                       {% render 'icon-plus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                                     </button>
@@ -314,14 +319,9 @@
                                 </cart-remove-button>
                               </div>
 
-                              <div id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}" class="cart-item__error hidden" role="alert">
+                              <div id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}" class="absolute text-coral-800 text-sm hidden" role="alert">
                                 <small class="cart-item__error-text"></small>
-                                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-error" viewBox="0 0 13 13">
-                                  <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
-                                  <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
-                                  <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
-                                  <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
-                                </svg>
+                                {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4', aria_hidden: true, stroke_width: 2 %}
                               </div>
                             </td>
 
@@ -468,7 +468,7 @@
                 <p id="CartDrawer-LiveRegionText" class="sr-only" role="status"></p>
                 <p id="CartDrawer-LineItemStatus" class="sr-only" aria-hidden="true" role="status">{{ 'accessibility.loading' | t }}</p>
               </div>
-              <div id="CartDrawer-CartErrors" role="alert" class="absolute inset-x-0 top-0 w-full text-center text-coral-800"></div>
+              <div id="CartDrawer-CartErrors" role="alert" class="absolute inset-x-0 top-0 w-full text-center text-coral-800 text-sm"></div>
             </form>
           </cart-drawer-items>
 

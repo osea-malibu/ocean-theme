@@ -5245,8 +5245,20 @@ ul.whr-items .whr-item.active h3::after {
   --tw-ring-color: rgb(219 229 211 / var(--tw-ring-opacity));
 }
 
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
+}
+
 .disabled\:opacity-50:disabled {
   opacity: 0.5;
+}
+
+.disabled\:hover\:border-transparent:hover:disabled {
+  border-color: transparent;
+}
+
+.disabled\:hover\:bg-transparent:hover:disabled {
+  background-color: transparent;
 }
 
 .group[open] .group-open\:visible {
