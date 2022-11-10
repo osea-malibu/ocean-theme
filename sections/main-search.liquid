@@ -124,7 +124,8 @@
                         url: item.url,
                         image: item.image.src,
                         title: article_title,
-                        description: article_description
+                        description: article_description,
+                        search_page: true
                       %}
                     {%- when 'page' -%}
                       {%- liquid
@@ -135,7 +136,8 @@
                         url: item.url,
                         image: item.image,
                         title: page_title,
-                        description: page_description
+                        description: page_description,
+                        search_page: true
                       %}
                   {%- endcase -%}
                 </li>
