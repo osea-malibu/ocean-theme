@@ -42,7 +42,7 @@
         width="{{ article.image.width }}"
         height="{{ article.image.height }}"
         loading="lazy"
-        class="{{ image_classes }}{% if image_aspect != blank %} absolute inset-0 object-cover object-center min-w-full min-h-full{% endif %}"
+        class="{{ image_classes }}{% if image_aspect != blank %} absolute inset-0 object-cover{% unless image_classes contains 'object-' %} object-center{% endunless %} min-w-full min-h-full{% endif %}"
       >
     </a>
   {%- endif -%}

@@ -31,6 +31,8 @@
           assign badge_class = 'bg-seafoam-300 text-seaweed-700'
         elsif tag contains 'holiday'
           assign badge_class = 'bg-seaweed-300 text-seaweed-700'
+        elsif tag contains 'powdered exfoliator'
+          assign badge_class = 'bg-coral-600 text-white tracking-wider sm:tracking-widest'
         else
           assign badge_class = 'bg-coral-600 text-white'
         endif
@@ -40,7 +42,7 @@
 -%}
 
 {%- if badge_text != '' -%}
-  <div class="badge absolute top-1 left-1 mb-1 text-xs {{ badge_class }}{% if classes != nil %} {{ classes }}{% endif %}">
+  <div class="badge absolute top-1 left-1 mb-1 text-xs whitespace-nowrap overflow-hidden {{ badge_class }}{% if classes != nil %} {{ classes }}{% endif %}">
     {{ badge_text }}
   </div>
 {%- endif -%}

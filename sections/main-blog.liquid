@@ -138,11 +138,12 @@
       {%- for article in blog.articles -%}
         {%- unless current_tags == nil and section.settings.main_featured_article == blank and forloop.first or brand_article_handles contains article.handle -%}
           <li class="article order-{{ forloop.index }}">
+            {% assign image_classes = 'mb-1 rounded-sm ' | append: article.metafields.custom.tile_image_class %}
             {%- render 'article-card',
               article: article,
               show_image: true,
-              card_classes: 'flex flex-col whitespace-normal',
-              image_classes: 'mb-1 rounded-sm',
+              card_classes: 'flex flex-col whitespace-normal w-full',
+              image_classes: image_classes,
               image_aspect: 'pt-[100%]',
               title_classes: 'tracking-wide mb-1.5 mt-1 leading-tight text-xl',
               tag_classes: 'inline-block text-xs scale-90 uppercase tracking-widest font-bold origin-left mt-2',

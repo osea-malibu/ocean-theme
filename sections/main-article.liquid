@@ -58,7 +58,7 @@
                     if article.content contains product.handle
                       assign product_tag = '[product-block product="' | append: product.handle | append: '"]'
                       capture product_card
-                        render 'product-card', card_product: all_products[product.handle], card_class: 'flex flex-col relative max-w-2xs mx-auto'
+                        render 'product-card', card_product: all_products[product.handle], card_class: 'flex flex-col relative max-w-2xs w-full mx-auto', button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
                       endcapture
                       assign new_content = new_content | replace: product_tag, product_card
                     endif
