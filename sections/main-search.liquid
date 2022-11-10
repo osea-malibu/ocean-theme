@@ -2,6 +2,7 @@
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign sort_by = search.sort_by | default: search.default_sort_by
@@ -110,10 +111,9 @@
                     {%- when 'product' -%}
                       {%- capture product_settings -%}{%- if section.settings.product_show_vendor -%}vendor,{%- endif -%}title,price{%- endcapture -%}
                       {% render 'product-card',
-                        card_product: item,
+                        card_product: all_products[item.handle],
                         section_id: section.id,
-                        show_secondary_image: section.settings.show_secondary_image,
-                        add_image_padding: section.settings.add_image_padding
+                        button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
                       %}
                     {%- when 'article' -%}
                       {%- liquid
@@ -159,12 +159,6 @@
     {
       "type": "header",
       "content": "t:sections.main-search.settings.header__1.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "t:sections.main-search.settings.show_secondary_image.label"
     },
     {
       "type": "header",
