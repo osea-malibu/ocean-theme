@@ -65,7 +65,7 @@ class CartItems extends HTMLElement {
 
   updateCartItem(line, value, name, target) {
     const lineItemSubscription = document.getElementById(`CartSubscribeCheckbox-${line}`);
-    if (lineItemSubscription.checked && name === "updates[]" && value > 4) {
+    if (lineItemSubscription && lineItemSubscription.checked && name === "updates[]" && value > 4) {
       const quantityElement = document.getElementById(`Quantity-${line}`) || document.getElementById(`Drawer-quantity-${line}`);
       const errors = document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
 
