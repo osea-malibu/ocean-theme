@@ -2906,6 +2906,10 @@ table.comparison-matrix td.unchecked {
   margin-left: -0px !important;
 }
 
+.mb-7 {
+  margin-bottom: 1.75rem;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -3875,6 +3879,12 @@ table.comparison-matrix td.unchecked {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-seaweed-800 {
+  --tw-gradient-from: #0B2E25;
+  --tw-gradient-to: rgb(11 46 37 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .bg-cover {
   background-size: cover;
 }
@@ -4270,6 +4280,10 @@ table.comparison-matrix td.unchecked {
 
 .\!pr-6 {
   padding-right: 1.5rem !important;
+}
+
+.pr-6 {
+  padding-right: 1.5rem;
 }
 
 .text-left {
@@ -5732,6 +5746,11 @@ ul.whr-items .whr-item.active h3::after {
     line-height: 1.5rem;
   }
 
+  .xs\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
   .xs\:leading-tight {
     line-height: 1.25;
   }
@@ -5814,6 +5833,14 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:-top-5 {
     top: -1.25rem;
+  }
+
+  .sm\:top-1 {
+    top: 0.25rem;
+  }
+
+  .sm\:right-1\/2 {
+    right: 50%;
   }
 
   .sm\:order-3 {
@@ -5930,6 +5957,10 @@ ul.whr-items .whr-item.active h3::after {
     margin-top: 0.25rem;
   }
 
+  .sm\:mt-0 {
+    margin-top: 0px;
+  }
+
   .sm\:block {
     display: block;
   }
@@ -6004,6 +6035,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:w-\[calc\(50\%-1\.5rem\)\] {
     width: calc(50% - 1.5rem);
+  }
+
+  .sm\:w-1 {
+    width: 0.25rem;
   }
 
   .sm\:max-w-2xs {
@@ -6204,6 +6239,14 @@ ul.whr-items .whr-item.active h3::after {
     padding-right: 1.5rem;
   }
 
+  .sm\:pt-0 {
+    padding-top: 0px;
+  }
+
+  .sm\:pl-12 {
+    padding-left: 3rem;
+  }
+
   .sm\:text-left {
     text-align: left;
   }
@@ -6242,6 +6285,10 @@ ul.whr-items .whr-item.active h3::after {
     line-height: 1.25rem;
   }
 
+  .sm\:font-book {
+    font-weight: 500;
+  }
+
   .sm\:leading-normal {
     line-height: 1.5;
   }
@@ -6252,6 +6299,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:tracking-widest {
     letter-spacing: .1em;
+  }
+
+  .sm\:tracking-wider {
+    letter-spacing: .05em;
   }
 
   .sm\:button-sm {
@@ -6460,6 +6511,10 @@ ul.whr-items .whr-item.active h3::after {
     top: 148px;
   }
 
+  .md\:top-1 {
+    top: 0.25rem;
+  }
+
   .md\:order-2 {
     order: 2;
   }
@@ -6595,6 +6650,14 @@ ul.whr-items .whr-item.active h3::after {
 
   .md\:w-full {
     width: 100%;
+  }
+
+  .md\:w-2 {
+    width: 0.5rem;
+  }
+
+  .md\:w-1 {
+    width: 0.25rem;
   }
 
   .md\:min-w-\[120px\] {
@@ -6929,6 +6992,14 @@ ul.whr-items .whr-item.active h3::after {
 
   .lg\:top-3 {
     top: 0.75rem;
+  }
+
+  .lg\:left-1 {
+    left: 0.25rem;
+  }
+
+  .lg\:right-1 {
+    right: 0.25rem;
   }
 
   .lg\:order-none {
@@ -7370,6 +7441,11 @@ ul.whr-items .whr-item.active h3::after {
     line-height: 1.75rem;
   }
 
+  .lg\:text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
   .lg\:tracking-normal {
     letter-spacing: 0;
   }
@@ -7528,6 +7604,11 @@ ul.whr-items .whr-item.active h3::after {
   .xl\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .xl\:text-8xl {
+    font-size: 6rem;
+    line-height: 1;
   }
 
   .xl\:leading-snug {
