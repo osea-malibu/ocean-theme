@@ -40,6 +40,10 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
+      pattern: /font-(light|normal|book|medium|bold)/,
+      variants: ["xs", "sm", "md", "lg", "xl"],
+    },
+    {
       pattern: /button-(xs|sm|lg|xl|primary|secondary|tertiary|white)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
