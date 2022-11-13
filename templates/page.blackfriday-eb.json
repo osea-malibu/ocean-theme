@@ -1,5 +1,36 @@
 {
   "sections": {
+    "dc253ca3-fd98-417b-81ab-ec9c09b580c8": {
+      "type": "page-banner",
+      "blocks": {
+        "template--15723658117303__dc253ca3-fd98-417b-81ab-ec9c09b580c8-166835538375bc9b2d-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "2 Free Gifts, 3 Days Only!",
+            "heading_classes": "tracking-widest font-bold uppercase text-xl lg:text-2xl"
+          }
+        },
+        "cfadaef3-e1c5-4b90-9224-90f0a8e9aa52": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_link": "shopify:\/\/collections\/shop",
+            "button_classes": "button-primary"
+          }
+        }
+      },
+      "block_order": [
+        "template--15723658117303__dc253ca3-fd98-417b-81ab-ec9c09b580c8-166835538375bc9b2d-0",
+        "cfadaef3-e1c5-4b90-9224-90f0a8e9aa52"
+      ],
+      "settings": {
+        "is_text_only": true,
+        "is_lazy": false,
+        "section_classes": "relative container px-0 xs:px-6",
+        "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
+        "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
+      }
+    },
     "166415601283823358": {
       "type": "multicolumn",
       "blocks": {
@@ -775,6 +806,7 @@
     }
   },
   "order": [
+    "dc253ca3-fd98-417b-81ab-ec9c09b580c8",
     "166415601283823358",
     "1664483803db5cb552",
     "b6c68e2c-763c-4552-ae94-acdd2bc4f90f",
