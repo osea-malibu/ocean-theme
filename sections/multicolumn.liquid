@@ -297,6 +297,20 @@
                   {%- if block.settings.code != "" -%}
                     {{- block.settings.code -}}
                   {%- endif -%}
+                {%- when 'countdown' -%}
+                  {%- if block.settings.countdown_date != blank and block.settings.countdown_time != blank -%}
+                    {%- assign increment_array = 'days, hours, minutes, seconds' | split: ', ' -%}
+                    <countdown>
+                      <dl class="flex justify-center {{ block.settings.text_classes }}">
+                        {%- for increment in increment_array -%}
+                          <div class="countdown-{{ increment }} flex flex-1 flex-col-reverse text-center">
+                            <dt>{{ increment }}</dt>
+                            <dd>00</dd>
+                          </div>
+                        {%- endfor -%}
+                      </dl>
+                    </countdown>
+                  {%- endif -%}
               {%- endcase -%}
             </li>
           {%- endfor -%}
@@ -741,6 +755,11 @@
           "type": "textarea",
           "id": "column_classes",
           "label": "Column classes"
+        },
+        {
+          "type": "textarea",
+          "id": "text_classes",
+          "label": "Text block classes"
         },
         {
           "type": "header",
