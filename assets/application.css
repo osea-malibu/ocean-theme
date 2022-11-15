@@ -2901,6 +2901,10 @@ table.comparison-matrix td.unchecked {
   margin-left: -0px !important;
 }
 
+.mb-7 {
+  margin-bottom: 1.75rem;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -3866,6 +3870,12 @@ table.comparison-matrix td.unchecked {
 
 .from-seaweed-800\/30 {
   --tw-gradient-from: rgb(11 46 37 / 0.3);
+  --tw-gradient-to: rgb(11 46 37 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-seaweed-800 {
+  --tw-gradient-from: #0B2E25;
   --tw-gradient-to: rgb(11 46 37 / 0);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
@@ -6001,6 +6011,10 @@ ul.whr-items .whr-item.active h3::after {
     width: calc(50% - 1.5rem);
   }
 
+  .sm\:w-1 {
+    width: 0.25rem;
+  }
+
   .sm\:max-w-lg {
     max-width: 32rem;
   }
@@ -6197,6 +6211,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:pr-6 {
     padding-right: 1.5rem;
+  }
+
+  .sm\:pt-28 {
+    padding-top: 7rem;
   }
 
   .sm\:text-left {
@@ -6613,6 +6631,14 @@ ul.whr-items .whr-item.active h3::after {
     width: 100%;
   }
 
+  .md\:w-2 {
+    width: 0.5rem;
+  }
+
+  .md\:w-1 {
+    width: 0.25rem;
+  }
+
   .md\:min-w-\[120px\] {
     min-width: 120px;
   }
@@ -6937,6 +6963,14 @@ ul.whr-items .whr-item.active h3::after {
 
   .lg\:top-3 {
     top: 0.75rem;
+  }
+
+  .lg\:left-1 {
+    left: 0.25rem;
+  }
+
+  .lg\:right-1 {
+    right: 0.25rem;
   }
 
   .lg\:order-none {
@@ -7372,6 +7406,11 @@ ul.whr-items .whr-item.active h3::after {
   .lg\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
+  }
+
+  .lg\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
   }
 
   .lg\:leading-snug {
