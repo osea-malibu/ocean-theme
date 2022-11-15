@@ -2733,10 +2733,6 @@ table.comparison-matrix td.unchecked {
   margin-bottom: 0.25rem;
 }
 
-.mb-7 {
-  margin-bottom: 1.75rem;
-}
-
 .mb-12 {
   margin-bottom: 3rem;
 }
@@ -2981,6 +2977,10 @@ table.comparison-matrix td.unchecked {
   height: 20rem;
 }
 
+.h-auto {
+  height: auto;
+}
+
 .h-40 {
   height: 10rem;
 }
@@ -3011,10 +3011,6 @@ table.comparison-matrix td.unchecked {
 
 .h-20 {
   height: 5rem;
-}
-
-.h-auto {
-  height: auto;
 }
 
 .h-7 {
@@ -3217,12 +3213,12 @@ table.comparison-matrix td.unchecked {
   max-width: 42rem;
 }
 
-.max-w-4xl {
-  max-width: 56rem;
-}
-
 .max-w-sm {
   max-width: 24rem;
+}
+
+.max-w-4xl {
+  max-width: 56rem;
 }
 
 .max-w-lg {
@@ -3874,12 +3870,6 @@ table.comparison-matrix td.unchecked {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-seaweed-800 {
-  --tw-gradient-from: #0B2E25;
-  --tw-gradient-to: rgb(11 46 37 / 0);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .bg-cover {
   background-size: cover;
 }
@@ -3954,16 +3944,16 @@ table.comparison-matrix td.unchecked {
   padding: 0px;
 }
 
+.p-1 {
+  padding: 0.25rem;
+}
+
 .p-6 {
   padding: 1.5rem;
 }
 
 .p-3 {
   padding: 0.75rem;
-}
-
-.p-1 {
-  padding: 0.25rem;
 }
 
 .p-10 {
@@ -4105,10 +4095,6 @@ table.comparison-matrix td.unchecked {
   padding-top: 1.5rem;
 }
 
-.pb-4 {
-  padding-bottom: 1rem;
-}
-
 .pr-6 {
   padding-right: 1.5rem;
 }
@@ -4171,6 +4157,10 @@ table.comparison-matrix td.unchecked {
 
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
 }
 
 .pb-10 {
@@ -4400,12 +4390,12 @@ table.comparison-matrix td.unchecked {
   line-height: 1.25;
 }
 
-.leading-snug {
-  line-height: 1.375;
-}
-
 .leading-none {
   line-height: 1;
+}
+
+.leading-snug {
+  line-height: 1.375;
 }
 
 .leading-relaxed {
@@ -5646,10 +5636,6 @@ ul.whr-items .whr-item.active h3::after {
     margin-right: 0px;
   }
 
-  .xs\:mb-4 {
-    margin-bottom: 1rem;
-  }
-
   .xs\:mr-3 {
     margin-right: 0.75rem;
   }
@@ -5821,10 +5807,6 @@ ul.whr-items .whr-item.active h3::after {
     top: -1.25rem;
   }
 
-  .sm\:left-1 {
-    left: 0.25rem;
-  }
-
   .sm\:order-3 {
     order: 3;
   }
@@ -5863,10 +5845,6 @@ ul.whr-items .whr-item.active h3::after {
     margin-right: 0px;
   }
 
-  .sm\:mb-2 {
-    margin-bottom: 0.5rem;
-  }
-
   .sm\:mb-4 {
     margin-bottom: 1rem;
   }
@@ -5881,6 +5859,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:mb-6 {
     margin-bottom: 1.5rem;
+  }
+
+  .sm\:mb-2 {
+    margin-bottom: 0.5rem;
   }
 
   .sm\:mr-auto {
@@ -6017,10 +5999,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:w-\[calc\(50\%-1\.5rem\)\] {
     width: calc(50% - 1.5rem);
-  }
-
-  .sm\:w-1 {
-    width: 0.25rem;
   }
 
   .sm\:max-w-lg {
@@ -6635,14 +6613,6 @@ ul.whr-items .whr-item.active h3::after {
     width: 100%;
   }
 
-  .md\:w-2 {
-    width: 0.5rem;
-  }
-
-  .md\:w-1 {
-    width: 0.25rem;
-  }
-
   .md\:min-w-\[120px\] {
     min-width: 120px;
   }
@@ -6693,12 +6663,12 @@ ul.whr-items .whr-item.active h3::after {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .md\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .md\:grid-cols-5 {
@@ -6969,14 +6939,6 @@ ul.whr-items .whr-item.active h3::after {
     top: 0.75rem;
   }
 
-  .lg\:left-1 {
-    left: 0.25rem;
-  }
-
-  .lg\:right-1 {
-    right: 0.25rem;
-  }
-
   .lg\:order-none {
     order: 0;
   }
@@ -7006,12 +6968,12 @@ ul.whr-items .whr-item.active h3::after {
     margin-right: 3rem;
   }
 
-  .lg\:mr-2 {
-    margin-right: 0.5rem;
-  }
-
   .lg\:mb-4 {
     margin-bottom: 1rem;
+  }
+
+  .lg\:mr-2 {
+    margin-right: 0.5rem;
   }
 
   .lg\:mb-0 {
@@ -7387,9 +7349,9 @@ ul.whr-items .whr-item.active h3::after {
     text-align: center;
   }
 
-  .lg\:text-4xl {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+  .lg\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
   }
 
   .lg\:text-xl {
@@ -7402,18 +7364,14 @@ ul.whr-items .whr-item.active h3::after {
     line-height: 2rem;
   }
 
+  .lg\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
   .lg\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
-  }
-
-  .lg\:text-5xl {
-    font-size: 3rem;
-    line-height: 1;
-  }
-
-  .lg\:leading-normal {
-    line-height: 1.5;
   }
 
   .lg\:tracking-normal {
