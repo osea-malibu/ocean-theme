@@ -1087,6 +1087,15 @@ menu-drawer details.menu-opening > .menu-drawer,
   line-height: 1.5rem;
 }
 
+.button-lg {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .button-primary {
   --tw-border-opacity: 1;
   border-color: rgb(29 77 65 / var(--tw-border-opacity));
@@ -1190,6 +1199,11 @@ menu-drawer details.menu-opening > .menu-drawer,
 .button-icon-left.button-lg svg,
   .button-icon-left.button-xl svg {
   margin-right: 0.75rem;
+}
+
+.button-icon-right.button-lg svg,
+  .button-icon-right.button-xl svg {
+  margin-left: 0.75rem;
 }
 
 .button-group .button {
