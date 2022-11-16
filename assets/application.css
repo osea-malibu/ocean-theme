@@ -6298,6 +6298,15 @@ ul.whr-items .whr-item.active h3::after {
     line-height: 1.5rem;
   }
 
+  .sm\:button-lg {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
   .sm\:button-primary {
     --tw-border-opacity: 1;
     border-color: rgb(29 77 65 / var(--tw-border-opacity));
@@ -6320,6 +6329,12 @@ ul.whr-items .whr-item.active h3::after {
     stroke-width: 2px;
   }
 
+  .sm\:button-lg.button-icon svg {
+    height: 1.5rem;
+    width: 1.5rem;
+    stroke-width: 1.75px;
+  }
+
   .sm\:button-sm
   .button-icon-left svg {
     margin-right: 0.25rem;
@@ -6328,6 +6343,14 @@ ul.whr-items .whr-item.active h3::after {
   .sm\:button-sm
   .button-icon-right svg {
     margin-left: 0.25rem;
+  }
+
+  .sm\:button-lg.button-icon-left svg {
+    margin-right: 0.75rem;
+  }
+
+  .sm\:button-lg.button-icon-right svg {
+    margin-left: 0.75rem;
   }
 
   .sm\:\[--swiffy-slider-item-count\:3\] {
@@ -6996,6 +7019,11 @@ ul.whr-items .whr-item.active h3::after {
   .lg\:mx-auto {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .lg\:my-12 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
   }
 
   .lg\:mr-12 {
