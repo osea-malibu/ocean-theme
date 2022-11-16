@@ -300,16 +300,19 @@
                 {%- when 'countdown' -%}
                   {%- if block.settings.countdown_date != blank and block.settings.countdown_time != blank -%}
                     {%- assign increment_array = 'days, hours, minutes, seconds' | split: ', ' -%}
-                    <countdown>
+                    <countdown-component
+                      data-date="{{ block.settings.countdown_date }}"
+                      data-time="{{ block.settings.countdown_time }}"
+                    >
                       <dl class="flex justify-center {{ block.settings.text_classes }}">
                         {%- for increment in increment_array -%}
-                          <div class="countdown-{{ increment }} flex flex-1 flex-col-reverse text-center">
-                            <dt>{{ increment }}</dt>
-                            <dd>00</dd>
+                          <div class="flex flex-1 flex-col-reverse text-center">
+                            <dt class="{{ block.settings.label_classes }}">{{ increment }}</dt>
+                            <dd class="countdown-{{ increment }} {{ block.settings.count_classes }}">00</dd>
                           </div>
                         {%- endfor -%}
                       </dl>
-                    </countdown>
+                    </countdown-component>
                   {%- endif -%}
               {%- endcase -%}
             </li>

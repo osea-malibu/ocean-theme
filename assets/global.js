@@ -1075,6 +1075,32 @@ class GiftWithPurchaseUrl extends HTMLElement {
 }
 customElements.define("gift-with-purchase-url", GiftWithPurchaseUrl);
 
+class CountdownComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.updateTimer();
+  }
+
+  updateTimer() {
+    setInterval(() => {
+      const future = Date.parse(`${this.dataset.date} ${this.dataset.time}:00`);
+      const now = new Date();
+      const diff = future - now;
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor(diff / (1000 * 60 * 60));
+      const m = Math.floor(diff / (1000 * 60));
+      const s = Math.floor(diff / 1000);
+
+      this.querySelector(".countdown-days").textContent = d;
+      this.querySelector(".countdown-hours").textContent = h - d * 24;
+      this.querySelector(".countdown-minutes").textContent = m - h * 60;
+      this.querySelector(".countdown-seconds").textContent = s - m * 60;
+    }, 1000);
+  }
+}
+customElements.define("countdown-component", CountdownComponent);
+
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {
   constructor(el) {
