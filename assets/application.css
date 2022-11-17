@@ -2529,6 +2529,14 @@ table.comparison-matrix td.unchecked {
   left: 1rem;
 }
 
+.-top-2 {
+  top: -0.5rem;
+}
+
+.-top-1 {
+  top: -0.25rem;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -7076,6 +7084,10 @@ ul.whr-items .whr-item.active h3::after {
     margin-top: 1rem;
   }
 
+  .lg\:mt-12 {
+    margin-top: 3rem;
+  }
+
   .lg\:block {
     display: block;
   }
@@ -7371,6 +7383,11 @@ ul.whr-items .whr-item.active h3::after {
   .lg\:px-3 {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+  }
+
+  .lg\:py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   .lg\:pt-6 {
