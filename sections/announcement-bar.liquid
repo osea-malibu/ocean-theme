@@ -1,6 +1,6 @@
 <div class="bg-seaweed-700 flex justify-center px-4" id="AnnouncementBar">
   {% comment %} Gift with purchase {% endcomment %}
-  {%- if settings.enable_gwp and settings.gwp_type == 'auto' -%}
+  {%- if settings.enable_gwp and settings.enable_annoucement_bar_message and settings.gwp_type == 'auto' -%}
     {%- liquid
       assign cart_ids = cart.items | map: 'product_id'
       assign tier1_product = all_products[settings.gwp_tier1_product]
