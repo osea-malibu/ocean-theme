@@ -71,6 +71,9 @@ if (!customElements.get("product-form")) {
                       if (!cartIdArray.includes(tier.product) && data.total_price >= tier.threshold) {
                         this.cart.addFreeGift(tier.variant);
                       }
+                    })
+                    .catch((e) => {
+                      console.error(e);
                     });
                 }
               });
