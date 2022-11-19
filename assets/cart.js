@@ -151,7 +151,9 @@ class CartItems extends HTMLElement {
         console.error(error);
         this.querySelectorAll(".loading-overlay").forEach((overlay) => overlay.classList.add("hidden"));
         const errors = document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
-        errors.textContent = window.cartStrings.error;
+        if (errors) {
+          errors.textContent = window.cartStrings.error;
+        }
         this.disableLoading();
       });
   }
@@ -210,11 +212,13 @@ class CartItems extends HTMLElement {
     this.lineItemStatusElement.setAttribute("aria-hidden", true);
 
     const cartStatus = document.getElementById("cart-live-region-text") || document.getElementById("CartDrawer-LiveRegionText");
-    cartStatus.setAttribute("aria-hidden", false);
+    if (cartStatus) {
+      cartStatus.setAttribute("aria-hidden", false);
 
-    setTimeout(() => {
-      cartStatus.setAttribute("aria-hidden", true);
-    }, 1000);
+      setTimeout(() => {
+        cartStatus.setAttribute("aria-hidden", true);
+      }, 1000);
+    }
   }
 
   getSectionInnerHTML(html, selector) {
@@ -236,7 +240,7 @@ class CartItems extends HTMLElement {
 
   disableLoading() {
     const mainCartItems = document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
-    mainCartItems.classList.remove("pointer-events-none");
+    mainCartItems && mainCartItems.classList.remove("pointer-events-none");
   }
 }
 
