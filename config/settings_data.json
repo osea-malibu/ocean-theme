@@ -24,6 +24,7 @@
     "shipping_countdown_threshold": 50,
     "enable_gwp": true,
     "gwp_type": "auto",
+    "enable_annoucement_bar_message": false,
     "gwp_url_threshold": 0,
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
     "gwp_tier1_product": "free-gift-hyaluronic-sea-serum-bonus-mini-ocean-cleanser-1",
@@ -40,13 +41,21 @@
         "blocks": {
           "announcement-bar-0": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p>Free shipping on all US orders $50+<\/p>"
+            }
+          },
+          "4e1e4c7c-38ad-4f62-94fb-ed57fa785a2f": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p>2 Free Gifts on Orders $150+ | More Details<\/p>"
             }
           }
         },
         "block_order": [
-          "announcement-bar-0"
+          "announcement-bar-0",
+          "4e1e4c7c-38ad-4f62-94fb-ed57fa785a2f"
         ],
         "settings": {
           "slide_interval": 3
