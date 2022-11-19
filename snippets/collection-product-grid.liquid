@@ -4,6 +4,9 @@
   Accepts:
   - collection: {Object} Collection or Search object (required)
   - products_per_page: {Number} Number of products to display before paginating (required)
+  - is_subcollection: {Boolean} Default: false, Is this a subcollection (optional)
+  - is_first_subcollection: {Boolean} Default: false, Is this the first subcollection (optional)
+  - parent_collection: {Boolean} Default: blank, If is subcollection, what is parent collection (optional)
 
   Usage:
   {% render 'collection-product-grid', collection: collection %}
@@ -32,24 +35,38 @@
             else
               assign no_featured_products = true
             endif
+
+            if is_subcollection and is_first_subcollection == false
+              assign is_first_grid = false
+            else
+              assign is_first_grid = true
+            endif
+
+            if is_subcollection
+              assign promo_tile_image = parent_collection.metafields.custom.promo_tile_image
+              assign promo_tile_url = parent_collection.metafields.custom.promo_tile_url
+            else
+              assign promo_tile_image = collection.metafields.custom.promo_tile_image
+              assign promo_tile_url = collection.metafields.custom.promo_tile_url
+            endif
           -%}
-          {%- if collection.metafields.custom.promo_tile_image != blank and no_featured_products -%}
+          {%- if promo_tile_image != blank and no_featured_products and is_first_grid -%}
             <li class="relative overflow-hidden">
-              {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
-                <a href="{{ collection.metafields.custom_fields.promo_tile_url }}" class="block">
+              {%- if promo_tile_url != blank -%}
+                <a href="{{ promo_tile_url }}" class="block">
               {%- else -%}
                 <div>
               {%- endif -%}
               <img
-                srcset="{{ collection.metafields.custom.promo_tile_image | image_url: width: 300 }} 1x, {{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }} 2x"
-                src="{{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }}"
-                alt="{{ collection.metafields.custom.promo_tile_image.value.alt }}"
-                width="{{ collection.metafields.custom.promo_tile_image.value.width }}"
-                height="{{ collection.metafields.custom.promo_tile_image.value.width | divided_by: collection.metafields.custom.promo_tile_image.value.aspect_ratio }}"
+                srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
+                src="{{ promo_tile_image | image_url: width: 600 }}"
+                alt="{{ promo_tile_image.value.alt }}"
+                width="{{ promo_tile_image.value.width }}"
+                height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio }}"
                 loading=lazy
                 class="absolute inset-0 object-cover object-center min-h-full"
               >
-              {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
+              {%- if promo_tile_url != blank -%}
                 </a>
               {%- else -%}
                 </div>

@@ -91,7 +91,7 @@
         assign summary_handle = summary | handle
 
         capture subcollection_grid
-          render 'collection-product-grid', collection: collections[subcollection], products_per_page: 200
+          render 'collection-product-grid', collection: collections[subcollection], products_per_page: 200, is_subcollection: true, is_first_subcollection: forloop.first, parent_collection: collection
         endcapture
       -%}
       {% render 'accordion-item',
