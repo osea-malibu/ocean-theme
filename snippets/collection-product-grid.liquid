@@ -26,10 +26,19 @@
 
       <div id="product-grid" data-id="{{ collection.id }}">
         <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
-          {%- if collection.metafields.custom.promo_tile_image != blank and collection.metafields.my_fields.featured_products == nil -%}
+          {%- liquid
+            if collection.metafields.my_fields.featured_products != blank and collection.metafields.my_fields.featured_products.size > 0
+              assign no_featured_products = false
+            else
+              assign no_featured_products = true
+            endif
+          -%}
+          {%- if collection.metafields.custom.promo_tile_image != blank and no_featured_products -%}
             <li class="relative overflow-hidden">
               {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
                 <a href="{{ collection.metafields.custom_fields.promo_tile_url }}" class="block">
+              {%- else -%}
+                <div>
               {%- endif -%}
               <img
                 srcset="{{ collection.metafields.custom.promo_tile_image | image_url: width: 300 }} 1x, {{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }} 2x"
@@ -42,6 +51,8 @@
               >
               {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
                 </a>
+              {%- else -%}
+                </div>
               {%- endif -%}
             </li>
           {%- endif -%}

@@ -36,13 +36,15 @@
     </div>
   {%- endif -%}
 
-  {%- if featured_products -%}
+  {%- if featured_products and featured_products.size > 0 -%}
     {%- capture featured_products_grid -%}
       <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
         {%- if collection.metafields.custom.promo_tile_image != blank -%}
           <li class="relative overflow-hidden">
             {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
               <a href="{{ collection.metafields.custom_fields.promo_tile_url }}" class="block">
+            {%- else -%}
+              <div>
             {%- endif -%}
             <img
               srcset="{{ collection.metafields.custom.promo_tile_image | image_url: width: 300 }} 1x, {{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }} 2x"
@@ -55,6 +57,8 @@
             >
             {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
               </a>
+            {%- else -%}
+              </div>
             {%- endif -%}
           </li>
         {%- endif -%}
@@ -89,14 +93,6 @@
         capture subcollection_grid
           render 'collection-product-grid', collection: collections[subcollection], products_per_page: 200
         endcapture
-
-        comment
-        if collection.metafields.my_fields.featured_products == nil and forloop.first
-          assign is_default_open = true
-        else
-          assign is_default_open = false
-        endif
-        endcomment
       -%}
       {% render 'accordion-item',
         id: summary_handle,
