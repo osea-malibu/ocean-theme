@@ -82,7 +82,17 @@
                     {{ settings.gwp_success_text }}
                   {%- endif -%}
                 </h3>
-                {%- if remaining_amount <= 0 and settings.gwp_type == 'banner' -%}
+                {%- liquid
+                  assign show_gwp_atc = false
+                  if settings.gwp_type == 'banner'
+                    assign show_gwp_atc = true
+                  elsif settings.gwp_type == 'auto'
+                    unless cart_ids contains gwp_button_id
+                      assign show_gwp_atc = true
+                    endunless
+                  endif
+                -%}
+                {%- if remaining_amount <= 0 and show_gwp_atc -%}
                   <button
                     class="button button-xs button-secondary mt-1"
                     id="GwpButton"
