@@ -1085,7 +1085,7 @@ class CountdownComponent extends HTMLElement {
     setInterval(() => {
       const dateArray = this.dataset.date.split("/");
       const sortedDateArray = [dateArray[2], dateArray[0], dateArray[1]];
-      const future = new Date(`${sortedDateArray.join("-")}T${this.dataset.time}:00Z`);
+      const future = new Date(`${sortedDateArray.join("-")}T${this.dataset.time}:00-07:00`);
       const now = new Date();
       const diff = future - now;
 
