@@ -273,7 +273,7 @@
   }
   predictive-search[open] .predictive-search,
   predictive-search[loading] .predictive-search {
-    @apply max-h-[calc(100vh-96px)] ml-[26px];
+    @apply max-h-[calc(100vh-96px)] ml-[19px] md:ml-[26px];
   }
   predictive-search:not([loading]) .loading-spinner,
   predictive-search:not([loading]) .predictive-search__loading-state,
