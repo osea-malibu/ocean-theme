@@ -7,8 +7,12 @@
       GorgiasChat.hidePoweredBy(true)
       GorgiasChat.setCustomBusinessHours({
         timezone: "America/Los_Angeles",
-        businessHours: [
+        {% comment %} businessHours: [
           { days: [1, 2, 3, 4, 5], fromTime: "08:00", toTime: "17:00" }
+        ], {% endcomment %}
+        businessHours: [
+            { days: [2, 3, 4], fromTime: "08:00", toTime: "17:00" },
+            { days: [1, 5], fromTime: "08:00", toTime: "19:00" }
         ]
       })
       
