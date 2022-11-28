@@ -307,6 +307,9 @@
               </subscription-radios>
             {%- endunless -%}
           {%- when 'buy_buttons' -%}
+            {%- if product.type == 'Gift Card' -%}
+              <button class="giftcard-align hidden"></button>
+            {%- endif -%}
             {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
               <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
                 <product-form class="product-form" data-cart-type="{{ settings.cart_type }}">
