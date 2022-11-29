@@ -44,10 +44,13 @@
             <h2 class="text-xl sm:text-2xl tracking-wide font-medium mb-4">
               {{- category -}}
             </h2>
-            {%- assign accordion_data = json_data | where: 'group', category -%}
+            {%- liquid
+              assign accordion_data = json_data | where: 'group', category
+              assign accordion_id = 'Accordion-' | append: category
+            -%}
             <div class="accordion mb-12">
               {% render 'accordion',
-                id: "Accordion-{{ category }}",
+                id: accordion_id,
                 items: accordion_data %}
             </div>
           </article>

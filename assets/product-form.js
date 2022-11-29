@@ -13,9 +13,39 @@ if (!customElements.get("product-form")) {
         if (document.querySelector("cart-drawer")) this.submitButton.setAttribute("aria-haspopup", "dialog");
       }
 
+      getCartContents() {
+        return fetch(window.Shopify.routes.root + "cart.js")
+          .then((response) => response.json())
+          .then((data) => {
+            return data;
+          });
+      }
+
       onSubmitHandler(evt) {
         evt.preventDefault();
         if (this.submitButton.getAttribute("aria-disabled") === "true") return;
+
+        /* if (this.form.querySelector('[name="properties[_is_subscription]"]').value == "true") {
+          console.log("getCartContents", this.getCartContents());
+          this.getCartContents().then((cartContents) => {
+            const filteredData = cartContents.items.filter((i) => i.properties._is_subscription === "true" && i.id === parseInt(this.form.querySelector("[name=id]").value));
+            if (filteredData.length > 0) {
+              console.log("filteredData", filteredData.length > 0);
+              return;
+            }
+          });
+          fetch(window.Shopify.routes.root + "cart.js")
+            .then((response) => response.json())
+            .then((data) => {
+              const filteredData = data.items.filter((i) => i.properties._is_subscription === "true" && i.id === parseInt(this.form.querySelector("[name=id]").value));
+              if (filteredData.length > 0) {
+                return;
+              }
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+        } */
 
         this.handleErrorMessage();
 
@@ -44,15 +74,6 @@ if (!customElements.get("product-form")) {
           .then((response) => {
             if (response.status) {
               this.handleErrorMessage(response.description);
-
-              // Sold out message handling - might replace with klaviyo
-              const soldOutMessage = this.submitButton.querySelector(".sold-out-message");
-              if (!soldOutMessage) return;
-              this.submitButton.setAttribute("aria-disabled", true);
-              this.submitButton.querySelector("span").classList.add("hidden");
-              soldOutMessage.classList.remove("hidden");
-              this.error = true;
-              return;
             } else if (!this.cart) {
               window.location = window.routes.cart_url;
               return;
@@ -93,6 +114,7 @@ if (!customElements.get("product-form")) {
       handleErrorMessage(errorMessage = false) {
         this.errorMessageWrapper = this.errorMessageWrapper || this.querySelector(".product-form__error-message-wrapper");
         if (!this.errorMessageWrapper) return;
+
         this.errorMessage = this.errorMessage || this.errorMessageWrapper.querySelector(".product-form__error-message");
 
         this.errorMessageWrapper.toggleAttribute("hidden", !errorMessage);

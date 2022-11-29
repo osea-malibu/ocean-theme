@@ -15,7 +15,7 @@
   {% render 'accordion-item', product: product %}
 {% endcomment %}
 
-<details class="accordion group-accordion" id="{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
+<details class="accordion group-accordion scroll-mt-32" id="{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
   <summary class="w-full flex {% if summary_classes != blank %}{{ summary_classes }}{% else %}py-2{% endif %}">
     <h2 class="font-medium tracking-wide grow">
       {{- summary -}}
@@ -25,7 +25,7 @@
       <line x1="5" y1="12" x2="19" y2="12" />
     </svg>
   </summary>
-  <div class="content tracking-wide py-2 {{ content_classes }}" id="ProductAccordion-{{ id }}">
+  <div class="content tracking-wide py-2 {{ content_classes }}">
     {{ content }}
   </div>
 </details>

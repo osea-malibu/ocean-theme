@@ -2880,6 +2880,10 @@ table.comparison-matrix td.unchecked {
   margin-top: 2.5rem;
 }
 
+.-mt-6 {
+  margin-top: -1.5rem;
+}
+
 .mt-0\.5 {
   margin-top: 0.125rem;
 }
@@ -2914,6 +2918,10 @@ table.comparison-matrix td.unchecked {
 
 .inline-block {
   display: inline-block;
+}
+
+.inline {
+  display: inline;
 }
 
 .flex {
@@ -3459,6 +3467,10 @@ table.comparison-matrix td.unchecked {
   resize: both;
 }
 
+.scroll-mt-32 {
+  scroll-margin-top: 8rem;
+}
+
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -3865,12 +3877,6 @@ table.comparison-matrix td.unchecked {
 
 .from-seaweed-800\/30 {
   --tw-gradient-from: rgb(11 46 37 / 0.3);
-  --tw-gradient-to: rgb(11 46 37 / 0);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.from-seaweed-800 {
-  --tw-gradient-from: #0B2E25;
   --tw-gradient-to: rgb(11 46 37 / 0);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
@@ -4292,6 +4298,10 @@ table.comparison-matrix td.unchecked {
   vertical-align: top;
 }
 
+.align-bottom {
+  vertical-align: bottom;
+}
+
 .font-serif {
   font-family: Canela, serif;
 }
@@ -4421,6 +4431,10 @@ table.comparison-matrix td.unchecked {
 
 .leading-5 {
   line-height: 1.25rem;
+}
+
+.leading-4 {
+  line-height: 1rem;
 }
 
 .leading-10 {
@@ -5821,10 +5835,6 @@ ul.whr-items .whr-item.active h3::after {
     top: -1.25rem;
   }
 
-  .sm\:right-1 {
-    right: 0.25rem;
-  }
-
   .sm\:order-3 {
     order: 3;
   }
@@ -6017,10 +6027,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:w-\[calc\(50\%-1\.5rem\)\] {
     width: calc(50% - 1.5rem);
-  }
-
-  .sm\:w-1 {
-    width: 0.25rem;
   }
 
   .sm\:max-w-lg {
@@ -6610,14 +6616,6 @@ ul.whr-items .whr-item.active h3::after {
     width: 100%;
   }
 
-  .md\:w-2 {
-    width: 0.5rem;
-  }
-
-  .md\:w-1 {
-    width: 0.25rem;
-  }
-
   .md\:min-w-\[120px\] {
     min-width: 120px;
   }
@@ -6942,14 +6940,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .lg\:top-3 {
     top: 0.75rem;
-  }
-
-  .lg\:left-1 {
-    left: 0.25rem;
-  }
-
-  .lg\:right-1 {
-    right: 0.25rem;
   }
 
   .lg\:order-none {

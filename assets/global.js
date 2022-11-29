@@ -137,7 +137,31 @@ class QuantityInput extends HTMLElement {
     this.input = this.querySelector("input");
     this.changeEvent = new Event("change", { bubbles: true });
 
+    this.input.addEventListener("change", this.onInputChange.bind(this));
     this.querySelectorAll("button").forEach((button) => button.addEventListener("click", this.onButtonClick.bind(this)));
+  }
+
+  onInputChange(event) {
+    const autodeliverOptionEl = document.querySelector('input[value="autodeliver"]');
+    const inputValueInteger = parseInt(event.currentTarget.value);
+    const plusButtonEl = this.querySelector('button[name="plus"]');
+
+    if (autodeliverOptionEl && autodeliverOptionEl.checked) {
+      this.productForm = document.querySelector("product-form.pdp-product-form");
+      if (inputValueInteger > 4) {
+        this.input.value = 4;
+        this.productForm.handleErrorMessage("You may not subscribe to more than 4 of this product.");
+        setTimeout(() => this.productForm.handleErrorMessage(), 5000);
+        plusButtonEl.setAttribute("disabled", "");
+      } else if (inputValueInteger == 4) {
+        plusButtonEl.setAttribute("disabled", "");
+      } else {
+        if (plusButtonEl.disabled) {
+          plusButtonEl.removeAttribute("disabled");
+        }
+        this.productForm.handleErrorMessage();
+      }
+    }
   }
 
   onButtonClick(event) {
@@ -656,12 +680,26 @@ class SubscriptionRadios extends HTMLElement {
       this.setActiveState();
       this.updateMainPrice(e.currentTarget);
 
+      const plusButtonEl = document.querySelector('.pdp-quantity button[name="plus"]');
+
       if (value === "onetime") {
         this.clearSellingPlanValues();
         this.isSubscriptionInput.value = false;
+
+        if (plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
       } else if (value === "autodeliver") {
         this.setDefaultSellingPlan();
         this.isSubscriptionInput.value = true;
+
+        const inputEl = document.querySelector(".pdp-quantity input");
+        const inputValueInteger = parseInt(inputEl.value);
+
+        if (inputValueInteger > 4) {
+          inputEl.value = 4;
+          plusButtonEl.setAttribute("disabled", "");
+        } else if (inputValueInteger == 4) {
+          plusButtonEl.setAttribute("disabled", "");
+        }
       }
     }
   }
@@ -699,6 +737,7 @@ class TabController extends HTMLElement {
     this.activeTab = this.querySelector("[role=tab][aria-selected=true]");
 
     this.addEventListeners();
+    this.checkUrlParameters();
   }
 
   // Private function to set event listeners
@@ -746,12 +785,12 @@ class TabController extends HTMLElement {
 
   // Public function to set the tab by id
   // This can be called by the developer too.
-  setActiveTab(id) {
+  setActiveTab(id, skipFocus = false) {
     for (let tab of this.tabs) {
       if (tab.getAttribute("aria-controls") == id) {
         tab.setAttribute("aria-selected", "true");
         tab.classList.add("bg-wave-200");
-        tab.focus();
+        !skipFocus && tab.focus();
         this.activeTab = tab;
       } else {
         tab.setAttribute("aria-selected", "false");
@@ -761,12 +800,32 @@ class TabController extends HTMLElement {
     for (let tabpanel of this.tabpanels) {
       if (tabpanel.getAttribute("id") == id) {
         if (tabpanel.getAttribute("aria-expanded") === "true") {
-          tabpanel.focus();
+          !skipFocus && tabpanel.focus();
         } else {
           tabpanel.setAttribute("aria-expanded", "true");
         }
       } else {
         tabpanel.setAttribute("aria-expanded", "false");
+      }
+    }
+  }
+
+  checkUrlParameters() {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+    let { tab, question } = params;
+
+    if (tab) {
+      this.setActiveTab(`tab-${tab}`, true);
+
+      if (question) {
+        const questionEl = this.querySelector(`#tab-${tab} ul.accordion li:nth-child(${question}) details`);
+
+        if (questionEl) {
+          questionEl.setAttribute("open", "");
+          setTimeout(() => questionEl.scrollIntoView({ block: "start" }), 1000);
+        }
       }
     }
   }
@@ -1102,6 +1161,38 @@ class CountdownComponent extends HTMLElement {
   }
 }
 customElements.define("countdown-component", CountdownComponent);
+
+class SktGcFields extends HTMLElement {
+  constructor() {
+    super();
+
+    setTimeout(() => this.moveFields(), 500);
+  }
+
+  moveFields() {
+    const source = document.querySelector("#skt_cgc_lineitems");
+
+    if (source) {
+      source.querySelectorAll("#skt-fields > div").forEach((i) => {
+        const inputEl = i.firstElementChild;
+        const inputId = inputEl.getAttribute("id");
+        const labelEl = document.createElement("label");
+        const labelText = inputEl.getAttribute("placeholder");
+        inputEl.removeAttribute("placeholder");
+        inputEl.classList.add("input");
+        labelEl.setAttribute("for", inputId);
+        labelEl.classList.add("font-medium", "text-sm");
+        labelEl.innerText = `${labelText}:`;
+        i.prepend(labelEl);
+      });
+
+      this.appendChild(source);
+
+      this.classList.remove("hidden");
+    }
+  }
+}
+customElements.define("skt-gc-fields", SktGcFields);
 
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {

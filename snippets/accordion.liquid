@@ -15,7 +15,7 @@
 {%- if items.size > 0 -%}
   <ul class="accordion">
     {%- for item in items -%}
-      {%- assign item_id = "{{ id }}-{{ forloop.index }}" -%}
+      {%- assign item_id =  id | append: '-' | append: forloop.index -%}
       <li class="border-seaweed-400{% unless forloop.last %} border-b{% endunless %}">
         {% render 'accordion-item',
           id: item_id,
