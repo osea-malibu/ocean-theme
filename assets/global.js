@@ -1172,7 +1172,9 @@ class SktGcFields extends HTMLElement {
   }
 
   moveFields() {
-    const source = document.querySelector("#skt_cgc_lineitems");
+    const source = Array.prototype.slice.call(document.querySelectorAll("#skt_cgc_lineitems")).find((i) => {
+      if (i.hasChildNodes()) return i;
+    });
 
     if (source) {
       source.querySelectorAll("#skt-fields > div").forEach((i) => {
@@ -1183,7 +1185,7 @@ class SktGcFields extends HTMLElement {
         inputEl.removeAttribute("placeholder");
         inputEl.classList.add("input");
         labelEl.setAttribute("for", inputId);
-        labelEl.classList.add("font-medium", "text-sm");
+        labelEl.classList.add("font-medium", "text-sm", "bg-white");
         labelEl.innerText = `${labelText}:`;
         i.prepend(labelEl);
       });

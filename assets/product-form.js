@@ -86,7 +86,8 @@ if (!customElements.get("product-form")) {
 
         this.handleErrorMessage();
 
-        if (this.form.querySelector('[name="properties[_is_subscription]"]').value == "true") {
+        const purchaseOptionInput = this.form.querySelector('[name="properties[_is_subscription]"]');
+        if (purchaseOptionInput && purchaseOptionInput.value == "true") {
           this.getCartContents().then((cartContents) => {
             const filteredData = cartContents.items.filter(
               (i) => i.properties._is_subscription === "true" && i.id === parseInt(this.form.querySelector("[name=id]").value) && i.quantity >= 4
