@@ -21,34 +21,7 @@ if (!customElements.get("product-form")) {
           });
       }
 
-      onSubmitHandler(evt) {
-        evt.preventDefault();
-        if (this.submitButton.getAttribute("aria-disabled") === "true") return;
-
-        /* if (this.form.querySelector('[name="properties[_is_subscription]"]').value == "true") {
-          console.log("getCartContents", this.getCartContents());
-          this.getCartContents().then((cartContents) => {
-            const filteredData = cartContents.items.filter((i) => i.properties._is_subscription === "true" && i.id === parseInt(this.form.querySelector("[name=id]").value));
-            if (filteredData.length > 0) {
-              console.log("filteredData", filteredData.length > 0);
-              return;
-            }
-          });
-          fetch(window.Shopify.routes.root + "cart.js")
-            .then((response) => response.json())
-            .then((data) => {
-              const filteredData = data.items.filter((i) => i.properties._is_subscription === "true" && i.id === parseInt(this.form.querySelector("[name=id]").value));
-              if (filteredData.length > 0) {
-                return;
-              }
-            })
-            .catch((e) => {
-              console.error(e);
-            });
-        } */
-
-        this.handleErrorMessage();
-
+      addProductToCart() {
         this.submitButton.setAttribute("aria-disabled", true);
         this.submitButton.classList.add("opacity-50");
         // maybe remove following line
@@ -93,22 +66,42 @@ if (!customElements.get("product-form")) {
                         this.cart.addFreeGift(tier.variant);
                       }
                     })
-                    .catch((e) => {
-                      console.error(e);
-                    });
+                    .catch((e) => console.error(e));
                 }
               });
             }
           })
-          .catch((e) => {
-            console.error(e);
-          })
+          .catch((e) => console.error(e))
           .finally(() => {
             this.submitButton.classList.remove("opacity-50");
             if (this.cart && this.cart.classList.contains("is-empty")) this.cart.classList.remove("is-empty");
             if (!this.error) this.submitButton.removeAttribute("aria-disabled");
             this.querySelector(".loading-overlay__spinner")?.classList.add("hidden");
           });
+      }
+
+      onSubmitHandler(evt) {
+        evt.preventDefault();
+        if (this.submitButton.getAttribute("aria-disabled") === "true") return;
+
+        this.handleErrorMessage();
+
+        if (this.form.querySelector('[name="properties[_is_subscription]"]').value == "true") {
+          this.getCartContents().then((cartContents) => {
+            const filteredData = cartContents.items.filter(
+              (i) => i.properties._is_subscription === "true" && i.id === parseInt(this.form.querySelector("[name=id]").value) && i.quantity >= 4
+            );
+
+            if (filteredData.length > 0) {
+              this.handleErrorMessage("You may not subscribe to more than 4 of this product.");
+              return;
+            } else {
+              this.addProductToCart();
+            }
+          });
+        } else {
+          this.addProductToCart();
+        }
       }
 
       handleErrorMessage(errorMessage = false) {
