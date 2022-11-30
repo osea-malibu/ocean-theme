@@ -228,20 +228,6 @@
                 </div>
               </div>
             </noscript>
-            
-            {%- if product.type == 'Gift Card' -%}
-              <skt-gc-fields id="SktGcFields" class="hidden col-span-12"></skt-gc-fields>
-              {% comment %} <div class="relative col-span-12 mb-2">
-                <skt-gc-fields id="SktGcFields" class="hidden absolute inset-0 z-10"></skt-gc-fields>
-
-                <label class="font-medium text-sm">To Name:</label>
-                <div class="animate-pulse z-0 w-full h-10 bg-wave-400 rounded-sm mb-3 relative -bottom-px"></div>
-                <label class="font-medium text-sm">From Name:</label>
-                <div class="animate-pulse z-0 w-full h-10 bg-wave-400 rounded-sm mb-3 relative -bottom-px"></div>
-                <label class="font-medium text-sm">Message:</label>
-                <div class="animate-pulse z-0 w-full h-16 bg-wave-400 rounded-sm relative -bottom-px"></div>
-              </div> {% endcomment %}
-            {%- endif -%}
           {%- when 'subscription_picker' -%}
             {%- liquid
               assign hide_subscription = false
