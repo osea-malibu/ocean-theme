@@ -4,7 +4,7 @@
 <section id="main-product">
   <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start xl:gap-10 xl:max-w-screen-lg">
     <a class="sr-only button button-secondary focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
-      {{ "accessibility.skip_to_product_info" | t }}
+      {{ "accessibility.skip_to_produ∂ct_info" | t }}
     </a>
     <glide-slider
       class="glide type-carousel md:flex-1 relative gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 md:sticky md:top-[148px] mb-6 overflow-hidden max-w-full xl:flex xl:flex-row-reverse xl:gap-2"
@@ -63,7 +63,7 @@
     <div class="container md:px-0 md:flex-1">
       <div id="ProductInfo-{{ section.id }}" class="{{ section.settings.product_info_classes }}">
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
-
+ABCD
         {%- for block in section.blocks -%}
           {%- case block.type -%}
           {%- when '@app' -%}
