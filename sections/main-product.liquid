@@ -63,7 +63,7 @@
     <div class="container md:px-0 md:flex-1">
       <div id="ProductInfo-{{ section.id }}" class="{{ section.settings.product_info_classes }}">
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
-ABCD
+
         {%- for block in section.blocks -%}
           {%- case block.type -%}
           {%- when '@app' -%}
@@ -140,6 +140,8 @@ ABCD
                 -%}
               </div>
             {%- endif -%}
+
+            ABCD
           {%- when 'quantity_selector' -%}
             {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
               <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
