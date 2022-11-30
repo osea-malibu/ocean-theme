@@ -80,6 +80,8 @@
             <div class="no-js-hidden main-price {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
               {%- render 'price', product: product, use_variant: true -%}
             </div>
+
+            ABCD
           {%- when 'rating' -%}
             {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
           {%- when 'benefits' -%}
@@ -102,7 +104,7 @@
                 </ul>
               </div>
             {%- endif -%}
-ABCD
+
             {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
