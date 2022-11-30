@@ -142,6 +142,7 @@
             {%- endif -%}
 
           {%- when 'quantity_selector' -%}
+ABCD
             {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
               <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
                 <label class="sr-only" for="Quantity-{{ section.id }}">
