@@ -177,7 +177,23 @@
                   </button>
                 </quantity-input>
               </div>
-              ABCD
+               <!-- ShopKeeper Gift Card -->
+ {% if product.type contains 'Gift Card' %}
+<div id="skt-fields">
+        <div>
+	<input id="sktcgc_to" style="width:100%;margin-bottom:10px;" type="text" name="properties[To]" value="" placeholder="To Name" />
+</div>
+<div>
+	<input id="sktcgc_from" style="width:100%;margin-bottom:10px;" type="text" name="properties[_From]" value="" placeholder="From Name"/>
+</div>
+<div>
+	<textarea id="sktcgc_msg" style="width:100%;margin-bottom:10px;" placeholder="Message"></textarea>
+<input type="hidden" id="sktcgc_msgprop" name="properties[_Msg]" value="" />
+</div>
+</div>
+{% endif %}
+<!-- End ShopKeeper -->
+
             {%- endif -%}
           {%- when 'variant_picker' -%}
             {%- unless product.has_only_default_variant -%}
