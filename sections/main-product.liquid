@@ -236,16 +236,13 @@
             {% if product.type contains 'Gift Card' %}
               <div id="skt-fields" class="col-span-12">
                 <div>
-                  <label for="sktcgc_to" class="text-sm font-medium">To Name:</label>
-                  <input id="sktcgc_to" style="width:100%;margin-bottom:8px;" type="text" name="properties[To]" value="" class="input" />
+                  <input id="sktcgc_to" style="width:100%;margin-bottom:10px;" type="text" name="properties[To]" value="" placeholder="To Name" />
                 </div>
                 <div>
-                  <label for="sktcgc_from" class="text-sm font-medium">From Name:</label>
-                  <input id="sktcgc_from" style="width:100%;margin-bottom:8px;" type="text" name="properties[_From]" value="" class="input" />
+                  <input id="sktcgc_from" style="width:100%;margin-bottom:10px;" type="text" name="properties[_From]" value="" placeholder="From Name"/>
                 </div>
                 <div>
-                  <label for="sktcgc_from" class="text-sm font-medium">Message:</label>
-                  <textarea id="sktcgc_msg" style="width:100%;margin-bottom:8px;" class="input"></textarea>
+                  <textarea id="sktcgc_msg" style="width:100%;margin-bottom:10px;" placeholder="Message"></textarea>
                   <input type="hidden" id="sktcgc_msgprop" name="properties[_Msg]" value="" />
                 </div>
               </div>
