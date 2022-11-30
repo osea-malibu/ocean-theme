@@ -139,10 +139,10 @@
                   content_classes: 'max-h-80 overflow-y-auto pr-4 a:link b:font-bold p:mb-4'
                 -%}
               </div>
+              ABCD
             {%- endif -%}
 
           {%- when 'quantity_selector' -%}
-ABCD
             {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
               <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
                 <label class="sr-only" for="Quantity-{{ section.id }}">
