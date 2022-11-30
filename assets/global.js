@@ -1164,39 +1164,17 @@ class CountdownComponent extends HTMLElement {
 }
 customElements.define("countdown-component", CountdownComponent);
 
-class SktGcFields extends HTMLElement {
+class GiftCardFields extends HTMLElement {
   constructor() {
     super();
-
-    setTimeout(() => this.moveFields(), 500);
+    this.addEventListener("change", this.onInputChange);
   }
 
-  moveFields() {
-    const source = Array.prototype.slice.call(document.querySelectorAll("#skt_cgc_lineitems")).find((i) => {
-      if (i.hasChildNodes()) return i;
-    });
-
-    if (source) {
-      source.querySelectorAll("#skt-fields > div").forEach((i) => {
-        const inputEl = i.firstElementChild;
-        const inputId = inputEl.getAttribute("id");
-        const labelEl = document.createElement("label");
-        const labelText = inputEl.getAttribute("placeholder");
-        inputEl.removeAttribute("placeholder");
-        inputEl.classList.add("input");
-        labelEl.setAttribute("for", inputId);
-        labelEl.classList.add("font-medium", "text-sm", "bg-white");
-        labelEl.innerText = `${labelText}:`;
-        i.prepend(labelEl);
-      });
-
-      this.appendChild(source);
-
-      this.classList.remove("hidden");
-    }
+  onInputChange(event) {
+    document.querySelector(`product-form.pdp-product-form #sktc${event.target.id}`).value = event.target.value;
   }
 }
-customElements.define("skt-gc-fields", SktGcFields);
+customElements.define("gift-card-fields", GiftCardFields);
 
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {

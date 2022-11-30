@@ -234,18 +234,22 @@
 
             <!-- ShopKeeper Gift Card -->
             {% if product.type contains 'Gift Card' %}
-              <div id="skt-fields" class="col-span-12">
-                <div>
-                  <input id="sktcgc_to" style="width:100%;margin-bottom:10px;" type="text" name="properties[To]" value="" placeholder="To Name" />
+              <gift-card-fields class="col-span-12">
+                <div id="skt-fields">
+                  <div>
+                    <label for="gc_to" class="text-sm font-medium">To Name:</label>
+                    <input id="gc_to" type="text" value="" class="input w-full mb-2" />
+                  </div>
+                  <div>
+                    <label for="gc_from" class="text-sm font-medium">From Name:</label>
+                    <input id="gc_from" type="text" value="" class="input w-full mb-2" />
+                  </div>
+                  <div>
+                    <label for="gc_msg" class="text-sm font-medium">Message:</label>
+                    <textarea id="gc_msg" class="input w-full mb-2"></textarea>
+                  </div>
                 </div>
-                <div>
-                  <input id="sktcgc_from" style="width:100%;margin-bottom:10px;" type="text" name="properties[_From]" value="" placeholder="From Name"/>
-                </div>
-                <div>
-                  <textarea id="sktcgc_msg" style="width:100%;margin-bottom:10px;" placeholder="Message"></textarea>
-                  <input type="hidden" id="sktcgc_msgprop" name="properties[_Msg]" value="" />
-                </div>
-              </div>
+              </gift-card-fields>
             {% endif %}
             <!-- End ShopKeeper -->
           {%- when 'subscription_picker' -%}
@@ -347,6 +351,11 @@
                   {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                     <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
                     <input type="hidden" name="properties[_is_subscription]" value="{% if product.selected_or_first_available_variant.selling_plan_groups.size > 0 %}true{% else %}false{% endif %}">
+                    {% if product.type contains 'Gift Card' %}
+                      <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
+                      <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
+                      <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
+                    {%- endif -%}
                     <div class="product-form__buttons relative" id="AddToCart">
                       <button
                         type="submit"

@@ -2514,10 +2514,6 @@ table.comparison-matrix td.unchecked {
   left: 1rem;
 }
 
-.-bottom-px {
-  bottom: -1px;
-}
-
 .z-0 {
   z-index: 0;
 }
@@ -2906,14 +2902,6 @@ table.comparison-matrix td.unchecked {
 
 .\!-ml-0 {
   margin-left: -0px !important;
-}
-
-.mt-px {
-  margin-top: 1px;
-}
-
-.mb-2\.5 {
-  margin-bottom: 0.625rem;
 }
 
 .box-border {
@@ -3893,12 +3881,6 @@ table.comparison-matrix td.unchecked {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-seaweed-800 {
-  --tw-gradient-from: #0B2E25;
-  --tw-gradient-to: rgb(11 46 37 / 0);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .bg-cover {
   background-size: cover;
 }
@@ -4423,10 +4405,6 @@ table.comparison-matrix td.unchecked {
   line-height: 1.25;
 }
 
-.leading-normal {
-  line-height: 1.5;
-}
-
 .leading-none {
   line-height: 1;
 }
@@ -4437,6 +4415,10 @@ table.comparison-matrix td.unchecked {
 
 .leading-relaxed {
   line-height: 1.625;
+}
+
+.leading-normal {
+  line-height: 1.5;
 }
 
 .leading-8 {
@@ -5673,10 +5655,6 @@ ul.whr-items .whr-item.active h3::after {
     margin-right: 0px;
   }
 
-  .xs\:mb-4 {
-    margin-bottom: 1rem;
-  }
-
   .xs\:mr-3 {
     margin-right: 0.75rem;
   }
@@ -5761,11 +5739,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .xs\:pl-20 {
     padding-left: 5rem;
-  }
-
-  .xs\:text-5xl {
-    font-size: 3rem;
-    line-height: 1;
   }
 
   .xs\:text-base {
@@ -5853,10 +5826,6 @@ ul.whr-items .whr-item.active h3::after {
     top: -1.25rem;
   }
 
-  .sm\:right-1 {
-    right: 0.25rem;
-  }
-
   .sm\:order-3 {
     order: 3;
   }
@@ -5895,10 +5864,6 @@ ul.whr-items .whr-item.active h3::after {
     margin-right: 0px;
   }
 
-  .sm\:mb-2 {
-    margin-bottom: 0.5rem;
-  }
-
   .sm\:mt-0 {
     margin-top: 0px;
   }
@@ -5909,6 +5874,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:mb-6 {
     margin-bottom: 1.5rem;
+  }
+
+  .sm\:mb-2 {
+    margin-bottom: 0.5rem;
   }
 
   .sm\:mr-auto {
@@ -6049,10 +6018,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .sm\:w-\[calc\(50\%-1\.5rem\)\] {
     width: calc(50% - 1.5rem);
-  }
-
-  .sm\:w-1 {
-    width: 0.25rem;
   }
 
   .sm\:max-w-lg {
@@ -6642,14 +6607,6 @@ ul.whr-items .whr-item.active h3::after {
     width: 100%;
   }
 
-  .md\:w-2 {
-    width: 0.5rem;
-  }
-
-  .md\:w-1 {
-    width: 0.25rem;
-  }
-
   .md\:min-w-\[120px\] {
     min-width: 120px;
   }
@@ -6825,11 +6782,6 @@ ul.whr-items .whr-item.active h3::after {
     text-align: justify;
   }
 
-  .md\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-
   .md\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
@@ -6838,6 +6790,11 @@ ul.whr-items .whr-item.active h3::after {
   .md\:text-5xl {
     font-size: 3rem;
     line-height: 1;
+  }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 
   .md\:text-3xl {
@@ -6976,14 +6933,6 @@ ul.whr-items .whr-item.active h3::after {
     top: 0.75rem;
   }
 
-  .lg\:left-1 {
-    left: 0.25rem;
-  }
-
-  .lg\:right-1 {
-    right: 0.25rem;
-  }
-
   .lg\:order-none {
     order: 0;
   }
@@ -7013,10 +6962,6 @@ ul.whr-items .whr-item.active h3::after {
     margin-right: 3rem;
   }
 
-  .lg\:mb-0 {
-    margin-bottom: 0px;
-  }
-
   .lg\:mr-2 {
     margin-right: 0.5rem;
   }
@@ -7031,6 +6976,10 @@ ul.whr-items .whr-item.active h3::after {
 
   .lg\:mb-12 {
     margin-bottom: 3rem;
+  }
+
+  .lg\:mb-0 {
+    margin-bottom: 0px;
   }
 
   .lg\:ml-8 {
@@ -7403,19 +7352,19 @@ ul.whr-items .whr-item.active h3::after {
     text-align: center;
   }
 
-  .lg\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-
-  .lg\:text-7xl {
-    font-size: 4.5rem;
+  .lg\:text-6xl {
+    font-size: 3.75rem;
     line-height: 1;
   }
 
   .lg\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .lg\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 
   .lg\:text-4xl {
@@ -7426,11 +7375,6 @@ ul.whr-items .whr-item.active h3::after {
   .lg\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
-  }
-
-  .lg\:text-6xl {
-    font-size: 3.75rem;
-    line-height: 1;
   }
 
   .lg\:tracking-normal {
@@ -7592,10 +7536,6 @@ ul.whr-items .whr-item.active h3::after {
 
   .xl\:leading-snug {
     line-height: 1.375;
-  }
-
-  .xl\:tracking-tighter {
-    letter-spacing: -.05em;
   }
 
   .xl\:\[--swiffy-slider-item-count\:4\] {
