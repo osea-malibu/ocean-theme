@@ -373,6 +373,93 @@ class SaveWithSets extends HTMLElement {
   }
 }
 
+class PrintedGiftNote extends HTMLElement {
+  constructor() {
+    super();
+
+    this.messageTextarea = this.querySelector("#PrintedGiftNoteMessage");
+    this.giftMessage = this.messageTextarea.value;
+    this.errorMessage = this.querySelector("#PrintedGiftNoteError");
+    this.confirmMessage = this.querySelector("#PrintedGiftNoteConfirm");
+    this.noteEnabledCheckbox = this.querySelector("#PrintedGiftNoteEnable");
+
+    //this.messageTextarea.addEventListener("keydown", this.debouncedUpdateGiftMessage);
+    //this.messageTextarea.addEventListener("change", this.updateGiftMessage);
+    this.messageTextarea.addEventListener(
+      "keydown",
+      debounce((event) => {
+        this.updateGiftMessage(event.target.value);
+      }, 1000)
+    );
+  }
+
+  connectedCallback() {
+    console.log("printed gift note is connected");
+  }
+
+  validateInput(string) {
+    if (!string) return false;
+    const regEx = RegExp(/^[\s0-9a-zA-Z.,?!]*$/g);
+    return !string.match(regEx);
+  }
+
+  updateGiftMessage(value) {
+    console.log("value:", value);
+    console.log("isNoteEnabled:", this.noteEnabledCheckbox.checked);
+    this.confirmMessage.classList.add("hidden");
+    this.errorMessage.classList.add("hidden");
+
+    if (this.noteEnabledCheckbox.checked && value !== "") {
+      if (this.validateInput(value)) {
+        this.errorMessage.classList.remove("hidden");
+      } else {
+        this.confirmMessage.classList.remove("hidden");
+
+        const body = JSON.stringify({
+          attributes: {
+            giftEnabled: true,
+            giftMessage: value,
+          },
+        });
+        fetch(`${routes.cart_update_url}`, { ...fetchConfig(), ...{ body } });
+      }
+    }
+    if ((this.noteEnabledCheckbox.checked && value === "") || !this.noteEnabledCheckbox.checked) {
+      const body = JSON.stringify({
+        attributes: {
+          giftEnabled: false,
+          giftMessage: null,
+        },
+      });
+      fetch(`${routes.cart_update_url}`, { ...fetchConfig(), ...{ body } });
+    }
+  }
+
+  /* debouncedUpdateGiftMessage(event) {
+    const { value: inputValue } = event.target;
+
+    this.confirmMessage.classList.add("hidden");
+    this.errorMessage.classList.add("hidden");
+
+    clearTimeout(this.timeout);
+
+    let self = this;
+
+    if (this.validateInput(inputValue)) {
+      this.errorMessage.classList.remove("hidden");
+    }
+
+    this.timeout = setTimeout(function () {
+      if (!self.validateInput(inputValue)) {
+        this.confirmMessage.classList.remove("hidden");
+        self.updateGiftMessage();
+        //document.getElementById("giftMessageInput").blur();
+      }
+    }, 2000);
+  } */
+}
+customElements.define("printed-gift-note", PrintedGiftNote);
+
 customElements.define("save-with-sets", SaveWithSets);
 
 if (!customElements.get("cart-note")) {

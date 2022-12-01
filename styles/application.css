@@ -248,7 +248,7 @@
     @apply pr-5 bg-[right_0.125rem_center] xs:bg-[right_0.25rem_center];
   }
   [type="checkbox"] {
-    @apply cursor-pointer p-0;
+    @apply cursor-pointer p-0 w-4 h-4 text-seaweed-700 bg-white rounded-sm border-seaweed-400 focus:ring-seaweed-300 focus:ring-2;
   }
   [type="checkbox"]:checked {
     @apply bg-seaweed-700;
