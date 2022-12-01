@@ -244,9 +244,10 @@
                     <label for="gc_from" class="text-sm font-medium">From Name:</label>
                     <input id="gc_from" type="text" value="" class="input w-full mb-2" />
                   </div>
-                  <div>
+                  <div class="mb-2">
                     <label for="gc_msg" class="text-sm font-medium">Message:</label>
-                    <textarea id="gc_msg" class="input w-full mb-2"></textarea>
+                    <textarea id="gc_msg" class="input w-full block" maxlength="400"></textarea>
+                    <small class="text-right block">Max characters: 400</small>
                   </div>
                 </div>
               </gift-card-fields>
