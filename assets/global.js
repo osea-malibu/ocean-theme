@@ -1091,7 +1091,7 @@ class GlideSlider extends HTMLElement {
     const classes = Array.from(this.classList);
 
     if (classes.length > 0) {
-      const optionTypes = ["perView", "peek", "focusAt", "type", "bound", "gap"];
+      const optionTypes = ["perView", "peek", "focusAt", "type", "bound", "gap", "autoplay"];
       const optionClasses = classes.filter((className) => optionTypes.some((optionType) => className.includes(optionType)));
 
       if (optionClasses.length > 0) {

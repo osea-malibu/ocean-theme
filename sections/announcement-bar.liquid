@@ -39,19 +39,39 @@
     {%- endunless -%}
   {% comment %} Slider announcement bar {% endcomment %}
   {%- elsif section.blocks.size > 1 -%}
-    <div class="slider slider-nav-autoplay slider-nav-outside max-w-xl" data-slider-nav-autoplay-interval={{ section.settings.slide_interval | times: 1000 }}>
-      <ul class="slider-container">
-        {%- for block in section.blocks -%}
-          {%- if block.settings.text != blank -%}
-            <li class="text-white text-base font-book text-center py-1 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
-              {{ block.settings.text }}
-            </li>
-          {%- endif -%}
-        {%- endfor -%}
-      </ul>
-      <button type="button" class="slider-nav slider-nav-small"></button>
-      <button type="button" class="slider-nav slider-nav-small slider-nav-next"></button>
-    </div>
+    <glide-slider
+      class="glide type-carousel gap-0 autoplay-{{ section.settings.slide_interval | times: 1000 }} max-w-xl mx-auto"
+      id="slider-announcement-bar"
+      data-breakpoint-limit="none"
+    >
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.text != blank -%}
+              <li class="glide__slide text-white text-base font-book text-center py-1 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
+                {{ block.settings.text }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        <div class="glide__arrows" data-glide-el="controls">
+          <button
+            class="glide__arrow glide__arrow--left top-1 opacity-50 left-0 z-10"
+            aria-label="Go to previous"
+            data-glide-dir="<"
+          >
+            {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white bg-seaweed-700 block' %}
+          </button>
+          <button
+            class="glide__arrow glide__arrow--right top-1 opacity-50 right-0 z-10"
+            aria-label="Go to next"
+            data-glide-dir=">"
+          >
+            {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white bg-seaweed-700 block rotate-180' %}
+          </button>
+        </div>
+      </div>
+    </glide-slider>
   {%- else -%}
     <div class="text-white text-base font-book text-center py-1 tracking-wider" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
       {{ section.blocks[0].settings.text }}
