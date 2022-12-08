@@ -109,13 +109,13 @@
 
   {%- if collection.metafields.custom.seo_description != nil -%}
     <div class="mt-10 max-w-screen-md md:text-justify mx-auto">
-      {%- if collection.metafields.custom.seo_description.value.size > 124 -%}
+      {%- if collection.metafields.custom.seo_description.value.size > 840 -%}
         <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox">
       {%- endif -%}
-      <div class="{% if collection.metafields.custom.seo_description.value.size > 124 %}overflow-hidden max-h-52 peer-checked:max-h-screen transition-max-height leading-6{% endif %}">
+      <div class="{% if collection.metafields.custom.seo_description.value.size > 840 %}overflow-hidden max-h-48 peer-checked:max-h-screen transition-max-height leading-6{% endif %}">
         {{ collection.metafields.custom.seo_description }}
       </div>
-      {%- if collection.metafields.custom.seo_description.value.size > 124 -%}
+      {%- if collection.metafields.custom.seo_description.value.size > 840 -%}
         <label aria-hidden="true" for="collapsible" class="link mt-1.5 block peer-checked:hidden">Read more</label>
         <label aria-hidden="true" for="collapsible" class="link mt-1.5 hidden peer-checked:block">Read less</label>
       {%- endif -%}
