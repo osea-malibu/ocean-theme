@@ -30,7 +30,7 @@
       <div id="product-grid" data-id="{{ collection.id }}">
         <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
           {%- liquid
-            if collection.metafields.my_fields.featured_products != blank and collection.metafields.my_fields.featured_products.size > 0
+            if parent_collection.metafields.my_fields.featured_products != blank
               assign no_featured_products = false
             else
               assign no_featured_products = true
