@@ -26,7 +26,7 @@
     "shipping_countdown_threshold": 50,
     "enable_gwp": true,
     "gwp_type": "auto",
-    "enable_annoucement_bar_message": false,
+    "enable_annoucement_bar_message": true,
     "gwp_url_threshold": 0,
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
     "gwp_tier1_product": "free-gift-mini-bestseller-bodycare-duo",
@@ -46,17 +46,10 @@
             "settings": {
               "text": "<p>Free shipping on all US orders $50+<\/p>"
             }
-          },
-          "940d48f7-2964-4fc8-a02a-4418ae5cc8f9": {
-            "type": "announcement",
-            "settings": {
-              "text": "<p>Order by 12\/12 for delivery by 12\/24<\/p>"
-            }
           }
         },
         "block_order": [
-          "announcement-bar-0",
-          "940d48f7-2964-4fc8-a02a-4418ae5cc8f9"
+          "announcement-bar-0"
         ],
         "settings": {
           "slide_interval": 5
