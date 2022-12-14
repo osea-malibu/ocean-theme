@@ -99,6 +99,30 @@
       "step": 1,
       "type": "range",
       "unit": "sec"
+    },
+    {
+      "type": "header",
+      "content": "Dismissable announcement"
+    },
+    {
+      "default": false,
+      "type": "checkbox",
+      "id": "enable_dismissable_announcement",
+      "label": "Enable dismissable announcement",
+      "info": "Adds a close button to banner that will close the current message and display a default message (below). Allows for longer text."
+    },
+    {
+      "type": "richtext",
+      "id": "dismissable_message",
+      "label": "Dismissable announcement message",
+      "info": "This is the message that will be closeable."
+    },
+    {
+      "type": "richtext",
+      "id": "default_message",
+      "label": "Default announcement message",
+      "default": "<p>Free shipping on orders over $50</p>",
+      "info": "This is the message that will be appear when the main message is dismissed."
     }
   ],
   "blocks": [
