@@ -18,7 +18,7 @@
       {% comment %} Hamburger menu {% endcomment %}
       {%- if section.settings.hamburger_menu != blank -%}
         {%- assign menu_link_styles = 'px-8 py-3 text-xl tracking-wide font-regular cursor-pointer' -%}
-        <menu-drawer class="mr-1 md:mr-4 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
+        <menu-drawer id="HamburgerMenu" class="mr-1 md:mr-4 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="group">
             {% comment %} Hamburger icon {% endcomment %}
             <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-1 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
@@ -193,65 +193,67 @@
             </span>
           </summary>
           <div class="search-modal absolute inset-0 z-40 opacity-0 h-full motion-safe:transition-opacity group-open:opacity-100" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
-            <div class="modal-overlay fixed inset-x-0 top-24 bottom-0 bg-seaweed-800/50"></div>
-            <div class="search-modal__content bg-white flex items-center justify-center w-full h-full px-6 opacity-0 group-open:opacity-100 motion-safe:transition-opacity" tabindex="-1">
-              <predictive-search
-                class="w-full md:relative"
-                data-loading-text="{{ 'accessibility.loading' | t }}"
-              >
-                <form
-                  action="{{ routes.search_url }}"
-                  method="get"
-                  role="search"
-                  class="search w-full relative -translate-y-6 group-open:translate-y-0 tranition-transform duration-300"
+            <div class="modal-overlay fixed z-0 inset-x-0 top-0 bottom-0 bg-seaweed-800/50"></div>
+            <div class="search-modal__content relative z-10 bg-white w-screen h-full left-1/2 -translate-x-1/2 px-6 opacity-0 group-open:opacity-100 motion-safe:transition-opacity" tabindex="-1">
+              <div class="sm:container h-full flex items-center justify-center">
+                <predictive-search
+                  class="w-full md:relative"
+                  data-loading-text="{{ 'accessibility.loading' | t }}"
                 >
-                  <div class="relative flex items-center w-full">
-                    <input class="border-seaweed-500 rounded-sm w-full h-10 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
-                      id="Search-In-Modal"
-                      type="search"
-                      name="q"
-                      value=""
-                      placeholder="Search for products, categories, and content"
-                      role="combobox"
-                      aria-expanded="false"
-                      aria-owns="predictive-search-results-list"
-                      aria-controls="predictive-search-results-list"
-                      aria-haspopup="listbox"
-                      aria-autocomplete="list"
-                      autocorrect="off"
-                      autocomplete="off"
-                      autocapitalize="off"
-                      spellcheck="false"
-                    >
-                    <label class="hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
-                    <input type="hidden" name="options[prefix]" value="last">
-                    <button class="cursor-pointer w-10 h-10 flex items-center justify-center ml-2 md:ml-4 shrink-0" aria-label="{{ 'general.search.search' | t }}">
-                      <svg class="h-7 w-7 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"> 
-                        <circle cx="11" cy="11" r="8" /> 
-                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                      </svg>
-                    </button>
-                  </div>
-                  <div
-                    class="predictive-search fixed top-[52px] left-1/2 -translate-x-1/2 bg-wave-200 z-30 max-h-0 w-screen shadow-md shadow-seaweed-700/10 motion-safe:transition-max-height overflow-y-auto"
-                    tabindex="-1"
-                    data-predictive-search
+                  <form
+                    action="{{ routes.search_url }}"
+                    method="get"
+                    role="search"
+                    class="search w-full relative -translate-y-6 group-open:translate-y-0 tranition-transform duration-300"
                   >
-                    <div class="predictive-search__loading-state justify-center p-4">
-                      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-                      </svg>
+                    <div class="relative flex items-center w-full">
+                      <input class="border-seaweed-500 rounded-sm w-full h-10 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
+                        id="Search-In-Modal"
+                        type="search"
+                        name="q"
+                        value=""
+                        placeholder="Search for products, categories, and content"
+                        role="combobox"
+                        aria-expanded="false"
+                        aria-owns="predictive-search-results-list"
+                        aria-controls="predictive-search-results-list"
+                        aria-haspopup="listbox"
+                        aria-autocomplete="list"
+                        autocorrect="off"
+                        autocomplete="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                      >
+                      <label class="hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
+                      <input type="hidden" name="options[prefix]" value="last">
+                      <button class="cursor-pointer w-10 h-10 flex items-center justify-center ml-2 md:ml-4 shrink-0" aria-label="{{ 'general.search.search' | t }}">
+                        <svg class="h-7 w-7 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"> 
+                          <circle cx="11" cy="11" r="8" /> 
+                          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                      </button>
                     </div>
-                  </div>
-                  <span class="predictive-search-status hidden" role="status" aria-hidden="true"></span>
-                </form>
-              </predictive-search>
-              <button type="button" class="cursor-pointer ml-0.5 md:ml-4 -mr-1 w-10 h-10 flex items-center justify-center shrink-0" aria-label="{{ 'accessibility.close' | t }}">
-                <svg class="h-8 w-8 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
+                    <div
+                      class="predictive-search fixed top-[52px] left-1/2 -translate-x-1/2 bg-wave-200 z-30 max-h-0 w-screen shadow-md shadow-seaweed-700/10 motion-safe:transition-max-height overflow-y-auto"
+                      tabindex="-1"
+                      data-predictive-search
+                    >
+                      <div class="predictive-search__loading-state justify-center p-4">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                          <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                        </svg>
+                      </div>
+                    </div>
+                    <span class="predictive-search-status hidden" role="status" aria-hidden="true"></span>
+                  </form>
+                </predictive-search>
+                <button type="button" class="cursor-pointer ml-0.5 md:ml-4 -mr-1 w-10 h-10 flex items-center justify-center shrink-0" aria-label="{{ 'accessibility.close' | t }}">
+                  <svg class="h-8 w-8 hover:text-seaweed-500" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </details>
@@ -359,7 +361,7 @@
 
 {% comment %} Navbar menu {% endcomment %}
 {%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
-  <nav class="overflow-x-auto bg-white -mt-2">
+  <nav class="overflow-x-auto sm:overflow-x-hidden bg-white -mt-2">
     <ul class="flex md:justify-center" role="list">
       {%- for link in section.settings.navbar_menu.links -%}
         <li class="first:pl-1{% if link.links != blank %} group{% endif %}">
@@ -371,7 +373,7 @@
             {{- link.title | replace: 'Mobile - ', '' | escape -}}
           </a>
           {%- if link.links != blank -%}
-            <ul role="list" class="invisible group-hover:visible hidden sm:block absolute z-100 bg-sand-200 py-2 shadow-md shadow-seaweed-400/10 {% if link.levels >= 2 %}inset-x-0 top-[88px]{% else %}px-2{% endif %}">
+            <ul role="list" class="invisible group-hover:visible hidden sm:block absolute z-100 bg-sand-200 py-2 shadow-md shadow-seaweed-400/10 {% if link.levels >= 2 %}inset-x-0{% else %}px-2{% endif %}{% if forloop.last %} right-0 md:right-auto{% endif %}">
               {%- if link.levels >= 2 -%}<div class="mx-auto px-6 py-4 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">{%- endif -%}
               {%- for childlink in link.links -%}
                 {%- if childlink.links != blank -%}
@@ -490,7 +492,7 @@
 {% schema %}
 {
   "name": "t:sections.header.name",
-  "class": "inset-x-0 fixed top-8 z-40 bg-white transition-shadow",
+  "class": "inset-x-0 z-40 bg-white transition-shadow",
   "settings": [
     {
       "type": "image_picker",

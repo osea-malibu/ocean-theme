@@ -172,7 +172,6 @@ class QuantityInput extends HTMLElement {
     if (previousValue !== this.input.value) this.input.dispatchEvent(this.changeEvent);
   }
 }
-
 customElements.define("quantity-input", QuantityInput);
 
 function debounce(fn, wait) {
@@ -418,8 +417,61 @@ class MenuDrawer extends HTMLElement {
 
     window.requestAnimationFrame(handleAnimation);
   }
+
+  setMenuTopValue() {
+    const drawer = this.querySelector(".menu-drawer");
+    const scrim = this.querySelector(".menu-scrim");
+
+    const announcementBar = document.querySelector("#AnnouncementBar");
+    const header = document.querySelector("header.header");
+
+    const topValue = announcementBar.offsetHeight + header.offsetHeight;
+
+    drawer.style.top = `${topValue}px`;
+    scrim.style.top = `${topValue}px`;
+  }
 }
 customElements.define("menu-drawer", MenuDrawer);
+
+class DismissableAnnoucement extends HTMLElement {
+  constructor() {
+    super();
+
+    this.dismissableMessage = this.querySelector("#DismissableMessage");
+    this.defaultMessage = this.querySelector("#DismissableDefault");
+    this.closeButton = this.querySelector("#DismissableClose");
+
+    this.closeButton.addEventListener("click", this.onClose.bind(this));
+  }
+
+  connectedCallback() {
+    let isDismissed = JSON.parse(sessionStorage.getItem("osea.announcementDismissed"));
+    if (isDismissed) {
+      this.useDefaultMessage();
+    } else {
+      const menuDrawer = document.querySelector("menu-drawer");
+      menuDrawer.setMenuTopValue();
+    }
+  }
+
+  onClose() {
+    const drawer = document.querySelector("#HamburgerMenu .menu-drawer");
+    const scrim = document.querySelector("#HamburgerMenu .menu-scrim");
+
+    drawer.style.removeProperty("top");
+    scrim.style.removeProperty("top");
+
+    this.useDefaultMessage();
+    sessionStorage.setItem("osea.announcementDismissed", true);
+  }
+
+  useDefaultMessage() {
+    this.dismissableMessage.classList.add("hidden");
+    this.closeButton.classList.add("hidden");
+    this.defaultMessage.classList.remove("hidden");
+  }
+}
+customElements.define("dismissable-announcement", DismissableAnnoucement);
 
 class ModalDialog extends HTMLElement {
   constructor() {
@@ -1266,11 +1318,11 @@ document.querySelectorAll("details.accordion").forEach((el) => {
 });
 
 // add shadow to header when #MainContent reaches top of window
-let observer = new IntersectionObserver((entries) => {
+/* let observer = new IntersectionObserver((entries) => {
   if (entries[0].boundingClientRect.y < 0) {
     document.querySelector("#shopify-section-header").classList.add("shadow-md", "shadow-seaweed-400/5");
   } else {
     document.querySelector("#shopify-section-header").classList.remove("shadow-md", "shadow-seaweed-400/5");
   }
 });
-observer.observe(document.querySelector("#HeaderScrollPixel"));
+observer.observe(document.querySelector("#HeaderScrollPixel")); */
