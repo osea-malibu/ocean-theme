@@ -17,10 +17,15 @@
             {% if block.settings.button_link == blank %}role="link" aria-disabled="true"
             {% else %}href="{{ block.settings.button_link }}"{% endif %}
             {% if block.settings.target_blank %}target="_blank"{% endif %}
+            {% if block.settings.button_aria_label != blank %}aria-label="{{ block.settings.button_aria_label }}"{% endif %}
             class="{{ block.settings.button_classes }}"
             {{ block.shopify_attributes }}
+            
           >
             {{ block.settings.button_label | escape }}
+            {%- if block.settings.button_icon -%}
+              {{- block.settings.button_icon -}}
+            {%- endif -%}
           </a>
         {%- when 'image' -%}
           {%- if block.settings.image_mobile != blank -%}
@@ -167,9 +172,20 @@
           "label": "Button link"
         },
         {
+          "type": "text",
+          "id": "button_aria_label",
+          "label": "ARIA label"
+        },
+        {
           "type": "checkbox",
           "id": "target_blank",
           "label": "Open in new tab"
+        },
+        {
+          "type": "html",
+          "id": "button_icon",
+          "info": "Format: SVG",
+          "label": "Button icon"
         },
         {
           "default": "button button-primary",
@@ -207,7 +223,7 @@
         {
           "type": "text",
           "id": "image_aria_label",
-          "label": "Image ARIA label",
+          "label": "ARIA label",
           "info": "This is required if your image is linked. Describe the destination on click. Ex: 'Go to shop page'"
         },
         {
