@@ -1,0 +1,30 @@
+<script src="{{ 'bundle-builder.js' | asset_url }}" defer="defer"></script>
+
+<div class="bundle-builder">
+  <h1 class="sr-only">
+    {{ page.title | escape }}
+  </h1>
+  <div class="container my-8">
+    <bundle-builder>
+    </bundle-builder>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "label": "Face product options",
+      "id": "byob_face_products"
+    },
+    {
+      "type": "collection",
+      "label": "Body product options",
+      "id": "byob_body_products"
+    }
+  ]
+}
+{% endschema %}
