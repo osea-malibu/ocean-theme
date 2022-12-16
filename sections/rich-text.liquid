@@ -22,7 +22,7 @@
           >
             {{ block.settings.button_label | escape }}
           </a>
-        {%- when 'picture' -%}
+        {%- when 'image' -%}
           {%- if block.settings.image_mobile != blank -%}
             {%- if block.settings.image_link != blank -%}
               <a
@@ -184,8 +184,8 @@
       ]
     },
     {
-      "type": "picture",
-      "name": "Picture",
+      "type": "image",
+      "name": "Image",
       "settings": [
         {
           "type": "image_picker",
