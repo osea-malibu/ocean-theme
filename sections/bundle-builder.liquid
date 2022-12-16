@@ -5,10 +5,13 @@
     <h1 class="sr-only">
       {{ page.title | escape }}
     </h1>
-    <bundle-builder class="flex gap-6">
+    <bundle-builder class="flex flex-col gap-6">
       {%- if section.settings.byob_face_products != blank -%}
         <div class="flex-1">
-          <h2>Pick your <em></em></h2>
+          <div class="text-center mb-4">
+            <small class="underline underline-offset-2 uppercase tracking-widest font-medium text-sm mb-2">Step 1</small>
+            <h2 class="text-xl tracking-wide">Pick Your <strong>Face</strong> Moisturizer</h2>
+          </div>
           <div class="grid grid-cols-3 gap-4">
             {%- for product in section.settings.byob_face_products.products -%}
               <div>
