@@ -45,14 +45,10 @@
                     media="(max-width: 639px)"
                   >
                 {%- endif %}
-                {%- if block.settings.image != blank -%}
+                {%- if block.settings.image_desktop != blank -%}
                   <source
                     srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
                     media="(min-width: 640px)"
-                  >
-                  <source
-                    srcset="{% render 'imgix', src: desktop_image_src2x %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
-                    media="(min-width: 800px)"
                   >
                 {%- endif %}
                 {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
