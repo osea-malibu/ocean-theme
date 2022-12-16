@@ -5,39 +5,37 @@
     <h1 class="sr-only">
       {{ page.title | escape }}
     </h1>
-    <div class="container lg:max-w-screen-lg my-8">
-      <bundle-builder class="flex gap-6">
-        {%- if section.settings.byob_face_products != blank -%}
-          <div class="flex-1">
-            <h2>Pick your <em></em></h2>
-            <div class="grid grid-cols-3 gap-4">
-              {%- for product in section.settings.byob_face_products.products -%}
-                <div>
-                  {%- liquid
-                    assign default_image_src = product.featured_media | image_url: width: 328
-                    assign default_image_src_2x = product.featured_media | image_url: width: 656
-                    assign hover_image_src = product.media[1] | image_url: width: 328
-                    assign hover_image_src_2x = product.media[1] | image_url: width: 656
-                  -%}
-                  <img
-                    srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
-                    src="{% render 'imgix', src: default_image_src_2x %}"
-                    alt="{{ product.featured_media.alt | escape }}"
-                    loading="lazy"
-                    width="{{ product.featured_media.width }}"
-                    height="{{ product.featured_media.height }}"
-                    id="ByobImage-{{ product.id }}"
-                    class="group block bg-wave-100"
-                  >
-                  {{ product.title }}
-                </div>
-              {%- endfor -%}
-            </div>
+    <bundle-builder class="flex gap-6">
+      {%- if section.settings.byob_face_products != blank -%}
+        <div class="flex-1">
+          <h2>Pick your <em></em></h2>
+          <div class="grid grid-cols-3 gap-4">
+            {%- for product in section.settings.byob_face_products.products -%}
+              <div>
+                {%- liquid
+                  assign default_image_src = product.featured_media | image_url: width: 328
+                  assign default_image_src_2x = product.featured_media | image_url: width: 656
+                  assign hover_image_src = product.media[1] | image_url: width: 328
+                  assign hover_image_src_2x = product.media[1] | image_url: width: 656
+                -%}
+                <img
+                  srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
+                  src="{% render 'imgix', src: default_image_src_2x %}"
+                  alt="{{ product.featured_media.alt | escape }}"
+                  loading="lazy"
+                  width="{{ product.featured_media.width }}"
+                  height="{{ product.featured_media.height }}"
+                  id="ByobImage-{{ product.id }}"
+                  class="group block bg-wave-100"
+                >
+                {{ product.title }}
+              </div>
+            {%- endfor -%}
           </div>
-        {%- endif -%}
-        <div class="flex-1"></div>
-      </bundle-builder>
-    </div>
+        </div>
+      {%- endif -%}
+      <div class="flex-1"></div>
+    </bundle-builder>
   </div>
 </div>
 
