@@ -1,0 +1,41 @@
+{% comment %}
+  Renders a product card for the bundle builder
+
+  Accepts:
+  - product: {Object} Product Liquid object (required)
+
+  Usage:
+  {% render 'bundle-card', product: section.settings.product %}
+{% endcomment %}
+
+<div class="flex flex-col">
+  {%- liquid
+    assign default_image_src = product.featured_media | image_url: width: 328
+    assign default_image_src_2x = product.featured_media | image_url: width: 656
+    assign hover_image_src = product.media[1] | image_url: width: 328
+    assign hover_image_src_2x = product.media[1] | image_url: width: 656
+  -%}
+  <img
+    srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
+    src="{% render 'imgix', src: default_image_src_2x %}"
+    alt="{{ product.featured_media.alt | escape }}"
+    loading="lazy"
+    width="{{ product.featured_media.width }}"
+    height="{{ product.featured_media.height }}"
+    id="ByobImage-{{ product.id }}"
+    class="group block bg-wave-100"
+  >
+  <div class="flex items-center mb-1">
+    {% render 'product-rating', product: product, hide_count: true, classes: 'h-5' %}
+    {%- liquid
+      if product.metafields.stamped.reviews_count
+        assign review_count = product.metafields.stamped.reviews_count
+      else
+        assign review_count = 0
+      endif
+    -%}
+    <span aria-hidden="true" class="text-xs ml-1 font-book">({{ review_count }})</span>
+  </div>
+  <h3 class="leading-none mb-2">{{ product.title }}</h3>
+  <button class="button button-sm button-tertiary w-full mt-auto">Add</button>
+</div>

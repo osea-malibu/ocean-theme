@@ -5,6 +5,7 @@
     - product: {Object} Product Liquid object (optional)
     - classes: {Object} Tailwind CSS classes (optional)
     - compact: {Boolean} Removes "reviews" from count string. Default: false (optional)
+    - hide_count: {Boolean} Hides count string. Default: false (optional)
 
     Usage:
     {% render 'product-rating', product: product %}
@@ -38,7 +39,7 @@
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     {%- endfor -%}
-    <p class="text-xs ml-0.5{% if compact %} hidden xs:flex{% endif %}">
+    <p class="text-xs ml-0.5{% if compact %} hidden xs:flex{% endif %}{% if hide_count %} hidden{% endif %}">
       {%- liquid
         if product.metafields.stamped.reviews_count
           assign review_count = product.metafields.stamped.reviews_count
