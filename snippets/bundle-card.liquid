@@ -29,7 +29,7 @@
 -%}
 
 <div class="bundle-card flex" data-variant-id="{{ variant_id }}">
-  <input type="radio" id="Input-{{ variant_id }}" class="hidden peer" name="{{ name }}" data-price="{{ card_product.price | times: 0.8 }}">
+  <input type="radio" id="Input-{{ variant_id }}" class="hidden peer" name="{{ name }}" data-price="{{ card_product.price }}">
   <div class="group flex flex-col bg-white rounded-sm relative z-0 p-1 transition-all peer-checked:shadow-seaweed-700/10 border border-transparent peer-checked:shadow-lg peer-checked:border-seaweed-400 peer-checked:z-10">
     <img
       srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
