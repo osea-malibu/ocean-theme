@@ -7,6 +7,7 @@
     - price_class: {String} Adds a price class to the price element (optional)
     - show_price_range: {Boolean} Displays variants as a price range, does not show sale strikeout (optional)
     - subscription: {Boolean} Displays subscription price with strikeout on compare at price (optional)
+    - bundle: {Boolean} Displays bundle price with strikeout on compare at price (optional)
 
     Usage:
     {% render 'price', product: product %}
@@ -42,6 +43,15 @@
       </span>
       <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
       <span>{{ price | times: 0.9 | money }}</span>
+    </div>
+  {%- elsif bundle -%}
+    <div class="flex-row">
+      <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
+      <span>
+        <s class="text-wave-600">{{ money_price }}</s>
+      </span>
+      <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
+      <span>{{ price | times: 0.8 | money }}</span>
     </div>
   {%- elsif show_price_range -%}
     {%- if product.price_varies -%}
