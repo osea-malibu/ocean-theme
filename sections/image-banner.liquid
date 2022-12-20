@@ -25,7 +25,7 @@
       {%- if section.settings.image != blank -%}
         <source
           srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
-          media="(min-width: 640px)"
+          media="(min-width: 640px) and (max-width: 1023px)"
         >
         <source
           srcset="{% render 'imgix', src: desktop_image_src_2x %} 1x, {% render 'imgix', src: desktop_image_src_3x %} 2x"
