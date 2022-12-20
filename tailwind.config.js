@@ -210,6 +210,7 @@ module.exports = {
     function ({ addVariant }) {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
+      addVariant("small", "& > small");
       addVariant("li", "& > li");
       addVariant("td", "& > td");
       addVariant("th", "& > th");

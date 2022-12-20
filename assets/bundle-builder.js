@@ -3,8 +3,9 @@ class BundleBuilder extends HTMLElement {
     super();
 
     this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    this.panelProducts = this.querySelector("#ByobPanel .products");
 
-    this.querySelectorAll(".byob-modal").forEach((i) => i.addEventListener("click", this.handleModalOpen.bind(this)));
+    this.querySelectorAll("modal-opener").forEach((i) => i.addEventListener("click", this.handleModalOpen.bind(this)));
     this.querySelectorAll(".byob-add-to-bundle").forEach((i) => i.addEventListener("click", this.handleAddToBundle.bind(this)));
     this.querySelector(".byob-add-to-cart").addEventListener("click", this.handleAddToCart.bind(this));
   }
@@ -23,6 +24,31 @@ class BundleBuilder extends HTMLElement {
     this.renderElements();
   }
 
+  getPanelProductHtml(productId, type) {
+    const image = this.querySelector(`[data-variant-id="${productId}"] img`);
+    const info = this.querySelector(`[data-variant-id="${productId}"] .info`).innerHTML;
+    const price = this.querySelector(`[data-variant-id="${productId}"] .price`).innerHTML;
+
+    const html = `<div class="flex gap-4 py-4 border-b border-white first-of-type:pt-8">
+			<img
+				srcset="${image.getAttribute("srcset")}"
+				srcset="${image.getAttribute("src")}"
+				alt=""
+				loading="lazy"
+				width="{{ product.featured_media.width }}"
+				height="{{ product.featured_media.height }}"
+				class="block bg-white w-16"
+			>
+			<div>${info}</div>
+			<div class="ml-auto flex flex-col items-end">
+				<div class="whitespace-nowrap font-medium">${price}</div>
+				<button class="link font-book tracking-wide text-sm" onclick="this.closest('bundle-builder').handleRemove('${productId}', '${type}')">Remove</button>
+			</div>
+		</div>`;
+
+    return html;
+  }
+
   getPriceHtml(totalPrice, saleClass) {
     return `<div class="flex-row">
 			<span class="sr-only">Regular price</span>
@@ -34,57 +60,147 @@ class BundleBuilder extends HTMLElement {
 		</div>`;
   }
 
+  getRemainingHtml(faceProduct, bodyProduct) {
+    if (faceProduct && bodyProduct) {
+      return '<p class="text-lg lg:hidden whitespace-nowrap"><b>2/2</b><span class="hidden xs:inline"> products</span> selected</p><p class="sr-only">Your bundle is complete!</p>';
+    } else {
+      return `<p class="text-lg lg:text-2xl whitespace-nowrap"><b>${!faceProduct && !bodyProduct ? 0 : 1}/2</b> products selected</p>
+			<p class="hidden lg:block mt-3 leading-5 lg:max-w-sm lg:mx-auto${!faceProduct && !bodyProduct ? " mb-12" : ""}">
+				<span class="system-sans font-medium">←</span> Add ${faceProduct ? "" : "<b>one face</b>"}${!faceProduct && !bodyProduct ? " and " : " "}${
+        bodyProduct ? "" : "<b>one body</b>"
+      } product to complete your bundle
+			</p>`;
+    }
+  }
+
   renderElements() {
     const faceProductId = localStorage.getItem("osea.byobFaceProductId");
     const bodyProductId = localStorage.getItem("osea.byobBodyProductId");
-    const byobBarCount = this.querySelector("#ByobBar .count");
-    const byobBarCost = this.querySelector("#ByobBar .cost");
-    const byobBuyButton = this.querySelector(".byob-add-to-cart");
-    const byobButtonCost = this.querySelector(".byob-add-to-cart .cost");
+    const byobBarRemaining = this.querySelector("#ByobBar .remaining");
+    const byobBarBuyButton = this.querySelector("#ByobBar .byob-add-to-cart");
+    const byobBarTotalCost = this.querySelector("#ByobBar .total-cost");
+    const byobBuyButtons = this.querySelectorAll(".byob-add-to-cart");
+    const byobTotalCosts = this.querySelectorAll(".total-cost");
 
     if (faceProductId && bodyProductId) {
-      const facePrice = parseInt(this.querySelector(`#Input-${faceProductId}`).dataset.price);
-      const bodyPrice = parseInt(this.querySelector(`#Input-${bodyProductId}`).dataset.price);
+      const facePrice = parseInt(this.querySelector(`[data-variant-id="${faceProductId}"]`).dataset.price);
+      const bodyPrice = parseInt(this.querySelector(`[data-variant-id="${bodyProductId}"]`).dataset.price);
       const totalPrice = facePrice + bodyPrice;
 
-      byobBarCount.innerText = "2/2";
-      byobBarCost.innerHTML = this.getPriceHtml(totalPrice, "text-wave-600");
+      byobBarRemaining.innerHTML = this.getRemainingHtml(faceProductId, bodyProductId);
+      byobBarRemaining.classList.remove("lg:block");
+      byobBarBuyButton.classList.remove("hidden");
+      byobBarTotalCost.classList.add("hidden");
 
-      byobBuyButton.removeAttribute("disabled");
-      byobButtonCost.innerHTML = this.getPriceHtml(totalPrice, "text-wave-500");
+      byobBuyButtons.forEach((i) => i.removeAttribute("disabled"));
+      byobTotalCosts.forEach((i) => (i.innerHTML = this.getPriceHtml(totalPrice, "text-wave-500")));
+
+      this.panelProducts.innerHTML = `${this.getPanelProductHtml(faceProductId, "Face")}${this.getPanelProductHtml(bodyProductId, "Body")}`;
     } else if (faceProductId && !bodyProductId) {
-      const facePrice = parseInt(this.querySelector(`#Input-${faceProductId}`).dataset.price);
+      const facePrice = parseInt(this.querySelector(`[data-variant-id="${faceProductId}"]`).dataset.price);
 
-      byobBarCount.innerText = "1/2";
-      byobBarCost.innerHTML = this.getPriceHtml(facePrice, "text-wave-600");
+      byobBarRemaining.innerHTML = this.getRemainingHtml(faceProductId, null);
+      byobBarRemaining.classList.add("lg:block");
+      byobBarBuyButton.classList.add("hidden");
+      byobBarTotalCost.classList.remove("hidden");
 
-      byobBuyButton.setAttribute("disabled", true);
-      byobButtonCost.innerHTML = this.getPriceHtml(facePrice, "text-seaweed-400");
+      byobBuyButtons.forEach((i) => i.setAttribute("disabled", true));
+      byobTotalCosts.forEach((i) => (i.innerHTML = this.getPriceHtml(facePrice, "text-seaweed-400")));
+
+      this.panelProducts.innerHTML = this.getPanelProductHtml(faceProductId, "Face");
     } else if (!faceProductId && bodyProductId) {
-      const bodyPrice = parseInt(this.querySelector(`#Input-${bodyProductId}`).dataset.price);
+      const bodyPrice = parseInt(this.querySelector(`[data-variant-id="${bodyProductId}"]`).dataset.price);
 
-      byobBarCount.innerText = "1/2";
-      byobBarCost.innerHTML = this.getPriceHtml(bodyPrice, "text-wave-600");
+      byobBarRemaining.innerHTML = this.getRemainingHtml(null, bodyProductId);
+      byobBarRemaining.classList.add("lg:block");
+      byobBarBuyButton.classList.add("hidden");
+      byobBarTotalCost.classList.remove("hidden");
 
-      byobBuyButton.setAttribute("disabled", true);
-      byobButtonCost.innerHTML = this.getPriceHtml(bodyPrice, "text-seaweed-400");
+      byobBuyButtons.forEach((i) => i.setAttribute("disabled", true));
+      byobTotalCosts.forEach((i) => (i.innerHTML = this.getPriceHtml(bodyPrice, "text-seaweed-400")));
+
+      this.panelProducts.innerHTML = this.getPanelProductHtml(bodyProductId, "Body");
     } else {
-      byobBarCount.innerText = "0/2";
+      byobBarRemaining.innerHTML = this.getRemainingHtml(null, null);
+      byobBarRemaining.classList.add("lg:block");
+      byobBarBuyButton.classList.add("hidden");
+      byobBarTotalCost.classList.add("hidden");
 
-      byobBuyButton.setAttribute("disabled", true);
-      byobButtonCost.innerText = "$0";
+      byobBuyButtons.forEach((i) => i.setAttribute("disabled", true));
+      byobTotalCosts.forEach((i) => (i.innerText = "$0"));
+
+      this.panelProducts.innerHTML = "";
     }
   }
 
   handleModalOpen(e) {
     e.preventDefault();
-    const { variantId } = e.currentTarget.closest(".bundle-card").dataset;
-    console.log(variantId);
+    const addedProducts = [localStorage.getItem("osea.byobFaceProductId"), localStorage.getItem("osea.byobBodyProductId")];
+    const bundleCard = e.currentTarget.closest(".bundle-card");
+    const { productHandle, variantId } = bundleCard.dataset;
+
+    fetch(`${window.Shopify.routes.root}products/${productHandle}.json`)
+      .then((response) => response.json())
+      .then((response) => {
+        const { body_html, images, title, variants } = response.product;
+        const modalContent = this.querySelector("#ByobModal .content");
+        const reviewsHtml = bundleCard.querySelector(".rating").innerHTML;
+        const addToBundleButton = bundleCard.querySelector(".byob-add-to-bundle");
+        const parsedId = JSON.parse(variantId);
+        const variantData = variants.find((i) => i.id === parsedId);
+        const { name } = addToBundleButton.dataset;
+
+        modalContent.innerHTML = `<div class="flex sm:flex-col overflow-x-auto sm:overflow-y-auto mb-4 gap-1 sm:absolute sm:inset-y-0 sm:w-1/2 sm:pr-3">
+					${images
+            .filter((image) => {
+              const { variant_ids } = image;
+              return variants.length === 1 || (variants.length > 1 && (variant_ids.length === 0 || variant_ids.includes(parsedId)));
+            })
+            .slice(0, 6)
+            .map((image) => {
+              return `
+									<img
+										srcset="${image.src}&width=328&auto=format,compress 1x, ${image.src}&width=656&auto=format,compress 2x"
+										src="${image.src}&width=656"
+										alt=""
+										loading="lazy"
+										width="${image.width}"
+										height="${image.height}"
+										class="block bg-wave-200 w-48 sm:w-full ${image.variant_ids.includes(parsedId) ? "order-1" : "order-2"}"
+									>
+								`;
+            })
+            .join("")}
+				</div>
+				<div class="sm:w-1/2 sm:ml-auto sm:pl-4 sm:min-h-[32rem] sm:flex sm:flex-col">
+					<div class="flex items-center mb-2">${reviewsHtml}</div>
+					<h1 class="text-lg font-medium tracking-wide mb-2 leading-tight">${title}</h1>
+					<div class="p:mb-3 mb-6">${body_html}</div>
+					<div class="sticky bottom-0 bg-white py-4 mt-auto">
+						<label for="Input-${variantId}" data-name="${name}" onclick="this.closest('bundle-builder').handleModalAdd('${variantId}', '${name}')" class="button button-primary w-full justify-between">
+							<span>${addedProducts.includes(variantId) ? "Added!" : "Add"}</span>
+							<span>${this.getPriceHtml(parseInt(variantData.price * 100), "text-seaweed-400")}</span>
+						</label>
+					</div>
+				</div>`;
+      })
+      .catch((e) => console.error(e));
   }
 
-  handleAddToBundle(e) {
-    const { variantId } = e.currentTarget.closest(".bundle-card").dataset;
-    const { name } = e.currentTarget.dataset;
+  handleModalAdd(variantId, name) {
+    this.handleAddToBundle(null, variantId, name);
+    this.querySelector("modal-dialog").hide();
+  }
+
+  handleRemove(productId, type) {
+    localStorage.removeItem(`osea.byob${type}ProductId`);
+    this.querySelector(`#Input-${productId}`).checked = false;
+    this.renderElements();
+  }
+
+  handleAddToBundle(e, varId, type) {
+    const variantId = varId || e.currentTarget.closest(".bundle-card").dataset.variantId;
+    const name = type || e.currentTarget.dataset.name;
 
     if (name === "byob-face") {
       localStorage.setItem("osea.byobFaceProductId", variantId);
@@ -97,7 +213,6 @@ class BundleBuilder extends HTMLElement {
   }
 
   handleAddToCart() {
-    console.log("add to cart");
     /* this.submitButton.setAttribute("aria-disabled", true);
     this.submitButton.classList.add("opacity-50");
     this.querySelector(".loading-overlay__spinner")?.classList.remove("hidden"); */
