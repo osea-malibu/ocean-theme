@@ -296,10 +296,13 @@
                       </div>
                       {%- if option == 'autodeliver' -%}
                         <span class="text-xs 2xs:tracking-wide block leading-tight mt-1">
-                          <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
-                          <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                            <button class="product-popup-modal__button underline" type="button" aria-haspopup="dialog">Learn more</button>
-                          </modal-opener>
+                          <span class="block">
+                            <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
+                            <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+                              <button class="product-popup-modal__button underline" type="button" aria-haspopup="dialog">Learn more</button>
+                            </modal-opener>
+                          </span>
+                          <span class="block mt-0.5">For pricing updates, <a href="/pages/customer-care?tab=7&question=2" class="underline">click here</a>.</span>
                         </span>
                         <div class="overflow-hidden max-h-0 peer-checked:max-h-20 motion-safe:transition-max-height">
                           <fieldset class="js flex mt-3 mb-2">
