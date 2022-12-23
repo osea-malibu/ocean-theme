@@ -714,8 +714,12 @@ class SubscriptionRadios extends HTMLElement {
     this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
     this.sellingPlanInputs = Array.from(this.querySelectorAll('input[name="selling_plan"]'));
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlPurchaseType = urlParams.get("type");
+
     this.purchaseOptionInputs.forEach((input) => {
-      if (document.referrer.includes("/pages/subscribe") && input.value === "autodeliver") {
+      const isSubscription = urlPurchaseType === "subscription" || document.referrer.includes("/pages/subscribe");
+      if (isSubscription && input.value === "autodeliver") {
         input.checked = true;
         this.setActiveState();
         this.updateMainPrice(input);

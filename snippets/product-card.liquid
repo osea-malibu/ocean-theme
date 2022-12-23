@@ -95,7 +95,7 @@
             </select>
           </div>
         {%- endif -%}
-      {%- elsif card_product.has_only_default_variant == false -%}
+      {%- elsif card_product.variants.size > 1 -%}
         {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' -%}
           <variant-selects
             class="no-js-hidden block mt-2"
