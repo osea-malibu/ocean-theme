@@ -259,6 +259,7 @@
             class="{% if show_secondary_image_on_hover %}absolute min-h-full inset-x-0 top-1/2 -translate-y-1/2 bg-cover bg-center bg-wave-100 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity{% endif %} duration-300"
             width="{{ card_product.media[1].width }}"
             height="{{ card_product.media[1].height }}"
+            class="object-cover"
           >
         {%- endif -%}
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}

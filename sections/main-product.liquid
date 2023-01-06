@@ -6,60 +6,82 @@
     <a class="sr-only button button-secondary focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_produ∂ct_info" | t }}
     </a>
-    <glide-slider
-      class="glide type-carousel md:flex-1 relative gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 md:sticky md:top-[148px] mb-6 overflow-hidden max-w-full xl:flex xl:flex-row-reverse xl:gap-2"
-      id="Product-Slider"
-      data-breakpoint-limit="none"
-    >
-      {% render 'product-badge', product: product, classes: 'z-10 xl:left-[70px]' %}
-      <div class="glide__track" data-glide-el="track">
-        <ul class="glide__slides">
+    {%- if product.media.size > 1 -%}
+      <glide-slider
+        class="glide type-carousel md:flex-1 relative gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 md:sticky md:top-[148px] mb-6 overflow-hidden max-w-full xl:flex xl:flex-row-reverse xl:gap-2"
+        id="Product-Slider"
+        data-breakpoint-limit="none"
+      >
+        {% render 'product-badge', product: product, classes: 'z-10 xl:left-[70px]' %}
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides">
+            {%- for media in product.media limit: section.settings.gallery_limit -%}
+              <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
+                {%- liquid
+                  assign main_image_src = media | image_url: width: 300, height: 375, crop: 'center'
+                  assign main_image_src_2x = media | image_url: width: 600, height: 750, crop: 'center'
+                -%}
+                {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                <img
+                  id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
+                  srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
+                  src="{% render 'imgix', src: main_image_src_2x %}"
+                  loading="lazy"
+                  alt="{{ media.alt | escape }}"
+                  width="{{ media.width }}"
+                  height="{{ media.width | divided_by: 0.8 }}"
+                  class="min-h-full object-cover"
+                >
+                {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 xl:flex-col xl:shrink-0" data-glide-el="controls[nav]">
           {%- for media in product.media limit: section.settings.gallery_limit -%}
-            <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
+            <button class="glide__bullet p-2 md:px-0 xl:py-0" data-glide-dir="={{ forloop.index0 }}">
+              <span class="sr-only">Go to slide {{ forloop.index }}</span>
+              <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
               {%- liquid
-                assign main_image_src = media | image_url: width: 300, height: 375, crop: 'center'
-                assign main_image_src_2x = media | image_url: width: 600, height: 750, crop: 'center'
+                assign thumb_image_src = media | image_url: width: 48
+                assign thumb_image_src_2x = media | image_url: width: 96
               -%}
               {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img
                 id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
-                srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
-                src="{% render 'imgix', src: main_image_src_2x %}"
+                srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
+                src="{% render 'imgix', src: thumb_image_src_2x %}"
                 loading="lazy"
                 alt="{{ media.alt | escape }}"
                 width="{{ media.width }}"
-                height="{{ media.width | divided_by: 0.8 }}"
+                height="{{ media.width | divided_by: media.aspect_ratio }}"
+                class="hidden md:block w-14 h-20 object-cover"
               >
               {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-            </li>
+            </button>
           {%- endfor -%}
-        </ul>
+        </div>
+      </glide-slider>
+    {%- else -%}
+      <div class="bg-wave-100 mb-6 md:flex-1 relative md:sticky md:top-[148px] max-w-full">
+        {%- liquid
+          assign main_image_src = product.media[0] | image_url: width: 300, height: 375, crop: 'center'
+          assign main_image_src_2x = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
+        -%}
+        {% render 'product-badge', product: product, classes: 'z-10 xl:left-[70px]' %}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        <img
+          class="mx-auto"
+          srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
+          src="{% render 'imgix', src: main_image_src_2x %}"
+          loading="lazy"
+          alt="{{ media.alt | escape }}"
+          width="{{ media.width }}"
+          height="{{ media.width | divided_by: 0.8 }}"
+        >
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       </div>
-      <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 xl:flex-col xl:shrink-0" data-glide-el="controls[nav]">
-        {%- for media in product.media limit: section.settings.gallery_limit -%}
-          <button class="glide__bullet p-2 md:px-0 xl:py-0" data-glide-dir="={{ forloop.index0 }}">
-            <span class="sr-only">Go to slide {{ forloop.index }}</span>
-            <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
-            {%- liquid
-              assign thumb_image_src = media | image_url: width: 48
-              assign thumb_image_src_2x = media | image_url: width: 96
-            -%}
-            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-            <img
-              id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
-              srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
-              src="{% render 'imgix', src: thumb_image_src_2x %}"
-              loading="lazy"
-              alt="{{ media.alt | escape }}"
-              width="{{ media.width }}"
-              height="{{ media.width | divided_by: media.aspect_ratio }}"
-              class="hidden md:block w-14 h-20 object-cover"
-            >
-            {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-          </button>
-        {%- endfor -%}
-      </div>
-    </glide-slider>
+    {%- endif -%}
     <div class="container md:px-0 md:flex-1">
       <div id="ProductInfo-{{ section.id }}" class="{{ section.settings.product_info_classes }}">
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
