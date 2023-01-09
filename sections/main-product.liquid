@@ -285,7 +285,7 @@
                   assign hide_subscription = true
                 endif
               else
-                assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 9.6 oz Holiday' | split: ', '
+                assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, 9.6 oz Holiday' | split: ', '
                 if travel_sizes contains product.selected_or_first_available_variant.title
                   assign hide_subscription = true
                 endif

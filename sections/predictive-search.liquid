@@ -52,8 +52,15 @@
                 {%- for product in productList -%}
                   {% comment %} Product result list item {% endcomment %}
                   <li id="predictive-search-product-{{ forloop.index }}" role="option" aria-selected="false" class="w-full">
+                    {%- liquid 
+                      if product.metafields.custom.redirect_url != blank
+                        assign product_url = product.metafields.custom.redirect_url
+                      else
+                        assign product_url = product.url
+                      endif
+                    -%}
                     {% render 'search-card',
-                      url: product.url,
+                      url: product_url,
                       image: product.featured_media,
                       title: product.title,
                       description: product.metafields.custom_fields["short_description"],
