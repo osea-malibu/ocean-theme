@@ -243,7 +243,7 @@
                             </td>
 
                             <td class="cart-item__name p-0 [grid-area:name]" role="cell" headers="CartDrawer-ColumnName">
-                              <div class="flex items-center h-full">
+                              <div class="flex items-center h-full{% if item.product.type == 'Bundle' %} pr-8 pb-1{% endif %}">
                                 {%- if settings.show_vendor -%}
                                   <p class="text-xs text-wave-600">{{ item.product.vendor }}</p>
                                 {%- endif -%}
@@ -419,6 +419,24 @@
                                       <span class="whitespace-nowrap">
                                         {{ item.selling_plan_allocation.per_delivery_price | times: item.quantity | money }}
                                       </span>
+                                    </div>
+                                  {%- elsif item.product.type == 'Bundle' -%}
+                                    <div class="flex flex-col items-end">
+                                      <div class="flex tracking-tight">
+                                        <span class="sr-only">
+                                          {{ 'products.product.price.regular_price' | t }}
+                                        </span>
+                                        <s class="text-wave-600 mr-1 whitespace-nowrap">
+                                          {{ item.variant.compare_at_price | times: item.quantity | money_without_trailing_zeros }}
+                                        </s>
+                                        <span class="sr-only">
+                                          {{ 'products.product.price.sale_price' | t }}
+                                        </span>
+                                        <span class="whitespace-nowrap">
+                                          {{ item.variant.price | times: item.quantity | money }}
+                                        </span>
+                                      </div>
+                                      <span class="bg-seaweed-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">Bundle</span>
                                     </div>
                                   {%- elsif item.original_line_price != item.final_line_price -%}
                                     <div class="flex">

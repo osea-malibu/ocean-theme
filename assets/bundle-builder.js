@@ -177,7 +177,7 @@ class BundleBuilder extends HTMLElement {
 					<h1 class="text-lg font-medium tracking-wide mb-2 leading-tight">${title}</h1>
 					<div class="p:mb-3 mb-6">${body_html}</div>
 					<div class="sticky bottom-0 bg-white py-4 mt-auto">
-						<label for="Input-${variantId}" data-name="${name}" onclick="this.closest('bundle-builder').handleModalAdd('${variantId}', '${name}')" class="button button-primary w-full justify-between">
+						<label for="Input-${variantId}" data-name="${name}" onclick="this.closest('bundle-builder').handleModalAdd('${variantId}', '${productHandle}', '${name}')" class="button button-primary w-full justify-between">
 							<span>${addedProducts.includes(variantId) ? "Added!" : "Add"}</span>
 							<span>${this.getPriceHtml(parseInt(variantData.price * 100), "text-seaweed-400")}</span>
 						</label>
@@ -198,15 +198,18 @@ class BundleBuilder extends HTMLElement {
     this.renderElements();
   }
 
-  handleAddToBundle(e, varId, type) {
+  handleAddToBundle(e, varId, handle, type) {
     const variantId = varId || e.currentTarget.closest(".bundle-card").dataset.variantId;
+    const productHandle = handle || e.currentTarget.closest(".bundle-card").dataset.productHandle;
     const name = type || e.currentTarget.dataset.name;
 
     if (name === "byob-face") {
       localStorage.setItem("osea.byobFaceProductId", variantId);
+      localStorage.setItem("osea.byobFaceProductHandle", productHandle);
     }
     if (name === "byob-body") {
       localStorage.setItem("osea.byobBodyProductId", variantId);
+      localStorage.setItem("osea.byobBodyProductHandle", productHandle);
     }
 
     this.renderElements();
@@ -219,35 +222,40 @@ class BundleBuilder extends HTMLElement {
 
     const faceProductId = localStorage.getItem("osea.byobFaceProductId");
     const bodyProductId = localStorage.getItem("osea.byobBodyProductId");
-    const bundleId = `${faceProductId}${bodyProductId}`;
+    const faceProductHandle = localStorage.getItem("osea.byobFaceProductHandle");
+    const bodyProductHandle = localStorage.getItem("osea.byobBodyProductHandle");
+    const bundleId = `${bodyProductHandle}-${faceProductHandle}`;
 
-    const body = JSON.stringify({
-      items: [
-        { id: faceProductId, quantity: 1, properties: { _bundle: bundleId } },
-        { id: bodyProductId, quantity: 1, properties: { _bundle: bundleId } },
-      ],
-    });
-
-    fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
+    console.log(`${window.Shopify.routes.root}products/${bundleId}.json`);
+    fetch(`${window.Shopify.routes.root}products/${bundleId}.json`)
       .then((response) => response.json())
       .then((response) => {
-        /* if (response.status) {
-          this.handleErrorMessage(response.description);
-        } else if (!this.cart) {
-          window.location = window.routes.cart_url;
-          return;
-        }
+        const body = JSON.stringify({
+          items: [{ id: response.product.variants[0].id, quantity: 1, properties: { _bundle: bundleId } }],
+        });
 
-        this.error = false; */
-        this.cart.renderContents(response);
+        fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
+          .then((response) => response.json())
+          .then((response) => {
+            /* if (response.status) {
+							this.handleErrorMessage(response.description);
+						} else if (!this.cart) {
+							window.location = window.routes.cart_url;
+							return;
+						}
+
+						this.error = false; */
+            this.cart.renderContents(response);
+          })
+          .catch((e) => console.error(e))
+          .finally(() => {
+            /* this.submitButton.classList.remove("opacity-50");
+						if (this.cart && this.cart.classList.contains("is-empty")) this.cart.classList.remove("is-empty");
+						if (!this.error) this.submitButton.removeAttribute("aria-disabled");
+						this.querySelector(".loading-overlay__spinner")?.classList.add("hidden"); */
+          });
       })
-      .catch((e) => console.error(e))
-      .finally(() => {
-        /* this.submitButton.classList.remove("opacity-50");
-        if (this.cart && this.cart.classList.contains("is-empty")) this.cart.classList.remove("is-empty");
-        if (!this.error) this.submitButton.removeAttribute("aria-disabled");
-        this.querySelector(".loading-overlay__spinner")?.classList.add("hidden"); */
-      });
+      .catch((e) => console.error(e));
   }
 }
 customElements.define("bundle-builder", BundleBuilder);
