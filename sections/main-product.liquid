@@ -14,12 +14,12 @@
       >
         {% render 'product-badge', product: product, classes: 'z-10 xl:left-[70px]' %}
         <div class="glide__track" data-glide-el="track">
-          <ul class="glide__slides">
+          <ul class="glide__slides min-h-full">
             {%- for media in product.media limit: section.settings.gallery_limit -%}
               <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
                 {%- liquid
-                  assign main_image_src = media | image_url: width: 300, height: 375, crop: 'center'
-                  assign main_image_src_2x = media | image_url: width: 600, height: 750, crop: 'center'
+                  assign main_image_src = media | image_url: width: 400, height: 500, crop: 'center'
+                  assign main_image_src_2x = media | image_url: width: 800, height: 1000, crop: 'center'
                 -%}
                 {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                 <img
