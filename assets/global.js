@@ -627,6 +627,7 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
+    console.log("render product info");
     fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
       .then((response) => response.text())
       .then((responseText) => {
@@ -634,6 +635,14 @@ class VariantSelects extends HTMLElement {
         const destination = document.getElementById(`price-${this.dataset.section}`);
         const source = responseHTML.querySelector(".product .price").parentElement;
         if (source && destination) destination.innerHTML = source.innerHTML;
+
+        const subOneTimeDestination = document.querySelector(".subscription .onetime .price");
+        const subOneTimeSource = responseHTML.querySelector(".subscription .onetime .price");
+        if (subOneTimeSource && subOneTimeDestination) subOneTimeDestination.innerHTML = subOneTimeSource.innerHTML;
+
+        const subAutoDestination = document.querySelector(".subscription .autodeliver .price");
+        const subAutoSource = responseHTML.querySelector(".subscription .autodeliver .price");
+        if (subAutoSource && subAutoDestination) subAutoDestination.innerHTML = subAutoSource.innerHTML;
 
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
@@ -646,6 +655,8 @@ class VariantSelects extends HTMLElement {
     } else {
       isTravelSized = ["1.7 oz", "1 oz", "0.6 oz", "0.22 oz"].includes(this.currentVariant.title);
     }
+
+    this.renderProductInfo();
 
     if (isTravelSized || ["UAO-1", "UAO-H22"].includes(this.currentVariant.sku)) {
       document.querySelector("subscription-radios").classList.add("h-0");

@@ -300,7 +300,7 @@
                 <fieldset>
                   <legend class="sr-only">Purchase options</legend>
                   {%- for option in purchase_options -%}
-                    <label class="relative block w-full pl-9 2xs:pl-10 py-3 pr-2 2xs:pr-3 xs:pr-4 motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200{% else %}bg-white{% endif %}{% if forloop.last %} mb-4{% endif %}">
+                    <label class="{{ option }} relative block w-full pl-9 2xs:pl-10 py-3 pr-2 2xs:pr-3 xs:pr-4 motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200{% else %}bg-white{% endif %}{% if forloop.last %} mb-4{% endif %}">
                       <span class="flex justify-between">
                         <span class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</span>
                         {%- if option == 'onetime' -%}

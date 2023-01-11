@@ -220,8 +220,8 @@ class BundleBuilder extends HTMLElement {
     this.submitButton.classList.add("opacity-50");
     this.querySelector(".loading-overlay__spinner")?.classList.remove("hidden"); */
 
-    const faceProductId = localStorage.getItem("osea.byobFaceProductId");
-    const bodyProductId = localStorage.getItem("osea.byobBodyProductId");
+    //const faceProductId = localStorage.getItem("osea.byobFaceProductId");
+    //const bodyProductId = localStorage.getItem("osea.byobBodyProductId");
     const faceProductHandle = localStorage.getItem("osea.byobFaceProductHandle");
     const bodyProductHandle = localStorage.getItem("osea.byobBodyProductHandle");
     const bundleId = `${bodyProductHandle}-${faceProductHandle}`;
