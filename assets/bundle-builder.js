@@ -7,7 +7,7 @@ class BundleBuilder extends HTMLElement {
 
     this.querySelectorAll("modal-opener").forEach((i) => i.addEventListener("click", this.handleModalOpen.bind(this)));
     this.querySelectorAll(".byob-add-to-bundle").forEach((i) => i.addEventListener("click", this.handleAddToBundle.bind(this)));
-    this.querySelector(".byob-add-to-cart").addEventListener("click", this.handleAddToCart.bind(this));
+    this.querySelectorAll(".byob-add-to-cart").forEach((i) => i.addEventListener("click", this.handleAddToCart.bind(this)));
   }
 
   connectedCallback() {
@@ -220,8 +220,6 @@ class BundleBuilder extends HTMLElement {
     this.submitButton.classList.add("opacity-50");
     this.querySelector(".loading-overlay__spinner")?.classList.remove("hidden"); */
 
-    //const faceProductId = localStorage.getItem("osea.byobFaceProductId");
-    //const bodyProductId = localStorage.getItem("osea.byobBodyProductId");
     const faceProductHandle = localStorage.getItem("osea.byobFaceProductHandle");
     const bodyProductHandle = localStorage.getItem("osea.byobBodyProductHandle");
     const bundleId = `${bodyProductHandle}-${faceProductHandle}`;
