@@ -11,9 +11,10 @@
     - image_class: {String} Tailwind styling classes (optional)
     - price_class: {String} Tailwind styling classes (optional)
     - badge_class: {String} Tailwind styling classes (optional)
-    - hide_badge: {Boolean}
-    - subscription: {Boolean}
+    - hide_badge: {Boolean} Hide badge in upper left corner of tile (optional)
+    - subscription: {Boolean} Deafult to subscription selection insead of variants (optional)
     - section_id: {String} Unique id of section that card is in (required)
+    - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -96,12 +97,12 @@
           </div>
         {%- endif -%}
       {%- elsif card_product.variants.size > 1 -%}
-        {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' -%}
+        {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' or card_product.handle == 'undaria-algae-oil' -%}
           <variant-selects
             class="no-js-hidden block mt-2"
             data-section="{{ card_product.id }}-{{ section_id }}"
             data-url="{{ card_product.url }}"
-            data-updateUrl="false"
+            data-update-url="false"
           >
           {%- for option in card_product.options_with_values -%}
             <div class="relative block">
@@ -109,12 +110,19 @@
                 {{- option.name -}}
               </label>
               <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                class="block input input-xs w-full pl-16"
+                class="block input input-xs w-full {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}"
                 name="options[{{ option.name | escape }}]"
                 form="{{ product_form_id }}"
               >
                 {%- for value in option.values -%}
-                  <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                  <option
+                    value="{{ value | escape }}"
+                    {%- if default_to_mini and forloop.last -%}
+                      selected="selected"
+                    {%- elsif default_to_mini != true and option.selected_value == value -%}
+                      selected="selected"
+                    {%- endif -%}
+                  >
                     {{ value }}
                   </option>
                 {%- endfor -%}
@@ -144,7 +152,11 @@
                       name="{{ option.name }}"
                       value="{{ value | escape }}"
                       form="{{ product_form_id }}"
-                      {% if option.selected_value == value %}checked{% endif %}
+                      {%- if default_to_mini and forloop.last -%}
+                        checked
+                      {%- elsif default_to_mini != true and option.selected_value == value -%}
+                        checked
+                      {%- endif -%}
                     >
                     <label
                       class="button button-xs lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
@@ -172,7 +184,15 @@
         </div>
 
         {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-          <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}" disabled>
+          {%- liquid
+            if default_to_mini
+              assign mini_index = card_product.variants.size | minus: 1
+              assign default_id = card_product.variants[mini_index].id
+            else 
+              assign default_id = card_product.selected_or_first_available_variant.id
+            endif
+          -%}
+          <input type="hidden" name="id" value="{{ default_id }}" disabled>
           <input type="hidden" name="properties[_is_subscription]" value="{% if subscription %}true{% else %}false{% endif %}">
           <button
             id="{{ product_form_id }}-submit"
@@ -195,7 +215,8 @@
                   product: card_product,
                   show_price_range: true,
                   use_variant: true,
-                  subscription: subscription
+                  subscription: subscription,
+                  default_to_mini: default_to_mini
                 %}
               </span>
             {%- else -%}
@@ -229,6 +250,9 @@
         {%- liquid
           if custom_default_image != nil
             assign default_image = custom_default_image
+          elsif default_to_mini
+            assign mini_index = card_product.variants.size | minus: 1
+            assign default_image = card_product.variants[mini_index].featured_media
           elsif card_product.selected_or_first_available_variant.featured_media != nil
             assign default_image = card_product.selected_or_first_available_variant.featured_media
           else

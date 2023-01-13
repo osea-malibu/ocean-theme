@@ -627,7 +627,6 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
-    console.log("render product info");
     fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
       .then((response) => response.text())
       .then((responseText) => {
