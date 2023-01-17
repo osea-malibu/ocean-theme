@@ -187,8 +187,8 @@ class BundleBuilder extends HTMLElement {
       .catch((e) => console.error(e));
   }
 
-  handleModalAdd(variantId, name) {
-    this.handleAddToBundle(null, variantId, name);
+  handleModalAdd(variantId, handle, name) {
+    this.handleAddToBundle(null, variantId, handle, name);
     this.querySelector("modal-dialog").hide();
   }
 
