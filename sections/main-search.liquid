@@ -106,41 +106,43 @@
             <div class="loading-overlay gradient"></div>
             <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4" role="list">
               {%- for item in search.results -%}
-                <li class="w-full">
-                  {%- case item.object_type -%}
-                    {%- when 'product' -%}
-                      {%- capture product_settings -%}{%- if section.settings.product_show_vendor -%}vendor,{%- endif -%}title,price{%- endcapture -%}
-                      {% render 'product-card',
-                        card_product: all_products[item.handle],
-                        section_id: section.id,
-                        button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
-                      %}
-                    {%- when 'article' -%}
-                      {%- liquid
-                        assign article_title = item.title | truncate: 50
-                        assign article_description = item.excerpt | truncate: 75
-                      -%}
-                      {% render 'search-card',
-                        url: item.url,
-                        image: item.image.src,
-                        title: article_title,
-                        description: article_description,
-                        search_page: true
-                      %}
-                    {%- when 'page' -%}
-                      {%- liquid
-                        assign page_title = item.title | truncate: 50
-                        assign page_description = item.content | strip_html | truncate: 75
-                      -%}
-                      {% render 'search-card',
-                        url: item.url,
-                        image: item.image,
-                        title: page_title,
-                        description: page_description,
-                        search_page: true
-                      %}
-                  {%- endcase -%}
-                </li>
+                {%- unless item.metafields.settings.hide_from_search -%}
+                  <li class="w-full">
+                    {%- case item.object_type -%}
+                      {%- when 'product' -%}
+                          {%- capture product_settings -%}{%- if section.settings.product_show_vendor -%}vendor,{%- endif -%}title,price{%- endcapture -%}
+                          {% render 'product-card',
+                            card_product: all_products[item.handle],
+                            section_id: section.id,
+                            button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
+                          %}
+                      {%- when 'article' -%}
+                        {%- liquid
+                          assign article_title = item.title | truncate: 50
+                          assign article_description = item.excerpt | truncate: 75
+                        -%}
+                        {% render 'search-card',
+                          url: item.url,
+                          image: item.image.src,
+                          title: article_title,
+                          description: article_description,
+                          search_page: true
+                        %}
+                      {%- when 'page' -%}
+                        {%- liquid
+                          assign page_title = item.title | truncate: 50
+                          assign page_description = item.content | strip_html | truncate: 75
+                        -%}
+                        {% render 'search-card',
+                          url: item.url,
+                          image: item.image,
+                          title: page_title,
+                          description: page_description,
+                          search_page: true
+                        %}
+                    {%- endcase -%}
+                  </li>
+                {%- endunless -%}
               {%- endfor -%}
             </ul>
             {%- if paginate.pages > 1 -%}
