@@ -224,7 +224,6 @@ class BundleBuilder extends HTMLElement {
     const bodyProductHandle = localStorage.getItem("osea.byobBodyProductHandle");
     const bundleId = `${bodyProductHandle}-${faceProductHandle}`;
 
-    console.log(`${window.Shopify.routes.root}products/${bundleId}.json`);
     fetch(`${window.Shopify.routes.root}products/${bundleId}.json`)
       .then((response) => response.json())
       .then((response) => {
