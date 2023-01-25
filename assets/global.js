@@ -734,6 +734,8 @@ class SubscriptionRadios extends HTMLElement {
         this.setActiveState();
         this.updateMainPrice(input);
         this.setDefaultSellingPlan();
+
+        document.querySelector("#PayInstallments").classList.add("opacity-0");
       }
       input.addEventListener("change", this.onPurchaseOptionChange.bind(this));
     });
@@ -753,11 +755,15 @@ class SubscriptionRadios extends HTMLElement {
         this.isSubscriptionInput.value = false;
         this.productForm = document.querySelector("product-form.pdp-product-form");
 
+        document.querySelector("#PayInstallments").classList.remove("opacity-0");
+
         if (plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
         this.productForm.handleErrorMessage();
       } else if (value === "autodeliver") {
         this.setDefaultSellingPlan();
         this.isSubscriptionInput.value = true;
+
+        document.querySelector("#PayInstallments").classList.add("opacity-0");
 
         const inputEl = document.querySelector(".pdp-quantity input");
         const inputValueInteger = parseInt(inputEl.value);
