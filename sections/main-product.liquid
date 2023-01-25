@@ -404,6 +404,11 @@
                           </div>
                       </button>
                     </div>
+                    <div id="PayInstallments" class="mb-10 sm:mb-8">
+                      <div class="absolute inset-x-0 leading-tight py-2 text-sm">
+                        {{ form | payment_terms }}
+                      </div>
+                    </div>
                   {%- endform -%}
                 </product-form>
               </div>
