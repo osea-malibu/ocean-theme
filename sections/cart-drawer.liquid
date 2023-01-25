@@ -581,7 +581,7 @@
           </cart-recommendations>
         </div>
 
-        <div class="bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-4">
+        <div class="bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-2">
           <div class="max-w-md mx-auto">
             {%- if settings.show_cart_note -%}
               <details id="Details-CartDrawer mb-4">
@@ -636,6 +636,8 @@
                 form="CartDrawer-Form"
                 {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
+
+            <div class="catch-upfunnel" id="catch-minicart" data-page-type="cart" data-amount="{{ cart.total_price }}"></div>
 
             <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
               {%- if settings.cart_disclaimer != blank -%}{{ settings.cart_disclaimer }}{%- endif -%}
