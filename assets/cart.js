@@ -135,6 +135,7 @@ class CartItems extends HTMLElement {
 
         this.replaceSections(parsedState);
         this.updateLiveRegions(line, parsedState.item_count);
+        Catch.refresh();
 
         const lineItem = document.getElementById(`CartItem-${line}`) || document.getElementById(`CartDrawer-Item-${line}`);
         if (lineItem && lineItem.querySelector(`[name="${name}"]`)) {
