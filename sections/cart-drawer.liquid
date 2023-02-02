@@ -12,7 +12,7 @@
       {%- liquid
         assign cart_ids = cart.items | map: 'product_id'
         assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 9.6 oz Holiday' | split: ', '
-        assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1' | split: ', '
+        assign small_products = 'Dayglow Face Oil, Essential Hydrating Oil' | split: ', '
       -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
       {% comment %} Gift with purchase {% endcomment %}
@@ -140,7 +140,7 @@
         {%- liquid
           for item in cart.items
             assign hide_upsell = false
-            if small_products contains item.handle and item.variant.title == '0.34oz'
+            if small_products contains item.product.title and item.variant.title == '0.34 oz'
               assign hide_upsell = true
             elsif travel_sizes contains item.variant.title
               assign hide_upsell = true
@@ -344,8 +344,10 @@
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
                               {%- liquid
                                 assign hide_subscription = false
-                                if small_products contains item.handle and item.variant.title == '0.34oz'
-                                  assign hide_subscription = true
+                                if small_products contains item.product.title
+                                  if item.variant.title == '0.34 oz'
+                                    assign hide_subscription = true
+                                  endif
                                 elsif travel_sizes contains item.variant.title and item.title != 'Advanced Repair Eye Cream - 0.6 oz'
                                   assign hide_subscription = true
                                 endif
