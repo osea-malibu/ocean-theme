@@ -280,7 +280,7 @@
           {%- when 'subscription_picker' -%}
             {%- liquid
               assign hide_subscription = false
-              if product.handle == 'dayglow-face-oil' or product.handle == 'essential-hydrating-oil-1'
+              if product.handle == 'dayglow-face-oil' or product.handle == 'essential-hydrating-oil-1' or product.handle == 'advanced-repair-eye-cream'
                 if product.selected_or_first_available_variant.title == '0.34 oz'
                   assign hide_subscription = true
                 endif
