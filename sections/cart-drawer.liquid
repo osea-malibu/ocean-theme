@@ -12,7 +12,7 @@
       {%- liquid
         assign cart_ids = cart.items | map: 'product_id'
         assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 9.6 oz Holiday' | split: ', '
-        assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1, advanced-repair-eye-cream' | split: ', '
+        assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1' | split: ', '
       -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
       {% comment %} Gift with purchase {% endcomment %}
@@ -346,7 +346,7 @@
                                 assign hide_subscription = false
                                 if small_products contains item.handle and item.variant.title == '0.34oz'
                                   assign hide_subscription = true
-                                elsif travel_sizes contains item.variant.title
+                                elsif travel_sizes contains item.variant.title and item.title != 'Advanced Repair Eye Cream - 0.6 oz'
                                   assign hide_subscription = true
                                 endif
                               -%}
