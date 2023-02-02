@@ -34,8 +34,21 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'AW-873848209');
-        //get channel data from url and change second param to associated channel
-        //gtag('channel', 'Purchase_Test');
+        //get channel data from url params and add to data layer
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmSource = urlParams.get('utm_source');
+        const utmMedium = urlParams.get('utm_medium');
+        let channel = "";
+        if (utmSource === "tiktok_ad") channel = "Purchase_TikTok"
+        else if (utmSource === "pinterest-ad") channel = "Purchase_Pinterest"
+        else if (utmSource === "google") channel = "Purchase_Google"
+        else if (utmSource === "tiktok") channel = "Purchase_Organic-TikTok"
+        else if (utmSource === "likeshop") channel = "Purchase_Organic-IG"
+        else if (utmSource === "refersion") channel = "Purchase_Affiliate-Refersion"
+        else if (utmSource === "shareasale") channel = "Purchase_Affiliate-Shareasale"
+        else if (utmMedium === "email") channel = "Purchase_Email"
+        else if (utmMedium === "sms") channel = "Purchase_SMS";
+        gtag('channel', channel);
       </script>
       <meta name="google-site-verification" content="MiznO-EUjv83C_HVxjqNIOhz2buimAl8rv6hmJarl94" />
     {% comment %} End Global site tag (gtag.js) - Google Ads: 873848209 {% endcomment %}
