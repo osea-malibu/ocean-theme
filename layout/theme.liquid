@@ -38,16 +38,22 @@
         const urlParams = new URLSearchParams(window.location.search);
         const utmSource = urlParams.get('utm_source');
         const utmMedium = urlParams.get('utm_medium');
+        const utmCampaign = urlParams.get('utm_campaign').toLowerCase();
         let channel = "";
         if (utmSource === "tiktok_ad") channel = "Purchase_TikTok"
         else if (utmSource === "pinterest-ad") channel = "Purchase_Pinterest"
-        else if (utmSource === "google") channel = "Purchase_Google"
         else if (utmSource === "tiktok") channel = "Purchase_Organic-TikTok"
         else if (utmSource === "likeshop") channel = "Purchase_Organic-IG"
         else if (utmSource === "refersion") channel = "Purchase_Affiliate-Refersion"
         else if (utmSource === "shareasale") channel = "Purchase_Affiliate-Shareasale"
         else if (utmMedium === "email") channel = "Purchase_Email"
-        else if (utmMedium === "sms") channel = "Purchase_SMS";
+        else if (utmMedium === "sms") channel = "Purchase_SMS"
+        else if (utmSource === "google") {
+          if (utmCampaign.includes("nonbrand")) channel = "Purchase_Google-NonBranded"
+          else if (utmCampaign.includes("brand")) channel = "Purchase_Google-Branded"
+          else if (utmCampaign.includes("pmax")) channel = "Purchase_Google-Shopping"
+          else if (utmCampaign.includes("display") || utmCampaign.includes("discovery")) channel = "Purchase_Google-Display"
+        };
         gtag('channel', channel);
       </script>
       <meta name="google-site-verification" content="MiznO-EUjv83C_HVxjqNIOhz2buimAl8rv6hmJarl94" />
