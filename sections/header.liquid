@@ -64,7 +64,7 @@
                         {% comment %} L1 - Link with sub menu {% endcomment %}
                         {%- elsif link.links != blank -%}
                           <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
-                            <summary class="flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}">
+                            <summary class="flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}" aria-controls="link-{{ link.title | escape }}">
                               <span class="mr-3">{{ link.title | escape }}</span>
                               {% render 'icon-arrow', variant: 'short', aria_hidden: true, classes: 'h-6 w-6', stroke_width: '1.5' %}
                             </summary>
@@ -213,10 +213,9 @@
                         name="q"
                         value=""
                         placeholder="Search for products, categories, and content"
-                        role="combobox"
                         aria-expanded="false"
-                        aria-owns="predictive-search-results-list"
-                        aria-controls="predictive-search-results-list"
+                        aria-owns="predictive-search"
+                        aria-controls="predictive-search"
                         aria-haspopup="listbox"
                         aria-autocomplete="list"
                         autocorrect="off"

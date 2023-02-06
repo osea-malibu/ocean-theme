@@ -14,7 +14,7 @@
 
 {%- paginate collection.products by products_per_page -%}
   {%- if collection.products.size == 0 -%}
-    <div class="collection collection--empty relative" id="product-grid" data-id="{{ collection.id }}">
+    <div class="collection collection--empty relative" id="product-grid-{{ collection.id }}" data-id="{{ collection.id }}">
       <div class="loading-overlay"></div>
       <div class="title-wrapper center">
         <h2 class="title title--primary">
@@ -27,7 +27,7 @@
     <div class="collection relative">
       <div class="loading-overlay"></div>
 
-      <div id="product-grid" data-id="{{ collection.id }}">
+      <div id="product-grid-{{ collection.id }}" data-id="{{ collection.id }}">
         <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
           {%- liquid
             if parent_collection.metafields.my_fields.featured_products != blank

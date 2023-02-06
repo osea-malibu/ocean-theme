@@ -228,7 +228,7 @@
               <div
                 class="klaviyo-product-container"
                 data-klaviyo-handle="{{ card_product.handle }}"
-                id="klaviyo-data-handle-{{ card_product.handle }}"
+                id="klaviyo-data-handle-{{ card_product.handle }}-{{ section_id }}"
               >
                 <div class="klaviyo-button-container !inset-0 !w-full !opacity-100 !-ml-0"></div>
               </div>
@@ -272,7 +272,7 @@
           loading="lazy"
           width="{{ default_image.width }}"
           height="{{ default_image.height }}"
-          id="ProductCard-DefaultImage-{{ card_product.id }}"
+          id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
         >
         {%- if card_product.media[1] != nil and show_secondary_image_on_hover -%}
           <img
