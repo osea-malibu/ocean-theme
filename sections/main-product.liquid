@@ -48,7 +48,6 @@
               -%}
               {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img
-                id="{%- if product.selected_or_first_available_variant.featured_media != null and forloop.first -%}Product-VariantImage{%- endif -%}"
                 srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
                 src="{% render 'imgix', src: thumb_image_src_2x %}"
                 loading="lazy"
@@ -132,7 +131,7 @@
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
                 {%- if block.settings.is_collapsible -%}
-                  {%- assign description_id = "Details-{{ block.id }}-{{ section.id }}" -%}
+                  {%- assign description_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
                   {% render 'accordion-item',
                     id: description_id,
                     summary: "Product description",
@@ -149,7 +148,7 @@
             {%- if block.settings.content != blank -%}
               <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
                 {%- liquid
-                  assign tab_id = "Details-{{ block.id }}-{{ section.id }}"
+                  assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id
                   comment
                     workaround for shopify data source multi-line rendering bug
                     replace with block.setting.content when resolved
