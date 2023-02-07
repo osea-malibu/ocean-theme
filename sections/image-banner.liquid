@@ -70,7 +70,7 @@
             >
               <span{% if block.settings.button_label_desktop != blank %} class="sm:hidden"{% endif %}>{{- block.settings.button_label | escape -}}</span>
               {%- if block.settings.button_label_desktop != blank -%}
-                <span class="hidden sm:inline">{{- block.settings.button_label | escape -}}</span>
+                <span class="hidden sm:inline">{{- block.settings.button_label_desktop | escape -}}</span>
               {%- endif -%}
             </a>
           {%- endif -%}
