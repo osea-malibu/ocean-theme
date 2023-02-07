@@ -11,7 +11,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const utmSource = urlParams.get('utm_source');
     const utmMedium = urlParams.get('utm_medium');
-    const utmCampaign = urlParams.get('utm_campaign').toLowerCase();
+    const utmCampaign = urlParams.get('utm_campaign');
     let channel = "";
     if (utmSource === "tiktok_ad") channel = "Purchase_TikTok"
     else if (utmSource === "pinterest-ad") channel = "Purchase_Pinterest"
@@ -24,8 +24,9 @@
     else if (utmSource === "google") {
       if (utmCampaign.includes("nonbrand")) channel = "Purchase_Google-NonBranded"
       else if (utmCampaign.includes("brand")) channel = "Purchase_Google-Branded"
-      else if (utmCampaign.includes("pmax")) channel = "Purchase_Google-Shopping"
-      else if (utmCampaign.includes("display") || utmCampaign.includes("discovery")) channel = "Purchase_Google-Display"
+      else if (utmCampaign.includes("youtube")) channel = "Purchase_Google-Youtube"
+      else if (utmCampaign.includes("Pmax")) channel = "Purchase_Google-Shopping"
+      else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Purchase_Google-Display"
     };
     gtag('channel', channel);
   </script>
