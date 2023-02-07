@@ -1,3 +1,4 @@
+{% if section.settings.section_heading %}<h2 class="sr-only">{{ section.settings.section_heading }}</h2>{% endif %}
 <div
   class="{{ section.settings.section_classes }}"
   {% if section.settings.row_bg_image != blank %}
@@ -366,6 +367,11 @@
   "name": "t:sections.multicolumn.name",
   "tag": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading"
+    },
     {
       "type": "textarea",
       "id": "section_classes",

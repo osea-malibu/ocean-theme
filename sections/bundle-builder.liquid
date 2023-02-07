@@ -1,11 +1,9 @@
 <script src="{{ 'bundle-builder.js' | asset_url }}" defer="defer"></script>
 <style type="text/css">#gorgias-chat-container #chat-button { bottom: 30px !important; right: 8px !important; }</style>
 
+<h2>Bundle Builder</h2>
 <div class="{{ section.settings.section_classes }}">
   <div class="{{ section.settings.container_classes }}">
-    <h1 class="sr-only">
-      {{ page.title | escape }}
-    </h1>
     <bundle-builder class="flex lg:flex-row-reverse lg:gap-6 lg:items-start">
       <aside class="fixed lg:sticky z-20 inset-x-0 bottom-0 lg:bottom-auto lg:top-32 flex flex-col lg:flex-col-reverse lg:w-1/2 bg-white lg:bg-[#f8eaea]/50 lg:rounded-lg border-t border-seaweed-400 lg:border-transparent">
         <div id="ByobBar" class="flex lg:flex-col justify-between lg:justify-center py-2 lg:pt-8 lg:pb-0 px-4 sm:px-6 lg:px-8 lg:text-center">

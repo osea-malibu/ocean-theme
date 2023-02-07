@@ -1,3 +1,4 @@
+{% if section.settings.section_heading %}<h2 class="sr-only">{{ section.settings.section_heading }}</h2>{% endif %}
 <div class="{{ section.settings.section_classes }}">
   <div
     class="{{ section.settings.container_classes }}"
@@ -82,6 +83,11 @@
   "name": "Rich text",
   "tag": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading"
+    },
     {
       "type": "textarea",
       "id": "section_classes",
