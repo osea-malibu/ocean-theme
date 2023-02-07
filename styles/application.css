@@ -267,7 +267,8 @@
   }
 
   /* Predictive search */
-  [type="search"]::-webkit-search-cancel-button {
+  [type="search"]::-webkit-search-cancel-button,
+  #Search-In-Modal::-webkit-search-cancel-button {
     @apply appearance-none h-5 w-[60px] text-wave-400;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='20px' width='60px'><text x='6' y='15' fill='%23818181' font-size='14' font-family='neuzeit-grotesk, sans-serif' style='text-transform: uppercase; letter-spacing: 0.25px;'>Clear</text></svg>");
   }
