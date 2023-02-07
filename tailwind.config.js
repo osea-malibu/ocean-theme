@@ -219,6 +219,8 @@ module.exports = {
       addVariant("b", "& b");
       addVariant("i", "& i");
       addVariant("p", "& p");
+      addVariant("h1", "& h1");
+      addVariant("h2", "& h2");
     },
     // add backface classes
     plugin(function ({ addUtilities }) {
