@@ -68,7 +68,10 @@
               class="button {{ block.settings.button_classes }}"
               {{ block.shopify_attributes }}
             >
-              {{- block.settings.button_label | escape -}}
+              <span{% if block.settings.button_label_desktop != blank %} class="sm:hidden"{% endif %}>{{- block.settings.button_label | escape -}}</span>
+              {%- if block.settings.button_label_desktop != blank -%}
+                <span class="hidden sm:inline">{{- block.settings.button_label | escape -}}</span>
+              {%- endif -%}
             </a>
           {%- endif -%}
       {%- endcase -%}
@@ -172,6 +175,11 @@
           "id": "button_label",
           "default": "Shop now",
           "label": "Button label"
+        },
+        {
+          "type": "text",
+          "id": "button_label_desktop",
+          "label": "Button label (desktop)"
         },
         {
           "type": "url",
