@@ -75,7 +75,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Product Description",
-            "content": "<p>{{ product.metafields.custom_fields.description | metafield_tag }}</p>",
+            "content": "<p>{{ product.metafields.custom_fields.description.value }}</p>",
             "tab_classes": "col-span-12 mt-6",
             "default_open": true,
             "namespace": "custom_fields.description"
@@ -85,7 +85,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Ingredients",
-            "content": "<p>{{ product.metafields.custom_fields.ingredients | metafield_tag }}</p>",
+            "content": "<p>{{ product.metafields.custom_fields.ingredients.value }}</p>",
             "tab_classes": "col-span-12",
             "default_open": false,
             "namespace": "custom_fields.ingredients"
@@ -95,7 +95,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Skin Types & Concerns",
-            "content": "<p>{{ product.metafields.custom_fields.skin_types | metafield_tag }}</p>",
+            "content": "<p>{{ product.metafields.custom_fields.skin_types.value }}</p>",
             "tab_classes": "col-span-12",
             "default_open": false,
             "namespace": "custom_fields.skin_types"
@@ -115,7 +115,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Clinical & Consumer Results",
-            "content": "<p>{{ product.metafields.custom_fields.clinical_consumer_results | metafield_tag }}</p>",
+            "content": "<p>{{ product.metafields.custom_fields.clinical_consumer_results.value }}</p>",
             "tab_classes": "col-span-12",
             "default_open": false,
             "namespace": "custom_fields.clinical_consumer_results"
@@ -125,7 +125,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Scent Profile",
-            "content": "<p>{{ product.metafields.custom.scent_profile | metafield_tag }}</p>",
+            "content": "<p>{{ product.metafields.custom.scent_profile.value }}</p>",
             "tab_classes": "col-span-12",
             "default_open": false,
             "namespace": "custom.scent_profile"
