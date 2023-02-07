@@ -348,7 +348,6 @@
         >
           {%- for dot in (1..section.settings.slider_indicator_count) -%}
             <li
-              type="button"
               class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
               data-glide-dir="={{ forloop.index0 }}"
             >

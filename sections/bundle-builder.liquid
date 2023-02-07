@@ -11,7 +11,7 @@
           <div class="remaining">
             <p class="text-lg lg:text-2xl whitespace-nowrap"><b>0/2</b> products selected</p>
             <p class="hidden lg:block mt-3 leading-5 lg:max-w-sm lg:mx-auto">
-              <span class="system-sans font-medium">←</span> Add <b>one face</b> and <b>one body</b> product to complete your bundle
+              <strong class="system-sans font-medium">←</strong> Add <b>one face</b> and <b>one body</b> product to complete your bundle
             </p>
           </div>
           <b class="total-cost text-lg lg:mt-3 lg:mb-8">$0</b>
@@ -35,6 +35,7 @@
               {%- for product in section.settings.byob_face_products.products -%}
                 {% render 'bundle-card', product: product, name: 'byob-face' %}
               {%- endfor -%}
+              <input type="radio" selected name="byob-face" class="sr-only" />
             </div>
           </div>
         {%- endif -%}
@@ -53,6 +54,7 @@
                   {% render 'bundle-card', product: product, name: 'byob-body' %}
                 {%- endif -%}
               {%- endfor -%}
+              <input type="radio" selected name="byob-body" class="sr-only" />
             </div>
           </div>
         {%- endif -%}
