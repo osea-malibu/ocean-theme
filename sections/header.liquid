@@ -121,9 +121,9 @@
                                         <details class="group" open>
                                           <summary class="flex items-center px-8 mt-3 mb-2">
                                             {% render 'icon-caret', classes: 'w-5 h-5 mr-2 -rotate-90 group-open:rotate-0 motion-safe:transition-transform' %}
-                                            <p class="text-2xl tracking-wide cursor-pointer font-medium">
+                                            <span class="text-2xl tracking-wide cursor-pointer font-medium">
                                               {{ childlink.title | escape }}
-                                            </p>
+                                            </span>
                                           </summary>
                                           {% comment %} L3 menu {% endcomment %}
                                           <ul id="childlink-{{ childlink.title | escape }}" role="list" tabindex="-1" class="mb-6 pl-7">
