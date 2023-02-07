@@ -147,15 +147,7 @@
           {%- when 'collapsible_tab' -%}
             {%- if block.settings.content != blank -%}
               <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
-                {%- liquid
-                  assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id
-                  comment
-                    workaround for shopify data source multi-line rendering bug
-                    replace with block.setting.content when resolved
-                  endcomment
-                  assign split_id = block.settings.namespace | split: '.'
-                  assign tab_content = product.metafields[split_id[0]][split_id[1]].value
-                -%}
+                {%- assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
                 {%- render 'accordion-item',
                   id: tab_id,
                   summary: block.settings.heading,
@@ -667,41 +659,6 @@
           "type": "checkbox",
           "id": "default_open",
           "label": "Open by default"
-        },
-        {
-          "type": "paragraph",
-          "content": "The following is a temporary workaround for a known bug in shopify with rendering HTML in a multi-line input."
-        },
-        {
-          "type": "select",
-          "id": "namespace",
-          "label": "Tab content",
-          "options": [
-            {
-              "label": "Long description",
-              "value": "custom_fields.description"
-            },
-            {
-              "label": "Ingredients",
-              "value": "custom_fields.ingredients"
-            },
-            {
-              "label": "Skin types & concerns",
-              "value": "custom_fields.skin_types"
-            },
-            {
-              "label": "How to use",
-              "value": "custom_fields.how_it_works"
-            },
-            {
-              "label": "Clinical & consumer results",
-              "value": "custom_fields.clinical_consumer_results"
-            },
-            {
-              "label": "Scent profile",
-              "value": "custom.scent_profile"
-            }
-          ]
         }
       ]
     },
