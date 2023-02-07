@@ -98,7 +98,7 @@
               {{ product.title | escape }}
             </h1>
           {%- when 'price' -%}
-            <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+            <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
               {%- render 'price', product: product, use_variant: true -%}
               {%- if product.metafields.custom.set_value -%}
                 <span class="ml-2 self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
@@ -146,7 +146,7 @@
             {%- endif -%}
           {%- when 'collapsible_tab' -%}
             {%- if block.settings.content != blank -%}
-              <div class="{{ block.settings.tab_classes }}" {{ block.shopify_attributes }}>
+              <div class="{{ block.settings.tab_classes }}">
                 {%- assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
                 {%- render 'accordion-item',
                   id: tab_id,
@@ -197,8 +197,8 @@
             {%- unless product.has_only_default_variant -%}
               {%- if product.variants.size == 1 -%}
                 {%- for option in product.options_with_values -%}
-                  <div class="mb-2">
-                    <strong class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
+                  <div class="{{ block.settings.variant_classes }}">
+                    <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
                     {%- for value in option.values -%}
                       <div class="button button-xs lowercase button-secondary border-seaweed-4 bg-wave-200 mr-2 mb-1">
                         {{ value }}
