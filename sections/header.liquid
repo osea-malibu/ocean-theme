@@ -222,7 +222,6 @@
                         aria-controls="predictive-search"
                         aria-haspopup="listbox"
                         aria-autocomplete="list"
-                        autocorrect="off"
                         autocomplete="off"
                         autocapitalize="off"
                         spellcheck="false"
@@ -377,8 +376,11 @@
             {{- link.title | replace: 'Mobile - ', '' | escape -}}
           </a>
           {%- if link.links != blank -%}
-            <ul role="list" class="invisible group-hover:visible hidden sm:block absolute z-100 bg-sand-200 py-2 shadow-md shadow-seaweed-400/10 {% if link.levels >= 2 %}inset-x-0{% else %}px-2{% endif %}{% if forloop.last %} right-0 md:right-auto{% endif %}">
-              {%- if link.levels >= 2 -%}<div class="mx-auto px-6 py-4 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">{%- endif -%}
+            {%- if link.levels >= 2 -%}
+              <ul role="list" class="invisible group-hover:visible hidden sm:flex absolute z-100 bg-sand-200 py-4 shadow-md shadow-seaweed-400/10 flex-col sm:flex-row justify-center gap-4 sm:gap-6 mx-auto px-6 inset-x-0">
+            {%- else -%}
+              <ul role="list" class="invisible group-hover:visible hidden sm:block absolute z-100 bg-sand-200 py-2 shadow-md shadow-seaweed-400/10 px-2{% if forloop.last %} right-0 md:right-auto{% endif %}">
+            {%- endif -%}
               {%- for childlink in link.links -%}
                 {%- if childlink.links != blank -%}
                   <li>
@@ -412,14 +414,15 @@
                 {%- endif -%}
               {%- endfor -%}
               {%- if link.levels >= 2 -%}
-                  <figure class="shrink-0 tracking-wide">
+                <li class="shrink-0">
+                  <figure class="tracking-wide">
                     {%- if section.settings.promo_image != nil -%}
                       {%- if section.settings.promo_link != nil -%}<a href="{{ section.settings.promo_link.url }}">{%- endif -%}
                         <img
                           srcset="{{ section.settings.promo_image | image_url: width: 250 }} 1x, {{ section.settings.promo_image | image_url: width: 500 }} 2x"
                           src="{{ section.settings.promo_image | image_url: width: 250 }}"
                           width="250"
-                          height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio }}"
+                          height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio | round }}"
                           alt="{{ section.settings.promo_heading }}"
                           loading="lazy"
                           class="w-full mb-2"
@@ -438,7 +441,7 @@
                       {%- endif -%}
                     </figcaption>
                   </figure>
-                </div>
+                </li>
               {%- endif -%}
             </ul>
           {%- endif -%}
