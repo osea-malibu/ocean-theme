@@ -123,6 +123,31 @@ class CartDrawer extends HTMLElement {
       .catch((error) => console.error(error));
   }
 
+  clearCart() {
+    fetch(window.Shopify.routes.root + "cart/clear.js")
+      .then(() => {
+        const emptyCartHTML =
+          '<div class="cart-empty h-full overflow-hidden flex flex-col items-center justify-center w-60 mx-auto"><h2 class="text-lg tracking-wide font-book mb-4">Your cart is empty</h2><a href="/collections/bestsellers" class="button button-secondary mb-4 w-full">Shop Best Sellers</a><a href="/collections/skincare" class="button button-secondary mb-4 w-full">Shop Skincare</a><a href="/collections/body-care" class="button button-secondary mb-4 w-full">Shop Body Care</a><a href="/collections/shop" class="button button-secondary mb-4 w-full">Shop All</a><a href="/pages/quiz" class="button button-secondary mb-4 w-full">Take Skin Quiz</a></div>';
+        const emptyCartBubbleHTML =
+          '<a href="/cart" class="header__icon header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble"><span class="hidden">Cart</span><div class="w-8 h-8 bg-seafoam-300 rounded-full flex justify-center items-center"><span aria-hidden="true" class="leading-8 font-book text-lg">0</span><span class="hidden">0 items</span></div></a>';
+        const cartBubble = document.getElementById("cart-icon-bubble");
+        const cartDrawerWrapper = document.querySelector("cart-drawer");
+        const cartFooter = document.getElementById("main-cart-footer");
+        const cartDrawerBody = document.querySelector(".cart-drawer-body");
+        const cartDrawerFooter = document.querySelector(".cart-drawer-footer");
+
+        if (cartBubble) cartBubble.outerHTML = emptyCartBubbleHTML;
+        if (cartDrawerBody) cartDrawerBody.innerHTML = emptyCartHTML;
+        if (cartDrawerFooter) cartDrawerFooter.remove();
+        if (cartFooter) cartFooter.classList.add("is-empty");
+        if (cartDrawerWrapper) {
+          cartDrawerWrapper.classList.add("is-empty");
+          trapFocus(cartDrawerWrapper.querySelector(".cart-empty"), cartDrawerWrapper.querySelector("a"));
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
   getSectionInnerHTML(html, selector = ".shopify-section") {
     return new DOMParser().parseFromString(html, "text/html").querySelector(selector).innerHTML;
   }
@@ -135,6 +160,7 @@ class CartDrawer extends HTMLElement {
       },
       {
         id: "cart-icon-bubble",
+        selector: "#cart-icon-bubble",
       },
       {
         id: "announcement-bar",

@@ -107,6 +107,12 @@ class CartItems extends HTMLElement {
       .then((response) => response.text())
       .then((state) => {
         const parsedState = JSON.parse(state);
+        this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+
+        // if the only items in the cart are samples
+        if (parsedState.items.filter((i) => i.product_type !== "Sample").length === 0) {
+          this.cart.clearCart();
+        }
 
         if (window.gwpSettings.enabled) {
           const cartIdArray = this.dataset.cartIds.slice(1, -1).split(",");
@@ -119,7 +125,6 @@ class CartItems extends HTMLElement {
                 this.removeGift(line);
               }
               if (window.gwpSettings.type === "auto" && !cartIdArray.includes(tier.product) && parsedState.total_price >= tier.threshold) {
-                this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
                 this.cart.addFreeGift(tier.variant);
               }
             }

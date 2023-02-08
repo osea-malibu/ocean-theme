@@ -160,7 +160,7 @@
           endfor
         -%}
 
-        <div class="flex-grow overflow-y-auto px-4 2xs:px-6 pb-12">
+        <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12">
           {% comment %} Save with sets upsell {% endcomment %}
           {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or cart_ids contains first_set.id -%}
             <save-with-sets
@@ -583,7 +583,7 @@
           </cart-recommendations>
         </div>
 
-        <div class="bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-2">
+        <div class="cart-drawer-footer bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-2">
           <div class="max-w-md mx-auto">
             {%- if settings.show_cart_note -%}
               <details id="Details-CartDrawer mb-4">
