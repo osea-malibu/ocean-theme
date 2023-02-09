@@ -110,24 +110,26 @@
             {%- if product.metafields.custom.benefits.value.size > 0 -%}
               <div class="{{ block.settings.benefits_classes }}">
                 <h2 class="font-medium tracking-wide mb-2{% if block.settings.hide_label %} sr-only{% endif %}">Benefits</h2>
-                <ul class="flex justify-between max-w-sm">
+                <ul class="flex">
                   {%- for benefit in product.metafields.custom.benefits.value limit: 4 -%}
-                    <li class="w-1/5 flex flex-col items-center">
-                      {%- assign benefit_icon = benefit | handle -%}
-                      {%- render 'icon-benefit', icon: benefit_icon, stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
-                      {%- assign benefit_title_array = benefit | split: ' ' -%}
-                      <span class="text-center text-sm font-book leading-none tracking-wide">
-                        {%- for string in benefit_title_array -%}
-                          {{ string }}{%- unless forloop.last -%}<br/>{%- endunless -%}
-                        {%- endfor -%}
-                      </span>
+                    <li class="w-24 flex flex-start">
+                      <div class="flex flex-col items-center">
+                        {%- assign benefit_icon = benefit | handle -%}
+                        {%- render 'icon-benefit', icon: benefit_icon, stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
+                        {%- assign benefit_title_array = benefit | split: ' ' -%}
+                        <span class="text-center text-sm font-book leading-none tracking-wide">
+                          {%- for string in benefit_title_array -%}
+                            {{ string }}{%- unless forloop.last -%}<br/>{%- endunless -%}
+                          {%- endfor -%}
+                        </span>
+                      </div>
                     </li>
                   {%- endfor -%}
                 </ul>
               </div>
             {%- endif -%}
 
-            {%- when 'description' -%}
+          {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
                 {%- if block.settings.is_collapsible -%}
