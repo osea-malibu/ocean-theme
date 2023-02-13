@@ -1,36 +1,54 @@
 {
   "sections": {
-    "dc253ca3-fd98-417b-81ab-ec9c09b580c8": {
-      "type": "page-banner",
+    "9fe0df8d-c3d4-493f-b4b9-fd7a0e07ac1b": {
+      "type": "image-banner",
       "blocks": {
-        "template--15723658117303__dc253ca3-fd98-417b-81ab-ec9c09b580c8-166835538375bc9b2d-0": {
-          "type": "heading",
+        "99447a94-56af-401b-b252-cd159dc88220": {
+          "type": "paragraph",
           "settings": {
-            "heading": "2 Free Gifts, 3 Days Only!",
-            "heading_classes": "tracking-widest font-bold uppercase text-xl lg:text-2xl"
+            "paragraph": "Full-Size",
+            "paragraph_classes": "badge bg-transparent \ntracking-wide\nfont-medium \ntext-md \nsm:text-2xl \npt-4 \nsm:pt-14 \nunderline \ntext-white sm:text-seaweed-700"
           }
         },
-        "cfadaef3-e1c5-4b90-9224-90f0a8e9aa52": {
+        "template--15784846753975__9fe0df8d-c3d4-493f-b4b9-fd7a0e07ac1b-167630246734ecc6a2-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Free Gift",
+            "heading_classes": "tracking-normal \ntext-5xl \npt-1 sm:pt-4  \nlg:text-8xl \npb-1 \nfont-serif \nsm:font-book \ntext-white sm:text-seaweed-700"
+          }
+        },
+        "template--15784846753975__9fe0df8d-c3d4-493f-b4b9-fd7a0e07ac1b-167630246734ecc6a2-1": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "<span class=\"font-medium\">Salts of the Earth Body Scrub<\/span><br>on orders $125+",
+            "paragraph_classes": "tracking-normal \ntext-xl \npt-1 \nsm:pt-4 \nlg:text-3xl \npb-4 \nfont-medium sm:font-book \ntext-white sm:text-seaweed-700"
+          }
+        },
+        "template--15784846753975__9fe0df8d-c3d4-493f-b4b9-fd7a0e07ac1b-167630246734ecc6a2-2": {
           "type": "button",
           "settings": {
-            "button_label": "Shop Now",
+            "button_label": "Shop now",
+            "button_label_desktop": "Shop Now",
             "button_link": "shopify:\/\/collections\/shop",
-            "button_classes": "button-primary"
+            "target_blank": false,
+            "button_classes": "button button-primary \nmd:button-lg \nmt-auto \nmb-6 \nsm:mt-4"
           }
         }
       },
       "block_order": [
-        "template--15723658117303__dc253ca3-fd98-417b-81ab-ec9c09b580c8-166835538375bc9b2d-0",
-        "cfadaef3-e1c5-4b90-9224-90f0a8e9aa52"
+        "99447a94-56af-401b-b252-cd159dc88220",
+        "template--15784846753975__9fe0df8d-c3d4-493f-b4b9-fd7a0e07ac1b-167630246734ecc6a2-0",
+        "template--15784846753975__9fe0df8d-c3d4-493f-b4b9-fd7a0e07ac1b-167630246734ecc6a2-1",
+        "template--15784846753975__9fe0df8d-c3d4-493f-b4b9-fd7a0e07ac1b-167630246734ecc6a2-2"
       ],
       "settings": {
-        "is_text_only": false,
-        "image": "shopify:\/\/shop_images\/PD2023_HP_Banner_Mobile_BLANK_ffaba235-14c4-4ca3-817a-bc6d813229bb.jpg",
-        "image_desktop": "shopify:\/\/shop_images\/PD2023_HP_Banner_Desktop_BLANK_UPDATED.jpg",
-        "is_lazy": true,
-        "section_classes": "relative container px-0 xs:px-6",
-        "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
-        "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
+        "image_mobile": "shopify:\/\/shop_images\/PD2023_HP_Banner_Mobile_BLANK_ffaba235-14c4-4ca3-817a-bc6d813229bb.jpg",
+        "image": "shopify:\/\/shop_images\/PD2023_HP_Banner_Desktop_BLANK_UPDATED.jpg",
+        "is_lazy": false,
+        "image_link": "shopify:\/\/collections\/shop",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-y-0 left-0 pl-6 sm:pr-0 pr-6 right-0 sm:right-1\/2 text-center flex flex-col items-center justify-center sm:pl-10 sm:pt-4"
       }
     },
     "987661ba-a2db-4ef1-beda-d181c20c526b": {
@@ -700,7 +718,7 @@
     }
   },
   "order": [
-    "dc253ca3-fd98-417b-81ab-ec9c09b580c8",
+    "9fe0df8d-c3d4-493f-b4b9-fd7a0e07ac1b",
     "987661ba-a2db-4ef1-beda-d181c20c526b",
     "6ac086c6-ae58-4d16-a63b-a2ae9c989edd",
     "166415601283823358",
