@@ -93,14 +93,17 @@ class PredictiveSearch extends HTMLElement {
     const selectedElement = this.querySelector('[aria-selected="true"]');
     const allElements = this.querySelectorAll("li");
     let activeElement = this.querySelector("li");
+    console.log("allElements", allElements);
 
     if (moveUp && !selectedElement) return;
 
     this.statusElement.textContent = "";
 
     if (!moveUp && selectedElement) {
+      console.log("go to next item");
       activeElement = selectedElement.nextElementSibling || allElements[0];
     } else if (moveUp) {
+      console.log("go to previous item");
       activeElement = selectedElement.previousElementSibling || allElements[allElements.length - 1];
     }
 

@@ -285,6 +285,9 @@
   predictive-search[loading] .predictive-search__results-list:first-child {
     @apply hidden;
   }
+  predictive-search [role="option"][aria-selected="true"] {
+    @apply ring;
+  }
 
   /* Tab controller */
   tab-controller [role="tabpanel"] {

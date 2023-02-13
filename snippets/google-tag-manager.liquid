@@ -9,7 +9,7 @@
     gtag('js', new Date());
     gtag('config', 'AW-873848209');
     gtag('config', 'G-P6YCF1X0QF');
-    //get channel data from url params and add to datalayer
+    {% comment %} //get channel data from url params and add to datalayer
     const urlParams = new URLSearchParams(window.location.search);
     const utmSource = urlParams.get('utm_source');
     const utmMedium = urlParams.get('utm_medium');
@@ -30,7 +30,7 @@
       else if (utmCampaign.includes("Pmax")) channel = "Purchase_Google-Shopping"
       else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Purchase_Google-Display"
     };
-    gtag('channel', channel);
+    gtag('channel', channel); {% endcomment %}
   </script>
   <meta name="google-site-verification" content="MiznO-EUjv83C_HVxjqNIOhz2buimAl8rv6hmJarl94" />
 <!-- End Global site tag (gtag.js) - Google Ads: 873848209 -->
