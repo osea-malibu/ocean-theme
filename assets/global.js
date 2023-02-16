@@ -597,7 +597,7 @@ class VariantSelects extends HTMLElement {
       variantImageEl.src = newImageSrc;
     } else {
       // change image in product card
-      const imageElement = document.getElementById(`ProductCard-DefaultImage-${this.dataset.section.split("-")[0]}`);
+      const imageElement = document.getElementById(`ProductCard-DefaultImage-${this.dataset.section}`);
       const newImageSrc = this.currentVariant.featured_media.preview_image.src;
 
       if (imageElement) {
