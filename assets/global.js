@@ -599,8 +599,11 @@ class VariantSelects extends HTMLElement {
       // change image in product card
       const imageElement = document.getElementById(`ProductCard-DefaultImage-${this.dataset.section.split("-")[0]}`);
       const newImageSrc = this.currentVariant.featured_media.preview_image.src;
-      imageElement.srcset = `${newImageSrc}&width=328 1x, ${newImageSrc}&width=656 2x`;
-      imageElement.src = newImageSrc;
+
+      if (imageElement) {
+        imageElement.srcset = `${newImageSrc}&width=328 1x, ${newImageSrc}&width=656 2x`;
+        imageElement.src = newImageSrc;
+      }
     }
   }
 
@@ -1181,7 +1184,7 @@ class GiftWithPurchaseUrl extends HTMLElement {
     super();
 
     this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
-    const { threshold, productId, variantId } = this.dataset;
+    const { productId } = this.dataset;
 
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
@@ -1189,18 +1192,29 @@ class GiftWithPurchaseUrl extends HTMLElement {
     let gwpParam = params.gwp;
 
     if (gwpParam === productId) {
-      if (Number(threshold) === 0) {
-        this.isGiftInCart(variantId);
-      }
+      this.checkGiftQualifiers();
     }
   }
 
-  isGiftInCart(variantId) {
+  checkGiftQualifiers() {
+    const { threshold, variantId } = this.dataset;
+
     fetch(window.Shopify.routes.root + "cart.js")
       .then((response) => response.json())
       .then((data) => {
         if (!data.items.map((i) => i.id).includes(variantId)) {
-          this.cart.addFreeGift(variantId);
+          if (Number(threshold) === 0) {
+            this.cart.addFreeGift(variantId);
+          } else if (Number(threshold) > 0) {
+            if (localStorage.getItem("osea.gwpUrlVariantId") !== variantId) {
+              document.getElementById("GwpUrlModal").show();
+              localStorage.setItem("osea.gwpUrlVariantId", variantId);
+            }
+
+            if (data.total_price > threshold * 100) {
+              this.cart.addFreeGift(variantId);
+            }
+          }
         }
       })
       .catch((error) => console.error(error));
