@@ -127,6 +127,9 @@ class CartItems extends HTMLElement {
               if (window.gwpSettings.type === "auto" && !cartIdArray.includes(tier.product) && parsedState.total_price >= tier.threshold) {
                 this.cart.addFreeGift(tier.variant);
               }
+              if (window.gwpSettings.type === "url" && localStorage.getItem("osea.gwpUrlVariantId") === tier.variant) {
+                document.querySelector("gift-with-purchase-url").checkGiftQualifiers();
+              }
             }
           });
         }

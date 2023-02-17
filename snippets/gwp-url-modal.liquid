@@ -1,11 +1,11 @@
 <modal-dialog id="GwpUrlModal">
-  <div role="dialog" aria-label="Your free gift will be added when you meet the ${{ settings.gwp_url_threshold }} threshold" aria-modal="true" tabindex="-1">
+  <div role="dialog" aria-label="Your free gift will be added when you meet the ${{ settings.gwp_tier1_threshold }} threshold" aria-modal="true" tabindex="-1">
     <button id="ModalClose-GwpUrlModal" type="button" aria-label="{{ 'accessibility.close' | t }}">
       {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
     </button>
     <div class="w-full">
-      <h1 class="font-serif text-3xl tracking-tight mb-2">Your gift will be added to your cart when you reach ${{ settings.gwp_url_threshold }}!</h1>
-      <p class="mb-4">Shop until you have ${{ settings.gwp_url_threshold }} of products in your cart and your gift will be added automatically.</p>
+      <h1 class="font-serif text-3xl tracking-tight mb-2">Your gift will be added to your cart when you reach ${{ settings.gwp_tier1_threshold }}!</h1>
+      <p class="mb-4">Start shopping to redeem your gift. No code required.</p>
       <a href="/collections/shop" class="button button-primary" aria-label="Go to shop all page">Shop Now</a>
     </div>
   </div>

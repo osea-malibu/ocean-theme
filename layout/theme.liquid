@@ -161,9 +161,9 @@
       <gift-with-purchase-url
         data-product-id="{{ all_products[settings.gwp_tier1_product].id }}"
         data-variant-id="{{ all_products[settings.gwp_tier1_product].selected_or_first_available_variant.id }}"
-        data-threshold="{{ settings.gwp_url_threshold }}"
+        data-threshold="{{ settings.gwp_tier1_threshold | times: 100 }}"
       ></gift-with-purchase-url>
-      {%- if settings.gwp_url_threshold > 0 -%}
+      {%- if settings.gwp_tier1_threshold > 0 -%}
         {%- render 'gwp-url-modal' -%}
       {%- endif -%}
     {%- endif -%}

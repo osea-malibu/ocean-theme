@@ -1211,7 +1211,7 @@ class GiftWithPurchaseUrl extends HTMLElement {
               localStorage.setItem("osea.gwpUrlVariantId", variantId);
             }
 
-            if (data.total_price > threshold * 100) {
+            if (data.total_price >= threshold) {
               this.cart.addFreeGift(variantId);
             }
           }
