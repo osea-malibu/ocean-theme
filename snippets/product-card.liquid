@@ -28,21 +28,18 @@
         {%- endif -%} {% endcomment %}
 
         <a href="{{ card_product.url | default: '#' }}">
+          {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
           <h3
-            class="text-sm 2xs:text-base sm:text-lg font-bold 2xs:font-medium !leading-none hover:underline mb-1"
+            class="text-sm 2xs:text-base sm:text-lg font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}"
             id="title-{{ section_id }}-{{ card_product.id }}"
           >
-            {{ card_product.title | escape }}
+            {{- card_product.title | replace: 'Undaria Algae Body Butter', 'Undaria Body Butter' | replace: 'Undaria Algae Body Polish', 'Undaria Body Polish' -}}
           </h3>
         </a>
       </div>
 
-      <p class="text-sm leading-tight mb-1{% if card_product.handle == 'undaria-algae-oil' %} tracking-normal{% endif %}">
-        {%- if card_product.metafields.custom_fields.short_description == 'Daily moisturizer that creates a hydrating barrier' -%}
-          Daily moisturizer for a hydrating barrier
-        {%- else -%}
-          {{ card_product.metafields.custom_fields.short_description | escape }}
-        {%- endif -%}
+      <p class="text-sm !leading-[1.1]">
+        {{- card_product.metafields.custom_fields.short_description | escape -}}
       </p>
 
     <div class="mt-auto overflow-hidden">
@@ -99,18 +96,18 @@
       {%- elsif card_product.variants.size > 1 -%}
         {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' or card_product.handle == 'undaria-algae-oil' -%}
           <variant-selects
-            class="no-js-hidden block mt-2"
+            class="no-js-hidden block mt-1"
             data-section="{{ card_product.id }}-{{ section_id }}"
             data-url="{{ card_product.url }}"
             data-update-url="false"
           >
           {%- for option in card_product.options_with_values -%}
             <div class="relative block">
-              <label class="absolute top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
+              <label class="absolute top-0 sm:top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
                 {{- option.name -}}
               </label>
               <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                class="block input input-xs w-full {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}"
+                class="block input input-xs w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}"
                 name="options[{{ option.name | escape }}]"
                 form="{{ product_form_id }}"
               >
@@ -136,7 +133,7 @@
           </variant-selects>
         {%- else -%}
           <variant-radios
-            class="no-js-hidden block sm:mt-1"
+            class="no-js-hidden block mt-1.5"
             data-section="{{ card_product.id }}-{{ section_id }}"
             data-url="{{ card_product.url }}"
             data-update-url="false"
@@ -159,7 +156,7 @@
                       {%- endif -%}
                     >
                     <label
-                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
+                      class="button button-xs block lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
                       for="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
                       tabindex="0"
                     >
