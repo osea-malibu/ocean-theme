@@ -25,14 +25,26 @@
             "button_aria_label": "Go to shop all collections page",
             "button_link": "shopify:\/\/collections\/shop",
             "target_blank": false,
-            "button_classes": "button button-white sm:button-primary md:button-lg \nmt-auto mb-16 sm:mt-4"
+            "button_classes": "button button-white sm:button-primary md:button-lg \nmt-auto mb-16 sm:mt-4 sm:hidden"
+          }
+        },
+        "805da776-b041-4f0c-b887-cebdccd50cba": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_label_desktop": "",
+            "button_aria_label": "Go to shop all collections page",
+            "button_link": "shopify:\/\/collections\/shop",
+            "target_blank": false,
+            "button_classes": "hidden sm:block button-primary"
           }
         }
       },
       "block_order": [
         "35ca4d62-6e76-4264-b696-16cafdb54e81",
         "fef2cce8-d514-49b5-bfd3-d896d8706dba",
-        "2ccb767f-f812-4536-9492-8c0dac19f69c"
+        "2ccb767f-f812-4536-9492-8c0dac19f69c",
+        "805da776-b041-4f0c-b887-cebdccd50cba"
       ],
       "settings": {
         "image_mobile": "shopify:\/\/shop_images\/Anti-Aging_Focus_HP_Banner_Mobile_BLANK.jpg",
