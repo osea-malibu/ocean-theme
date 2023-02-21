@@ -25,7 +25,7 @@
 
 <div id="ProductGridContainer" class="container mb-12">
   {%- if section.settings.enable_anchors and subcollections and subcollections.value.size > 0 -%}
-    <collection-anchors class="flex overflow-x-auto h-0 opacity-0 mb-0 scrollbar-hide w-[calc(100%+1rem)] xs:w-full">
+    <collection-anchors class="flex overflow-x-auto mb-3 scrollbar-hide w-[calc(100%+1rem)] xs:w-full">
       {%- if featured_products -%}
         <a href="#Featured" aria-label="Jump to featured products section" class="button button-xs button-secondary mr-2">Featured</a>
       {%- endif -%}

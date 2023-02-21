@@ -1271,7 +1271,9 @@ class CollectionAnchors extends HTMLElement {
 
   onAnchorClick(anchor) {
     document.querySelectorAll("details.subcollection").forEach((subcollection) => {
-      if (subcollection.id !== anchor.getAttribute("href").substring(1)) {
+      if (subcollection.id === anchor.getAttribute("href").substring(1)) {
+        subcollection.setAttribute("open", "");
+      } else {
         subcollection.removeAttribute("open");
       }
     });
