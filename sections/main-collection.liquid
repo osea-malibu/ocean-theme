@@ -26,7 +26,7 @@
 <div id="ProductGridContainer" class="container mb-12">
   {%- if section.settings.enable_anchors and subcollections and subcollections.value.size > 0 -%}
     <collection-anchors class="flex overflow-x-auto mb-3 scrollbar-hide w-[calc(100%+1rem)] xs:w-full">
-      {%- if featured_products -%}
+      {%- if featured_products.value.count > 0 -%}
         <a href="#Featured" aria-label="Jump to featured products section" class="button button-xs button-secondary mr-2">Featured</a>
       {%- endif -%}
       {%- for subcollection in subcollections.value -%}
@@ -35,8 +35,7 @@
       {%- endfor -%}
     </collection-anchors>
   {%- endif -%}
-  
-  {%- if featured_products -%}
+  {%- if featured_products.value.count > 0 -%}
     {%- capture featured_products_grid -%}
       <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
         {%- if collection.metafields.custom.promo_tile_image != blank -%}
@@ -97,12 +96,18 @@
         capture subcollection_grid
           render 'collection-product-grid', collection: collections[subcollection], products_per_page: 200, is_subcollection: true, is_first_subcollection: forloop.first, parent_collection: collection
         endcapture
+
+        if featured_products.value.count > 0
+          assign summary_classes = 'border-t border-seaweed-300 py-2 text-lg'
+        else
+          assign summary_classes = 'py-2 text-lg'
+        endif
       -%}
       {% render 'accordion-item',
         id: summary_handle,
         classes: 'subcollection',
         summary: summary,
-        summary_classes: 'border-t border-seaweed-300 py-2 text-lg',
+        summary_classes: summary_classes,
         content: subcollection_grid,
         content_classes: 'pb-6',
         default_open: true,
