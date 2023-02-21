@@ -25,7 +25,7 @@
 
 <div id="ProductGridContainer" class="container mb-12">
   {%- if section.settings.enable_anchors and subcollections and subcollections.value.size > 0 -%}
-    <div class="flex overflow-x-auto scrollbar mb-4">
+    <collection-anchors class="hidden overflow-x-auto mb-3 scrollbar-hide w-[calc(100%+1rem)] xs:w-full">
       {%- if featured_products -%}
         <a href="#Featured" aria-label="Jump to featured products section" class="button button-xs button-secondary mr-2">Featured</a>
       {%- endif -%}
@@ -33,7 +33,7 @@
         {%- assign subcollection_title = collections[subcollection].title | replace: "Section: ", "" -%}
         <a href="#{{ subcollection_title | handle }}" aria-label="Jump to {{ subcollection_title }} section" class="button button-xs button-secondary mr-2">{{ subcollection_title }}</a>
       {%- endfor -%}
-    </div>
+    </collection-anchors>
   {%- endif -%}
   
   {%- if featured_products -%}
@@ -77,10 +77,14 @@
 
     {% render 'accordion-item',
       id: 'Featured',
+      classes: 'subcollection',
       summary: 'Featured',
+      summary_classes: 'py-2 text-lg',
       content: featured_products_grid,
+      content_classes: 'pb-6',
       default_open: true,
-      transition_duration: 800
+      transition_duration: 800,
+      icon_type: 'caret'
     %}
   {%- endif -%}
 
@@ -96,10 +100,14 @@
       -%}
       {% render 'accordion-item',
         id: summary_handle,
+        classes: 'subcollection',
         summary: summary,
+        summary_classes: 'border-t border-seaweed-300 py-2 text-lg',
         content: subcollection_grid,
+        content_classes: 'pb-6',
         default_open: true,
-        transition_duration: 800
+        transition_duration: 800,
+        icon_type: 'caret'
       %}
     {%- endfor -%}
   {%- else -%}

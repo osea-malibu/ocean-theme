@@ -747,6 +747,14 @@
   .scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-seafoam-500;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    @apply w-0 h-0 bg-transparent;
+  }
 }
 
 /* this will always be included in your compiled CSS */

@@ -1262,6 +1262,23 @@ class GiftCardFields extends HTMLElement {
 }
 customElements.define("gift-card-fields", GiftCardFields);
 
+class CollectionAnchors extends HTMLElement {
+  constructor() {
+    super();
+
+    this.querySelectorAll("a").forEach((anchor) => anchor.addEventListener("click", () => this.onAnchorClick(anchor)));
+  }
+
+  onAnchorClick(anchor) {
+    document.querySelectorAll("details.subcollection").forEach((subcollection) => {
+      if (subcollection.id !== anchor.getAttribute("href").substring(1)) {
+        subcollection.removeAttribute("open");
+      }
+    });
+  }
+}
+customElements.define("collection-anchors", CollectionAnchors);
+
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {
   constructor(el) {
