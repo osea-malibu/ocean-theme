@@ -273,11 +273,15 @@
                     {% render 'product-card',
                       card_product: all_products[block.settings.product],
                       section_id: section.id,
-                      custom_default_image: block.settings.custom_product_image
-                      hide_badge: block.settings.hide_badge,
-                      subscription: block.settings.subscription,
+                      custom_default_image: block.settings.custom_product_image,
                       image_class: block.settings.image_classes,
-                      button_class: block.settings.button_classes
+                      button_class: block.settings.button_classes,
+                      name_class: block.settings.name_classes,
+                      description_class: block.settings.description_classes,
+                      hide_badge: block.settings.hide_badge,
+                      show_reviews: block.settings.show_reviews,
+                      show_benefits: block.settings.show_benefits,
+                      subscription: block.settings.subscription,
                     %}
                   {%- endif -%}
                 {%- when 'article' -%}
@@ -643,19 +647,39 @@
           "label": "Image classes"
         },
         {
+          "type": "textarea",
+          "id": "button_classes",
+          "label": "Button classes"
+        },
+        {
+          "type": "textarea",
+          "id": "name_classes",
+          "label": "Product name classes"
+        },
+        {
+          "type": "textarea",
+          "id": "description_classes",
+          "label": "Short description classes"
+        },
+        {
           "type": "checkbox",
           "id": "hide_badge",
           "label": "Hide badge"
         },
         {
           "type": "checkbox",
-          "id": "subscription",
-          "label": "Subscription tile"
+          "id": "show_reviews",
+          "label": "Show reviews"
         },
         {
-          "type": "textarea",
-          "id": "button_classes",
-          "label": "Button classes"
+          "type": "checkbox",
+          "id": "show_benefits",
+          "label": "Show benefits"
+        },
+        {
+          "type": "checkbox",
+          "id": "subscription",
+          "label": "Subscription tile"
         }
       ]
     },

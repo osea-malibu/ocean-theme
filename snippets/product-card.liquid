@@ -3,6 +3,7 @@
 
     Accepts:
     - card_product: {Object} Product Liquid object (required)
+    - section_id: {String} Unique id of section that card is in (required)
     - show_secondary_image_on_hover: {Boolean} Show the secondary image on hover. Default: false (optional)
     - custom_default_image: {Boolean} Make the secondary image appear first. Default: false (optional)
     - variant_picker_type: {'button' or 'dropdown'} Display mode of variant options, default: 'button' (optional)
@@ -11,9 +12,12 @@
     - image_class: {String} Tailwind styling classes (optional)
     - price_class: {String} Tailwind styling classes (optional)
     - badge_class: {String} Tailwind styling classes (optional)
+    - name_class: {String} Tailwind styling classes (optional)
+    - description_class: {String} Tailwind styling classes (optional)
     - hide_badge: {Boolean} Hide badge in upper left corner of tile (optional)
+    - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
+    - show_benefits: {Boolean} Show benefits icons. Default: false (optional)
     - subscription: {Boolean} Deafult to subscription selection insead of variants (optional)
-    - section_id: {String} Unique id of section that card is in (required)
     - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
 
     Usage:
@@ -23,14 +27,14 @@
 <div class="{% if card_class == blank %}flex flex-col relative grow h-full{% else %}{{ card_class }}{% endif %}">
   <div class="w-full order-1 grow flex flex-col">
       <div>
-        {% comment %} {%- if card_product.metafields.reviews.rating.value != blank -%}
+        {%- if show_reviews and card_product.metafields.reviews.rating.value != blank -%}
           {% render 'product-rating', product: card_product, compact: true, classes: 'h-5 float-right' %}
-        {%- endif -%} {% endcomment %}
+        {%- endif -%}
 
         <a href="{{ card_product.url | default: '#' }}">
           {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
           <h3
-            class="text-sm 2xs:text-base sm:text-lg font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}"
+            class="text-sm 2xs:text-base sm:text-lg font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}"
             id="title-{{ section_id }}-{{ card_product.id }}"
           >
             {{- card_product.title | replace: 'Undaria Algae Body Butter', 'Undaria Body Butter' | replace: 'Undaria Algae Body Polish', 'Undaria Body Polish' -}}
@@ -38,7 +42,7 @@
         </a>
       </div>
 
-      <p class="text-sm !leading-[1.1]">
+      <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
         {{- card_product.metafields.custom_fields.short_description | escape -}}
       </p>
 
