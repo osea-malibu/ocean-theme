@@ -85,11 +85,11 @@
               {%- for value in card_product.selling_plan_groups[0].selling_plans -%}
                 <option
                   value="{{ value.id | escape }}"
-                  {%- if card_product.metafields.custom.subscription_interval != blank and value.name contains card_product.metafields.custom.subscription_interval -%}
+                  {% if card_product.metafields.custom.subscription_interval != blank and value.name contains card_product.metafields.custom.subscription_interval %}
                     selected
-                  {%- elsif forloop.index == 2 -%}
+                  {% elsif forloop.index == 2 %}
                     selected
-                  {%- endif -%}
+                  {% endif %}
                 >
                   {{ value.name | replace: 'Ship every ', '' }}
                 </option>
@@ -118,11 +118,11 @@
                 {%- for value in option.values -%}
                   <option
                     value="{{ value | escape }}"
-                    {%- if default_to_mini and forloop.last -%}
+                    {% if default_to_mini and forloop.last %}
                       selected="selected"
-                    {%- elsif default_to_mini != true and option.selected_value == value -%}
+                    {% elsif default_to_mini != true and option.selected_value == value %}
                       selected="selected"
-                    {%- endif -%}
+                    {% endif %}
                   >
                     {{ value }}
                   </option>
