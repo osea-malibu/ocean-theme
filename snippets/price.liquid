@@ -60,23 +60,26 @@
       {{ money_price }}
     {%- endif -%}
   {%- else -%}
-    <span class="{% if compare_at_price > price %}hidden{% else %}flex{% endif %}"{% if compare_at_price > price %} aria-hidden="true"{% endif %}>
-      <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
-      <span>{{ money_price }}</span>
-    </span>
-    <span class="flex-row flex-wrap{% if compare_at_price > price %} flex{% else %} hidden{% endif %}"{% if price > compare_at_price %} aria-hidden="true"{% endif %}>
-      {%- unless product.price_varies == false and product.compare_at_price_varies %}
+    {% if compare_at_price > price %}
+      <span class="flex-row flex-wrap flex">
+        {%- unless product.price_varies == false and product.compare_at_price_varies %}
+          <span class="sr-only"> {{ 'products.product.price.regular_price' | t }}</span>
+          <s class="text-wave-600 mr-1">
+            {% if settings.currency_code_enabled %}
+              {{ compare_at_price | money_with_currency }}
+            {% else %}
+              {{ compare_at_price | money }}
+            {% endif %}
+          </s>
+        {%- endunless -%}
+        <span class="sr-only"> {{ 'products.product.price.sale_price' | t }}</span>
+        <span>{{ money_price }}</span>
+      </span>
+    {%- else -%}
+      <span class="flex">
         <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
-        <s class="text-wave-600 mr-1">
-          {% if settings.currency_code_enabled %}
-            {{ compare_at_price | money_with_currency }}
-          {% else %}
-            {{ compare_at_price | money }}
-          {% endif %}
-        </s>
-      {%- endunless -%}
-      <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
-      <span>{{ money_price }}</span>
-    </span>
+        <span>{{ money_price }}</span>
+      </span>
+    {%- endif -%}
   {%- endif -%}
 </span>
