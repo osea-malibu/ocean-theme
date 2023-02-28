@@ -548,6 +548,36 @@
         "info": "Variables: remaining_amount, gift_product",
         "label": "Countdown message",
         "default": "Spend another remaining_amount to get a FREE gift_product!"
+      },
+      {
+        "type": "header",
+        "content": "URL parameter modal settings"
+      },
+      {
+        "type": "html",
+        "id": "gwp_urlmodal_title",
+        "info": "Variables: threshold_amount",
+        "label": "Title text",
+        "default": "Your gift will be added to your cart when you reach threshold_amount!"
+      },
+      {
+        "type": "html",
+        "id": "gwp_urlmodal_body",
+        "info": "Variables: threshold_amount",
+        "label": "Body text",
+        "default": "Start shopping to redeem your gift. No code required."
+      },
+      {
+        "type": "image_picker",
+        "id": "gwp_urlmodal_image_mobile",
+        "label": "Mobile image",
+        "info": "Appears at top of modal on mobile, choose horizontal image."
+      },
+      {
+        "type": "image_picker",
+        "id": "gwp_urlmodal_image_desktop",
+        "label": "Desktop image",
+        "info": "Appears on left of modal on mobile, choose vertical image."
       }
     ]
   },

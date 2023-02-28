@@ -476,6 +476,7 @@ class ModalDialog extends HTMLElement {
   constructor() {
     super();
     this.querySelector('[id^="ModalClose-"]').addEventListener("click", this.hide.bind(this));
+    this.querySelectorAll(".close-modal").forEach((i) => i.addEventListener("click", this.hide.bind(this)));
     this.addEventListener("keyup", (event) => {
       if (event.code.toUpperCase() === "ESCAPE") this.hide();
     });
