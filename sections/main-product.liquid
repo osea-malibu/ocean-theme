@@ -314,7 +314,7 @@
                         value="{{ option }}"
                         {% if option == 'onetime' %}checked{% endif %}
                       />
-                      <span class="absolute pointer-events-none left-2 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
+                      <span class="absolute pointer-events-none left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
                         <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
                       </span>
                       <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
@@ -347,12 +347,17 @@
                                   name="selling_plan"
                                   value="{{ value.id | escape }}"
                                   form="{{ product_form_id }}"
-                                >
+                                  {% if product.metafields.custom.subscription_interval == blank and forloop.index == 2 %}
+                                    checked
+                                  {% elsif product.metafields.custom.subscription_interval != blank and product.metafields.custom.subscription_interval == forloop.index %}
+                                    checked
+                                  {% endif %}
+                                />
                                 <label
                                   class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-200"
                                   for="{{ block.id }}-{{ forloop.index0 }}"
                                 >
-                                  {{ value.name | replace: "Ship every", "" }}
+                                  {{- value.name | replace: "Ship every", "" -}}
                                 </label>
                               </div>
                             {%- endfor -%}
