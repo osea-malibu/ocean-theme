@@ -36,7 +36,10 @@
       </svg>
     {%- endif -%}
   </summary>
-  <div class="content tracking-wide py-2 {{ content_classes }}">
+  <div
+    class="content tracking-wide py-2{% if content_classes != blank %} {{ content_classes }}{% endif %}"
+    {% if content_classes contains 'overflow-y-auto' %}tabindex="0"{% endif %}
+  >
     {{- content -}}
   </div>
 </details>
