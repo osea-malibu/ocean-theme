@@ -13,8 +13,9 @@
     @apply invisible relative -top-32;
   }
 
+  body,
   a {
-    @apply bg-white text-seaweed-700 visited:text-seaweed-700 hover:text-seaweed-800;
+    @apply bg-white text-seaweed-700 active:text-seaweed-800 visited:text-seaweed-700 hover:text-seaweed-800;
   }
 
   /* Remove number input controls on quantity */
