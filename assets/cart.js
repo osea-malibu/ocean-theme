@@ -157,7 +157,7 @@ class CartItems extends HTMLElement {
       })
       .catch((error) => {
         console.error(error);
-        this.querySelectorAll(".loading-overlay").forEach((overlay) => overlay.classList.add("hidden"));
+        this.querySelectorAll(".loading-spinner").forEach((overlay) => overlay.classList.add("hidden"));
         const errors = document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
         if (errors) {
           errors.textContent = window.cartStrings.error;
@@ -237,8 +237,8 @@ class CartItems extends HTMLElement {
     const mainCartItems = document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
     mainCartItems.classList.add("pointer-events-none");
 
-    const cartItemElements = this.querySelectorAll(`#CartItem-${line} .loading-overlay`);
-    const cartDrawerItemElements = this.querySelectorAll(`#CartDrawer-Item-${line} .loading-overlay`);
+    const cartItemElements = this.querySelectorAll(`#CartItem-${line} .loading-spinner`);
+    const cartDrawerItemElements = this.querySelectorAll(`#CartDrawer-Item-${line} .loading-spinner`);
 
     [...cartItemElements, ...cartDrawerItemElements].forEach((overlay) => overlay.classList.remove("hidden"));
 
@@ -362,8 +362,8 @@ class SaveWithSets extends HTMLElement {
     const mainCartItems = document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
     mainCartItems.classList.add("pointer-events-none");
 
-    const cartItemElements = this.cart.querySelectorAll(`#CartItem-${line} .loading-overlay`);
-    const cartDrawerItemElements = this.cart.querySelectorAll(`#CartDrawer-Item-${line} .loading-overlay`);
+    const cartItemElements = this.cart.querySelectorAll(`#CartItem-${line} .loading-spinner`);
+    const cartDrawerItemElements = this.cart.querySelectorAll(`#CartDrawer-Item-${line} .loading-spinner`);
 
     [...cartItemElements, ...cartDrawerItemElements].forEach((overlay) => overlay.classList.remove("hidden"));
 

@@ -716,7 +716,7 @@ input.mobile-facets__checkbox {
   visibility: hidden;
 }
 
-.product-count .loading-overlay__spinner {
+.product-count .loading-spinner {
   display: none;
   position: absolute;
   right: 0;
@@ -725,6 +725,6 @@ input.mobile-facets__checkbox {
   width: 1.8rem;
 }
 
-.product-count__text.loading + .loading-overlay__spinner {
+.product-count__text.loading + .loading-spinner {
   display: block;
 }

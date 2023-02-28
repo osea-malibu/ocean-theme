@@ -218,7 +218,7 @@ class BundleBuilder extends HTMLElement {
   handleAddToCart() {
     /* this.submitButton.setAttribute("aria-disabled", true);
     this.submitButton.classList.add("opacity-50");
-    this.querySelector(".loading-overlay__spinner")?.classList.remove("hidden"); */
+    this.querySelector(".loading-spinner")?.classList.remove("hidden"); */
 
     const faceProductHandle = localStorage.getItem("osea.byobFaceProductHandle");
     const bodyProductHandle = localStorage.getItem("osea.byobBodyProductHandle");
@@ -249,7 +249,7 @@ class BundleBuilder extends HTMLElement {
             /* this.submitButton.classList.remove("opacity-50");
 						if (this.cart && this.cart.classList.contains("is-empty")) this.cart.classList.remove("is-empty");
 						if (!this.error) this.submitButton.removeAttribute("aria-disabled");
-						this.querySelector(".loading-overlay__spinner")?.classList.add("hidden"); */
+						this.querySelector(".loading-spinner")?.classList.add("hidden"); */
           });
       })
       .catch((e) => console.error(e));
