@@ -8,6 +8,14 @@
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
+  body {
+    @apply antialiased bg-white text-seaweed-700;
+  }
+
+  a {
+    @apply bg-white text-seaweed-700;
+  }
+
   /* Handle anchor link offset - accounts for fixed header */
   .anchor {
     @apply invisible relative -top-32;
