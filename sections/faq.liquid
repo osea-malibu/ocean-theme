@@ -25,36 +25,38 @@
                   aria-controls="tab-{{ forloop.index }}"
                   tabindex="0"
                   aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                  class="px-2 rounded-sm {% if forloop.first %} bg-wave-200{% endif %}"
+                  class="rounded-sm {% if forloop.first %} bg-wave-200{% endif %}"
                 >
-                  <a class="block font-book tracking-wide py-1 sm:py-2">{{ category }}</a>
+                  <a class="block font-book tracking-wide py-1 sm:py-2 px-2 cursor-pointer">{{ category }}</a>
                 </li>
               {%- endfor -%}
             </ul>
           </details>
         </nav>
-        {%- for category in categories -%}
-          <article
-            id="tab-{{ forloop.index }}"
-            role="tabpanel"
-            tabindex="0"
-            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-            class="w-full sm:w-2/3 lg:w-3/4"
-          >
-            <h2 class="text-xl sm:text-2xl tracking-wide font-medium mb-4">
-              {{- category -}}
-            </h2>
-            {%- liquid
-              assign accordion_data = json_data | where: 'group', category
-              assign accordion_id = 'Accordion-' | append: category
-            -%}
-            <div class="accordion mb-12">
-              {% render 'accordion',
-                id: accordion_id,
-                items: accordion_data %}
+        <article class="w-full sm:w-2/3 lg:w-3/4">
+          {%- for category in categories -%}
+            <div
+              id="tab-{{ forloop.index }}"
+              role="tabpanel"
+              tabindex="0"
+              aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+              class="w-full"
+            >
+              <h2 class="text-xl sm:text-2xl tracking-wide font-medium mb-4">
+                {{- category -}}
+              </h2>
+              {%- liquid
+                assign accordion_data = json_data | where: 'group', category
+                assign accordion_id = 'Accordion-' | append: category
+              -%}
+              <div class="accordion mb-12">
+                {% render 'accordion',
+                  id: accordion_id,
+                  items: accordion_data %}
+              </div>
             </div>
-          </article>
-        {%- endfor -%}
+          {%- endfor -%}
+        </article>
       </tab-controller>
     {%- endif -%}
   </div>
