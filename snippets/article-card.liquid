@@ -49,9 +49,9 @@
 
     <div>
       <header>
-        <span class="{{ tag_classes }}">
+        <strong class="{{ tag_classes }}">
           {{ article.tags | join: ', ' }}
-        </span>
+        </strong>
         <h2 class="{{ title_classes }}" id="Article-{{ article.id }}">
           {{ article.title | escape }}
         </h2>
