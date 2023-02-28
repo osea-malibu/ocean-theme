@@ -16,7 +16,12 @@
   {% render 'accordion-item', product: product %}
 {% endcomment %}
 
-<details class="accordion group-accordion scroll-mt-32{% if classes != blank %} {{ classes }}{% endif %}" id="{{ id }}" {% if default_open %}open{% endif %} data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}">
+<details
+  class="accordion group-accordion scroll-mt-32{% if classes != blank %} {{ classes }}{% endif %}"
+  id="{{ id }}"
+  {% if default_open %}open{% endif %}
+  data-duration="{% if transition_duration %}{{ transition_duration }}{% else %}400{% endif %}"
+>
   <summary class="w-full flex items-center {% if summary_classes != blank %}{{ summary_classes }}{% else %}py-2{% endif %}">
     {%- if icon_type == 'caret' -%}
       {% render 'icon-caret', classes: 'h-4 w-4 text-seaweed-500 mr-1.5 -rotate-90 group-accordion-open:rotate-0 motion-safe:transition-transform duration-300' %}

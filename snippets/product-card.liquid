@@ -202,7 +202,7 @@
             aria-haspopup="dialog"
             aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ card_product.id }}"
             aria-live="polite"
-            class="button button-tertiary w-full transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
+            class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
             {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
           >
             {%- if card_product.selected_or_first_available_variant.available -%}

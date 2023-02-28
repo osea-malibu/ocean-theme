@@ -69,10 +69,7 @@
               {% if block.settings.button_aria_label != blank %}aria-label="{{ block.settings.button_aria_label }}"{% endif %}
               {{ block.shopify_attributes }}
             >
-              <span{% if block.settings.button_label_desktop != blank %} class="sm:hidden"{% endif %}>{{- block.settings.button_label | escape -}}</span>
-              {%- if block.settings.button_label_desktop != blank -%}
-                <span class="hidden sm:inline">{{- block.settings.button_label_desktop | escape -}}</span>
-              {%- endif -%}
+              {{- block.settings.button_label | escape -}}
             </a>
           {%- endif -%}
       {%- endcase -%}
@@ -176,11 +173,6 @@
           "id": "button_label",
           "default": "Shop now",
           "label": "Button label"
-        },
-        {
-          "type": "text",
-          "id": "button_label_desktop",
-          "label": "Button label (desktop)"
         },
         {
           "type": "text",
