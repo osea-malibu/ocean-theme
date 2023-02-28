@@ -58,7 +58,7 @@
                     if article.content contains product.handle
                       assign product_tag = '[product-block product="' | append: product.handle | append: '"]'
                       capture product_card
-                        render 'product-card', card_product: all_products[product.handle], card_class: 'flex flex-col relative max-w-2xs w-full mx-auto', button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
+                        render 'product-card', card_product: all_products[product.handle], section_id: 'article_body', card_class: 'flex flex-col relative max-w-2xs w-full mx-auto', button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
                       endcapture
                       assign new_content = new_content | replace: product_tag, product_card
                     endif
@@ -115,11 +115,11 @@
                 {%- if article.metafields.custom.shop_the_story.value != blank -%}
                   <div class="bg-sand-200 px-6 py-6">
                     <h3 class="font-serif text-3xl tracking-tight text-center mb-2">Shop the Story</h3>
-                    <div class="grid grid-cols-2 gap-6">
+                    <ul class="grid grid-cols-2 gap-6">
                       {%- for product in article.metafields.custom.shop_the_story.value -%}
-                        {% render 'product-card-mini', card_product: product, button_class: 'button-secondary' %}
+                        {% render 'product-card-mini', card_product: product, section_id: 'article_aside' button_class: 'button-secondary' %}
                       {%- endfor -%}
-                    </div>
+                    </ul>
                   </div>
                 {%- endif -%}
               </div>

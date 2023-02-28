@@ -355,6 +355,16 @@
                                 </label>
                               </div>
                             {%- endfor -%}
+                            <div class="sr-only shrink">
+                              <input type="radio"
+                                id="{{ block.id }}-none"
+                                name="selling_plan"
+                                value=""
+                                form="{{ product_form_id }}"
+                                checked
+                              />
+                              <label for="{{ block.id }}-none">None</label>
+                            </div>
                           </fieldset>
                         </div>
                       {%- endif -%}
