@@ -306,35 +306,38 @@
                 <fieldset>
                   <legend class="sr-only">Purchase options</legend>
                   {%- for option in purchase_options -%}
-                    <label class="{{ option }} relative block w-full pl-9 2xs:pl-10 py-3 pr-2 2xs:pr-3 xs:pr-4 motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200{% else %}bg-white{% endif %}{% if forloop.last %} mb-4{% endif %}">
-                      <span class="flex justify-between">
-                        <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
-                        {%- if option == 'onetime' -%}
-                          {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
-                        {%- else -%}
-                          {% render 'price', product: product, use_variant: true, subscription: true, price_class: 'text-sm font-medium' %}
-                        {%- endif -%}
-                      </span>
+                    <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200{% else %}bg-white{% endif %}{% if forloop.last %} mb-4{% endif %}">
                       <input type="radio"
                         name="purchase_option"
+                        id="purchase_option-{{ option }}"
                         class="sr-only peer bg-white"
                         value="{{ option }}"
-                        {%-if option == 'onetime' %}checked{% endif %}
+                        {% if option == 'onetime' %}checked{% endif %}
                       />
-                      <div class="absolute left-2 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
-                        <div class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></div>
-                      </div>
+                      <span class="absolute pointer-events-none left-2 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
+                        <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
+                      </span>
+                      <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
+                        <span class="flex justify-between">
+                          <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
+                          {%- if option == 'onetime' -%}
+                            {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
+                          {%- else -%}
+                            {% render 'price', product: product, use_variant: true, subscription: true, price_class: 'text-sm font-medium' %}
+                          {%- endif -%}
+                        </span>
+                      </label>
                       {%- if option == 'autodeliver' -%}
-                        <span class="text-xs 2xs:tracking-wide block leading-tight mt-1">
+                        <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
                           <span class="block">
                             <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
                             <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                              <button class="product-popup-modal__button underline" type="button" aria-haspopup="dialog">Learn more</button>
+                              <a class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</a>
                             </modal-opener>
                           </span>
                         </span>
-                        <div class="overflow-hidden max-h-0 peer-checked:max-h-20 motion-safe:transition-max-height">
-                          <fieldset class="js flex mt-3 mb-2">
+                        <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
+                          <fieldset class="js flex mt-3 mb-2 pb-3">
                             <legend class="text-sm font-medium">Delivery every</legend>
                             {%- for value in product.selling_plan_groups[0].selling_plans -%}
                               <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
@@ -356,7 +359,7 @@
                           </fieldset>
                         </div>
                       {%- endif -%}
-                    </label>
+                    </div>
                   {%- endfor -%}
                 </fieldset>
                 <modal-dialog id="SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>

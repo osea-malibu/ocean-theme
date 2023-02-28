@@ -514,7 +514,7 @@ class ModalOpener extends HTMLElement {
   constructor() {
     super();
 
-    const button = this.querySelector("button");
+    const button = this.querySelector("button") || this.querySelector('[type="button"]');
 
     if (!button) return;
     button.addEventListener("click", () => {
@@ -738,7 +738,7 @@ class SubscriptionRadios extends HTMLElement {
         this.updateMainPrice(input);
         this.setDefaultSellingPlan();
 
-        document.querySelector("#PayInstallments").classList.add("opacity-0");
+        document.querySelector("#PayInstallments")?.classList.add("opacity-0");
       }
       input.addEventListener("change", this.onPurchaseOptionChange.bind(this));
     });
@@ -758,7 +758,7 @@ class SubscriptionRadios extends HTMLElement {
         this.isSubscriptionInput.value = false;
         this.productForm = document.querySelector("product-form.pdp-product-form");
 
-        document.querySelector("#PayInstallments").classList.remove("opacity-0");
+        document.querySelector("#PayInstallments")?.classList.remove("opacity-0");
 
         if (plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
         this.productForm.handleErrorMessage();
@@ -766,7 +766,7 @@ class SubscriptionRadios extends HTMLElement {
         this.setDefaultSellingPlan();
         this.isSubscriptionInput.value = true;
 
-        document.querySelector("#PayInstallments").classList.add("opacity-0");
+        document.querySelector("#PayInstallments")?.classList.add("opacity-0");
 
         const inputEl = document.querySelector(".pdp-quantity input");
         const inputValueInteger = parseInt(inputEl.value);
@@ -782,11 +782,11 @@ class SubscriptionRadios extends HTMLElement {
   }
 
   setActiveState() {
-    this.purchaseOptionInputs?.forEach((input) => input.closest("label").classList.toggle("bg-wave-200", input.checked));
+    this.purchaseOptionInputs?.forEach((input) => input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked));
   }
 
   updateMainPrice(currentTarget) {
-    const currentPrice = currentTarget.closest("label").querySelector(".price");
+    const currentPrice = currentTarget.closest(".purchase-option").querySelector(".price");
     const mainPrice = document.querySelector(".main-price .price");
 
     mainPrice.innerHTML = currentPrice.innerHTML;
