@@ -8,6 +8,14 @@
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
+  body {
+    @apply antialiased bg-white text-seaweed-700;
+  }
+
+  a {
+    @apply bg-transparent text-seaweed-700;
+  }
+
   /* Handle anchor link offset - accounts for fixed header */
   .anchor {
     @apply invisible relative -top-32;
@@ -154,10 +162,10 @@
     @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-500 hover:border-seaweed-500;
   }
   .button-secondary {
-    @apply bg-white border-seaweed-400 hover:bg-seafoam-100 hover:border-seaweed-500;
+    @apply bg-white border-seaweed-400 text-seaweed-700 hover:bg-seafoam-100 hover:border-seaweed-500;
   }
   .button-tertiary {
-    @apply bg-seaweed-200 border-seaweed-200 hover:border-seaweed-400;
+    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-700 hover:border-seaweed-400;
   }
   .button-white {
     @apply bg-white border-white text-seaweed-700 hover:bg-seafoam-100 hover:border-seafoam-100;
