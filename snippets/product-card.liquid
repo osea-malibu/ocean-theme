@@ -153,11 +153,11 @@
                       name="{{ option.name }}"
                       value="{{ value | escape }}"
                       form="{{ product_form_id }}"
-                      {%- if default_to_mini and forloop.last -%}
+                      {% if default_to_mini and forloop.last %}
                         checked
-                      {%- elsif default_to_mini != true and option.selected_value == value -%}
+                      {% elsif default_to_mini != true and option.selected_value == value %}
                         checked
-                      {%- endif -%}
+                      {% endif %}
                     >
                     <label
                       class="button button-xs block lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
