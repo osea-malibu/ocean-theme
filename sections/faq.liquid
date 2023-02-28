@@ -44,7 +44,7 @@
               </h2>
               {%- liquid
                 assign accordion_data = json_data | where: 'group', category
-                assign accordion_id = 'Accordion-' | append: category
+                assign accordion_id = 'Accordion-' | append: category | replace: ' ', '_'
               -%}
               <div class="accordion mb-12">
                 {% render 'accordion',
