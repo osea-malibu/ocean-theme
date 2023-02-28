@@ -346,11 +346,6 @@
                                   name="selling_plan"
                                   value="{{ value.id | escape }}"
                                   form="{{ product_form_id }}"
-                                  {% if product.metafields.custom.subscription_interval == blank and forloop.index == 2 %}
-                                    checked
-                                  {% elsif product.metafields.custom.subscription_interval != blank and product.metafields.custom.subscription_interval == forloop.index %}
-                                    checked
-                                  {% endif %}
                                 />
                                 <label
                                   class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-200"
