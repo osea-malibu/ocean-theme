@@ -33,9 +33,9 @@
             <a class="button button-sm button-tertiary w-8 h-8" href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
           {%- else -%}
             {%- if part.title == paginate.current_page -%}
-              <span class="button button-sm button-primary w-8 h-8" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</span>
+              <b class="button button-sm button-primary w-8 h-8" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</b>
             {%- else -%}
-              <span class="button button-sm button-tertiary w-8 h-8">{{ part.title }}</span>
+              <b class="button button-sm button-tertiary w-8 h-8">{{ part.title }}</b>
             {%- endif -%}
           {%- endif -%}
         </li>
