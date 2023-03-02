@@ -28,27 +28,27 @@
 
     <div class="mt-auto">
       {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
-
       <product-form data-cart-type="{{ settings.cart_type }}">
         {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
           <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}" {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
           <button
             type="submit"
             name="add"
-            aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ card_product.id }}"
             class="button button-xs w-full transition flex mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %} {{ button_class }}"
             {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
           >
+            <span class="sr-only">{{ card_product.title }} - </span>
             {%- if card_product.selected_or_first_available_variant.available -%}
               <span>Add</span>
+              <span class="sr-only"> - </span>
               {%- unless hide_price -%}
-                <span id="price-{{ card_product.id }}-{{ section_id }}" class="{{ price_class }}">
-                  {% render 'price',
-                    product: card_product,
-                    show_price_range: false,
-                    use_variant: true,
-                  %}
-                </span>
+                {%- assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id -%}
+                {% render 'price',
+                  product: card_product,
+                  show_price_range: false,
+                  use_variant: true,
+                  price_id: price_id
+                %}
               {%- endunless -%}
             {%- else -%}
               {{ 'products.product.sold_out' | t }}

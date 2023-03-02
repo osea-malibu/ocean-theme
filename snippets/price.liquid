@@ -4,6 +4,7 @@
     Accepts:
     - product: {Object} Product Liquid object (optional)
     - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
+    - price_id: {String} Id to be applied to outer span (optional)
     - price_class: {String} Adds a price class to the price element (optional)
     - show_price_range: {Boolean} Displays variants as a price range, does not show sale strikeout (optional)
     - subscription: {Boolean} Displays subscription price with strikeout on compare at price (optional)
@@ -34,52 +35,31 @@
   endif
 -%}
 
-<span
-  class="price whitespace-nowrap
-  {%- if price_class %} {{ price_class }}{% endif -%}
-  {%- if available == false %} price--sold-out{% endif -%}"
->
+<span class="price whitespace-nowrap flex flex-row{% if price_class %} {{ price_class }}{% endif %}"{% if price_id != blank %} id="{{ price_id }}"{% endif %}>
   {%- if subscription -%}
-    <span class="flex flex-row">
-      <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
-      <s class="text-wave-600 mr-1">{{ money_price }}</s>
-      <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
-      <span>{{ price | times: 0.9 | money }}</span>
-    </span>
+    <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
+    <s class="text-wave-600 mr-1">{{ money_price }}</s>
+    <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
+    <span>{{ price | times: 0.9 | money }}</span>
   {%- elsif bundle -%}
-    <span class="flex flex-row">
-      <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
-      <s class="text-wave-600 mr-1">{{ money_price }}</s>
-      <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
-      <span>{{ price | times: 0.8 | money }}</span>
-    </span>
+    <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
+    <s class="text-wave-600 mr-1">{{ money_price }}</s>
+    <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
+    <span>{{ price | times: 0.8 | money }}</span>
   {%- elsif show_price_range and default_to_mini != true -%}
-    {%- if product.price_varies -%}
-      {{ min_price | money_without_trailing_zeros }} - {{ max_price | money_without_trailing_zeros }}
-    {%- else -%}
-      {{ money_price }}
-    {%- endif -%}
+    <span class="sr-only">Price: </span>
+    <span>{% if product.price_varies %}{{ min_price | money_without_trailing_zeros }} - {{ max_price | money_without_trailing_zeros }}{% else %}{{ money_price }}{% endif %}</span>
   {%- else -%}
-    {% if compare_at_price > price %}
-      <span class="flex-row flex-wrap flex">
-        {%- unless product.price_varies == false and product.compare_at_price_varies %}
-          <span class="sr-only"> {{ 'products.product.price.regular_price' | t }}</span>
-          <s class="text-wave-600 mr-1">
-            {% if settings.currency_code_enabled %}
-              {{ compare_at_price | money_with_currency }}
-            {% else %}
-              {{ compare_at_price | money }}
-            {% endif %}
-          </s>
-        {%- endunless -%}
-        <span class="sr-only"> {{ 'products.product.price.sale_price' | t }}</span>
-        <span>{{ money_price }}</span>
-      </span>
+    {%- if compare_at_price > price -%}
+      {%- unless product.price_varies == false and product.compare_at_price_varies %}
+        <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
+        <s class="text-wave-600 mr-1">{{ compare_at_price | money }}</s>
+      {%- endunless -%}
+      <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
+      <span>{{ money_price }}</span>
     {%- else -%}
-      <span class="flex">
-        <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
-        <span>{{ money_price }}</span>
-      </span>
+      <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
+      <span>{{ money_price }}</span>
     {%- endif -%}
   {%- endif -%}
 </span>
