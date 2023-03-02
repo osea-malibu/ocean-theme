@@ -15,35 +15,53 @@
 <noscript>{{ 'component-pagination.css' | asset_url | stylesheet_tag }}</noscript>
 
 {%- if paginate.parts.size > 0 -%}
-  <nav class="pagination mt-6" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+  <nav class="pagination mt-6" aria-label="{{ 'general.pagination.label' | t }}">
     <div class="flex justify-center gap-2">
-      <button
-        class="button button-sm button-white w-8 h-8 pr-1.5 pl-0.5 mr-2{% unless paginate.previous %} opacity-50 cursor-not-allowed{% endunless %}"
-        {% if paginate.previous %} href="{{ paginate.previous.url }}{{ anchor }}"{% endif %}
-        aria-label="{{ 'general.pagination.previous' | t }}"
-      >
-        {% render 'icon-chevron', classes: 'w-6 h-6', stroke_width: 2, aria_hidden: true %}
-      </button>
+      {%- if paginate.previous -%}
+        <a
+          class="button button-sm button-white w-8 h-8 pr-1.5 pl-0.5 mr-2{% unless paginate.previous %} opacity-50 cursor-not-allowed{% endunless %}"
+          href="{{ paginate.previous.url }}{{ anchor }}"
+          aria-label="{{ 'general.pagination.previous' | t }}"
+        >
+          {% render 'icon-chevron', classes: 'w-6 h-6', stroke_width: 2, aria_hidden: true %}
+        </a>
+      {%- else -%}
+        <button
+          class="button button-sm button-white w-8 h-8 pr-1.5 pl-0.5 mr-2{% unless paginate.previous %} opacity-50 cursor-not-allowed{% endunless %}"
+          aria-label="{{ 'general.pagination.previous' | t }}"
+        >
+          {% render 'icon-chevron', classes: 'w-6 h-6', stroke_width: 2, aria_hidden: true %}
+        </button>
+      {%- endif -%}
 
       {%- for part in paginate.parts -%}
         {%- if part.is_link -%}
           <a class="button button-sm button-tertiary w-8 h-8" href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
         {%- else -%}
           {%- if part.title == paginate.current_page -%}
-            <b class="button button-sm button-primary w-8 h-8" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</b>
+            <button class="button button-sm button-primary w-8 h-8" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</button>
           {%- else -%}
-            <b class="button button-sm button-tertiary w-8 h-8">{{ part.title }}</b>
+            <button class="button button-sm button-tertiary w-8 h-8">{{ part.title }}</button>
           {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
 
-      <button
-        class="button button-sm button-white w-8 h-8 pr-0.5 pl-1.5 ml-2{% unless paginate.next %} opacity-50 cursor-not-allowed{% endunless %}"
-        {% if paginate.next %} href="{{ paginate.next.url }}{{ anchor }}"{% endif %}
-        aria-label="{{ 'general.pagination.next' | t }}"
-      >
-        {% render 'icon-chevron', classes: 'w-6 h-6 rotate-180', stroke_width: 2, aria_hidden: true %}
-      </button>
+      {%- if paginate.next -%}
+        <a
+          class="button button-sm button-white w-8 h-8 pr-0.5 pl-1.5 ml-2{% unless paginate.next %} opacity-50 cursor-not-allowed{% endunless %}"
+          href="{{ paginate.next.url }}{{ anchor }}"
+          aria-label="{{ 'general.pagination.next' | t }}"
+        >
+          {% render 'icon-chevron', classes: 'w-6 h-6 rotate-180', stroke_width: 2, aria_hidden: true %}
+        </a>
+      {%- else -%}
+        <button
+          class="button button-sm button-white w-8 h-8 pr-0.5 pl-1.5 ml-2{% unless paginate.next %} opacity-50 cursor-not-allowed{% endunless %}"
+          aria-label="{{ 'general.pagination.next' | t }}"
+        >
+          {% render 'icon-chevron', classes: 'w-6 h-6 rotate-180', stroke_width: 2, aria_hidden: true %}
+        </button>
+      {%- endif -%}
     </div>
   </nav>
 {%- endif -%}
