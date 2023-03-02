@@ -52,20 +52,20 @@
           <div class="{{ block.settings.content_classes }}">
             <div class="rte mb-8" itemprop="articleBody" {{ block.shopify_attributes }}>
               {%- liquid
+                assign random_number = "now" | date: "%N" | modulo: 800 | plus: 0
                 assign new_content = article.content
                 paginate collections['shop'].products by 80
                   for product in collections['shop'].products
                     if article.content contains product.handle
                       assign product_tag = '[product-block product="' | append: product.handle | append: '"]'
                       capture product_card
-                        render 'product-card', card_product: all_products[product.handle], section_id: 'article_body', card_class: 'flex flex-col relative max-w-2xs w-full mx-auto', button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
+                        render 'product-card', card_product: all_products[product.handle], section_id: 'article_body', variant_picker_type: 'none', card_class: 'flex flex-col relative max-w-2xs w-full mx-auto', button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
                       endcapture
                       assign new_content = new_content | replace: product_tag, product_card
                     endif
                   endfor
                 endpaginate
               -%}
-
               {{ new_content }}
             </div>
             <aside class="md:w-80 md:shrink-0">

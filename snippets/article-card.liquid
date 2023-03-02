@@ -3,6 +3,7 @@
 
     Accepts:
     - article: {Object} Article object
+    - unique_id: {String} Additional unique id for use when multiple of the same article block appear on a page (optional)
     - show_image: {String} The setting either show the article image or not. If it's not included it will show the image by default
     - large_image: {Boolean} Show a larger image (for main featured article)
     - date_classes: {String} Tailwind CSS classes
@@ -20,7 +21,7 @@
     {% render 'article-card', article: article, show_image: section.settings.show_image %}
 {% endcomment %}
 
-<article class="article-card{% if card_classes != blank %} {{ card_classes }}{% endif %}" aria-labelledby="Article-{{ article.id }}">
+<article class="article-card{% if card_classes != blank %} {{ card_classes }}{% endif %}" aria-labelledby="Article-{{ article.id }}{{ unique_id }}">
   {%- if show_image == true and article.image -%}
     <a
       href="{{ article.url }}"
@@ -52,7 +53,7 @@
         <strong class="{{ tag_classes }}">
           {{ article.tags | join: ', ' }}
         </strong>
-        <h2 class="{{ title_classes }}" id="Article-{{ article.id }}">
+        <h2 class="{{ title_classes }}" id="Article-{{ article.id }}{{ unique_id }}">
           {{ article.title | escape }}
         </h2>
         <span class="{{ date_classes }}">

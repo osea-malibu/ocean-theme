@@ -26,11 +26,11 @@
         <button
           type="submit"
           name="add"
-          class="button button-xs button-secondary w-full transition flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}"
+          class="button button-xs button-secondary w-full flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}"
           {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
         >
           {%- if product.selected_or_first_available_variant.available -%}
-            <span>Add to cart</span>
+            <span>Add to bag</span>
             {%- unless hide_price -%}
               <span id="price-{{ product.id }}-{{ random_number }}">
                 {% render 'price',

@@ -16,6 +16,7 @@
         <div class="px-6 lg:pr-0 lg:w-3/5">
           {%- render 'article-card',
             article: main_featured_article,
+            unique_id: '-main_featured',
             show_image: true,
             large_image: true,
             card_classes: 'flex flex-col text-center',
@@ -65,6 +66,7 @@
                       <li>
                         {%- render 'article-card',
                           article: featured_article,
+                          unique_id: '-secondary_featured',
                           show_image: true,
                           card_classes: 'flex flex-col whitespace-normal lg:grid lg:grid-cols-2 lg:gap-4',
                           image_classes: 'mb-1 rounded-sm',

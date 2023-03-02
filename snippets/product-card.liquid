@@ -6,7 +6,7 @@
     - section_id: {String} Unique id of section that card is in (required)
     - show_secondary_image_on_hover: {Boolean} Show the secondary image on hover. Default: false (optional)
     - custom_default_image: {Boolean} Make the secondary image appear first. Default: false (optional)
-    - variant_picker_type: {'button' or 'dropdown'} Display mode of variant options, default: 'button' (optional)
+    - variant_picker_type: {'button', 'dropdown', or 'none'} Display mode of variant options, default: 'button' (optional)
     - card_class: {String} Tailwind styling classes (optional)
     - button_class: {String} Tailwind styling classes (optional)
     - image_class: {String} Tailwind styling classes (optional)
@@ -32,10 +32,7 @@
 
         <a href="{{ card_product.url | default: '#' }}">
           {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
-          <h3
-            class="text-sm 2xs:text-base sm:text-lg font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}"
-            id="title-{{ section_id }}-{{ card_product.id }}"
-          >
+          <h3 class="text-sm 2xs:text-base sm:text-lg font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
             {{- card_product.title | replace: 'Undaria Algae Body Butter', 'Undaria Body Butter' | replace: 'Undaria Algae Body Polish', 'Undaria Body Polish' -}}
           </h3>
         </a>
@@ -96,7 +93,7 @@
             </select>
           </div>
         {%- endif -%}
-      {%- elsif card_product.variants.size > 1 -%}
+      {%- elsif card_product.variants.size > 1 and variant_picker_type != 'none' -%}
         {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' or card_product.handle == 'undaria-algae-oil' -%}
           <variant-selects
             class="no-js-hidden block mt-1"
