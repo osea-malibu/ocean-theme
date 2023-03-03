@@ -59,7 +59,7 @@
                 src="{{ promo_tile_image | image_url: width: 600 }}"
                 alt="{{ promo_tile_image.value.alt }}"
                 width="{{ promo_tile_image.value.width }}"
-                height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio }}"
+                height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
                 loading=lazy
                 class="absolute inset-0 object-cover object-center min-h-full"
               >

@@ -49,7 +49,7 @@
               src="{{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }}"
               alt="{{ collection.metafields.custom.promo_tile_image.value.alt }}"
               width="{{ collection.metafields.custom.promo_tile_image.value.width }}"
-              height="{{ collection.metafields.custom.promo_tile_image.value.width | divided_by: collection.metafields.custom.promo_tile_image.value.aspect_ratio }}"
+              height="{{ collection.metafields.custom.promo_tile_image.value.width | divided_by: collection.metafields.custom.promo_tile_image.value.aspect_ratio | round }}"
               loading=lazy
               class="absolute inset-0 object-cover object-center min-h-full"
             >
@@ -121,14 +121,14 @@
   {%- if collection.metafields.custom.seo_description != nil -%}
     <div class="mt-10 max-w-screen-md mx-auto">
       {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
-        <input aria-hidden="true" focusable="false" id="collapsible" class="hidden peer" type="checkbox" />
+        <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
       {%- endif -%}
       <div class="a:link p:mb-4 h2:font-medium h2:mb-2{% if collection.metafields.custom.seo_description.value.size > 400 %} overflow-hidden max-h-[4.5rem] peer-checked:max-h-screen transition-max-height leading-6{% endif %}">
         {{ collection.metafields.custom.seo_description }}
       </div>
       {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
-        <label aria-hidden="true" focusable="false" for="collapsible" class="link mt-1.5 block peer-checked:hidden">Read more</label>
-        <label aria-hidden="true" focusable="false" for="collapsible" class="link mt-1.5 hidden peer-checked:block">Read less</label>
+        <label aria-hidden="true" for="collapsible" class="link mt-1.5 block peer-checked:hidden">Read more</label>
+        <label aria-hidden="true" for="collapsible" class="link mt-1.5 hidden peer-checked:block">Read less</label>
       {%- endif -%}
     </div>
   {%- endif -%}

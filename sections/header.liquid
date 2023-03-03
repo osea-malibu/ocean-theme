@@ -89,7 +89,7 @@
                                                 srcset="{{ section.settings.promo_image | image_url: width: 250 }} 1x, {{ section.settings.promo_image | image_url: width: 500 }} 2x"
                                                 src="{{ section.settings.promo_image | image_url: width: 250 }}"
                                                 width="250"
-                                                height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio }}"
+                                                height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio | round }}"
                                                 alt="{{ section.settings.promo_heading }}"
                                                 loading="lazy"
                                                 class="mb-2"

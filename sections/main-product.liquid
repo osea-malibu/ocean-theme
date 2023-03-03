@@ -3,7 +3,7 @@
 <section id="main-product">
   <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start xl:gap-10 xl:max-w-screen-lg">
     <a class="sr-only button button-secondary focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
-      {{ "accessibility.skip_to_produ∂ct_info" | t }}
+      {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {%- if product.media.size > 1 -%}
       <glide-slider
@@ -28,7 +28,7 @@
                   loading="lazy"
                   alt="{{ media.alt | escape }}"
                   width="{{ media.width }}"
-                  height="{{ media.width | divided_by: 0.8 }}"
+                  height="{{ media.width | divided_by: 0.8 | round }}"
                   class="min-h-full object-cover"
                 >
                 {% comment %} theme-check-enable RemoteAsset {% endcomment %}
@@ -52,7 +52,7 @@
                 loading="lazy"
                 alt="{{ media.alt | escape }}"
                 width="{{ media.width }}"
-                height="{{ media.width | divided_by: media.aspect_ratio }}"
+                height="{{ media.width | divided_by: media.aspect_ratio | round }}"
                 class="hidden md:block w-14 h-20 object-cover"
               >
               {% comment %} theme-check-enable RemoteAsset {% endcomment %}
@@ -73,9 +73,9 @@
           srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
           src="{% render 'imgix', src: main_image_src_2x %}"
           loading="lazy"
-          alt="{{ media.alt | escape }}"
-          width="{{ media.width }}"
-          height="{{ media.width | divided_by: 0.8 }}"
+          alt="{{ product.media[0].alt | escape }}"
+          width="{{ product.media[0].width }}"
+          height="{{ product.media[0].width | divided_by: 0.8 | round }}"
         >
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       </div>

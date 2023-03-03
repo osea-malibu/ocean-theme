@@ -759,6 +759,23 @@
 
 /* this will always be included in your compiled CSS */
 
+/* Catch pay */
+.catch-upfunnel {
+  @apply flex justify-center items-center;
+}
+#catch-cart {
+  @apply mt-2.5;
+}
+#catch-minicart {
+  @apply mb-1 -mt-1;
+}
+div.catch-upfunnel > div {
+  @apply flex-wrap !w-full max-w-full !h-auto !py-0 !px-2 !min-h-[24px] !rounded-sm justify-center;
+}
+div.catch-upfunnel > div > span {
+  @apply !text-sm;
+}
+
 /* Workable job listing */
 .whr-date {
   @apply hidden;

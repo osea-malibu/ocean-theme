@@ -37,10 +37,10 @@
             </video>
           {%- endif -%}
           <div class="relative">
-            <i aria-hidden="true" class="absolute z-10 -left-12 mt-2 flex flex-row-reverse items-center gap-2 sm:group-odd:left-auto sm:group-odd:-right-12 sm:group-odd:flex-row">
+            <div aria-hidden="true" class="absolute z-10 -left-12 mt-2 flex flex-row-reverse items-center gap-2 sm:group-odd:left-auto sm:group-odd:-right-12 sm:group-odd:flex-row">
               <div class="caret w-5 h-5 bg-white rotate-45"></div>
               <div class="dot w-4 h-4 rounded-full bg-seaweed-100 border-[6px] border-seaweed-700"></div>
-            </i>
+            </div>
             {%- if block.settings.date != blank -%}<h3 class="mt-3 mb-2 text-2xl tracking-wide font-book">{{ block.settings.date }}</h3>{%- endif -%}
             {%- if block.settings.paragraph != blank -%}<p class="tracking-wide">{{ block.settings.paragraph }}</p>{%- endif -%}
           </div>

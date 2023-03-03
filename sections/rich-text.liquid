@@ -64,7 +64,7 @@
                   {% if block.settings.is_lazy %}loading="lazy"{% endif %}
                   alt="{{ block.settings.image_mobile.alt | escape }}"
                   width="{{ block.settings.image_mobile.width }}"
-                  height="{{ block.settings.image_mobile.width | divided_by: block.settings.image_mobile.aspect_ratio }}"
+                  height="{{ block.settings.image_mobile.width | divided_by: block.settings.image_mobile.aspect_ratio | round }}"
                   class="{{ block.settings.image_classes }} block"
                 >
                 {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
