@@ -280,7 +280,7 @@
                         <source src="{{ block.settings.video_mp4.sources[0].url }}">
                       {%- endif -%}
                       {%- if block.settings.video_webm != blank %}
-                        <source src="{{ block.settings.video_webm }}">
+                        <source src="{{ block.settings.video_webm.sources[0].url }}">
                       {%- endif -%}
                     </video>
                   {%- endif -%}
