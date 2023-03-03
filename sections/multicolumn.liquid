@@ -265,6 +265,25 @@
                       {%- endif -%}
                     </div>
                   {%- endif -%}
+                  {%- if block.settings.video_mp4 != blank or block.settings.video_webm != blank -%}
+                    {% assign video_poster_url = block.settings.video_poster | image_url: width: 480 %}
+                    <video
+                      {% if block.settings.video_autoplay %}autoplay{% endif %}
+                      {% unless block.settings.video_hide_controls %}controls{% endunless %}
+                      {% if block.settings.video_loop %}loop{% endif %}
+                      {% if block.settings.video_muted %}muted{% endif %}
+                      playsinline
+                      poster="{% render 'imgix', src: video_poster_url %}"
+                      class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
+                    >
+                      {%- if block.settings.video_mp4 != blank %}
+                        <source src="{{ block.settings.video_mp4.sources[0].url }}">
+                      {%- endif -%}
+                      {%- if block.settings.video_webm != blank %}
+                        <source src="{{ block.settings.video_webm }}">
+                      {%- endif -%}
+                    </video>
+                  {%- endif -%}
                 {%- when 'product' %}
                   {%- if block.settings.product -%}
                     {% render 'product-card',
@@ -616,6 +635,50 @@
           "type": "textarea",
           "id": "variant_classes",
           "label": "Variant classes"
+        },
+        {
+          "type": "header",
+          "content": "Video settings"
+        },
+        {
+          "type": "video",
+          "id": "video_mp4",
+          "label": "Video file (mp4)"
+        },
+        {
+          "type": "video",
+          "id": "video_webm",
+          "label": "Video file (webm)"
+        },
+        {
+          "type": "checkbox",
+          "id": "video_autoplay",
+          "label": "Autoplay video"
+        },
+        {
+          "type": "checkbox",
+          "id": "video_loop",
+          "label": "Loop video"
+        },
+        {
+          "type": "checkbox",
+          "id": "video_hide_controls",
+          "label": "Hide controls"
+        },
+        {
+          "type": "checkbox",
+          "id": "video_muted",
+          "label": "Mute video"
+        },
+        {
+          "type": "image_picker",
+          "id": "video_poster",
+          "label": "Placeholder image"
+        },
+        {
+          "type": "textarea",
+          "id": "video_classes",
+          "label": "Video classes"
         }
       ]
     },
