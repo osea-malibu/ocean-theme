@@ -27,7 +27,7 @@
                 {%- when 'column' %}
                   {%- if block.settings.image != blank -%}
                     {%- if block.settings.image_link != blank -%}
-                      <a href="{{ block.settings.image_link }}"{% if block.settings.is_bg_image %}class="absolute inset-0 object-cover z-0"{% endif %}>
+                      <a href="{{ block.settings.image_link }}"{% if block.settings.is_bg_image %} class="absolute inset-0 object-cover z-0"{% endif %}>
                     {%- endif -%}
                       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                       {%- liquid
@@ -264,7 +264,7 @@
                       {%- endif -%}
                     </div>
                   {%- endif -%}
-                  {%- if block.settings.video_mp4 != blank or block.settings.video_webm != blank -%}
+                  {%- if block.settings.video_mp4 != blank -%}
                     {% assign video_poster_url = block.settings.video_poster | image_url: width: 480 %}
                     <video
                       {% if block.settings.video_autoplay %}autoplay{% endif %}
@@ -277,9 +277,6 @@
                     >
                       {%- if block.settings.video_mp4 != blank %}
                         <source src="{{ block.settings.video_mp4.sources[0].url }}">
-                      {%- endif -%}
-                      {%- if block.settings.video_webm != blank %}
-                        <source src="{{ block.settings.video_webm.sources[0].url }}">
                       {%- endif -%}
                     </video>
                   {%- endif -%}
@@ -643,11 +640,6 @@
           "type": "video",
           "id": "video_mp4",
           "label": "Video file (mp4)"
-        },
-        {
-          "type": "video",
-          "id": "video_webm",
-          "label": "Video file (webm)"
         },
         {
           "type": "checkbox",
