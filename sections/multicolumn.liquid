@@ -81,7 +81,7 @@
                     {%- endif -%}
                   {%- endif -%}
                   {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
-                    <div class="{% if block.settings.is_bg_image %}relative z-10 {% endif %}{% if block.settings.text_classes != blank %}{{ block.settings.text_classes }}{% endif %}">
+                    <div class="{% if block.settings.is_bg_image %}relative z-10 pointer-events-none {% endif %}{% if block.settings.text_classes != blank %}{{ block.settings.text_classes }}{% endif %}">
                       {%- if block.settings.heading != "" -%}
                         <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
                       {%- endif -%}
