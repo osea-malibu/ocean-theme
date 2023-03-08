@@ -243,6 +243,7 @@
       "blocks": {
         "f1bf3fb8-cda1-41c1-81f5-4ee282b764c9": {
           "type": "column",
+          "disabled": true,
           "settings": {
             "column_classes": "hidden md:block relative md:w-2\/3 p-0 sm:p-4 lg:p-6 bg-right md:bg-left lg:bg-right",
             "image": "shopify:\/\/shop_images\/HP_Featured_Block_Banner_HSS_Desktop_BLANK.png",
@@ -277,15 +278,16 @@
         "1ce6669d-1567-48d9-b555-b7075dbb1ada": {
           "type": "column",
           "settings": {
-            "column_classes": "md:hidden relative",
+            "column_classes": "relative md:w-2\/3",
             "image": "shopify:\/\/shop_images\/Untitled-1_01a25a8d-9a52-45ff-9124-c1935a58be52.png",
+            "image_desktop": "shopify:\/\/shop_images\/HP_Featured_Block_Banner_HSS_Desktop_BLANK.png",
             "is_bg_image": false,
-            "image_link": "",
-            "image_classes": "",
+            "image_link": "shopify:\/\/products\/hyaluronic-sea-serum",
+            "image_classes": "w-full h-full object-cover",
             "image_wrapper_classes": "",
-            "text_classes": "absolute z-10 inset-x-0 top-0 text-center pt-3 text-white",
-            "heading": "<a href=\"https:\/\/oseamalibu.com\/products\/hyaluronic-sea-serum\"><span class=\"text-sm sm:text-md font-medium\">Clinically Proven, Powerfully Hydrating<\/span>\n<h2 class=\"font-serif leading-none\">Hyaluronic<br>Sea Serum<\/h2><\/a>",
-            "heading_classes": "text-4xl  tracking-normal mb-2 relative z-10 sm:text-5xl",
+            "text_classes": "absolute z-10 inset-x-0 top-0 text-center text-white md:text-left sm:p-4 md:p-6",
+            "heading": "<span class=\"text-sm sm:text-md font-medium tracking-wide\">Clinically Proven, Powerfully Hydrating<\/span>\n<h2 class=\"font-serif leading-none tracking-tight\">Hyaluronic<br>Sea Serum<\/h2>",
+            "heading_classes": "text-5xl  mb-2 relative z-10 md:text-6xl md:max-w-md lg:max-w-md",
             "paragraph": "",
             "paragraph_classes": "",
             "button_label": "",
