@@ -32,7 +32,7 @@
 
     {% comment %} {{ content_for_header }} {% endcomment %}
     {% comment %}theme-check-disable ContentForHeaderModification{% endcomment %}
-      {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" id="amazon-payments-metadata"' }}
+    {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" content="" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" content="" id="amazon-payments-metadata"' }}
     {% comment %}theme-check-enable ContentForHeaderModification{% endcomment %}
 
     {%- if template contains 'product' or template contains 'login' -%}
