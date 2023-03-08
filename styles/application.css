@@ -161,18 +161,17 @@
   .button-xl {
     @apply px-8 py-4 text-xl;
   }
-  .button-primary,
-  .button-primary:link {
-    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-500 hover:border-seaweed-500 hover:text-white visited:bg-seaweed-700 visited:text-white link:bg-seaweed-700 link:text-white active:ring-2;
+  .button-primary {
+    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-500 hover:border-seaweed-500 hover:text-white visited:bg-seaweed-700 visited:text-white link:bg-seaweed-700 link:text-white active:bg-seaweed-700 active:text-white active:ring-2;
   }
   .button-secondary {
-    @apply bg-white border-seaweed-400 text-seaweed-700 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-700 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-700 active:ring-2;
+    @apply bg-white border-seaweed-400 text-seaweed-700 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-700 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-700 active:bg-white active:text-seaweed-700 active:ring-2;
   }
   .button-tertiary {
-    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-700 hover:bg-seaweed-200 hover:border-seaweed-400 hover:text-seaweed-700 visited:bg-seaweed-200 visited:text-seaweed-700 link:bg-seaweed-200 link:text-seaweed-700 active:ring-2;
+    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-700 hover:bg-seaweed-200 hover:border-seaweed-400 hover:text-seaweed-700 visited:bg-seaweed-200 visited:text-seaweed-700 link:bg-seaweed-200 link:text-seaweed-700 active:bg-seaweed-200 active:text-seaweed-700 active:ring-2;
   }
   .button-white {
-    @apply bg-white border-white text-seaweed-700 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-700 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-700 active:ring-2;
+    @apply bg-white border-white text-seaweed-700 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-700 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-700 active:bg-white active:text-seaweed-700 active:ring-2;
   }
   .button-icon.button-xs svg {
     @apply w-3 h-3 stroke-2;
