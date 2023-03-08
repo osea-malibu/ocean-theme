@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
@@ -29,18 +29,16 @@
 
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
-    
-    {%- if template contains 'product' or template contains 'login' -%}
-      {{ content_for_header }}
-      {%- unless content_for_header contains 'https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com' -%}
-        {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-        <script type="text/javascript" src="https://static.rechargecdn.com/assets/js/widget.min.js?shop=osea-malibu.myshopify.com" defer></script>
-        {% comment %}theme-check-enable RemoteAsset{% endcomment %}
-      {%- endunless -%}
-    {%- else -%}
+
+    {% comment %} {{ content_for_header }} {% endcomment %}
     {% comment %}theme-check-disable ContentForHeaderModification{% endcomment %}
-      {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' }}
+      {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" id="amazon-payments-metadata"' }}
     {% comment %}theme-check-enable ContentForHeaderModification{% endcomment %}
+
+    {%- if template contains 'product' or template contains 'login' -%}
+      {% comment %}theme-check-disable RemoteAsset{% endcomment %}
+      <script type="text/javascript" src="https://static.rechargecdn.com/assets/js/widget.min.js?shop=osea-malibu.myshopify.com" defer></script>
+      {% comment %}theme-check-enable RemoteAsset{% endcomment %}
     {%- endif -%}
 
     {% style %}
@@ -68,7 +66,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-  <body class="antialiased bg-white text-seaweed-700">
+  <body class="antialiased">
     <a class="sr-only button button-secondary focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{ "accessibility.skip_to_text" | t }}
     </a>

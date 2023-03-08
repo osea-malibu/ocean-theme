@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  html,
+  body {
+    @apply bg-white text-seaweed-700;
+  }
+  /* a:link {
+    @apply bg-white text-seaweed-700;
+  }
+  a:visited {
+    @apply bg-white text-seaweed-700;
+  } */
+
   /* System fonts */
   .system-sans {
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -150,17 +161,18 @@
   .button-xl {
     @apply px-8 py-4 text-xl;
   }
-  .button-primary {
-    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-500 hover:border-seaweed-500 hover:text-white active:text-white visited:text-white;
+  .button-primary,
+  .button-primary:link {
+    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-500 hover:border-seaweed-500 hover:text-white visited:bg-seaweed-700 visited:text-white active:ring-2;
   }
   .button-secondary {
-    @apply bg-white border-seaweed-400 text-seaweed-700 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-700 active:text-seaweed-700 visited:text-seaweed-700;
+    @apply bg-white border-seaweed-400 text-seaweed-700 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-700 visited:bg-white visited:text-seaweed-700 active:ring-2;
   }
   .button-tertiary {
-    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-700 hover:bg-seaweed-200 hover:border-seaweed-400 hover:text-seaweed-700 active:text-seaweed-700 visited:text-seaweed-700;
+    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-700 hover:bg-seaweed-200 hover:border-seaweed-400 hover:text-seaweed-700 visited:bg-seaweed-200 visited:text-seaweed-700 active:ring-2;
   }
   .button-white {
-    @apply bg-white border-white text-seaweed-700 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-700 active:text-seaweed-700 visited:text-seaweed-700;
+    @apply bg-white border-white text-seaweed-700 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-700 visited:bg-white visited:text-seaweed-700 active:ring-2;
   }
   .button-icon.button-xs svg {
     @apply w-3 h-3 stroke-2;
