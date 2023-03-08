@@ -21,13 +21,14 @@
             {%- assign bg_image_src = block.settings.image | image_url: width: 1420 -%}
             <li
               class="{{ block.settings.column_classes }}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
+              {% if block.settings.is_bg_image %}style="background-image: url({% render 'imgix', src: bg_image_src %})"{% endif %}
               {{ block.shopify_attributes }}
             >
               {%- case block.type -%}
                 {%- when 'column' %}
-                  {%- if block.settings.image != blank -%}
+                  {%- if block.settings.image != blank and block.settings.is_bg_image == false -%}
                     {%- if block.settings.image_link != blank -%}
-                      <a href="{{ block.settings.image_link }}"{% if block.settings.is_bg_image %} class="absolute inset-0 object-cover z-0"{% endif %}>
+                      <a href="{{ block.settings.image_link }}">
                     {%- endif -%}
                       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                       {%- liquid
@@ -48,7 +49,7 @@
                           loading="lazy"
                         >
                       {%- else -%}
-                        <picture class="{{ block.settings.image_wrapper_classes }}{% if block.settings.is_bg_image and block.settings.image_link == blank %} absolute inset-0 object-cover z-0{% endif %}">
+                        <picture class="{{ block.settings.image_wrapper_classes }}">
                           {%- if block.settings.image_desktop != blank -%}
                             <source
                               srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
@@ -70,7 +71,7 @@
                             alt="{{ block.settings.image.alt }}"
                             height="{{ block.settings.image.height }}"
                             width="{{ block.settings.image.width }}"
-                            class="{{ block.settings.image_classes }}{% if block.settings.is_bg_image %}w-full h-full object-cover{% endif %}"
+                            class="{{ block.settings.image_classes }}"
                             loading="lazy"
                           >
                         </picture>
@@ -81,7 +82,7 @@
                     {%- endif -%}
                   {%- endif -%}
                   {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
-                    <div class="{% if block.settings.is_bg_image %}relative z-10 pointer-events-none {% endif %}{% if block.settings.text_classes != blank %}{{ block.settings.text_classes }}{% endif %}">
+                    <div {% if block.settings.text_classes != blank %}class="{{ block.settings.text_classes }}"{% endif %}>
                       {%- if block.settings.heading != "" -%}
                         <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
                       {%- endif -%}
@@ -264,7 +265,7 @@
                       {%- endif -%}
                     </div>
                   {%- endif -%}
-                  {%- if block.settings.video_mp4 != blank -%}
+                  {%- if block.settings.video_mp4 != blank or block.settings.video_webm != blank -%}
                     {% assign video_poster_url = block.settings.video_poster | image_url: width: 480 %}
                     <video
                       {% if block.settings.video_autoplay %}autoplay{% endif %}
@@ -277,6 +278,9 @@
                     >
                       {%- if block.settings.video_mp4 != blank %}
                         <source src="{{ block.settings.video_mp4.sources[0].url }}">
+                      {%- endif -%}
+                      {%- if block.settings.video_webm != blank %}
+                        <source src="{{ block.settings.video_webm.sources[0].url }}">
                       {%- endif -%}
                     </video>
                   {%- endif -%}
@@ -640,6 +644,11 @@
           "type": "video",
           "id": "video_mp4",
           "label": "Video file (mp4)"
+        },
+        {
+          "type": "video",
+          "id": "video_webm",
+          "label": "Video file (webm)"
         },
         {
           "type": "checkbox",
