@@ -76,16 +76,26 @@
               {%- endif -%}
 
               {%- if promo_tile_video_portrait != blank -%}
-                {% assign video_poster_url = promo_tile_image | image_url: width: 480 %}
+                <script>console.log({{ promo_tile_video_portrait.value.sources[0].url }})</script>
                 <collection-video class="block h-full video:h-full video:object-cover">
                   <div class="vertical-video h-full video:h-full video:w-full video:object-cover">
-                    {{ promo_tile_video_portrait.value | video_tag: image_size: '480x', preload: false, autoplay: true, loop: true, muted: true, defaultMuted: true, controls: true }}
+                    <video playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
+                      {%- for source in promo_tile_video_portrait.value.sources -%}
+                        <source src="{{ source.url }}" type="video/{{ source.format }}" />
+                      {%- endfor -%}
+                      <img src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
+                    </video>
                   </div>
                   <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-4 left-4 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/20">
                     <button class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
                       {%- render 'icon-close', classes: 'w-5 h-5', stroke_width: 2 -%}
                     </button>
-                    {{ promo_tile_video_landscape.value | video_tag: image_size: '768x', autoplay: true, loop: true, muted: true, defaultMuted: true, controls: true }}
+                    <video playsinline autoplay muted loop controls poster="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
+                      {%- for source in promo_tile_video_landscape.value.sources -%}
+                        <source src="{{ source.url }}" type="video/{{ source.format }}" />
+                      {%- endfor -%}
+                      <img src="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
+                    </video>
                   </div>
                 </collection-video>
               {%- endif -%}
