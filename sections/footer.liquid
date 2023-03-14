@@ -62,7 +62,20 @@
               {%- if section.settings.newsletter_paragraph != blank -%}
                 <p class="text-center text-md tracking-wide leading-tight mb-4">{{ section.settings.newsletter_paragraph }}</p>
               {%- endif -%}
-              {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
+              <div class="relative">
+                <div class="absolute inset-0 z-10">
+                  <div class="klaviyo-email-form relative">
+                    {% render 'icon-email',
+                      aria_hidden: true,
+                      classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3 z-10",
+                      stroke_width: 2
+                    %}
+                    <div class="klaviyo-form-T3gN5Z"></div>
+                  </div>
+                </div>
+                <div class="animate-pulse z-0 w-full h-10 bg-wave-400 rounded-sm"></div>
+              </div>
+              {% comment %} {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
               <tab-controller id="footer-newsletter-tabs">
                 <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex justify-center button-group">
                   {%- for tab in newsletter_tabs -%}
@@ -99,7 +112,7 @@
                   {%- endfor -%}
                   <div class="animate-pulse z-0 w-full h-10 bg-wave-400 rounded-sm mt-1.5"></div>
                 </div>
-              </tab-controller>
+              </tab-controller> {% endcomment %}
             </div>
             
             {% comment %} Social media icons {% endcomment %}
