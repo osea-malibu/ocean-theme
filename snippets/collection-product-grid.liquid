@@ -51,13 +51,30 @@
               assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
             endif
           -%}
-          {%- if promo_tile_image != blank and no_featured_products and is_first_grid -%}
+          {%- if no_featured_products and is_first_grid -%}
             <li class="relative overflow-hidden">
-              {%- if promo_tile_url != blank -%}
-                <a href="{{ promo_tile_url }}" class="block h-full">
-              {%- else -%}
-                <div>
+              {%- if promo_tile_image != blank -%}
+                {%- if promo_tile_url != blank -%}
+                  <a href="{{ promo_tile_url }}" class="block">
+                {%- else -%}
+                  <div>
+                {%- endif -%}
+                <img
+                  srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
+                  src="{{ promo_tile_image | image_url: width: 600 }}"
+                  alt="{{ promo_tile_image.value.alt }}"
+                  width="{{ promo_tile_image.value.width }}"
+                  height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
+                  loading=lazy
+                  class="absolute inset-0 object-cover object-center min-h-full"
+                >
+                {%- if promo_tile_url != blank -%}
+                  </a>
+                {%- else -%}
+                  </div>
+                {%- endif -%}
               {%- endif -%}
+
               {%- if promo_tile_video_portrait != blank -%}
                 {% assign video_poster_url = promo_tile_image | image_url: width: 480 %}
                 <collection-video class="block h-full video:h-full video:object-cover">
@@ -71,21 +88,6 @@
                     {{ promo_tile_video_landscape.value | video_tag: image_size: '768x', autoplay: true, loop: true, muted: true, defaultMuted: true, controls: true }}
                   </div>
                 </collection-video>
-              {%- else -%}
-                <img
-                  srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
-                  src="{{ promo_tile_image | image_url: width: 600 }}"
-                  alt="{{ promo_tile_image.value.alt }}"
-                  width="{{ promo_tile_image.value.width }}"
-                  height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
-                  loading=lazy
-                  class="absolute inset-0 object-cover object-center min-h-full"
-                >
-              {%- endif -%}
-              {%- if promo_tile_url != blank -%}
-                </a>
-              {%- else -%}
-                </div>
               {%- endif -%}
             </li>
           {%- endif -%}
