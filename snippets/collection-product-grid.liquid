@@ -79,7 +79,7 @@
                 {% assign video_poster_url = promo_tile_image | image_url: width: 480 %}
                 <collection-video class="block h-full video:h-full video:object-cover">
                   <div class="vertical-video h-full video:h-full video:w-full video:object-cover">
-                    {{ promo_tile_video_portrait.value | video_tag: image_size: '480x', autoplay: true, loop: true, muted: true, defaultMuted: true, controls: true }}
+                    {{ promo_tile_video_portrait.value | video_tag: image_size: '480x', preload: false, autoplay: true, loop: true, muted: true, defaultMuted: true, controls: true }}
                   </div>
                   <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-2 left-2 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/20">
                     <button class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
