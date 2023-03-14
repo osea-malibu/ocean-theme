@@ -61,7 +61,7 @@
               {%- if promo_tile_video_portrait != blank -%}
                 {% assign video_poster_url = promo_tile_image | image_url: width: 480 %}
                 <collection-video class="block h-full video:h-full video:object-cover">
-                  <div class="vertical-video h-full video:h-full video:object-cover">
+                  <div class="vertical-video h-full video:h-full video:w-full video:object-cover">
                     {{ promo_tile_video_portrait.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
                   </div>
                   <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-2 left-2 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/20">
