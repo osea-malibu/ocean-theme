@@ -212,6 +212,7 @@ module.exports = {
       addVariant("child-hover", "& > *:hover");
       addVariant("link", "&:link");
       addVariant("small", "& > small");
+      addVariant("video", "& > video");
       addVariant("li", "& > li");
       addVariant("td", "& > td");
       addVariant("th", "& > th");

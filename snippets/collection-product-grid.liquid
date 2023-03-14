@@ -41,28 +41,37 @@
 
             if is_subcollection
               assign promo_tile_image = parent_collection.metafields.custom.promo_tile_image
+              assign promo_tile_video_portrait = parent_collection.metafields.custom.promo_tile_video_portrait
+              assign promo_tile_video_landscape = parent_collection.metafields.custom.promo_tile_video_landscape
               assign promo_tile_url = parent_collection.metafields.custom_fields.promo_tile_url
             else
               assign promo_tile_image = collection.metafields.custom.promo_tile_image
+              assign promo_tile_video_portrait = collection.metafields.custom.promo_tile_video_portrait
+              assign promo_tile_video_landscape = collection.metafields.custom.promo_tile_video_landscape
               assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
             endif
           -%}
           {%- if promo_tile_image != blank and no_featured_products and is_first_grid -%}
             <li class="relative overflow-hidden">
               {%- if promo_tile_url != blank -%}
-                <a href="{{ promo_tile_url }}" class="block">
+                <a href="{{ promo_tile_url }}" class="block h-full video:h-full video:object-cover">
               {%- else -%}
                 <div>
               {%- endif -%}
-              <img
-                srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
-                src="{{ promo_tile_image | image_url: width: 600 }}"
-                alt="{{ promo_tile_image.value.alt }}"
-                width="{{ promo_tile_image.value.width }}"
-                height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
-                loading=lazy
-                class="absolute inset-0 object-cover object-center min-h-full"
-              >
+              {%- if promo_tile_video_portrait != blank -%}
+                {% assign video_poster_url = promo_tile_image | image_url: width: 480 %}
+                {{ promo_tile_video_portrait.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
+              {%- else -%}
+                <img
+                  srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
+                  src="{{ promo_tile_image | image_url: width: 600 }}"
+                  alt="{{ promo_tile_image.value.alt }}"
+                  width="{{ promo_tile_image.value.width }}"
+                  height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
+                  loading=lazy
+                  class="absolute inset-0 object-cover object-center min-h-full"
+                >
+              {%- endif -%}
               {%- if promo_tile_url != blank -%}
                 </a>
               {%- else -%}
