@@ -76,10 +76,9 @@
               {%- endif -%}
 
               {%- if promo_tile_video_portrait != blank -%}
-                <script>console.log({{ promo_tile_video_portrait.value.sources[0].url }})</script>
                 <collection-video class="block h-full video:h-full video:object-cover">
                   <div class="vertical-video h-full video:h-full video:w-full video:object-cover">
-                    <video playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
+                    <video playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}" width="335" height="655">
                       {%- for source in promo_tile_video_portrait.value.sources -%}
                         <source src="{{ source.url }}" type="video/{{ source.format }}" />
                       {%- endfor -%}
