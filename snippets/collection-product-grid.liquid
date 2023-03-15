@@ -53,60 +53,23 @@
           -%}
           {%- if promo_tile_image != blank or promo_tile_video_portrait != blank and no_featured_products and is_first_grid -%}
             <li class="relative overflow-hidden">
-              {%- if promo_tile_image != blank -%}
-                {%- if promo_tile_url != blank -%}
-                  <a href="{{ promo_tile_url }}" class="block">
-                {%- else -%}
-                  <div>
-                {%- endif -%}
-                <img
-                  srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
-                  src="{{ promo_tile_image | image_url: width: 600 }}"
-                  alt="{{ promo_tile_image.value.alt }}"
-                  width="{{ promo_tile_image.value.width }}"
-                  height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
-                  loading=lazy
-                  class="absolute inset-0 object-cover object-center min-h-full"
-                >
-                {%- if promo_tile_url != blank -%}
-                  </a>
-                {%- else -%}
-                  </div>
-                {%- endif -%}
-              {%- endif -%}
-
-              {%- if promo_tile_video_portrait != blank -%}
-                <collection-video class="block h-full">
-                  <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
-                    {%- for source in promo_tile_video_portrait.value.sources -%}
-                      <source src="{{ source.url }}" type="video/{{ source.format }}" />
-                    {%- endfor -%}
-                    <img src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
-                  </video>
-                  <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-4 left-4 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/20">
-                    <button class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
-                      {%- render 'icon-close', classes: 'w-5 h-5', stroke_width: 2 -%}
-                    </button>
-                    <video preload="metadata" playsinline autoplay muted loop controls poster="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
-                      {%- for source in promo_tile_video_landscape.value.sources -%}
-                        <source src="{{ source.url }}" type="video/{{ source.format }}" />
-                      {%- endfor -%}
-                      <img src="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
-                    </video>
-                  </div>
-                </collection-video>
-              {%- endif -%}
+              {%- render 'collection-promo-tile',
+                promo_tile_image: promo_tile_image,
+                promo_tile_video_portrait: promo_tile_video_portrait,
+                promo_tile_video_landscape: promo_tile_video_landscape,
+                promo_tile_url: promo_tile_url
+              -%}
             </li>
           {%- endif -%}
           {%- for product in collection.products -%}
             <li>
-              {% render 'product-card',
+              {%- render 'product-card',
                 card_product: product,
                 section_id: collection.id,
                 image_class: 'pt-2',
                 button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
                 default_to_mini: collection.metafields.my_fields.default_to_mini
-              %}
+              -%}
             </li>
           {%- endfor -%}
         </ul>

@@ -38,26 +38,13 @@
     {%- capture featured_products_grid -%}
       <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
         {%- if collection.metafields.custom.promo_tile_image != blank -%}
-          <li class="relative overflow-hidden">
-            {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
-              <a href="{{ collection.metafields.custom_fields.promo_tile_url }}" class="block">
-            {%- else -%}
-              <div>
-            {%- endif -%}
-            <img
-              srcset="{{ collection.metafields.custom.promo_tile_image | image_url: width: 300 }} 1x, {{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }} 2x"
-              src="{{ collection.metafields.custom.promo_tile_image | image_url: width: 600 }}"
-              alt="{{ collection.metafields.custom.promo_tile_image.value.alt }}"
-              width="{{ collection.metafields.custom.promo_tile_image.value.width }}"
-              height="{{ collection.metafields.custom.promo_tile_image.value.width | divided_by: collection.metafields.custom.promo_tile_image.value.aspect_ratio | round }}"
-              loading=lazy
-              class="absolute inset-0 object-cover object-center min-h-full"
-            >
-            {%- if collection.metafields.custom_fields.promo_tile_url != blank -%}
-              </a>
-            {%- else -%}
-              </div>
-            {%- endif -%}
+          <li class="relative">
+            {%- render 'collection-promo-tile',
+              promo_tile_image: collection.metafields.custom.promo_tile_image,
+              promo_tile_video_portrait: collection.metafields.custom.promo_tile_video_portrait,
+              promo_tile_video_landscape: collection.metafields.custom.promo_tile_video_landscape,
+              promo_tile_url: collection.metafields.custom_fields.promo_tile_url
+            -%}
           </li>
         {%- endif -%}
         {%- for product in featured_products.value -%}

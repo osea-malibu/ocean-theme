@@ -1,0 +1,54 @@
+{% comment %}
+  Accepts:
+  - promo_tile_image: {ImageDrop} Liquid image object
+  - promo_tile_url: {String} Link to promo tile destination (optional)
+  - promo_tile_video_portrait: {VideoDrop} Liquid video object (optional)
+  - promo_tile_video_landscape: {VideoDrop} Liquid video object (optional)
+
+  Usage:
+  {% render 'collection-promo-tile', promo_tile_image: collection.metafields.image.url %}
+{% endcomment %}
+
+{%- if promo_tile_image != blank -%}
+  {%- if promo_tile_url != blank -%}
+    <a href="{{ promo_tile_url }}" class="block">
+  {%- else -%}
+    <div>
+  {%- endif -%}
+  <img
+    srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
+    src="{{ promo_tile_image | image_url: width: 600 }}"
+    alt="{{ promo_tile_image.value.alt }}"
+    width="{{ promo_tile_image.value.width }}"
+    height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
+    loading=lazy
+    class="absolute inset-0 object-cover object-center min-h-full"
+  >
+  {%- if promo_tile_url != blank -%}
+    </a>
+  {%- else -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+{%- if promo_tile_video_portrait != blank -%}
+  <collection-video class="block h-full">
+    <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
+      {%- for source in promo_tile_video_portrait.value.sources -%}
+        <source src="{{ source.url }}" type="video/{{ source.format }}" />
+      {%- endfor -%}
+      <img src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
+    </video>
+    <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-4 left-4 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/20">
+      <button class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
+        {%- render 'icon-close', classes: 'w-5 h-5', stroke_width: 2 -%}
+      </button>
+      <video preload="metadata" playsinline autoplay muted loop controls poster="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
+        {%- for source in promo_tile_video_landscape.value.sources -%}
+          <source src="{{ source.url }}" type="video/{{ source.format }}" />
+        {%- endfor -%}
+        <img src="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
+      </video>
+    </div>
+  </collection-video>
+{%- endif -%}
