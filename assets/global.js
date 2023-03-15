@@ -1293,13 +1293,6 @@ class CollectionVideo extends HTMLElement {
   }
 
   connectedCallback() {
-    Array.from(this.verticalVideo.children).forEach((videoSource) => {
-      if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
-        videoSource.src = videoSource.dataset.src;
-      }
-    });
-    this.verticalVideo.load();
-
     if (!localStorage.getItem("osea.hideCollectionVideo")) {
       this.videoObserver = new IntersectionObserver((entries) => {
         if (entries[0].intersectionRatio <= 0) {

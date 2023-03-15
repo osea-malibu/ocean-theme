@@ -79,7 +79,7 @@
                 <collection-video class="block h-full">
                   <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
                     {%- for source in promo_tile_video_portrait.value.sources -%}
-                      <source data-src="{{ source.url }}" type="video/{{ source.format }}" />
+                      <source src="{{ source.url }}" type="video/{{ source.format }}" />
                     {%- endfor -%}
                     <img src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
                   </video>
@@ -87,9 +87,9 @@
                     <button class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
                       {%- render 'icon-close', classes: 'w-5 h-5', stroke_width: 2 -%}
                     </button>
-                    <video playsinline autoplay muted loop controls poster="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
+                    <video preload="metadata" playsinline autoplay muted loop controls poster="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
                       {%- for source in promo_tile_video_landscape.value.sources -%}
-                        <source data-src="{{ source.url }}" type="video/{{ source.format }}" />
+                        <source src="{{ source.url }}" type="video/{{ source.format }}" />
                       {%- endfor -%}
                       <img src="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
                     </video>
