@@ -11,7 +11,7 @@
 
 {%- if promo_tile_image != blank -%}
   {%- if promo_tile_url != blank -%}
-    <a href="{{ promo_tile_url }}" class="block">
+    <a href="{{ promo_tile_url }}" class="block absolute inset-0">
   {%- else -%}
     <div>
   {%- endif -%}
@@ -22,7 +22,7 @@
     width="{{ promo_tile_image.value.width }}"
     height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
     loading=lazy
-    class="absolute inset-0 object-cover object-center min-h-full"
+    class="absolute inset-0 object-cover object-center h-full w-full"
   >
   {%- if promo_tile_url != blank -%}
     </a>
@@ -32,14 +32,14 @@
 {%- endif -%}
 
 {%- if promo_tile_video_portrait != blank -%}
-  <collection-video class="block h-full">
+  <collection-video class="block h-full relative">
     <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
       {%- for source in promo_tile_video_portrait.value.sources -%}
         <source src="{{ source.url }}" type="video/{{ source.format }}" />
       {%- endfor -%}
       <img src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
     </video>
-    <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-4 left-4 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/20">
+    <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-4 left-4 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/10">
       <button class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
         {%- render 'icon-close', classes: 'w-5 h-5', stroke_width: 2 -%}
       </button>
