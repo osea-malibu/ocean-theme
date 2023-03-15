@@ -37,7 +37,7 @@
   {%- if featured_products.value.count > 0 -%}
     {%- capture featured_products_grid -%}
       <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
-        {%- if collection.metafields.custom.promo_tile_image != blank -%}
+        {%- if collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank -%}
           <li class="relative">
             {%- render 'collection-promo-tile',
               promo_tile_image: collection.metafields.custom.promo_tile_image,
