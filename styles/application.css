@@ -772,22 +772,10 @@
 
 /* Catch pay */
 #catch-callout-cart {
-  @apply justify-center md:justify-end;
+  @apply justify-center md:justify-end mt-2;
 }
-.catch-upfunnel {
-  @apply flex justify-center items-center;
-}
-#catch-cart {
-  @apply mt-2.5;
-}
-#catch-minicart {
-  @apply mb-1 -mt-1;
-}
-div.catch-upfunnel > div {
-  @apply flex-wrap !w-full max-w-full !h-auto !py-0 !px-2 !min-h-[24px] !rounded-sm justify-center;
-}
-div.catch-upfunnel > div > span {
-  @apply !text-sm;
+#catch-callout-minicart {
+  @apply my-2 justify-center;
 }
 
 /* Workable job listing */
