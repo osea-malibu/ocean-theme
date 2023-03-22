@@ -1,3 +1,4 @@
+{% if section.settings.section_heading != blank %}<h2 class="sr-only">{{ section.settings.section_heading }}</h2>{% endif %}
 {%- if section.settings.video_mp4 != nil or section.settings.video_webm != nil -%}
   <div class="video-section {{ section.settings.section_classes }}">
     <noscript>
@@ -74,8 +75,9 @@
         </button>
         <template>
           <video autoplay controls loop playsinline poster="{{ section.settings.cover_image }}" class="bg-wave-200 border-0 absolute w-full h-full border-none object-cover">
-            <source src="{{ section.settings.video_mp4.sources.first.url }}">
-            <source src="{{ section.settings.video_webm.sources.first.url }}">
+            <source src="{{ section.settings.video_mp4.sources.first.url }}" type="video/mp4">
+            <source src="{{ section.settings.video_webm.sources.first.url }}" type="video/webm">
+            <img src="{{ section.settings.video_mp4.preview_image | image_url: width: 1200 }}" alt="">
           </video>
         </template>
       </deferred-media>
@@ -88,6 +90,11 @@
   "name": "t:sections.video.name",
   "tag": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading"
+    },
     {
       "type": "textarea",
       "id": "section_classes",
