@@ -37,7 +37,7 @@
         srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
         src="{% render 'imgix', src: mobile_image_src_2x %}"
         {% if section.settings.is_lazy %}loading="lazy"{% endif %}
-        alt="{{ section.settings.image.alt | escape }}"
+        alt="{{ section.settings.image.alt }}"
         width="{{ section.settings.image.width }}"
         height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio | round }}"
         class="{{ section.settings.image_classes }} block"
