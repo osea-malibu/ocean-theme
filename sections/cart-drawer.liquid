@@ -636,7 +636,12 @@
                 {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
 
-            <div class="catch-upfunnel" id="catch-minicart" data-page-type="cart" data-amount="{{ cart.total_price }}"></div>
+            <catch-callout
+              price="{{ cart.total_price | money_without_currency | times: 100 | ceil }}"
+              page-type="mini-cart"
+              style="font-family: inherit; justify-content: center; margin: 0.5rem 0;"
+              border-style="none-no-padding">
+            </catch-callout>
 
             <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
               {%- if settings.cart_disclaimer != blank -%}{{ settings.cart_disclaimer }}{%- endif -%}

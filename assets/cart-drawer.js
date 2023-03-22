@@ -94,12 +94,8 @@ class CartDrawer extends HTMLElement {
             this.querySelector(".cart-scrim").addEventListener("click", this.close.bind(this));
             this.open();
           });
-
-          Catch.refresh();
         })
-        .catch((e) => {
-          console.error(e);
-        });
+        .catch((error) => console.error(error));
     } else {
       this.getSectionsToRender().forEach((section) => {
         const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
@@ -110,8 +106,6 @@ class CartDrawer extends HTMLElement {
         this.querySelector(".cart-scrim").addEventListener("click", this.close.bind(this));
         this.open();
       });
-
-      Catch.refresh();
     }
   }
 

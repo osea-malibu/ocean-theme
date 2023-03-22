@@ -32,6 +32,14 @@ class CartItems extends HTMLElement {
     this.updateCartItem(event.target.dataset.index, event.target.value, event.target.getAttribute("name"), event.target);
   }
 
+  updateCatchCalloutPrice(price) {
+    const callout = document.querySelector("#catch-callout-cart");
+
+    if (callout && price) {
+      callout.setAttribute("price", price);
+    }
+  }
+
   getSectionsToRender() {
     return [
       {
@@ -134,6 +142,8 @@ class CartItems extends HTMLElement {
           });
         }
 
+        this.updateCatchCalloutPrice(parsedState.total_price);
+
         this.classList.toggle("is-empty", parsedState.item_count === 0);
         const cartDrawerWrapper = document.querySelector("cart-drawer");
         const cartFooter = document.getElementById("main-cart-footer");
@@ -143,7 +153,6 @@ class CartItems extends HTMLElement {
 
         this.replaceSections(parsedState);
         this.updateLiveRegions(line, parsedState.item_count);
-        Catch.refresh();
 
         const lineItem = document.getElementById(`CartItem-${line}`) || document.getElementById(`CartDrawer-Item-${line}`);
         if (lineItem && lineItem.querySelector(`[name="${name}"]`)) {
