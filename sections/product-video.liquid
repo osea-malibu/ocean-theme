@@ -1,5 +1,5 @@
 {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-
+<h2 class="sr-only">Product Video</h2>
 {%- assign video_sources = product.metafields.my_fields.pdp_video -%}
 {%- if video_sources.value.size > 0 -%}
   <div class="video-section {{ section.settings.wrapper_classes }}">
@@ -86,12 +86,15 @@
       </button>
       <template>
         <video autoplay controls loop muted playsinline poster="{{ source_jpg }}" class="bg-wave-200 border-0 absolute w-full h-full">
-          <source src="{{ source_mp4 }}">
-          <source src="{{ source_webm }}">
+          <source src="{{ source_mp4 }}" type="video/mp4">
+          <source src="{{ source_webm }}" type="video/webm">
+          {% if source_jpg %}<img src="{{ source_jpg | image_url: width: 976 }}" alt="">{% endif %}
         </video>
       </template>
     </deferred-media>
   </div>
+{%- else -%}
+  <p class="sr-only">This product has no video</p>
 {%- endif -%}
 
 {% schema %}
