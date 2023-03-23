@@ -263,8 +263,8 @@
                       {%- endif -%}
                     </div>
                   {%- endif -%}
-                  {%- if block.settings.video_mp4 != blank or block.settings.video_webm != blank -%}
-                    {% assign video_poster_url = block.settings.video_poster | image_url: width: 480 %}
+                  {%- if block.settings.video_mp4 != blank -%}
+                    {% assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: 480 %}
                     <video
                       {% if block.settings.video_autoplay %}autoplay{% endif %}
                       {% unless block.settings.video_hide_controls %}controls{% endunless %}
@@ -274,12 +274,10 @@
                       poster="{% render 'imgix', src: video_poster_url %}"
                       class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
                     >
-                      {%- if block.settings.video_mp4 != blank %}
-                        <source src="{{ block.settings.video_mp4.sources[0].url }}">
-                      {%- endif -%}
-                      {%- if block.settings.video_webm != blank %}
-                        <source src="{{ block.settings.video_webm.sources[0].url }}">
-                      {%- endif -%}
+                      {%- for source in block.settings.video_mp4.sources -%}
+                        <source src="{{ source.url }}" type="video/{{ source.format }}">
+                      {%- endfor -%}
+                      <img src="{% render 'imgix', src: video_poster_url %}" alt="">
                     </video>
                   {%- endif -%}
                 {%- when 'product' %}
@@ -641,12 +639,8 @@
         {
           "type": "video",
           "id": "video_mp4",
-          "label": "Video file (mp4)"
-        },
-        {
-          "type": "video",
-          "id": "video_webm",
-          "label": "Video file (webm)"
+          "info": "Format: mp4 preferred",
+          "label": "Video file"
         },
         {
           "type": "checkbox",
@@ -667,11 +661,6 @@
           "type": "checkbox",
           "id": "video_muted",
           "label": "Mute video"
-        },
-        {
-          "type": "image_picker",
-          "id": "video_poster",
-          "label": "Placeholder image"
         },
         {
           "type": "textarea",
