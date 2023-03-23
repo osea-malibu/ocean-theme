@@ -209,7 +209,7 @@
                     class="search w-full relative -translate-y-6 group-open:translate-y-0 tranition-transform duration-300"
                   >
                     <div class="relative flex items-center w-full">
-                      <input class="border-seaweed-500 rounded-sm w-full h-10 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
+                      <input class="border-seaweed-500 rounded-md w-full h-10 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
                         id="Search-In-Modal"
                         type="text"
                         name="q"
@@ -393,7 +393,7 @@
                         <li>
                           <a
                             href="{{ grandchildlink.url }}"
-                            class="block px-3 py-1 -ml-3 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors"
+                            class="block px-3 py-1 -ml-3 rounded-md leading-snug hover:bg-sand-300 motion-safe:transition-colors"
                             {% if childlink.current %} aria-current="page"{% endif %}
                           >
                             {{- grandchildlink.title | escape -}}
@@ -406,7 +406,7 @@
                   <li>
                     <a
                       href="{{ childlink.url }}"
-                      class="block px-4 py-1.5 rounded-sm leading-snug hover:bg-sand-300 motion-safe:transition-colors"
+                      class="block px-4 py-1.5 rounded-md leading-snug hover:bg-sand-300 motion-safe:transition-colors"
                       {% if childlink.current %} aria-current="page"{% endif %}
                     >
                       {{- childlink.title | escape -}}

@@ -21,6 +21,7 @@
             large_image: true,
             card_classes: 'flex flex-col text-center',
             image_aspect: 'pt-[80%]',
+            image_classes: 'rounded-md',
             title_classes: 'font-serif text-3xl tracking-tight mb-2 mt-3 lg:text-4xl',
             tag_classes: 'sr-only',
             date_classes: 'sr-only',
@@ -69,7 +70,7 @@
                           unique_id: '-secondary_featured',
                           show_image: true,
                           card_classes: 'flex flex-col whitespace-normal lg:grid lg:grid-cols-2 lg:gap-4',
-                          image_classes: 'mb-1 rounded-sm',
+                          image_classes: 'mb-1 rounded-md',
                           image_aspect: 'pt-[100%]',
                           title_classes: 'tracking-wide font-medium mb-0.5 leading-tight mt-1',
                           tag_classes: 'inline-block text-xs scale-90 uppercase tracking-widest font-bold origin-left mt-1',
@@ -139,7 +140,7 @@
       {%- for article in blog.articles -%}
         {%- unless current_tags == nil and section.settings.main_featured_article == blank and forloop.first or brand_article_handles contains article.handle -%}
           <li class="article order-{{ forloop.index }}">
-            {% assign image_classes = 'mb-1 rounded-sm ' | append: article.metafields.custom.tile_image_class %}
+            {% assign image_classes = 'mb-1 rounded-md ' | append: article.metafields.custom.tile_image_class %}
             {%- render 'article-card',
               article: article,
               show_image: true,
@@ -176,7 +177,7 @@
                           unique_id: '-brand_featured',
                           show_image: true,
                           card_classes: 'flex flex-col whitespace-normal',
-                          image_classes: 'rounded-sm',
+                          image_classes: 'rounded-md',
                           image_aspect: 'pt-[100%]',
                           title_classes: 'tracking-wide font-medium mb-1 leading-tight mt-2',
                           tag_classes: 'sr-only',

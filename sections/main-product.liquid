@@ -165,9 +165,9 @@
                 <label class="sr-only" for="Quantity-{{ section.id }}">
                   {{ 'products.product.quantity.label' | t }}
                 </label>
-                <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-sm w-full">
+                <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
                   <button
-                    class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent"
+                    class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent rounded-l-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent"
                     name="minus"
                     type="button"
                   >
@@ -184,7 +184,7 @@
                     form="{{ product_form_id }}"
                   >
                   <button
-                    class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -mr-px box-content border-transparent rounded-sm hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent"
+                    class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -mr-px box-content border-transparent rounded-r-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent"
                     name="plus"
                     type="button"
                   >
@@ -201,7 +201,7 @@
                   <div class="{{ block.settings.variant_classes }}">
                     <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
                     {%- for value in option.values -%}
-                      <div class="button button-xs lowercase button-secondary border-seaweed-4 bg-wave-200 mr-2 mb-1">
+                      <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-1">
                         {{ value }}
                       </div>
                     {%- endfor -%}
@@ -223,7 +223,7 @@
                             {% if option.selected_value == value %}checked{% endif %}
                           >
                           <label
-                            class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 mr-2 mb-1{% if value == '9.6 oz Holiday' %} tracking-wide{% endif %}"
+                            class="button button-xs lowercase button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1{% if value == '9.6 oz Holiday' %} tracking-wide{% endif %}"
                             for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                           >
                             {{ value }}

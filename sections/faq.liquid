@@ -22,7 +22,7 @@
                   aria-controls="tab-{{ forloop.index }}"
                   tabindex="0"
                   aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                  class="rounded-sm block font-book tracking-wide py-1 sm:py-2 px-2 cursor-pointer{% if forloop.first %} bg-wave-200{% endif %}"
+                  class="rounded-md block font-book tracking-wide py-1 sm:py-2 px-2 cursor-pointer{% if forloop.first %} bg-wave-200{% endif %}"
                 >
                   {{- category -}}
                 </li>

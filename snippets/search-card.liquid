@@ -12,9 +12,9 @@
     {% render 'search-card', product: product %}
 {% endcomment %}
 
-<a href="{{ url }}" class="group flex rounded-sm bg-white shadow-sm shadow-seafoam-500/50 md:h-full {% if search_page %}flex-col{% else %}flex-row md:flex-col{% endif %}" tabindex="-1">
+<a href="{{ url }}" class="group flex rounded-md bg-white shadow-sm shadow-seafoam-500/50 md:h-full {% if search_page %}flex-col{% else %}flex-row md:flex-col{% endif %}" tabindex="-1">
   {%- if image != blank -%}
-    <div class="bg-wave-100 shrink-0 flex items-center justify-center rounded-l-sm lg:rounded-t-sm lg:rounded-bl-none overflow-hidden">
+    <div class="bg-wave-100 shrink-0 flex items-center justify-center rounded-l-md lg:rounded-t-md lg:rounded-bl-none overflow-hidden">
       <img class="w-36 md:w-full md:h-52 {% if product == blank %}object-cover h-full{% else %}object-contain h-36{% endif %}{% if search_page %} min-w-full{% endif %}"
         loading="lazy"
         srcset="{{ image | image_url: height: 260 }} 1x, {{ image | image_url: height: 520 }} 2x"
