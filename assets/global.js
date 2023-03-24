@@ -1447,13 +1447,3 @@ class Accordion {
 document.querySelectorAll("details.accordion").forEach((el) => {
   new Accordion(el);
 });
-
-// add shadow to header when #MainContent reaches top of window
-/* let observer = new IntersectionObserver((entries) => {
-  if (entries[0].boundingClientRect.y < 0) {
-    document.querySelector("#shopify-section-header").classList.add("shadow-md", "shadow-seaweed-400/5");
-  } else {
-    document.querySelector("#shopify-section-header").classList.remove("shadow-md", "shadow-seaweed-400/5");
-  }
-});
-observer.observe(document.querySelector("#HeaderScrollPixel")); */

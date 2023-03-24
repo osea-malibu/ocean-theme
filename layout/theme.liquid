@@ -67,12 +67,12 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-  <body class="antialiased">
+  <body class="antialiased {% if template.name == 'product' %}pdp{% endif%}">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
-      {{ "accessibility.skip_to_text" | t }}
+      {{- "accessibility.skip_to_text" | t -}}
     </a>
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="/pages/accessibility">
-      View our accessibility statement
+      {{- 'View our accessibility statement' -}}
     </a>
 
     {%- if settings.cart_type == 'drawer' -%}
@@ -94,8 +94,6 @@
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
       <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
     </ul>
-
-    <div id="HeaderScrollPixel"></div>
     
     <script>
       window.shopUrl = '{{ shop.url }}';

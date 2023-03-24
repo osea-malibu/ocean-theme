@@ -720,6 +720,11 @@
   .addresses [aria-expanded="true"] ~ div[id] {
     @apply block;
   }
+
+  /* */
+  .pdp .footer-main {
+    @apply pb-20;
+  }
 }
 
 @layer utilities {
