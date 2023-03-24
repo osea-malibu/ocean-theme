@@ -302,13 +302,13 @@
             {%- unless product.selling_plan_groups.size == 0 -%}
               {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
               <subscription-radios
-                class="subscription transition-height overflow-hidden {{ block.settings.subscription_classes }}{% if hide_subscription %} h-0{% endif %}"
+                class="subscription transition-height overflow-hidden border border-seaweed-400 rounded-lg {{ block.settings.subscription_classes }}{% if hide_subscription %} h-0{% endif %}"
                 data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
               >
                 <fieldset>
                   <legend class="sr-only">Purchase options</legend>
                   {%- for option in purchase_options -%}
-                    <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200{% else %}bg-white{% endif %}{% if forloop.last %} mb-4{% endif %}">
+                    <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">
                       <input type="radio"
                         name="purchase_option"
                         id="purchase_option-{{ option }}"
@@ -330,16 +330,14 @@
                         </span>
                       </label>
                       {%- if option == 'autodeliver' -%}
-                        <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
-                          <span class="block">
-                            <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
-                            <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                              <button class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</button>
-                            </modal-opener>
-                          </span>
+                        <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
+                          <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
+                          <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+                            <button class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</button>
+                          </modal-opener>
                         </span>
                         <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
-                          <fieldset class="js flex mt-3 mb-2 pb-3">
+                          <fieldset class="js flex mb-2 pb-3">
                             <legend class="text-sm font-medium">Delivery every</legend>
                             {%- for value in product.selling_plan_groups[0].selling_plans -%}
                               <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
