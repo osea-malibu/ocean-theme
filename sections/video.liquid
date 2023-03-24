@@ -5,7 +5,7 @@
       <div class="relative {{ section.settings.container_classes }}"
         {% if section.settings.cover_image != nil %} style="padding-bottom: 44%;"{% endif %}
       >
-        <a href="{{ section.settings.video_webm }}" class="absolute w-full h-full media media-transparent media-landscape{% if section.settings.cover_image == blank %} video-section__placeholder{% endif %}">
+        <a href="{{ section.settings.video_mp4.sources.first.url }}" class="absolute w-full h-full media media-transparent media-landscape{% if section.settings.cover_image == blank %} video-section__placeholder{% endif %}">
           {%- if section.settings.cover_image != nil -%}
             <picture>
               <source
