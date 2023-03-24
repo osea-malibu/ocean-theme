@@ -31,7 +31,7 @@
           slider-indicators-dark 
           slider-indicators-round 
           slider-item-snapstart
-          [--swiffy-slider-item-reveal:5rem] 
+          [--swiffy-slider-item-reveal:7rem] 
           xs:[--swiffy-slider-item-reveal:8rem] 
           [--swiffy-slider-item-count:1] 
           sm:[--swiffy-slider-item-count:2] 
@@ -44,8 +44,10 @@
                 {%- assign section_id = section.id | append: block.id -%}
                 {% render 'product-card',
                   card_product: product,
+                  card_class: 'featured-collection-card',
                   section_id: section_id,
                   show_secondary_image_on_hover: false,
+                  show_reviews: true,
                   button_class: 'sm:px-3 md:px-5 sm:text-sm md',
                 %}
               </li>

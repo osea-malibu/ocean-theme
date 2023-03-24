@@ -51,7 +51,7 @@
           assign review_count = 0
         endif
       -%}
-      <span aria-hidden="true" class="underline text-xs ml-0.5{% if compact %} hidden xs:flex{% endif %}{% if hide_count %} hidden{% endif %}">{{ review_count }}{% unless compact %} reviews{% endunless %}</span>
+      <span aria-hidden="true" class="underline text-xs ml-0.5{% if hide_count %} hidden{% endif %}">{{ review_count }}{% unless compact %} reviews{% endunless %}</span>
     </span>
   </a>
 {% endif %}

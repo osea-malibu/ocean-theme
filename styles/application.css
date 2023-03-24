@@ -721,9 +721,17 @@
     @apply block;
   }
 
-  /* */
+  /* Padding adjustment for PDP footer to accommodate sticky ATC */
   .pdp .footer-main {
     @apply pb-20;
+  }
+
+  /* FOR TESTING: Delete after HP featured collection test */
+  .featured-collection-card {
+    @apply flex flex-col relative grow h-full;
+  }
+  .featured-collection-card .product-info {
+    @apply p-0;
   }
 }
 

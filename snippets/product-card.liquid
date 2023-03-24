@@ -24,19 +24,18 @@
 {% endcomment %}
 
 <div class="{% if card_class == blank %}flex flex-col relative grow h-full{% else %}{{ card_class }}{% endif %}">
-  <div class="w-full order-1 grow flex flex-col">
-      <div>
-        {%- if show_reviews and card_product.metafields.reviews.rating.value != blank -%}
-          {% render 'product-rating', product: card_product, compact: true, classes: 'h-5 float-right' %}
-        {%- endif -%}
-
-        <a href="{{ card_product.url | default: '#' }}">
-          {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
-          <h3 class="text-sm 2xs:text-base sm:text-lg font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
-            {{- card_product.title | replace: 'Undaria Algae Body Butter', 'Undaria Body Butter' | replace: 'Undaria Algae Body Polish', 'Undaria Body Polish' -}}
-          </h3>
-        </a>
-      </div>
+  <div class="product-info w-full order-1 grow flex flex-col">
+    <div>
+      {%- if show_reviews and card_product.metafields.reviews.rating.value != blank -%}
+        {% render 'product-rating', product: card_product, compact: true, classes: 'h-5 float-right' %}
+      {%- endif -%}
+      <a href="{{ card_product.url | default: '#' }}">
+        {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
+        <h3 class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
+          {{- card_product.title | replace: 'Undaria Algae Body Butter', 'Undaria Body Butter' | replace: 'Undaria Algae Body Polish', 'Undaria Body Polish' -}}
+        </h3>
+      </a>
+    </div>
 
       <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
         {{- card_product.metafields.custom_fields.short_description | escape -}}
