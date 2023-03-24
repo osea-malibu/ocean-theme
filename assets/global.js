@@ -805,6 +805,34 @@ class SubscriptionRadios extends HTMLElement {
 }
 customElements.define("subscription-radios", SubscriptionRadios);
 
+class ProductStickyAtc extends HTMLElement {
+  constructor() {
+    super();
+
+    document.querySelector(".pdp-quantity").addEventListener("change", (event) => (document.querySelector(".sticky-quantity input").value = event.target.value));
+    document.querySelector(".sticky-quantity").addEventListener("change", (event) => (document.querySelector(".pdp-quantity input").value = event.target.value));
+  }
+
+  connectedCallback() {
+    this.atcObserver = new IntersectionObserver((entries) => {
+      if (entries[0].intersectionRatio <= 0) {
+        this.classList.remove("invisible", "opacity-0");
+      } else {
+        this.classList.add("invisible", "opacity-0");
+      }
+    });
+
+    this.atcObserver.observe(document.querySelector(".product-form.pdp-product-form"));
+  }
+
+  disconnectedCallback() {
+    if (this.atcObserver) {
+      this.atcObserver.disconnect();
+    }
+  }
+}
+customElements.define("product-sticky-atc", ProductStickyAtc);
+
 class TabController extends HTMLElement {
   constructor() {
     super();

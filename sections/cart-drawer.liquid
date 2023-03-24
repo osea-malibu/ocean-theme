@@ -130,7 +130,7 @@
       </button>
 
       {%- if cart == empty -%}
-        <div class="cart-empty h-full overflow-hidden flex flex-col items-center justify-center w-60 mx-auto">
+        <div class="cart-empty h-full overflow-hidden flex flex-col items-center justify-center w-60 mx-auto px-1">
           <h2 class="text-lg tracking-wide font-book mb-4">{{ 'sections.cart.empty' | t }}</h2>
           {%- for link in settings.cart_empty_state_links.links -%}
             <a href="{{ link.url }}" class="button button-secondary mb-4 w-full">{{ link.title }}</a>
