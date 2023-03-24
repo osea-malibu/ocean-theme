@@ -460,6 +460,7 @@
       <div class="flex gap-2 justify-between items-center pl-4 sm:pl-6 pr-20 md:pr-24 xl:max-w-screen-xl xl:mx-auto min-[1400px]:pr-6">
         <h3 class="tracking-wide leading-none text-lg sr-only sm:not-sr-only">{{- product.title | escape -}}</h3>
         <div class="relative w-full sm:w-96 flex gap-2">
+          <label class="sr-only" for="Quantity-sticky">Quantity</label>
           <quantity-input class="quantity sticky-quantity inline-flex border border-seaweed-400 rounded-md w-36 xs:w-40">
             <button
               class="{{ quantity_classes }} rounded-l-md"

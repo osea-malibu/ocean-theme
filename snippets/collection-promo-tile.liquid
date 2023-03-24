@@ -40,7 +40,7 @@
       <img src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}" alt="">
     </video>
     <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-4 left-4 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/10">
-      <button class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
+      <button aria-label="Close" class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
         {%- render 'icon-close', classes: 'w-5 h-5', stroke_width: 2 -%}
       </button>
       <video preload="metadata" playsinline autoplay muted loop controls poster="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
