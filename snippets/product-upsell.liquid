@@ -10,7 +10,7 @@
     {% render 'product-upsell', product: section.settings.product %}
 {% endcomment %}
 
-<div class="flex flex-row relative bg-wave-200 px-4 py-2 gap-3 items-center mb-4 last:mb-0 {{ classes }}">
+<div class="flex flex-row relative bg-white pr-4 gap-4 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
   <div class="w-full order-1 grow flex flex-col items-start">
     <a href="{{ product.url | default: '#' }}" class="group text-sm tracking-wide leading-tight">
       <h4 class="font-medium group-hover:underline mb-0.5">
@@ -26,7 +26,7 @@
         <button
           type="submit"
           name="add"
-          class="button button-xs button-secondary w-full flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}"
+          class="button button-sm button-tertiary w-full flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}"
           {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
         >
           {%- if product.selected_or_first_available_variant.available -%}
@@ -52,7 +52,7 @@
     <a
       aria-label="{{ product.title | escape }}"
       href="{{ product.url | default: '#' }}"
-      class="group relative block mx-auto no-underline shrink-0"
+      class="group relative block mx-auto no-underline shrink-0 w-24 bg-wave-100 rounded-l-lg"
       tabindex="-1"
     >
       <img
