@@ -192,6 +192,7 @@ module.exports = {
         "transform-opacity": "transform, opacity",
         visibility: "visibility, opacity",
         "transform-visibility": "transform, visibility",
+        "transform-border": "transform, border",
       },
       zIndex: {
         60: "60",

@@ -321,7 +321,7 @@
     {%- if request.page_type == 'index' -%}
       <h1 class="flex-initial">
     {%- endif -%}
-        <a href="{{ routes.root_url }}" class="cursor-pointer flex-initial hover:text-seaweed-500" aria-label="OSEA Malibu">
+        <a href="{{ routes.root_url }}" class="cursor-pointer flex-initial hover:text-seaweed-500 scale-90 sm:scale-100" aria-label="OSEA Malibu">
           <span class="sr-only">OSEA Malibu</span>
           <svg class="mx-auto h-12 w-24 motion-safe:transition-colors" width="316" height="156" viewBox="0 0 316 156" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M76.6855 156L75.5465 145.173C77.7705 144.941 80.0971 144.015 82.5641 143.035C83.4439 142.683 84.3562 142.321 85.2631 141.953C108.254 133.584 114.289 121.095 116.529 103.675C117.824 93.666 116.691 81.9679 115.59 70.6542C112.891 42.9165 109.851 11.4816 144.038 -0.00543213L147.482 10.3123C121.484 19.0493 123.757 42.4726 126.386 69.5986C127.546 81.5078 128.739 93.8393 127.282 105.077C124.945 123.136 118.688 141.346 89.004 152.173C88.2105 152.465 87.3846 152.785 86.5587 153.126C83.6653 154.273 80.3832 155.578 76.6855 155.973" fill="#1D4D41"/>
@@ -365,7 +365,7 @@
 
 {% comment %} Navbar menu {% endcomment %}
 {%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
-  <nav class="overflow-x-auto sm:overflow-x-hidden bg-white -mt-2">
+  <nav class="overflow-x-auto sm:overflow-x-hidden scrollbar-hide bg-white -mt-2">
     <ul class="flex md:justify-center">
       {%- for link in section.settings.navbar_menu.links -%}
         <li class="first:pl-1{% if link.links != blank %} group{% endif %}">

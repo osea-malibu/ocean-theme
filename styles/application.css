@@ -7,12 +7,6 @@
   body {
     @apply bg-white text-seaweed-700;
   }
-  /* a:link {
-    @apply bg-white text-seaweed-700;
-  }
-  a:visited {
-    @apply bg-white text-seaweed-700;
-  } */
 
   /* System fonts */
   .system-sans {
@@ -50,7 +44,7 @@
 
   /* Invisible pixel to track scroll for header shadow */
   #HeaderScrollPixel {
-    @apply absolute w-px h-px bg-transparent top-24;
+    @apply absolute w-px h-px bg-transparent top-8;
   }
 
   /* RTE content */

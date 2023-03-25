@@ -130,6 +130,19 @@ function onKeyUpEscape(event) {
   summaryElement.focus();
 }
 
+// hide announcement bar and add border on scroll
+let observer = new IntersectionObserver((entries) => {
+  const headerWrapper = document.querySelector("#HeaderContent");
+  if (entries[0].boundingClientRect.y < 0) {
+    headerWrapper.classList.add("-translate-y-8", "border-seaweed-300");
+    headerWrapper.classList.remove("border-transparent");
+  } else {
+    headerWrapper.classList.remove("-translate-y-8", "border-seaweed-300");
+    headerWrapper.classList.add("border-transparent");
+  }
+});
+observer.observe(document.querySelector("#HeaderScrollPixel"));
+
 class QuantityInput extends HTMLElement {
   constructor() {
     super();
