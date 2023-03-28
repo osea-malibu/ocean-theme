@@ -94,7 +94,7 @@
                       {%- if block.settings.button_label != "" or block.settings.is_atc_button -%}
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
                           <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-                          <div class="overflow-hidden">
+                          <div>
                             {%- assign product_form_id = 'product-form-' | append: block.settings.atc_button_product.id | append: '-' | append: block.id -%}
                             {%- if block.settings.is_subscription and block.settings.atc_button_product.selling_plan_groups.size > 0 -%}
                               {%- if block.settings.variant_picker_type == 'button' -%}
