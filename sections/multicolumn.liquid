@@ -12,7 +12,7 @@
       <div class="glide__track {{ section.settings.container_classes }}" data-glide-el="track">
   {%- endif -%}
         <ul
-          class="{% if section.settings.is_slider %}glide__slides{% else %}flex md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
+          class="{% if section.settings.is_slider %}glide__slides{% else %}{% unless container_classes contains 'grid' %}flex {% endunless %}md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
           role="presentation"
         >
           {%- for block in section.blocks -%}
