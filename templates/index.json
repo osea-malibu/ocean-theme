@@ -61,7 +61,7 @@
           "type": "paragraph",
           "settings": {
             "paragraph": "Clinically Proven",
-            "paragraph_classes": "sm:hidden badge mt-6 mb-1 lg:mb-2  border rounded-lg text-white bg-seaweed-700 py-1 px-2"
+            "paragraph_classes": "sm:hidden badge mt-6 mb-1 lg:mb-2  border rounded-lg text-white bg-seaweed-700 py-1 px-2 uppercase"
           }
         },
         "c273d920-7505-4067-a0f8-852699205cf8": {
@@ -111,6 +111,48 @@
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-center sm:w-1\/2 sm:px-6"
+      }
+    },
+    "65020b51-3552-4434-9821-6040cedb6ee5": {
+      "type": "image-banner",
+      "disabled": true,
+      "blocks": {
+        "template--15166819893431__65020b51-3552-4434-9821-6040cedb6ee5-1680127768a2f8f0f1-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_classes": ""
+          }
+        },
+        "template--15166819893431__65020b51-3552-4434-9821-6040cedb6ee5-1680127768a2f8f0f1-1": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "",
+            "paragraph_classes": ""
+          }
+        },
+        "template--15166819893431__65020b51-3552-4434-9821-6040cedb6ee5-1680127768a2f8f0f1-2": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "",
+            "button_link": "",
+            "target_blank": false,
+            "button_classes": "button-primary"
+          }
+        }
+      },
+      "block_order": [
+        "template--15166819893431__65020b51-3552-4434-9821-6040cedb6ee5-1680127768a2f8f0f1-0",
+        "template--15166819893431__65020b51-3552-4434-9821-6040cedb6ee5-1680127768a2f8f0f1-1",
+        "template--15166819893431__65020b51-3552-4434-9821-6040cedb6ee5-1680127768a2f8f0f1-2"
+      ],
+      "settings": {
+        "is_lazy": false,
+        "image_link": "",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "max-w-md top-1\/3"
       }
     },
     "165703204544efb73d": {
@@ -1751,6 +1793,7 @@
   "order": [
     "7e33235c-e9e3-4053-8351-5886eea45751",
     "3b769d4e-f31d-4d9a-af7b-6b5464cf24f6",
+    "65020b51-3552-4434-9821-6040cedb6ee5",
     "165703204544efb73d",
     "16570286821ae9514b",
     "1657672123c2735a5b",
