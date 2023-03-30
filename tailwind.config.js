@@ -214,6 +214,7 @@ module.exports = {
       addVariant("link", "&:link");
       addVariant("small", "& > small");
       addVariant("video", "& > video");
+      addVariant("label", "& label");
       addVariant("li", "& > li");
       addVariant("td", "& > td");
       addVariant("th", "& > th");
