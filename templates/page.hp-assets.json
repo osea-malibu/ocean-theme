@@ -262,6 +262,74 @@
         "text_block_classes": "absolute inset-y-0 left-0 pl-6 sm:pr-0 pr-6 right-0 sm:right-1/2 text-center flex flex-col items-center justify-center sm:pl-10 sm:pt-4"
       }
     },
+    "image_banner_7": {
+      "type": "image-banner",
+      "disabled": true,
+      "blocks": {
+        "d85580f9-8819-4cf4-9e23-a13a27886c1e": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Clinically Proven",
+            "paragraph_classes": "sm:hidden badge mt-6 mb-1 lg:mb-2  border rounded-full text-white bg-seaweed-700 border-seaweed-700 py-1 px-4 uppercase"
+          }
+        },
+        "dd66fe61-b899-42bc-a60e-8d1de4682c1b": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "New &amp; Improved Formula",
+            "paragraph_classes": "hidden sm:block badge bg-transparent border border-dashed rounded-lg py-1 px-2"
+          }
+        },
+        "template--15166819893431__2d256d3a-1ddd-4069-ac9a-8f9e8269f617-1680127768a2f8f0f1-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Atmosphere <br class=\"hidden lg:block\">Protection<span class=\"text-3xl\">®</span> Cream",
+            "heading_classes": "pt-2 font-serif font-book text-4xl sm:my-2 lg:my-4 lg:text-5xl lg:text-6xl max-w-xs lg:max-w-lg"
+          }
+        },
+        "template--15166819893431__2d256d3a-1ddd-4069-ac9a-8f9e8269f617-1680127768a2f8f0f1-1": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Clinically proven to instantly create<br>a barrier between pollutants and skin",
+            "paragraph_classes": "hidden sm:block font-medium tracking-wide text-lg leading-tight lg:mb-2"
+          }
+        },
+        "template--15166819893431__2d256d3a-1ddd-4069-ac9a-8f9e8269f617-1680127768a2f8f0f1-2": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop atmosphere protection cream",
+            "button_link": "shopify://products/atmosphere-protection-cream",
+            "target_blank": false,
+            "button_classes": "button button-white sm:button-primary lg:button-lg mt-auto mb-6 sm:mt-4"
+          }
+        },
+        "3b7047e2-81b7-4c48-8e75-8ad9b0f31bd6": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "*Based on a 3rd party clinical study conducted on 33 women ages 23-52 after 1 use.",
+            "paragraph_classes": "absolute inset-x-0 bottom-2 lg:bottom-4 text-[10px] leading-none tracking-tight px-2 sm:text-left sm:pl-8 lg:pr-16 lg:pl-12"
+          }
+        }
+      },
+      "block_order": [
+        "d85580f9-8819-4cf4-9e23-a13a27886c1e",
+        "dd66fe61-b899-42bc-a60e-8d1de4682c1b",
+        "template--15166819893431__2d256d3a-1ddd-4069-ac9a-8f9e8269f617-1680127768a2f8f0f1-0",
+        "template--15166819893431__2d256d3a-1ddd-4069-ac9a-8f9e8269f617-1680127768a2f8f0f1-1",
+        "template--15166819893431__2d256d3a-1ddd-4069-ac9a-8f9e8269f617-1680127768a2f8f0f1-2",
+        "3b7047e2-81b7-4c48-8e75-8ad9b0f31bd6"
+      ],
+      "settings": {
+        "image_mobile": "shopify://shop_images/APC_Reform_HP_Banner_V3_Clinicals_Mobile_BLANK.jpg",
+        "image": "shopify://shop_images/APC_Reform_HP_Banner_V3_Clinicals_Desktop_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://products/atmosphere-protection-cream",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-center sm:w-2/3 xl:w-1/2 sm:px-6 md:pr-16 lg:pr-32 xl:pr-0"
+      }
+    },
     "header_blocks": {
       "type": "rich-text",
       "blocks": {
@@ -726,6 +794,7 @@
     "image_banner_4",
     "image_banner_5",
     "image_banner_6",
+    "image_banner_7",
     "header_blocks",
     "block_adv",
     "block_jade",
