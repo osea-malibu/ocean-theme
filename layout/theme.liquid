@@ -23,18 +23,21 @@
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
 
-    {% render 'meta-tags' %}
-    {% render 'google-tag-manager' %}
-    {% render 'bing-uet-tag' %}
-    {% render 'northbeam' %}
+    {% liquid
+      render 'meta-tags'
+      render 'google-tag-manager'
+      render 'bing-uet-tag'
+      render 'northbeam'
+      render 'adswizz' 
+    %}
 
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
 
     {% comment %} {{ content_for_header }} {% endcomment %}
-    {% comment %}theme-check-disable ContentForHeaderModification{% endcomment %}
+    {% comment %}theme-check-disable ContentForHeaderModification,RemoteAsset{% endcomment %}
     {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" content="" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" content="" id="amazon-payments-metadata"' }}
-    {% comment %}theme-check-enable ContentForHeaderModification{% endcomment %}
+    {% comment %}theme-check-enable ContentForHeaderModification,RemoteAsset{% endcomment %}
 
     {%- if template contains 'product' or template contains 'login' -%}
       {% comment %}theme-check-disable RemoteAsset{% endcomment %}
