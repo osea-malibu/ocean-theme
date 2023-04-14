@@ -28,7 +28,6 @@
       render 'google-tag-manager'
       render 'bing-uet-tag'
       render 'northbeam'
-      render 'adswizz' 
     %}
 
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
@@ -71,6 +70,7 @@
   </head>
 
   <body class="antialiased {% if template.name == 'product' %}pdp{% endif%}">
+    {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
     </a>
