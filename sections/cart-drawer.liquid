@@ -296,7 +296,7 @@
                             </td>
 
                             <td class="cart-item__quantity p-0 [grid-area:quant]" role="cell" headers="CartDrawer-ColumnQuantity">
-                              <div class="flex items-center{% if item.product.type != 'Sample' and item.product.has_only_default_variant or item.properties.size == 0 %} sm:mt-[-14px] -mt-2{% endif %}">
+                              <div class="flex items-center{% if item.product.type != 'Sample' and item.product.type != 'Free Gift' and item.product.has_only_default_variant or item.properties.size == 0 %} sm:mt-[-14px] -mt-2{% endif %}">
                                 {%- unless item.product.type == 'Sample' or item.product.type == 'Free Gift' -%}
                                   <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-md mr-1">
                                     <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -ml-px box-content border-transparent rounded-l-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
