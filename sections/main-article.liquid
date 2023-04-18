@@ -52,7 +52,6 @@
           <div class="{{ block.settings.content_classes }}">
             <div class="rte mb-8" itemprop="articleBody" {{ block.shopify_attributes }}>
               {%- liquid
-                assign random_number = "now" | date: "%N" | modulo: 800 | plus: 0
                 assign new_content = article.content
                 paginate collections['shop'].products by 80
                   for product in collections['shop'].products

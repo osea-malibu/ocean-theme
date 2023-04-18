@@ -88,7 +88,15 @@
         <video autoplay controls loop muted playsinline poster="{{ source_jpg }}" class="bg-wave-200 border-0 absolute w-full h-full">
           <source src="{{ source_mp4 }}" type="video/mp4">
           <source src="{{ source_webm }}" type="video/webm">
-          {% if source_jpg %}<img src="{{ source_jpg | append: '&width=976' }}" alt="">{% endif %}
+          {%- if source_jpg -%}
+            <img
+              src="{{ source_jpg | append: '&width=976' }}"
+              alt=""
+              width="{{ source_jpg.width }}"
+              height="{{ source_jpg.height }}"
+              loading="lazy"
+            >
+          {%- endif -%}
         </video>
       </template>
     </deferred-media>

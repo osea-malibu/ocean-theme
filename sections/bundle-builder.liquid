@@ -46,14 +46,16 @@
               <h2 class="text-xl tracking-wide">Pick Your <strong>Body</strong> Moisturizer</h2>
             </div>
             <div class="grid grid-cols-3 -mx-2 sm:mx-0">
-              {%- for product in section.settings.byob_body_products.products -%}
-                {%- if product.handle == 'undaria-algae-oil' -%}
-                  {%- assign uao_variant = product.variants | where: 'title', '5 oz' | first -%}
-                  {% render 'bundle-card', product: product, variant: uao_variant, name: 'byob-body' %}
-                {%- else -%}
-                  {% render 'bundle-card', product: product, name: 'byob-body' %}
-                {%- endif -%}
-              {%- endfor -%}
+              {%- liquid
+                for product in section.settings.byob_body_products.products
+                  if product.handle == 'undaria-algae-oil'
+                    assign uao_variant = product.variants | where: 'title', '5 oz' | first
+                    render 'bundle-card', product: product, variant: uao_variant, name: 'byob-body'
+                  else
+                    render 'bundle-card', product: product, name: 'byob-body'
+                  endif
+                endfor
+              -%}
               <input type="radio" selected name="byob-body" class="sr-only" />
             </div>
           </div>

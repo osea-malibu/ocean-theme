@@ -24,8 +24,6 @@
 
   assign default_image_src = card_product.featured_media | image_url: width: 328
   assign default_image_src_2x = card_product.featured_media | image_url: width: 656
-  assign hover_image_src = card_product.media[1] | image_url: width: 328
-  assign hover_image_src_2x = card_product.media[1] | image_url: width: 656
 -%}
 
 <div
@@ -38,6 +36,7 @@
   <div class="group flex flex-col bg-white rounded-md relative z-0 p-1 transition-all peer-checked:shadow-seaweed-700/10 border border-transparent peer-checked:shadow-lg peer-checked:border-seaweed-400 peer-checked:z-10">
     <modal-opener data-modal="#ByobModal">
       <button class="flex flex-col relative" aria-haspopup="dialog">
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
           src="{% render 'imgix', src: default_image_src_2x %}"
@@ -48,6 +47,7 @@
           id="ByobImage-{{ product.id }}"
           class="block bg-wave-100"
         >
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         <svg class="h-5 w-5 text-wave-100 absolute bottom-1 left-1" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <circle fill="#D4E1DE" cx="12" cy="12" r="10" />
           <line x1="12" y1="16" x2="12" y2="12" />

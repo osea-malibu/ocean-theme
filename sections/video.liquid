@@ -75,9 +75,18 @@
         </button>
         <template>
           <video autoplay controls loop playsinline poster="{{ section.settings.cover_image }}" class="bg-wave-200 border-0 absolute w-full h-full border-none object-cover">
+            {% assign video_poster_url = section.settings.video_mp4.preview_image | image_url: width: 1200 %}
             <source src="{{ section.settings.video_mp4.sources.first.url }}" type="video/mp4">
             <source src="{{ section.settings.video_webm.sources.first.url }}" type="video/webm">
-            <img src="{{ section.settings.video_mp4.preview_image | image_url: width: 1200 }}" alt="">
+            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+            <img
+              src="{% render 'imgix', src: video_poster_url %}"
+              alt=""
+              width="{{ section.settings.video_mp4.preview_image.width }}"
+              height="{{ section.settings.video_mp4.preview_image.height }}"
+              loading="lazy"
+            >
+            {% comment %} theme-check-enable RemoteAsset {% endcomment %}
           </video>
         </template>
       </deferred-media>

@@ -247,17 +247,9 @@
                                 {%- if settings.show_vendor -%}
                                   <p class="text-xs text-wave-600">{{ item.product.vendor }}</p>
                                 {%- endif -%}
-
                                 <a {% unless item.product.type == 'Sample' or item.product.type == 'Free Gift' %}href="{{ item.url }}"{% endunless %}
-                                  class="block leading-none 2xs:w-full {% if item.selling_plan_allocation %}w-52{% else %}w-60{% endif %}"
-                                >
-                                  {{ item.product.title |
-                                    replace: 'Eye Serum', 'Serum' |
-                                    replace: 'Discovery, ', '' |
-                                    replace: ' - Sample', '' |
-                                    replace: 'Free Gift - ', '' |
-                                    escape
-                                  }}
+                                  class="block leading-none 2xs:w-full {% if item.selling_plan_allocation %}w-52{% else %}w-60{% endif %}">
+                                  {{ item.product.title | replace: 'Eye Serum', 'Serum' | replace: 'Discovery, ', '' | replace: ' - Sample', '' | replace: 'Free Gift - ', '' | escape }}
                                 </a>
                               </div>
                             </td>
@@ -406,66 +398,34 @@
                                 <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity">
                                   {%- if item.selling_plan_allocation != nil -%}
                                     <div class="flex">
-                                      <span class="sr-only">
-                                        {{ 'products.product.price.regular_price' | t }}
-                                      </span>
-                                      <s class="text-wave-600 mr-1 whitespace-nowrap">
-                                        {{ item.selling_plan_allocation.compare_at_price | times: item.quantity | money_without_trailing_zeros }}
-                                      </s>
-                                      <span class="sr-only">
-                                        {{ 'products.product.price.sale_price' | t }}
-                                      </span>
-                                      <span class="whitespace-nowrap">
-                                        {{ item.selling_plan_allocation.per_delivery_price | times: item.quantity | money }}
-                                      </span>
+                                      <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
+                                      <s class="text-wave-600 mr-1 whitespace-nowrap">{{ item.selling_plan_allocation.compare_at_price | times: item.quantity | money_without_trailing_zeros }}</s>
+                                      <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
+                                      <span class="whitespace-nowrap">{{ item.selling_plan_allocation.per_delivery_price | times: item.quantity | money }}</span>
                                     </div>
                                   {%- elsif item.product.type == 'Bundle' -%}
                                     <div class="flex flex-col items-end">
                                       <div class="flex tracking-tight">
-                                        <span class="sr-only">
-                                          {{ 'products.product.price.regular_price' | t }}
-                                        </span>
-                                        <s class="text-wave-600 mr-1 whitespace-nowrap">
-                                          {{ item.variant.compare_at_price | times: item.quantity | money_without_trailing_zeros }}
-                                        </s>
-                                        <span class="sr-only">
-                                          {{ 'products.product.price.sale_price' | t }}
-                                        </span>
-                                        <span class="whitespace-nowrap">
-                                          {{ item.variant.price | times: item.quantity | money }}
-                                        </span>
+                                        <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
+                                        <s class="text-wave-600 mr-1 whitespace-nowrap">{{ item.variant.compare_at_price | times: item.quantity | money_without_trailing_zeros }}</s>
+                                        <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
+                                        <span class="whitespace-nowrap">{{ item.variant.price | times: item.quantity | money }}</span>
                                       </div>
                                       <span class="bg-seaweed-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">Bundle</span>
                                     </div>
                                   {%- elsif item.original_line_price != item.final_line_price -%}
                                     <div class="flex">
-                                      <span class="sr-only">
-                                        {{ 'products.product.price.regular_price' | t }}
-                                      </span>
-                                      <s class="text-wave-600 mr-1">
-                                        {{ item.original_line_price | money }}
-                                      </s>
-                                      <span class="sr-only">
-                                        {{ 'products.product.price.sale_price' | t }}
-                                      </span>
-                                      <span>
-                                        {{ item.final_line_price | money }}
-                                      </span>
+                                      <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
+                                      <s class="text-wave-600 mr-1">{{ item.original_line_price | money }}</s>
+                                      <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
+                                      <span>{{ item.final_line_price | money }}</span>
                                     </div>
                                   {%- elsif item.product.has_only_default_variant != true and item.variant.compare_at_price > item.variant.price -%}
                                     <div class="flex">
-                                      <span class="sr-only">
-                                        {{ 'products.product.price.regular_price' | t }}
-                                      </span>
-                                      <s class="text-wave-600 mr-1 whitespace-nowrap">
-                                        {{ item.variant.compare_at_price | times: item.quantity | money }}
-                                      </s>
-                                      <span class="sr-only">
-                                        {{ 'products.product.price.sale_price' | t }}
-                                      </span>
-                                      <span class="whitespace-nowrap">
-                                        {{ item.variant.price | times: item.quantity | money }}
-                                      </span>
+                                      <span class="sr-only">{{ 'products.product.price.regular_price' | t }}</span>
+                                      <s class="text-wave-600 mr-1 whitespace-nowrap">{{ item.variant.compare_at_price | times: item.quantity | money }}</s>
+                                      <span class="sr-only">{{ 'products.product.price.sale_price' | t }}</span>
+                                      <span class="whitespace-nowrap">{{ item.variant.price | times: item.quantity | money }}</span>
                                     </div>
                                   {%- else -%}
                                       {%- if item.product.type == 'Sample' -%}
@@ -622,10 +582,7 @@
             <!-- CTAs -->
             <div class="mb-2" {{ block.shopify_attributes }}>
               <noscript>
-                <button
-                  type="submit"
-                  class="cart__update-button button button-primary w-full mb-2"
-                  form="CartDrawer-Form">{{ 'sections.cart.update' | t }}</button>
+                <button type="submit" class="cart__update-button button button-primary w-full mb-2" form="CartDrawer-Form">{{ 'sections.cart.update' | t }}</button>
               </noscript>
               <button
                 type="submit"

@@ -31,7 +31,15 @@
               {%- for source in block.settings.video_mp4.sources -%}
                 <source src="{{ source.url }}" type="video/{{ source.format }}">
               {%- endfor -%}
-              <img src="{% render 'imgix', src: video_poster_url %}" alt="">
+              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+              <img
+                src="{% render 'imgix', src: video_poster_url %}"
+                alt=""
+                width="{{ block.settings.video_mp4.preview_image.width }}"
+                height="{{ block.settings.video_mp4.preview_image.height }}"
+                loading="lazy"
+              >
+              {% comment %} theme-check-enable RemoteAsset {% endcomment %}
             </video>
           {%- endif -%}
           <div class="relative">
