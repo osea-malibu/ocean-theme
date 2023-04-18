@@ -8,7 +8,10 @@
     gtag('js', new Date());
     gtag('config', 'AW-873848209');
     gtag('config', 'G-P6YCF1X0QF');
-    //gtag('config', 'G-P6YCF1X0QF', { transport_url: 'https://gtm-m9x5757-zwe3m.uc.r.appspot.com' });
+    {% comment %} gtag('config', 'G-P6YCF1X0QF', {
+      transport_url: 'https://gtm-m9x5757-zwe3m.uc.r.appspot.com',
+      'first_party_collection': true,
+    }); {% endcomment %}
     {% comment %} //get channel data from url params and add to datalayer
     const urlParams = new URLSearchParams(window.location.search);
     const utmSource = urlParams.get('utm_source');
