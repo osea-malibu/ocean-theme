@@ -14,7 +14,6 @@
 
   if product.available == false
     assign badge_text = 'Out of Stock'
-    assign badge_class = 'bg-wave-200 text-wave-800'
   elsif product.tags contains 'badge::new'
     assign badge_text = 'New'
   elsif product.tags contains 'badge::editor_pick'
@@ -26,6 +25,12 @@
         assign badge_text = string_array[1]
       endif
     endfor
+  endif
+
+  if product.available == false
+    assign badge_class = 'bg-wave-200 text-wave-800'
+  elsif product.metafields.custom.badge_classes != blank
+    assign badge_class = product.metafields.custom.badge_classes
   endif
 -%}
 
