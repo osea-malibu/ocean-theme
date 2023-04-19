@@ -19,6 +19,7 @@
         },
         "price": {
           "type": "price",
+          "disabled": true,
           "settings": {
             "price_classes": "col-span-4 md:col-span-6 text-lg"
           }
@@ -26,13 +27,13 @@
         "6a44c417-fd63-4240-a103-3540393f4f89": {
           "type": "rating",
           "settings": {
-            "rating_classes": "col-span-8 md:col-span-6 ml-auto h-full"
+            "rating_classes": "col-span-12 md:col-span h-full"
           }
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "variant_classes": "col-span-12 mt-2 mb-2",
+            "variant_classes": "col-span-12 mt-4 mb-2",
             "hide_label": true
           }
         },
