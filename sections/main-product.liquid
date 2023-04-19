@@ -307,8 +307,8 @@
               </div>
             </noscript>
 
-            <!-- ShopKeeper Gift Card -->
             {% if product.type contains 'Gift Card' %}
+              <!-- ShopKeeper Gift Card -->
               <gift-card-fields class="col-span-12">
                 <div id="skt-fields">
                   <div>
@@ -326,8 +326,8 @@
                   </div>
                 </div>
               </gift-card-fields>
+              <!-- End ShopKeeper -->
             {% endif %}
-            <!-- End ShopKeeper -->
           {%- when 'subscription_picker' -%}
             {%- liquid
               assign hide_subscription = false
@@ -345,10 +345,10 @@
             {%- unless product.selling_plan_groups.size == 0 -%}
               {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
               <subscription-radios
-                class="subscription transition-height overflow-hidden border border-seaweed-400 rounded-lg {{ block.settings.subscription_classes }}{% if hide_subscription %} h-0{% endif %}"
+                class="subscription motion-safe:transition-height overflow-hidden {{ block.settings.subscription_classes }}{% if hide_subscription %} h-0{% endif %}"
                 data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
               >
-                <fieldset>
+                <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden">
                   <legend class="sr-only">Purchase options</legend>
                   {%- for option in purchase_options -%}
                     <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">
