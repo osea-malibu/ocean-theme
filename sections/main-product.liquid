@@ -152,6 +152,11 @@
                 <span class="ml-2 self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
               {%- endif -%}
             </div>
+       
+<!-- Stamped - Begin badge -->
+<span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-title="{{ product.title | escape }}" data-product-type="{{ product.type }}" style="display: block;">{{ product.metafields.stamped.badge }}</span>
+<!-- Stamped - End badge -->
+ 
           {%- when 'rating' -%}
             {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
           {%- when 'benefits' -%}
