@@ -1,86 +1,101 @@
 <div class="container {{ section.settings.wrapper_classes }}">
+  {%- if section.blocks.size > 1 -%}
   <tab-controller id="featured-collections-tabs">
-    {%- if section.blocks.size > 1 -%}
-      <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-center mb-4">
-        {%- for block in section.blocks -%}
-          <li
-            role="tab"
-            aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
-            tabindex="0"
-            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-            class="button button-sm button-secondary px-3 sm:px-4{% unless forloop.last %} mr-2 xs:mr-3{% endunless %}{% if forloop.first %} bg-wave-200{% endif %}"
-          >
-            {%- if block.settings.collection_name != blank -%}{{ block.settings.collection_name }}{%- else -%}{{ block.settings.collection.title }}{%- endif -%}
-          </li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+    <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-center mb-4">
+      {%- for block in section.blocks -%}
+        <li
+          role="tab"
+          aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
+          tabindex="0"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          class="button button-sm button-secondary px-3 sm:px-4{% unless forloop.last %} mr-2 xs:mr-3{% endunless %}{% if forloop.first %} bg-wave-200{% endif %}"
+        >
+          {%- if block.settings.collection_name != blank -%}{{ block.settings.collection_name }}{%- else -%}{{ block.settings.collection.title }}{%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
 
     {%- for block in section.blocks -%}
-      <div
-        id="tab-{{ forloop.index }}-{{ block.id }}"
-        role="tabpanel"
-        aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-      >
-        <slider-component class="
-          slider 
-          slider-item-reveal 
-          slider-nav-visible 
-          slider-indicators-visible 
-          slider-indicators-outside 
-          slider-indicators-dark 
-          slider-indicators-round 
-          slider-item-snapstart
-          [--swiffy-slider-item-reveal:7rem] 
-          xs:[--swiffy-slider-item-reveal:8rem] 
-          [--swiffy-slider-item-count:1] 
-          sm:[--swiffy-slider-item-count:2] 
-          lg:[--swiffy-slider-item-count:3] 
-          xl:[--swiffy-slider-item-count:4] 
-        ">
-          <ul class="slider-container -mr-4 2xs:-mr-6 w-[calc(100%+1rem)] 2xs:w-[calc(100%+1.5rem)] xs:w-full xs:mr-0">
-            {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
-              <li>
-                {%- assign section_id = section.id | append: block.id -%}
-                {% render 'product-card',
-                  card_product: product,
-                  card_class: 'featured-collection-card',
-                  section_id: section_id,
-                  show_secondary_image_on_hover: false,
-                  show_reviews: true,
-                  button_class: 'sm:px-3 md:px-5 sm:text-sm md'
-                %}
-              </li>
-            {%- else -%}
-              {%- for i in (1..4) -%}
-                <li>
-                  {% render 'product-card-placeholder' %}
+      {%- if section.blocks.size > 1 -%}
+        <div
+          id="tab-{{ forloop.index }}-{{ block.id }}"
+          role="tabpanel"
+          aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+        >
+      {%- endif -%}
+        <glide-slider
+          class="glide relative gap-16 peek.after-124 perView-4 lg:perView-3 md:perView-2 sm:perView-1"
+          data-breakpoint-limit="none"
+        >
+          <div class="glide__track -mr-4 2xs:-mr-6 sm:mr-0 w-[calc(100%+1rem)] 2xs:w-[calc(100%+1.5rem)] sm:w-full pb-2" data-glide-el="track">
+            <ul class="glide__slides min-h-full xs:w-full xs:mr-0">
+              {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
+                <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
+                  {%- assign section_id = section.id | append: block.id -%}
+                  {%- render 'product-card',
+                    card_product: product,
+                    section_id: section_id,
+                    show_secondary_image_on_hover: false,
+                    show_reviews: true,
+                    button_class: 'px-3 xl:px-5 sm:text-sm'
+                  -%}
                 </li>
-              {%- endfor -%}
+              {%- else -%}
+                {%- for i in (1..4) -%}
+                  <li>
+                    {% render 'product-card-placeholder' %}
+                  </li>
+                {%- endfor -%}
             {%- endfor -%}
-          </ul>
-          {%- if block.settings.collection.all_products_count > 2 and section.settings.products_to_show > 2 -%}
-            <button type="button" class="slider-nav inset-y-1/4" aria-label="Go to previous">
-              <svg aria-hidden="true" class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-            <button type="button" class="slider-nav slider-nav-next inset-y-1/4" aria-label="Go to next">
-              <svg aria-hidden="true" class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-l-2 border-r-6 border-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
+            </ul>
+          </div>
 
-            <ol class="slider-indicators">
-              <li class="active"></li>
-              <li></li>
-              <li></li>
-            </ol>
-          {%- endif -%}
-        </slider-component>
-      </div>
+          <div class="glide__arrows" data-glide-el="controls">
+            <button
+              class="glide__arrow glide__arrow--left top-1/2"
+              aria-label="Go to previous"
+              data-glide-dir="<"
+            >
+              {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white' %}
+            </button>
+            <button
+              class="glide__arrow glide__arrow--right top-1/2"
+              aria-label="Go to next"
+              data-glide-dir=">"
+            >
+              {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white rotate-180' %}
+            </button>
+          </div>
+
+          <ol
+            class="glide__bullets flex justify-center bottom-0"
+            data-glide-el="controls[nav]"
+          >
+            {%- liquid
+              assign dot_count = 6
+              if block.settings.collection.products.size < 12
+                assign dot_count = block.settings.collection.products.size | divided_by: 2 | round
+              endif
+            -%}
+            {%- for dot in (1..dot_count) -%}
+              <li
+                class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
+                data-glide-dir="={{ forloop.index0 }}"
+              >
+                <span class="sr-only">Go to slide {{ forloop.index }}</span>
+                <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
+              </li>
+            {%- endfor -%}
+          </ol>
+        </glide-slider>
+      {%- if section.blocks.size > 1 -%}
+        </div>
+      {%- endif -%}
     {%- endfor -%}
-  </tab-controller>
+  {%- if section.blocks.size > 1 -%}
+    </tab-controller>
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -101,6 +116,11 @@
       "type": "textarea",
       "id": "wrapper_classes",
       "label": "Wrapper classes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show reviews"
     }
   ],
   "blocks": [

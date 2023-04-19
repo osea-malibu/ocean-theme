@@ -10,7 +10,9 @@
 
   /* System fonts */
   .system-sans {
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica,
+      Arial, sans-serif;
   }
 
   /* Handle anchor link offset - accounts for fixed header */
@@ -286,7 +288,9 @@
   predictive-search:not([loading]) .predictive-search-status__loading {
     @apply hidden;
   }
-  predictive-search[loading] .predictive-search__heading ~ .predictive-search__loading-state,
+  predictive-search[loading]
+    .predictive-search__heading
+    ~ .predictive-search__loading-state,
   predictive-search[loading] .predictive-search__results-list:first-child {
     @apply hidden;
   }
@@ -393,8 +397,15 @@
   }
   .slider-container {
     @apply overflow-x-auto scroll-smooth grid items-center h-full grid-flow-col list-none m-0 bg-clip-padding;
-    --swiffy-slider-item-gap-totalwidth: calc(var(--swiffy-slider-item-gap) * (var(--swiffy-slider-item-count) - 1));
-    --swiffy-slider-item-width: calc((100% - var(--swiffy-slider-item-reveal) - var(--swiffy-slider-item-gap-totalwidth)) / var(--swiffy-slider-item-count));
+    --swiffy-slider-item-gap-totalwidth: calc(
+      var(--swiffy-slider-item-gap) * (var(--swiffy-slider-item-count) - 1)
+    );
+    --swiffy-slider-item-width: calc(
+      (
+          100% - var(--swiffy-slider-item-reveal) -
+            var(--swiffy-slider-item-gap-totalwidth)
+        ) / var(--swiffy-slider-item-count)
+    );
     -webkit-overflow-scrolling: touch;
     -ms-scroll-snap-type: x mandatory;
     scroll-snap-type: x mandatory;
@@ -404,7 +415,8 @@
     grid-auto-columns: var(--swiffy-slider-item-width);
     grid-gap: var(--swiffy-slider-item-gap);
     scrollbar-width: none;
-    scrollbar-color: rgba(0, 0, 0, 0.4) rgba(0, 0, 0, var(--swiffy-slider-track-opacity));
+    scrollbar-color: rgba(0, 0, 0, 0.4)
+      rgba(0, 0, 0, var(--swiffy-slider-track-opacity));
   }
   .slider-container > * {
     @apply relative w-full h-full;
@@ -470,10 +482,12 @@
   .slider:hover .slider-nav {
     @apply visible;
   }
-  .slider.slider-nav-autohide.slider-item-first-visible .slider-nav:not(.slider-nav-next) {
+  .slider.slider-nav-autohide.slider-item-first-visible
+    .slider-nav:not(.slider-nav-next) {
     @apply invisible;
   }
-  .slider.slider-nav-autohide.slider-item-last-visible .slider-nav.slider-nav-next {
+  .slider.slider-nav-autohide.slider-item-last-visible
+    .slider-nav.slider-nav-next {
     @apply invisible;
   }
   .slider .slider-nav:hover {
@@ -530,38 +544,57 @@
       --swiffy-slider-animation-duration: 1.25s;
     }
     .slider-nav-animation .slider-container > * > * {
-      transition: opacity var(--swiffy-slider-animation-duration) var(--swiffy-slider-animation-timing),
-        transform var(--swiffy-slider-animation-duration) var(--swiffy-slider-animation-timing);
+      transition: opacity var(--swiffy-slider-animation-duration)
+          var(--swiffy-slider-animation-timing),
+        transform var(--swiffy-slider-animation-duration)
+          var(--swiffy-slider-animation-timing);
       transition-delay: var(--swiffy-slider-animation-delay);
     }
     .slider-nav-animation .slider-container .slide-visible > * {
-      transition: opacity var(--swiffy-slider-animation-duration) var(--swiffy-slider-animation-timing),
-        transform var(--swiffy-slider-animation-duration) var(--swiffy-slider-animation-timing);
+      transition: opacity var(--swiffy-slider-animation-duration)
+          var(--swiffy-slider-animation-timing),
+        transform var(--swiffy-slider-animation-duration)
+          var(--swiffy-slider-animation-timing);
       transition-delay: var(--swiffy-slider-animation-delay);
     }
-    .slider-nav-animation.slider-nav-animation-fadein .slider-container > * > * {
+    .slider-nav-animation.slider-nav-animation-fadein
+      .slider-container
+      > *
+      > * {
       opacity: 0.5;
     }
     .slider-nav-animation.slider-nav-animation-scale .slider-container > * > * {
       transform: scale(0.9);
     }
-    .slider-nav-animation.slider-nav-animation-appear .slider-container > * > * {
+    .slider-nav-animation.slider-nav-animation-appear
+      .slider-container
+      > *
+      > * {
       opacity: 0.3;
       transform: scale(0.9);
     }
-    .slider-nav-animation.slider-nav-animation-scaleup .slider-container > * > * {
+    .slider-nav-animation.slider-nav-animation-scaleup
+      .slider-container
+      > *
+      > * {
       transform: scale(0.25);
     }
     .slider-nav-animation.slider-nav-animation-zoomout .slider-container > * {
       overflow: hidden;
     }
-    .slider-nav-animation.slider-nav-animation-zoomout .slider-container > * > * {
+    .slider-nav-animation.slider-nav-animation-zoomout
+      .slider-container
+      > *
+      > * {
       transform: scale(1.3);
     }
     .slider-nav-animation.slider-nav-animation-turn .slider-container > * > * {
       transform: rotateY(70deg);
     }
-    .slider-nav-animation.slider-nav-animation-slideup .slider-container > * > * {
+    .slider-nav-animation.slider-nav-animation-slideup
+      .slider-container
+      > *
+      > * {
       transform: translateY(60%) scale(0.99);
     }
     .slider-nav-animation.slider-nav-animation-slideup .slider-container {
@@ -718,17 +751,6 @@
   /* Padding adjustment for PDP footer to accommodate sticky ATC */
   .pdp .footer-main {
     @apply pb-20;
-  }
-
-  /* FOR TESTING: Delete after HP featured collection test */
-  .featured-collection-card {
-    @apply flex flex-col relative grow h-full;
-  }
-  .featured-collection-card .product-info {
-    @apply p-0;
-  }
-  .featured-collection-card .product-rating {
-    @apply hidden;
   }
 }
 

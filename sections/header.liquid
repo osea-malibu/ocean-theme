@@ -29,7 +29,7 @@
             {% comment %} L1 Drawer {% endcomment %}
             <div class="menu-drawer fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-24 overyflow-y-auto" tabindex="-1">
               <div class="relative flex flex-col h-full">
-                <nav class="pt-8 pb-6">
+                <nav class="py-6">
                   <ul>
                     {%- for link in section.settings.hamburger_menu.links -%}
                       <li>
@@ -184,7 +184,7 @@
           </summary>
           <div class="search-modal absolute inset-0 z-40 opacity-0 h-full motion-safe:transition-opacity group-open:opacity-100" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
             <div class="modal-overlay fixed z-0 inset-x-0 top-0 bottom-0 bg-seaweed-800/50"></div>
-            <div class="search-modal__content relative z-10 bg-white w-screen h-full left-1/2 -translate-x-1/2 px-6 opacity-0 group-open:opacity-100 motion-safe:transition-opacity" tabindex="-1">
+            <div class="search-modal__content relative z-10 bg-white w-screen h-full left-1/2 -translate-x-1/2 px-4 2xs:px-6 opacity-0 group-open:opacity-100 motion-safe:transition-opacity" tabindex="-1">
               <div class="sm:container h-full flex items-center justify-center">
                 <predictive-search
                   class="w-full md:relative"
@@ -235,7 +235,7 @@
                     <span class="predictive-search-status hidden" role="status" aria-hidden="true"></span>
                   </form>
                 </predictive-search>
-                <button type="button" class="cursor-pointer ml-0.5 -mr-1 w-10 h-10 flex items-center justify-center shrink-0" aria-label="{{ 'accessibility.close' | t }}">
+                <button type="button" class="cursor-pointer -mr-2 w-10 h-10 flex items-center justify-center shrink-0" aria-label="{{ 'accessibility.close' | t }}">
                   {% render 'icon-close', classes: 'h-7 w-7 hover:text-seaweed-500', aria-hidden: true, stroke_width: 1.75 %}
                 </button>
               </div>
