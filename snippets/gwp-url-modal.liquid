@@ -26,6 +26,7 @@
           srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
           media="(min-width: 0px)"
         >
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
           src="{% render 'imgix', src: mobile_image_src %}"
@@ -33,7 +34,9 @@
           height="{{ settings.gwp_urlmodal_image_mobile.height }}"
           width="{{ settings.gwp_urlmodal_image_mobile.width }}"
           class="rounded-t-sm sm:h-full object-cover sm:rounded-l-sm sm:rounded-tr-none"
+          loading="lazy"
         >
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       </picture>
       <div class="p-6 sm:flex sm:flex-col sm:justify-center">
         <h2 class="font-serif text-3xl tracking-tight mb-2">{{ settings.gwp_urlmodal_title | replace: 'threshold_amount', formatted_threshold}}</h2>
