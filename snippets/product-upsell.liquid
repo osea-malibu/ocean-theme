@@ -11,7 +11,7 @@
 {% endcomment %}
 
 <div class="flex flex-row relative bg-white pr-4 gap-4 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
-  <div class="w-full order-1 grow flex flex-col items-start">
+  <div class="w-full order-1 grow flex flex-col items-start py-1">
     <a href="{{ product.url | default: '#' }}" class="group text-sm tracking-wide leading-tight">
       <h4 class="font-medium group-hover:underline mb-0.5">
         {{ product.title | replace: ' - Sample', '' | escape }}

@@ -8,7 +8,7 @@
     </a>
     {%- if product.media.size > 1 -%}
       <glide-slider
-        class="glide type-carousel md:flex-1 relative gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 md:sticky md:top-[148px] mb-6 overflow-hidden max-w-full xl:flex xl:flex-row-reverse xl:gap-2"
+        class="glide type-carousel md:flex-1 relative gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 md:sticky md:top-[120px] mb-6 overflow-hidden max-w-full xl:flex xl:flex-row-reverse xl:gap-2"
         id="Product-Slider"
         data-breakpoint-limit="none"
       >
@@ -463,7 +463,7 @@
                             {%- endif -%}
                           </span>
                           {%- if block.settings.atc_show_price -%}
-                            {%- render 'price', product: product, use_variant: true, price_class: 'ml-auto' -%}
+                            {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
                           {%- endif -%}
                       </button>
                     </div>

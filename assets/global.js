@@ -764,11 +764,8 @@ class VariantSelects extends HTMLElement {
           responseText,
           "text/html"
         );
-        const destination = document.getElementById(
-          `price-${this.dataset.section}`
-        );
-        const source =
-          responseHTML.querySelector(".product .price").parentElement;
+        const destination = document.querySelector(".product .main-price");
+        const source = responseHTML.querySelector(".product .main-price");
         if (source && destination) destination.innerHTML = source.innerHTML;
 
         const subOneTimeDestination = document.querySelector(
