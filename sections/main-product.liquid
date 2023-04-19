@@ -142,6 +142,11 @@
             <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
               {{- product.title | escape -}}
             </h1>
+       
+<!-- Stamped - Begin badge -->
+<span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-title="{{ product.title | escape }}" data-product-type="{{ product.type }}" style="display: block;">{{ product.metafields.stamped.badge }}</span>
+<!-- Stamped - End badge -->
+ 
           {%- when 'price' -%}
             <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
               {%- render 'price', product: product, use_variant: true -%}
