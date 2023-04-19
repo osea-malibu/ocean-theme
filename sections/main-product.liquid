@@ -449,10 +449,10 @@
                       <button
                         type="submit"
                         name="add"
-                        class="product-form__submit button button-primary button-md w-full disabled:opacity-50"
+                        class="product-form__submit relative button button-primary button-md w-full disabled:opacity-50"
                         {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                       >
-                          <span class="loading-spinner relative -ml-6 hidden">
+                          <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
                             {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
                           </span>
                           <span>
@@ -463,7 +463,7 @@
                             {%- endif -%}
                           </span>
                           {%- if block.settings.atc_show_price -%}
-                            <span>{%- render 'price', product: product, use_variant: true -%}</span>
+                            {%- render 'price', product: product, use_variant: true, price_class: 'ml-auto' -%}
                           {%- endif -%}
                       </button>
                     </div>
