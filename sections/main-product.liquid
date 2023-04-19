@@ -462,6 +462,9 @@
                               {{ 'products.product.sold_out' | t }}
                             {%- endif -%}
                           </span>
+                          {%- if block.settings.atc_show_price -%}
+                            <span>{%- render 'price', product: product, use_variant: true -%}</span>
+                          {%- endif -%}
                       </button>
                     </div>
                     {%- assign product_collection_handles = product.collections | map: 'handle' -%}
@@ -727,6 +730,11 @@
           "type": "textarea",
           "id": "atc_classes",
           "label": "ATC button classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "atc_show_price",
+          "label": "Show price in button"
         }
       ]
     },
