@@ -256,7 +256,7 @@
               {%- else -%}
                 <variant-radios class="no-js-hidden block {{ block.settings.variant_classes }}" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
-                    <fieldset class="js flex flex-wrap">
+                    <fieldset class="js flex flex-wrap{% if option.name == 'Scent' %} hidden{% endif %}">
                       <legend class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</legend>
                       {%- for value in option.values -%}
                         <div>

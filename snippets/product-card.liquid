@@ -138,7 +138,7 @@
             data-update-url="false"
           >
             {%- for option in card_product.options_with_values -%}
-              <fieldset class="js flex">
+              <fieldset class="js flex{% if option.name == 'Scent' %} hidden{% endif %}">
                 <legend class="sr-only">{{ option.name }}</legend>
                 {%- for value in option.values -%}
                   <div>
