@@ -503,34 +503,7 @@
     <product-sticky-atc class="fixed z-100 inset-x-0 bottom-0 py-2.5 bg-white border-t border-seaweed-300 invisible opacity-0 transition-visibility">
       <div class="flex gap-2 justify-between items-center pl-4 sm:pl-6 pr-20 md:pr-24 xl:max-w-screen-xl xl:mx-auto min-[1400px]:pr-6">
         <h3 class="tracking-wide leading-none text-lg sr-only sm:not-sr-only">{{- product.title | escape -}}</h3>
-        <div class="relative w-full sm:w-96 flex gap-2">
-          <label class="sr-only" for="Quantity-sticky">Quantity</label>
-          <quantity-input class="quantity sticky-quantity inline-flex border border-seaweed-400 rounded-md w-36 xs:w-40">
-            <button
-              class="{{ quantity_classes }} rounded-l-md"
-              name="minus"
-              type="button"
-            >
-              <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-              {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-            </button>
-            <input
-              class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
-              type="number"
-              name="quantity"
-              id="Quantity-sticky"
-              min="1"
-              value="1"
-            >
-            <button
-              class="{{ quantity_classes }} rounded-r-md"
-              name="plus"
-              type="button"
-            >
-              <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-              {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-            </button>
-          </quantity-input>
+        <div class="relative w-full sm:w-96">
           <button
             type="submit"
             name="add"

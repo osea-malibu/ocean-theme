@@ -989,23 +989,6 @@ customElements.define("subscription-radios", SubscriptionRadios);
 class ProductStickyAtc extends HTMLElement {
   constructor() {
     super();
-
-    document
-      .querySelector(".pdp-quantity")
-      .addEventListener(
-        "change",
-        (event) =>
-          (document.querySelector(".sticky-quantity input").value =
-            event.target.value)
-      );
-    document
-      .querySelector(".sticky-quantity")
-      .addEventListener(
-        "change",
-        (event) =>
-          (document.querySelector(".pdp-quantity input").value =
-            event.target.value)
-      );
   }
 
   connectedCallback() {
