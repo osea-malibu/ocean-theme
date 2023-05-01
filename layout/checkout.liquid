@@ -16,7 +16,43 @@
     {%- render 'catch-pay' -%}
 
     {{ 'checkout.css' | asset_url | stylesheet_tag }}
-  </head>
+  
+              <script>
+                window.lsData = {};
+                window.lsData.customer = {% if customer %}{first_name: "{{ customer.first_name }}",last_name: "{{ customer.last_name }}",email: "{{ customer.email }}",customer_id: "{{ customer.id }}",id: "{{ customer.id }}",phone: "{{ customer.phone }}"};{% else %}null;{% endif %}
+                window.lsData.currency = '{{ cart.currency.iso_code }}';
+                window.lsData.collection_title = '{{ collection.title }}';
+                window.lsData.collection = {% if collection %}{{ collection.products | json }}{% else %}null{% endif %};
+                window.lsData.product = {% if product %}{{ product | json }}{% else %}null{% endif %};
+                window.lsData.cart = {% if cart %}{{ cart | json }}{% else %}null{% endif %};
+                window.lsData.checkout = {% if checkout %}
+                  {
+                    currency: "{{ checkout.currency }}",
+                    email: "{{checkout.email}}",
+                    item_count: {{checkout.item_count}},
+                    shipping_address: {{checkout.shipping_address | json}},
+                    total_price: {{checkout.total_price}},
+                    line_items: [
+                      {% for line_item in checkout.line_items %}
+                        {
+                          item_id: "{{ line_item.product_id | json }}",
+                          item_sku: {{ line_item.sku | json }},
+                          item_name: {{ line_item.product.title | json }},
+                          item_brand: {{ line_item.vendor | json }},
+                          item_category: {{ line_item.product.type | json }},
+                          item_variant: {{ line_item.variant.title | json }},
+                          price: "{{ line_item.final_price | times: 0.01 | json }}",
+                          quantity: "{{ line_item.quantity | json }}"
+                        },
+                      {% endfor %}
+                    ],
+                  }
+                {% else %}null{% endif %};
+                window.lsData.order = {% if order %}{{ order | json }}{% else %}null{% endif %};
+              </script>
+              <script async src='https://sp.stape.io/widget/script?shop={{shop.domain}}&shop_id={{shop.id}}'></script>
+            </head>
+            
   <body>
     {{ skip_to_content_link }}
 
