@@ -827,7 +827,7 @@ class VariantSelects extends HTMLElement {
     );
     if (!productForm) return;
     const addButton = productForm.querySelector('[name="add"]');
-    const addButtonText = productForm.querySelector('[name="add"] > span');
+    const addButtonText = productForm.querySelector('[name="add"] > .label');
 
     if (!addButton) return;
 
@@ -878,6 +878,49 @@ class VariantRadios extends VariantSelects {
   }
 }
 customElements.define("variant-radios", VariantRadios);
+
+class ScentCheckbox extends HTMLElement {
+  constructor() {
+    super();
+    this.scentCheckbox = this.querySelector("input");
+    this.scentRadios = document.querySelectorAll('input[name="Scent"]');
+    this.scentCheckbox.addEventListener(
+      "change",
+      this.onCheckboxChange.bind(this)
+    );
+  }
+
+  connectedCallback() {
+    this.scentCheckbox.checked = this.scentRadios[1].checked;
+    this.updateProductInfo();
+  }
+
+  onCheckboxChange() {
+    const isChecked = this.scentCheckbox.checked;
+    if (this.scentRadios.length === 2) {
+      this.scentRadios[0].checked = !isChecked;
+      this.scentRadios[1].checked = isChecked;
+      document
+        .querySelector("variant-radios")
+        .dispatchEvent(new Event("change"));
+      this.updateProductInfo();
+    }
+  }
+
+  updateProductInfo() {
+    const originalScentInfo = document.querySelectorAll(".scent-original");
+    const fragranceFreeScentInfo = document.querySelectorAll(
+      ".scent-fragrance-free"
+    );
+    originalScentInfo.forEach((i) => {
+      i.classList.toggle("hidden", this.scentRadios[1].checked);
+    });
+    fragranceFreeScentInfo.forEach((i) => {
+      i.classList.toggle("hidden", this.scentRadios[0].checked);
+    });
+  }
+}
+customElements.define("scent-checkbox", ScentCheckbox);
 
 class SubscriptionRadios extends HTMLElement {
   constructor() {

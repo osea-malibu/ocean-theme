@@ -142,9 +142,6 @@
             <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
               {{- product.title | escape -}}
             </h1>
-       
-
- 
           {%- when 'price' -%}
             <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
               {%- render 'price', product: product, use_variant: true -%}
@@ -152,12 +149,7 @@
                 <span class="ml-2 self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
               {%- endif -%}
             </div>
-      
- 
           {%- when 'rating' -%}
-
- 
-        
             {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
           {%- when 'benefits' -%}
             {%- if product.metafields.custom.benefits.value.size > 0 -%}
@@ -249,73 +241,79 @@
               </div>
             {%- endif -%}
           {%- when 'variant_picker' -%}
-            {%- unless product.has_only_default_variant -%}
-              {%- if product.variants.size == 1 -%}
-                {%- for option in product.options_with_values -%}
-                  <div class="{{ block.settings.variant_classes }}">
+            <div class="{{ block.settings.variant_classes }}">
+              {%- unless product.has_only_default_variant -%}
+                {%- if product.variants.size == 1 -%}
+                  {%- for option in product.options_with_values -%}
                     <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
                     {%- for value in option.values -%}
                       <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-1">
                         {{ value }}
                       </div>
                     {%- endfor -%}
-                  </div>
-                {%- endfor -%}
-              {%- else -%}
-                <variant-radios class="no-js-hidden block {{ block.settings.variant_classes }}" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
-                  {%- for option in product.options_with_values -%}
-                    
-                    <fieldset class="js flex flex-wrap">
-                      <legend class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</legend>
-                      {%- for value in option.values -%}
-                        <div>
-                          <input type="radio"
-                            id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                            class="peer hidden"
-                            name="{{ option.name }}"
-                            value="{{ value | escape }}"
-                            form="{{ product_form_id }}"
-                            {% if option.selected_value == value %}checked{% endif %}
-                          >
-                          <label
-                            class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1{% if option.name == 'Scent' %} tracking-wide normal-case{% else %} lowercase{% endif %}"
-                            for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                          >
-                            {{ value }}
-                          </label>
-                        </div>
-                      {%- endfor -%}
-                    </fieldset>
-                  
                   {%- endfor -%}
-                  <script type="application/json">
-                    {{ product.variants | json }}
-                  </script>
-                </variant-radios>
-              {%- endif -%}
-            {%- endunless -%}
-
-            <noscript class="product-form__noscript-wrapper-{{ section.id }}">
-              <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
-                <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
-                <div class="select">
-                  <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
-                    {%- for variant in product.variants -%}
-                      <option
-                        {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-                        {% if variant.available == false %}disabled{% endif %}
-                        value="{{ variant.id }}"
-                      >
-                        {{ variant.title }}
-                        {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
-                        - {{ variant.price | money | strip_html }}
-                      </option>
+                {%- else -%}
+                  <variant-radios class="no-js-hidden block" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                    {%- for option in product.options_with_values -%}
+                      <fieldset class="js flex flex-wrap{% if option.name == 'Scent' %} sr-only{% endif %}">
+                        <legend class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</legend>
+                        {%- for value in option.values -%}
+                          <div>
+                            <input type="radio"
+                              id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                              class="peer hidden"
+                              name="{{ option.name }}"
+                              value="{{ value | escape }}"
+                              form="{{ product_form_id }}"
+                              {% if option.selected_value == value %}checked{% endif %}
+                            >
+                            <label
+                              class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1 lowercase"
+                              for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                            >
+                              {{ value }}
+                            </label>
+                          </div>
+                        {%- endfor -%}
+                      </fieldset>
                     {%- endfor -%}
-                  </select>
-                  {% render 'icon-caret', classes: 'w-4 h-4' %}
+                    <script type="application/json">
+                      {{ product.variants | json }}
+                    </script>
+                  </variant-radios>
+                  {% comment %} Convert scent variant to checkbox {% endcomment %}
+                  {%- assign option_names = product.options_with_values | map: 'name' -%}
+                  {%- if option_names contains 'Scent' -%}
+                    <scent-checkbox class="flex items-center mt-1">
+                      <input type="checkbox" class="mr-2" id="ScentVariant">
+                      <label class="font-medium tracking-wide text-sm" for="ScentVariant">Fragrance free</label>
+                    </scent-checkbox>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endunless -%}
+
+              <noscript class="product-form__noscript-wrapper-{{ section.id }}">
+                <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+                  <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+                  <div class="select">
+                    <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
+                      {%- for variant in product.variants -%}
+                        <option
+                          {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                          {% if variant.available == false %}disabled{% endif %}
+                          value="{{ variant.id }}"
+                        >
+                          {{ variant.title }}
+                          {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                          - {{ variant.price | money | strip_html }}
+                        </option>
+                      {%- endfor -%}
+                    </select>
+                    {% render 'icon-caret', classes: 'w-4 h-4' %}
+                  </div>
                 </div>
-              </div>
-            </noscript>
+              </noscript>
+            </div>
 
             {% if product.type contains 'Gift Card' %}
               <!-- ShopKeeper Gift Card -->
@@ -465,7 +463,7 @@
                           <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
                             {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
                           </span>
-                          <span>
+                          <span class="label">
                             {%- if product.selected_or_first_available_variant.available -%}
                               {{ 'products.product.add_to_cart' | t }}
                             {%- else -%}
