@@ -675,11 +675,13 @@ class VariantSelects extends HTMLElement {
       this.toggleAddButton(true, "", true);
       this.setUnavailable();
     } else {
-      if (
-        window.location.pathname.includes("/products/") &&
-        this.currentVariant.selling_plan_allocations.length > 0
-      ) {
-        this.updateSubscription();
+      if (window.location.pathname.includes("/products/")) {
+        if (this.currentVariant.selling_plan_allocations.length > 0) {
+          this.toggleInfoVisibility("subscription-radios", "h-28");
+        }
+        if (this.currentVariant.options.length > 1) {
+          this.toggleInfoVisibility("scent-checkbox", "h-5");
+        }
       }
       this.updateMedia();
       this.updateURL();
@@ -793,7 +795,7 @@ class VariantSelects extends HTMLElement {
       });
   }
 
-  updateSubscription() {
+  isTravelOrExclusion() {
     let isTravelSized = false;
     if (
       ["dayglow-face-oil", "essential-hydrating-oil-1"].includes(
@@ -802,23 +804,28 @@ class VariantSelects extends HTMLElement {
     ) {
       isTravelSized = this.currentVariant.title === "0.34 oz";
     } else {
-      isTravelSized = ["1.7 oz", "1 oz", "0.6 oz", "0.22 oz"].includes(
-        this.currentVariant.title
-      );
+      isTravelSized = [
+        "1.7 oz",
+        "1 oz",
+        "0.6 oz",
+        "0.22 oz",
+        "1 oz / Original",
+      ].includes(this.currentVariant.title);
     }
+    const isExclusion = ["UAO-1", "UAO-H22"].includes(this.currentVariant.sku);
 
+    return isTravelSized || isExclusion;
+  }
+
+  toggleInfoVisibility(element, heightClass) {
     this.renderProductInfo();
 
-    if (
-      isTravelSized ||
-      ["UAO-1", "UAO-H22"].includes(this.currentVariant.sku)
-    ) {
-      document.querySelector("subscription-radios").classList.add("h-0");
-      document.querySelector("subscription-radios").classList.remove("h-28");
-    } else {
-      document.querySelector("subscription-radios").classList.remove("h-0");
-      document.querySelector("subscription-radios").classList.add("h-28");
-    }
+    document
+      .querySelector(element)
+      .classList.toggle("h-0", this.isTravelOrExclusion());
+    document
+      .querySelector(element)
+      .classList.toggle(heightClass, !this.isTravelOrExclusion());
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
