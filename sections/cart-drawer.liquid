@@ -28,9 +28,7 @@
           assign remaining_amount_money = remaining_amount | money
           assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
           assign gwp_button_id = tier1_product.selected_or_first_available_variant.id
-
-          assign gwp_image_src = settings.gwp_tier1_product.featured_media | image_url: width: 64
-          assign gwp_image_src_2x = settings.gwp_tier1_product.featured_media | image_url: width: 128
+          assign gwp_image_src = settings.gwp_tier1_product.featured_media | image_url: width: 128
 
           if cart_ids contains tier3_product.id
             assign hide_gwp = true
@@ -41,8 +39,7 @@
               assign remaining_amount_money = remaining_amount | money
               assign countdown_text = settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - '
               assign gwp_button_id = tier3_product.selected_or_first_available_variant.id
-              assign gwp_image_src = settings.gwp_tier3_product.featured_media | image_url: width: 64
-              assign gwp_image_src_2x = settings.gwp_tier3_product.featured_media | image_url: width: 128
+              assign gwp_image_src = settings.gwp_tier3_product.featured_media | image_url: width: 128
             else 
               assign hide_gwp = true
             endif
@@ -53,8 +50,7 @@
               assign remaining_amount_money = remaining_amount | money
               assign countdown_text = settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - '
               assign gwp_button_id = tier2_product.selected_or_first_available_variant.id
-              assign gwp_image_src = settings.gwp_tier2_product.featured_media | image_url: width: 64
-              assign gwp_image_src_2x = settings.gwp_tier2_product.featured_media | image_url: width: 128
+              assign gwp_image_src = settings.gwp_tier2_product.featured_media | image_url: width: 128
             else
               assign hide_gwp = true
             endif
@@ -65,23 +61,10 @@
           <gift-with-purchase-banner class="block bg-seafoam-100">
             <figure class="flex items-center max-w-md pl-6 pr-8 xs:pr-6 mx-auto gap-2">
               {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-              <img
-                srcset="{% render 'imgix', src: gwp_image_src_2x %} 2x, {% render 'imgix', src: gwp_image_src %} 1x"
-                src="{% render 'imgix', src: gwp_image_src_2x %}"
-                alt="Image of your free gift"
-                loading="lazy"
-                width="64"
-                height="82"
-              >
+              <img src="{% render 'imgix', src: gwp_image_src %}" alt="Image of your free gift" loading="lazy" width="64" height="82">
               {% comment %} theme-check-enable RemoteAsset {% endcomment %}
               <figcaption>
-                <h3 class="leading-tight">
-                  {%- if remaining_amount > 0 -%}
-                    {{ countdown_text }}
-                  {%- else -%}
-                    {{ settings.gwp_success_text }}
-                  {%- endif -%}
-                </h3>
+                <h3 class="leading-tight">{% if remaining_amount > 0 %}{{ countdown_text }}{% else %}{{ settings.gwp_success_text }}{% endif %}</h3>
                 {%- liquid
                   assign show_gwp_atc = false
                   if settings.gwp_type == 'banner'
@@ -93,11 +76,7 @@
                   endif
                 -%}
                 {%- if remaining_amount <= 0 and show_gwp_atc -%}
-                  <button
-                    class="button button-xs button-secondary mt-1"
-                    id="GwpButton"
-                    data-id="{{ gwp_button_id }}"
-                  >Add to cart</button>
+                  <button class="button button-xs button-secondary mt-1" id="GwpButton" data-id="{{ gwp_button_id }}">Add to cart</button>
                 {%- endif -%}
               </figcaption>
             </figure>
@@ -392,9 +371,7 @@
 
                             <td class="cart-item__totals p-0 [grid-area:price]" role="cell" headers="CartDrawer-ColumnTotal">
                               <div class="flex items-center justify-end h-full">
-                                <div class="loading-spinner hidden mr-2">
-                                  {% render 'icon-spinner', classes: 'w-4 h-4 text-wave-800' %}
-                                </div>
+                                <div class="loading-spinner hidden mr-2">{% render 'icon-spinner', classes: 'w-4 h-4 text-wave-800' %}</div>
                                 <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity">
                                   {%- if item.selling_plan_allocation != nil -%}
                                     <div class="flex">
@@ -473,7 +450,6 @@
               assign only_gc_in_cart = false
             endif
           -%}
-
           {% comment %} Printed gift note {% endcomment %}
           {%- if settings.enable_printed_gift_note and only_gc_in_cart == false -%}
             <printed-gift-note>
@@ -545,10 +521,7 @@
             {%- if settings.show_cart_note -%}
               <details id="Details-CartDrawer mb-4">
                 <summary>
-                  <span class="flex gap-1 items-center">
-                    {{ 'sections.cart.note' | t }}
-                    {% render 'icon-caret', classes: 'w-4 h-4' %}
-                  </span>
+                  <span class="flex gap-1 items-center">{{ 'sections.cart.note' | t }}{% render 'icon-caret', classes: 'w-4 h-4' %}</span>
                 </summary>
                 <cart-note class="cart__note field">
                   <label class="sr-only" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
@@ -563,7 +536,6 @@
                 <h3>{{ 'sections.cart.subtotal' | t }}</h3>
                 <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p>
               </div>
-
               <div>
                 {%- if cart.cart_level_discount_applications.size > 0 -%}
                   <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
@@ -592,14 +564,12 @@
                 form="CartDrawer-Form"
                 {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
-
             <catch-callout
               id="catch-callout-minicart"
               price="{{ cart.total_price | money_without_currency | times: 100 | ceil }}"
               page-type="mini-cart"
               border-style="none-no-padding">
             </catch-callout>
-
             <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
               {%- if settings.cart_disclaimer != blank -%}{{ settings.cart_disclaimer }}{%- endif -%}
             </small>
