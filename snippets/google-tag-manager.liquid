@@ -9,15 +9,16 @@
     gtag('js', new Date());
     gtag('config', 'AW-873848209');
     gtag('config', 'G-P6YCF1X0QF');
-    {% comment %} gtag('config', 'G-P6YCF1X0QF', {
-      transport_url: 'https://gtm-m9x5757-zwe3m.uc.r.appspot.com',
-      'first_party_collection': true,
-    }); {% endcomment %}
-    {% comment %} //get channel data from url params and add to datalayer
-    const urlParams = new URLSearchParams(window.location.search);
-    const utmSource = urlParams.get('utm_source');
-    const utmMedium = urlParams.get('utm_medium');
-    const utmCampaign = urlParams.get('utm_campaign');
+  </script>
+  <meta name="google-site-verification" content="MiznO-EUjv83C_HVxjqNIOhz2buimAl8rv6hmJarl94" />
+<!-- End Global site tag (gtag.js) - Google Ads: 873848209 -->
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const utmSource = urlParams.get('utm_source');
+  const utmMedium = urlParams.get('utm_medium');
+  const utmCampaign = urlParams.get('utm_campaign');
+  if (utmSource || utmMedium || utmCampaign) {
     let channel = "";
     if (utmSource === "tiktok_ad") channel = "Purchase_TikTok"
     else if (utmSource === "pinterest-ad") channel = "Purchase_Pinterest"
@@ -33,35 +34,8 @@
       else if (utmCampaign.includes("youtube")) channel = "Purchase_Google-Youtube"
       else if (utmCampaign.includes("Pmax")) channel = "Purchase_Google-Shopping"
       else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Purchase_Google-Display"
-    };
-    gtag('channel', channel); {% endcomment %}
-  </script>
-  <meta name="google-site-verification" content="MiznO-EUjv83C_HVxjqNIOhz2buimAl8rv6hmJarl94" />
-<!-- End Global site tag (gtag.js) - Google Ads: 873848209 -->
-
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const utmSource = urlParams.get('utm_source');
-    const utmMedium = urlParams.get('utm_medium');
-    const utmCampaign = urlParams.get('utm_campaign');
-    if (utmSource || utmMedium || utmCampaign) {
-      let channel = "";
-      if (utmSource === "tiktok_ad") channel = "Purchase_TikTok"
-      else if (utmSource === "pinterest-ad") channel = "Purchase_Pinterest"
-      else if (utmSource === "tiktok") channel = "Purchase_Organic-TikTok"
-      else if (utmSource === "likeshop") channel = "Purchase_Organic-IG"
-      else if (utmSource === "refersion") channel = "Purchase_Affiliate-Refersion"
-      else if (utmSource === "shareasale") channel = "Purchase_Affiliate-Shareasale"
-      else if (utmMedium === "email") channel = "Purchase_Email"
-      else if (utmMedium === "sms") channel = "Purchase_SMS"
-      else if (utmSource === "google") {
-        if (utmCampaign.includes("nonbrand")) channel = "Purchase_Google-NonBranded"
-        else if (utmCampaign.includes("brand")) channel = "Purchase_Google-Branded"
-        else if (utmCampaign.includes("youtube")) channel = "Purchase_Google-Youtube"
-        else if (utmCampaign.includes("Pmax")) channel = "Purchase_Google-Shopping"
-        else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Purchase_Google-Display"
-      }
-      else channel = 'Other';
-      localStorage.setItem('utm_source', channel);
     }
+    else channel = 'Other';
+    localStorage.setItem('utm_source', channel);
+  }
 </script>
