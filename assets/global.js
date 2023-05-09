@@ -692,7 +692,6 @@ class VariantSelects extends HTMLElement {
   }
 
   updateOptions() {
-    console.log("update options");
     this.options = Array.from(
       this.querySelectorAll("select"),
       (select) => select.value
@@ -700,7 +699,6 @@ class VariantSelects extends HTMLElement {
   }
 
   updateMasterId() {
-    console.log("update master id");
     this.currentVariant = this.getVariantData().find((variant) => {
       return !variant.options
         .map((option, index) => {
@@ -762,7 +760,6 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
-    console.log("render product info");
     fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
       .then((response) => response.text())
       .then((responseText) => {
@@ -833,7 +830,6 @@ class VariantSelects extends HTMLElement {
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
-    console.log("toggle add button");
     const productForm = document.getElementById(
       `product-form-${this.dataset.section}`
     );
@@ -868,7 +864,6 @@ class VariantSelects extends HTMLElement {
   }
 
   getVariantData() {
-    console.log("get variant data");
     this.variantData =
       this.variantData ||
       JSON.parse(this.querySelector('[type="application/json"]').textContent);
