@@ -868,6 +868,7 @@ class VariantSelects extends HTMLElement {
   }
 
   getVariantData() {
+    console.log("get variant data");
     this.variantData =
       this.variantData ||
       JSON.parse(this.querySelector('[type="application/json"]').textContent);
