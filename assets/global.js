@@ -833,6 +833,7 @@ class VariantSelects extends HTMLElement {
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
+    console.log("toggle add button");
     const productForm = document.getElementById(
       `product-form-${this.dataset.section}`
     );
