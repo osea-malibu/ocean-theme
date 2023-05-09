@@ -32,18 +32,20 @@
 {%- endif -%}
 
 {%- if promo_tile_video_portrait != blank -%}
-  <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
-    {%- for source in promo_tile_video_portrait.value.sources -%}
-      <source src="{{ source.url }}" type="video/{{ source.format }}" />
-    {%- endfor -%}
-    <img
-      src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}"
-      alt=""
-      width="{{ promo_tile_video_portrait.value.preview_image.width }}"
-      height="{{ promo_tile_video_portrait.value.preview_image.width | divided_by: promo_tile_video_portrait.value.preview_image.aspect_ratio | round }}"
-      loading=lazy
-    >
-  </video>
+  <div class="block h-full relative">
+    <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
+      {%- for source in promo_tile_video_portrait.value.sources -%}
+        <source src="{{ source.url }}" type="video/{{ source.format }}" />
+      {%- endfor -%}
+      <img
+        src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}"
+        alt=""
+        width="{{ promo_tile_video_portrait.value.preview_image.width }}"
+        height="{{ promo_tile_video_portrait.value.preview_image.width | divided_by: promo_tile_video_portrait.value.preview_image.aspect_ratio | round }}"
+        loading=lazy
+      >
+    </video>
+  </div>
 {%- endif -%}
 
 {% comment %} {%- if promo_tile_video_portrait != blank -%}
