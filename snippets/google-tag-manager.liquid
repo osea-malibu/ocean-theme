@@ -60,7 +60,7 @@
         else if (utmCampaign.includes("youtube")) channel = "Purchase_Google-Youtube"
         else if (utmCampaign.includes("Pmax")) channel = "Purchase_Google-Shopping"
         else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Purchase_Google-Display"
-      };
+      }
       else
         channel = 'Other';
       localStorage.setItem('utm_source', channel);
