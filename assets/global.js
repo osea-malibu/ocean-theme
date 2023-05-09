@@ -692,6 +692,7 @@ class VariantSelects extends HTMLElement {
   }
 
   updateOptions() {
+    console.log("update options");
     this.options = Array.from(
       this.querySelectorAll("select"),
       (select) => select.value
@@ -853,6 +854,7 @@ class VariantSelects extends HTMLElement {
   }
 
   setUnavailable() {
+    console.log("set unavailable");
     const button = document.getElementById(
       `product-form-${this.dataset.section}`
     );
