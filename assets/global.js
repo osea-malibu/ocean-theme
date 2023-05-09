@@ -699,6 +699,7 @@ class VariantSelects extends HTMLElement {
   }
 
   updateMasterId() {
+    console.log("update master id");
     this.currentVariant = this.getVariantData().find((variant) => {
       return !variant.options
         .map((option, index) => {
@@ -760,6 +761,7 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
+    console.log("render product info");
     fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
       .then((response) => response.text())
       .then((responseText) => {
