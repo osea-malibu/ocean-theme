@@ -706,6 +706,7 @@ class VariantSelects extends HTMLElement {
         })
         .includes(false);
     });
+    console.log("this.currentVariant", this.currentVariant);
   }
 
   updateMedia() {
