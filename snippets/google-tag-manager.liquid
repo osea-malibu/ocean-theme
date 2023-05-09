@@ -13,7 +13,7 @@
   <meta name="google-site-verification" content="MiznO-EUjv83C_HVxjqNIOhz2buimAl8rv6hmJarl94" />
 <!-- End Global site tag (gtag.js) - Google Ads: 873848209 -->
 
-<script>
+{% comment %} <script>
   const urlParams = new URLSearchParams(window.location.search);
   const utmSource = urlParams.get('utm_source');
   const utmMedium = urlParams.get('utm_medium');
@@ -38,4 +38,4 @@
     else channel = 'Other';
     localStorage.setItem('osea.utm_channel', channel);
   }
-</script>
+</script> {% endcomment %}
