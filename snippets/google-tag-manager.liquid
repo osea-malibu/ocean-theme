@@ -61,6 +61,7 @@
         else if (utmCampaign.includes("Pmax")) channel = "Purchase_Google-Shopping"
         else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Purchase_Google-Display"
       };
+      else if (channel == "") {channel = "Other"}
       localStorage.setItem('utm_source', channel);
     }
 </script>
