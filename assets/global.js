@@ -699,6 +699,7 @@ class VariantSelects extends HTMLElement {
   }
 
   updateMasterId() {
+    console.log("update master id");
     console.log("this.getVariantData()", this.getVariantData());
     this.currentVariant = this.getVariantData().find((variant) => {
       return !variant.options
@@ -869,7 +870,7 @@ class VariantSelects extends HTMLElement {
     console.log("get variant data");
     console.log(
       "this.variantData",
-      this.querySelector('[type="application/json"]')
+      this.querySelector('[type="application/json"]').textContent
     );
     this.variantData =
       this.variantData ||
