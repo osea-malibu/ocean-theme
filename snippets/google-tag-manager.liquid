@@ -44,8 +44,8 @@
     const utmSource = urlParams.get('utm_source');
     const utmMedium = urlParams.get('utm_medium');
     const utmCampaign = urlParams.get('utm_campaign');
+    let channel;
     if (utmSource || utmMedium || utmCampaign) {
-      let channel = "";
       if (utmSource === "tiktok_ad") channel = "Purchase_TikTok"
       else if (utmSource === "pinterest-ad") channel = "Purchase_Pinterest"
       else if (utmSource === "tiktok") channel = "Purchase_Organic-TikTok"
