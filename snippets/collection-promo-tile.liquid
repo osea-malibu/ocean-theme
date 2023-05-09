@@ -33,7 +33,7 @@
 
 {%- if promo_tile_video_portrait != blank -%}
   <div class="block h-full relative">
-    <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
+    <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
       {%- for source in promo_tile_video_portrait.value.sources -%}
         <source src="{{ source.url }}" type="video/{{ source.format }}" />
       {%- endfor -%}
