@@ -870,7 +870,7 @@ class VariantSelects extends HTMLElement {
     console.log("get variant data");
     console.log(
       "this.variantData",
-      this.querySelector('[type="application/json"]').textContent
+      this.querySelector('[type="application/json"]')
     );
     this.variantData =
       this.variantData ||
