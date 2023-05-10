@@ -20,20 +20,20 @@
   const utmCampaign = urlParams.get('utm_campaign');
   if (utmSource || utmMedium || utmCampaign) {
     let channel = "";
-    if (utmSource === "tiktok_ad") channel = "Purchase_TikTok"
-    else if (utmSource === "pinterest-ad") channel = "Purchase_Pinterest"
-    else if (utmSource === "tiktok") channel = "Purchase_Organic-TikTok"
-    else if (utmSource === "likeshop") channel = "Purchase_Organic-IG"
-    else if (utmSource === "refersion") channel = "Purchase_Affiliate-Refersion"
-    else if (utmSource === "shareasale") channel = "Purchase_Affiliate-Shareasale"
-    else if (utmMedium === "email") channel = "Purchase_Email"
-    else if (utmMedium === "sms") channel = "Purchase_SMS"
+    if (utmSource === "tiktok_ad") channel = "TikTok"
+    else if (utmSource === "pinterest-ad") channel = "Pinterest"
+    else if (utmSource === "tiktok") channel = "Organic-TikTok"
+    else if (utmSource === "likeshop") channel = "Organic-IG"
+    else if (utmSource === "refersion") channel = "Affiliate-Refersion"
+    else if (utmSource === "shareasale") channel = "Affiliate-Shareasale"
+    else if (utmMedium === "email") channel = "Email"
+    else if (utmMedium === "sms") channel = "SMS"
     else if (utmSource === "google") {
-      if (utmCampaign.includes("nonbrand")) channel = "Purchase_Google-NonBranded"
-      else if (utmCampaign.includes("brand")) channel = "Purchase_Google-Branded"
-      else if (utmCampaign.includes("youtube")) channel = "Purchase_Google-Youtube"
-      else if (utmCampaign.includes("Pmax")) channel = "Purchase_Google-Shopping"
-      else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Purchase_Google-Display"
+      if (utmCampaign.includes("nonbrand")) channel = "Google-NonBranded"
+      else if (utmCampaign.includes("brand")) channel = "Google-Branded"
+      else if (utmCampaign.includes("youtube")) channel = "Google-Youtube"
+      else if (utmCampaign.includes("Pmax")) channel = "Google-Shopping"
+      else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Google-Display"
     }
     else channel = 'Other';
     localStorage.setItem('osea.utm_channel', channel);
