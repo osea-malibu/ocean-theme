@@ -818,25 +818,25 @@
         "1de914e1-b487-4920-b259-199556a7ba66": {
           "type": "column",
           "settings": {
-            "column_classes": "relative sm:w-1\/2 bg-center h-60 sm:h-auto",
+            "column_classes": "relative sm:w-1\/2 bg-center h-60 sm:h-auto flex items-center",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "",
             "image_wrapper_classes": "",
-            "text_classes": "text-center",
+            "text_classes": "text-center max-w-md mx-auto",
             "heading": "<b class=\"badge px-2\">Save $30<\/b> When You Shop the Bundle",
             "heading_classes": "text-4xl font-medium mb-4 tracking-wide",
             "paragraph": "Plus <b class=\"uppercase\">free shipping<\/b>",
             "paragraph_classes": "text-lg font-medium tracking-wide",
-            "button_label": "",
+            "button_label": "Add to bag",
             "button_aria_label": "",
             "link": "",
             "target_blank": false,
-            "button_classes": "",
+            "button_classes": "button-tertiary max-w-xs mx-auto",
             "button_icon": "",
-            "is_atc_button": false,
+            "is_atc_button": true,
             "is_subscription": false,
-            "atc_button_product": "",
+            "atc_button_product": "body-glow-trio",
             "show_variants": false,
             "variant_picker_type": "button",
             "variant_classes": "",
@@ -849,6 +849,7 @@
         },
         "351e77c4-21a2-4382-a0bf-e528651aa396": {
           "type": "product",
+          "disabled": true,
           "settings": {
             "column_classes": "flex-1 sm:w-1\/2 max-w-xs mx-auto",
             "product": "body-glow-trio",
@@ -862,11 +863,45 @@
             "show_benefits": false,
             "subscription": false
           }
+        },
+        "47d966be-f66d-4fa2-beed-0c70a523d8b5": {
+          "type": "column",
+          "settings": {
+            "column_classes": "block max-w-xs w-full sm:w-1\/2",
+            "image": "shopify:\/\/shop_images\/OSEA_TBGT_lifestyle-image-1.jpg",
+            "is_bg_image": false,
+            "image_link": "shopify:\/\/products\/body-glow-trio",
+            "image_classes": "block",
+            "image_wrapper_classes": "block",
+            "text_classes": "-mt-20",
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "button-tertiary",
+            "button_icon": "",
+            "is_atc_button": true,
+            "is_subscription": false,
+            "atc_button_product": "body-glow-trio",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": ""
+          }
         }
       },
       "block_order": [
         "1de914e1-b487-4920-b259-199556a7ba66",
-        "351e77c4-21a2-4382-a0bf-e528651aa396"
+        "351e77c4-21a2-4382-a0bf-e528651aa396",
+        "47d966be-f66d-4fa2-beed-0c70a523d8b5"
       ],
       "settings": {
         "section_heading": "",
