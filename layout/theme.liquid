@@ -22,13 +22,13 @@
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
-    {% comment %}
-         {% liquid
-          render 'meta-tags'
-          render 'google-tag-manager'
-          render 'northbeam'
-        %}
-    {% endcomment %}
+    
+    {% liquid
+      render 'meta-tags'
+      render 'google-tag-manager'
+      render 'northbeam'
+    %}
+    
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
 
