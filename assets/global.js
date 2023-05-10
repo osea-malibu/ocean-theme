@@ -665,6 +665,23 @@ class VariantSelects extends HTMLElement {
     this.addEventListener("change", this.onVariantChange);
   }
 
+  connectedCallback() {
+    this.updateOptions();
+    this.updateMasterId();
+
+    if (
+      this.currentVariant &&
+      window.location.pathname.includes("/products/")
+    ) {
+      if (this.currentVariant.selling_plan_allocations.length > 0) {
+        this.toggleInfoVisibility("subscription-radios", "h-28");
+      }
+      if (this.currentVariant.options.length > 1) {
+        this.toggleInfoVisibility("scent-checkbox", "h-5");
+      }
+    }
+  }
+
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
