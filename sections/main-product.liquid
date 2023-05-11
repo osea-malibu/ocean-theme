@@ -315,8 +315,10 @@
                   {%- assign option_names = product.options_with_values | map: 'name' -%}
                   {%- if option_names contains 'Scent' -%}
                     <scent-checkbox class="flex items-center mt-1 motion-safe:transition-max-height overflow-hidden{% if is_travel_or_exclusion %} max-h-0{% endif %}">
-                      <input type="checkbox" class="mr-2" id="ScentVariant">
-                      <label class="font-medium tracking-wide text-sm" for="ScentVariant">Fragrance free</label>
+                      <div class="p-1">
+                        <input type="checkbox" class="mr-2" id="ScentVariant">
+                        <label class="font-medium tracking-wide text-sm" for="ScentVariant">Fragrance free</label>
+                      </div>
                     </scent-checkbox>
                   {%- endif -%}
                 {%- endif -%}
@@ -372,7 +374,7 @@
                 class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }}{% if is_travel_or_exclusion %} max-h-0{% endif %}"
                 data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
               >
-                <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden">
+                <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
                   <legend class="sr-only">Purchase options</legend>
                   {%- for option in purchase_options -%}
                     <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">

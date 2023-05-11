@@ -677,7 +677,7 @@ class VariantSelects extends HTMLElement {
         this.toggleInfoVisibility("subscription-radios", "max-h-44");
       }
       if (this.currentVariant.options.length > 1) {
-        this.toggleInfoVisibility("scent-checkbox", "h-5");
+        this.toggleInfoVisibility("scent-checkbox", "max-h-6");
       }
     }
   }
@@ -697,7 +697,7 @@ class VariantSelects extends HTMLElement {
           this.toggleInfoVisibility("subscription-radios", "max-h-44");
         }
         if (this.currentVariant.options.length > 1) {
-          this.toggleInfoVisibility("scent-checkbox", "max-h-5");
+          this.toggleInfoVisibility("scent-checkbox", "max-h-6");
         }
       }
       this.updateMedia();
