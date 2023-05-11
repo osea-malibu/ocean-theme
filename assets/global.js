@@ -674,7 +674,7 @@ class VariantSelects extends HTMLElement {
       window.location.pathname.includes("/products/")
     ) {
       if (this.currentVariant.selling_plan_allocations.length > 0) {
-        this.toggleInfoVisibility("subscription-radios", "h-28");
+        this.toggleInfoVisibility("subscription-radios", "max-h-44");
       }
       if (this.currentVariant.options.length > 1) {
         this.toggleInfoVisibility("scent-checkbox", "h-5");
@@ -694,10 +694,10 @@ class VariantSelects extends HTMLElement {
     } else {
       if (window.location.pathname.includes("/products/")) {
         if (this.currentVariant.selling_plan_allocations.length > 0) {
-          this.toggleInfoVisibility("subscription-radios", "h-28");
+          this.toggleInfoVisibility("subscription-radios", "max-h-44");
         }
         if (this.currentVariant.options.length > 1) {
-          this.toggleInfoVisibility("scent-checkbox", "h-5");
+          this.toggleInfoVisibility("scent-checkbox", "max-h-5");
         }
       }
       this.updateMedia();
@@ -805,6 +805,12 @@ class VariantSelects extends HTMLElement {
         if (subAutoSource && subAutoDestination)
           subAutoDestination.innerHTML = subAutoSource.innerHTML;
 
+        const benefitsDestination =
+          document.querySelector(".product .benefits");
+        const benefitsSource = responseHTML.querySelector(".product .benefits");
+        if (benefitsSource && benefitsDestination)
+          benefitsDestination.innerHTML = benefitsSource.innerHTML;
+
         this.toggleAddButton(
           !this.currentVariant.available,
           window.variantStrings.soldOut
@@ -826,7 +832,7 @@ class VariantSelects extends HTMLElement {
         "1 oz",
         "0.6 oz",
         "0.22 oz",
-        "1 oz / Original",
+        "1 oz / Scented",
       ].includes(this.currentVariant.title);
     }
     const isExclusion = ["UAO-1", "UAO-H22"].includes(this.currentVariant.sku);
@@ -839,7 +845,7 @@ class VariantSelects extends HTMLElement {
 
     document
       .querySelector(element)
-      .classList.toggle("h-0", this.isTravelOrExclusion());
+      .classList.toggle("max-h-0", this.isTravelOrExclusion());
     document
       .querySelector(element)
       .classList.toggle(heightClass, !this.isTravelOrExclusion());
@@ -932,7 +938,7 @@ class ScentCheckbox extends HTMLElement {
   }
 
   updateProductInfo() {
-    const originalScentInfo = document.querySelectorAll(".scent-original");
+    const originalScentInfo = document.querySelectorAll(".scent-scented");
     const fragranceFreeScentInfo = document.querySelectorAll(
       ".scent-fragrance-free"
     );
@@ -1034,7 +1040,9 @@ class SubscriptionRadios extends HTMLElement {
     const currentPrice = currentTarget
       .closest(".purchase-option")
       .querySelector(".price");
-    const mainPrice = document.querySelector(".main-price .price");
+    const mainPrice = document.querySelector(".main-price.price");
+    console.log("currentTarget", currentTarget);
+    console.log("mainPrice", mainPrice);
 
     mainPrice.innerHTML = currentPrice.innerHTML;
   }

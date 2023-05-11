@@ -140,6 +140,11 @@
               assign is_travel_or_exclusion = true
             endif
           endif
+
+          assign is_fragrance_free = false
+          if product.options contains 'Scent' and product.selected_or_first_available_variant.title contains 'Fragrance free'
+            assign is_fragrance_free = true
+          endif
         -%}
 
         {%- for block in section.blocks -%}
@@ -167,8 +172,22 @@
             {%- if product.metafields.custom.benefits.value.size > 0 -%}
               <div class="{{ block.settings.benefits_classes }}">
                 <h2 class="font-medium tracking-wide mb-2{% if block.settings.hide_label %} sr-only{% endif %}">Benefits</h2>
-                <ul class="flex">
-                  {%- for benefit in product.metafields.custom.benefits.value limit: 4 -%}
+                <ul class="benefits flex">
+                  {%- if is_fragrance_free -%}
+                    <li class="w-24 flex flex-start">
+                      <div class="flex flex-col items-center">
+                        {%- render 'icon-benefit', icon: 'fragrance-free', stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
+                        <span class="text-center text-sm font-book leading-none">Fragrance<br><span class="tracking-wide">free</span></span>
+                      </div>
+                    </li>
+                  {%- endif -%}
+                  {%- liquid
+                    assign benefit_limit = 4
+                    if is_fragrance_free
+                      assign benefit_limit = 3
+                    endif
+                  -%}
+                  {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
                     <li class="w-24 flex flex-start">
                       <div class="flex flex-col items-center">
                         {%- assign benefit_icon = benefit | handle -%}
@@ -185,7 +204,6 @@
                 </ul>
               </div>
             {%- endif -%}
-
           {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
@@ -296,7 +314,7 @@
                   {% comment %} Convert scent variant to checkbox {% endcomment %}
                   {%- assign option_names = product.options_with_values | map: 'name' -%}
                   {%- if option_names contains 'Scent' -%}
-                    <scent-checkbox class="flex items-center mt-1 motion-safe:transition-height overflow-hidden{% if is_travel_or_exclusion %} h-0{% endif %}">
+                    <scent-checkbox class="flex items-center mt-1 motion-safe:transition-max-height overflow-hidden{% if is_travel_or_exclusion %} max-h-0{% endif %}">
                       <input type="checkbox" class="mr-2" id="ScentVariant">
                       <label class="font-medium tracking-wide text-sm" for="ScentVariant">Fragrance free</label>
                     </scent-checkbox>
@@ -326,7 +344,6 @@
                 </div>
               </noscript>
             </div>
-
             {% if product.type contains 'Gift Card' %}
               <!-- ShopKeeper Gift Card -->
               <gift-card-fields class="col-span-12">
@@ -352,7 +369,7 @@
             {%- unless product.selling_plan_groups.size == 0 -%}
               {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
               <subscription-radios
-                class="subscription motion-safe:transition-height overflow-hidden {{ block.settings.subscription_classes }}{% if is_travel_or_exclusion %} h-0{% endif %}"
+                class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }}{% if is_travel_or_exclusion %} max-h-0{% endif %}"
                 data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
               >
                 <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden">
