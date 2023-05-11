@@ -34,12 +34,7 @@ function trapFocus(container, elementToFocus = container) {
   removeTrapFocus();
 
   trapFocusHandlers.focusin = (event) => {
-    if (
-      event.target !== container &&
-      event.target !== last &&
-      event.target !== first
-    )
-      return;
+    if (event.target !== container && event.target !== last && event.target !== first) return;
 
     document.addEventListener("keydown", trapFocusHandlers.keydown);
   };
@@ -57,10 +52,7 @@ function trapFocus(container, elementToFocus = container) {
     }
 
     //  On the first focusable element and tab backward, focus the last element.
-    if (
-      (event.target === container || event.target === first) &&
-      event.shiftKey
-    ) {
+    if ((event.target === container || event.target === first) && event.shiftKey) {
       event.preventDefault();
       last.focus();
     }
@@ -110,8 +102,7 @@ function focusVisiblePolyfill() {
   window.addEventListener(
     "focus",
     () => {
-      if (currentFocusedElement)
-        currentFocusedElement.classList.remove("focused");
+      if (currentFocusedElement) currentFocusedElement.classList.remove("focused");
 
       if (mouseClick) return;
 
@@ -184,16 +175,12 @@ class QuantityInput extends HTMLElement {
   }
 
   onInputChange(event) {
-    const autodeliverOptionEl = document.querySelector(
-      'input[value="autodeliver"]'
-    );
+    const autodeliverOptionEl = document.querySelector('input[value="autodeliver"]');
     const inputValueInteger = parseInt(event.currentTarget.value);
     const plusButtonEl = this.querySelector('button[name="plus"]');
 
     if (autodeliverOptionEl && autodeliverOptionEl.checked) {
-      this.productForm = document.querySelector(
-        "product-form.pdp-product-form"
-      );
+      this.productForm = document.querySelector("product-form.pdp-product-form");
       if (inputValueInteger > 4) {
         this.input.value = 4;
         this.productForm.handleErrorMessage(
@@ -217,8 +204,7 @@ class QuantityInput extends HTMLElement {
     const previousValue = this.input.value;
 
     event.target.name === "plus" ? this.input.stepUp() : this.input.stepDown();
-    if (previousValue !== this.input.value)
-      this.input.dispatchEvent(this.changeEvent);
+    if (previousValue !== this.input.value) this.input.dispatchEvent(this.changeEvent);
   }
 }
 customElements.define("quantity-input", QuantityInput);
@@ -289,22 +275,12 @@ Shopify.postLink = function (path, options) {
   document.body.removeChild(form);
 };
 
-Shopify.CountryProvinceSelector = function (
-  country_domid,
-  province_domid,
-  options
-) {
+Shopify.CountryProvinceSelector = function (country_domid, province_domid, options) {
   this.countryEl = document.getElementById(country_domid);
   this.provinceEl = document.getElementById(province_domid);
-  this.provinceContainer = document.getElementById(
-    options["hideElement"] || province_domid
-  );
+  this.provinceContainer = document.getElementById(options["hideElement"] || province_domid);
 
-  Shopify.addListener(
-    this.countryEl,
-    "change",
-    Shopify.bind(this.countryHandler, this)
-  );
+  Shopify.addListener(this.countryEl, "change", Shopify.bind(this.countryHandler, this));
 
   this.initCountry();
   this.initProvince();
@@ -367,10 +343,7 @@ class MenuDrawer extends HTMLElement {
     this.mainDetailsToggle = this.querySelector("details");
 
     if (navigator.platform === "iPhone")
-      document.documentElement.style.setProperty(
-        "--viewport-height",
-        `${window.innerHeight}px`
-      );
+      document.documentElement.style.setProperty("--viewport-height", `${window.innerHeight}px`);
 
     this.addEventListener("keyup", this.onKeyUp.bind(this));
     this.addEventListener("focusout", this.onFocusOut.bind(this));
@@ -381,17 +354,13 @@ class MenuDrawer extends HTMLElement {
     this.querySelectorAll("summary").forEach((summary) =>
       summary.addEventListener("click", this.onSummaryClick.bind(this))
     );
-    this.querySelector(".menu-scrim").addEventListener(
-      "click",
-      this.onSummaryClick.bind(this)
-    );
+    this.querySelector(".menu-scrim").addEventListener("click", this.onSummaryClick.bind(this));
     this.querySelectorAll(".submenu-close").forEach((button) =>
       button.addEventListener("click", this.onCloseSubmenu.bind(this))
     );
 
     const closeButton = this.querySelector(".menu-close");
-    closeButton &&
-      closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
+    closeButton && closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
   }
 
   onKeyUp(event) {
@@ -401,10 +370,7 @@ class MenuDrawer extends HTMLElement {
     if (!openDetailsElement) return;
 
     openDetailsElement === this.mainDetailsToggle
-      ? this.closeMenuDrawer(
-          event,
-          this.mainDetailsToggle.querySelector("summary")
-        )
+      ? this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector("summary"))
       : this.closeSubmenu(openDetailsElement);
   }
 
@@ -415,31 +381,20 @@ class MenuDrawer extends HTMLElement {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function addTrapFocus() {
-      trapFocus(
-        summaryElement.nextElementSibling,
-        detailsElement.querySelector("button")
-      );
-      summaryElement.nextElementSibling.removeEventListener(
-        "transitionend",
-        addTrapFocus
-      );
+      trapFocus(summaryElement.nextElementSibling, detailsElement.querySelector("button"));
+      summaryElement.nextElementSibling.removeEventListener("transitionend", addTrapFocus);
     }
 
     if (detailsElement === this.mainDetailsToggle) {
       if (isOpen) event.preventDefault();
-      isOpen
-        ? this.closeMenuDrawer(event, summaryElement)
-        : this.openMenuDrawer(summaryElement);
+      isOpen ? this.closeMenuDrawer(event, summaryElement) : this.openMenuDrawer(summaryElement);
     } else {
       setTimeout(() => {
         detailsElement.classList.add("menu-opening");
         summaryElement.setAttribute("aria-expanded", true);
         !reducedMotion || reducedMotion.matches
           ? addTrapFocus()
-          : summaryElement.nextElementSibling.addEventListener(
-              "transitionend",
-              addTrapFocus
-            );
+          : summaryElement.nextElementSibling.addEventListener("transitionend", addTrapFocus);
       }, 100);
     }
   }
@@ -483,9 +438,7 @@ class MenuDrawer extends HTMLElement {
 
   closeSubmenu(detailsElement) {
     detailsElement.classList.remove("menu-opening");
-    detailsElement
-      .querySelector("summary")
-      .setAttribute("aria-expanded", false);
+    detailsElement.querySelector("summary").setAttribute("aria-expanded", false);
     removeTrapFocus();
     this.closeAnimation(detailsElement);
   }
@@ -543,9 +496,7 @@ class DismissableAnnoucement extends HTMLElement {
   }
 
   connectedCallback() {
-    let isDismissed = JSON.parse(
-      sessionStorage.getItem("osea.announcementDismissed")
-    );
+    let isDismissed = JSON.parse(sessionStorage.getItem("osea.announcementDismissed"));
     if (isDismissed) {
       this.useDefaultMessage();
     } else {
@@ -576,10 +527,7 @@ customElements.define("dismissable-announcement", DismissableAnnoucement);
 class ModalDialog extends HTMLElement {
   constructor() {
     super();
-    this.querySelector('[id^="ModalClose-"]').addEventListener(
-      "click",
-      this.hide.bind(this)
-    );
+    this.querySelector('[id^="ModalClose-"]').addEventListener("click", this.hide.bind(this));
     this.querySelectorAll(".close-modal").forEach((i) =>
       i.addEventListener("click", this.hide.bind(this))
     );
@@ -588,10 +536,7 @@ class ModalDialog extends HTMLElement {
     });
     if (this.classList.contains("media-modal")) {
       this.addEventListener("pointerup", (event) => {
-        if (
-          event.pointerType === "mouse" &&
-          !event.target.closest("deferred-media, product-model")
-        )
+        if (event.pointerType === "mouse" && !event.target.closest("deferred-media, product-model"))
           this.hide();
       });
     } else {
@@ -624,8 +569,7 @@ class ModalOpener extends HTMLElement {
   constructor() {
     super();
 
-    const button =
-      this.querySelector("button") || this.querySelector('[type="button"]');
+    const button = this.querySelector("button") || this.querySelector('[type="button"]');
 
     if (!button) return;
     button.addEventListener("click", () => {
@@ -648,9 +592,7 @@ class DeferredMedia extends HTMLElement {
     window.pauseAllMedia();
     if (!this.getAttribute("loaded")) {
       const content = document.createElement("div");
-      content.appendChild(
-        this.querySelector("template").content.firstElementChild.cloneNode(true)
-      );
+      content.appendChild(this.querySelector("template").content.firstElementChild.cloneNode(true));
 
       this.setAttribute("loaded", true);
       this.appendChild(content.querySelector("video, iframe")).focus();
@@ -668,18 +610,7 @@ class VariantSelects extends HTMLElement {
   connectedCallback() {
     this.updateOptions();
     this.updateMasterId();
-
-    if (
-      this.currentVariant &&
-      window.location.pathname.includes("/products/")
-    ) {
-      if (this.currentVariant.selling_plan_allocations.length > 0) {
-        this.toggleInfoVisibility("subscription-radios", "max-h-44");
-      }
-      if (this.currentVariant.options.length > 1) {
-        this.toggleInfoVisibility("scent-checkbox", "max-h-6");
-      }
-    }
+    this.updateOptionVisibility();
   }
 
   onVariantChange() {
@@ -692,14 +623,7 @@ class VariantSelects extends HTMLElement {
       this.toggleAddButton(true, "", true);
       this.setUnavailable();
     } else {
-      if (window.location.pathname.includes("/products/")) {
-        if (this.currentVariant.selling_plan_allocations.length > 0) {
-          this.toggleInfoVisibility("subscription-radios", "max-h-44");
-        }
-        if (this.currentVariant.options.length > 1) {
-          this.toggleInfoVisibility("scent-checkbox", "max-h-6");
-        }
-      }
+      this.updateOptionVisibility();
       this.updateMedia();
       this.updateURL();
       this.updateVariantInput();
@@ -708,10 +632,7 @@ class VariantSelects extends HTMLElement {
   }
 
   updateOptions() {
-    this.options = Array.from(
-      this.querySelectorAll("select"),
-      (select) => select.value
-    );
+    this.options = Array.from(this.querySelectorAll("select"), (select) => select.value);
   }
 
   updateMasterId() {
@@ -749,11 +670,7 @@ class VariantSelects extends HTMLElement {
 
   updateURL() {
     if (!this.currentVariant || this.dataset.updateUrl === "false") return;
-    window.history.replaceState(
-      {},
-      "",
-      `${this.dataset.url}?variant=${this.currentVariant.id}`
-    );
+    window.history.replaceState({}, "", `${this.dataset.url}?variant=${this.currentVariant.id}`);
   }
 
   updateVariantInput() {
@@ -779,42 +696,27 @@ class VariantSelects extends HTMLElement {
     fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
       .then((response) => response.text())
       .then((responseText) => {
-        const responseHTML = new DOMParser().parseFromString(
-          responseText,
-          "text/html"
-        );
+        const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
         const destination = document.querySelector(".product .main-price");
         const source = responseHTML.querySelector(".product .main-price");
         if (source && destination) destination.innerHTML = source.innerHTML;
 
-        const subOneTimeDestination = document.querySelector(
-          ".subscription .onetime .price"
-        );
-        const subOneTimeSource = responseHTML.querySelector(
-          ".subscription .onetime .price"
-        );
+        const subOneTimeDestination = document.querySelector(".subscription .onetime .price");
+        const subOneTimeSource = responseHTML.querySelector(".subscription .onetime .price");
         if (subOneTimeSource && subOneTimeDestination)
           subOneTimeDestination.innerHTML = subOneTimeSource.innerHTML;
 
-        const subAutoDestination = document.querySelector(
-          ".subscription .autodeliver .price"
-        );
-        const subAutoSource = responseHTML.querySelector(
-          ".subscription .autodeliver .price"
-        );
+        const subAutoDestination = document.querySelector(".subscription .autodeliver .price");
+        const subAutoSource = responseHTML.querySelector(".subscription .autodeliver .price");
         if (subAutoSource && subAutoDestination)
           subAutoDestination.innerHTML = subAutoSource.innerHTML;
 
-        const benefitsDestination =
-          document.querySelector(".product .benefits");
+        const benefitsDestination = document.querySelector(".product .benefits");
         const benefitsSource = responseHTML.querySelector(".product .benefits");
         if (benefitsSource && benefitsDestination)
           benefitsDestination.innerHTML = benefitsSource.innerHTML;
 
-        this.toggleAddButton(
-          !this.currentVariant.available,
-          window.variantStrings.soldOut
-        );
+        this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
   }
 
@@ -827,34 +729,60 @@ class VariantSelects extends HTMLElement {
     ) {
       isTravelSized = this.currentVariant.title === "0.34 oz";
     } else {
-      isTravelSized = [
-        "1.7 oz",
-        "1 oz",
-        "0.6 oz",
-        "0.22 oz",
-        "1 oz / Scented",
-      ].includes(this.currentVariant.title);
+      isTravelSized = ["1.7 oz", "1 oz", "0.6 oz", "0.22 oz", "Scented / 1 oz"].includes(
+        this.currentVariant.title
+      );
     }
     const isExclusion = ["UAO-1", "UAO-H22"].includes(this.currentVariant.sku);
 
     return isTravelSized || isExclusion;
   }
 
-  toggleInfoVisibility(element, heightClass) {
+  toggleOption(selector, heightClass) {
     this.renderProductInfo();
 
-    document
-      .querySelector(element)
-      .classList.toggle("max-h-0", this.isTravelOrExclusion());
-    document
-      .querySelector(element)
-      .classList.toggle(heightClass, !this.isTravelOrExclusion());
+    document.querySelector(selector).classList.toggle("max-h-0", this.isTravelOrExclusion());
+    document.querySelector(selector).classList.toggle(heightClass, !this.isTravelOrExclusion());
+  }
+
+  toggleDisabledState(qualifier, selector) {
+    if (qualifier) {
+      this.querySelector(selector).setAttribute("disabled", "");
+    } else {
+      this.querySelector(selector).removeAttribute("disabled");
+    }
+  }
+
+  updateOptionVisibility() {
+    if (this.currentVariant && window.location.pathname.includes("/products/")) {
+      const hasSubscriptionOption = this.currentVariant.selling_plan_allocations.length > 0;
+      const scentValues = ["Fragrance free", "Scented"];
+      const hasScentVariant = this.currentVariant.options.some((r) => scentValues.indexOf(r) >= 0);
+
+      if (hasSubscriptionOption) {
+        this.toggleOption("subscription-radios", "max-h-48");
+      }
+      if (hasScentVariant) {
+        const scentRadios = document.querySelectorAll('input[name="Scent"]');
+        const originalScentInfo = document.querySelectorAll(".scent-scented");
+        const fragranceFreeScentInfo = document.querySelectorAll(".scent-fragrance-free");
+        const isFragranceFreeSelected = this.currentVariant.options.includes("Fragrance free");
+
+        originalScentInfo.forEach((i) => {
+          i.classList.toggle("hidden", scentRadios[1].checked);
+        });
+        fragranceFreeScentInfo.forEach((i) => {
+          i.classList.toggle("hidden", scentRadios[0].checked);
+        });
+
+        this.toggleDisabledState(this.isTravelOrExclusion(), '[value="Fragrance free"]');
+        this.toggleDisabledState(isFragranceFreeSelected, ".travel-input");
+      }
+    }
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
-    const productForm = document.getElementById(
-      `product-form-${this.dataset.section}`
-    );
+    const productForm = document.getElementById(`product-form-${this.dataset.section}`);
     if (!productForm) return;
     const addButton = productForm.querySelector('[name="add"]');
     const addButtonText = productForm.querySelector('[name="add"] > .label');
@@ -873,9 +801,7 @@ class VariantSelects extends HTMLElement {
   }
 
   setUnavailable() {
-    const button = document.getElementById(
-      `product-form-${this.dataset.section}`
-    );
+    const button = document.getElementById(`product-form-${this.dataset.section}`);
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
     const price = document.getElementById(`price-${this.dataset.section}`);
@@ -886,8 +812,7 @@ class VariantSelects extends HTMLElement {
 
   getVariantData() {
     this.variantData =
-      this.variantData ||
-      JSON.parse(this.querySelector('[type="application/json"]').textContent);
+      this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
     return this.variantData;
   }
 }
@@ -901,78 +826,26 @@ class VariantRadios extends VariantSelects {
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll("fieldset"));
     this.options = fieldsets.map((fieldset) => {
-      return Array.from(fieldset.querySelectorAll("input")).find(
-        (radio) => radio.checked
-      ).value;
+      return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
     });
   }
 }
 customElements.define("variant-radios", VariantRadios);
 
-class ScentCheckbox extends HTMLElement {
-  constructor() {
-    super();
-    this.scentCheckbox = this.querySelector("input");
-    this.scentRadios = document.querySelectorAll('input[name="Scent"]');
-    this.scentCheckbox.addEventListener(
-      "change",
-      this.onCheckboxChange.bind(this)
-    );
-  }
-
-  connectedCallback() {
-    this.scentCheckbox.checked = this.scentRadios[1].checked;
-    this.updateProductInfo();
-  }
-
-  onCheckboxChange() {
-    const isChecked = this.scentCheckbox.checked;
-    if (this.scentRadios.length === 2) {
-      this.scentRadios[0].checked = !isChecked;
-      this.scentRadios[1].checked = isChecked;
-      document
-        .querySelector("variant-radios")
-        .dispatchEvent(new Event("change"));
-      this.updateProductInfo();
-    }
-  }
-
-  updateProductInfo() {
-    const originalScentInfo = document.querySelectorAll(".scent-scented");
-    const fragranceFreeScentInfo = document.querySelectorAll(
-      ".scent-fragrance-free"
-    );
-    originalScentInfo.forEach((i) => {
-      i.classList.toggle("hidden", this.scentRadios[1].checked);
-    });
-    fragranceFreeScentInfo.forEach((i) => {
-      i.classList.toggle("hidden", this.scentRadios[0].checked);
-    });
-  }
-}
-customElements.define("scent-checkbox", ScentCheckbox);
-
 class SubscriptionRadios extends HTMLElement {
   constructor() {
     super();
 
-    this.isSubscriptionInput = document.querySelector(
-      'input[name="properties[_is_subscription]"]'
-    );
-    this.purchaseOptionInputs = Array.from(
-      this.querySelectorAll('input[name="purchase_option"]')
-    );
-    this.sellingPlanInputs = Array.from(
-      this.querySelectorAll('input[name="selling_plan"]')
-    );
+    this.isSubscriptionInput = document.querySelector('input[name="properties[_is_subscription]"]');
+    this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
+    this.sellingPlanInputs = Array.from(this.querySelectorAll('input[name="selling_plan"]'));
 
     const urlParams = new URLSearchParams(window.location.search);
     const urlPurchaseType = urlParams.get("type");
 
     this.purchaseOptionInputs.forEach((input) => {
       const isSubscription =
-        urlPurchaseType === "subscription" ||
-        document.referrer.includes("/pages/subscribe");
+        urlPurchaseType === "subscription" || document.referrer.includes("/pages/subscribe");
       if (isSubscription && input.value === "autodeliver") {
         input.checked = true;
         this.setActiveState();
@@ -992,20 +865,14 @@ class SubscriptionRadios extends HTMLElement {
       this.setActiveState();
       this.updateMainPrice(e.currentTarget);
 
-      const plusButtonEl = document.querySelector(
-        '.pdp-quantity button[name="plus"]'
-      );
+      const plusButtonEl = document.querySelector('.pdp-quantity button[name="plus"]');
 
       if (value === "onetime") {
         this.clearSellingPlanValues();
         this.isSubscriptionInput.value = false;
-        this.productForm = document.querySelector(
-          "product-form.pdp-product-form"
-        );
+        this.productForm = document.querySelector("product-form.pdp-product-form");
 
-        document
-          .querySelector("#PayInstallments")
-          ?.classList.remove("opacity-0");
+        document.querySelector("#PayInstallments")?.classList.remove("opacity-0");
 
         if (plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
         this.productForm.handleErrorMessage();
@@ -1030,19 +897,13 @@ class SubscriptionRadios extends HTMLElement {
 
   setActiveState() {
     this.purchaseOptionInputs?.forEach((input) =>
-      input
-        .closest(".purchase-option")
-        .classList.toggle("bg-wave-200", input.checked)
+      input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked)
     );
   }
 
   updateMainPrice(currentTarget) {
-    const currentPrice = currentTarget
-      .closest(".purchase-option")
-      .querySelector(".price");
+    const currentPrice = currentTarget.closest(".purchase-option").querySelector(".price");
     const mainPrice = document.querySelector(".main-price.price");
-    console.log("currentTarget", currentTarget);
-    console.log("mainPrice", mainPrice);
 
     mainPrice.innerHTML = currentPrice.innerHTML;
   }
@@ -1053,8 +914,7 @@ class SubscriptionRadios extends HTMLElement {
 
   setDefaultSellingPlan() {
     const defaultSellingPlanInt = this.dataset.recommendedInterval || 2;
-    const defaultSellingPlanInput =
-      this.sellingPlanInputs[defaultSellingPlanInt - 1];
+    const defaultSellingPlanInput = this.sellingPlanInputs[defaultSellingPlanInt - 1];
 
     defaultSellingPlanInput.checked = true;
   }
@@ -1075,9 +935,7 @@ class ProductStickyAtc extends HTMLElement {
       }
     });
 
-    this.atcObserver.observe(
-      document.querySelector(".product-form.pdp-product-form")
-    );
+    this.atcObserver.observe(document.querySelector(".product-form.pdp-product-form"));
   }
 
   disconnectedCallback() {
@@ -1119,9 +977,7 @@ class TabController extends HTMLElement {
       switch (e.keyCode) {
         case 35: // end key
           e.preventDefault();
-          this.setActiveTab(
-            this.tabs[this.tabs.length - 1].getAttribute("aria-controls")
-          );
+          this.setActiveTab(this.tabs[this.tabs.length - 1].getAttribute("aria-controls"));
           break;
         case 36: // home key
           e.preventDefault();
@@ -1237,9 +1093,7 @@ class GlideSlider extends HTMLElement {
   }
 
   getPath(currentBreakpoint) {
-    return currentBreakpoint
-      ? this.options.breakpoints[currentBreakpoint]
-      : this.options;
+    return currentBreakpoint ? this.options.breakpoints[currentBreakpoint] : this.options;
   }
 
   addOtherPeek(currentPeek, currentBreakpoint) {
@@ -1252,9 +1106,7 @@ class GlideSlider extends HTMLElement {
   parseValue(valueString) {
     let value;
     if (isNaN(valueString)) {
-      value = ["true", "false"].includes(valueString)
-        ? valueString === "true"
-        : valueString;
+      value = ["true", "false"].includes(valueString) ? valueString === "true" : valueString;
     } else {
       value = parseInt(valueString);
     }
@@ -1269,8 +1121,7 @@ class GlideSlider extends HTMLElement {
             ...[this.getPath(currentBreakpoint)]?.[level1],
             [level2]: this.parseValue(level3),
             // fixes bug: property fails when only before/after is present
-            ...(level1 === "peek" &&
-              this.addOtherPeek(level2, currentBreakpoint)),
+            ...(level1 === "peek" && this.addOtherPeek(level2, currentBreakpoint)),
           }
         : this.parseValue(level2),
     };
@@ -1290,21 +1141,12 @@ class GlideSlider extends HTMLElement {
 
         this.options.breakpoints[breakpointInt] = {
           ...this.options.breakpoints?.[breakpointInt],
-          ...this.buildOptionObject(
-            splitClass[1],
-            splitClass[2],
-            splitClass[3],
-            breakpointInt
-          ),
+          ...this.buildOptionObject(splitClass[1], splitClass[2], splitClass[3], breakpointInt),
         };
       } else {
         this.options = {
           ...this.options,
-          ...this.buildOptionObject(
-            splitClass[0],
-            splitClass[1],
-            splitClass[2]
-          ),
+          ...this.buildOptionObject(splitClass[0], splitClass[1], splitClass[2]),
         };
       }
     });
@@ -1314,15 +1156,7 @@ class GlideSlider extends HTMLElement {
     const classes = Array.from(this.classList);
 
     if (classes.length > 0) {
-      const optionTypes = [
-        "perView",
-        "peek",
-        "focusAt",
-        "type",
-        "bound",
-        "gap",
-        "autoplay",
-      ];
+      const optionTypes = ["perView", "peek", "focusAt", "type", "bound", "gap", "autoplay"];
       const optionClasses = classes.filter((className) =>
         optionTypes.some((optionType) => className.includes(optionType))
       );
@@ -1342,8 +1176,7 @@ class GiftWithPurchaseUrl extends HTMLElement {
     super();
 
     this.cart =
-      document.querySelector("cart-notification") ||
-      document.querySelector("cart-drawer");
+      document.querySelector("cart-notification") || document.querySelector("cart-drawer");
     const { productId } = this.dataset;
 
     const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -1392,9 +1225,7 @@ class CountdownComponent extends HTMLElement {
     setInterval(() => {
       const dateArray = this.dataset.date.split("/");
       const sortedDateArray = [dateArray[2], dateArray[0], dateArray[1]];
-      const future = new Date(
-        `${sortedDateArray.join("-")}T${this.dataset.time}:00-07:00`
-      );
+      const future = new Date(`${sortedDateArray.join("-")}T${this.dataset.time}:00-07:00`);
       const now = new Date();
       const diff = future - now;
 
@@ -1419,9 +1250,8 @@ class GiftCardFields extends HTMLElement {
   }
 
   onInputChange(event) {
-    document.querySelector(
-      `product-form.pdp-product-form #sktc${event.target.id}`
-    ).value = event.target.value;
+    document.querySelector(`product-form.pdp-product-form #sktc${event.target.id}`).value =
+      event.target.value;
   }
 }
 customElements.define("gift-card-fields", GiftCardFields);
@@ -1436,15 +1266,13 @@ class CollectionAnchors extends HTMLElement {
   }
 
   onAnchorClick(anchor) {
-    document
-      .querySelectorAll("details.subcollection")
-      .forEach((subcollection) => {
-        if (subcollection.id === anchor.getAttribute("href").substring(1)) {
-          subcollection.setAttribute("open", "");
-        } else {
-          subcollection.removeAttribute("open");
-        }
-      });
+    document.querySelectorAll("details.subcollection").forEach((subcollection) => {
+      if (subcollection.id === anchor.getAttribute("href").substring(1)) {
+        subcollection.setAttribute("open", "");
+      } else {
+        subcollection.removeAttribute("open");
+      }
+    });
   }
 }
 customElements.define("collection-anchors", CollectionAnchors);
@@ -1457,10 +1285,7 @@ class CollectionVideo extends HTMLElement {
     this.horizontalVideo = this.querySelector(".horizontal-video");
     this.closeButton = this.querySelector(".video-close");
 
-    this.closeButton.addEventListener(
-      "click",
-      this.closeHorizontalVideo.bind(this)
-    );
+    this.closeButton.addEventListener("click", this.closeHorizontalVideo.bind(this));
   }
 
   connectedCallback() {
@@ -1560,9 +1385,7 @@ class Accordion {
   expand() {
     this.isExpanding = true;
     const startHeight = `${this.el.offsetHeight}px`;
-    const endHeight = `${
-      this.summary.offsetHeight + this.content.offsetHeight
-    }px`;
+    const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight}px`;
 
     if (this.animation) {
       this.animation.cancel();

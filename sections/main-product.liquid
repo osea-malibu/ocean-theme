@@ -128,7 +128,7 @@
         {%- liquid
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
-          assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, 9.6 oz Holiday, 1 oz / Original' | split: ', '
+          assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, 9.6 oz Holiday, Scented / 1 oz' | split: ', '
 
           assign is_travel_or_exclusion = false
           if product.handle == 'dayglow-face-oil' or product.handle == 'essential-hydrating-oil-1' or product.handle == 'advanced-repair-eye-cream'
@@ -277,7 +277,7 @@
                   {%- for option in product.options_with_values -%}
                     <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
                     {%- for value in option.values -%}
-                      <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-1">
+                      <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
                         {{ value }}
                       </div>
                     {%- endfor -%}
@@ -285,20 +285,20 @@
                 {%- else -%}
                   <variant-radios class="no-js-hidden block" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                     {%- for option in product.options_with_values -%}
-                      <fieldset class="js flex flex-wrap{% if option.name == 'Scent' %} sr-only{% endif %}">
-                        <legend class="font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</legend>
+                      <fieldset class="js flex flex-wrap items-center mb-2 last-of-type:mb-0">
+                        <legend class="block font-medium tracking-wide text-sm float-left mr-1.5{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">{{ option.name }}:</legend>
                         {%- for value in option.values -%}
                           <div>
                             <input type="radio"
                               id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                              class="peer hidden"
+                              class="peer hidden{% if travel_sizes contains value %} travel-input{% endif %}"
                               name="{{ option.name }}"
                               value="{{ value | escape }}"
                               form="{{ product_form_id }}"
                               {% if option.selected_value == value %}checked{% endif %}
                             >
                             <label
-                              class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1 lowercase"
+                              class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1 peer-disabled:opacity-50 {% if option.name == 'Scent' %}normal-case tracking-wide{% else %}lowercase{% endif %}"
                               for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                             >
                               {{ value }}
@@ -311,16 +311,6 @@
                       {{ product.variants | json }}
                     </script>
                   </variant-radios>
-                  {% comment %} Convert scent variant to checkbox {% endcomment %}
-                  {%- assign option_names = product.options_with_values | map: 'name' -%}
-                  {%- if option_names contains 'Scent' -%}
-                    <scent-checkbox class="flex items-center mt-1 motion-safe:transition-max-height overflow-hidden{% if is_travel_or_exclusion %} max-h-0{% endif %}">
-                      <div class="p-1">
-                        <input type="checkbox" class="mr-2" id="ScentVariant">
-                        <label class="font-medium tracking-wide text-sm" for="ScentVariant">Fragrance free</label>
-                      </div>
-                    </scent-checkbox>
-                  {%- endif -%}
                 {%- endif -%}
               {%- endunless -%}
 
