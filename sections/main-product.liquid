@@ -168,6 +168,11 @@
             </div>
           {%- when 'rating' -%}
             {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
+            {%- if product.metafields.custom.set_value -%}
+              <div class="col-span-12 relative -bottom-2">
+                <span class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
+              </div>
+            {%- endif -%}
           {%- when 'benefits' -%}
             {%- if product.metafields.custom.benefits.value.size > 0 -%}
               <div class="{{ block.settings.benefits_classes }}">
