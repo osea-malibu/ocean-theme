@@ -137,7 +137,8 @@
             data-url="{{ card_product.url }}"
             data-update-url="false"
           >
-            {%- assign option = card_product.options_with_values.first -%}
+            <script>console.log("options", {{card_product.options_with_values | json}});</script>
+            {%- assign option = card_product.options_with_values.last -%}
             <fieldset class="js flex">
               <legend class="sr-only">{{ option.name }}</legend>
               {%- for value in option.values -%}
