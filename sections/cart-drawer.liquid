@@ -126,8 +126,10 @@
             endif
 
             if item.product.metafields.my_fields.save_with_sets != nil and item.selling_plan_allocation == nil and hide_upsell == false
-              assign item_with_set = item
-              assign item_with_set_line = forloop.index
+              unless item.variant.title contains 'Fragrance free'
+                assign item_with_set = item
+                assign item_with_set_line = forloop.index
+              endunless
             endif
           endfor
 
@@ -138,6 +140,7 @@
             endif
           endfor
         -%}
+        <script>console.log("thing", {{cart.items[0].variant.title | json}});</script>
 
         <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12">
           {% comment %} Save with sets upsell {% endcomment %}
