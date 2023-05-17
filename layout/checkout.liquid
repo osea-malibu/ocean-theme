@@ -13,6 +13,7 @@
     {{ checkout_stylesheets }}
     {{ checkout_scripts }}
 
+    {%- render 'bing-uet-tag' -%}
     {%- render 'catch-pay' -%}
 
     {{ 'checkout.css' | asset_url | stylesheet_tag }}
