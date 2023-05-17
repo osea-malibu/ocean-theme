@@ -222,7 +222,6 @@
                                 </div>
                               {% endif %}
                             </td>
-
                             <td class="cart-item__name p-0 [grid-area:name]" role="cell" headers="CartDrawer-ColumnName">
                               <div class="flex items-center h-full{% if item.product.type == 'Bundle' %} pr-8 pb-1{% endif %}">
                                 {%- if settings.show_vendor -%}
@@ -234,7 +233,6 @@
                                 </a>
                               </div>
                             </td>
-
                             <td class="cart-item__size p-0 [grid-area:size]{% if item.product.has_only_default_variant or item.properties.size == 0 %} h-0{% endif %}" role="cell" headers="CartDrawer-ColumnSize">
                               {%- if item.product.has_only_default_variant == false or item.properties.size != 0 and item.product.type != 'Sample' and item.product.type != 'Free Gift' -%}
                                 <dl class="flex items-center h-full text-sm pb-1 gap-2">
@@ -246,7 +244,6 @@
                                       </div>
                                     {%- endfor -%}
                                   {%- endif -%}
-
                                   {%- for property in item.properties -%}
                                     {%- assign property_first_char = property.first | slice: 0 -%}
                                     {%- if property.last != blank and property_first_char != '_' -%}
@@ -267,7 +264,6 @@
                                 </dl>
                               {%- endif -%}
                             </td>
-
                             <td class="cart-item__quantity p-0 [grid-area:quant]" role="cell" headers="CartDrawer-ColumnQuantity">
                               <div class="flex items-center{% if item.product.type != 'Sample' and item.product.type != 'Free Gift' and item.product.has_only_default_variant or item.properties.size == 0 %} sm:mt-[-14px] -mt-2{% endif %}">
                                 {%- unless item.product.type == 'Sample' or item.product.type == 'Free Gift' -%}
@@ -313,7 +309,6 @@
                                 {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4', aria_hidden: true, stroke_width: 2 %}
                               </div>
                             </td>
-
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
                               {%- liquid
                                 assign hide_subscription = false
@@ -370,7 +365,6 @@
                                 </div>
                               {%- endif -%}
                             </td>
-
                             <td class="cart-item__totals p-0 [grid-area:price]" role="cell" headers="CartDrawer-ColumnTotal">
                               <div class="flex items-center justify-end h-full">
                                 <div class="loading-spinner hidden mr-2">{% render 'icon-spinner', classes: 'w-4 h-4 text-wave-800' %}</div>
