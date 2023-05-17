@@ -29,10 +29,10 @@
       window.lsData.checkout = {% if checkout %}
         {
           currency: "{{ checkout.currency }}",
-          email: "{{checkout.email}}",
-          item_count: {{checkout.item_count}},
-          shipping_address: {{checkout.shipping_address | json}},
-          total_price: {{checkout.total_price}},
+          email: "{{ checkout.email }}",
+          item_count: {{ checkout.item_count }},
+          shipping_address: {{ checkout.shipping_address | json }},
+          total_price: {{ checkout.total_price }},
           line_items: [
             {% for line_item in checkout.line_items %}
               {
