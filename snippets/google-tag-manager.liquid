@@ -19,7 +19,8 @@
   const utmCampaign = urlParams.get('utm_campaign');
   if (utmSource || utmMedium || utmCampaign) {
     let channel = "";
-    if (utmSource === "tiktok_ad") channel = "TikTok"
+    if (utmSource === "facebook_ad") channel = "Meta"
+    else if (utmSource === "tiktok_ad") channel = "TikTok"
     else if (utmSource === "pinterest-ad") channel = "Pinterest"
     else if (utmSource === "tiktok") channel = "Organic-TikTok"
     else if (utmSource === "likeshop") channel = "Organic-IG"
