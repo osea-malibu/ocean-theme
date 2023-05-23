@@ -159,9 +159,7 @@
 
     {%- if template.name == 'product' -%}
       {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-      <!-- Stamped - Begin script -->
-      <script async type="text/javascript" id="stamped-script-widget" data-api-key="pubkey-4oB4VG51Cx1881U1R762Z6cpQtC50C" src="https://cdn1.stamped.io/files/widget.min.js"></script>
-      <!-- Stamped - End script -->
+
       {% comment %}theme-check-enable RemoteAsset{% endcomment %}
     {%- endif %}
 
@@ -189,5 +187,7 @@
       
       render 'catch-messaging'
     -%}
+<script>function myInit(){ StampedFn.init({ apiKey: 'pubkey-4oB4VG51Cx1881U1R762Z6cpQtC50C', sId: '33056' }); }</script>
+<script async onload="myInit()" type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>    
   </body>
 </html>
