@@ -28,6 +28,7 @@
     else if (utmSource === "shareasale") channel = "Affiliate-Shareasale"
     else if (utmMedium === "email") channel = "Email"
     else if (utmMedium === "SMS") channel = "SMS"
+    localStorage.setItem('osea.utm_channel', channel);
     else if (utmSource === "google") {
       if (utmCampaign.includes("nonbrand")) channel = "Google-NonBranded"
       else if (utmCampaign.includes("brand")) channel = "Google-Branded"
