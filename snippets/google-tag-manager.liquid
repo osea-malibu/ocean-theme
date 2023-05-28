@@ -39,7 +39,7 @@
   } else {
     channel = "Direct"
   }
-  if (localStorage.getItem('osea.utm_channel').length < 1) {
+  if (localStorage.getItem('osea.utm_channel').length === null) {
     localStorage.setItem('osea.utm_channel', channel);
   }
 </script>
