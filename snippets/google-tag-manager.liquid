@@ -17,7 +17,7 @@
   const utmSource = urlParams.get('utm_source');
   const utmMedium = urlParams.get('utm_medium');
   const utmCampaign = urlParams.get('utm_campaign');
-  if (utmSource || utmMedium) {
+  if (utmSource) {
     let channel = "";
     if (utmSource === "facebook_ad") channel = "Meta"
     else if (utmSource === "tiktok_ad") channel = "TikTok"
