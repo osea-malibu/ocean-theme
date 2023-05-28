@@ -28,7 +28,6 @@
     else if (utmSource === "shareasale") channel = "Affiliate-Shareasale"
     else if (utmMedium === "email") channel = "Email"
     else if (utmMedium === "SMS") channel = "SMS"
-    console.log(channel);
     else if (utmSource === "google") {
       if (utmCampaign.includes("nonbrand")) channel = "Google-NonBranded"
       else if (utmCampaign.includes("brand")) channel = "Google-Branded"
@@ -36,6 +35,7 @@
       else if (utmCampaign.includes("Pmax")) channel = "Google-Shopping"
       else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Google-Display"
     }
+    console.log(channel);
     else channel = "Other";
   } else {
     channel = "Direct"
