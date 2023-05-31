@@ -10,9 +10,8 @@
 
   /* System fonts */
   .system-sans {
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica,
-      Arial, sans-serif;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+      "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   /* Handle anchor link offset - accounts for fixed header */
@@ -288,9 +287,7 @@
   predictive-search:not([loading]) .predictive-search-status__loading {
     @apply hidden;
   }
-  predictive-search[loading]
-    .predictive-search__heading
-    ~ .predictive-search__loading-state,
+  predictive-search[loading] .predictive-search__heading ~ .predictive-search__loading-state,
   predictive-search[loading] .predictive-search__results-list:first-child {
     @apply hidden;
   }
@@ -542,6 +539,17 @@
 }
 
 /* this will always be included in your compiled CSS */
+
+/* Stamped */
+.stamped-badge .stamped-fa-star {
+  @apply -mr-0.5;
+}
+.stamped-badge .stamped-fa-star:before {
+  @apply text-base;
+}
+.stamped-badge .stamped-badge-caption {
+  @apply text-xs underline ml-0.5;
+}
 
 /* Catch pay */
 #catch-callout-cart {
