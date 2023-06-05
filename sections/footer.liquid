@@ -78,26 +78,29 @@
                   {%- endfor -%}
                 </ul>
 
-                <div class="relative">
-                  {%- for tab in newsletter_tabs -%}
-                    <div class="absolute z-10 inset-0" id="footer-tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
-                      {%- if tab == 'Email' -%}
-                        <div class="klaviyo-email-form relative">
-                          {% render 'icon-email',
-                            aria_hidden: true,
-                            classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3 z-10",
-                            stroke_width: 2
-                          %}
-                          <div class="klaviyo-form-T3gN5Z"></div>
-                        </div>
-                      {%- else -%}
-                        <div class="klaviyo-phone-form relative">
-                          <div class="klaviyo-form-TA8JnT"></div>
-                        </div>
-                      {%- endif -%}
-                    </div>
-                  {%- endfor -%}
-                  <div class="animate-pulse z-0 w-full h-10 bg-wave-400 rounded-md mt-1.5"></div>
+                <div class="relative mt-1.5">
+                  <div class="animate-pulse z-0 w-full h-10 bg-wave-400 rounded-md"></div>
+                  <div class="relative z-10 -mt-10 min-h-[40px]">
+                    {%- for tab in newsletter_tabs -%}
+                      <div id="footer-tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                        {%- if tab == 'Email' -%}
+                          <div class="klaviyo-email-form relative">
+                            {% render 'icon-email',
+                              aria_hidden: true,
+                              classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3 z-10",
+                              stroke_width: 2
+                            %}
+                            <div class="klaviyo-form-T3gN5Z"></div>
+                          </div>
+                        {%- else -%}
+                          <div class="klaviyo-phone-form relative">
+                            <div class="klaviyo-form-TA8JnT"></div>
+                            <small class="block text-xs leading-none mt-1">*By providing your cell phone number you are agreeing to receive text messages from OSEA at that number. The text messages may contain marketing content and will be sent in accordance with <a class="underline" href="https://oseamalibu.com/pages/sms-terms-of-service">OSEA’s Text Messaging Terms and Conditions</a> and the <a class="underline" href="https://oseamalibu.com/pages/privacy-policy">OSEA Privacy Policy</a>. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to unsubscribe. HELP for help.</small>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
                 </div>
               </tab-controller>
             </div>
