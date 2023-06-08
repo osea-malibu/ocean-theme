@@ -119,9 +119,10 @@
         {%- liquid
           for item in cart.items
             assign hide_upsell = false
-            if small_products contains item.product.title and item.variant.title == '0.34 oz'
+            assign normalized_variant_title = item.variant.title | replace: 'fl ', ''
+            if small_products contains item.product.title and normalized_variant_title == '0.34 oz'
               assign hide_upsell = true
-            elsif travel_sizes contains item.variant.title
+            elsif travel_sizes contains normalized_variant_title
               assign hide_upsell = true
             endif
 
@@ -313,10 +314,10 @@
                               {%- liquid
                                 assign hide_subscription = false
                                 if small_products contains item.product.title
-                                  if item.variant.title == '0.34 oz'
+                                  if normalized_variant_title == '0.34 oz'
                                     assign hide_subscription = true
                                   endif
-                                elsif travel_sizes contains item.variant.title and item.title != 'Advanced Repair Eye Cream - 0.6 oz'
+                                elsif travel_sizes contains normalized_variant_title and item.title != 'Advanced Repair Eye Cream - 0.6 oz'
                                   assign hide_subscription = true
                                 endif
                               -%}

@@ -129,20 +129,21 @@
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
           assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, 9.6 oz Holiday, Scented / 1 oz' | split: ', '
+          assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
 
           assign is_travel_or_exclusion = false
           if product.handle == 'dayglow-face-oil' or product.handle == 'essential-hydrating-oil-1' or product.handle == 'advanced-repair-eye-cream'
-            if product.selected_or_first_available_variant.title == '0.34 oz'
+            if normalized_variant_title == '0.34 oz'
               assign is_travel_or_exclusion = true
             endif
           else
-            if travel_sizes contains product.selected_or_first_available_variant.title
+            if travel_sizes contains normalized_variant_title
               assign is_travel_or_exclusion = true
             endif
           endif
 
           assign is_fragrance_free = false
-          if product.options contains 'Scent' and product.selected_or_first_available_variant.title contains 'Fragrance free'
+          if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'
             assign is_fragrance_free = true
           endif
         -%}

@@ -721,16 +721,17 @@ class VariantSelects extends HTMLElement {
   }
 
   isTravelOrExclusion() {
+    const normalizedVariantTitle = this.currentVariant.title.replace("fl ", "");
     let isTravelSized = false;
     if (
       ["dayglow-face-oil", "essential-hydrating-oil-1"].includes(
         this.dataset.url.replace("/products/", "")
       )
     ) {
-      isTravelSized = this.currentVariant.title === "0.34 oz";
+      isTravelSized = normalizedVariantTitle === "0.34 oz";
     } else {
       isTravelSized = ["1.7 oz", "1 oz", "0.6 oz", "0.22 oz", "Scented / 1 oz"].includes(
-        this.currentVariant.title
+        normalizedVariantTitle
       );
     }
     const isExclusion = ["UAO-1", "UAO-H22"].includes(this.currentVariant.sku);
