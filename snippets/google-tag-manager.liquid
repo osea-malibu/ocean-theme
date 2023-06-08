@@ -27,7 +27,7 @@
     }
     else channel = "Other";
   }
-  if (!utmSource) {
+  if (!utmSource && !localStorage.getItem('osea.utm_channel')) {
     var channel = "Direct";
   }
   if (channel !== undefined){
