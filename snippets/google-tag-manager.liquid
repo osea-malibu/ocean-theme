@@ -26,7 +26,10 @@
       else if (utmCampaign.includes("Display") || utmCampaign.includes("Discovery")) channel = "Google-Display"
     }
     else channel = "Other";
-  } 
+  }
+  if (!utmSource) {
+    var channel = "Direct";
+  }
   if (channel !== undefined){
     localStorage.setItem('osea.utm_channel', channel);
   }
