@@ -12,7 +12,7 @@
       {%- liquid
         assign cart_ids = cart.items | map: 'product_id'
         assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 9.6 oz Holiday, Scented / 1 oz' | split: ', '
-        assign small_products = 'Dayglow Face Oil, Essential Hydrating Oil, Anti-Aging Sea Serum' | split: ', '
+        assign small_products = 'Dayglow Face Oil, Essential Hydrating Oil, Hyaluronic Sea Serum, Advanced Repair Eye Cream, Anti-Aging Sea Serum' | split: ', '
       -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
       {% comment %} Gift with purchase {% endcomment %}
@@ -311,6 +311,7 @@
                               </div>
                             </td>
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
+                              <script>console.log("test", {{ item.variant.options.size }});</script>
                               {%- liquid
                                 assign hide_subscription = false
                                 assign normalized_current_variant_title = item.variant.title | replace: 'fl ', ''
