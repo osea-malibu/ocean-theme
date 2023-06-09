@@ -697,24 +697,21 @@ class VariantSelects extends HTMLElement {
       .then((response) => response.text())
       .then((responseText) => {
         const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
-        const destination = document.querySelector(".product .main-price");
-        const source = responseHTML.querySelector(".product .main-price");
-        if (source && destination) destination.innerHTML = source.innerHTML;
 
-        const subOneTimeDestination = document.querySelector(".subscription .onetime .price");
-        const subOneTimeSource = responseHTML.querySelector(".subscription .onetime .price");
-        if (subOneTimeSource && subOneTimeDestination)
-          subOneTimeDestination.innerHTML = subOneTimeSource.innerHTML;
+        const replaceContent = (selector) => {
+          const source = responseHTML.querySelector(selector);
+          const destination = document.querySelector(selector);
+          if (source && destination) destination.innerHTML = source.innerHTML;
+        };
 
-        const subAutoDestination = document.querySelector(".subscription .autodeliver .price");
-        const subAutoSource = responseHTML.querySelector(".subscription .autodeliver .price");
-        if (subAutoSource && subAutoDestination)
-          subAutoDestination.innerHTML = subAutoSource.innerHTML;
+        replaceContent(".product .main-price");
+        replaceContent(".subscription .onetime .price");
+        replaceContent(".subscription .autodeliver .price");
+        replaceContent(".product .benefits");
 
-        const benefitsDestination = document.querySelector(".product .benefits");
-        const benefitsSource = responseHTML.querySelector(".product .benefits");
-        if (benefitsSource && benefitsDestination)
-          benefitsDestination.innerHTML = benefitsSource.innerHTML;
+        document.querySelector(
+          `[value="${this.currentVariant.id}"] ~ button[name="add"] .price`
+        ).innerHTML = responseHTML.querySelector(".product .main-price").innerHTML;
 
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });

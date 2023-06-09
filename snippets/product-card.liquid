@@ -41,7 +41,7 @@
         {{- card_product.metafields.custom_fields.short_description | escape -}}
       </p>
 
-    <div class="mt-auto overflow-hidden">
+    <div class="mt-auto overflow-hidden px-1 -mx-1">
       {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
       {%- if subscription and card_product.selling_plan_groups.size > 0 -%}
         {%- if variant_picker_type == 'button' -%}
@@ -201,14 +201,10 @@
           >
             <span class="sr-only">{{ card_product.title }} - </span>
             {%- if card_product.selected_or_first_available_variant.available -%}
-              {%- if subscription -%}
-                <span>Subscribe</span>
-              {%- else -%}
-                <span>{{ 'products.product.add_to_cart' | t }}</span>
-              {%- endif -%}
+              <span class="label">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
               <span class="sr-only"> - </span>
               {%- assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id -%}
-              {% render 'price',
+              {%- render 'price',
                 product: card_product,
                 price_id: price_id,
                 price_class: 'tracking-wide',
@@ -216,9 +212,9 @@
                 use_variant: true,
                 subscription: subscription,
                 default_to_mini: default_to_mini
-              %}
+              -%}
             {%- else -%}
-              {{ 'products.product.sold_out' | t }}
+              <span class="label">{{ 'products.product.sold_out' | t }}</span>
             {%- endif -%}
           </button>
           {%- if card_product.selected_or_first_available_variant.available == false -%}
