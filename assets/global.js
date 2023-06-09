@@ -709,9 +709,13 @@ class VariantSelects extends HTMLElement {
         replaceContent(".subscription .autodeliver .price");
         replaceContent(".product .benefits");
 
-        document.querySelector(
+        const cardPriceDest = document.querySelector(
           `[value="${this.currentVariant.id}"] ~ button[name="add"] .price`
-        ).innerHTML = responseHTML.querySelector(".product .main-price").innerHTML;
+        );
+        const cardPriceSource = responseHTML.querySelector(".product .main-price");
+        if (cardPriceSource && cardPriceDest) {
+          cardPriceDest.innerHTML = cardPriceSource.innerHTML;
+        }
 
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
