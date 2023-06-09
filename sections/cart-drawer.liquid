@@ -12,7 +12,7 @@
       {%- liquid
         assign cart_ids = cart.items | map: 'product_id'
         assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 9.6 oz Holiday, Scented / 1 oz' | split: ', '
-        assign small_products = 'Dayglow Face Oil, Essential Hydrating Oil' | split: ', '
+        assign small_products = 'Dayglow Face Oil, Essential Hydrating Oil, Anti-Aging Sea Serum' | split: ', '
       -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
       {% comment %} Gift with purchase {% endcomment %}
