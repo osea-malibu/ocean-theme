@@ -693,13 +693,14 @@ class VariantSelects extends HTMLElement {
   }
 
   renderProductInfo() {
-    fetch(`${this.dataset.url}?variant=${this.currentVariant.id}`)
+    const { id } = this.currentVariant;
+    fetch(`${this.dataset.url}?variant=${id}`)
       .then((response) => response.text())
       .then((responseText) => {
         const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
 
-        const replaceContent = (selector) => {
-          const source = responseHTML.querySelector(selector);
+        const replaceContent = (selector, sourceSelector) => {
+          const source = responseHTML.querySelector(sourceSelector || selector);
           const destination = document.querySelector(selector);
           if (source && destination) destination.innerHTML = source.innerHTML;
         };
@@ -708,14 +709,7 @@ class VariantSelects extends HTMLElement {
         replaceContent(".subscription .onetime .price");
         replaceContent(".subscription .autodeliver .price");
         replaceContent(".product .benefits");
-
-        const cardPriceDest = document.querySelector(
-          `[value="${this.currentVariant.id}"] ~ button[name="add"] .price`
-        );
-        const cardPriceSource = responseHTML.querySelector(".product .main-price");
-        if (cardPriceSource && cardPriceDest) {
-          cardPriceDest.innerHTML = cardPriceSource.innerHTML;
-        }
+        replaceContent(`[value="${id}"] ~ button[name="add"] .price`, ".product .main-price");
 
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
