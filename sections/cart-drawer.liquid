@@ -311,7 +311,6 @@
                               </div>
                             </td>
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
-                              <script>console.log("test", {{ item.variant.options.size }});</script>
                               {%- liquid
                                 assign hide_subscription = false
                                 assign normalized_current_variant_title = item.variant.title | replace: 'fl ', ''
