@@ -6,14 +6,14 @@
         "template--15574932979895__1db55616-03d9-4eb9-83bd-42a504e8dde8-16658623204552cb81-0": {
           "type": "heading",
           "settings": {
-            "heading": "Selfcare Straight<br class=\"2xs:hidden\"> to Your Inbox",
+            "heading": "Contact <br class=\"2xs:hidden\">OSEA Customer Care",
             "heading_classes": "tracking-widest font-bold uppercase text-xl lg:text-2xl"
           }
         },
         "7596312a-6dd0-4507-88c7-e2475ae4b5e9": {
           "type": "paragraph",
           "settings": {
-            "paragraph": "Sign up and be the first to know about promotions, new products, our latest skincare tips, and get 10% off your first purchase!",
+            "paragraph": "Thank you for connecting with the OSEA Customer Care Team! We do our very best to respond to inquiries within 1-2 business days. If you need immediate assistance, you can Live Chat us M-F 8am-5pm PT (excluding major holidays).",
             "paragraph_classes": "mt-1  font-book tracking-wide max-w-lg mx-auto"
           }
         }
@@ -24,6 +24,7 @@
       ],
       "settings": {
         "is_text_only": true,
+        "is_lazy": false,
         "section_classes": "relative px-4 bg-seafoam-100",
         "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
         "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
@@ -47,6 +48,7 @@
             "paragraph": "Sign up and be the first to know about promotions, new products, our latest skincare tips, and get 10% off your first purchase!",
             "paragraph_classes": "leading-snug",
             "button_label": "",
+            "button_aria_label": "",
             "link": "",
             "target_blank": false,
             "button_classes": "",
@@ -56,14 +58,19 @@
             "atc_button_product": "",
             "show_variants": false,
             "variant_picker_type": "button",
-            "variant_classes": ""
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": ""
           }
         },
         "487a1302-f24e-4ef6-bd42-d292ef38c7c4": {
           "type": "code",
           "settings": {
             "column_classes": "p-6",
-            "code": "<div class=\"klaviyo-form-Y7bP2X\"><\/div>"
+            "code": "<div data-gorgias-contact-form=\"container\"><\/div>\n<script defer src=\"https:\/\/contact.gorgias.help\/api\/contact-forms\/loader.js?uid=vch8geua&amp;locale=en-US\" data-gorgias-contact-form=\"script\"><\/script>"
           }
         }
       },
@@ -72,6 +79,7 @@
         "487a1302-f24e-4ef6-bd42-d292ef38c7c4"
       ],
       "settings": {
+        "section_heading": "",
         "section_classes": "bg-seafoam-100 pb-6 px-6",
         "container_classes": "bg-white max-w-lg mx-auto flex flex-col shadow-md shadow-seaweed-700\/10",
         "is_slider": false,
