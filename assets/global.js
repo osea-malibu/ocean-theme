@@ -616,6 +616,7 @@ class VariantSelects extends HTMLElement {
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
+    this.updateIsSubscription();
     this.toggleAddButton(true, "", false);
     this.removeErrorMessage();
 
@@ -643,6 +644,32 @@ class VariantSelects extends HTMLElement {
         })
         .includes(false);
     });
+  }
+
+  updateIsSubscription() {
+    const isSubscriptionInput = document.querySelector(
+      'input[name="properties[_is_subscription]"]'
+    );
+    const purchaseOptionInputs = Array.from(
+      document.querySelectorAll('input[name="purchase_option"]')
+    );
+    console.log(this.isTravelOrExclusion());
+    console.log("isSubscriptionInput", isSubscriptionInput);
+
+    if (this.isTravelOrExclusion()) {
+      isSubscriptionInput.value = false;
+      console.log("purchaseOptionInputs", purchaseOptionInputs);
+      purchaseOptionInputs?.forEach((input) => {
+        console.log("closest purchase option", input.closest(".purchase-option"));
+        console.log("input.checked", input.checked, input.value);
+        if (input.value === "onetime") {
+          input.checked = true;
+        } else {
+          input.checked = false;
+        }
+        input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked);
+      });
+    }
   }
 
   updateMedia() {
@@ -870,7 +897,7 @@ class SubscriptionRadios extends HTMLElement {
 
         document.querySelector("#PayInstallments")?.classList.remove("opacity-0");
 
-        if (plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
+        if (plusButtonEl && plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
         this.productForm.handleErrorMessage();
       } else if (value === "autodeliver") {
         this.setDefaultSellingPlan();
@@ -879,13 +906,15 @@ class SubscriptionRadios extends HTMLElement {
         document.querySelector("#PayInstallments")?.classList.add("opacity-0");
 
         const inputEl = document.querySelector(".pdp-quantity input");
-        const inputValueInteger = parseInt(inputEl.value);
+        if (inputEl) {
+          const inputValueInteger = parseInt(inputEl.value);
 
-        if (inputValueInteger > 4) {
-          inputEl.value = 4;
-          plusButtonEl.setAttribute("disabled", "");
-        } else if (inputValueInteger == 4) {
-          plusButtonEl.setAttribute("disabled", "");
+          if (inputValueInteger > 4) {
+            inputEl.value = 4;
+            plusButtonEl.setAttribute("disabled", "");
+          } else if (inputValueInteger == 4) {
+            plusButtonEl.setAttribute("disabled", "");
+          }
         }
       }
     }
