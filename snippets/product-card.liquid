@@ -203,12 +203,25 @@
             {%- if card_product.selected_or_first_available_variant.available -%}
               <span class="label">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
               <span class="sr-only"> - </span>
-              {%- assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id -%}
+              {%- liquid
+                assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
+                assign set_products = collections['skincare-sets-1'].products | map: 'handle'
+                assign is_set = false
+                assign show_range = true
+                assign price_class = 'tracking-wide'
+                if set_products contains card_product.handle
+                  assign is_set = true
+                endif
+                if is_set
+                  assign show_range = false
+                  assign price_class = 'tracking-wide set-price'
+                endif
+              -%}
               {%- render 'price',
                 product: card_product,
                 price_id: price_id,
-                price_class: 'tracking-wide',
-                show_price_range: true,
+                price_class: price_class,
+                show_price_range: show_range,
                 use_variant: true,
                 subscription: subscription,
                 default_to_mini: default_to_mini
