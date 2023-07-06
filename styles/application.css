@@ -550,6 +550,11 @@
 .stamped-badge .stamped-badge-caption {
   @apply text-xs underline ml-0.5;
 }
+.stamped-product-reviews-badge.compact
+  .stamped-badge-caption[data-reviews][data-label][data-version="2"]
+  > span {
+  @apply !hidden;
+}
 
 /* Catch pay */
 #catch-callout-cart {
