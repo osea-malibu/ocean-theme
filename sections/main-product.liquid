@@ -684,7 +684,11 @@
     {%- if product.selected_or_first_available_variant.featured_media -%}
       {%- assign media_size = product.selected_or_first_available_variant.featured_media.preview_image.width -%}
       "image": [
-        {{ product.selected_or_first_available_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
+        {%- if product.metafields.my_fields.white_image_bg != blank -%}
+          {{ product.metafields.my_fields.white_image_bg | image_url: width: 1200 | prepend: "https:" | json }}
+        {%- else -%}
+          {{ product.selected_or_first_available_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
+        {%- endif -%}
       ],
     {%- endif -%}
     "description": {{ product.description | strip_html | json }},
@@ -692,7 +696,7 @@
       "sku": {{ product.selected_or_first_available_variant.sku | json }},
     {%- endif -%}
     "brand": {
-      "@type": "Thing",
+      "@type": "Brand",
       "name": {{ product.vendor | json }}
     },
     "offers": [
@@ -708,7 +712,12 @@
           "url" : {{ shop.url | append: variant.url | json }}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
-    ]
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ product.metafields.stamped.reviews_average | round: 1 | json }},
+      "reviewCount": {{ product.metafields.stamped.reviews_count | json }}
+    }
   }
 </script>
 
