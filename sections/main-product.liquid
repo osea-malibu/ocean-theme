@@ -695,6 +695,13 @@
     {%- if product.selected_or_first_available_variant.sku != blank -%}
       "sku": {{ product.selected_or_first_available_variant.sku | json }},
     {%- endif -%}
+    {%- if product.metafields.stamped.reviews_count != blank -%}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": {{ product.metafields.stamped.reviews_average | round: 1 | json }},
+        "reviewCount": {{ product.metafields.stamped.reviews_count }}
+      },
+    {%- endif -%}
     "brand": {
       "@type": "Brand",
       "name": {{ product.vendor | json }}
@@ -712,12 +719,7 @@
           "url" : {{ shop.url | append: variant.url | json }}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": {{ product.metafields.stamped.reviews_average | round: 1 | json }},
-      "reviewCount": {{ product.metafields.stamped.reviews_count | json }}
-    }
+    ]
   }
 </script>
 
