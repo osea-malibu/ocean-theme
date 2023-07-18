@@ -45,6 +45,13 @@
         loading=lazy
       >
     </video>
+    {%- if promo_tile_url != blank -%}
+      <a href="{{ promo_tile_url }}" class="button button-primary absolute bottom-4 xs:bottom-7 w-36 left-1/2 -translate-x-1/2">
+    {%- endif -%}
+      {{- 'Shop now' -}}
+    {%- if promo_tile_url != blank -%}
+      </a>
+    {%- endif -%}
   </div>
 {%- elsif promo_tile_video_portrait != blank and promo_tile_video_landscape != blank -%}
   <collection-video class="block h-full relative">
