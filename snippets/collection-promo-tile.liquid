@@ -11,7 +11,7 @@
 
 {%- if promo_tile_image != blank -%}
   {%- if promo_tile_url != blank -%}
-    <a href="{{ promo_tile_url }}" class="block absolute inset-0">
+    <a href="{{ promo_tile_url }}" class="block absolute inset-0 plp-tile-clickarea">
   {%- else -%}
     <div>
   {%- endif -%}
@@ -46,7 +46,7 @@
       >
     </video>
     {%- if promo_tile_url != blank -%}
-      <a href="{{ promo_tile_url }}" class="button button-primary absolute bottom-4 xs:bottom-7 w-36 left-1/2 -translate-x-1/2">
+      <a href="{{ promo_tile_url }}" class="button button-primary absolute bottom-4 xs:bottom-7 w-36 left-1/2 -translate-x-1/2 plp-tile-clickarea">
     {%- endif -%}
       {{- 'Shop now' -}}
     {%- if promo_tile_url != blank -%}
