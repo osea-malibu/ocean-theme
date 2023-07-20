@@ -595,7 +595,7 @@ class DeferredMedia extends HTMLElement {
       content.appendChild(this.querySelector("template").content.firstElementChild.cloneNode(true));
 
       this.setAttribute("loaded", true);
-      this.appendChild(content.querySelector("video, iframe")).focus();
+      this.appendChild(content).focus();
     }
   }
 }
@@ -1050,15 +1050,17 @@ class ProductSlider extends HTMLElement {
     const currentChild = currentSlide.childNodes[0];
     const imageSwapped = currentSlide.classList.contains("swapped");
     const posterImage = currentSlide.querySelector("img");
+    const isVideo = currentChild.classList.contains("video-wrapper");
 
     // check if images have been swapped
     if (imageSwapped) {
       currentSlide.classList.remove("swapped");
 
       // check if current slide is video
-      if (currentChild.nodeName === "VIDEO") {
+      if (isVideo) {
         defaultImage.src = defaultImage.dataset.thumbImage;
-        currentChild.classList.remove("hidden");
+        currentChild.querySelector("video").classList.remove("hidden");
+        currentChild.querySelector(".video-controls").classList.remove("hidden");
         posterImage.classList.add("hidden");
       } else {
         currentChild.src = currentChild.dataset.fullImage;
@@ -1068,9 +1070,10 @@ class ProductSlider extends HTMLElement {
       currentSlide.classList.add("swapped");
 
       // check if current slide is video
-      if (currentChild.nodeName === "VIDEO") {
+      if (isVideo) {
         defaultImage.src = posterImage.dataset.thumbImage;
-        currentChild.classList.add("hidden");
+        currentChild.querySelector("video").classList.add("hidden");
+        currentChild.querySelector(".video-controls").classList.add("hidden");
         posterImage.classList.remove("hidden");
       } else {
         currentChild.src = defaultImage.dataset.fullImage;

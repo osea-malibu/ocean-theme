@@ -80,8 +80,8 @@
         {%- else -%}
           {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
         {%- endif -%}
-        <span class="deferred-media__poster-button">
-          {%- render 'icon-play', classes: 'w-10 h-10 text-white -mr-1' -%}
+        <span class="deferred-media__poster-button bg-white/50 rounded-full flex items-center justify-center h-20 w-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 z-10 motion-safe:transition-transform hover:scale-110">
+          {%- render 'icon-play', classes: 'w-8 h-8 text-white -mr-1 ml-1' -%}
         </span>
       </button>
       <template>
