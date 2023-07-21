@@ -105,7 +105,7 @@
           </div>
         </glide-slider>
         <product-slider
-          class="{% if product.handle != 'ocean-eyes' %}absolute invisible pointer-events-none z-0 {% endif %}glide mb-4 overflow-hidden max-w-full relative z-10"
+          class="{% if product.handle != 'ocean-eyes' %}absolute invisible pointer-events-none z-0 {% else %} relative z-10{% endif %}glide mb-4 overflow-hidden max-w-full"
           id="Product-Slider-Alt"
         >
           {%- comment -%} theme-check-disable RemoteAsset {%- endcomment -%}
