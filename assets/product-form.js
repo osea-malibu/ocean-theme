@@ -8,9 +8,11 @@ if (!customElements.get("product-form")) {
         this.form = this.querySelector("form");
         this.form.querySelector("[name=id]").disabled = false;
         this.form.addEventListener("submit", this.onSubmitHandler.bind(this));
-        this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+        this.cart =
+          document.querySelector("cart-notification") || document.querySelector("cart-drawer");
         this.submitButton = this.querySelector('[type="submit"]');
-        if (document.querySelector("cart-drawer")) this.submitButton.setAttribute("aria-haspopup", "dialog");
+        if (document.querySelector("cart-drawer"))
+          this.submitButton.setAttribute("aria-haspopup", "dialog");
       }
 
       getCartContents() {
@@ -62,14 +64,20 @@ if (!customElements.get("product-form")) {
                       .then((response) => response.json())
                       .then((data) => {
                         const cartIdArray = data.items.map((i) => i.id);
-                        if (!cartIdArray.includes(tier.product) && data.total_price >= tier.threshold) {
+                        if (
+                          !cartIdArray.includes(tier.product) &&
+                          data.total_price >= tier.threshold
+                        ) {
                           this.cart.addFreeGift(tier.variant);
                         }
                       })
                       .catch((e) => console.error(e));
                   }
                 });
-              } else if (window.gwpSettings.type === "url" && localStorage.getItem("osea.gwpUrlVariantId") === window.gwpSettings.tiers[2].variant) {
+              } else if (
+                window.gwpSettings.type === "url" &&
+                localStorage.getItem("osea.gwpUrlVariantId") === window.gwpSettings.tiers[2].variant
+              ) {
                 document.querySelector("gift-with-purchase-url").checkGiftQualifiers();
               }
             }
@@ -77,7 +85,8 @@ if (!customElements.get("product-form")) {
           .catch((e) => console.error(e))
           .finally(() => {
             this.submitButton.classList.remove("opacity-50");
-            if (this.cart && this.cart.classList.contains("is-empty")) this.cart.classList.remove("is-empty");
+            if (this.cart && this.cart.classList.contains("is-empty"))
+              this.cart.classList.remove("is-empty");
             if (!this.error) this.submitButton.removeAttribute("aria-disabled");
             this.querySelector(".loading-spinner")?.classList.add("hidden");
           });
@@ -89,11 +98,16 @@ if (!customElements.get("product-form")) {
 
         this.handleErrorMessage();
 
-        const purchaseOptionInput = this.form.querySelector('[name="properties[_is_subscription]"]');
+        const purchaseOptionInput = this.form.querySelector(
+          '[name="properties[_is_subscription]"]'
+        );
         if (purchaseOptionInput && purchaseOptionInput.value == "true") {
           this.getCartContents().then((cartContents) => {
             const filteredData = cartContents.items.filter(
-              (i) => i.properties._is_subscription === "true" && i.id === parseInt(this.form.querySelector("[name=id]").value) && i.quantity >= 4
+              (i) =>
+                i.properties._is_subscription === "true" &&
+                i.id === parseInt(this.form.querySelector("[name=id]").value) &&
+                i.quantity >= 4
             );
 
             if (filteredData.length > 0) {
@@ -109,10 +123,13 @@ if (!customElements.get("product-form")) {
       }
 
       handleErrorMessage(errorMessage = false) {
-        this.errorMessageWrapper = this.errorMessageWrapper || this.querySelector(".product-form__error-message-wrapper");
+        this.errorMessageWrapper =
+          this.errorMessageWrapper || this.querySelector(".product-form__error-message-wrapper");
         if (!this.errorMessageWrapper) return;
 
-        this.errorMessage = this.errorMessage || this.errorMessageWrapper.querySelector(".product-form__error-message");
+        this.errorMessage =
+          this.errorMessage ||
+          this.errorMessageWrapper.querySelector(".product-form__error-message");
 
         this.errorMessageWrapper.toggleAttribute("hidden", !errorMessage);
 
