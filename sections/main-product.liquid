@@ -338,7 +338,6 @@
                 -%}
               </div>
             {%- endif -%}
-
           {%- when 'quantity_selector' -%}
             {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
               <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
@@ -619,6 +618,14 @@
             {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
+        <div class="col-span-12 mt-6">
+          <h2 class="font-medium tracking-wide mb-2">Set includes</h2>
+          <ul>
+            {%- for product_in_set in product.metafields.custom.set_contains.value -%}
+              {%- render 'product-in-set', product: product_in_set -%}
+            {%- endfor -%}
+          </ul>
+        </div>
       </div>
     </div>
   </div>
