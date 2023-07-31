@@ -567,11 +567,11 @@
                       <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
                       <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
                     {%- endif -%}
-                    <div class="product-form__buttons relative grid grid-cols-2" id="AddToCart">
+                    <div class="product-form__buttons relative grid grid-cols-2 gap-2" id="AddToCart">
                       <button
                         type="submit"
                         name="add"
-                        class="product-form__submit relative button button-primary button-md w-full disabled:opacity-50 col-span-2 gap-2"
+                        class="product-form__submit relative button button-primary button-md w-full disabled:opacity-50 col-span-2"
                         {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                       >
                           <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
