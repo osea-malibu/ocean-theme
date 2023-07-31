@@ -227,6 +227,7 @@
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
           assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, 9.6 oz Holiday, Scented / 1 oz' | split: ', '
           assign small_products = 'Dayglow Face Oil, Essential Hydrating Oil' | split: ', '
+          assign set_products = collections['skincare-sets-1'].products | map: 'handle'
           assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
 
           assign is_travel_or_exclusion = false
@@ -618,14 +619,16 @@
             {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
-        <div class="col-span-12 mt-6">
-          <h2 class="font-medium tracking-wide mb-2">Set includes</h2>
-          <ul>
-            {%- for product_in_set in product.metafields.custom.set_contains.value -%}
-              {%- render 'product-in-set', product: product_in_set -%}
-            {%- endfor -%}
-          </ul>
-        </div>
+        {%- if set_products contains product.handle -%}
+          <div class="col-span-12 mt-6">
+            <h2 class="font-medium tracking-wide mb-2">Set includes</h2>
+            <ul>
+              {%- for product_in_set in product.metafields.custom.set_contains.value -%}
+                {%- render 'product-in-set', product: product_in_set -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
       </div>
     </div>
   </div>
