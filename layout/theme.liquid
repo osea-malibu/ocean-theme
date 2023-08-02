@@ -25,6 +25,7 @@
     
     {% liquid
       render 'meta-tags'
+      render 'prefetch'
       render 'google-tag-manager'
       render 'northbeam'
       render 'bing-uet-tag'
@@ -187,7 +188,8 @@
     -%}
     <script>function myInit(){ StampedFn.init({ apiKey: 'pubkey-4oB4VG51Cx1881U1R762Z6cpQtC50C', sId: '33056' }); }</script>
     {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-    <script async onload="myInit()" type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>    
+    <script async onload="myInit()" type="text/javascript" data-src="https://cdn1.stamped.io/files/widget.min.js"></script>    
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
+    {% render 'content_for_footer' %}
   </body>
 </html>
