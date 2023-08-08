@@ -9,14 +9,14 @@
     {% render 'product-in-set', product: section.settings.product %}
 {% endcomment %}
 
-<div class="relative bg-white px-4 pt-4 gap-4 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
+<div class="relative bg-white px-3 pt-3 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
   <div class="flex flex-row gap-4">
     <div class="w-full order-1 grow flex flex-col items-start py-1">
       <a href="{{ product.url | default: '#' }}" class="group text-sm tracking-wide leading-tight no-underline">
         <h4 class="font-medium group-hover:underline mb-0.5">
           {{ product.title | escape }}
         </h4>
-        <p class="group-hover:underline mb-1">{{ product.metafields.custom_fields.short_description }}</p>
+        <p class="group-hover:underline mb-0.5">{{ product.metafields.custom_fields.short_description }}</p>
         <p class="group-hover:underline mb-1">{{ product.metafields.my_fields.size }}</p>
       </a>
     </div>
@@ -42,7 +42,7 @@
     {%- endif -%}
   </div>
   <details
-    class="accordion group-accordion relative -top-5"
+    class="accordion group-accordion relative -top-6 -mb-3"
     id="Details-SetIncludes"
     data-duration="400"
   >
@@ -51,21 +51,21 @@
         <line class="group-accordion-open:rotate-90 origin-center motion-safe:transition-transform duration-300" x1="12" y1="5" x2="12" y2="19" />
         <line x1="5" y1="12" x2="19" y2="12" />
       </svg>
-      <span class="link">See more info</span>
+      <span class="link">See <span class="group-accordion-open:hidden">more</span><span class="hidden group-accordion-open:inline">less</span> info</span>
     </summary>
     <div
-      class="content tracking-wide pt-4"
+      class="content tracking-wide py-3"
       tabindex="0"
     >
       <section class="mb-4">
         <h5 class="font-bold mb-2">Description</h5>
-        <div class="p:text-xs">{{ product.metafields.custom_fields.description }}</div>
+        <div class="p:text-sm">{{ product.metafields.custom_fields.description }}</div>
       </section>
       <section class="mb-4">
         <h5 class="font-bold mb-2">Key ingredients</h5>
-        <div class="li:text-xs">{{ product.metafields.custom.key_ingredients_text }}</div>
+        <div class="li:text-sm">{{ product.metafields.custom.key_ingredients_text }}</div>
         <modal-opener class="no-js-hidden" data-modal="#SetIngredientsPopup-{{ product.handle }}">
-          <button class="link text-sm mt-2 font-book">See all ingredients</button>
+          <button class="link text-sm mt-2 font-book">View all ingredients</button>
         </modal-opener>
         <modal-dialog id="SetIngredientsPopup-{{ product.handle }}">
           <div role="dialog" aria-label="Read full ingredients list" aria-modal="true" class="product-popup-modal__content max-h-screen overflow-y-auto" tabindex="-1">
@@ -79,6 +79,12 @@
           </div>
         </modal-dialog>
       </section>
+      {%- if product.metafields.custom.scent_profile != blank -%}
+        <section>
+          <h5 class="font-bold mb-2">Scent profile</h5>
+          <div class="p:text-sm p:mb-2">{{ product.metafields.custom.scent_profile.value }}</div>
+        </section>
+      {%- endif -%}
       <a class="button button-xs button-tertiary" href="{{ product.url }}">View full product details</a>
     </div>
   </details>
