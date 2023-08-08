@@ -619,7 +619,7 @@
             {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
-        {%- if set_products contains product.handle -%}
+        {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
           <div class="col-span-12 mt-6">
             <h2 class="font-medium tracking-wide mb-2">Set includes</h2>
             <ul>
