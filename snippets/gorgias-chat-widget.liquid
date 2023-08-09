@@ -3,15 +3,25 @@
   <script id="gorgias-chat-widget-install-v2" data-src="https://config.gorgias.chat/gorgias-chat-bundle-loader.js?applicationId=17101"></script>
   {% comment %}theme-check-enable ParserBlockingJavaScript, RemoteAsset{% endcomment %}
   <script type="text/lazyload">
-    GorgiasChat.init().then(function () {
+    var initGorgiasChatPromise = window.GorgiasChat
+      ? window.GorgiasChat.init()
+      : new Promise(function (resolve) {
+        window.addEventListener('gorgias-widget-loaded', function () {
+          resolve()
+        })
+      })
+    initGorgiasChatPromise.then(function () {
       GorgiasChat.hidePoweredBy(true)
+      
       GorgiasChat.setCustomBusinessHours({
-        timezone: "America/Los_Angeles",
+        // Using a timezone from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+        // Day 1 represents Monday, Day 7 represents Sunday
+        timezone: 'America/Los_Angeles',
         businessHours: [
           { days: [1, 2, 3, 4, 5], fromTime: "08:00", toTime: "17:00" }
-        ]
+        ],
       })
-      
+
       var chatDict = {
         emailCaptureInputLabel: "Your Email",
         emailCaptureOnlineTriggerText: "We'll be right with you! In the meantime, leave us your email in case we need to follow up."
@@ -28,6 +38,6 @@
       window.GORGIAS_CHAT_TEXTS = chatDict
       GorgiasChat.updateTexts(chatDict)
       GorgiasChat.updateSSPTexts(sspDict)
-    });
+    })
   </script>
 {% comment %} Gorgias Chat Widget End {% endcomment %}
