@@ -276,7 +276,7 @@
                       class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
                     >
                       {%- for source in block.settings.video_mp4.sources -%}
-                        <source src="{{ source.url }}" type="video/{{ source.format }}">
+                        <source {% if block.settings.video_lazy %}data-src="{{ source.url }}"{% else %}src="{{ source.url }}"{% endif %} type="video/{{ source.format }}">
                       {%- endfor -%}
                       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                       <img
@@ -672,6 +672,11 @@
           "type": "checkbox",
           "id": "video_muted",
           "label": "Mute video"
+        },
+        {
+          "type": "checkbox",
+          "id": "video_lazy",
+          "label": "Lazy load video"
         },
         {
           "type": "textarea",
