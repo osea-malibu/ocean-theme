@@ -49,7 +49,7 @@
       {% render 'font-face' %}
     {% endstyle %}
 
-    {{ 'application.css' | asset_url | stylesheet_tag }}
+    {{ 'application.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% comment %} Start VWO Async SmartCode {% endcomment %}
       <script type='text/javascript'>
