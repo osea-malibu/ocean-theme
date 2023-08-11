@@ -289,7 +289,6 @@
                     </div>
                   {%- endif -%}
                   {%- if block.settings.video_mp4 != blank -%}
-                    <script>console.log("block.settings.video_poster_size", {{ block.settings.video_poster_size }})</script>
                     {%- liquid
                       if block.settings.video_poster_size != blank
                         assign video_poster_width = block.settings.video_poster_size | split: ', ' | first
