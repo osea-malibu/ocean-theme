@@ -29,14 +29,11 @@
                       <a href="{{ block.settings.image_link }}">
                     {%- endif -%}
                       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-                      {%- liquid
-                        assign mobile_image_src = block.settings.image | image_url: width: 400
-                        assign mobile_image_src_2x = block.settings.image | image_url: width: 800
-                        assign mobile_image_src_4x = block.settings.image | image_url: width: 1600
-                        assign desktop_image_src = block.settings.image_desktop | image_url: width: 800
-                        assign desktop_image_src_2x = block.settings.image_desktop | image_url: width: 1600
-                      -%}
                       {%- if block.settings.image contains '.gif' -%}
+                        {%- liquid
+                          assign mobile_image_src = block.settings.image | image_url: width: 400
+                          assign mobile_image_src_2x = block.settings.image | image_url: width: 800
+                        -%}
                         <img
                           srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
                           src="{{ mobile_image_src }}"
@@ -47,32 +44,59 @@
                           loading="lazy"
                         >
                       {%- else -%}
-                        <picture class="{{ block.settings.image_wrapper_classes }}">
-                          {%- if block.settings.image_desktop != blank -%}
-                            <source
-                              srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
-                              media="(min-width: 640px)"
-                            >
-                          {%- else -%}
-                            <source
-                              srcset="{% render 'imgix', src: mobile_image_src_2x %} 1x, {% render 'imgix', src: mobile_image_src_4x %} 2x"
-                              media="(min-width: 640px)"
-                            >
-                          {%- endif -%}
-                          <source
-                            srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-                            media="(min-width: 0px)"
-                          >
+                        {%- if block.settings.image_static_size != blank -%}
+                          {%- liquid
+                            assign static_image_size_array = block.settings.image_static_size | split: ', '
+                            assign static_image_width = static_image_size_array | first
+                            assign static_image_height = static_image_size_array | last
+                            assign static_image_width_mobile = static_image_size_array | first | divided_by: 2
+                            assign static_image_src = block.settings.image | image_url: width: static_image_width_mobile
+                            assign static_image_src_2x = block.settings.image | image_url: width: static_image_width
+                          -%}
                           <img
-                            srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-                            src="{% render 'imgix', src: mobile_image_src %}"
+                            srcset="{% render 'imgix', src: static_image_src %} 1x, {% render 'imgix', src: static_image_src_2x %} 2x"
+                            src="{% render 'imgix', src: static_image_src %}"
                             alt="{{ block.settings.image.alt }}"
-                            height="{{ block.settings.image.height }}"
-                            width="{{ block.settings.image.width }}"
+                            height="{{ static_image_height }}"
+                            width="{{ static_image_width }}"
                             class="{{ block.settings.image_classes }}"
                             loading="lazy"
                           >
-                        </picture>
+                        {%- else -%}
+                          {%- liquid
+                            assign mobile_image_src = block.settings.image | image_url: width: 400
+                            assign mobile_image_src_2x = block.settings.image | image_url: width: 800
+                            assign mobile_image_src_4x = block.settings.image | image_url: width: 1600
+                            assign desktop_image_src = block.settings.image_desktop | image_url: width: 800
+                            assign desktop_image_src_2x = block.settings.image_desktop | image_url: width: 1600
+                          -%}
+                          <picture class="{{ block.settings.image_wrapper_classes }}">
+                            {%- if block.settings.image_desktop != blank -%}
+                              <source
+                                srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+                                media="(min-width: 640px)"
+                              >
+                            {%- else -%}
+                              <source
+                                srcset="{% render 'imgix', src: mobile_image_src_2x %} 1x, {% render 'imgix', src: mobile_image_src_4x %} 2x"
+                                media="(min-width: 640px)"
+                              >
+                            {%- endif -%}
+                            <source
+                              srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+                              media="(min-width: 0px)"
+                            >
+                            <img
+                              srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+                              src="{% render 'imgix', src: mobile_image_src %}"
+                              alt="{{ block.settings.image.alt }}"
+                              height="{{ block.settings.image.height }}"
+                              width="{{ block.settings.image.width }}"
+                              class="{{ block.settings.image_classes }}"
+                              loading="lazy"
+                            >
+                          </picture>
+                        {%- endif -%}
                       {%- endif -%}
                       {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                     {%- if block.settings.image_link != blank -%}
