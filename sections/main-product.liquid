@@ -104,101 +104,6 @@
             {%- endfor -%}
           </div>
         </glide-slider>
-        <product-slider
-          class="{% if product.handle != 'ocean-eyes' %}absolute invisible pointer-events-none z-0 {% else %} relative z-10{% endif %}glide mb-4 overflow-hidden max-w-full"
-          id="Product-Slider-Alt"
-        >
-          {%- comment -%} theme-check-disable RemoteAsset {%- endcomment -%}
-          {% render 'product-badge', product: product, classes: 'z-10 left-1 !right-auto md:!left-auto md:!right-1' %}
-          {%- liquid
-            assign default_image_thumb = product.media | first | image_url: width: 200
-            assign default_image_full = product.media | first | image_url: width: 800, height: 1000, crop: 'center'
-          -%}
-          <button class="absolute bottom-10 left-2 z-10" id="Product-DefaultImage">
-            <img
-              id="Product-VariantImage"
-              loading="lazy"
-              src="{% render 'imgix', src: default_image_thumb %}"
-              width="200"
-              height="{{ 200 | divided_by: default_image_thumb.aspect_ratio | round }}"
-              class="bg-white w-24 rounded-md"
-              data-full-image="{% render 'imgix', src: default_image_full %}"
-              data-thumb-image="{% render 'imgix', src: default_image_thumb %}"
-            >
-          </button>
-          <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides min-h-full">
-              {%- for media in product.media offset: 1 limit: section.settings.gallery_limit -%}
-                {%- liquid
-                  assign main_image_full = media | image_url: width: 800, height: 1000, crop: 'center'
-                  assign main_image_thumb = media | image_url: width: 200
-                -%}
-                <li class="glide__slide relative group{% if forloop.index == 1 %} first-slide{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
-                  {%- if media.media_type == 'image' -%}
-                    <img
-                      src="{% render 'imgix', src: main_image_full %}"
-                      loading="lazy"
-                      alt="{{ media.alt | escape }}"
-                      width="{{ media.width }}"
-                      height="{{ media.width | divided_by: 0.8 | round }}"
-                      class="min-h-full object-cover"
-                      data-thumb-image="{% render 'imgix', src: main_image_thumb %}"
-                      data-full-image="{% render 'imgix', src: main_image_full %}"
-                    >
-                  {%- elsif media.media_type == 'video' -%}
-                    {%- liquid
-                      assign poster_image_full = media.preview_image | image_url: width: 800, height: 1000, crop: 'center'
-                      assign poster_image_thumb = media.preview_image | image_url: width: 200
-                    -%}
-                    <div class="h-full w-full object-cover relative video-wrapper">
-                      <video
-                        class="h-full w-full object-cover relative"
-                        poster="{% render 'imgix', src: poster_image_full %}"
-                        playsinline muted loop
-                      >
-                        {%- for source in media.sources -%}
-                          <source src="{{ source.url }}" type="video/{{ source.format }}" />
-                        {%- endfor -%}
-                      </video>
-                      <img
-                        src="{% render 'imgix', src: default_image_full %}"
-                        alt=""
-                        width="800"
-                        height="1000"
-                        loading="lazy"
-                        class="hidden absolute inset-0 object-cover"
-                        data-thumb-image="{% render 'imgix', src: poster_image_thumb %}"
-                        data-full-image="{% render 'imgix', src: poster_image_full %}"
-                      >
-                      <div class="video-controls flex items-center justify-end gap-2 absolute bottom-2 right-4">
-                        <button aria-label="Play or pause" type="button" class="play-pause button button-white relative p-1 shadow-seaweed-800/10 shadow-lg">
-                          {% render 'icon-play', classes: 'play w-6 h-6 translate-x-0.5 scale-90 transition-opacity' %}
-                          {% render 'icon-pause', classes: 'pause w-6 h-6 absolute inset-1 opacity-0 transition-opacity' %}
-                        </button>
-                        <button aria-label="Maximize" type="button" class="full-screen button button-white p-1 shadow-seaweed-800/10 shadow-lg">
-                          {% render 'icon-maximize', classes: 'w-6 h-6', stroke_width: 2 %}
-                        </button>
-                      </div>
-                    </div>
-                  {%- endif -%}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-          <div class="glide__bullets relative flex items-center" data-glide-el="controls[nav]">
-            {%- for media in product.media offset: 1  limit: section.settings.gallery_limit -%}
-              <button class="glide__bullet relative p-2" data-glide-dir="={{ forloop.index0 }}">
-                <span class="sr-only">Go to slide {{ forloop.index }}</span>
-                {%- if media.media_type == 'image' -%}
-                  <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
-                {%- elsif media.media_type == 'video' -%}
-                  {%- render 'icon-play', classes: 'w-4 h-4 scale-95 origin-right' -%}
-                {%- endif -%}
-              </button>
-            {%- endfor -%}
-          </div>
-          {%- comment -%} theme-check-enable RemoteAsset {%- endcomment -%}
-        </product-slider>
       </div>
     {%- else -%}
       <div class="bg-wave-100 mb-6 md:flex-1 relative md:sticky md:top-[148px] max-w-full">
@@ -257,7 +162,7 @@
             </p>
           {%- when 'title' -%}
             <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
-              {{- product.title | replace: 'Eye Serum', 'Serum' | escape -}}
+              {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' -}}
             </h1>
           {%- when 'price' -%}
             <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
