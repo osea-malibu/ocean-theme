@@ -675,15 +675,10 @@ class VariantSelects extends HTMLElement {
     const purchaseOptionInputs = Array.from(
       document.querySelectorAll('input[name="purchase_option"]')
     );
-    console.log(this.isTravelOrExclusion());
-    console.log("isSubscriptionInput", isSubscriptionInput);
 
     if (this.isTravelOrExclusion()) {
       isSubscriptionInput.value = false;
-      console.log("purchaseOptionInputs", purchaseOptionInputs);
       purchaseOptionInputs?.forEach((input) => {
-        console.log("closest purchase option", input.closest(".purchase-option"));
-        console.log("input.checked", input.checked, input.value);
         if (input.value === "onetime") {
           input.checked = true;
         } else {
