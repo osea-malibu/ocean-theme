@@ -27,7 +27,13 @@ setTimeout(function() {
                 .then(data => {
                     var lineproducts = data.items;
                     var contents = [];
-                    for (let i = 0; i < lineproducts.length; i++) {
+                    for (var i = 0; i < lineproducts.length; i++) {
+                        var subscriptionType;
+                        if (lineproducts[i]['properties']['_is_subscription'] == 'true') {
+                            subscriptionType = lineproducts[i]['selling_plan_allocation']['selling_plan']['name'];
+                        }
+                        else subscriptionType = undefined;
+            
                         contents.push({
                             'item_name': lineproducts[i]['title'],
                             'item_id': lineproducts[i]['product_id'],
@@ -36,8 +42,9 @@ setTimeout(function() {
                             'price': lineproducts[i]['price'] / 100,
                             'item_brand': lineproducts[i]['vendor'],
                             'item_category': lineproducts[i]['product_type'],
-                            'item_image': lineproducts[i]['image'],
-                            'quantity': lineproducts[i]['quantity']
+                            'quantity': lineproducts[i]['quantity'],
+                            'subscription': lineproducts[i]['properties']['_is_subscription'],
+                            'subscription_interval': subscriptionType,
                         });
                     }
                     dataLayer.push({ ecommerce: null });
