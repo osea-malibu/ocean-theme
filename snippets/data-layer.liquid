@@ -49,7 +49,15 @@ setTimeout(function() {
                     }
                     dataLayer.push({ ecommerce: null });
                     dataLayer.push({
-                        'event': 'begin_checkout_stape_custom',
+                        'event': 'begin_checkout_additional',
+                        {%  if customer %}
+                        'user_data': {
+                            'email' : '{{ customer.email }}',
+                            'first_name' : '{{ customer.first_name }}',
+                            'last_name' : '{{ customer.last_name }}',
+                            'customer_id': '{{ customer.id | remove: "'" }}',
+                        },
+                        {%  endif %}
                         'ecommerce': {
                             'cart_quantity': data.item_count,
                             'cart_total': data.total_price/100,
