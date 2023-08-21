@@ -1,0 +1,71 @@
+<script>
+setTimeout(function() {
+
+        var checkoutBtns = [];
+        var btnCheckout = document.querySelector('[name="checkout"]');
+        var btnShopPay = document.querySelector('[data-testid="ShopifyPay-button"]');
+        var btnGooglePay = document.querySelector('[data-testid="GooglePay-button"]');
+        var btnApplePay = document.querySelector('[data-testid="ApplePay-button"]');
+
+        if (btnCheckout) {
+            checkoutBtns.push( btnCheckout );
+        }
+        if (btnShopPay) {
+            checkoutBtns.push( btnShopPay );
+        }
+        if (btnGooglePay) {
+            checkoutBtns.push( btnGooglePay );
+        }
+        if (btnApplePay) {
+            checkoutBtns.push( btnApplePay );
+        }
+
+        checkoutBtns.forEach(function(element) {
+            element.addEventListener('click', function(){
+                var cartContents = fetch(window.Shopify.routes.root + 'cart.js')
+                .then(response => response.json())
+                .then(data => {
+                    var lineproducts = data.items;
+                    var contents = [];
+                    for (let i = 0; i < lineproducts.length; i++) {
+                        contents.push({
+                            'item_name': lineproducts[i]['title'],
+                            'item_id': lineproducts[i]['product_id'],
+                            'item_sku': lineproducts[i]['sku'],
+                            'item_variant': lineproducts[i]['variant_id'],
+                            'price': lineproducts[i]['price'] / 100,
+                            'item_brand': lineproducts[i]['vendor'],
+                            'item_category': lineproducts[i]['product_type'],
+                            'item_image': lineproducts[i]['image'],
+                            'quantity': lineproducts[i]['quantity']
+                        });
+                    }
+                    dataLayer.push({ ecommerce: null });
+                    dataLayer.push({
+                        'event': 'begin_checkout_stape',
+                        {%  if customer %}
+                        'user_data': {
+                            'email' : '{{ customer.email }}',
+                            'first_name' : '{{ customer.first_name }}',
+                            'last_name' : '{{ customer.last_name }}',
+                            'customer_id': '{{ customer.id | remove: "'" }}',
+                        },
+                        {%  endif %}
+                        'ecomm_pagetype': ecomm_pagetype,
+                        'ecomm_category': ecomm_category,
+                        'ecommerce': {
+                            'cart_quantity': data.item_count,
+                            'cart_total': data.total_price/100,
+                            'currency': data.currency,
+                            'items': contents
+                        }
+                    });
+                });
+            //In case the Checkout button already has an event listener, create a duplicate button, hide the original button and simulate a click on the original button after click on duplicate.
+            //   if (element == btnCheckout){
+            //   	document.getElementById('checkout').click();
+            //   }
+            });
+        });
+    }, 500);
+</script>
