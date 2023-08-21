@@ -560,6 +560,7 @@
                 class="cart__checkout-button button button-primary w-full"
                 name="checkout"
                 form="CartDrawer-Form"
+                onclick="beginCheckoutDataLayer()"
                 {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
             <catch-callout

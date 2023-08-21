@@ -1,4 +1,9 @@
 <script>
+function beginCheckoutDataLayer() {
+  dataLayer.push({
+    event:'test begin checkout'
+  })
+}
 window.addEventListener('load', function(){
 //begin checkout
   setTimeout(function() {
