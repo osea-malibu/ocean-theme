@@ -597,7 +597,9 @@
     });
   });
 </script>
+
 <script>
+  //data layer begin checkout
   function beginCheckoutDataLayer() {
   var cartContents = fetch(window.Shopify.routes.root + 'cart.js')
   .then(response => response.json())
