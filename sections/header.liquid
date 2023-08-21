@@ -139,7 +139,7 @@
                           <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
                             {{ link.title | replace: 'Popular: ', '' | escape }}
                             {%- if link.title contains 'Popular:' -%}
-                              <span class="badge">Popular</span>
+                              <span class="inline-block rounded-md bg-seafoam-300 text-xs font-bold px-1 py-px ml-1 relative -top-px">Popular</span>
                             {%- endif -%}
                           </a>
                         {%- endif -%}
