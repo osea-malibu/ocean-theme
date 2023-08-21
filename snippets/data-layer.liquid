@@ -42,7 +42,7 @@ setTimeout(function() {
                     }
                     dataLayer.push({ ecommerce: null });
                     dataLayer.push({
-                        'event': 'begin_checkout_stape',
+                        'event': 'begin_checkout_stape_custom',
                         {%  if customer %}
                         'user_data': {
                             'email' : '{{ customer.email }}',
@@ -61,10 +61,6 @@ setTimeout(function() {
                         }
                     });
                 });
-            //In case the Checkout button already has an event listener, create a duplicate button, hide the original button and simulate a click on the original button after click on duplicate.
-            //   if (element == btnCheckout){
-            //   	document.getElementById('checkout').click();
-            //   }
             });
         });
     }, 500);
