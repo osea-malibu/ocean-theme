@@ -137,7 +137,7 @@
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
                           <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
-                            {{ link.title | replace: 'Popular:', '' | escape }}
+                            {{ link.title | replace: 'Popular: ', '' | escape }}
                             {%- if link.title contains 'Popular:' -%}
                               <span class="badge">Popular</span>
                             {%- endif -%}
