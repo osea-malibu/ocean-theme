@@ -192,19 +192,11 @@
       render 'data-layer'
     -%}
    
-    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-    {% comment %}theme-check-enable RemoteAsset{% endcomment %}
-    {% render 'content_for_footer' %}
-    
     <script>function myInit(){ StampedFn.init({ apiKey: 'pubkey-4oB4VG51Cx1881U1R762Z6cpQtC50C', storeUrl: '33056' }); }</script>
-<script async onload="myInit()" type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
-  
-<!--Gorgias Chat Widget Start-->
-<script id="gorgias-chat-widget-install-v3" 
-    src="https://config.gorgias.chat/bundle-loader/01GYCCDPGE0SBJA47915Z0YPJA?source=shopify1click">
-</script>
-<script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});
-</script>
-<!--Gorgias Chat Widget End-->
+    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
+    <script async onload="myInit()" type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+    {% comment %}theme-check-enable RemoteAsset{% endcomment %}
+    
+    {% render 'content_for_footer' %}
 </body>
 </html>
