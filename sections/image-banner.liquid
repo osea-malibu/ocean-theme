@@ -35,7 +35,7 @@
       {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
       <img
         srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-        src="{% render 'imgix', src: mobile_image_src_2x %}"
+        src="{% render 'imgix', src: mobile_image_src %}"
         {% if section.settings.is_lazy %}loading="lazy"{% endif %}
         alt="{{ section.settings.image_mobile.alt }}"
         width="{{ section.settings.image_mobile.width }}"
