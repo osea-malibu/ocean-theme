@@ -41,7 +41,8 @@ class PredictiveSearch extends HTMLElement {
   }
 
   onFormSubmit(event) {
-    if (!this.getQuery().length || this.querySelector('[aria-selected="true"] a')) event.preventDefault();
+    if (!this.getQuery().length || this.querySelector('[aria-selected="true"] a'))
+      event.preventDefault();
   }
 
   onFocus() {
@@ -98,7 +99,9 @@ class PredictiveSearch extends HTMLElement {
 
     this.statusElement.textContent = "";
 
-    const activeIndex = Array.from(allElements).findIndex((node) => node.isEqualNode(selectedElement));
+    const activeIndex = Array.from(allElements).findIndex((node) =>
+      node.isEqualNode(selectedElement)
+    );
     if (!moveUp && selectedElement) {
       activeElement = allElements[activeIndex + 1] || allElements[0];
     } else if (moveUp) {
@@ -115,7 +118,9 @@ class PredictiveSearch extends HTMLElement {
   }
 
   selectOption() {
-    const selectedProduct = this.querySelector('[aria-selected="true"] a, [aria-selected="true"] button');
+    const selectedProduct = this.querySelector(
+      '[aria-selected="true"] a, [aria-selected="true"] button'
+    );
 
     if (selectedProduct) selectedProduct.click();
   }
@@ -130,9 +135,13 @@ class PredictiveSearch extends HTMLElement {
     }
 
     fetch(
-      `${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&${encodeURIComponent("resources[type]")}=product,page,article,collection&${encodeURIComponent(
+      `${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&${encodeURIComponent(
+        "resources[type]"
+      )}=product,page,article,collection&${encodeURIComponent(
         "resources[limit]"
-      )}=8&${encodeURIComponent("resources[options][fields]")}=author,body,product_type,tag,title,variants.title&section_id=predictive-search`
+      )}=20&${encodeURIComponent(
+        "resources[options][fields]"
+      )}=author,body,product_type,tag,title,variants.title&section_id=predictive-search`
     )
       .then((response) => {
         if (!response.ok) {
@@ -144,7 +153,9 @@ class PredictiveSearch extends HTMLElement {
         return response.text();
       })
       .then((text) => {
-        const resultsMarkup = new DOMParser().parseFromString(text, "text/html").querySelector("#shopify-section-predictive-search").innerHTML;
+        const resultsMarkup = new DOMParser()
+          .parseFromString(text, "text/html")
+          .querySelector("#shopify-section-predictive-search").innerHTML;
         this.cachedResults[queryKey] = resultsMarkup;
         this.renderSearchResults(resultsMarkup);
       })
@@ -190,9 +201,13 @@ class PredictiveSearch extends HTMLElement {
 
   setLiveRegionResults() {
     this.removeAttribute("loading");
-    this.setLiveRegionText(this.querySelector("[data-predictive-search-live-region-count-value]").textContent);
+    this.setLiveRegionText(
+      this.querySelector("[data-predictive-search-live-region-count-value]").textContent
+    );
 
-    this.querySelectorAll(".button-popular-search").forEach((button) => button.addEventListener("click", this.onPopularSearchClick.bind(this)));
+    this.querySelectorAll(".button-popular-search").forEach((button) =>
+      button.addEventListener("click", this.onPopularSearchClick.bind(this))
+    );
   }
 
   open() {
