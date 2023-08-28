@@ -104,7 +104,9 @@
                     {%- endif -%}
                   {%- endif -%}
                   {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
-                    <div {% if block.settings.text_classes != blank %}class="{{ block.settings.text_classes }}"{% endif %}>
+                    {%- unless block.settings.remove_text_wrapper -%}
+                      <div {% if block.settings.text_classes != blank %}class="{{ block.settings.text_classes }}"{% endif %}>
+                    {%- endunless -%}
                       {%- if block.settings.heading != "" -%}
                         <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
                       {%- endif -%}
@@ -286,7 +288,9 @@
                           </a>
                         {%- endif -%}
                       {%- endif -%}
-                    </div>
+                    {%- unless block.settings.remove_text_wrapper -%}
+                      </div>
+                    {%- endunless -%}
                   {%- endif -%}
                   {%- if block.settings.video_mp4 != blank -%}
                     {%- liquid
@@ -581,6 +585,11 @@
           "type": "textarea",
           "id": "text_classes",
           "label": "Text block classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "remove_text_wrapper",
+          "label": "Remove text wrapper"
         },
         {
           "type": "html",
