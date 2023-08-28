@@ -29,7 +29,7 @@
           "settings": {
             "button_label": "Shop Now",
             "button_aria_label": "Shop Now: Seaglow resurfacing scrub",
-            "button_link": "shopify://products/seaglow-resurfacing-scrub",
+            "button_link": "shopify:\/\/products\/seaglow-resurfacing-scrub",
             "target_blank": false,
             "button_classes": "button button-white md:button-lg sm:mt-1 mt-auto mb-4"
           }
@@ -42,13 +42,13 @@
         "template--15166819893431__7fd023d6-ee39-4e18-96df-4b1d84fc9b1e-16861579937f068c89-2"
       ],
       "settings": {
-        "image_mobile": "shopify://shop_images/SRS_Launch_HP_Banner_Mobile_-_BLANK.jpg",
-        "image": "shopify://shop_images/SRS_Launch_HP_Banner_Desktop_-_BLANK.jpg",
+        "image_mobile": "shopify:\/\/shop_images\/SRS_Launch_HP_Banner_Mobile_-_BLANK.jpg",
+        "image": "shopify:\/\/shop_images\/SRS_Launch_HP_Banner_Desktop_-_BLANK.jpg",
         "is_lazy": false,
-        "image_link": "shopify://products/seaglow-resurfacing-scrub",
+        "image_link": "shopify:\/\/products\/seaglow-resurfacing-scrub",
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
-        "text_block_classes": "absolute inset-y-0 left-4 pl-0 sm:pr-0 pr-0 right-0 sm:right-1/2 text-center flex flex-col items-center justify-top sm:pl-0 sm:pt-4 sm:justify-center"
+        "text_block_classes": "absolute inset-y-0 left-4 pl-0 sm:pr-0 pr-0 right-0 sm:right-1\/2 text-center flex flex-col items-center justify-top sm:pl-0 sm:pt-4 sm:justify-center"
       }
     },
     "165703204544efb73d": {
@@ -57,7 +57,7 @@
         "165703204528fb3b00-0": {
           "type": "heading",
           "settings": {
-            "heading_text": "Skincare from the Sea<span class=\"text-sm md:text-base font-sans font-book relative bottom-4 md:bottom-5 -mr-2\">®</span>",
+            "heading_text": "Skincare from the Sea<span class=\"text-sm md:text-base font-sans font-book relative bottom-4 md:bottom-5 -mr-2\">®<\/span>",
             "heading_classes": "font-serif text-4xl md:text-5xl tracking-tight",
             "subheading_text": "",
             "subheading_classes": ""
@@ -71,7 +71,10 @@
           }
         }
       },
-      "block_order": ["165703204528fb3b00-0", "9d280c33-2d05-4ce7-b39f-76ae6d0d9d5e"],
+      "block_order": [
+        "165703204528fb3b00-0",
+        "9d280c33-2d05-4ce7-b39f-76ae6d0d9d5e"
+      ],
       "settings": {
         "section_heading": "Brand statement",
         "section_classes": "pt-10 pb-6 px-4 sm:px-6 md:px-0 max-w-xl mx-auto",
@@ -89,7 +92,9 @@
           }
         }
       },
-      "block_order": ["ef36c6b7-d88e-4497-b951-129a5bb04048"],
+      "block_order": [
+        "ef36c6b7-d88e-4497-b951-129a5bb04048"
+      ],
       "settings": {
         "products_to_show": 12,
         "wrapper_classes": "mb-8",
@@ -102,14 +107,15 @@
         "1e8c2240-5d57-4f97-8c2f-238c1585e1ad": {
           "type": "column",
           "settings": {
-            "column_classes": "md:w-1/2 min-h-[15rem] xs:min-h-full bg-center 2xs:mb-2 sm:mb-4 md:mb-0",
-            "image": "shopify://shop_images/jenefer-melissa-2-1.jpg",
+            "column_classes": "md:w-1\/2 min-h-[15rem] xs:min-h-full bg-center 2xs:mb-2 sm:mb-4 md:mb-0",
+            "image": "shopify:\/\/shop_images\/jenefer-melissa-2-1.jpg",
             "is_bg_image": false,
-            "image_link": "shopify://pages/our-family",
+            "image_link": "shopify:\/\/pages\/our-family",
             "image_classes": "",
             "image_wrapper_classes": "",
             "image_static_size": "732, 488",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -137,20 +143,21 @@
         "1a10a165-947e-46c5-9a0b-181283b41bf1": {
           "type": "column",
           "settings": {
-            "column_classes": "md:w-1/2 md:pl-8 flex items-center",
+            "column_classes": "md:w-1\/2 md:pl-8 flex items-center",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "",
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "text-center md:text-left",
+            "remove_text_wrapper": false,
             "heading": "Clean Since 1996",
             "heading_classes": "font-serif text-3xl sm:text-4xl tracking-tight mb-1 text-left",
-            "paragraph": "Today it’s called clean beauty, but in our family, it is what it has always been<span style=\"font-family:sans-serif\">:</span> a simple, holistic philosophy that our connection to nature is essential to our collective wellbeing.",
+            "paragraph": "Today it’s called clean beauty, but in our family, it is what it has always been<span style=\"font-family:sans-serif\">:<\/span> a simple, holistic philosophy that our connection to nature is essential to our collective wellbeing.",
             "paragraph_classes": "text-lg mb-4 text-left leading-snug",
             "button_label": "Our family story",
             "button_aria_label": "",
-            "link": "shopify://pages/our-family",
+            "link": "shopify:\/\/pages\/our-family",
             "target_blank": false,
             "button_classes": "button-primary",
             "button_icon": "",
@@ -182,9 +189,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "1657672123c2735a5b": {
@@ -200,13 +207,14 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "Build Your Routine",
             "heading_classes": "text-4xl font-serif tracking-tight",
             "paragraph": "Discover the best products for your skin in 3 quick minutes",
             "paragraph_classes": "mb-3 leading-tight px-8",
             "button_label": "Take quiz",
             "button_aria_label": "",
-            "link": "shopify://pages/quiz",
+            "link": "shopify:\/\/pages\/quiz",
             "target_blank": false,
             "button_classes": "button-primary",
             "button_icon": "",
@@ -225,7 +233,9 @@
           }
         }
       },
-      "block_order": ["1657672123ec38d471-0"],
+      "block_order": [
+        "1657672123ec38d471-0"
+      ],
       "settings": {
         "section_heading": "Take the OSEA Skin Quiz",
         "section_classes": "container mb-8 block",
@@ -235,9 +245,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "114c07af-2c59-4a1a-bd42-4ab3350fbe16": {
@@ -246,22 +256,23 @@
         "61a96737-9675-43e9-b452-5edf59b06944": {
           "type": "column",
           "settings": {
-            "column_classes": "relative md:w-2/3 items-center",
-            "image": "shopify://shop_images/UBCP_HP_Featured_Block_Infographic_Mobile_BLANK_4d295934-422a-49b8-a363-d62911f460d8.jpg",
-            "image_desktop": "shopify://shop_images/UCBP_HP_Featured_Block_Infographic_Desktop_BLANK.jpg",
+            "column_classes": "relative md:w-2\/3 items-center",
+            "image": "shopify:\/\/shop_images\/UBCP_HP_Featured_Block_Infographic_Mobile_BLANK_4d295934-422a-49b8-a363-d62911f460d8.jpg",
+            "image_desktop": "shopify:\/\/shop_images\/UCBP_HP_Featured_Block_Infographic_Desktop_BLANK.jpg",
             "is_bg_image": false,
-            "image_link": "shopify://products/undaria-body-collection",
+            "image_link": "shopify:\/\/products\/undaria-body-collection",
             "image_classes": "w-full h-full object-cover",
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "absolute inset-y-0 right-0 left-0 text-center flex flex-col items-center justify-top sm:justify-center pt-6 m-auto leading-snug pointer-events-none",
+            "remove_text_wrapper": false,
             "heading": "Undaria <br class=\"hidden sm:block\">Body Collection",
             "heading_classes": "text-3xl mb-0 font-serif text-white sm:text-6xl text-center max-w-lg tracking-tight",
-            "paragraph": "<a href=\"https://oseamalibu.com/products/undaria-body-collection\">Experience our new Undaria Cleansing<br>Body Polish in a set and save.</a>",
+            "paragraph": "<a href=\"https:\/\/oseamalibu.com\/products\/undaria-body-collection\">Experience our new Undaria Cleansing<br>Body Polish in a set and save.<\/a>",
             "paragraph_classes": "text-md md:text-xl tracking-wide leading-tighter font-book text-white sm:pb-4 pb-2",
             "button_label": "Shop Now",
             "button_aria_label": "Shop now: Undaria body collection",
-            "link": "shopify://products/undaria-body-collection",
+            "link": "shopify:\/\/products\/undaria-body-collection",
             "target_blank": false,
             "button_classes": "button button-white text-sm mt-0 sm:button-lg",
             "button_icon": "",
@@ -282,7 +293,7 @@
         "c8712a46-3500-4d3e-92ca-8abd53f6c776": {
           "type": "product",
           "settings": {
-            "column_classes": "flex-1 md:w-1/3",
+            "column_classes": "flex-1 md:w-1\/3",
             "product": "undaria-body-collection",
             "image_classes": "",
             "button_classes": "",
@@ -309,9 +320,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "165763348414500414": {
@@ -320,24 +331,23 @@
         "1ce6669d-1567-48d9-b555-b7075dbb1ada": {
           "type": "column",
           "settings": {
-            "column_classes": "relative md:w-2/3",
-            "image": "shopify://shop_images/SRS_HP_Featured_Block_Infographic_Mobile_BLANK.png",
-            "image_desktop": "shopify://shop_images/SRS_HP_Featured_Block_Infographic_Desktop_BLANK.png",
+            "column_classes": "",
             "is_bg_image": false,
-            "image_link": "shopify://products/radiant-exfoliation-trio",
-            "image_classes": "w-full h-full object-cover",
+            "image_link": "",
+            "image_classes": "",
             "image_wrapper_classes": "",
             "image_static_size": "",
-            "text_classes": "flex flex-col items-center justify-top sm:justify-center absolute inset-0 text-center sm:right-1/2 p-4 md:p-2 pt-4 sm:left-1",
-            "heading": "Radiant <br class=\"hidden md:block\">Exfoliation Trio",
-            "heading_classes": "text-3xl mb-0 font-serif text-white text-center max-w-xl  tracking-normal lg:text-5xl",
-            "paragraph": "<a href=\"https://oseamalibu.com/products/radiant-exfoliation-trio\">Try our new Seaglow Resurfacing Scrub <br class=\"lg:hidden\">in a set and save.</a>",
-            "paragraph_classes": "text-md md:text-xl tracking-wide leading-tighter font-book text-white sm:pb-4 pb-2 max-w-sm sm:max-w-xl",
-            "button_label": "Shop now",
-            "button_aria_label": "Shop now: Radiant exfoliation trio",
-            "link": "shopify://products/radiant-exfoliation-trio",
+            "text_classes": "",
+            "remove_text_wrapper": false,
+            "heading": "Subscribe &amp; Save 10%",
+            "heading_classes": "text-2xl md:text-3xl font-medium tracking-wide leading-none",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
             "target_blank": false,
-            "button_classes": "button button-white text-sm mt-0 sm:button-lg",
+            "button_classes": "",
             "button_icon": "",
             "is_atc_button": false,
             "is_subscription": false,
@@ -353,38 +363,59 @@
             "video_poster_size": ""
           }
         },
-        "b74971dc-2142-412b-8a3e-87cde70afaf4": {
-          "type": "product",
+        "f7dfd4c1-2c3f-45fa-a1f3-221fa73624d6": {
+          "type": "column",
           "settings": {
-            "column_classes": "flex-1 md:w-1/3",
-            "product": "radiant-exfoliation-trio",
+            "column_classes": "",
+            "is_bg_image": false,
+            "image_link": "",
             "image_classes": "",
-            "button_classes": "",
-            "name_classes": "",
-            "description_classes": "",
-            "hide_badge": true,
-            "show_reviews": false,
-            "show_benefits": false,
-            "subscription": false
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "Learn more",
+            "button_aria_label": "Learn more on subscription information page",
+            "link": "shopify:\/\/pages\/subscribe",
+            "target_blank": false,
+            "button_classes": "subscription-learn-more button-sm button-secondary px-2 md:px-4",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": ""
           }
         }
       },
       "block_order": [
         "1ce6669d-1567-48d9-b555-b7075dbb1ada",
-        "b74971dc-2142-412b-8a3e-87cde70afaf4"
+        "f7dfd4c1-2c3f-45fa-a1f3-221fa73624d6"
       ],
+      "disabled": true,
       "settings": {
-        "section_heading": "",
-        "section_classes": "container mb-12",
-        "container_classes": "flex-col md:flex-row gap-0 md:gap-6",
+        "section_heading": "Browse subscription products",
+        "section_classes": "container mb-2",
+        "container_classes": "flex justify-between items-center gap-6",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "9e1e3c61-f9f8-4cd1-9a6d-a9a7c602f9e7": {
@@ -400,13 +431,14 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "Results You Can Sea",
             "heading_classes": "text-4xl font-serif tracking-tight",
             "paragraph": "Shop risk free with our 30 day money back guarantee.",
             "paragraph_classes": "mb-3 leading-tight px-8",
             "button_label": "shop now",
             "button_aria_label": "",
-            "link": "shopify://collections/shop",
+            "link": "shopify:\/\/collections\/shop",
             "target_blank": false,
             "button_classes": "button-primary",
             "button_icon": "",
@@ -425,7 +457,9 @@
           }
         }
       },
-      "block_order": ["4b5af2ba-4a8b-4522-b0d4-c399f507638c"],
+      "block_order": [
+        "4b5af2ba-4a8b-4522-b0d4-c399f507638c"
+      ],
       "settings": {
         "section_heading": "Take the OSEA Skin Quiz",
         "section_classes": "container mb-8",
@@ -435,9 +469,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "1661281093f635a455": {
@@ -453,6 +487,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -469,7 +504,7 @@
             "show_variants": false,
             "variant_picker_type": "button",
             "variant_classes": "",
-            "video_mp4": "shopify://files/videos/uabb_mp4_240.mp4",
+            "video_mp4": "shopify:\/\/files\/videos\/uabb_mp4_240.mp4",
             "video_autoplay": true,
             "video_loop": true,
             "video_hide_controls": true,
@@ -482,13 +517,14 @@
           "type": "column",
           "settings": {
             "column_classes": "order-2 lg:order-none",
-            "image": "shopify://shop_images/beach-lifestyle-1.jpg",
+            "image": "shopify:\/\/shop_images\/beach-lifestyle-1.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "w-full h-full",
             "image_wrapper_classes": "",
             "image_static_size": "343, 610",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -517,13 +553,14 @@
           "type": "column",
           "settings": {
             "column_classes": "order-4 sm:order-3 lg:order-none",
-            "image": "shopify://shop_images/hss-lifestyle-1_3cf040b8-d20c-495d-b462-1a986698a26c.jpg",
+            "image": "shopify:\/\/shop_images\/hss-lifestyle-1_3cf040b8-d20c-495d-b462-1a986698a26c.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "h-full",
             "image_wrapper_classes": "",
             "image_static_size": "362, 644",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -558,9 +595,10 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
-            "heading": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"75\" height=\"80\" viewbox=\"0 0 100 73\" class=\"ml-auto w-12 h-12 md:w-16 md:h-16 lg:w-12 lg:h-12 xl:w-16 xl:h-16\">\n  <path fill=\"currentColor\" d=\"M76.19617,0.96 C88.9960786,0.96 99.996,9.75958 99.996,28.75998 C99.996,55.4597893 78.1961557,71.1596771 65.7962443,72.7596657 L63.1964414,65.35954 C70.39639,60.6595736 76.2961693,52.5596314 75.6963521,47.859665 C67.5965886,47.2597764 54.4965036,42.9595214 54.4965036,25.3598257 C54.3960579,12.0604564 61.8960936,0.96 76.1963486,0.96 L76.19617,0.96 Z M21.8965579,0.96017857 C34.6964664,0.96017857 45.6963879,9.76029428 45.6963879,28.75998 C45.6963879,55.4597893 23.8965436,71.1596771 11.4966321,72.7596657 L8.89682928,65.35954 C15.9964214,60.6602879 21.8962007,52.6601664 21.1958486,47.8603793 C13.1964414,47.2597943 -0.004,42.9602357 -0.004,25.36054 C-0.004,12.060635 7.59576714,0.96017857 21.8958436,0.96017857 L21.8965579,0.96017857 Z\"></path>\n</svg>",
+            "remove_text_wrapper": false,
+            "heading": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"75\" height=\"80\" viewbox=\"0 0 100 73\" class=\"ml-auto w-12 h-12 md:w-16 md:h-16 lg:w-12 lg:h-12 xl:w-16 xl:h-16\">\n  <path fill=\"currentColor\" d=\"M76.19617,0.96 C88.9960786,0.96 99.996,9.75958 99.996,28.75998 C99.996,55.4597893 78.1961557,71.1596771 65.7962443,72.7596657 L63.1964414,65.35954 C70.39639,60.6595736 76.2961693,52.5596314 75.6963521,47.859665 C67.5965886,47.2597764 54.4965036,42.9595214 54.4965036,25.3598257 C54.3960579,12.0604564 61.8960936,0.96 76.1963486,0.96 L76.19617,0.96 Z M21.8965579,0.96017857 C34.6964664,0.96017857 45.6963879,9.76029428 45.6963879,28.75998 C45.6963879,55.4597893 23.8965436,71.1596771 11.4966321,72.7596657 L8.89682928,65.35954 C15.9964214,60.6602879 21.8962007,52.6601664 21.1958486,47.8603793 C13.1964414,47.2597943 -0.004,42.9602357 -0.004,25.36054 C-0.004,12.060635 7.59576714,0.96017857 21.8958436,0.96017857 L21.8965579,0.96017857 Z\"><\/path>\n<\/svg>",
             "heading_classes": "mb-4 text-seafoam-300",
-            "paragraph": "<figure>\n<blockquote> Truly like bringing the spa home. I literally can't wait for my skin and body routine. Thank you for making such superior products! </blockquote>\n<figcaption class=\"font-sans text-lg md:text-2xl lg:text-xl xl:text-2xl text-right tracking-wide font-light\">-Raquel, OSEA Customer</figcaption>\n</figure>",
+            "paragraph": "<figure>\n<blockquote> Truly like bringing the spa home. I literally can't wait for my skin and body routine. Thank you for making such superior products! <\/blockquote>\n<figcaption class=\"font-sans text-lg md:text-2xl lg:text-xl xl:text-2xl text-right tracking-wide font-light\">-Raquel, OSEA Customer<\/figcaption>\n<\/figure>",
             "paragraph_classes": "font-serif text-2xl md:text-4xl lg:text-2xl xl:text-4xl tracking-tight md:leading-snug xl:leading-snug mb-2 md:mb-6",
             "button_label": "",
             "button_aria_label": "",
@@ -592,9 +630,10 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
-            "heading": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"75\" height=\"80\" viewbox=\"0 0 100 73\" class=\"ml-auto w-12 h-12 md:w-16 md:h-16 lg:w-12 lg:h-12 xl:w-16 xl:h-16\">\n  <path fill=\"currentColor\" d=\"M76.19617,0.96 C88.9960786,0.96 99.996,9.75958 99.996,28.75998 C99.996,55.4597893 78.1961557,71.1596771 65.7962443,72.7596657 L63.1964414,65.35954 C70.39639,60.6595736 76.2961693,52.5596314 75.6963521,47.859665 C67.5965886,47.2597764 54.4965036,42.9595214 54.4965036,25.3598257 C54.3960579,12.0604564 61.8960936,0.96 76.1963486,0.96 L76.19617,0.96 Z M21.8965579,0.96017857 C34.6964664,0.96017857 45.6963879,9.76029428 45.6963879,28.75998 C45.6963879,55.4597893 23.8965436,71.1596771 11.4966321,72.7596657 L8.89682928,65.35954 C15.9964214,60.6602879 21.8962007,52.6601664 21.1958486,47.8603793 C13.1964414,47.2597943 -0.004,42.9602357 -0.004,25.36054 C-0.004,12.060635 7.59576714,0.96017857 21.8958436,0.96017857 L21.8965579,0.96017857 Z\"></path>\n</svg>",
+            "remove_text_wrapper": false,
+            "heading": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"75\" height=\"80\" viewbox=\"0 0 100 73\" class=\"ml-auto w-12 h-12 md:w-16 md:h-16 lg:w-12 lg:h-12 xl:w-16 xl:h-16\">\n  <path fill=\"currentColor\" d=\"M76.19617,0.96 C88.9960786,0.96 99.996,9.75958 99.996,28.75998 C99.996,55.4597893 78.1961557,71.1596771 65.7962443,72.7596657 L63.1964414,65.35954 C70.39639,60.6595736 76.2961693,52.5596314 75.6963521,47.859665 C67.5965886,47.2597764 54.4965036,42.9595214 54.4965036,25.3598257 C54.3960579,12.0604564 61.8960936,0.96 76.1963486,0.96 L76.19617,0.96 Z M21.8965579,0.96017857 C34.6964664,0.96017857 45.6963879,9.76029428 45.6963879,28.75998 C45.6963879,55.4597893 23.8965436,71.1596771 11.4966321,72.7596657 L8.89682928,65.35954 C15.9964214,60.6602879 21.8962007,52.6601664 21.1958486,47.8603793 C13.1964414,47.2597943 -0.004,42.9602357 -0.004,25.36054 C-0.004,12.060635 7.59576714,0.96017857 21.8958436,0.96017857 L21.8965579,0.96017857 Z\"><\/path>\n<\/svg>",
             "heading_classes": "rotate-180 mb-4 text-sand-400",
-            "paragraph": "<figure>\n<blockquote>I love OSEA so much, it's a borderline obsession. The Dayglow Face Oil is DIVINE!</blockquote>\n<figcaption class=\"font-sans text-lg md:text-2xl lg:text-xl xl:text-2xl text-right tracking-wide font-light\">-Magda, OSEA Customer</figcaption>\n</figure>",
+            "paragraph": "<figure>\n<blockquote>I love OSEA so much, it's a borderline obsession. The Dayglow Face Oil is DIVINE!<\/blockquote>\n<figcaption class=\"font-sans text-lg md:text-2xl lg:text-xl xl:text-2xl text-right tracking-wide font-light\">-Magda, OSEA Customer<\/figcaption>\n<\/figure>",
             "paragraph_classes": "font-serif text-2xl md:text-4xl lg:text-2xl xl:text-4xl tracking-tight md:leading-snug xl:leading-snug mb-2 md:mb-6",
             "button_label": "",
             "button_aria_label": "",
@@ -626,6 +665,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -642,7 +682,7 @@
             "show_variants": false,
             "variant_picker_type": "button",
             "variant_classes": "",
-            "video_mp4": "shopify://files/videos/waves_mp4_240.mp4",
+            "video_mp4": "shopify:\/\/files\/videos\/waves_mp4_240.mp4",
             "video_autoplay": true,
             "video_loop": true,
             "video_hide_controls": true,
@@ -655,13 +695,14 @@
           "type": "column",
           "settings": {
             "column_classes": "order-7 sm:order-6 lg:order-none",
-            "image": "shopify://shop_images/floral-1.jpg",
+            "image": "shopify:\/\/shop_images\/floral-1.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "w-full h-full",
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -696,6 +737,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -712,7 +754,7 @@
             "show_variants": false,
             "variant_picker_type": "button",
             "variant_classes": "",
-            "video_mp4": "shopify://files/videos/egs_mp4_240.mp4",
+            "video_mp4": "shopify:\/\/files\/videos\/egs_mp4_240.mp4",
             "video_autoplay": true,
             "video_loop": true,
             "video_hide_controls": true,
@@ -726,13 +768,14 @@
           "disabled": true,
           "settings": {
             "column_classes": "",
-            "image": "shopify://shop_images/uao-all-frames-64.gif",
+            "image": "shopify:\/\/shop_images\/uao-all-frames-64.gif",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "w-full",
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -762,13 +805,14 @@
           "disabled": true,
           "settings": {
             "column_classes": "",
-            "image": "shopify://shop_images/beach-lifestyle-2.jpg",
+            "image": "shopify:\/\/shop_images\/beach-lifestyle-2.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "",
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "",
@@ -815,9 +859,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     }
   },
