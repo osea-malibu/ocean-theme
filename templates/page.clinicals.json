@@ -45,6 +45,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "<a class=\"block py-2 pr-2 sm:pr-3 lg:pr-4 pl-4 whitespace-nowrap link\" href=\"/pages/about-us\">Body Moisturizers</a>",
@@ -79,6 +80,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "<a class=\"block py-2 px-2 sm:px-3 lg:px-4 whitespace-nowrap\" href=\"/pages/our-family\">Face Moisturizers</a>",
@@ -113,6 +115,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "<a class=\"block py-2 px-2 sm:px-3 lg:px-4 whitespace-nowrap\" href=\"/pages/our-commitment\">Serums</a>",
@@ -147,6 +150,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "",
+            "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
             "paragraph": "<a class=\"block py-2 px-2 sm:px-3 lg:px-4 whitespace-nowrap\" href=\"/pages/our-ingredients\">Eye Care</a>",
@@ -206,6 +210,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "200, 255",
             "text_classes": "text-center",
+            "remove_text_wrapper": false,
             "heading": "<a href=\"#undaria-algae-body-butter\" class=\"link\"><span class=\"tracking-tight lg:tracking-normal\">Undaria Algae</span><br> Body Butter</a>",
             "heading_classes": "leading-snug",
             "paragraph": "",
@@ -241,6 +246,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "200, 255",
             "text_classes": "text-center",
+            "remove_text_wrapper": false,
             "heading": "<a href=\"#undaria-algae-oil\" class=\"link\"><span class=\"tracking-tight lg:tracking-normal\">Undaria Algae</span><br> Body Oil</a>",
             "heading_classes": "leading-snug",
             "paragraph": "",
@@ -276,6 +282,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "200, 255",
             "text_classes": "text-center",
+            "remove_text_wrapper": false,
             "heading": "<a href=\"#undaria-collagen-body-lotion\" class=\"link\"><span class=\"tracking-tight lg:tracking-normal\">Undaria Collagen</span><br> Body Lotion</a>",
             "heading_classes": "leading-snug",
             "paragraph": "",
@@ -311,6 +318,7 @@
             "image_wrapper_classes": "",
             "image_static_size": "200, 255",
             "text_classes": "text-center",
+            "remove_text_wrapper": false,
             "heading": "<a href=\"#anti-aging-body-balm\" class=\"link\">Anti-Aging<br> Body Balm</a>",
             "heading_classes": "leading-snug",
             "paragraph": "",
@@ -362,23 +370,24 @@
         "2bafebdd-855d-4185-b1ac-1b32f1d56940": {
           "type": "code",
           "settings": {
-            "column_classes": "",
+            "column_classes": "absolute",
             "code": "<a id=\"undaria-algae-body-butter\" class=\"anchor\" aria-label=\"Undaria Algae Body Butter\"></a>"
           }
         },
         "02b2d735-4fdb-4190-bb2f-369cd03f067b": {
           "type": "column",
           "settings": {
-            "column_classes": "flex-1",
-            "image": "shopify://shop_images/Moisture_Barrier_-_Body_-_uabb.png",
+            "column_classes": "lg:col-span-1 xl:col-span-3 flex flex-col justify-center",
+            "image": "shopify://shop_images/uabb-lifestyle-1.jpg",
             "is_bg_image": false,
             "image_link": "",
-            "image_classes": "",
-            "image_wrapper_classes": "order-2",
-            "image_static_size": "",
-            "text_classes": "",
-            "heading": "Undaria Algae Body Butter",
-            "heading_classes": "order-1",
+            "image_classes": "rounded-lg order-2 md:hidden md:absolute",
+            "image_wrapper_classes": "",
+            "image_static_size": "480, 224",
+            "text_classes": "order-1",
+            "remove_text_wrapper": false,
+            "heading": "<h2>Undaria Algae Body Butter</h2>",
+            "heading_classes": "order-1 -mx-2 mb-4 md:mb-0 tracking-tight font-serif text-3xl md:text-4xl",
             "paragraph": "",
             "paragraph_classes": "",
             "button_label": "",
@@ -401,17 +410,25 @@
             "video_poster_size": ""
           }
         },
+        "828fe448-b514-4bcd-b7ae-fa1964c3148f": {
+          "type": "code",
+          "settings": {
+            "column_classes": "lg:col-span-1  lg:col-start-1 lg:col-start-1 lg:row-start-2 xl:col-span-3 xl:col-start-1 xl:row-start-2 flex flex-col md:flex-row py-4 md:py-8 lg:py-0",
+            "code": "<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">72 <sub class=\"bottom-0 text-3xl tracking-tight\">hours</sub>\n</h3>\n<p class=\"tracking-wide md:text-sm\">of <b class=\"font-medium\">clinically proven <mark class=\"bg-white text-seaweed-700\">hydration</mark></b>*</p>\n</div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"md:text-sm\">felt <b class=\"font-medium\">silky-smooth</b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">relieved of dryness</mark></b>*</p>\n</div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">97<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"md:text-sm\">agreed skin felt <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">supple</mark></b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">looked less crepey</mark></b>*</p>\n</div>"
+          }
+        },
         "4b4c8430-e583-42ca-8922-1682d819f9e7": {
           "type": "column",
           "settings": {
-            "column_classes": "bg-white md:w-96 rounded-xl py-6 px-6 mx-auto",
+            "column_classes": "lg:col-span-1 lg:row-span-3 lg:col-start-2 lg:row-start-1 xl:col-span-2 xl:row-span-3 xl:col-start-4 xl:row-start-1 bg-white rounded-xl py-6 px-6 mx-auto mb-4 w-full lg:w-96",
             "image": "shopify://shop_images/uabb-product-texture.png",
             "is_bg_image": false,
             "image_link": "shopify://products/undaria-algae-body-butter",
-            "image_classes": "relative w-48 md:w-60 mx-auto -right-6 mb-5 pt-6",
+            "image_classes": "relative w-48 lg:w-60 mx-auto -right-6 mb-5 pt-6",
             "image_wrapper_classes": "",
             "image_static_size": "",
             "text_classes": "text-center max-w-xs mx-auto",
+            "remove_text_wrapper": false,
             "heading": "Anti-Aging Skincare<br> for Your Body",
             "heading_classes": "text-3xl md:text-4xl font-serif tracking-tight mb-2",
             "paragraph": "",
@@ -435,17 +452,54 @@
             "video_classes": "",
             "video_poster_size": ""
           }
+        },
+        "de90ad10-42c9-4191-972f-261523a486d4": {
+          "type": "column",
+          "settings": {
+            "column_classes": "lg:col-span-1 lg:row-start-3 xl:col-span-3 xl:row-start-3",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "flex flex-col py-4 gap-4 lg:py-0 lg:gap-8",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "*Based on a 3rd party clinical &amp; consumer study on 32 women ages 37 to 65, after 4 weeks.",
+            "paragraph_classes": "order-2 md:order-1 text-xs leading-tight",
+            "button_label": "Learn more",
+            "button_aria_label": "Learn more about Undaria Algae Body Butter",
+            "link": "shopify://products/undaria-algae-body-butter",
+            "target_blank": false,
+            "button_classes": "order-1 md:order-2 button-secondary button-sm mx-auto",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": ""
+          }
         }
       },
       "block_order": [
         "2bafebdd-855d-4185-b1ac-1b32f1d56940",
         "02b2d735-4fdb-4190-bb2f-369cd03f067b",
-        "4b4c8430-e583-42ca-8922-1682d819f9e7"
+        "828fe448-b514-4bcd-b7ae-fa1964c3148f",
+        "4b4c8430-e583-42ca-8922-1682d819f9e7",
+        "de90ad10-42c9-4191-972f-261523a486d4"
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "container mb-4",
-        "container_classes": "bg-[#FAF5EA] bg-sand-200 px-6 py-6 flex-col md:flex-row",
+        "section_classes": "container px-0 2xs:px-6",
+        "container_classes": "bg-[#FAF5EA] px-4 md:px-6 py-6 text-center grid lg:grid-cols-2 lg:grid-rows-3 xl:grid-cols-5",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -456,64 +510,37 @@
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     },
-    "0c226fe5-55d9-4126-bd0e-85f615a29f10": {
-      "type": "rich-text",
-      "blocks": {
-        "template--15696584081591__0c226fe5-55d9-4126-bd0e-85f615a29f10-166595907958e7c29e-0": {
-          "type": "heading",
-          "settings": {
-            "heading_text": "Ingredient blogs",
-            "heading_classes": "text-xl font-medium tracking-wide",
-            "subheading_text": "",
-            "subheading_classes": ""
-          }
-        },
-        "3981662f-9135-4a1f-9efb-3810782d2e96": {
-          "type": "button",
-          "settings": {
-            "button_label": "See all",
-            "button_link": "",
-            "button_aria_label": "",
-            "target_blank": false,
-            "button_icon": "",
-            "button_classes": "button button-secondary button-xs"
-          }
-        }
-      },
-      "block_order": [
-        "template--15696584081591__0c226fe5-55d9-4126-bd0e-85f615a29f10-166595907958e7c29e-0",
-        "3981662f-9135-4a1f-9efb-3810782d2e96"
-      ],
-      "disabled": true,
-      "settings": {
-        "section_heading": "",
-        "section_classes": "container lg:max-w-screen-lg mb-4",
-        "container_classes": "flex justify-between items-center"
-      }
-    },
-    "a4883545-54d3-4cc0-aed1-529b572df657": {
+    "d69514a1-b336-401a-a178-6b307d10eeb8": {
       "type": "multicolumn",
       "blocks": {
-        "944aae80-10ee-49fe-951f-e72675fdd259": {
+        "3699f54b-1598-4eff-ab78-0d4cdb9fe95b": {
+          "type": "code",
+          "settings": {
+            "column_classes": "absolute",
+            "code": "<a id=\"undaria-algae-oil\" class=\"anchor\" aria-label=\"Undaria Algae Body Oil\"></a>"
+          }
+        },
+        "a8521192-43d8-44f5-a7e6-ad6f43eda69a": {
           "type": "column",
           "settings": {
-            "column_classes": "",
-            "image": "shopify://shop_images/our-family-banner-mobile.jpg",
+            "column_classes": "lg:col-span-1 lg:col-start-2 lg:row-start-1 xl:col-span-3 xl:col-start-3 xl:row-start-1 flex flex-col justify-center",
+            "image": "shopify://shop_images/uao-lifestyle-1.jpg",
             "is_bg_image": false,
-            "image_link": "shopify://pages/our-family",
-            "image_classes": "h-60 object-cover mb-2",
+            "image_link": "",
+            "image_classes": "rounded-lg order-2 md:hidden md:absolute",
             "image_wrapper_classes": "",
-            "image_static_size": "",
-            "text_classes": "",
-            "heading": "Our Family",
-            "heading_classes": "font-medium tracking-wide text-lg mb-1",
-            "paragraph": "OSEA is the story of generations of women in our family inspired by the sea.",
-            "paragraph_classes": "leading-snug mb-1",
-            "button_label": "Read more",
-            "button_aria_label": "Read more on our family page",
-            "link": "shopify://pages/our-family",
+            "image_static_size": "480, 224",
+            "text_classes": "order-1",
+            "remove_text_wrapper": false,
+            "heading": "<h2>Undaria Algae Body Oil</h2>",
+            "heading_classes": "order-1 -mx-2 mb-4 md:mb-0 tracking-tight font-serif text-3xl md:text-4xl",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
             "target_blank": false,
-            "button_classes": "button-xs link px-0 border-none",
+            "button_classes": "",
             "button_icon": "",
             "is_atc_button": false,
             "is_subscription": false,
@@ -529,33 +556,41 @@
             "video_poster_size": ""
           }
         },
-        "cfde52d2-5adb-4f03-9cbd-9a5ecadb6ef1": {
+        "b054357f-d75c-48b4-8d6f-d70875184432": {
+          "type": "code",
+          "settings": {
+            "column_classes": "lg:col-span-1 lg:col-start-2 lg:row-start-2 xl:col-span-3 xl:col-start-3 xl:row-start-2 flex flex-col md:flex-row py-4 md:py-8 lg:py-0",
+            "code": "<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"tracking-wide md:text-sm\">showed an instant improvement in <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">moisturization</mark></b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">skin elasticity</mark></b>*</p>\n</div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"md:text-sm\">agreed skin looked <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">firmer</mark></b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">less crepey</mark></b>*</p>\n</div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"md:text-sm\">agreed skin felt <b class=\"font-medium\"> softer, <mark class=\"bg-white text-seaweed-700\">smoother</mark></b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">more supple</mark></b>*</p>\n</div>"
+          }
+        },
+        "1a23aa2d-1a71-4bc5-8bb1-6b01e36cfffb": {
           "type": "column",
           "settings": {
-            "column_classes": "",
-            "image": "shopify://shop_images/Our_Commitment_Banner_Desktop_2_1440x816_18b3e849-1bcc-442d-8ec2-38fbd5f718d9.webp",
+            "column_classes": "lg:col-span-1 lg:row-span-3 lg:col-start-1 lg:row-start-1 xl:col-span-2 xl:row-span-3 xl:col-start-1 xl:row-start-1 bg-white rounded-xl py-6 px-6 mx-auto mb-4 w-full lg:w-96",
+            "image": "shopify://shop_images/uao-product-texture.png",
             "is_bg_image": false,
-            "image_link": "shopify://pages/our-commitment",
-            "image_classes": "h-60 object-cover object-right mb-2",
+            "image_link": "shopify://products/undaria-algae-oil",
+            "image_classes": "relative w-40 mx-auto -left-2 mb-4",
             "image_wrapper_classes": "",
             "image_static_size": "",
-            "text_classes": "",
-            "heading": "Our Commitment",
-            "heading_classes": "font-medium tracking-wide text-lg mb-1",
-            "paragraph": "Every product is made with consideration of our impact on our planet and our collective well being.",
-            "paragraph_classes": "leading-snug mb-1",
-            "button_label": "Read more",
-            "button_aria_label": "Read more on our commitment page",
-            "link": "shopify://pages/our-commitment",
+            "text_classes": "text-center max-w-xs mx-auto",
+            "remove_text_wrapper": false,
+            "heading": "Glow-Boosting, Firming<br> Body Moisturizer",
+            "heading_classes": "text-3xl md:text-4xl font-serif tracking-tight mb-2 lg:-mx-5",
+            "paragraph": "",
+            "paragraph_classes": "tracking-wide text-xl font-book",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
             "target_blank": false,
-            "button_classes": "button-xs link px-0 border-none",
+            "button_classes": "button-primary px-3",
             "button_icon": "",
-            "is_atc_button": false,
+            "is_atc_button": true,
             "is_subscription": false,
-            "atc_button_product": "",
-            "show_variants": false,
+            "atc_button_product": "undaria-algae-oil",
+            "show_variants": true,
             "variant_picker_type": "button",
-            "variant_classes": "",
+            "variant_classes": "justify-center [&>*:nth-child(3)]:hidden",
             "video_autoplay": false,
             "video_loop": false,
             "video_hide_controls": false,
@@ -564,61 +599,26 @@
             "video_poster_size": ""
           }
         },
-        "05deacbf-f026-4a5b-825c-c8650432d9b1": {
+        "f712d74a-46f6-4e13-8717-1fbd46f2b810": {
           "type": "column",
           "settings": {
-            "column_classes": "",
-            "image": "shopify://shop_images/seaweed-drying.jpg",
+            "column_classes": "lg:col-span-1  lg:col-start-2 lg:row-start-3 xl:col-span-3 xl:col-start-3 xl:row-start-3 lg:mt-4",
             "is_bg_image": false,
-            "image_link": "shopify://pages/our-ingredients",
-            "image_classes": "h-60 object-cover object-right mb-2",
+            "image_link": "",
+            "image_classes": "",
             "image_wrapper_classes": "",
             "image_static_size": "",
-            "text_classes": "",
-            "heading": "Our Ingredients",
-            "heading_classes": "font-medium tracking-wide text-lg mb-1",
-            "paragraph": "We use safe, naturally-derived ingredients, chosen for their efficacy, with the most rigorous industry standards in mind.",
-            "paragraph_classes": "leading-snug mb-1",
-            "button_label": "Read more",
-            "button_aria_label": "Read more on our ingredients page",
-            "link": "shopify://pages/our-ingredients",
+            "text_classes": "flex flex-col py-4 gap-4 lg:py-0 lg:gap-8",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "*Based on a 3rd party clinical &amp; consumer study on 53 women ages 25 to 65, after 2 weeks.",
+            "paragraph_classes": "order-2 md:order-1 text-xs leading-tight",
+            "button_label": "Learn more",
+            "button_aria_label": "Learn more about Undaria Algae Body Oil",
+            "link": "shopify://products/undaria-algae-oil",
             "target_blank": false,
-            "button_classes": "button-xs link px-0 border-none",
-            "button_icon": "",
-            "is_atc_button": false,
-            "is_subscription": false,
-            "atc_button_product": "",
-            "show_variants": false,
-            "variant_picker_type": "button",
-            "variant_classes": "",
-            "video_autoplay": false,
-            "video_loop": false,
-            "video_hide_controls": false,
-            "video_muted": false,
-            "video_classes": "",
-            "video_poster_size": ""
-          }
-        },
-        "080ccad6-a919-4961-a7a5-bfd449e117f6": {
-          "type": "column",
-          "settings": {
-            "column_classes": "",
-            "image": "shopify://shop_images/our-commitment-2.jpg",
-            "is_bg_image": false,
-            "image_link": "shopify://pages/sustainability",
-            "image_classes": "h-60 object-cover mb-2",
-            "image_wrapper_classes": "",
-            "image_static_size": "",
-            "text_classes": "",
-            "heading": "Sustainability",
-            "heading_classes": "font-medium tracking-wide text-lg mb-1",
-            "paragraph": "In our every deliberation, we consider how our actions will affect our planet for years to come.",
-            "paragraph_classes": "leading-snug mb-1",
-            "button_label": "Read more",
-            "button_aria_label": "Read more on our sustainability page",
-            "link": "shopify://pages/sustainability",
-            "target_blank": false,
-            "button_classes": "button-xs link px-0 border-none",
+            "button_classes": "order-1 md:order-2 button-secondary button-sm mx-auto",
             "button_icon": "",
             "is_atc_button": false,
             "is_subscription": false,
@@ -636,16 +636,16 @@
         }
       },
       "block_order": [
-        "944aae80-10ee-49fe-951f-e72675fdd259",
-        "cfde52d2-5adb-4f03-9cbd-9a5ecadb6ef1",
-        "05deacbf-f026-4a5b-825c-c8650432d9b1",
-        "080ccad6-a919-4961-a7a5-bfd449e117f6"
+        "3699f54b-1598-4eff-ab78-0d4cdb9fe95b",
+        "a8521192-43d8-44f5-a7e6-ad6f43eda69a",
+        "b054357f-d75c-48b4-8d6f-d70875184432",
+        "1a23aa2d-1a71-4bc5-8bb1-6b01e36cfffb",
+        "f712d74a-46f6-4e13-8717-1fbd46f2b810"
       ],
-      "disabled": true,
       "settings": {
-        "section_heading": "About Our Brand",
-        "section_classes": "container lg:max-w-screen-lg mb-12",
-        "container_classes": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4",
+        "section_heading": "",
+        "section_classes": "container px-0 2xs:px-6",
+        "container_classes": "bg-[#FFF8E1] px-4 md:px-6 py-6 text-center grid lg:grid-cols-2 lg:grid-rows-3 xl:grid-cols-5",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -656,47 +656,296 @@
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     },
-    "ee58bac8-3361-4a66-b24c-9cd60e5232d2": {
-      "type": "rich-text",
+    "1287ae7b-d47b-4819-88a5-f5fb56017e80": {
+      "type": "multicolumn",
       "blocks": {
-        "template--15696584081591__ee58bac8-3361-4a66-b24c-9cd60e5232d2-166595907958e7c29e-0": {
-          "type": "heading",
+        "cb65347b-2072-46fe-8737-14fc109e95f2": {
+          "type": "code",
           "settings": {
-            "heading_text": "Skincare from the Sea®",
-            "heading_classes": "font-serif text-4xl tracking-tight leading-none mb-1 w-64 mx-auto xs:w-auto",
-            "subheading_text": "",
-            "subheading_classes": ""
+            "column_classes": "absolute",
+            "code": "<a id=\"undaria-collagen-body-lotion\" class=\"anchor\" aria-label=\"Undaria Collagen Body Lotion\"></a>"
           }
         },
-        "be794a04-84b7-45df-92b6-a84612814cbe": {
-          "type": "paragraph",
+        "f09d1d84-8698-4442-95b6-3683136a3e3b": {
+          "type": "column",
           "settings": {
-            "paragraph_text": "Clean Since 1996",
-            "paragraph_classes": "mb-3 tracking-wide"
-          }
-        },
-        "template--15696584081591__ee58bac8-3361-4a66-b24c-9cd60e5232d2-166595907958e7c29e-2": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_link": "shopify://collections/shop",
+            "column_classes": "lg:col-span-1 xl:col-span-3 flex flex-col justify-center",
+            "image": "shopify://shop_images/ucbl-lifestyle-1.jpg",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "rounded-lg order-2 md:hidden md:absolute",
+            "image_wrapper_classes": "",
+            "image_static_size": "480, 224",
+            "text_classes": "order-1",
+            "remove_text_wrapper": false,
+            "heading": "<h2>Undaria Collagen Body Lotion</h2>",
+            "heading_classes": "order-1 -mx-2 mb-4 md:mb-0 tracking-tight font-serif text-3xl md:text-4xl",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
             "button_aria_label": "",
+            "link": "",
             "target_blank": false,
+            "button_classes": "",
             "button_icon": "",
-            "button_classes": "button button-primary"
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": ""
+          }
+        },
+        "8e2ab42e-1262-45c8-b7c6-dbe9ad6a4fef": {
+          "type": "code",
+          "settings": {
+            "column_classes": "lg:col-span-1  lg:col-start-1 lg:col-start-1 lg:row-start-2 xl:col-span-3 xl:col-start-1 xl:row-start-2 flex flex-col md:flex-row py-4 md:py-8 lg:py-0",
+            "code": "<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">4 <sub class=\"bottom-0 text-3xl tracking-tight\">hours</sub>\n</h3>\n<p class=\"tracking-wide md:text-sm\"><b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">visibly firms skin</mark></b> in just a few hours*</p>\n</div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"md:text-sm\">agreed skin felt <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">softer</mark></b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">smoother</mark></b>**</p>\n</div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">97<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"md:text-sm\">agreed <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">dryness</mark></b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">dullness disappeared</mark></b>**</p>\n</div>"
+          }
+        },
+        "b4b47947-9962-401e-8826-f39e5c54b281": {
+          "type": "column",
+          "settings": {
+            "column_classes": "lg:col-span-1 lg:row-span-3 lg:col-start-2 lg:row-start-1 xl:col-span-2 xl:row-span-3 xl:col-start-4 xl:row-start-1 bg-white rounded-xl py-6 px-6 mx-auto mb-4 w-full lg:w-96",
+            "image": "shopify://shop_images/ucbl-product-texture.png",
+            "is_bg_image": false,
+            "image_link": "shopify://products/undaria-collagen-body-lotion",
+            "image_classes": "relative w-36 mx-auto mb-4",
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "text-center max-w-xs mx-auto",
+            "remove_text_wrapper": false,
+            "heading": "Visibly Firming Lightweight Moisturizer",
+            "heading_classes": "text-3xl md:text-4xl font-serif tracking-tight mb-2",
+            "paragraph": "",
+            "paragraph_classes": "tracking-wide text-xl font-book",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "button-primary px-3",
+            "button_icon": "",
+            "is_atc_button": true,
+            "is_subscription": false,
+            "atc_button_product": "undaria-collagen-body-lotion",
+            "show_variants": true,
+            "variant_picker_type": "button",
+            "variant_classes": "justify-center first-of-type:hidden",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": ""
+          }
+        },
+        "8ee8e816-1dd1-44b4-8014-67c39a40d082": {
+          "type": "column",
+          "settings": {
+            "column_classes": "lg:col-span-1 lg:row-start-3 xl:col-span-3 xl:row-start-3",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "flex flex-col py-4 gap-4 lg:py-0 lg:gap-8",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "<span class=\"block mb-1\">*Based on a 3rd party clinical study conducted on 33 women ages 24 to 61, after 1 use.</span>\n<span class=\"block\">**Based on a 3rd party consumer perception study conducted on 31 women ages 24 to 61, after 1 use.</span>",
+            "paragraph_classes": "order-2 md:order-1 text-xs leading-tight",
+            "button_label": "Learn more",
+            "button_aria_label": "Learn more about Undaria Algae Body Butter",
+            "link": "shopify://products/undaria-collagen-body-lotion",
+            "target_blank": false,
+            "button_classes": "order-1 md:order-2 button-secondary button-sm mx-auto",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": ""
           }
         }
       },
       "block_order": [
-        "template--15696584081591__ee58bac8-3361-4a66-b24c-9cd60e5232d2-166595907958e7c29e-0",
-        "be794a04-84b7-45df-92b6-a84612814cbe",
-        "template--15696584081591__ee58bac8-3361-4a66-b24c-9cd60e5232d2-166595907958e7c29e-2"
+        "cb65347b-2072-46fe-8737-14fc109e95f2",
+        "f09d1d84-8698-4442-95b6-3683136a3e3b",
+        "8e2ab42e-1262-45c8-b7c6-dbe9ad6a4fef",
+        "b4b47947-9962-401e-8826-f39e5c54b281",
+        "8ee8e816-1dd1-44b4-8014-67c39a40d082"
       ],
-      "disabled": true,
       "settings": {
         "section_heading": "",
-        "section_classes": "bg-shell-200 px-6 py-8 text-center",
-        "container_classes": ""
+        "section_classes": "container px-0 2xs:px-6",
+        "container_classes": "bg-[#FFFAF0] px-4 md:px-6 py-6 text-center grid lg:grid-cols-2 lg:grid-rows-3 xl:grid-cols-5",
+        "is_slider": false,
+        "slider_indicator_count": 3,
+        "slider_breakpoint_limit": "none",
+        "slider_classes": "",
+        "show_arrow_nav": true,
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "show_dot_nav": false,
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+      }
+    },
+    "60c0ae7c-343c-449d-9c6d-4411fca2559b": {
+      "type": "multicolumn",
+      "blocks": {
+        "a89c7e24-23d3-4066-b5a0-01613ac23913": {
+          "type": "code",
+          "settings": {
+            "column_classes": "absolute",
+            "code": "<a id=\"anti-aging-body-balm\" class=\"anchor\" aria-label=\"Anti-Aging Body Balm\"></a>"
+          }
+        },
+        "d8e028fd-48dd-4add-9d7b-fd8d074ea906": {
+          "type": "column",
+          "settings": {
+            "column_classes": "lg:col-span-1 lg:col-start-2 lg:row-start-1 xl:col-span-3 xl:col-start-3 xl:row-start-1 flex flex-col justify-center",
+            "image": "shopify://shop_images/bbalm-lifestyle-1c.jpg",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "rounded-lg",
+            "image_wrapper_classes": "order-2 md:hidden md:absolute",
+            "image_static_size": "",
+            "text_classes": "order-1",
+            "remove_text_wrapper": false,
+            "heading": "<h2>Anti-Aging Body Balm</h2>",
+            "heading_classes": "order-1 -mx-2 mb-4 md:mb-0 tracking-tight font-serif text-3xl md:text-4xl",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": ""
+          }
+        },
+        "54a2d6f9-0e54-4575-b254-81f0fb52fcba": {
+          "type": "code",
+          "settings": {
+            "column_classes": "lg:col-span-1 lg:col-start-2 lg:row-start-2 xl:col-span-3 xl:col-start-3 xl:row-start-2 flex flex-col md:flex-row py-4 md:py-8 lg:py-0",
+            "code": "<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">94<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"tracking-wide md:text-sm\">agreed skin felt <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">nourished, moisturized</mark></b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">softer</mark></b>*</p>\n</div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">94<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"md:text-sm\">agreed skin looked <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">smoother,</mark> more <mark class=\"bg-white text-seaweed-700\">supple</mark></b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">glowing</mark></b>*</p>\n</div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">84<sup class=\"-top-4 text-4xl\">%</sup>\n</h3>\n<p class=\"md:text-sm\">agreed skin <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">looked firmer</mark></b>*</p>\n</div>"
+          }
+        },
+        "6da3a7e5-0893-42b4-a62e-eec8a94ec104": {
+          "type": "column",
+          "settings": {
+            "column_classes": "lg:col-span-1 lg:row-span-3 lg:col-start-1 lg:row-start-1 xl:col-span-2 xl:row-span-3 xl:col-start-1 xl:row-start-1 bg-white rounded-xl py-6 px-6 mx-auto mb-4 w-full lg:w-96",
+            "image": "shopify://shop_images/bbalm-product-texture.png",
+            "is_bg_image": false,
+            "image_link": "shopify://products/anti-aging-body-balm",
+            "image_classes": "relative w-40 mx-auto mb-4",
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "text-center max-w-xs mx-auto",
+            "remove_text_wrapper": false,
+            "heading": "Firming Radiance<br> Body Moisturizer",
+            "heading_classes": "text-3xl md:text-4xl font-serif tracking-tight mb-2 lg:-mx-5",
+            "paragraph": "",
+            "paragraph_classes": "tracking-wide text-xl font-book",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "button-primary px-3",
+            "button_icon": "",
+            "is_atc_button": true,
+            "is_subscription": false,
+            "atc_button_product": "anti-aging-body-balm",
+            "show_variants": true,
+            "variant_picker_type": "button",
+            "variant_classes": "justify-center",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": ""
+          }
+        },
+        "1773a5c3-a6c8-4d4b-b8e9-acb10746ccae": {
+          "type": "column",
+          "settings": {
+            "column_classes": "lg:col-span-1  lg:col-start-2 lg:row-start-3 xl:col-span-3 xl:col-start-3 xl:row-start-3 lg:mt-4",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "flex flex-col py-4 gap-4 lg:py-0 lg:gap-8",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "**Based on a 3rd party consumer study on 32 women ages 37 to 65, after 4 weeks.",
+            "paragraph_classes": "order-2 md:order-1 text-xs leading-tight",
+            "button_label": "Learn more",
+            "button_aria_label": "Learn more about Undaria Algae Body Oil",
+            "link": "shopify://products/anti-aging-body-balm",
+            "target_blank": false,
+            "button_classes": "order-1 md:order-2 button-secondary button-sm mx-auto",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "a89c7e24-23d3-4066-b5a0-01613ac23913",
+        "d8e028fd-48dd-4add-9d7b-fd8d074ea906",
+        "54a2d6f9-0e54-4575-b254-81f0fb52fcba",
+        "6da3a7e5-0893-42b4-a62e-eec8a94ec104",
+        "1773a5c3-a6c8-4d4b-b8e9-acb10746ccae"
+      ],
+      "settings": {
+        "section_heading": "",
+        "section_classes": "container px-0 2xs:px-6 lg:mb-12",
+        "container_classes": "bg-[#F4F3EE] px-4 md:px-6 py-6 text-center grid lg:grid-cols-2 lg:grid-rows-3 xl:grid-cols-5",
+        "is_slider": false,
+        "slider_indicator_count": 3,
+        "slider_breakpoint_limit": "none",
+        "slider_classes": "",
+        "show_arrow_nav": true,
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "show_dot_nav": false,
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     }
   },
@@ -705,8 +954,8 @@
     "2d6f05ad-07fe-4510-931d-d145495b9dd2",
     "76631c24-8107-4244-ab15-e27d78d0311e",
     "513a5095-c712-4ac6-af61-ed72c1e53e35",
-    "0c226fe5-55d9-4126-bd0e-85f615a29f10",
-    "a4883545-54d3-4cc0-aed1-529b572df657",
-    "ee58bac8-3361-4a66-b24c-9cd60e5232d2"
+    "d69514a1-b336-401a-a178-6b307d10eeb8",
+    "1287ae7b-d47b-4819-88a5-f5fb56017e80",
+    "60c0ae7c-343c-449d-9c6d-4411fca2559b"
   ]
 }
