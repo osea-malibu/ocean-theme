@@ -1,29 +1,31 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 <footer>
-  <div class="relative bg-seafoam-100 pt-6 pb-28 lg:pb-6">
-    <ul class="container flex justify-between sm:max-w-lg lg:max-w-4xl">
-      <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
-        {%- render 'icon-value', icon: 'clean-ingredients', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
-        <span><span class="whitespace-nowrap">Clean Beauty</span> <br />Since 1996</span>
-      </li>
-      <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
-        {%- render 'icon-value', icon: 'climate-neutral', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
-        <span>Climate <br />Neutral</span>
-      </li>
-      <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
-        {%- render 'icon-value', icon: 'vegan', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
-        <span>Vegan & <br /><span class="whitespace-nowrap">Cruelty-Free</span></span>
-      </li>
-      <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
-        {%- render 'icon-value', icon: 'california-made', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
-        <span>Born in <br />California</span>
-      </li>
-      <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased hidden lg:block">
-        {%- render 'icon-value', icon: 'female-founded', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
-        <span>Female <br />Founded</span>
-      </li>
-    </ul>
-  </div>
+  {%- unless section.settings.hide_brand_icons -%}
+    <div class="relative bg-seafoam-100 pt-6 pb-28 lg:pb-6">
+      <ul class="container flex justify-between sm:max-w-lg lg:max-w-4xl">
+        <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
+          {%- render 'icon-value', icon: 'clean-ingredients', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
+          <span><span class="whitespace-nowrap">Clean Beauty</span> <br />Since 1996</span>
+        </li>
+        <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
+          {%- render 'icon-value', icon: 'climate-neutral', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
+          <span>Climate <br />Neutral</span>
+        </li>
+        <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
+          {%- render 'icon-value', icon: 'vegan', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
+          <span>Vegan & <br /><span class="whitespace-nowrap">Cruelty-Free</span></span>
+        </li>
+        <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased">
+          {%- render 'icon-value', icon: 'california-made', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
+          <span>Born in <br />California</span>
+        </li>
+        <li class="flex-1 text-center text-sm xs:text-base font-serif leading-tight xs:leading-tight subpixel-antialiased hidden lg:block">
+          {%- render 'icon-value', icon: 'female-founded', stroke_width: 4.5, aria_hidden: true, classes: "w-12 h-12 block mx-auto mb-1 overflow-visible" -%}
+          <span>Female <br />Founded</span>
+        </li>
+      </ul>
+    </div>
+  {%- endunless -%}
 
   <div class="footer-main bg-seafoam-200 pt-40 lg:pt-12 pb-12">
     {%- if section.blocks.size > 0 -%}
@@ -213,10 +215,9 @@
   ],
   "settings": [
     {
-      "type": "text",
-      "id": "text_ticker",
-      "default": "Climate Neutral • Cruelty-Free • Vegan • California Made • Clean Ingredients • ",
-      "label": "Text ticker"
+      "type": "checkbox",
+      "id": "hide_brand_icons",
+      "label": "Hide brand icons"
     },
     {
       "type": "link_list",
