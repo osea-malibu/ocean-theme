@@ -49,13 +49,13 @@
             <fieldset class="js flex">
               <legend class="sr-only">Ship every:</legend>
               <div class="overflow-scroll">
-                {%- for value in card_product.selling_plan_groups[0].selling_plans -%}
+                {%- for value in card_product.selling_plan_groups -%}
                   <div class="flex-grow{% unless forloop.last %} mr-1 sm:mr-2{% endunless %}">
                     <input type="radio"
                       id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
                       class="peer hidden"
                       name="selling_plan"
-                      value="{{ value.id | escape }}"
+                      value="{{ value.selling_plans[0].id | escape }}"
                       form="{{ product_form_id }}"
                     >
                     <label
@@ -63,7 +63,7 @@
                       for="{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
                       tabindex="0"
                     >
-                      {{ value.name | replace: 'Ship every ', '' }}
+                      {{ value.name | replace: 'Delivery every ', '' }}
                   </div>
                 {%- endfor -%}
               </div>
@@ -78,16 +78,16 @@
                 name="selling_plan"
                 form="{{ product_form_id }}"
               >
-                {%- for value in card_product.selling_plan_groups[0].selling_plans -%}
+                {%- for value in card_product.selling_plan_groups -%}
                   <option
-                    value="{{ value.id | escape }}"
+                    value="{{ value.selling_plans[0].id | escape }}"
                     {% if card_product.metafields.custom.subscription_interval != blank and value.name contains card_product.metafields.custom.subscription_interval %}
                       selected
                     {% elsif card_product.metafields.custom.subscription_interval == blank and forloop.index == 2 %}
                       selected
                     {% endif %}
                   >
-                    {{ value.name | replace: 'Ship every ', '' }}
+                    {{ value.name | replace: 'Delivery every ', '' }}
                   </option>
                 {%- endfor -%}
               </select>
