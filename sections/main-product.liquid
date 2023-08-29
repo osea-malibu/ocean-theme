@@ -410,20 +410,20 @@
                         <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
                           <fieldset class="js flex mb-2 pb-3">
                             <legend class="text-sm font-medium">Delivery every</legend>
-                            {%- for value in product.selling_plan_groups[0].selling_plans -%}
+                            {%- for value in product.selling_plan_groups -%}
                               <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
                                 <input type="radio"
                                   id="{{ block.id }}-{{ forloop.index0 }}"
                                   class="peer sr-only"
                                   name="selling_plan"
-                                  value="{{ value.id | escape }}"
+                                  value="{{ value.selling_plans[0].id | escape }}"
                                   form="{{ product_form_id }}"
                                 />
                                 <label
                                   class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-200"
                                   for="{{ block.id }}-{{ forloop.index0 }}"
                                 >
-                                  {{- value.name | replace: "Ship every", "" -}}
+                                  {{- value.name | replace: "Delivery every", "" -}}
                                 </label>
                               </div>
                             {%- endfor -%}

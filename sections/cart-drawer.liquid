@@ -325,8 +325,8 @@
                               {%- if item.product.selling_plan_groups.size > 0 and hide_subscription == false -%}
                                 <div class="cart-subscibe flex flex-col items-end h-full">
                                   {%- liquid
-                                    assign selling_plans = item.product.selling_plan_groups[0].selling_plans
-                                    assign default_option = selling_plans[1].id
+                                    assign selling_plans = item.product.selling_plan_groups
+                                    assign default_option = selling_plans[1].selling_plans[0].id
                                     if item.product.metafields.custom.subscription_interval != blank
                                       for plan in selling_plans
                                         if plan.name contains item.product.metafields.custom.subscription_interval
@@ -357,8 +357,8 @@
                                         data-index="{{ item.index | plus: 1 }}"
                                       >
                                         {%- for option in selling_plans -%}
-                                          <option value="{{ option.id }}" {%- if option.id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}>
-                                            {{- option.name | replace: 'Ship every ', '' | replace: 'Month', 'month' -}}
+                                          <option value="{{ option.selling_plans[0].id }}" {%- if option.selling_plans[0].id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}>
+                                            {{- option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' -}}
                                           </option>
                                         {%- endfor -%}
                                       </select>
