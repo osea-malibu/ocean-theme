@@ -330,7 +330,7 @@
                                     if item.product.metafields.custom.subscription_interval != blank
                                       for plan in selling_plans
                                         if plan.name contains item.product.metafields.custom.subscription_interval
-                                          assign default_option = plan.id
+                                          assign default_option = plan.selling_plans[0].id
                                         endif
                                       endfor
                                     endif
