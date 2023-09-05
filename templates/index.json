@@ -46,14 +46,45 @@
     },
     "7fd023d6-ee39-4e18-96df-4b1d84fc9b1e": {
       "type": "image-banner",
+      "blocks": {
+        "6101ebd9-6a14-4cd1-9374-be8b095f9f69": {
+          "type": "heading",
+          "settings": {
+            "heading": "Unlock<br class=\"block sm:hidden\">Youthful Radiance",
+            "heading_classes": "font-serif text-white text-4xl sm:text-5xl lg:text-5xl xl:text-6xl lg:mb-4 max-w-sm lg:max-w-md mt-4"
+          }
+        },
+        "08940feb-ef9a-459d-b586-a7214531a181": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Discover clinically proven<br>anti-aging solutions.",
+            "paragraph_classes": "text-white font-medium text-lg lg:mb-6 lg:text-xl xl:text-2xl sm:block hidden leading-tight"
+          }
+        },
+        "132f4259-883b-4358-bce4-0fa285dacefe": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop now",
+            "button_link": "shopify:\/\/collections\/shop",
+            "target_blank": false,
+            "button_classes": "button button-white md:button-lg mt-auto mb-4 sm:mt-0 px-8"
+          }
+        }
+      },
+      "block_order": [
+        "6101ebd9-6a14-4cd1-9374-be8b095f9f69",
+        "08940feb-ef9a-459d-b586-a7214531a181",
+        "132f4259-883b-4358-bce4-0fa285dacefe"
+      ],
       "settings": {
-        "image_mobile": "shopify:\/\/shop_images\/1_-_Anti-Aging_Focus_HP_Banner_MOBILE_-_LAYOUT.jpg",
-        "image": "shopify:\/\/shop_images\/1_-_Anti-Aging_Focus_HP_Banner_Desktop_-_LAYOUT.jpg",
+        "image_mobile": "shopify:\/\/shop_images\/1_-_Anti-Aging_Focus_HP_Banner_MOBILE_-_BLANK.jpg",
+        "image": "shopify:\/\/shop_images\/1_-_Anti-Aging_Focus_HP_Banner_Desktop_-_BLANK.jpg",
         "is_lazy": false,
         "image_link": "shopify:\/\/collections\/shop",
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-center sm:w-2\/3 xl:w-1\/2 sm:px-6 md:pr-16 lg:pr-32 xl:pr-0 sm:mb-8 sm:pb-4 sm:pl-8"
+        "text_block_classes": "absolute inset-0 sm:left-1\/2 pt-6 text-center flex flex-col items-center justify-center"
       }
     },
     "165703204544efb73d": {
