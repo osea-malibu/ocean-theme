@@ -6,17 +6,17 @@
 -%}
 
 {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-  {%- unless subcollections or subcollections.value.size > 0 -%}
-    {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+  {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
-    <div class="container mb-6" id="main-collection-filters" data-id="{{ section.id }}">
-      {% render 'facets',
-        results: collection,
-        enable_filtering: section.settings.enable_filtering,
-        enable_sorting: section.settings.enable_filtering
-      %}
-    </div>
+  <div class="container mb-6" id="main-collection-filters" data-id="{{ section.id }}">
+    {% render 'facets',
+      results: collection,
+      enable_filtering: section.settings.enable_filtering,
+      enable_sorting: section.settings.enable_filtering
+    %}
+  </div>
+  {%- unless subcollections or subcollections.value.size > 0 -%}
   {%- endunless -%}
 {%- else -%}
   <div class="sr-only container whitespace-nowrap leading-relaxed mb-0.5">{{ collection.products_count }} items</div>

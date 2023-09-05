@@ -9,12 +9,19 @@
     {% render 'product-in-set', product: section.settings.product %}
 {% endcomment %}
 
+{%- liquid
+  if product.metafields.custom.parent_product != blank
+    assign product_url = product.metafields.custom.parent_product.value.url
+  else
+    assign product_url = product.url
+  endif
+-%}
 <div class="relative bg-white px-3 pt-3 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
   <div class="flex flex-row gap-4">
     <div class="w-full order-1 grow flex flex-col items-start py-1">
-      <a href="{{ product.url | default: '#' }}" class="group text-sm tracking-wide leading-tight no-underline">
+      <a href="{{ product_url | default: '#' }}" class="group text-sm tracking-wide leading-tight no-underline">
         <h4 class="font-medium group-hover:underline mb-0.5">
-          {{ product.title | escape }}
+          {{ product.title | replace: 'Deluxe Sample ', '' | escape }}
         </h4>
         <p class="group-hover:underline mb-0.5">{{ product.metafields.custom_fields.short_description }}</p>
         <p class="group-hover:underline mb-1">{{ product.metafields.my_fields.size }}</p>
@@ -85,7 +92,7 @@
           <div class="p:text-sm p:mb-2">{{ product.metafields.custom.scent_profile.value }}</div>
         </section>
       {%- endif -%}
-      <a class="button button-xs button-tertiary" href="{{ product.url }}">View full product details</a>
+      <a class="button button-xs button-tertiary" href="{{ product_url }}">View full product details</a>
     </div>
   </details>
 </div>
