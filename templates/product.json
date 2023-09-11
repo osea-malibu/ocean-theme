@@ -169,6 +169,15 @@
         "paragraph": "{{ product.metafields.custom.key_ingredients_text.value }}"
       }
     },
+    "ingredients": {
+      "type": "product-ingredients",
+      "settings": {
+        "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
+        "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
+        "header": "Key Ingredients",
+        "paragraph": "{{ product.metafields.custom.key_ingredients_text.value }}"
+      }
+    },
     "product-reviews": {
       "type": "product-reviews",
       "settings": {
@@ -194,6 +203,7 @@
     "main",
     "product-video",
     "key-ingredients",
+    "ingredients",
     "product-reviews",
     "product-recommendations"
   ]
