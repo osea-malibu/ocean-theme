@@ -30,7 +30,7 @@
       </picture>
       <h3 class="relative z-10 text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
       {%- if section.settings.paragraph and section.settings.paragraph != blank -%}
-        <div class="relative z-10 text-sm md:text-base md:max-w-prose lg:max-w-2xl font-book">{{ section.settings.paragraph }}</div>
+        <div class="relative z-10 text-sm md:text-base md:max-w-prose lg:max-w-2xl font-book">{{ section.settings.key_ingredients }}</div>
       {%- endif -%}
     </div>
   </div>
@@ -68,9 +68,15 @@
     },
     {
       "type": "text",
-      "id": "paragraph",
+      "id": "key_ingredients",
       "label": "Paragraph",
       "info": "Connect data source 'Key ingredients: Text'"
+    },
+    {
+      "type": "text",
+      "id": "full_ingredients",
+      "label": "Paragraph",
+      "info": "Connect data source 'Ingredients'"
     }
   ]
 }
