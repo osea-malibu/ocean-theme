@@ -1,37 +1,37 @@
 <div class="product-ingredients hidden container mb-12 xl:max-w-screen-lg">
-  <div class="relative overflow-hidden p-6 lg:p-8">
-    {%- if section.settings.image_mobile != blank and section.settings.paragraph and section.settings.paragraph != blank -%}
-      <picture>
-        {%- if section.settings.image_desktop != blank -%}
-          <source
-            srcset="{{ section.settings.image_desktop | image_url: width: 720 }} 1x, {{ section.settings.image_desktop | image_url: width: 1440 }} 2x"
-            media="(min-width: 768px)"
-          >
-        {%- else -%}
-          <source
-            srcset="{{ section.settings.image_mobile | image_url: width: 720 }} 1x, {{ section.settings.image_mobile | image_url: width: 1440 }} 2x,"
-            media="(min-width: 768px)"
-          >
-        {%- endif -%}
+  {%- if section.settings.image_mobile != blank and section.settings.paragraph and section.settings.paragraph != blank -%}
+    <picture>
+      {%- if section.settings.image_desktop != blank -%}
         <source
-          srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 1x, {{ section.settings.image_mobile | image_url: width: 800 }} 2x"
-          media="(min-width: 0px)"
+          srcset="{{ section.settings.image_desktop | image_url: width: 720 }} 1x, {{ section.settings.image_desktop | image_url: width: 1440 }} 2x"
+          media="(min-width: 768px)"
         >
-        <img 
-          srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 1x, {{ section.settings.image_mobile | image_url: width: 800 }} 2x"
-          src="{{ section.settings.image_mobile | image_url: width: 800 }}"
-          alt=""
-          aria-hidden="true"
-          height="{{ section.settings.image_mobile.height }}"
-          width="{{ section.settings.image_mobile.width }}"
-          class="block absolute z-0 top-0 left-0 min-w-full min-h-full object-cover"
-          loading="lazy"
+      {%- else -%}
+        <source
+          srcset="{{ section.settings.image_mobile | image_url: width: 720 }} 1x, {{ section.settings.image_mobile | image_url: width: 1440 }} 2x,"
+          media="(min-width: 768px)"
         >
-      </picture>
-    {%- endif -%}
-    <h3 class="relative z-10 text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
-    {%- if section.settings.paragraph and section.settings.paragraph != blank -%}
-      <div class="relative z-10 text-sm md:text-base md:max-w-prose lg:max-w-2xl font-book">{{ section.settings.key_ingredients }}</div>
+      {%- endif -%}
+      <source
+        srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 1x, {{ section.settings.image_mobile | image_url: width: 800 }} 2x"
+        media="(min-width: 0px)"
+      >
+      <img 
+        srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 1x, {{ section.settings.image_mobile | image_url: width: 800 }} 2x"
+        src="{{ section.settings.image_mobile | image_url: width: 800 }}"
+        alt=""
+        aria-hidden="true"
+        height="{{ section.settings.image_mobile.height }}"
+        width="{{ section.settings.image_mobile.width }}"
+        class="block object-cover"
+        loading="lazy"
+      >
+    </picture>
+  {%- endif -%}
+  <div>
+    <h3 class="text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
+    {%- if section.settings.key_ingredients and section.settings.key_ingredients != blank -%}
+      <div class="text-sm md:text-base md:max-w-prose lg:max-w-2xl font-book">{{ section.settings.key_ingredients }}</div>
     {%- endif -%}
   </div>
 </div>
@@ -64,10 +64,10 @@
       "default": "Key ingredients"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "key_ingredients",
       "label": "Key ingredients",
-      "info": "Connect data source 'Key ingredients: Text'"
+      "info": "Connect data source 'Key ingredients: List'"
     },
     {
       "type": "text",
