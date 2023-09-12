@@ -1,6 +1,6 @@
-{%- if section.settings.image_mobile != blank and section.settings.paragraph and section.settings.paragraph != blank -%}
-  <div class="hidden container mb-12 xl:max-w-screen-lg">
-    <div class="relative overflow-hidden p-6 lg:p-8">
+<div class="product-ingredients hidden container mb-12 xl:max-w-screen-lg">
+  <div class="relative overflow-hidden p-6 lg:p-8">
+    {%- if section.settings.image_mobile != blank and section.settings.paragraph and section.settings.paragraph != blank -%}
       <picture>
         {%- if section.settings.image_desktop != blank -%}
           <source
@@ -28,16 +28,13 @@
           loading="lazy"
         >
       </picture>
-      <h3 class="relative z-10 text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
-      {%- if section.settings.paragraph and section.settings.paragraph != blank -%}
-        <div class="relative z-10 text-sm md:text-base md:max-w-prose lg:max-w-2xl font-book">{{ section.settings.key_ingredients }}</div>
-      {%- endif -%}
-    </div>
+    {%- endif -%}
+    <h3 class="relative z-10 text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
+    {%- if section.settings.paragraph and section.settings.paragraph != blank -%}
+      <div class="relative z-10 text-sm md:text-base md:max-w-prose lg:max-w-2xl font-book">{{ section.settings.key_ingredients }}</div>
+    {%- endif -%}
   </div>
-{%- else -%}
-  <h3 class="sr-only">Key Ingredients</h3>
-  <p class="sr-only">Formulated with vegan, non-toxic, sustainably harvested ingredients.</p>
-{%- endif -%}
+</div>
 
 {% schema %}
 {
