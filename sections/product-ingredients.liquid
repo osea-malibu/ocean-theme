@@ -64,16 +64,45 @@
       "default": "Key ingredients"
     },
     {
-      "type": "richtext",
+      "type": "text",
       "id": "key_ingredients",
       "label": "Key ingredients",
-      "info": "Connect data source 'Key ingredients: List'"
+      "info": "Connect data source 'Key ingredients: Text'"
     },
     {
       "type": "text",
       "id": "full_ingredients",
       "label": "Ingredients",
       "info": "Connect data source 'Ingredients'"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "key_ingredient",
+      "name": "Key Ingredient",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "ingredient_name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_scientific_name",
+          "label": "Scientific name"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_citation",
+          "label": "Citation"
+        }
+      ]
     }
   ]
 }
