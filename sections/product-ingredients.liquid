@@ -1,17 +1,10 @@
-<div class="product-ingredients hidden container mb-12 xl:max-w-screen-lg">
-  {%- if section.settings.image_mobile != blank and section.settings.paragraph and section.settings.paragraph != blank -%}
-    <picture>
-      {%- if section.settings.image_desktop != blank -%}
-        <source
-          srcset="{{ section.settings.image_desktop | image_url: width: 720 }} 1x, {{ section.settings.image_desktop | image_url: width: 1440 }} 2x"
-          media="(min-width: 768px)"
-        >
-      {%- else -%}
-        <source
-          srcset="{{ section.settings.image_mobile | image_url: width: 720 }} 1x, {{ section.settings.image_mobile | image_url: width: 1440 }} 2x,"
-          media="(min-width: 768px)"
-        >
-      {%- endif -%}
+<div class="product-ingredients hidden container mb-12 xl:max-w-screen-lg relative">
+  {%- if section.settings.image_mobile -%}
+    <picture class="absolute inset-x-4 bottom-0 top-0 2xs:left-6">
+      <source
+        srcset="{{ section.settings.image_mobile | image_url: width: 720 }} 1x, {{ section.settings.image_mobile | image_url: width: 1440 }} 2x"
+        media="(min-width: 768px)"
+      >
       <source
         srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 1x, {{ section.settings.image_mobile | image_url: width: 800 }} 2x"
         media="(min-width: 0px)"
@@ -23,12 +16,12 @@
         aria-hidden="true"
         height="{{ section.settings.image_mobile.height }}"
         width="{{ section.settings.image_mobile.width }}"
-        class="block object-cover"
+        class="block object-cover h-full object-left-top"
         loading="lazy"
       >
     </picture>
   {%- endif -%}
-  <div>
+  <div class="relative bg-white w-11/12 ml-auto mt-7 p-4">
     <h3 class="text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
     <div class="mb-4">
       {%- for block in section.blocks -%}
@@ -58,11 +51,11 @@
     </modal-opener>
   </div>
   <modal-dialog id="IngredientsPopup">
-    <div role="dialog" aria-label="Full ingredients list" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+    <div role="dialog" aria-label="Full ingredients list" aria-modal="true" class="!pr-4" tabindex="-1">
       <button id="ModalClose-IngredientsPopup" type="button" aria-label="{{ 'accessibility.close' | t }}">
         {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
       </button>
-      <div class="w-full max-h-96 overflow-auto">
+      <div class="w-full max-h-96 overflow-auto pr-4">
         <h2 class="font-serif text-3xl tracking-tight mb-2">Ingredients</h2>
         {{ section.settings.full_ingredients }}
       </div>
