@@ -98,18 +98,32 @@
     "5825ef80-7eba-428f-aef6-379126e7f97c": {
       "type": "image-banner",
       "blocks": {
+        "9195fc1d-8294-43c3-ac51-092eca7a1e1d": {
+          "type": "heading",
+          "settings": {
+            "heading": "Free Gift",
+            "heading_classes": "font-serif tracking-tight text-6xl lg:text-6xl lg:leading-tight mb-0 lg:mb-1 sm:font-book pt-4 sm:hidden text-white"
+          }
+        },
+        "1b61fe8e-8f53-4c8e-bf8f-6b49d864d024": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Mini Undaria Body Heroes Duo<br>With Purchase of $90+",
+            "paragraph_classes": "font-medium text-lg sm:text-xl xl:text-2xl sm:hidden text-white"
+          }
+        },
         "template--15166819893431__5825ef80-7eba-428f-aef6-379126e7f97c-heading-1": {
           "type": "heading",
           "settings": {
             "heading": "Fall Skin Refresh",
-            "heading_classes": "font-serif tracking-tight text-5xl lg:text-6xl lg:leading-tight mb-0 lg:mb-1 sm:font-book pt-6"
+            "heading_classes": "font-serif tracking-tight text-5xl lg:text-6xl lg:leading-tight mb-0 lg:mb-1 sm:font-book pt-6 hidden sm:block"
           }
         },
         "template--15166819893431__5825ef80-7eba-428f-aef6-379126e7f97c-paragraph-1": {
           "type": "paragraph",
           "settings": {
             "paragraph": "Essential for the new season.",
-            "paragraph_classes": "font-medium text-lg sm:text-xl xl:text-2xl"
+            "paragraph_classes": "font-medium text-lg sm:text-xl xl:text-2xl hidden sm:block"
           }
         },
         "template--15166819893431__5825ef80-7eba-428f-aef6-379126e7f97c-button-1": {
@@ -119,18 +133,31 @@
             "button_aria_label": "Shop our seasonal favorites",
             "button_link": "shopify:\/\/collections\/seasonal-favorites",
             "target_blank": false,
-            "button_classes": "button-primary mt-auto sm:mt-4 mb-6"
+            "button_classes": "button-primary mt-auto sm:mt-4 mb-6 hidden sm:block"
+          }
+        },
+        "7eb522a8-bb3f-4f41-861e-d83c72ac42db": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop all osea products",
+            "button_link": "shopify:\/\/collections\/shop",
+            "target_blank": false,
+            "button_classes": "button-primary sm:hidden mt-auto mb-6"
           }
         }
       },
       "block_order": [
+        "9195fc1d-8294-43c3-ac51-092eca7a1e1d",
+        "1b61fe8e-8f53-4c8e-bf8f-6b49d864d024",
         "template--15166819893431__5825ef80-7eba-428f-aef6-379126e7f97c-heading-1",
         "template--15166819893431__5825ef80-7eba-428f-aef6-379126e7f97c-paragraph-1",
-        "template--15166819893431__5825ef80-7eba-428f-aef6-379126e7f97c-button-1"
+        "template--15166819893431__5825ef80-7eba-428f-aef6-379126e7f97c-button-1",
+        "7eb522a8-bb3f-4f41-861e-d83c72ac42db"
       ],
       "disabled": true,
       "settings": {
-        "image_mobile": "shopify:\/\/shop_images\/Fall_Favorites_HP_Banner_Mobile_BLANK.jpg",
+        "image_mobile": "shopify:\/\/shop_images\/Mini_Undaria_Body_Heroes_Duo_GWP_HP_Banner_Mobile_BLANK_V1.jpg",
         "image": "shopify:\/\/shop_images\/Fall_Favorites_HP_Banner_Desktop_BLANK.jpg",
         "is_lazy": false,
         "image_link": "shopify:\/\/collections\/seasonal-favorites",
