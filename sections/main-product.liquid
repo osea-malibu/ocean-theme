@@ -527,7 +527,7 @@
               </div>
             {%- endif -%}
 
-            <div class="quick-info col-span-12 gap-6 mt-8 hidden">
+            <div class="quick-info col-span-12 gap-4 sm:gap-6 mt-8 hidden">
               {%- if product.metafields.custom.benefits.value.size > 0 -%}
                 <div class="flex-1">
                   <h2 class="font-medium tracking-wide mb-3">Benefits</h2>
@@ -568,10 +568,14 @@
                   <p class="text-sm font-book leading-none tracking-wide">{{ product.metafields.custom_fields.skin_types }}</p>
                 </div>
               {%- endif -%}
-              {%- if product.metafields.custom.scent_profile != blank -%}
+              {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
                 <div class="flex-1">
                   <h2 class="font-medium tracking-wide mb-2">Scent profile</h2>
-                  <div class="text-sm font-book">{{ product.metafields.custom.scent_profile }}</div>
+                  {%- if product.metafields.custom.scent_profile_short -%}
+                    <div class="text-sm font-book">{{ product.metafields.custom.scent_profile_short }}</div>
+                  {%- else -%}
+                    <div class="text-sm font-book">{{ product.metafields.custom.scent_profile }}</div>
+                  {%- endif -%}
                 </div>
               {%- endif -%}
             </div>
