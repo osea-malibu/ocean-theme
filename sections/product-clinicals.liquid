@@ -1,6 +1,30 @@
-<div class="product-clinicals hidden {{ section.settings.section_classes }}">
-  <div class="container">
-    <h3 class="relative z-10 text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
+<div class="product-clinicals hidden mb-12 {{ section.settings.section_classes }}">
+  <div class="container lg:max-w-screen-lg">
+    <div class="bg-wave-200 py-4 pl-4 sm:py-6 sm:pl-6">
+      <h3 class="relative text-2xl tracking-wide mb-3 md:mb-4"><em>{{ section.settings.header }}</em></h3>
+      <script>console.log({{ product.metafields.custom.clinical_results }});</script>
+      {%- for clinical_result in product.metafields.custom.clinical_results.value -%}
+        <div class="mb-2">
+          <h4 class="font-medium mb-2">{{ clinical_result.title }}</h4>
+          <div class="relative">
+            <div class="flex gap-4 snap-x overflow-x-auto pb-3">
+              {%- for stat in clinical_result.stats -%}
+                <div class="snap-start w-48 shrink-0 bg-white rounded-xl p-4{% if forloop.last %} mr-6{% endif %}">
+                  <h5>
+                    <span class="text-5xl">{{ stat.value }}</span>
+                    <sub class="text-2xl bottom-0">{% if stat.value_type == 'percent' %}%{% else %}hours{% endif %}</sub></h5>
+                  <p class="leading-snug">{{ stat.description }}</p>
+                </div>
+              {%- endfor -%}
+            </div>
+            <div class="bg-gradient-to-r from-transparent to-seaweed-400/10 absolute top-0 right-0 bottom-3 w-6 z-10"></div>
+          </div>
+          {%- if clinical_result.citations != blank -%}
+            <cite class="block mt-4 text-xs pr-4 sm:pr-6">{{ clinical_result.citations }}</cite>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
   </div>
 </div>
 

@@ -373,9 +373,6 @@
           {%- when 'subscription_picker' -%}
             {%- unless product.selling_plan_groups.size == 0 -%}
               {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
-              <script>
-                console.log("product.selling_plan_groups", {{product.selling_plan_groups | json}});
-              </script>
               <subscription-radios
                 class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }}{% if is_travel_or_exclusion and product.variants.size > 1 %} max-h-0{% endif %}"
                 data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"

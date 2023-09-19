@@ -1,6 +1,6 @@
-<div class="product-ingredients hidden container mb-12 xl:max-w-screen-lg relative">
+<div class="product-ingredients hidden container mb-12 lg:max-w-screen-lg relative overflow-hidden">
   {%- if section.settings.image_mobile -%}
-    <picture class="absolute inset-x-4 bottom-0 top-0 2xs:inset-x-6 md:relative md:w-1/2 md:inset-x-0 md:h-full">
+    <picture class="absolute inset-x-4 inset-y-0 2xs:inset-x-6">
       <source
         srcset="{{ section.settings.image_mobile | image_url: width: 720 }} 1x, {{ section.settings.image_mobile | image_url: width: 1440 }} 2x"
         media="(min-width: 768px)"
@@ -16,12 +16,12 @@
         aria-hidden="true"
         height="{{ section.settings.image_mobile.height }}"
         width="{{ section.settings.image_mobile.width }}"
-        class="block object-cover h-full object-left-top md:object-right-bottom md:max-h-80"
+        class="block object-cover h-full object-left-top"
         loading="lazy"
       >
     </picture>
   {%- endif -%}
-  <div class="relative bg-white w-11/12 ml-auto mt-7 p-4 md:w-1/2 md:pr-0 md:mt-0">
+  <div class="relative bg-white/90 p-4 m-4">
     <h3 class="text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
     <div class="mb-4">
       {%- for block in section.blocks -%}
@@ -36,10 +36,10 @@
           <div class="max-h-0 peer-checked:max-h-24 motion-safe:transition-max-height duration-700">
             <div class="pb-5 leading-tight">
               {%- if block.settings.ingredient_description != blank -%}
-                <p class="">{{ block.settings.ingredient_description }}</p>
+                <p>{{ block.settings.ingredient_description }}</p>
               {%- endif -%}
               {%- if block.settings.ingredient_citation != blank -%}
-                <cite class="">{{ block.settings.ingredient_citation }}</cite>
+                <cite>{{ block.settings.ingredient_citation }}</cite>
               {%- endif -%}
             </div>
           </div>
