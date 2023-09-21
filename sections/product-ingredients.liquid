@@ -16,12 +16,12 @@
         aria-hidden="true"
         height="{{ section.settings.image_mobile.height }}"
         width="{{ section.settings.image_mobile.width }}"
-        class="block object-cover h-full object-left-top"
+        class="block object-cover h-full w-full object-left-top"
         loading="lazy"
       >
     </picture>
   {%- endif -%}
-  <div class="relative bg-white/90 p-4 m-4">
+  <div class="relative w-full bg-white/90 p-4 m-4 sm:p-6 sm:m-6">
     <h3 class="text-xl md:text-2xl tracking-wide font-medium mb-3 md:mb-4">{{ section.settings.header }}</h3>
     <div class="mb-4">
       {%- for block in section.blocks -%}
