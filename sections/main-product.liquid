@@ -233,20 +233,27 @@
               </div>
             {%- endif -%}
           {%- when 'how_to_use' -%}
-            <script>console.log({{ product.metafields.custom.how_to_use }});</script>
+            {%- assign how_to_use = product.metafields.custom.how_to_use -%}
             {%- if product.metafields.custom.how_to_use != blank -%}
+              {%- assign how_to_html = '<p class="mb-2"><b>How:</b> '
+                | append: how_to_use.value.how
+                | append: '</p><p class="mb-2"><b>When:</b> '
+                | append: how_to_use.value.when
+                | append: '</p><p><b>Pro tip:</b> '
+                | append: how_to_use.value.pro_tip
+                | append: '</p>' -%}
               <div class="{{ block.settings.wrapper_classes }}">
                 {%- if block.settings.is_collapsible -%}
                   {%- assign how_to_use_id = "HowToUse-" | append: block.id | append: "-" | append: section.id -%}
                   {% render 'accordion-item',
                     id: how_to_use_id,
                     summary: "How to Use",
-                    content: "test",
-                    default_open: true,
+                    content: how_to_html,
+                    default_open: false,
                     content_classes: 'max-h-80 overflow-y-auto pr-4'
                   %}
                 {%- else -%}
-                  'test'
+                  {{ how_to_html }}
                 {%- endif -%}
               </div>
             {%- endif -%}

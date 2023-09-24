@@ -27,7 +27,7 @@
       {%- for block in section.blocks -%}
         <div class="relative overflow-hidden{% unless forloop.last %} border-b border-seaweed-400{% endunless %}">
           <input type="checkbox" name="panel" id="panel-{{ forloop.index }}" class="hidden peer">
-          <label for="panel-{{ forloop.index }}" class="relative block py-2 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-2 after:w-2 before:h-px after:h-px before:bg-seaweed-700 after:bg-seaweed-700  before:my-0.5 after:my-0.5 before:top-4 after:top-4 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform">
+          <label for="panel-{{ forloop.index }}" class="relative block py-2 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-4 after:w-4 before:h-0.5 after:h-0.5 before:rounded-full after:rounded-full before:bg-seaweed-500 after:bg-seaweed-500 before:scale-75 after:scale-75 before:my-0.5 after:my-0.5 before:top-4 after:top-4 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform after:duration-300">
             <b class="font-medium">{{ block.settings.ingredient_name | split: ' [' | first }}</b>
             {%- if block.settings.ingredient_scientific_name != blank -%}
               {{ ' ' }}<em class="text-sm text-seaweed-600">({{ block.settings.ingredient_scientific_name }})</em>
