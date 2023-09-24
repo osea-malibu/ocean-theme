@@ -233,6 +233,7 @@
               </div>
             {%- endif -%}
           {%- when 'how_to_use' -%}
+            <script>console.log({{ product.metafields.custom.how_to_use }});</script>
             {%- if product.metafields.custom.how_to_use != blank -%}
               <div class="{{ block.settings.wrapper_classes }}">
                 {%- if block.settings.is_collapsible -%}
