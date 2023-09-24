@@ -245,7 +245,7 @@
                     content_classes: 'max-h-80 overflow-y-auto pr-4'
                   %}
                 {%- else -%}
-                  {{ product.description }}
+                  'test'
                 {%- endif -%}
               </div>
             {%- endif -%}
@@ -878,13 +878,8 @@
         },
         {
           "type": "text",
-          "id": "content_html",
-          "label": "Content (text/html)"
-        },
-        {
-          "type": "text",
-          "id": "content_json",
-          "label": "Content (json)"
+          "id": "content",
+          "label": "t:sections.main-product.blocks.collapsible_tab.settings.content.label"
         },
         {
           "type": "textarea",
