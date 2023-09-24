@@ -142,6 +142,7 @@ module.exports = {
       "uabb-light": "#FAF5EA",
       "uao-light": "#FFF8E1",
       "ucbl-light": "#FFFAF0",
+      "ucbp-light": "#F0E1C7",
     },
     fontFamily: {
       sans: "Circular, sans-serif",
@@ -226,6 +227,7 @@ module.exports = {
       addVariant("child-hover", "& > *:hover");
       addVariant("link", "&:link");
       addVariant("small", "& > small");
+      addVariant("span", "& > span");
       addVariant("video", "& > video");
       addVariant("label", "& label");
       addVariant("li", "& li");

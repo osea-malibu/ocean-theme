@@ -232,6 +232,23 @@
                 {%- endif -%}
               </div>
             {%- endif -%}
+          {%- when 'how_to_use' -%}
+            {%- if product.metafields.custom.how_to_use != blank -%}
+              <div class="{{ block.settings.wrapper_classes }}">
+                {%- if block.settings.is_collapsible -%}
+                  {%- assign how_to_use_id = "HowToUse-" | append: block.id | append: "-" | append: section.id -%}
+                  {% render 'accordion-item',
+                    id: how_to_use_id,
+                    summary: "How to Use",
+                    content: "test",
+                    default_open: true,
+                    content_classes: 'max-h-80 overflow-y-auto pr-4'
+                  %}
+                {%- else -%}
+                  {{ product.description }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
           {%- when 'collapsible_tab' -%}
             {%- if block.settings.content != blank -%}
               <div class="{{ block.settings.tab_classes }}">
@@ -832,6 +849,23 @@
       ]
     },
     {
+      "type": "how_to_use",
+      "name": "How to Use",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "wrapper_classes",
+          "label": "Wrapper classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_collapsible",
+          "label": "Is collapsible tab"
+        }
+      ]
+    },
+    {
       "type": "collapsible_tab",
       "name": "t:sections.main-product.blocks.collapsible_tab.name",
       "settings": [
@@ -844,8 +878,13 @@
         },
         {
           "type": "text",
-          "id": "content",
-          "label": "t:sections.main-product.blocks.collapsible_tab.settings.content.label"
+          "id": "content_html",
+          "label": "Content (text/html)"
+        },
+        {
+          "type": "text",
+          "id": "content_json",
+          "label": "Content (json)"
         },
         {
           "type": "textarea",
