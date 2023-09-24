@@ -186,6 +186,7 @@ module.exports = {
     extend: {
       animation: {
         marquee: "marquee 100s linear infinite",
+        skeleton: "skeleton 2s cubic-bezier(.4,0,.6,1) infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -232,6 +233,7 @@ module.exports = {
       addVariant("label", "& label");
       addVariant("li", "& li");
       addVariant("td", "& > td");
+      addVariant("tr", "& > tr");
       addVariant("th", "& > th");
       addVariant("h1", "& h1");
       addVariant("a", "& a");

@@ -1,3 +1,4 @@
+{%- if product.metafields.custom.clinical_results != blank -%}
 <div class="product-clinicals hidden mb-12 {{ section.settings.section_classes }}">
   <div class="container lg:max-w-screen-lg">
     <div class="{% if product.metafields.custom.product_color_light != blank %}{{ product.metafields.custom.product_color_light }}{% else %}bg-wave-200{% endif %} py-4 pl-4 sm:py-6 sm:pl-6">
@@ -6,8 +7,8 @@
       {%- for clinical_result in product.metafields.custom.clinical_results.value -%}
         <div class="mb-2">
           <h4 class="font-medium mb-2">{{ clinical_result.title }}</h4>
-          <div class="relative">
-            <div class="flex gap-3 snap-x overflow-x-auto pb-3 sm:overflow-x-hidden">
+          <horizontal-scroll-box class="relative">
+            <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3 sm:overflow-x-hidden">
               {%- for stat in clinical_result.stats -%}
                 <div class="snap-start w-40 lg:w-52 shrink-0 sm:shrink bg-white rounded-xl p-4{% if forloop.last %} mr-6{% endif %}">
                   {%- if stat.value != nil -%}
@@ -20,10 +21,15 @@
                 </div>
               {%- endfor -%}
             </div>
-            <div class="absolute top-1/2 -right-3 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center sm:hidden">
-              {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
-            </div>
-          </div>
+            <nav>
+              <button class="next absolute top-1/2 -right-3 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity">
+                {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
+              </button>
+              <button class="prev opacity-0 absolute top-1/2 -left-7 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity">
+                {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6 rotate-180', stroke_width: 1.5 %}
+              </button>
+            </nav>
+          </horizontal-scroll-box>
           {%- if clinical_result.citations != blank -%}
             {%- assign citations_array = clinical_result.citations | split: '<br />' -%}
             <cite class="block mt-4 text-xs pr-4 sm:pr-6">
@@ -39,6 +45,7 @@
     </div>
   </div>
 </div>
+{%- endif -%}
 
 {% schema %}
 {

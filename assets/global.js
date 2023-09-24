@@ -1046,15 +1046,16 @@ class TabController extends HTMLElement {
   // Public function to set the tab by id
   // This can be called by the developer too.
   setActiveTab(id, skipFocus = false) {
+    const activeTabClass = this.dataset.activeClass.split(" ") || ["bg-wave-200"];
     for (let tab of this.tabs) {
       if (tab.getAttribute("aria-controls") == id) {
         tab.setAttribute("aria-selected", "true");
-        tab.classList.add("bg-wave-200");
+        activeTabClass.forEach((i) => tab.classList.add(i));
         !skipFocus && tab.focus();
         this.activeTab = tab;
       } else {
         tab.setAttribute("aria-selected", "false");
-        tab.classList.remove("bg-wave-200");
+        activeTabClass.forEach((i) => tab.classList.remove(i));
       }
     }
     for (let tabpanel of this.tabpanels) {
@@ -1093,6 +1094,29 @@ class TabController extends HTMLElement {
   }
 }
 customElements.define("tab-controller", TabController);
+
+class HorizontalScrollBox extends HTMLElement {
+  constructor() {
+    super();
+    this.navNext = this.querySelector("nav .next");
+    this.navPrev = this.querySelector("nav .prev");
+
+    this.navNext.addEventListener("click", () => this.scrollContainer("next"));
+    this.navPrev.addEventListener("click", () => this.scrollContainer("prev"));
+  }
+
+  scrollContainer(direction) {
+    console.log("direction", direction);
+    const scrollBox = this.querySelector(".scroll-box");
+    if (direction === "next") {
+      scrollBox.scrollTo({
+        left: 120,
+        behavior: "smooth",
+      });
+    }
+  }
+}
+customElements.define("horizontal-scroll-box", HorizontalScrollBox);
 
 // TODO: replace all sliders with CSS-only solution
 // Glide.js: https://glidejs.com/docs/

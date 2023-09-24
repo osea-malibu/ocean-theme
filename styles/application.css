@@ -71,6 +71,16 @@
   .rte li {
     @apply before:content-['\2022'] before:mr-3 before:inline-block before:-ml-7 before:w-4 before:text-center leading-tight block mb-2;
   }
+
+  /* animation correction for klaviyo override */
+  .skeleton {
+    @apply animate-skeleton;
+  }
+  @keyframes skeleton {
+    50% {
+      opacity: 0.5;
+    }
+  }
 }
 
 @layer components {
@@ -493,11 +503,17 @@
   .icon-list li {
     @apply before:inline-block before:-ml-7 before:w-4 before:text-center leading-tight;
   }
+  .icon-list.\!pl-5 li {
+    @apply before:-ml-5;
+  }
   .icon-list.check li {
     @apply before:content-['\2713'] before:font-bold before:mr-2;
   }
   .icon-list.bullet li {
     @apply before:content-['\2022'] before:mr-3;
+  }
+  .icon-list.bullet.\!pl-5 li {
+    @apply before:mr-1;
   }
 
   /* fancy scrollbars */
