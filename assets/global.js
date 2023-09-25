@@ -1098,22 +1098,38 @@ customElements.define("tab-controller", TabController);
 class HorizontalScrollBox extends HTMLElement {
   constructor() {
     super();
+    this.scrollBox = this.querySelector(".scroll-box");
     this.navNext = this.querySelector("nav .next");
     this.navPrev = this.querySelector("nav .prev");
 
-    this.navNext.addEventListener("click", () => this.scrollContainer("next"));
-    this.navPrev.addEventListener("click", () => this.scrollContainer("prev"));
+    this.addEventListeners();
+    this.handleShowNav();
+  }
+
+  addEventListeners() {
+    if (this.scrollBox.getBoundingClientRect().width < this.scrollBox.scrollWidth) {
+      this.navNext.addEventListener("click", () => this.scrollContainer("next"));
+      this.navPrev.addEventListener("click", () => this.scrollContainer("prev"));
+
+      this.scrollBox.addEventListener("scroll", this.handleShowNav.bind(this));
+    }
   }
 
   scrollContainer(direction) {
-    console.log("direction", direction);
-    const scrollBox = this.querySelector(".scroll-box");
-    if (direction === "next") {
-      scrollBox.scrollTo({
-        left: 120,
-        behavior: "smooth",
-      });
-    }
+    this.scrollBox.scrollTo({
+      left:
+        direction === "next" ? this.scrollBox.scrollLeft + 120 : this.scrollBox.scrollLeft - 120,
+      behavior: "smooth",
+    });
+  }
+
+  handleShowNav() {
+    this.navNext.classList.toggle(
+      "nav-hide",
+      this.scrollBox.scrollWidth - this.scrollBox.scrollLeft ==
+        this.scrollBox.getBoundingClientRect().width
+    );
+    this.navPrev.classList.toggle("nav-hide", this.scrollBox.scrollLeft == 0);
   }
 }
 customElements.define("horizontal-scroll-box", HorizontalScrollBox);

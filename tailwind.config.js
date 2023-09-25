@@ -142,7 +142,7 @@ module.exports = {
       "uabb-light": "#FAF5EA",
       "uao-light": "#FFF8E1",
       "ucbl-light": "#FFFAF0",
-      "ucbp-light": "#F0E1C7",
+      "ucbp-light": "#F7F0E2",
     },
     fontFamily: {
       sans: "Circular, sans-serif",

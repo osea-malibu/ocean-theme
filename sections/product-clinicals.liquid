@@ -8,7 +8,7 @@
         <div class="mb-2">
           <h4 class="font-medium mb-2">{{ clinical_result.title }}</h4>
           <horizontal-scroll-box class="relative">
-            <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3 sm:overflow-x-hidden">
+            <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
               {%- for stat in clinical_result.stats -%}
                 <div class="snap-start w-40 lg:w-52 shrink-0 sm:shrink bg-white rounded-xl p-4{% if forloop.last %} mr-6{% endif %}">
                   {%- if stat.value != nil -%}
@@ -22,10 +22,10 @@
               {%- endfor -%}
             </div>
             <nav>
-              <button class="next absolute top-1/2 -right-3 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity">
+              <button class="next nav-hide absolute top-1/2 -right-3 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity">
                 {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
               </button>
-              <button class="prev opacity-0 absolute top-1/2 -left-7 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity">
+              <button class="prev nav-hide absolute top-1/2 -left-7 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity">
                 {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6 rotate-180', stroke_width: 1.5 %}
               </button>
             </nav>

@@ -81,6 +81,11 @@
       opacity: 0.5;
     }
   }
+
+  /* Horizontal Scroll Box */
+  horizontal-scroll-box .nav-hide {
+    @apply opacity-0 pointer-events-none;
+  }
 }
 
 @layer components {
