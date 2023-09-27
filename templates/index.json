@@ -22,7 +22,7 @@
           "settings": {
             "button_label": "Shop now",
             "button_aria_label": "Shop our seasonal favorites",
-            "button_link": "shopify://products/vagus-nerve-bath-oil",
+            "button_link": "shopify:\/\/products\/vagus-nerve-bath-oil",
             "target_blank": false,
             "button_classes": "button-primary sm:button-white mt-auto sm:mt-4 lg:mt-6"
           }
@@ -34,13 +34,13 @@
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-button-1"
       ],
       "settings": {
-        "image_mobile": "shopify://shop_images/8.1_Undaria_Collection_HP_Banner_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/8.1_Undaria_Collection_HP_Banner_Desktop_BLANK.jpg",
+        "image_mobile": "shopify:\/\/shop_images\/8.1_Undaria_Collection_HP_Banner_Mobile_BLANK.jpg",
+        "image": "shopify:\/\/shop_images\/8.1_Undaria_Collection_HP_Banner_Desktop_BLANK.jpg",
         "is_lazy": false,
-        "image_link": "shopify://products/vagus-nerve-bath-oil",
+        "image_link": "shopify:\/\/products\/vagus-nerve-bath-oil",
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 p-6 text-center flex flex-col items-center justify-start text-white sm:left-1/3 sm:justify-center pointer-events-none"
+        "text_block_classes": "absolute inset-0 p-6 text-center flex flex-col items-center justify-start text-white sm:left-1\/3 sm:justify-center pointer-events-none"
       }
     },
     "165703204544efb73d": {
@@ -49,14 +49,16 @@
         "165703204528fb3b00-0": {
           "type": "heading",
           "settings": {
-            "heading_text": "Skincare from the Sea<span class=\"text-sm md:text-base font-sans font-book relative bottom-4 md:bottom-5 -mr-2\">®</span>",
+            "heading_text": "Skincare from the Sea<span class=\"text-sm md:text-base font-sans font-book relative bottom-4 md:bottom-5 -mr-2\">®<\/span>",
             "heading_classes": "font-serif text-4xl md:text-5xl tracking-tight",
             "subheading_text": "",
             "subheading_classes": ""
           }
         }
       },
-      "block_order": ["165703204528fb3b00-0"],
+      "block_order": [
+        "165703204528fb3b00-0"
+      ],
       "settings": {
         "section_heading": "Brand statement",
         "section_classes": "pt-10 pb-6 px-4 sm:px-6 md:px-0 max-w-xl mx-auto",
@@ -70,7 +72,7 @@
         "container_classes": "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-8 sm:gap-x-4",
         "collection": "retail-products",
         "is_subscription": false,
-        "card_image_classes": "h-60 img:object-bottom",
+        "card_image_classes": "img:h-60 img:object-bottom",
         "variant_picker_type": "button"
       }
     },
@@ -94,7 +96,7 @@
             "paragraph_classes": "mb-3 leading-tight px-8",
             "button_label": "shop now",
             "button_aria_label": "",
-            "link": "shopify://collections/shop",
+            "link": "shopify:\/\/collections\/shop",
             "target_blank": false,
             "button_classes": "button-primary",
             "button_icon": "",
@@ -113,7 +115,9 @@
           }
         }
       },
-      "block_order": ["4b5af2ba-4a8b-4522-b0d4-c399f507638c"],
+      "block_order": [
+        "4b5af2ba-4a8b-4522-b0d4-c399f507638c"
+      ],
       "settings": {
         "section_heading": "Take the OSEA Skin Quiz",
         "section_classes": "container mb-8",
@@ -123,9 +127,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     }
   },
