@@ -157,11 +157,6 @@
             assign is_fragrance_free = true
           endif
         -%}
-        <script>
-          console.log("{{ product.handle }}");
-          console.log("{{ excluded_bbalm_variants }}");
-          console.log("{{ normalized_variant_title }}");
-      </script>
 
         {%- for block in section.blocks -%}
           {%- case block.type -%}
