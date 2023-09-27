@@ -761,19 +761,16 @@ class VariantSelects extends HTMLElement {
 
   isTravelOrExclusion() {
     const normalizedVariantTitle = this.currentVariant.title.replace("fl ", "");
+    const productHandle = this.dataset.url.replace("/products/", "");
     let isTravelSized = false;
-    if (
-      ["dayglow-face-oil", "essential-hydrating-oil-1"].includes(
-        this.dataset.url.replace("/products/", "")
-      )
-    ) {
+    if (["dayglow-face-oil", "essential-hydrating-oil-1"].includes(productHandle)) {
       isTravelSized = normalizedVariantTitle === "0.34 oz";
     } else {
       isTravelSized = ["1.7 oz", "1 oz", "0.6 oz", "0.22 oz", "Scented / 1 oz"].includes(
         normalizedVariantTitle
       );
     }
-    const isExclusion = ["UAO-1", "UAO-H22"].includes(this.currentVariant.sku);
+    const isExclusion = ["UAO-1", "UAO-H22", "B-BALM"].includes(this.currentVariant.sku);
 
     return isTravelSized || isExclusion;
   }

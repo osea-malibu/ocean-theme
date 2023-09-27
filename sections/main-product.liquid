@@ -137,7 +137,12 @@
           assign excluded_in_new_benefits = 'energizing, fast-acting, mineral-rich, oil-balance, oil-free, rich-texture, spot-control, tsa-friendly' | split: ', '
 
           assign is_travel_or_exclusion = false
-          if small_products contains product.handle
+          if product.handle == 'anti-aging-body-balm'
+            assign excluded_bbalm_variants = '5 oz, 1 oz' | split: ', '
+            if excluded_bbalm_variants contains normalized_variant_title
+              assign is_travel_or_exclusion = true
+            endif
+          elsif small_products contains product.handle
             if normalized_variant_title == '0.34 oz'
               assign is_travel_or_exclusion = true
             endif
@@ -152,6 +157,11 @@
             assign is_fragrance_free = true
           endif
         -%}
+        <script>
+          console.log("{{ product.handle }}");
+          console.log("{{ excluded_bbalm_variants }}");
+          console.log("{{ normalized_variant_title }}");
+      </script>
 
         {%- for block in section.blocks -%}
           {%- case block.type -%}
