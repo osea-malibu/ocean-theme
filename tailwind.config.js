@@ -229,6 +229,7 @@ module.exports = {
       addVariant("link", "&:link");
       addVariant("small", "& > small");
       addVariant("span", "& > span");
+      addVariant("img", "& > img");
       addVariant("video", "& > video");
       addVariant("label", "& label");
       addVariant("li", "& li");
