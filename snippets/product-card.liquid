@@ -94,7 +94,8 @@
             </div>
           {%- endif -%}
         {%- elsif card_product.variants.size > 1 and variant_picker_type != 'none' -%}
-          {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' or card_product.handle == 'undaria-algae-oil' -%}
+          {%- assign dropdown_product_handles = 'undaria-algae-oil, anti-aging-body-balm' | split: ', ' -%}
+          {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' or dropdown_product_handles contains card_product.handle -%}
             <variant-selects
               class="no-js-hidden block mt-1"
               data-section="{{ card_product.id }}-{{ section_id }}"
