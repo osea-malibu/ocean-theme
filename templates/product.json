@@ -9,27 +9,6 @@
             "title_classes": "title text-2xl tracking-wide col-span-12"
           }
         },
-        "subtitle": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "",
-            "text_classes": "col-span-12"
-          }
-        },
-        "price": {
-          "type": "price",
-          "disabled": true,
-          "settings": {
-            "price_classes": "col-span-4 md:col-span-6 text-lg"
-          }
-        },
-        "6a44c417-fd63-4240-a103-3540393f4f89": {
-          "type": "rating",
-          "settings": {
-            "rating_classes": "rating col-span-12 md:col-span h-full"
-          }
-        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -59,12 +38,11 @@
             "atc_show_price": true
           }
         },
-        "f8ca449b-3a83-411f-ac44-40e011b825f3": {
-          "type": "upsells",
+        "f4a9e5dc-cdce-4c14-8035-54a84305ece9": {
+          "type": "description",
           "settings": {
-            "upsell_classes": "upsells col-span-12 mt-6",
-            "upsell_enable_sets": true,
-            "upsell_enable_partner": true
+            "description_classes": "col-span-12 mt-8",
+            "is_collapsible": false
           }
         },
         "b8e1b69d-3824-4a7b-b330-2ce69f67159c": {
@@ -147,14 +125,11 @@
       },
       "block_order": [
         "title",
-        "subtitle",
-        "price",
-        "6a44c417-fd63-4240-a103-3540393f4f89",
         "variant_picker",
         "b1cbaec2-3770-42c2-906e-d3f144bcda1f",
         "quantity_selector",
         "buy_buttons",
-        "f8ca449b-3a83-411f-ac44-40e011b825f3",
+        "f4a9e5dc-cdce-4c14-8035-54a84305ece9",
         "b8e1b69d-3824-4a7b-b330-2ce69f67159c",
         "9daf20a0-2368-43a0-89b0-22bd74e7779e",
         "ed9f21c8-82b0-4c60-8717-bc6a7e417428",
