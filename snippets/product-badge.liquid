@@ -27,7 +27,9 @@
     endfor
   endif
 
-  if product.available == false
+  if product.tags contains 'badge::new jumbo size'
+    assign badge_class= 'bg-[#F1E1AA]'
+  elsif product.available == false
     assign badge_class = 'bg-wave-200 text-wave-800'
   elsif product.metafields.custom.badge_classes != blank
     assign badge_class = product.metafields.custom.badge_classes
