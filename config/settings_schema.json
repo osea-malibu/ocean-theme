@@ -298,6 +298,16 @@
         "id": "predictive_search_popular_searches",
         "info": "This list displays when there are no search results or no search query",
         "label": "List of popular searches"
+      },
+      {
+        "type": "heading",
+        "content": "Noindex/nofollow"
+      },
+      {
+        "type": "textarea",
+        "id": "noIndexPageHandles",
+        "label": "Page handles",
+        "info": "A comma separated list of page handles"
       }
     ]
   },
@@ -609,21 +619,6 @@
         "label": "imgix Parameters",
         "default": "&auto=format,compress",
         "info": "e.g: &auto=format,compress"
-      }
-    ]
-  },
-  {
-    "name": "Noindex / nofollow",
-    "settings": [
-      {
-        "type": "paragraph",
-        "content": "To add page to the noindex / nofollow list, add the page handle to the comma separated list below. Your entry must be a handle (kebab case format). Entries separated with comma + space."
-      },
-      {
-        "type": "textarea",
-        "id": "noIndexPageHandles",
-        "label": "Page handles",
-        "info": "format: comma separated list (include space after comma)"
       }
     ]
   }
