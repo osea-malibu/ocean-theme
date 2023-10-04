@@ -325,27 +325,27 @@
                     </video>
                   {%- endif -%}
                   {%- if block.settings.prod_slider_handles != 'blank' -%}
-                    {%- liquid
-                      assign product_handles = block.settings.prod_slider_handles | split: ', '
-                    -%}
+                    {%- assign product_handles = block.settings.prod_slider_handles | split: ', ' -%}
                     <glide-slider
-                      class="glide{% if section.settings.prod_slider_classes != '' %} {{ section.settings.prod_slider_classes }}{% endif %}"
+                      class="glide{% if block.settings.prod_slider_classes != '' %} {{ block.settings.prod_slider_classes }}{% endif %}"
                       id="slider-{{ section.id }}-{{ block.id }}"
                     >
-                      <ul class="glide__track" data-glide-el="track">
-                        {%- for handle in product_handles -%}
-                          <li class="glide__slide">
-                            {% render 'product-card',
-                              card_product: all_products[handle],
-                              section_id: block.id,
-                              image_class: '',
-                              button_class: '',
-                              name_class: '',
-                              description_class: ''
-                            %}
-                          </li>
-                        {%- endfor -%}
-                      </ul>
+                      <div class="glide__track" data-glide-el="track">
+                        <ul class="glide__slides" role="presentation">
+                          {%- for handle in product_handles -%}
+                            <li class="glide__slide">
+                              {% render 'product-card',
+                                card_product: all_products[handle],
+                                section_id: block.id,
+                                image_class: '',
+                                button_class: '',
+                                name_class: '',
+                                description_class: ''
+                              %}
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
                     </glide-slider>
                   {%- endif -%}
                 {%- when 'product' %}
