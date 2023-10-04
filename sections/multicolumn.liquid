@@ -324,29 +324,32 @@
                       {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                     </video>
                   {%- endif -%}
-                  {%- if block.settings.prod_slider_handles != 'blank' -%}
+                  {%- if block.settings.prod_slider_handles != blank -%}
                     {%- assign product_handles = block.settings.prod_slider_handles | split: ', ' -%}
-                    <glide-slider
-                      class="glide{% if block.settings.prod_slider_classes != '' %} {{ block.settings.prod_slider_classes }}{% endif %}"
-                      id="slider-{{ section.id }}-{{ block.id }}"
-                    >
-                      <div class="glide__track" data-glide-el="track">
-                        <ul class="glide__slides" role="presentation">
-                          {%- for handle in product_handles -%}
-                            <li class="glide__slide">
-                              {% render 'product-card',
-                                card_product: all_products[handle],
-                                section_id: block.id,
-                                image_class: '',
-                                button_class: '',
-                                name_class: '',
-                                description_class: ''
-                              %}
-                            </li>
-                          {%- endfor -%}
-                        </ul>
+                    <horizontal-scroll-box class="relative">
+                      <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
+                        {%- for handle in product_handles -%}
+                          <div class="w-60 flex">
+                            {% render 'product-card',
+                              card_product: all_products[handle],
+                              section_id: block.id,
+                              image_class: '',
+                              button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 xl:px-6',
+                              name_class: '',
+                              description_class: ''
+                            %}
+                          </div>
+                        {%- endfor -%}
                       </div>
-                    </glide-slider>
+                      <nav>
+                        <button class="next nav-hide absolute top-1/2 -right-3 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity">
+                          {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
+                        </button>
+                        <button class="prev nav-hide absolute top-1/2 -left-7 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity">
+                          {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6 rotate-180', stroke_width: 1.5 %}
+                        </button>
+                      </nav>
+                    </horizontal-scroll-box>
                   {%- endif -%}
                 {%- when 'product' %}
                   {% comment %} theme-check-disable LiquidTag {% endcomment %}
