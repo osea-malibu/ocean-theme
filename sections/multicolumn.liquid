@@ -329,7 +329,7 @@
                     <horizontal-scroll-box class="relative">
                       <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
                         {%- for handle in product_handles -%}
-                          <div class="w-60 flex">
+                          <div class="snap-start w-40 lg:w-52 shrink-0">
                             {% render 'product-card',
                               card_product: all_products[handle],
                               section_id: block.id,
