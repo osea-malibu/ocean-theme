@@ -324,6 +324,30 @@
                       {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                     </video>
                   {%- endif -%}
+                  {%- if block.settings.prod_slider_handles != 'blank' -%}
+                    {%- liquid
+                      assign product_handles = block.settings.prod_slider_handles | split: ', '
+                    -%}
+                    <glide-slider
+                      class="glide{% if section.settings.prod_slider_classes != '' %} {{ section.settings.prod_slider_classes }}{% endif %}"
+                      id="slider-{{ section.id }}-{{ block.id }}"
+                    >
+                      <ul class="glide__track" data-glide-el="track">
+                        {%- for handle in product_handles -%}
+                          <li class="glide__slide">
+                            {% render 'product-card',
+                              card_product: all_products[handle],
+                              section_id: block.id,
+                              image_class: '',
+                              button_class: '',
+                              name_class: '',
+                              description_class: ''
+                            %}
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </glide-slider>
+                  {%- endif -%}
                 {%- when 'product' %}
                   {% comment %} theme-check-disable LiquidTag {% endcomment %}
                   {%- if block.settings.product -%}
