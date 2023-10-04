@@ -329,7 +329,7 @@
                     <horizontal-scroll-box class="relative">
                       <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
                         {%- for handle in product_handles -%}
-                          <div class="snap-start w-40 shrink-0{% if forloop.last %} mr-6{% endif %}">
+                          <div class="snap-start w-44 shrink-0{% if forloop.last %} mr-6{% endif %}">
                             {% render 'product-card',
                               card_product: all_products[handle],
                               section_id: block.id,
