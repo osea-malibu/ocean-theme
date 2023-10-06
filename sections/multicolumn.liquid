@@ -355,7 +355,7 @@
                   {% comment %} theme-check-disable LiquidTag {% endcomment %}
                   {%- if block.settings.product -%}
                     {% render 'product-card',
-                      card_product: block.settings.product,
+                      card_product: all_products[block.settings.product],
                       section_id: section.id,
                       custom_default_image: block.settings.custom_product_image,
                       image_class: block.settings.image_classes,
