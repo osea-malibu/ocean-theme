@@ -153,7 +153,7 @@
     </script>
 
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
-    <script>console.log("thing", "{{ template.name }}", "{{ handle }}")</script>
+
     {%- if template.name == 'index' or template.name == 'article' or handle == 'holiday-gift-guide' -%}
       <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}

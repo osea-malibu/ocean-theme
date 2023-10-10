@@ -150,7 +150,9 @@
                         name="{{ option.name }}"
                         value="{{ value | escape }}"
                         form="{{ product_form_id }}"
-                        {% if default_to_mini and forloop.last %}
+                        {% if option.name == 'Scent' and value == 'Scented' %}
+                          checked
+                        {% elsif option.name != 'Scent' and default_to_mini and forloop.last %}
                           checked
                         {% elsif default_to_mini != true and option.selected_value == value %}
                           checked
