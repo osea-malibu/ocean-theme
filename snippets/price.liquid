@@ -17,8 +17,8 @@
 {%- liquid
   if default_to_mini
     assign mini_index = product.variants.size | minus: 1
-    if product.options.size > 1
-      assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+    if product.options.size > 1 or product.options contains 'Amount:'
+      assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz, $25' | split: ', '
       for variant in product.variants
         assign normalized_variant_title = variant.title | replace: 'fl ', ''
         if travel_sizes contains normalized_variant_title
