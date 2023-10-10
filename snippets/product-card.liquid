@@ -152,7 +152,7 @@
                         form="{{ product_form_id }}"
                         {% if option.name == 'Scent' and value == 'Scented' %}
                           checked
-                        {% elsif option.name != 'Scent' and default_to_mini and forloop.last %}
+                        {% elsif option.name == 'Size' and default_to_mini and forloop.last %}
                           checked
                         {% elsif default_to_mini != true and option.selected_value == value %}
                           checked
@@ -186,6 +186,15 @@
             {%- liquid
               if default_to_mini
                 assign mini_index = card_product.variants.size | minus: 1
+                if card_product.options.size > 1
+                  assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+                  for variant in card_product.variants
+                    assign normalized_variant_title = variant.title | replace: 'fl ', ''
+                    if travel_sizes contains normalized_variant_title
+                      assign mini_index = forloop.index0
+                    endif
+                  endfor
+                endif
                 assign default_id = card_product.variants[mini_index].id
               else 
                 assign default_id = card_product.selected_or_first_available_variant.id
@@ -262,7 +271,6 @@
           if custom_default_image != nil
             assign default_image = custom_default_image
           elsif default_to_mini
-            assign mini_index = card_product.variants.size | minus: 1
             assign default_image = card_product.variants[mini_index].featured_media
           elsif card_product.selected_or_first_available_variant.featured_media != nil
             assign default_image = card_product.selected_or_first_available_variant.featured_media
