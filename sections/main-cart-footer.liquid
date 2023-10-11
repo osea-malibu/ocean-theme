@@ -22,10 +22,10 @@
 
                 <div class="mb-4">
                   {%- if cart.cart_level_discount_applications.size > 0 -%}
-                    <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                    <ul class="mb-2" role="list" aria-label="{{ 'customer.order.discount' | t }}">
                       {%- for discount in cart.cart_level_discount_applications -%}
-                        <li class="discounts__discount discounts__discount--end">
-                          {%- render 'icon-discount' -%}
+                        <li class="flex items-center justify-end gap-2">
+                          {%- render 'icon-discount', aria_hidden: true, classes: 'w-3 h-3' -%}
                           {{ discount.title }}
                           (-{{ discount.total_allocated_amount | money }})
                         </li>
