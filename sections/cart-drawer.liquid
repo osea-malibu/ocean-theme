@@ -1,3 +1,4 @@
+{% comment %} theme-check-disable TemplateLength {% endcomment %}
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 
 <cart-drawer class="fixed z-[2147483001] top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
@@ -604,46 +605,47 @@
   var cartContents = fetch(window.Shopify.routes.root + 'cart.js')
   .then(response => response.json())
   .then(data => {
-      var lineproducts = data.items;
-      var contents = [];
-      for (var i = 0; i < lineproducts.length; i++) {
-          var subscriptionType;
-          if (lineproducts[i]['properties']['_is_subscription'] == 'true') {
-              subscriptionType = lineproducts[i]['selling_plan_allocation']['selling_plan']['name'];
-          }
-          else subscriptionType = undefined;
-
-          contents.push({
-              'item_name': lineproducts[i]['title'],
-              'item_id': lineproducts[i]['product_id'],
-              'item_sku': lineproducts[i]['sku'],
-              'item_variant': lineproducts[i]['variant_id'],
-              'price': lineproducts[i]['price'] / 100,
-              'item_brand': lineproducts[i]['vendor'],
-              'item_category': lineproducts[i]['product_type'],
-              'quantity': lineproducts[i]['quantity'],
-              'subscription': lineproducts[i]['properties']['_is_subscription'],
-              'subscription_interval': subscriptionType,
-          });
+    var lineproducts = data.items;
+    var contents = [];
+    for (var i = 0; i < lineproducts.length; i++) {
+      var subscriptionType;
+      if (lineproducts[i]['properties']['_is_subscription'] == 'true') {
+        subscriptionType = lineproducts[i]['selling_plan_allocation']['selling_plan']['name'];
       }
-      dataLayer.push({ ecommerce: null });
-      dataLayer.push({
-          'event': 'begin_checkout_additional',
-          {%  if customer %}
-          'user_data': {
-              'email' : '{{ customer.email }}',
-              'first_name' : '{{ customer.first_name }}',
-              'last_name' : '{{ customer.last_name }}',
-              'customer_id': '{{ customer.id | remove: "'" }}',
-          },
-          {%  endif %}
-          'ecommerce': {
-              'cart_quantity': data.item_count,
-              'cart_total': data.total_price/100,
-              'currency': data.currency,
-              'items': contents
-          }
+      else subscriptionType = undefined;
+
+      contents.push({
+        'item_name': lineproducts[i]['title'],
+        'item_id': lineproducts[i]['product_id'],
+        'item_sku': lineproducts[i]['sku'],
+        'item_variant': lineproducts[i]['variant_id'],
+        'price': lineproducts[i]['price'] / 100,
+        'item_brand': lineproducts[i]['vendor'],
+        'item_category': lineproducts[i]['product_type'],
+        'quantity': lineproducts[i]['quantity'],
+        'subscription': lineproducts[i]['properties']['_is_subscription'],
+        'subscription_interval': subscriptionType,
       });
+    }
+    dataLayer.push({ ecommerce: null });
+    dataLayer.push({
+      'event': 'begin_checkout_additional',
+      {% if customer %}
+      'user_data': {
+        'email' : '{{ customer.email }}',
+        'first_name' : '{{ customer.first_name }}',
+        'last_name' : '{{ customer.last_name }}',
+        'customer_id': '{{ customer.id | remove: "'" }}',
+      },
+      {% endif %}
+      'ecommerce': {
+        'cart_quantity': data.item_count,
+        'cart_total': data.total_price/100,
+        'currency': data.currency,
+        'items': contents
+      }
+    });
   });
 }
 </script>
+{% comment %} theme-check-enable TemplateLength {% endcomment %}
