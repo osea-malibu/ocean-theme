@@ -31,7 +31,7 @@
     {%- if product.featured_media -%}
       <a
         aria-label="{{ product.title | escape }}"
-        href="{{ product.url | default: '#' }}"
+        href="{{ product_url | default: '#' }}"
         class="group relative block mx-auto no-underline shrink-0 w-24 bg-wave-100 rounded-l-lg"
         tabindex="-1"
       >
