@@ -160,438 +160,40 @@
 
         {%- for block in section.blocks -%}
           {%- case block.type -%}
-          {%- when '@app' -%}
-            {% render block %}
-          {%- when 'text' -%}
-            <p class="{{ block.settings.text_classes }}" {{ block.shopify_attributes }}>
-              {{- block.settings.text -}}
-            </p>
-          {%- when 'title' -%}
-            <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
-              {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' -}}
-            </h1>
-          {%- when 'price' -%}
-            <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
-              {%- render 'price', product: product, use_variant: true -%}
+            {%- when '@app' -%}
+              {% render block %}
+            {%- when 'text' -%}
+              <p class="{{ block.settings.text_classes }}" {{ block.shopify_attributes }}>
+                {{- block.settings.text -}}
+              </p>
+            {%- when 'title' -%}
+              <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
+                {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' -}}
+              </h1>
+            {%- when 'price' -%}
+              <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
+                {%- render 'price', product: product, use_variant: true -%}
+                {%- if product.metafields.custom.set_value -%}
+                  <span class="ml-2 self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
+                {%- endif -%}
+              </div>
+            {%- when 'rating' -%}
+              {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
               {%- if product.metafields.custom.set_value -%}
-                <span class="ml-2 self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
+                <div class="col-span-12 relative -bottom-2">
+                  <span class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
+                </div>
               {%- endif -%}
-            </div>
-          {%- when 'rating' -%}
-            {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
-            {%- if product.metafields.custom.set_value -%}
-              <div class="col-span-12 relative -bottom-2">
-                <span class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
-              </div>
-            {%- endif -%}
-          {%- when 'benefits' -%}
-            {%- if product.metafields.custom.benefits.value.size > 0 -%}
-              <div class="{{ block.settings.benefits_classes }}">
-                <h2 class="font-medium tracking-wide mb-2{% if block.settings.hide_label %} sr-only{% endif %}">Benefits</h2>
-                <ul class="benefits flex">
-                  {%- if is_fragrance_free -%}
-                    <li class="w-24 flex flex-start">
-                      <div class="flex flex-col items-center">
-                        {%- render 'icon-benefit', icon: 'fragrance-free', stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
-                        <span class="text-center text-sm font-book leading-none">Fragrance<br><span class="tracking-wide">free</span></span>
-                      </div>
-                    </li>
-                  {%- endif -%}
-                  {%- liquid
-                    assign benefit_limit = 4
-                    if is_fragrance_free
-                      assign benefit_limit = 3
-                    endif
-                  -%}
-                  {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
-                    <li class="w-24 flex flex-start">
-                      <div class="flex flex-col items-center">
-                        {%- assign benefit_icon = benefit | handle -%}
-                        {%- render 'icon-benefit', icon: benefit_icon, stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
-                        {%- assign benefit_title_array = benefit | split: ' ' -%}
-                        <span class="text-center text-sm font-book leading-none tracking-wide">
-                          {%- for string in benefit_title_array -%}
-                            {{ string }}{%- unless forloop.last -%}<br/>{%- endunless -%}
-                          {%- endfor -%}
-                        </span>
-                      </div>
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              </div>
-            {%- endif -%}
-          {%- when 'description' -%}
-            {%- if product.description != blank -%}
-              <div class="{{ block.settings.description_classes }}">
-                {%- if block.settings.is_collapsible -%}
-                  {%- assign description_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
-                  {% render 'accordion-item',
-                    id: description_id,
-                    summary: "Product description",
-                    content: product.description,
-                    default_open: true,
-                    content_classes: 'max-h-80 overflow-y-auto'
-                  %}
-                {%- else -%}
-                  {{ product.description }}
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- when 'how_to_use' -%}
-            {%- assign how_to_use = product.metafields.custom.how_to_use -%}
-            {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works -%}
-              {%- capture how_to_html -%} 
-                {%- if how_to_use != blank -%}
-                  <table>
-                    <tr class="align-top td:pb-2">
-                      <td><b class="mr-1">How:</b></td>
-                      <td>{{ how_to_use.value.how }}</td>
-                    </tr>
-                    <tr class="align-top td:pb-2">
-                      <td><b class="mr-1">When:</b></td>
-                      <td>{{ how_to_use.value.when }}</td>
-                    </tr>
-                    {%- if how_to_use.value.pro_tip != nil -%}
-                      <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
-                        <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
-                        <td>{{ how_to_use.value.pro_tip }}</td>
-                      </tr>
-                    {%- endif -%}
-                    {%- if how_to_use.value.warnings.size > 0 -%}
-                      <tr class="align-top">
-                        <td><b class="sr-only">Warnings:</b></td>
-                        <td>
-                          <ul class="text-sm">
-                            {%- for warning in how_to_use.value.warnings -%}
-                              <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
-                            {%- endfor -%}
-                          </ul>
-                        </td>
-                      </tr>
-                    {%- endif -%}
-                  </table>
-                {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
-                  {{ product.metafields.custom_fields.how_it_works }}
-                {%- endif -%}
-              {%- endcapture -%}
-              <div class="{{ block.settings.wrapper_classes }}">
-                {%- if block.settings.is_collapsible -%}
-                  {%- assign how_to_use_id = "HowToUse-" | append: block.id | append: "-" | append: section.id -%}
-                  {% render 'accordion-item',
-                    id: how_to_use_id,
-                    summary: "How to Use",
-                    content: how_to_html,
-                    default_open: false,
-                    content_classes: 'max-h-80 overflow-y-auto'
-                  %}
-                {%- else -%}
-                  {{ how_to_html }}
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- when 'collapsible_tab' -%}
-            {%- if block.settings.content != blank -%}
-              <div class="{{ block.settings.tab_classes }}">
-                {%- assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
-                {%- render 'accordion-item',
-                  id: tab_id,
-                  summary: block.settings.heading,
-                  content: block.settings.content,
-                  default_open: block.settings.default_open
-                  content_classes: 'max-h-80 overflow-y-auto a:link b:font-bold p:mb-4'
-                -%}
-              </div>
-            {%- endif -%}
-          {%- when 'quantity_selector' -%}
-            {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
-              <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
-                <label class="sr-only" for="Quantity-{{ section.id }}">
-                  {{ 'products.product.quantity.label' | t }}
-                </label>
-                <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
-                  <button
-                    class="{{ quantity_classes }} rounded-l-md"
-                    name="minus"
-                    type="button"
-                  >
-                    <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-                    {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-                  </button>
-                  <input
-                    class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
-                    type="number"
-                    name="quantity"
-                    id="Quantity-{{ section.id }}"
-                    min="1"
-                    value="1"
-                    form="{{ product_form_id }}"
-                  >
-                  <button
-                    class="{{ quantity_classes }} rounded-r-md"
-                    name="plus"
-                    type="button"
-                  >
-                    <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-                    {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-                  </button>
-                </quantity-input>
-              </div>
-            {%- endif -%}
-          {%- when 'variant_picker' -%}
-            <div class="{{ block.settings.variant_classes }}">
-              {%- unless product.has_only_default_variant -%}
-                {%- if product.variants.size == 1 -%}
-                  {%- for option in product.options_with_values -%}
-                    <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
-                    {%- for value in option.values -%}
-                      <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
-                        {{ value }}
-                      </div>
-                    {%- endfor -%}
-                  {%- endfor -%}
-                {%- else -%}
-                  <variant-radios class="no-js-hidden block" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
-                    {%- for option in product.options_with_values -%}
-                      <fieldset class="js group">
-                        <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
-                          <legend class="font-medium tracking-wide text-sm mr-1.5{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">{{ option.name }}:</legend>
-                          {%- for value in option.values -%}
-                            <div>
-                              {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
-                              <input type="radio"
-                                id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                class="peer hidden{% if travel_sizes contains normalized_option_value %} travel-input{% endif %}"
-                                name="{{ option.name }}"
-                                value="{{ value | escape }}"
-                                form="{{ product_form_id }}"
-                                {% if option.selected_value == value %}checked{% endif %}
-                              >
-                              <label
-                                class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1 peer-disabled:opacity-50 {% if option.name == 'Scent' %}normal-case tracking-wide{% else %}lowercase{% endif %}"
-                                for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                              >
-                                {{ value }}
-                              </label>
-                            </div>
-                          {%- endfor -%}
-                        </div>
-                      </fieldset>
-                    {%- endfor -%}
-                    <script type="application/json">
-                      {{ product.variants | json }}
-                    </script>
-                  </variant-radios>
-                {%- endif -%}
-              {%- endunless -%}
-
-              <noscript class="product-form__noscript-wrapper-{{ section.id }}">
-                <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
-                  <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
-                  <div class="select">
-                    <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
-                      {%- for variant in product.variants -%}
-                        <option
-                          {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-                          {% if variant.available == false %}disabled{% endif %}
-                          value="{{ variant.id }}"
-                        >
-                          {{ variant.title }}
-                          {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
-                          - {{ variant.price | money | strip_html }}
-                        </option>
-                      {%- endfor -%}
-                    </select>
-                    {% render 'icon-caret', classes: 'w-4 h-4' %}
-                  </div>
-                </div>
-              </noscript>
-            </div>
-            {% if product.type contains 'Gift Card' %}
-              <!-- ShopKeeper Gift Card -->
-              <gift-card-fields class="col-span-12">
-                <div id="skt-fields">
-                  <div>
-                    <label for="gc_to" class="text-sm font-medium">To Name:</label>
-                    <input id="gc_to" type="text" value="" class="input w-full mb-2" />
-                  </div>
-                  <div>
-                    <label for="gc_from" class="text-sm font-medium">From Name:</label>
-                    <input id="gc_from" type="text" value="" class="input w-full mb-2" />
-                  </div>
-                  <div class="mb-2">
-                    <label for="gc_msg" class="text-sm font-medium">Message:</label>
-                    <textarea id="gc_msg" class="input w-full block" maxlength="400"></textarea>
-                    <small class="text-right block">Max characters: 400</small>
-                  </div>
-                </div>
-              </gift-card-fields>
-              <!-- End ShopKeeper -->
-            {% endif %}
-          {%- when 'subscription_picker' -%}
-            {%- unless product.selling_plan_groups.size == 0 -%}
-              {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
-              <subscription-radios
-                class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }}{% if is_travel_or_exclusion and product.variants.size > 1 %} max-h-0{% endif %}"
-                data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
-              >
-                <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
-                  <legend class="sr-only">Purchase options</legend>
-                  {%- for option in purchase_options -%}
-                    <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">
-                      <input type="radio"
-                        name="purchase_option"
-                        id="purchase_option-{{ option }}"
-                        class="sr-only peer bg-white"
-                        value="{{ option }}"
-                        {% if option == 'onetime' %}checked{% endif %}
-                      />
-                      <span class="absolute pointer-events-none left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
-                        <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
-                      </span>
-                      <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
-                        <span class="flex justify-between">
-                          <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
-                          {%- if option == 'onetime' -%}
-                            {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
-                          {%- else -%}
-                            {% render 'price', product: product, use_variant: true, subscription: true, price_class: 'text-sm font-medium' %}
-                          {%- endif -%}
-                        </span>
-                      </label>
-                      {%- if option == 'autodeliver' -%}
-                        <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
-                          <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
-                          <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                            <button class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</button>
-                          </modal-opener>
-                        </span>
-                        <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
-                          <fieldset class="js flex mb-2 pb-3">
-                            <legend class="text-sm font-medium">Delivery every</legend>
-                            {%- for value in product.selling_plan_groups -%}
-                              <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
-                                <input type="radio"
-                                  id="{{ block.id }}-{{ forloop.index0 }}"
-                                  class="peer sr-only"
-                                  name="selling_plan"
-                                  value="{{ value.selling_plans[0].id | escape }}"
-                                  form="{{ product_form_id }}"
-                                />
-                                <label
-                                  class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-200"
-                                  for="{{ block.id }}-{{ forloop.index0 }}"
-                                >
-                                  {{- value.name | replace: "Delivery every", "" -}}
-                                </label>
-                              </div>
-                            {%- endfor -%}
-                            <div class="sr-only shrink">
-                              <input type="radio"
-                                id="{{ block.id }}-none"
-                                name="selling_plan"
-                                value=""
-                                form="{{ product_form_id }}"
-                                checked
-                              />
-                              <label for="{{ block.id }}-none">None</label>
-                            </div>
-                          </fieldset>
-                        </div>
-                        <span class="popular-badge hidden absolute -top-2 left-3 bg-seaweed-700 text-white rounded font-bold tracking-wide text-xs px-1 h-4">Popular</span>
-                      {%- endif -%}
-                    </div>
-                  {%- endfor -%}
-                </fieldset>
-                <modal-dialog id="SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                  <div role="dialog" aria-label="{{ block.settings.text }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
-                    <button id="ModalClose-{{ block.id }}" type="button" aria-label="{{ 'accessibility.close' | t }}">
-                      {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
-                    </button>
-                    <div class="w-full">
-                      <h2 class="font-serif text-3xl tracking-tight mb-2">{{ block.settings.subscription_modal_heading }}</h2>
-                      {{ block.settings.subscription_modal_content }}
-                    </div>
-                  </div>
-                </modal-dialog>
-              </subscription-radios>
-            {%- endunless -%}
-          {%- when 'buy_buttons' -%}
-            {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
-              <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
-                <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
-                  <div class="product-form__error-message-wrapper absolute left-0 -mt-6 text-coral-800 text-sm" role="alert" hidden>
-                    {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
-                    <span class="product-form__error-message leading-4 align-bottom"></span>
-                  </div>
-
-                  {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-                    <input type="hidden" name="properties[_is_subscription]" value="{% if product.selected_or_first_available_variant.selling_plan_groups.size > 0 %}true{% else %}false{% endif %}">
-                    {% if product.type contains 'Gift Card' %}
-                      <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
-                      <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
-                      <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
-                    {%- endif -%}
-                    <div class="product-form__buttons relative grid grid-cols-2 gap-2" id="AddToCart">
-                      <button
-                        type="submit"
-                        name="add"
-                        class="product-form__submit relative button button-primary button-md w-full disabled:opacity-50 col-span-2"
-                        {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                      >
-                          <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
-                            {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-                          </span>
-                          <span class="label">
-                            {%- if product.selected_or_first_available_variant.available -%}
-                              {{ 'products.product.add_to_cart' | t }}
-                            {%- else -%}
-                              {{ 'products.product.sold_out' | t }}
-                            {%- endif -%}
-                          </span>
-                          {%- if block.settings.atc_show_price -%}
-                            {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
-                          {%- endif -%}
-                      </button>
-                    </div>
-                    {%- assign product_collection_handles = product.collections | map: 'handle' -%}
-                    {%- if product_collection_handles contains 'skincare-sets-1' -%}
-                      <div id="PayInstallments" class="mb-10 sm:mb-8 transition-opacity">
-                        <div class="absolute inset-x-0 leading-tight py-2 text-sm">
-                          {{ form | payment_terms }}
-                        </div>
-                      </div>
-                    {%- endif -%}
-                  {%- endform -%}
-                </product-form>
-              </div>
-            {%- endif -%}
-          {%- when 'upsells' -%}
-            {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
-              <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
-                {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
-                  {%- for set in product.metafields.my_fields.save_with_sets.value -%}
-                    {%- if forloop.first %}<h2 class="font-medium tracking-wide mb-1">Save with Sets</h2>{%- endif -%}
-                    {%- render 'product-upsell', product: set -%}
-                  {%- endfor -%}
-                {%- endif -%}
-                {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
-                  <h2 class="font-medium tracking-wide mb-1">Pairs Well With</h2>
-                  {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-
-            <div class="quick-info col-span-12 gap-4 sm:gap-6 mt-8 hidden">
+            {%- when 'benefits' -%}
               {%- if product.metafields.custom.benefits.value.size > 0 -%}
-                <div class="flex-1">
-                  <h2 class="font-medium tracking-wide mb-3">Benefits</h2>
-                  <ul class="flex-col li:mb-4">
+                <div class="{{ block.settings.benefits_classes }}">
+                  <h2 class="font-medium tracking-wide mb-2{% if block.settings.hide_label %} sr-only{% endif %}">Benefits</h2>
+                  <ul class="benefits flex">
                     {%- if is_fragrance_free -%}
                       <li class="w-24 flex flex-start">
                         <div class="flex flex-col items-center">
-                          {%- render 'icon-benefit-new', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                          <span class="text-sm font-book leading-none">Fragrance free</span>
+                          {%- render 'icon-benefit', icon: 'fragrance-free', stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
+                          <span class="text-center text-sm font-book leading-none">Fragrance<br><span class="tracking-wide">free</span></span>
                         </div>
                       </li>
                     {%- endif -%}
@@ -602,145 +204,544 @@
                       endif
                     -%}
                     {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
-                      {%- assign benefit_icon = benefit | handle -%}
-                      {%- unless excluded_in_new_benefits contains benefit_icon -%}
-                        <li class="flex">
-                          <div class="flex flex-row items-center">
-                            {%- render 'icon-benefit-new', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                            <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
-                              {{ benefit }}
-                            </span>
-                          </div>
-                        </li>
-                      {%- endunless -%}
+                      <li class="w-24 flex flex-start">
+                        <div class="flex flex-col items-center">
+                          {%- assign benefit_icon = benefit | handle -%}
+                          {%- render 'icon-benefit', icon: benefit_icon, stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
+                          {%- assign benefit_title_array = benefit | split: ' ' -%}
+                          <span class="text-center text-sm font-book leading-none tracking-wide">
+                            {%- for string in benefit_title_array -%}
+                              {{ string }}{%- unless forloop.last -%}<br/>{%- endunless -%}
+                            {%- endfor -%}
+                          </span>
+                        </div>
+                      </li>
                     {%- endfor -%}
                   </ul>
                 </div>
               {%- endif -%}
-              {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
-                <div class="flex-1">
-                  <h2 class="font-medium tracking-wide mb-3">Skin types</h2>
-                  {%- if product.metafields.custom.skin_types_list != blank -%}
-                    <ul class="text-sm font-book tracking-wide icon-list bullet !pl-5">
-                      {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
-                        {%- if skin_type == 'Not for sensitive' -%}
-                          <li class="flex items-center before:!hidden">
-                            {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5', stroke_width: 2 %}
-                            <span>{{ skin_type }}</span>
-                          </li>
-                        {%- else -%}
-                          <li class="mb-4 !leading-4 last:mb-0">{{ skin_type }}</li>
-                        {%- endif -%}
-                      {%- endfor -%}
-                    </ul>
-                  {%- elsif product.metafields.custom_fields.skin_types != blank -%}
-                    <p class="text-sm font-book leading-none tracking-wide">{{ product.metafields.custom_fields.skin_types }}</p>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-              {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
-                <div class="flex-1">
-                  <h2 class="font-medium tracking-wide mb-2">Scent profile</h2>
-                  {%- if product.metafields.custom.scent_profile_short -%}
-                    <div class="text-sm font-book">{{ product.metafields.custom.scent_profile_short }}</div>
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <div class="{{ block.settings.description_classes }}">
+                  {%- if block.settings.is_collapsible -%}
+                    {%- assign description_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
+                    {% render 'accordion-item',
+                      id: description_id,
+                      summary: "Product description",
+                      content: product.description,
+                      default_open: true,
+                      content_classes: 'max-h-80 overflow-y-auto'
+                    %}
                   {%- else -%}
-                    <div class="text-sm font-book">{{ product.metafields.custom.scent_profile }}</div>
+                    {{ product.description }}
                   {%- endif -%}
                 </div>
               {%- endif -%}
-            </div>
+            {%- when 'how_to_use' -%}
+              {%- assign how_to_use = product.metafields.custom.how_to_use -%}
+              {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works -%}
+                {%- capture how_to_html -%} 
+                  {%- if how_to_use != blank -%}
+                    <table>
+                      <tr class="align-top td:pb-2">
+                        <td><b class="mr-1">How:</b></td>
+                        <td>{{ how_to_use.value.how }}</td>
+                      </tr>
+                      <tr class="align-top td:pb-2">
+                        <td><b class="mr-1">When:</b></td>
+                        <td>{{ how_to_use.value.when }}</td>
+                      </tr>
+                      {%- if how_to_use.value.pro_tip != nil -%}
+                        <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
+                          <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
+                          <td>{{ how_to_use.value.pro_tip }}</td>
+                        </tr>
+                      {%- endif -%}
+                      {%- if how_to_use.value.warnings.size > 0 -%}
+                        <tr class="align-top">
+                          <td><b class="sr-only">Warnings:</b></td>
+                          <td>
+                            <ul class="text-sm">
+                              {%- for warning in how_to_use.value.warnings -%}
+                                <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
+                              {%- endfor -%}
+                            </ul>
+                          </td>
+                        </tr>
+                      {%- endif -%}
+                    </table>
+                  {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
+                    {{ product.metafields.custom_fields.how_it_works }}
+                  {%- endif -%}
+                {%- endcapture -%}
+                <div class="{{ block.settings.wrapper_classes }}">
+                  {%- if block.settings.is_collapsible -%}
+                    {%- assign how_to_use_id = "HowToUse-" | append: block.id | append: "-" | append: section.id -%}
+                    {% render 'accordion-item',
+                      id: how_to_use_id,
+                      summary: "How to Use",
+                      content: how_to_html,
+                      default_open: false,
+                      content_classes: 'max-h-80 overflow-y-auto'
+                    %}
+                  {%- else -%}
+                    {{ how_to_html }}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- when 'collapsible_tab' -%}
+              {%- if block.settings.content != blank -%}
+                <div class="{{ block.settings.tab_classes }}">
+                  {%- assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
+                  {%- render 'accordion-item',
+                    id: tab_id,
+                    summary: block.settings.heading,
+                    content: block.settings.content,
+                    default_open: block.settings.default_open
+                    content_classes: 'max-h-80 overflow-y-auto a:link b:font-bold p:mb-4'
+                  -%}
+                </div>
+              {%- endif -%}
+            {%- when 'quantity_selector' -%}
+              {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
+                <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
+                  <label class="sr-only" for="Quantity-{{ section.id }}">
+                    {{ 'products.product.quantity.label' | t }}
+                  </label>
+                  <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
+                    <button
+                      class="{{ quantity_classes }} rounded-l-md"
+                      name="minus"
+                      type="button"
+                    >
+                      <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+                      {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                    </button>
+                    <input
+                      class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
+                      type="number"
+                      name="quantity"
+                      id="Quantity-{{ section.id }}"
+                      min="1"
+                      value="1"
+                      form="{{ product_form_id }}"
+                    >
+                    <button
+                      class="{{ quantity_classes }} rounded-r-md"
+                      name="plus"
+                      type="button"
+                    >
+                      <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+                      {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                    </button>
+                  </quantity-input>
+                </div>
+              {%- endif -%}
+            {%- when 'variant_picker' -%}
+              <div class="{{ block.settings.variant_classes }}">
+                {%- unless product.has_only_default_variant -%}
+                  {%- if product.variants.size == 1 -%}
+                    {%- for option in product.options_with_values -%}
+                      <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
+                      {%- for value in option.values -%}
+                        <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
+                          {{ value }}
+                        </div>
+                      {%- endfor -%}
+                    {%- endfor -%}
+                  {%- else -%}
+                    <variant-radios class="no-js-hidden block" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                      {%- for option in product.options_with_values -%}
+                        <fieldset class="js group">
+                          <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
+                            <legend class="font-medium tracking-wide text-sm mr-1.5{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">{{ option.name }}:</legend>
+                            {%- for value in option.values -%}
+                              <div>
+                                {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
+                                <input type="radio"
+                                  id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                  class="peer hidden{% if travel_sizes contains normalized_option_value %} travel-input{% endif %}"
+                                  name="{{ option.name }}"
+                                  value="{{ value | escape }}"
+                                  form="{{ product_form_id }}"
+                                  {% if option.selected_value == value %}checked{% endif %}
+                                >
+                                <label
+                                  class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1 peer-disabled:opacity-50 {% if option.name == 'Scent' %}normal-case tracking-wide{% else %}lowercase{% endif %}"
+                                  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                >
+                                  {{ value }}
+                                </label>
+                              </div>
+                            {%- endfor -%}
+                          </div>
+                        </fieldset>
+                      {%- endfor -%}
+                      <script type="application/json">
+                        {{ product.variants | json }}
+                      </script>
+                    </variant-radios>
+                  {%- endif -%}
+                {%- endunless -%}
 
-            <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="pdp-info-tabs hidden col-span-12 mt-4">
-              <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
-                {%- assign tabs = 'Description, How to Use, Sustainability' | split: ', ' -%}
-                {%- for tab in tabs -%}
-                  <li
-                    role="tab"
-                    aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
-                    tabindex="0"
-                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                    class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 font-bold uppercase text-xs tracking-widest px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %}{% if tab == 'Sustainability' %} sustainability hidden{% endif %}"
-                  >
-                    {{ tab }}
-                  </li>
-                {%- endfor -%}
-              </ul>
-              {%- for tab in tabs -%}
-                <div
-                  id="tab-{{ forloop.index }}-{{ block.id }}"
-                  role="tabpanel"
-                  aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-                  class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px"
+                <noscript class="product-form__noscript-wrapper-{{ section.id }}">
+                  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+                    <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+                    <div class="select">
+                      <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
+                        {%- for variant in product.variants -%}
+                          <option
+                            {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                            {% if variant.available == false %}disabled{% endif %}
+                            value="{{ variant.id }}"
+                          >
+                            {{ variant.title }}
+                            {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                            - {{ variant.price | money | strip_html }}
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                      {% render 'icon-caret', classes: 'w-4 h-4' %}
+                    </div>
+                  </div>
+                </noscript>
+              </div>
+              {% if product.type contains 'Gift Card' %}
+                <!-- ShopKeeper Gift Card -->
+                <gift-card-fields class="col-span-12">
+                  <div id="skt-fields">
+                    <div>
+                      <label for="gc_to" class="text-sm font-medium">To Name:</label>
+                      <input id="gc_to" type="text" value="" class="input w-full mb-2" />
+                    </div>
+                    <div>
+                      <label for="gc_from" class="text-sm font-medium">From Name:</label>
+                      <input id="gc_from" type="text" value="" class="input w-full mb-2" />
+                    </div>
+                    <div class="mb-2">
+                      <label for="gc_msg" class="text-sm font-medium">Message:</label>
+                      <textarea id="gc_msg" class="input w-full block" maxlength="400"></textarea>
+                      <small class="text-right block">Max characters: 400</small>
+                    </div>
+                  </div>
+                </gift-card-fields>
+                <!-- End ShopKeeper -->
+              {% endif %}
+            {%- when 'subscription_picker' -%}
+              {%- unless product.selling_plan_groups.size == 0 -%}
+                {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
+                <subscription-radios
+                  class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }}{% if is_travel_or_exclusion and product.variants.size > 1 %} max-h-0{% endif %}"
+                  data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
                 >
-                  {%- case tab -%}
-                  {%- when 'Description' -%}
-                    <div>{{ product.metafields.custom_fields.description }}</div>
-                  {%- when 'How to Use' -%}
-                    {%- assign how_to_use = product.metafields.custom.how_to_use -%}
-                    {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works -%}
-                      {%- capture how_to_html -%} 
-                        {%- if how_to_use != blank -%}
-                          <table>
-                            <tr class="align-top td:pb-2">
-                              <td><b class="mr-1">How:</b></td>
-                              <td>{{ how_to_use.value.how }}</td>
-                            </tr>
-                            <tr class="align-top td:pb-2">
-                              <td><b class="mr-1">When:</b></td>
-                              <td>{{ how_to_use.value.when }}</td>
-                            </tr>
-                            {%- if how_to_use.value.pro_tip != nil -%}
-                              <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
-                                <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
-                                <td>{{ how_to_use.value.pro_tip }}</td>
-                              </tr>
+                  <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
+                    <legend class="sr-only">Purchase options</legend>
+                    {%- for option in purchase_options -%}
+                      <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">
+                        <input type="radio"
+                          name="purchase_option"
+                          id="purchase_option-{{ option }}"
+                          class="sr-only peer bg-white"
+                          value="{{ option }}"
+                          {% if option == 'onetime' %}checked{% endif %}
+                        />
+                        <span class="absolute pointer-events-none left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
+                          <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
+                        </span>
+                        <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
+                          <span class="flex justify-between">
+                            <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
+                            {%- if option == 'onetime' -%}
+                              {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
+                            {%- else -%}
+                              {% render 'price', product: product, use_variant: true, subscription: true, price_class: 'text-sm font-medium' %}
                             {%- endif -%}
-                            {%- if how_to_use.value.warnings.size > 0 -%}
-                              <tr class="align-top">
-                                <td><b class="sr-only">Warnings:</b></td>
-                                <td>
-                                  <ul class="text-sm">
-                                    {%- for warning in how_to_use.value.warnings -%}
-                                      <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
-                                    {%- endfor -%}
-                                  </ul>
-                                </td>
-                              </tr>
-                            {%- endif -%}
-                          </table>
-                        {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
-                          {{ product.metafields.custom_fields.how_it_works }}
+                          </span>
+                        </label>
+                        {%- if option == 'autodeliver' -%}
+                          <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
+                            <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
+                            <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+                              <button class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</button>
+                            </modal-opener>
+                          </span>
+                          <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
+                            <fieldset class="js flex mb-2 pb-3">
+                              <legend class="text-sm font-medium">Delivery every</legend>
+                              {%- for value in product.selling_plan_groups -%}
+                                <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
+                                  <input type="radio"
+                                    id="{{ block.id }}-{{ forloop.index0 }}"
+                                    class="peer sr-only"
+                                    name="selling_plan"
+                                    value="{{ value.selling_plans[0].id | escape }}"
+                                    form="{{ product_form_id }}"
+                                  />
+                                  <label
+                                    class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-200"
+                                    for="{{ block.id }}-{{ forloop.index0 }}"
+                                  >
+                                    {{- value.name | replace: "Delivery every", "" -}}
+                                  </label>
+                                </div>
+                              {%- endfor -%}
+                              <div class="sr-only shrink">
+                                <input type="radio"
+                                  id="{{ block.id }}-none"
+                                  name="selling_plan"
+                                  value=""
+                                  form="{{ product_form_id }}"
+                                  checked
+                                />
+                                <label for="{{ block.id }}-none">None</label>
+                              </div>
+                            </fieldset>
+                          </div>
+                          <span class="popular-badge hidden absolute -top-2 left-3 bg-seaweed-700 text-white rounded font-bold tracking-wide text-xs px-1 h-4">Popular</span>
                         {%- endif -%}
-                      {%- endcapture -%}
-                      <div class="">
-                        {{ how_to_html }}
                       </div>
-                    {%- endif -%}
-                  {%- when 'Sustainability' -%}
-                    <div class="sustainability hidden">
-                      <div class="skeleton bg-wave-200 absolute z-0 inset-4 rounded-xl"></div>
-                      <div class="relative z-10">
-                        {%- comment -%} theme-check-disable RemoteAsset {% endcomment %}
-                        <script src="https://learn.bluebirdclimate.com/embed/ilia-beauty?id=sample-SustainabilityReport" async="" type="text/javascript"></script>
-                        {%- comment -%} theme-check-enable RemoteAsset {% endcomment %}
+                    {%- endfor -%}
+                  </fieldset>
+                  <modal-dialog id="SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div role="dialog" aria-label="{{ block.settings.text }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+                      <button id="ModalClose-{{ block.id }}" type="button" aria-label="{{ 'accessibility.close' | t }}">
+                        {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
+                      </button>
+                      <div class="w-full">
+                        <h2 class="font-serif text-3xl tracking-tight mb-2">{{ block.settings.subscription_modal_heading }}</h2>
+                        {{ block.settings.subscription_modal_content }}
                       </div>
                     </div>
-                  {%- endcase -%}
+                  </modal-dialog>
+                </subscription-radios>
+              {%- endunless -%}
+            {%- when 'buy_buttons' -%}
+              {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
+                <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
+                  <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
+                    <div class="product-form__error-message-wrapper absolute left-0 -mt-6 text-coral-800 text-sm" role="alert" hidden>
+                      {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
+                      <span class="product-form__error-message leading-4 align-bottom"></span>
+                    </div>
+
+                    {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+                      <input type="hidden" name="properties[_is_subscription]" value="{% if product.selected_or_first_available_variant.selling_plan_groups.size > 0 %}true{% else %}false{% endif %}">
+                      {% if product.type contains 'Gift Card' %}
+                        <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
+                        <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
+                        <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
+                      {%- endif -%}
+                      <div class="product-form__buttons relative grid grid-cols-2 gap-2" id="AddToCart">
+                        <button
+                          type="submit"
+                          name="add"
+                          class="product-form__submit relative button button-primary button-md w-full disabled:opacity-50 col-span-2"
+                          {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                        >
+                            <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
+                              {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+                            </span>
+                            <span class="label">
+                              {%- if product.selected_or_first_available_variant.available -%}
+                                {{ 'products.product.add_to_cart' | t }}
+                              {%- else -%}
+                                {{ 'products.product.sold_out' | t }}
+                              {%- endif -%}
+                            </span>
+                            {%- if block.settings.atc_show_price -%}
+                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
+                            {%- endif -%}
+                        </button>
+                      </div>
+                      {%- assign product_collection_handles = product.collections | map: 'handle' -%}
+                      {%- if product_collection_handles contains 'skincare-sets-1' -%}
+                        <div id="PayInstallments" class="mb-10 sm:mb-8 transition-opacity">
+                          <div class="absolute inset-x-0 leading-tight py-2 text-sm">
+                            {{ form | payment_terms }}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    {%- endform -%}
+                  </product-form>
                 </div>
-              {%- endfor -%}
-            </tab-controller>
+              {%- endif -%}
+            {%- when 'upsells' -%}
+              {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
+                <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
+                  {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
+                    {%- for set in product.metafields.my_fields.save_with_sets.value -%}
+                      {%- if forloop.first %}<h2 class="font-medium tracking-wide mb-1">Save with Sets</h2>{%- endif -%}
+                      {%- render 'product-upsell', product: set -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
+                    <h2 class="font-medium tracking-wide mb-1">Pairs Well With</h2>
+                    {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              <div class="quick-info col-span-12 gap-4 sm:gap-6 mt-8 hidden">
+                {%- if product.metafields.custom.benefits.value.size > 0 -%}
+                  <div class="flex-1">
+                    <h2 class="font-medium tracking-wide mb-3">Benefits</h2>
+                    <ul class="flex-col li:mb-4">
+                      {%- if is_fragrance_free -%}
+                        <li class="w-24 flex flex-start">
+                          <div class="flex flex-col items-center">
+                            {%- render 'icon-benefit-new', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+                            <span class="text-sm font-book leading-none">Fragrance free</span>
+                          </div>
+                        </li>
+                      {%- endif -%}
+                      {%- liquid
+                        assign benefit_limit = 4
+                        if is_fragrance_free
+                          assign benefit_limit = 3
+                        endif
+                      -%}
+                      {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
+                        {%- assign benefit_icon = benefit | handle -%}
+                        {%- unless excluded_in_new_benefits contains benefit_icon -%}
+                          <li class="flex">
+                            <div class="flex flex-row items-center">
+                              {%- render 'icon-benefit-new', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+                              <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
+                                {{ benefit }}
+                              </span>
+                            </div>
+                          </li>
+                        {%- endunless -%}
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                {%- endif -%}
+                {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
+                  <div class="flex-1">
+                    <h2 class="font-medium tracking-wide mb-3">Skin types</h2>
+                    {%- if product.metafields.custom.skin_types_list != blank -%}
+                      <ul class="text-sm font-book tracking-wide icon-list bullet !pl-5">
+                        {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
+                          {%- if skin_type == 'Not for sensitive' -%}
+                            <li class="flex items-center before:!hidden">
+                              {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5', stroke_width: 2 %}
+                              <span>{{ skin_type }}</span>
+                            </li>
+                          {%- else -%}
+                            <li class="mb-4 !leading-4 last:mb-0">{{ skin_type }}</li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    {%- elsif product.metafields.custom_fields.skin_types != blank -%}
+                      <p class="text-sm font-book leading-none tracking-wide">{{ product.metafields.custom_fields.skin_types }}</p>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
+                  <div class="flex-1">
+                    <h2 class="font-medium tracking-wide mb-2">Scent profile</h2>
+                    {%- if product.metafields.custom.scent_profile_short -%}
+                      <div class="text-sm font-book">{{ product.metafields.custom.scent_profile_short }}</div>
+                    {%- else -%}
+                      <div class="text-sm font-book">{{ product.metafields.custom.scent_profile }}</div>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+
+              <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="pdp-info-tabs hidden col-span-12 mt-4">
+                <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
+                  {%- assign tabs = 'Description, How to Use, Sustainability' | split: ', ' -%}
+                  {%- for tab in tabs -%}
+                    <li
+                      role="tab"
+                      aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
+                      tabindex="0"
+                      aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 font-bold uppercase text-xs tracking-widest px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %}{% if tab == 'Sustainability' %} sustainability hidden{% endif %}"
+                    >
+                      {{ tab }}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+                {%- for tab in tabs -%}
+                  <div
+                    id="tab-{{ forloop.index }}-{{ block.id }}"
+                    role="tabpanel"
+                    aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                    class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px"
+                  >
+                    {%- case tab -%}
+                    {%- when 'Description' -%}
+                      <div>{{ product.metafields.custom_fields.description }}</div>
+                    {%- when 'How to Use' -%}
+                      {%- assign how_to_use = product.metafields.custom.how_to_use -%}
+                      {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works -%}
+                        {%- capture how_to_html -%} 
+                          {%- if how_to_use != blank -%}
+                            <table>
+                              <tr class="align-top td:pb-2">
+                                <td><b class="mr-1">How:</b></td>
+                                <td>{{ how_to_use.value.how }}</td>
+                              </tr>
+                              <tr class="align-top td:pb-2">
+                                <td><b class="mr-1">When:</b></td>
+                                <td>{{ how_to_use.value.when }}</td>
+                              </tr>
+                              {%- if how_to_use.value.pro_tip != nil -%}
+                                <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
+                                  <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
+                                  <td>{{ how_to_use.value.pro_tip }}</td>
+                                </tr>
+                              {%- endif -%}
+                              {%- if how_to_use.value.warnings.size > 0 -%}
+                                <tr class="align-top">
+                                  <td><b class="sr-only">Warnings:</b></td>
+                                  <td>
+                                    <ul class="text-sm">
+                                      {%- for warning in how_to_use.value.warnings -%}
+                                        <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
+                                      {%- endfor -%}
+                                    </ul>
+                                  </td>
+                                </tr>
+                              {%- endif -%}
+                            </table>
+                          {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
+                            {{ product.metafields.custom_fields.how_it_works }}
+                          {%- endif -%}
+                        {%- endcapture -%}
+                        <div class="">
+                          {{ how_to_html }}
+                        </div>
+                      {%- endif -%}
+                    {%- when 'Sustainability' -%}
+                      <div class="sustainability hidden">
+                        <div class="skeleton bg-wave-200 absolute z-0 inset-4 rounded-xl"></div>
+                        <div class="relative z-10">
+                          {%- comment -%} theme-check-disable RemoteAsset {% endcomment %}
+                          <script src="https://learn.bluebirdclimate.com/embed/ilia-beauty?id=sample-SustainabilityReport" async="" type="text/javascript"></script>
+                          {%- comment -%} theme-check-enable RemoteAsset {% endcomment %}
+                        </div>
+                      </div>
+                    {%- endcase -%}
+                  </div>
+                {%- endfor -%}
+              </tab-controller>
+            {%- when 'set_includes' -%}
+              {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
+                <div class="{{ block.settings.set_includes_classes }}">
+                  <h2 class="font-medium tracking-wide mb-2">Set includes</h2>
+                  <ul>
+                    {%- for product_in_set in product.metafields.custom.set_contains.value -%}
+                      {%- render 'product-in-set', product: product_in_set -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
-        {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
-          <div class="col-span-12 mt-6">
-            <h2 class="font-medium tracking-wide mb-2">Set includes</h2>
-            <ul>
-              {%- for product_in_set in product.metafields.custom.set_contains.value -%}
-                {%- render 'product-in-set', product: product_in_set -%}
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
       </div>
     </div>
   </div>
@@ -1081,6 +1082,22 @@
           "type": "checkbox",
           "id": "upsell_enable_partner",
           "label": "Pair with product"
+        }
+      ]
+    },
+    {
+      "type": "set_includes",
+      "name": "Set includes",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "This section will only appear if the product is in the 'Gifts & Sets' collection, and the product has content in the 'Set Includes' metafield."
+        },
+        {
+          "type": "textarea",
+          "id": "set_includes_classes",
+          "label": "Set includes classes"
         }
       ]
     }
