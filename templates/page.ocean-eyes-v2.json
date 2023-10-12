@@ -516,10 +516,25 @@
     "4157272b-d166-4e0b-819d-a4d5224d9dc9": {
       "type": "multicolumn",
       "blocks": {
+        "08e1a89a-d0c0-4f3e-a26f-1e0c52161511": {
+          "type": "product",
+          "settings": {
+            "column_classes": "col-span-1",
+            "product": "eye-care-duo",
+            "image_classes": "",
+            "button_classes": "",
+            "name_classes": "",
+            "description_classes": "",
+            "hide_badge": false,
+            "show_reviews": false,
+            "show_benefits": false,
+            "subscription": false
+          }
+        },
         "template--15927766155447__4157272b-d166-4e0b-819d-a4d5224d9dc9-column-1": {
           "type": "column",
           "settings": {
-            "column_classes": "col-span-2",
+            "column_classes": "col-span-2 relative flex items-center justify-center",
             "image": "shopify:\/\/shop_images\/1_a6b87867-bbdc-4e0c-9f8b-4f6d21cf17cc.png",
             "is_bg_image": false,
             "image_link": "",
@@ -529,9 +544,9 @@
             "text_classes": "relative z-10 text-center",
             "remove_text_wrapper": false,
             "heading": "Save $28",
-            "heading_classes": "font-bold mb-2 lg:text-lg",
-            "paragraph": "when you bundle with our Advanced Repair Eye Cream",
-            "paragraph_classes": "text-xl lg:text-2xl",
+            "heading_classes": "font-bold mb-2 lg:text-5xl uppercase",
+            "paragraph": "when you bundle with our Advanced Repair Eye Cream.<br><span class=\"text-xl font-bold\">Plus Free Shipping<\/span>",
+            "paragraph_classes": "text-xl lg:text-3xl max-w-md",
             "button_label": "",
             "button_aria_label": "",
             "link": "",
@@ -553,26 +568,11 @@
             "prod_slider_handles": "",
             "prod_slider_classes": ""
           }
-        },
-        "08e1a89a-d0c0-4f3e-a26f-1e0c52161511": {
-          "type": "product",
-          "settings": {
-            "column_classes": "col-span-1",
-            "product": "eye-care-duo",
-            "image_classes": "",
-            "button_classes": "",
-            "name_classes": "",
-            "description_classes": "",
-            "hide_badge": false,
-            "show_reviews": false,
-            "show_benefits": false,
-            "subscription": false
-          }
         }
       },
       "block_order": [
-        "template--15927766155447__4157272b-d166-4e0b-819d-a4d5224d9dc9-column-1",
-        "08e1a89a-d0c0-4f3e-a26f-1e0c52161511"
+        "08e1a89a-d0c0-4f3e-a26f-1e0c52161511",
+        "template--15927766155447__4157272b-d166-4e0b-819d-a4d5224d9dc9-column-1"
       ],
       "settings": {
         "section_heading": "",
