@@ -55,10 +55,15 @@
                       else
                         assign product_url = product.url
                       endif
+                      if product.metafields.custom.product_image_transparent != blank
+                        assign image_object = product.metafields.custom.product_image_transparent
+                      else
+                        assign image_object = product.featured_media
+                      endif
                     -%}
                     {% render 'search-card',
                       url: product_url,
-                      image: product.featured_media,
+                      image: image_object,
                       title: product.title,
                       description: product.metafields.custom_fields["short_description"],
                       product: product
@@ -142,10 +147,17 @@
           <h5 class="tracking-wide font-book mb-2">Trending products:</h5>
           <ul class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 lg:gap-4">
             {%- for product in collections['bestsellers'].products limit: 10 -%}
+              {%- liquid
+                if product.metafields.custom.product_image_transparent != blank
+                  assign image_object = product.metafields.custom.product_image_transparent
+                else
+                  assign image_object = product.featured_media
+                endif
+              -%}
               <li>
                 {% render 'search-card',
                   url: product.url,
-                  image: product.featured_media,
+                  image: image_object,
                   title: product.title,
                   description: product.metafields.custom_fields["short_description"],
                   product: product

@@ -68,6 +68,8 @@
         {%- liquid
           if custom_default_image != nil
             assign default_image = custom_default_image
+          elsif card_product.metafields.custom.product_image_transparent != blank
+            assign default_image = card_product.metafields.custom.product_image_transparent
           else
             assign default_image = card_product.featured_media
           endif

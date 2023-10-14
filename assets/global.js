@@ -633,6 +633,7 @@ class VariantSelects extends HTMLElement {
     this.updateOptions();
     this.updateMasterId();
     this.updateOptionVisibility();
+    this.updateMedia();
   }
 
   onVariantChange() {

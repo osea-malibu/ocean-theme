@@ -15,14 +15,20 @@
 <a href="{{ url }}" class="group flex rounded-md bg-white shadow-sm shadow-seafoam-500/50 md:h-full {% if search_page %}flex-col{% else %}flex-row md:flex-col{% endif %}" tabindex="-1">
   {%- if image != blank -%}
     <div class="bg-wave-100 shrink-0 flex items-center justify-center rounded-l-md lg:rounded-t-md lg:rounded-bl-none overflow-hidden">
+      {%- liquid
+        assign main_image_src = image | image_url: height: 260
+        assign main_image_src_2x = image | image_url: height: 520
+      -%}
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
       <img class="w-36 md:w-full md:h-52 {% if product == blank %}object-cover h-full{% else %}object-contain h-36{% endif %}{% if search_page %} min-w-full{% endif %}"
         loading="lazy"
-        srcset="{{ image | image_url: height: 260 }} 1x, {{ image | image_url: height: 520 }} 2x"
-        src="{{ image | image_url: height: 260 }}"
+        srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
+        src="{% render 'imgix', src: main_image_src_2x %}"
         alt="{{ image.alt }}"
         width="260"
         height="260"
       />
+      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
     </div>
   {%- endif -%}
   <div class="flex flex-col p-4">

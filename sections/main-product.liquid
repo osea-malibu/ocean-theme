@@ -20,8 +20,13 @@
                 <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
                   {%- if media.media_type == 'image' -%}
                     {%- liquid
-                      assign main_image_src = media | image_url: width: 400, height: 500, crop: 'center'
-                      assign main_image_src_2x = media | image_url: width: 800, height: 1000, crop: 'center'
+                      if forloop.first and product.metafields.custom.product_image_transparent != blank
+                        assign image_object = product.metafields.custom.product_image_transparent
+                      else
+                        assign image_object = media
+                      endif
+                      assign main_image_src = image_object | image_url: width: 400, height: 500, crop: 'center'
+                      assign main_image_src_2x = image_object | image_url: width: 800, height: 1000, crop: 'center'
                     -%}
                     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                     <img

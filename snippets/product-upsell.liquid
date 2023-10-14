@@ -49,22 +49,32 @@
   </div>
 
   {%- if product.featured_media -%}
+    {%- liquid
+      if product.metafields.custom.product_image_transparent != blank
+        assign image_object = product.metafields.custom.product_image_transparent
+      else
+        assign image_object = product.featured_media
+      endif
+      assign image_src = image_object | image_url: width: 80
+      assign image_src_2x = image_object | image_url: width: 160
+    -%}
     <a
       aria-label="{{ product.title | escape }}"
       href="{{ product.url | default: '#' }}"
       class="group relative block mx-auto no-underline shrink-0 w-24 bg-wave-100 rounded-l-lg"
       tabindex="-1"
     >
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
       <img
-        srcset="{{ product.featured_media | image_url: width: 160 }} 2x,
-          {{ product.featured_media | image_url: width: 80 }}"
-        src="{{ product.featured_media | image_url: width: 160 }}"
+        srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
+        src="{% render 'imgix', src: image_src_2x %}"
         alt="{{ product.featured_media.alt | escape }}"
         loading="lazy"
         width="72"
         height="72"
         class="mx-auto"
       >
+      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
     </a>
   {%- endif -%}
 </div>
