@@ -18,7 +18,7 @@
 -%}
 <div class="relative bg-white px-3 pt-3 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
   <div class="flex flex-row gap-4">
-    <div class="w-full order-1 grow flex flex-col items-start py-1">
+    <div class="w-full order-1 grow flex flex-col items-start pt-1 pb-6">
       <a href="{{ product_url | default: '#' }}" class="group text-sm tracking-wide leading-tight no-underline">
         <h4 class="font-medium group-hover:underline mb-0.5">
           {{ product.title | replace: 'Deluxe Sample ', '' | escape }}
