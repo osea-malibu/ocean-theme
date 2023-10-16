@@ -158,9 +158,6 @@
       <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {% comment %} {%- if template.name == 'product' -%}
-    {%- endif %} {% endcomment %}
-
     {%- if settings.enable_gwp and settings.gwp_type == 'url' -%}
       <gift-with-purchase-url
         data-product-id="{{ all_products[settings.gwp_tier1_product].id }}"

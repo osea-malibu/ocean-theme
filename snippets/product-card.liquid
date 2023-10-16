@@ -142,7 +142,7 @@
               </div>
             {%- endfor -%}
 
-              <script type="application/json">
+              <script type="application/json" class="variant-data">
                 {{ card_product.variants | json }}
               </script>
             </variant-selects>
@@ -184,7 +184,7 @@
                 </fieldset>
               {%- endfor -%}
 
-              <script type="application/json">
+              <script type="application/json" class="variant-data">
                 {{ card_product.variants | json }}
               </script>
             </variant-radios>
@@ -272,16 +272,15 @@
         tabindex="-1"
       >
         {%- liquid
+          assign default_image = card_product.featured_media
           if custom_default_image != nil
             assign default_image = custom_default_image
           elsif default_to_mini and card_product.title != 'Digital Gift Card'
             assign default_image = card_product.variants[mini_index].featured_media
-          elsif card_product.selected_or_first_available_variant.featured_media != nil
-            assign default_image = card_product.selected_or_first_available_variant.featured_media
           elsif card_product.metafields.custom.product_image_transparent != blank
             assign default_image = card_product.metafields.custom.product_image_transparent
-          else
-            assign default_image = card_product.featured_media
+          elsif card_product.selected_or_first_available_variant.featured_media != nil
+            assign default_image = card_product.selected_or_first_available_variant.featured_media
           endif
 
           assign default_image_src = default_image | image_url: width: 328
