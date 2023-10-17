@@ -1,5 +1,27 @@
 {
   "sections": {
+    "05e3eba5-bde6-4ba2-89db-38ac741c7d0d": {
+      "type": "page-banner",
+      "blocks": {
+        "template--15947651973303__05e3eba5-bde6-4ba2-89db-38ac741c7d0d-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Discover Our Routine Favorites",
+            "heading_classes": "tracking-widest font-bold uppercase text-xl lg:text-2xl"
+          }
+        }
+      },
+      "block_order": [
+        "template--15947651973303__05e3eba5-bde6-4ba2-89db-38ac741c7d0d-heading-1"
+      ],
+      "settings": {
+        "is_text_only": false,
+        "is_lazy": false,
+        "section_classes": "relative container px-0 xs:px-6",
+        "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
+        "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
+      }
+    },
     "main": {
       "type": "main-page",
       "settings": {
@@ -7,6 +29,7 @@
     }
   },
   "order": [
+    "05e3eba5-bde6-4ba2-89db-38ac741c7d0d",
     "main"
   ]
 }
