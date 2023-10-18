@@ -231,7 +231,7 @@
                                 {%- endif -%}
                                 <a {% unless item.product.type == 'Sample' or item.product.type == 'Free Gift' %}href="{{ item.url }}"{% endunless %}
                                   class="block leading-none 2xs:w-full {% if item.selling_plan_allocation %}w-52{% else %}w-60{% endif %}">
-                                  {{ item.product.title | replace: 'Plant Based Salicyclic', 'Salicyclic' | replace: 'Eye Serum', 'Serum' | replace: 'Discovery, ', '' | replace: ' - Sample', '' | replace: 'Free Gift - ', '' | escape }}
+                                  {{ item.product.title | replace: 'Plant Based Salicylic', 'Salicylic' | replace: 'Eye Serum', 'Serum' | replace: 'Discovery, ', '' | replace: ' - Sample', '' | replace: 'Free Gift - ', '' | escape }}
                                 </a>
                               </div>
                             </td>
