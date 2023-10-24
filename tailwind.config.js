@@ -143,6 +143,7 @@ module.exports = {
       "uao-light": "#FFF8E1",
       "ucbl-light": "#FFFAF0",
       "ucbp-light": "#F7F0E2",
+      "mystery-green": "#67F700",
     },
     fontFamily: {
       sans: "Circular, sans-serif",
