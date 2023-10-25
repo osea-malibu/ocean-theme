@@ -77,8 +77,8 @@
         -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
-          srcset="{% render 'imgix', src: default_image_src_2x %} 2x, {% render 'imgix', src: default_image_src %} 1x"
-          src="{% render 'imgix', src: default_image_src_2x %}"
+          srcset="{{ default_image_src_2x }} 2x, {{ default_image_src }} 1x"
+          src="{{ default_image_src_2x }}"
           alt="{{ default_image.alt | escape }}"
           loading="lazy"
           width="72"

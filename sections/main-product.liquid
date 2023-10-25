@@ -26,8 +26,8 @@
                     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                     <img
                       {% if product.selected_or_first_available_variant.featured_media != null and forloop.first %}id="Product-VariantImage"{% endif %}
-                      srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
-                      src="{% render 'imgix', src: main_image_src_2x %}"
+                      srcset="{{ main_image_src }} 1x, {{ main_image_src_2x }} 2x"
+                      src="{{ main_image_src_2x }}"
                       loading="lazy"
                       alt="{{ media.alt | escape }}"
                       width="{{ media.width }}"
@@ -91,8 +91,8 @@
                 -%}
                 {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                 <img
-                  srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
-                  src="{% render 'imgix', src: thumb_image_src_2x %}"
+                  srcset="{{ thumb_image_src }} 1x, {{ thumb_image_src_2x }} 2x"
+                  src="{{ thumb_image_src_2x }}"
                   loading="lazy"
                   alt="{{ media.alt | escape }}"
                   width="{{ media.width }}"
@@ -115,8 +115,8 @@
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           class="mx-auto"
-          srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
-          src="{% render 'imgix', src: main_image_src_2x %}"
+          srcset="{{ main_image_src }} 1x, {{ main_image_src_2x }} 2x"
+          src="{{ main_image_src_2x }}"
           loading="lazy"
           alt="{{ product.media[0].alt | escape }}"
           width="{{ product.media[0].width }}"
@@ -131,14 +131,6 @@
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
           assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
-          assign set_products = collections['skincare-sets-1'].products | map: 'handle'
-          assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
-          assign excluded_in_new_benefits = 'energizing, fast-acting, mineral-rich, oil-balance, oil-free, rich-texture, spot-control, tsa-friendly' | split: ', '
-
-          assign is_fragrance_free = false
-          if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'
-            assign is_fragrance_free = true
-          endif
         -%}
 
         {%- for block in section.blocks -%}
@@ -160,49 +152,6 @@
                 <span class="ml-2 self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
               {%- endif -%}
             </div>
-          {%- when 'rating' -%}
-            {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
-            {%- if product.metafields.custom.set_value -%}
-              <div class="col-span-12 relative -bottom-2">
-                <span class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
-              </div>
-            {%- endif -%}
-          {%- when 'benefits' -%}
-            {%- if product.metafields.custom.benefits.value.size > 0 -%}
-              <div class="{{ block.settings.benefits_classes }}">
-                <h2 class="font-medium tracking-wide mb-2{% if block.settings.hide_label %} sr-only{% endif %}">Benefits</h2>
-                <ul class="benefits flex">
-                  {%- if is_fragrance_free -%}
-                    <li class="w-24 flex flex-start">
-                      <div class="flex flex-col items-center">
-                        {%- render 'icon-benefit', icon: 'fragrance-free', stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
-                        <span class="text-center text-sm font-book leading-none">Fragrance<br><span class="tracking-wide">free</span></span>
-                      </div>
-                    </li>
-                  {%- endif -%}
-                  {%- liquid
-                    assign benefit_limit = 4
-                    if is_fragrance_free
-                      assign benefit_limit = 3
-                    endif
-                  -%}
-                  {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
-                    <li class="w-24 flex flex-start">
-                      <div class="flex flex-col items-center">
-                        {%- assign benefit_icon = benefit | handle -%}
-                        {%- render 'icon-benefit', icon: benefit_icon, stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
-                        {%- assign benefit_title_array = benefit | split: ' ' -%}
-                        <span class="text-center text-sm font-book leading-none tracking-wide">
-                          {%- for string in benefit_title_array -%}
-                            {{ string }}{%- unless forloop.last -%}<br/>{%- endunless -%}
-                          {%- endfor -%}
-                        </span>
-                      </div>
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              </div>
-            {%- endif -%}
           {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="{{ block.settings.description_classes }}">
@@ -217,58 +166,6 @@
                   %}
                 {%- else -%}
                   {{ product.description }}
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- when 'how_to_use' -%}
-            {%- assign how_to_use = product.metafields.custom.how_to_use -%}
-            {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works -%}
-              {%- capture how_to_html -%} 
-                {%- if how_to_use != blank -%}
-                  <table>
-                    <tr class="align-top td:pb-2">
-                      <td><b class="mr-1">How:</b></td>
-                      <td>{{ how_to_use.value.how }}</td>
-                    </tr>
-                    <tr class="align-top td:pb-2">
-                      <td><b class="mr-1">When:</b></td>
-                      <td>{{ how_to_use.value.when }}</td>
-                    </tr>
-                    {%- if how_to_use.value.pro_tip != nil -%}
-                      <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
-                        <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
-                        <td>{{ how_to_use.value.pro_tip }}</td>
-                      </tr>
-                    {%- endif -%}
-                    {%- if how_to_use.value.warnings.size > 0 -%}
-                      <tr class="align-top">
-                        <td><b class="sr-only">Warnings:</b></td>
-                        <td>
-                          <ul class="text-sm">
-                            {%- for warning in how_to_use.value.warnings -%}
-                              <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
-                            {%- endfor -%}
-                          </ul>
-                        </td>
-                      </tr>
-                    {%- endif -%}
-                  </table>
-                {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
-                  {{ product.metafields.custom_fields.how_it_works }}
-                {%- endif -%}
-              {%- endcapture -%}
-              <div class="{{ block.settings.wrapper_classes }}">
-                {%- if block.settings.is_collapsible -%}
-                  {%- assign how_to_use_id = "HowToUse-" | append: block.id | append: "-" | append: section.id -%}
-                  {% render 'accordion-item',
-                    id: how_to_use_id,
-                    summary: "How to Use",
-                    content: how_to_html,
-                    default_open: false,
-                    content_classes: 'max-h-80 overflow-y-auto'
-                  %}
-                {%- else -%}
-                  {{ how_to_html }}
                 {%- endif -%}
               </div>
             {%- endif -%}
@@ -389,27 +286,6 @@
                 </div>
               </noscript>
             </div>
-            {% if product.type contains 'Gift Card' %}
-              <!-- ShopKeeper Gift Card -->
-              <gift-card-fields class="col-span-12">
-                <div id="skt-fields">
-                  <div>
-                    <label for="gc_to" class="text-sm font-medium">To Name:</label>
-                    <input id="gc_to" type="text" value="" class="input w-full mb-2" />
-                  </div>
-                  <div>
-                    <label for="gc_from" class="text-sm font-medium">From Name:</label>
-                    <input id="gc_from" type="text" value="" class="input w-full mb-2" />
-                  </div>
-                  <div class="mb-2">
-                    <label for="gc_msg" class="text-sm font-medium">Message:</label>
-                    <textarea id="gc_msg" class="input w-full block" maxlength="400"></textarea>
-                    <small class="text-right block">Max characters: 400</small>
-                  </div>
-                </div>
-              </gift-card-fields>
-              <!-- End ShopKeeper -->
-            {% endif %}
           {%- when 'buy_buttons' -%}
             {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
               <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
@@ -460,211 +336,36 @@
                 </product-form>
               </div>
             {%- endif -%}
-          {%- when 'upsells' -%}
-            {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
-              <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
-                {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
-                  {%- for set in product.metafields.my_fields.save_with_sets.value -%}
-                    {%- if forloop.first %}<h2 class="font-medium tracking-wide mb-1">Save with Sets</h2>{%- endif -%}
-                    {%- render 'product-upsell', product: set -%}
-                  {%- endfor -%}
-                {%- endif -%}
-                {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
-                  <h2 class="font-medium tracking-wide mb-1">Pairs Well With</h2>
-                  {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-
-            <div class="quick-info col-span-12 gap-4 sm:gap-6 mt-8 hidden">
-              {%- if product.metafields.custom.benefits.value.size > 0 -%}
-                <div class="flex-1">
-                  <h2 class="font-medium tracking-wide mb-3">Benefits</h2>
-                  <ul class="flex-col li:mb-4">
-                    {%- if is_fragrance_free -%}
-                      <li class="w-24 flex flex-start">
-                        <div class="flex flex-col items-center">
-                          {%- render 'icon-benefit-new', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                          <span class="text-sm font-book leading-none">Fragrance free</span>
-                        </div>
-                      </li>
-                    {%- endif -%}
-                    {%- liquid
-                      assign benefit_limit = 4
-                      if is_fragrance_free
-                        assign benefit_limit = 3
-                      endif
-                    -%}
-                    {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
-                      {%- assign benefit_icon = benefit | handle -%}
-                      {%- unless excluded_in_new_benefits contains benefit_icon -%}
-                        <li class="flex">
-                          <div class="flex flex-row items-center">
-                            {%- render 'icon-benefit-new', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                            <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
-                              {{ benefit }}
-                            </span>
-                          </div>
-                        </li>
-                      {%- endunless -%}
-                    {%- endfor -%}
-                  </ul>
-                </div>
-              {%- endif -%}
-              {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
-                <div class="flex-1">
-                  <h2 class="font-medium tracking-wide mb-3">Skin types</h2>
-                  {%- if product.metafields.custom.skin_types_list != blank -%}
-                    <ul class="text-sm font-book tracking-wide icon-list bullet !pl-5">
-                      {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
-                        {%- if skin_type == 'Not for sensitive' -%}
-                          <li class="flex items-center before:!hidden">
-                            {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5', stroke_width: 2 %}
-                            <span>{{ skin_type }}</span>
-                          </li>
-                        {%- else -%}
-                          <li class="mb-4 !leading-4 last:mb-0">{{ skin_type }}</li>
-                        {%- endif -%}
-                      {%- endfor -%}
-                    </ul>
-                  {%- elsif product.metafields.custom_fields.skin_types != blank -%}
-                    <p class="text-sm font-book leading-none tracking-wide">{{ product.metafields.custom_fields.skin_types }}</p>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-              {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
-                <div class="flex-1">
-                  <h2 class="font-medium tracking-wide mb-2">Scent profile</h2>
-                  {%- if product.metafields.custom.scent_profile_short -%}
-                    <div class="text-sm font-book">{{ product.metafields.custom.scent_profile_short }}</div>
-                  {%- else -%}
-                    <div class="text-sm font-book">{{ product.metafields.custom.scent_profile }}</div>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-            </div>
-
-            <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="pdp-info-tabs hidden col-span-12 mt-4">
-              <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
-                {%- assign tabs = 'Description, How to Use, Sustainability' | split: ', ' -%}
-                {%- for tab in tabs -%}
-                  <li
-                    role="tab"
-                    aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
-                    tabindex="0"
-                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                    class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 font-bold uppercase text-xs tracking-widest px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %}{% if tab == 'Sustainability' %} sustainability hidden{% endif %}"
-                  >
-                    {{ tab }}
-                  </li>
-                {%- endfor -%}
-              </ul>
-              {%- for tab in tabs -%}
-                <div
-                  id="tab-{{ forloop.index }}-{{ block.id }}"
-                  role="tabpanel"
-                  aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-                  class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px"
-                >
-                  {%- case tab -%}
-                  {%- when 'Description' -%}
-                    <div>{{ product.metafields.custom_fields.description }}</div>
-                  {%- when 'How to Use' -%}
-                    {%- assign how_to_use = product.metafields.custom.how_to_use -%}
-                    {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works -%}
-                      {%- capture how_to_html -%} 
-                        {%- if how_to_use != blank -%}
-                          <table>
-                            <tr class="align-top td:pb-2">
-                              <td><b class="mr-1">How:</b></td>
-                              <td>{{ how_to_use.value.how }}</td>
-                            </tr>
-                            <tr class="align-top td:pb-2">
-                              <td><b class="mr-1">When:</b></td>
-                              <td>{{ how_to_use.value.when }}</td>
-                            </tr>
-                            {%- if how_to_use.value.pro_tip != nil -%}
-                              <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
-                                <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
-                                <td>{{ how_to_use.value.pro_tip }}</td>
-                              </tr>
-                            {%- endif -%}
-                            {%- if how_to_use.value.warnings.size > 0 -%}
-                              <tr class="align-top">
-                                <td><b class="sr-only">Warnings:</b></td>
-                                <td>
-                                  <ul class="text-sm">
-                                    {%- for warning in how_to_use.value.warnings -%}
-                                      <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
-                                    {%- endfor -%}
-                                  </ul>
-                                </td>
-                              </tr>
-                            {%- endif -%}
-                          </table>
-                        {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
-                          {{ product.metafields.custom_fields.how_it_works }}
-                        {%- endif -%}
-                      {%- endcapture -%}
-                      <div class="">
-                        {{ how_to_html }}
-                      </div>
-                    {%- endif -%}
-                  {%- when 'Sustainability' -%}
-                    <div class="sustainability hidden">
-                      <div class="skeleton bg-wave-200 absolute z-0 inset-4 rounded-xl"></div>
-                      <div class="relative z-10">
-                        {%- comment -%} theme-check-disable RemoteAsset {% endcomment %}
-                        <script src="https://learn.bluebirdclimate.com/embed/ilia-beauty?id=sample-SustainabilityReport" async="" type="text/javascript"></script>
-                        {%- comment -%} theme-check-enable RemoteAsset {% endcomment %}
-                      </div>
-                    </div>
-                  {%- endcase -%}
-                </div>
-              {%- endfor -%}
-            </tab-controller>
           {%- endcase -%}
         {%- endfor -%}
-        {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
-          <div class="col-span-12 mt-6">
-            <h2 class="font-medium tracking-wide mb-2">Set includes</h2>
-            <ul>
-              {%- for product_in_set in product.metafields.custom.set_contains.value -%}
-                {%- render 'product-in-set', product: product_in_set -%}
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
       </div>
     </div>
   </div>
-  {%- if product.type != 'Sample' and product.type != 'Free Gift' and product.type != 'Gift Card' -%}
-    <product-sticky-atc class="fixed z-40 inset-x-0 bottom-0 py-2.5 bg-white border-t border-seaweed-300 invisible opacity-0 transition-visibility">
-      <div class="flex gap-2 justify-between items-center pl-4 sm:pl-6 pr-20 md:pr-24 xl:max-w-screen-xl xl:mx-auto min-[1400px]:pr-6">
-        <h3 class="tracking-wide leading-none text-lg sr-only sm:!not-sr-only">{{- product.title | escape -}}</h3>
-        <div class="relative w-full sm:w-96">
-          <button
-            type="submit"
-            name="add"
-            class="product-form__submit button button-primary button-md w-full disabled:opacity-50"
-            {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-            form="{{ product_form_id }}"
-          >
-              <span class="loading-spinner relative -ml-6 hidden">
-                {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-              </span>
-              <span>
-                {%- if product.selected_or_first_available_variant.available -%}
-                  {{ 'products.product.add_to_cart' | t }}
-                {%- else -%}
-                  {{ 'products.product.sold_out' | t }}
-                {%- endif -%}
-              </span>
-          </button>
-        </div>
+  <product-sticky-atc class="fixed z-40 inset-x-0 bottom-0 py-2.5 bg-white border-t border-seaweed-300 invisible opacity-0 transition-visibility">
+    <div class="flex gap-2 justify-between items-center pl-4 sm:pl-6 pr-20 md:pr-24 xl:max-w-screen-xl xl:mx-auto min-[1400px]:pr-6">
+      <h3 class="tracking-wide leading-none text-lg sr-only sm:!not-sr-only">{{- product.title | escape -}}</h3>
+      <div class="relative w-full sm:w-96">
+        <button
+          type="submit"
+          name="add"
+          class="product-form__submit button button-primary button-md w-full disabled:opacity-50"
+          {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+          form="{{ product_form_id }}"
+        >
+            <span class="loading-spinner relative -ml-6 hidden">
+              {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+            </span>
+            <span>
+              {%- if product.selected_or_first_available_variant.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </span>
+        </button>
       </div>
-    </product-sticky-atc>
-  {%- endif -%}
+    </div>
+  </product-sticky-atc>
 </section>
 
 <script>
@@ -852,23 +553,6 @@
       ]
     },
     {
-      "type": "how_to_use",
-      "name": "How to Use",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "wrapper_classes",
-          "label": "Wrapper classes"
-        },
-        {
-          "type": "checkbox",
-          "id": "is_collapsible",
-          "label": "Is collapsible tab"
-        }
-      ]
-    },
-    {
       "type": "collapsible_tab",
       "name": "t:sections.main-product.blocks.collapsible_tab.name",
       "settings": [
@@ -893,61 +577,6 @@
           "type": "checkbox",
           "id": "default_open",
           "label": "Open by default"
-        }
-      ]
-    },
-    {
-      "type": "rating",
-      "name": "Star rating",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "t:sections.main-product.blocks.rating.settings.paragraph.content"
-        },
-        {
-          "type": "textarea",
-          "id": "rating_classes",
-          "label": "Rating classes"
-        }
-      ]
-    },
-    {
-      "type": "benefits",
-      "name": "Benefits",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "benefits_classes",
-          "label": "Benefits classes"
-        },
-        {
-          "type": "checkbox",
-          "id": "hide_label",
-          "label": "Hide label"
-        }
-      ]
-    },
-    {
-      "type": "upsells",
-      "name": "Product upsells",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "upsell_classes",
-          "label": "Upsell classes"
-        },
-        {
-          "type": "checkbox",
-          "id": "upsell_enable_sets",
-          "label": "Save with sets"
-        },
-        {
-          "type": "checkbox",
-          "id": "upsell_enable_partner",
-          "label": "Pair with product"
         }
       ]
     }

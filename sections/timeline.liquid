@@ -27,13 +27,13 @@
             >
           {%- elsif block.settings.video_mp4 != blank -%}
             {% assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: 480 %}
-            <video autoplay controls loop muted playsinline poster="{% render 'imgix', src: video_poster_url %}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
+            <video autoplay controls loop muted playsinline poster="{{ video_poster_url }}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
               {%- for source in block.settings.video_mp4.sources -%}
                 <source src="{{ source.url }}" type="video/{{ source.format }}">
               {%- endfor -%}
               {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img
-                src="{% render 'imgix', src: video_poster_url %}"
+                src="{{ video_poster_url }}"
                 alt=""
                 width="{{ block.settings.video_mp4.preview_image.width }}"
                 height="{{ block.settings.video_mp4.preview_image.height }}"

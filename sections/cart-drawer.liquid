@@ -69,8 +69,8 @@
                                   -%}
                                   {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                                   <img class="cart-item__image max-w-full"
-                                    srcset="{% render 'imgix', src: main_image_src_2x %} 2x, {% render 'imgix', src: main_image_src %} 1x"
-                                    src="{% render 'imgix', src: main_image_src_2x %}"
+                                    srcset="{{ main_image_src_2x }} 2x, {{ main_image_src }} 1x"
+                                    src="{{ main_image_src_2x }}"
                                     alt="{{ item.image.alt | escape }}"
                                     loading="lazy"
                                     width="60"

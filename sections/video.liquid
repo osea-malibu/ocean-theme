@@ -80,7 +80,7 @@
             <source src="{{ section.settings.video_webm.sources.first.url }}" type="video/webm">
             {% comment %} theme-check-disable RemoteAsset {% endcomment %}
             <img
-              src="{% render 'imgix', src: video_poster_url %}"
+              src="{{ video_poster_url }}"
               alt=""
               width="{{ section.settings.video_mp4.preview_image.width }}"
               height="{{ section.settings.video_mp4.preview_image.height }}"

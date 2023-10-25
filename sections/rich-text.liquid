@@ -58,19 +58,19 @@
                 <picture>
                   {%- if block.settings.image_mobile != blank -%}
                     <source
-                      srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+                      srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
                       media="(max-width: 639px)"
                     >
                   {%- endif %}
                   {%- if block.settings.image_desktop != blank -%}
                     <source
-                      srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+                      srcset="{{ desktop_image_src }} 1x, {{ desktop_image_src_2x }} 2x"
                       media="(min-width: 640px)"
                     >
                   {%- endif %}
                   <img
-                    srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-                    src="{% render 'imgix', src: mobile_image_src_2x %}"
+                    srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
+                    src="{{ mobile_image_src_2x }}"
                     {% if block.settings.is_lazy %}loading="lazy"{% endif %}
                     alt="{{ block.settings.image_mobile.alt | escape }}"
                     width="{{ block.settings.image_mobile.width }}"

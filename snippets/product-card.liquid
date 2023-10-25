@@ -219,8 +219,8 @@
         -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
-          srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
-          src="{% render 'imgix', src: default_image_src %}"
+          srcset="{{ default_image_src }} 1x, {{ default_image_src_2x }} 2x"
+          src="{{ default_image_src }}"
           alt="{{ default_image.alt | escape }}"
           loading="lazy"
           width="{{ default_image.width }}"
@@ -229,8 +229,8 @@
         >
         {%- if card_product.media[1] != nil and show_secondary_image_on_hover -%}
           <img
-            srcset="{% render 'imgix', src: hover_image_src %} 1x, {% render 'imgix', src: hover_image_src_2x %} 2x"
-            src="{% render 'imgix', src: hover_image_src %}"
+            srcset="{{ hover_image_src }} 1x, {{ hover_image_src_2x }} 2x"
+            src="{{ hover_image_src }}"
             alt="{{ card_product.media[1].alt | escape }}"
             loading="lazy"
             class="{% if show_secondary_image_on_hover %}absolute min-h-full inset-x-0 top-1/2 -translate-y-1/2 bg-cover bg-center bg-wave-100 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity{% endif %} duration-300"

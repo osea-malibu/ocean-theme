@@ -18,24 +18,24 @@
 
       {%- if section.settings.image_mobile != blank -%}
         <source
-          srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+          srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
           media="(max-width: 639px)"
         >
       {%- endif %}
       {%- if section.settings.image != blank -%}
         <source
-          srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+          srcset="{{ desktop_image_src }} 1x, {{ desktop_image_src_2x }} 2x"
           media="(min-width: 640px) and (max-width: 1023px)"
         >
         <source
-          srcset="{% render 'imgix', src: desktop_image_src_2x %} 1x, {% render 'imgix', src: desktop_image_src_3x %} 2x"
+          srcset="{{ desktop_image_src_2x }} 1x, {{ desktop_image_src_3x }} 2x"
           media="(min-width: 1024px)"
         >
       {%- endif %}
       {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
       <img
-        srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-        src="{% render 'imgix', src: mobile_image_src %}"
+        srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
+        src="{{ mobile_image_src }}"
         {% if section.settings.is_lazy %}loading="lazy"{% endif %}
         alt="{{ section.settings.image_mobile.alt }}"
         width="{{ section.settings.image_mobile.width }}"

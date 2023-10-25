@@ -383,36 +383,5 @@
         "label": "Disclaimer"
       }
     ]
-  },
-  {
-    "name": "ImgIX Settings",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "enableImgix",
-        "label": "Enable Imgix"
-      },
-      {
-        "type": "text",
-        "id": "shopifyCdnUrl",
-        "label": "Shopify CDN Url",
-        "default": "//cdn.shopify.com/s/files/1/1368/9993",
-        "info": "e.g: //cdn.shopify.com/s/files/0/0000/000"
-      },
-      {
-        "type": "text",
-        "id": "imgixUrl",
-        "label": "Imgix Subdomain",
-        "default": "https://osea.imgix.net",
-        "info": "e.g: https://subdomain.imgix.net"
-      },
-      {
-        "type": "text",
-        "id": "imgFormatParam",
-        "label": "imgix Parameters",
-        "default": "&auto=format,compress",
-        "info": "e.g: &auto=format,compress"
-      }
-    ]
   }
 ]

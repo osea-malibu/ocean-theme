@@ -19,7 +19,7 @@
             {%- assign bg_image_src = block.settings.image | image_url: width: 1420 -%}
             <li
               class="{% if block.settings.column_classes != blank %}{{ block.settings.column_classes }}{% endif %}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
-              {% if block.settings.is_bg_image %}style="background-image: url({% render 'imgix', src: bg_image_src %})"{% endif %}
+              {% if block.settings.is_bg_image %}style="background-image: url({{ bg_image_src }})"{% endif %}
               {{ block.shopify_attributes }}
             >
               {%- case block.type -%}
@@ -54,8 +54,8 @@
                             assign static_image_src_2x = block.settings.image | image_url: width: static_image_width
                           -%}
                           <img
-                            srcset="{% render 'imgix', src: static_image_src %} 1x, {% render 'imgix', src: static_image_src_2x %} 2x"
-                            src="{% render 'imgix', src: static_image_src %}"
+                            srcset="{{ static_image_src }} 1x, {{ static_image_src_2x }} 2x"
+                            src="{{ static_image_src }}"
                             alt="{{ block.settings.image.alt }}"
                             height="{{ static_image_height }}"
                             width="{{ static_image_width }}"
@@ -73,22 +73,22 @@
                           <picture class="{{ block.settings.image_wrapper_classes }}">
                             {%- if block.settings.image_desktop != blank -%}
                               <source
-                                srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+                                srcset="{{ desktop_image_src }} 1x, {{ desktop_image_src_2x }} 2x"
                                 media="(min-width: 640px)"
                               >
                             {%- else -%}
                               <source
-                                srcset="{% render 'imgix', src: mobile_image_src_2x %} 1x, {% render 'imgix', src: mobile_image_src_4x %} 2x"
+                                srcset="{{ mobile_image_src_2x }} 1x, {{ mobile_image_src_4x }} 2x"
                                 media="(min-width: 640px)"
                               >
                             {%- endif -%}
                             <source
-                              srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+                              srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
                               media="(min-width: 0px)"
                             >
                             <img
-                              srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-                              src="{% render 'imgix', src: mobile_image_src %}"
+                              srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
+                              src="{{ mobile_image_src }}"
                               alt="{{ block.settings.image.alt }}"
                               height="{{ block.settings.image.height }}"
                               width="{{ block.settings.image.width }}"
@@ -260,7 +260,7 @@
                       {% if block.settings.video_loop %}loop{% endif %}
                       {% if block.settings.video_muted %}muted{% endif %}
                       playsinline
-                      poster="{% render 'imgix', src: video_poster_url %}"
+                      poster="{{ video_poster_url }}"
                       class="lazy bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
                     >
                       {%- for source in block.settings.video_mp4.sources -%}
@@ -268,7 +268,7 @@
                       {%- endfor -%}
                       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                       <img
-                        src="{% render 'imgix', src: video_poster_url %}"
+                        src="{{ video_poster_url }}"
                         alt=""
                         width="{{ block.settings.video_mp4.preview_image.width }}"
                         height="{{ block.settings.video_mp4.preview_image.height }}"
