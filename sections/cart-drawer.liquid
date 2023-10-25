@@ -448,31 +448,6 @@
               assign only_gc_in_cart = false
             endif
           -%}
-          {% comment %} Printed gift note {% endcomment %}
-          {%- if settings.enable_printed_gift_note and only_gc_in_cart == false -%}
-            <printed-gift-note>
-              <div class="max-w-md mx-auto mb-4">
-                <input type="checkbox" id="PrintedGiftNote-Enable" class="peer mr-1" />
-                <label for="PrintedGiftNote-Enable" class="inline-block leading-4 relative -bottom-0.5 tracking-wide peer-checked:hidden">Add a gift message?</label>
-                <label for="PrintedGiftNote-Enable" class="hidden leading-4 relative -bottom-0.5 tracking-wide peer-checked:inline-block">This is a gift!</label>
-                <div class="peer-checked:h-28 h-0 transition-height overflow-hidden flex flex-col mt-3 relative">
-                  <label for="PrintedGiftNote-Message" class="text-sm font-medium mb-0.5">Your message:</label>
-                  <textarea id="PrintedGiftNote-Message" maxlength="1000" aria-labelledby="PrintedGiftNote-Message" aria-describedby="PrintedGiftNote-Error" class="input px-3 mb-px"></textarea>
-                  <div class="flex justify-between">
-                    <small id="PrintedGiftNote-Error" class="text-coral-800 font-book hidden">
-                      {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-0.5 align-text-top', aria_hidden: true, stroke_width: 2 %}
-                      <span id="PrintedGiftNote-ErrorText"></span>
-                    </small>
-                    <small id="PrintedGiftNote-Confirm" class="text-seafoam-800 font-book hidden">
-                      {% render 'icon-check-circle', classes: 'text-seafoam-700 icon icon-error w-4 h-4 inline mr-0.5 align-text-top', aria_hidden: true, stroke_width: 2 %}
-                      Message saved!
-                    </small>
-                    <small class="ml-auto">Max characters: 1000</small>
-                  </div>
-                </div>
-              </div>
-            </printed-gift-note>
-          {%- endif -%}
 
           {% comment %} Free samples {% endcomment %}
           {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
