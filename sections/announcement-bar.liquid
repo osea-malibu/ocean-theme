@@ -6,44 +6,6 @@
       <div id="DismissableDefault" class="hidden tracking-wider font-book py-0.5 sm:max-w-screen-sm mx-auto">{{ section.settings.default_message }}</div>
       <button id="DismissableClose" type="button" class="absolute top-1 right-0.5 md:relative md:right-0 md:top-0">{% render 'icon-close', classes: 'text-white w-6 h-6', stroke_width: 1.5 %}</button>
     </dismissable-announcement>
-  {% comment %} Gift with purchase {% endcomment %}
-  {%- elsif settings.enable_gwp and settings.enable_annoucement_bar_message and settings.gwp_type == 'auto' -%}
-    {%- liquid
-      assign cart_ids = cart.items | map: 'product_id'
-      assign tier1_product = all_products[settings.gwp_tier1_product]
-      assign tier2_product = all_products[settings.gwp_tier2_product]
-      assign tier3_product = all_products[settings.gwp_tier2_product]
-
-      assign gwp_threshold = settings.gwp_tier1_threshold | times: 100
-      assign remaining_amount = gwp_threshold | minus: cart.total_price
-      assign remaining_amount_money = remaining_amount | money_without_trailing_zeros
-      assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
-      assign countdown_text_mobile = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', 'gift' | replace: 'Free Gift - '
-
-      if cart_ids contains tier2_product.id
-        if settings.gwp_tier3_product != nil
-          assign tier3_product = all_products[settings.gwp_tier3_product]
-          assign gwp_threshold = settings.gwp_tier3_threshold | times: 100
-          assign countdown_text = settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - '
-        endif
-      elsif cart_ids contains tier1_product.id
-        if settings.gwp_tier2_product != nil
-          assign gwp_threshold = settings.gwp_tier2_threshold | times: 100
-          assign countdown_text = settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - '
-        endif
-      endif
-    -%}
-
-    {%- unless settings.gwp_tier1_product == nil -%}
-      <p class="text-white font-book text-center py-0.5 tracking-wide">
-        {%- if remaining_amount > 0 -%}
-          <span class="hidden sm:block">{{ countdown_text }}</span>
-          <span class="sm:hidden">{{ countdown_text_mobile }}</span>
-        {%- else -%}
-          {{ settings.gwp_success_text }}
-        {%- endif -%}
-      </p>
-    {%- endunless -%}
   {% comment %} Slider announcement bar {% endcomment %}
   {%- elsif section.blocks.size > 1 -%}
     <glide-slider

@@ -103,51 +103,12 @@
       window.accessibilityStrings = {
         shareSuccess: `{{ 'general.share.success_message' | t }}`,
       }
-
-      window.gwpSettings = {
-        enabled: {{ settings.enable_gwp }},
-        type: '{{ settings.gwp_type }}',
-        tiers: [
-          {
-            id: "tier3",
-            product: '{{ settings.gwp_tier3_product.id }}',
-            variant: '{{ settings.gwp_tier3_product.selected_or_first_available_variant.id }}',
-            threshold: {{ settings.gwp_tier3_threshold | times: 100 }}
-          },
-          {
-            id: "tier2",
-            product: '{{ settings.gwp_tier2_product.id }}',
-            variant: '{{ settings.gwp_tier2_product.selected_or_first_available_variant.id }}',
-            threshold: {{ settings.gwp_tier2_threshold | times: 100 }}
-          },
-          {
-            id: "tier1",
-            product: '{{ settings.gwp_tier1_product.id }}',
-            variant: '{{ settings.gwp_tier1_product.selected_or_first_available_variant.id }}',
-            threshold: {{ settings.gwp_tier1_threshold | times: 100 }}
-          }
-        ]
-      }
     </script>
 
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     
     {%- if template.name == 'index' or template.name == 'article' -%}
       <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
-
-    {% comment %} {%- if template.name == 'product' -%}
-    {%- endif %} {% endcomment %}
-
-    {%- if settings.enable_gwp and settings.gwp_type == 'url' -%}
-      <gift-with-purchase-url
-        data-product-id="{{ all_products[settings.gwp_tier1_product].id }}"
-        data-variant-id="{{ all_products[settings.gwp_tier1_product].selected_or_first_available_variant.id }}"
-        data-threshold="{{ settings.gwp_tier1_threshold | times: 100 }}"
-      ></gift-with-purchase-url>
-      {%- if settings.gwp_tier1_threshold > 0 -%}
-        {%- render 'gwp-url-modal' -%}
-      {%- endif -%}
     {%- endif -%}
 
     {%- liquid

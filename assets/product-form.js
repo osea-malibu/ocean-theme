@@ -55,32 +55,6 @@ if (!customElements.get("product-form")) {
 
             this.error = false;
             this.cart.renderContents(response);
-
-            if (window.gwpSettings.enabled) {
-              if (window.gwpSettings.type === "auto") {
-                window.gwpSettings.tiers.forEach((tier) => {
-                  if (tier.product !== "") {
-                    fetch(window.Shopify.routes.root + "cart.js")
-                      .then((response) => response.json())
-                      .then((data) => {
-                        const cartIdArray = data.items.map((i) => i.id);
-                        if (
-                          !cartIdArray.includes(tier.product) &&
-                          data.total_price >= tier.threshold
-                        ) {
-                          this.cart.addFreeGift(tier.variant);
-                        }
-                      })
-                      .catch((e) => console.error(e));
-                  }
-                });
-              } else if (
-                window.gwpSettings.type === "url" &&
-                localStorage.getItem("osea.gwpUrlVariantId") === window.gwpSettings.tiers[2].variant
-              ) {
-                document.querySelector("gift-with-purchase-url").checkGiftQualifiers();
-              }
-            }
           })
           .catch((e) => console.error(e))
           .finally(() => {

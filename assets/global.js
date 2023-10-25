@@ -1130,50 +1130,6 @@ class GlideSlider extends HTMLElement {
 }
 customElements.define("glide-slider", GlideSlider);
 
-class GiftWithPurchaseUrl extends HTMLElement {
-  constructor() {
-    super();
-
-    this.cart =
-      document.querySelector("cart-notification") || document.querySelector("cart-drawer");
-    const { productId } = this.dataset;
-
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-      get: (searchParams, prop) => searchParams.get(prop),
-    });
-    let gwpParam = params.gwp;
-
-    if (gwpParam === productId) {
-      this.checkGiftQualifiers();
-    }
-  }
-
-  checkGiftQualifiers() {
-    const { threshold, variantId } = this.dataset;
-
-    fetch(window.Shopify.routes.root + "cart.js")
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.items.map((i) => i.id).includes(variantId)) {
-          if (Number(threshold) === 0) {
-            this.cart.addFreeGift(variantId);
-          } else if (Number(threshold) > 0) {
-            if (localStorage.getItem("osea.gwpUrlVariantId") !== variantId) {
-              document.getElementById("GwpUrlModal").show();
-              localStorage.setItem("osea.gwpUrlVariantId", variantId);
-            }
-
-            if (data.total_price >= threshold) {
-              this.cart.addFreeGift(variantId);
-            }
-          }
-        }
-      })
-      .catch((error) => console.error(error));
-  }
-}
-customElements.define("gift-with-purchase-url", GiftWithPurchaseUrl);
-
 class CountdownComponent extends HTMLElement {
   constructor() {
     super();

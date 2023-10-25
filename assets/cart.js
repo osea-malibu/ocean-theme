@@ -82,9 +82,6 @@ class CartItems extends HTMLElement {
 
   updateCartItem(line, value, name, target) {
     this.enableLoading(line);
-    if (window.gwpSettings.enabled && window.gwpSettings.type === "banner") {
-      document.getElementById("GwpButton")?.remove();
-    }
 
     const body = JSON.stringify({
       line,
@@ -102,33 +99,6 @@ class CartItems extends HTMLElement {
         // if the only items in the cart are samples
         if (parsedState.items.filter((i) => i.product_type !== "Sample").length === 0) {
           this.cart.clearCart();
-        }
-
-        if (window.gwpSettings.enabled) {
-          const cartIdArray = this.dataset.cartIds.slice(1, -1).split(",");
-          const { tiers } = window.gwpSettings;
-
-          tiers.forEach((tier) => {
-            if (tier.product != "") {
-              if (cartIdArray.includes(tier.product) && parsedState.total_price < tier.threshold) {
-                const line = cartIdArray.findIndex((i) => i === tier.product) + 1;
-                this.removeGift(line);
-              }
-              if (
-                window.gwpSettings.type === "auto" &&
-                !cartIdArray.includes(tier.product) &&
-                parsedState.total_price >= tier.threshold
-              ) {
-                this.cart.addFreeGift(tier.variant);
-              }
-              if (
-                window.gwpSettings.type === "url" &&
-                localStorage.getItem("osea.gwpUrlVariantId") === tier.variant
-              ) {
-                document.querySelector("gift-with-purchase-url").checkGiftQualifiers();
-              }
-            }
-          });
         }
 
         this.updateCatchCalloutPrice(parsedState.total_price);
