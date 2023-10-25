@@ -312,29 +312,6 @@ class ShippingCountdown extends HTMLElement {
 }
 customElements.define("shipping-countdown", ShippingCountdown);
 
-class CartRecommendations extends HTMLElement {
-  constructor() {
-    super();
-
-    this.filteredIdArray = JSON.parse(this.dataset.ids);
-    this.destination = this.querySelector("#CartDrawer-Recommendations");
-
-    if (this.filteredIdArray.length > 0) {
-      this.getRecommendations(this.filteredIdArray[0]);
-    }
-  }
-
-  getRecommendations(productId) {
-    fetch(
-      window.Shopify.routes.root +
-        `recommendations/products?product_id=${productId}&limit=6&section_id=cart-recommendations`
-    )
-      .then((response) => response.text())
-      .then((text) => (this.destination.innerHTML = text));
-  }
-}
-customElements.define("cart-recommendations", CartRecommendations);
-
 class GiftWithPurchaseBanner extends HTMLElement {
   constructor() {
     super();

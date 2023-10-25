@@ -381,45 +381,6 @@
               <div id="CartDrawer-CartErrors" role="alert" class="absolute inset-x-0 top-0 w-full text-center text-coral-800 text-sm"></div>
             </form>
           </cart-drawer-items>
-
-          {% comment %} Free samples {% endcomment %}
-          {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
-          {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 -%}
-            <div class="max-w-md mx-auto mb-6 bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
-              <h3 class="tracking-wide font-medium text-sm mb-1">Select up to 3 free samples</h3>
-              <div class="overflow-x-auto pb-3">
-                <ul class="grid gap-2" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
-                  {%- for sample in settings.cart_samples_collection.products limit: 6 -%}
-                    {%- if sample.available and sample.price == 0 -%}
-                      {%- unless cart_ids contains sample.id -%}
-                        {% render 'product-card-mini',
-                          card_product: sample,
-                          section_id: section.id,
-                          hide_price: true,
-                          button_class: 'button-secondary',
-                          disable_links: true
-                        -%}
-                      {%- endunless -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                </ul>
-              </div>
-            </div>
-          {%- endif -%}
-
-          {% comment %} Product recommendations {% endcomment %}
-          {%- liquid
-            assign filtered_items = null | sort
-            for item in cart.items
-              unless item.product.type == 'Sample' or item.product.type == 'Free Gift' or item.product.type == 'Bundle'
-                assign item_array = item | sort
-                assign filtered_items = filtered_items | concat: item_array
-              endunless
-            endfor 
-          -%}
-          <cart-recommendations data-ids="{{ filtered_items | map: 'product_id' | escape }}">
-            <div id="CartDrawer-Recommendations"></div>
-          </cart-recommendations>
         </div>
 
         <div class="cart-drawer-footer bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-2">
@@ -471,12 +432,6 @@
                 onclick="beginCheckoutDataLayer()"
                 {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
-            <catch-callout
-              id="catch-callout-minicart"
-              price="{{ cart.total_price | money_without_currency | times: 100 | ceil }}"
-              page-type="mini-cart"
-              border-style="none-no-padding">
-            </catch-callout>
             <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
               {%- if settings.cart_disclaimer != blank -%}{{ settings.cart_disclaimer }}{%- endif -%}
             </small>
@@ -504,46 +459,4 @@
       document.querySelector('#cart').submit();
     });
   });
-</script>
-
-<script>
-  //data layer begin checkout
-  function beginCheckoutDataLayer() {
-  var cartContents = fetch(window.Shopify.routes.root + 'cart.js')
-  .then(response => response.json())
-  .then(data => {
-      var lineproducts = data.items;
-      var contents = [];
-      for (var i = 0; i < lineproducts.length; i++) {
-          contents.push({
-              'item_name': lineproducts[i]['title'],
-              'item_id': lineproducts[i]['product_id'],
-              'item_sku': lineproducts[i]['sku'],
-              'item_variant': lineproducts[i]['variant_id'],
-              'price': lineproducts[i]['price'] / 100,
-              'item_brand': lineproducts[i]['vendor'],
-              'item_category': lineproducts[i]['product_type'],
-              'quantity': lineproducts[i]['quantity'],
-          });
-      }
-      dataLayer.push({ ecommerce: null });
-      dataLayer.push({
-          'event': 'begin_checkout_additional',
-          {% if customer %}
-          'user_data': {
-              'email' : '{{ customer.email }}',
-              'first_name' : '{{ customer.first_name }}',
-              'last_name' : '{{ customer.last_name }}',
-              'customer_id': '{{ customer.id | remove: "'" }}',
-          },
-          {% endif %}
-          'ecommerce': {
-              'cart_quantity': data.item_count,
-              'cart_total': data.total_price/100,
-              'currency': data.currency,
-              'items': contents
-          }
-      });
-  });
-}
 </script>
