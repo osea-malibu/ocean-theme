@@ -11,19 +11,6 @@
     >
       {%- assign cart_ids = cart.items | map: 'product_id' -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
-      {% comment %} Shipping countdown {% endcomment %}
-      <shipping-countdown data-threshold="{{ settings.shipping_countdown_threshold }}" class="block px-6 pt-4 pb-2 text-center">
-        {%- assign remaining_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price -%}
-        <h3 class="mb-1">
-          {%- if remaining_amount > 0 -%}
-            {%- assign formatted_remaining_amount = remaining_amount | money %}
-            {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
-          {%- else -%}
-            {{ settings.shipping_countdown_text_success }}
-          {%- endif -%}
-        </h3>
-        <progress max="100" value="0" class="progress-bar block mx-auto max-w-md motion-safe:transition-all">0%</progress>
-      </shipping-countdown>
 
       {% comment %} Close button {% endcomment %}
       <button
@@ -100,7 +87,7 @@
                                 {%- endif -%}
                                 <a {% unless item.product.type == 'Sample' or item.product.type == 'Free Gift' %}href="{{ item.url }}"{% endunless %}
                                   class="block leading-none 2xs:w-full {% if item.selling_plan_allocation %}w-52{% else %}w-60{% endif %}">
-                                  {{ item.product.title | replace: 'Eye Serum', 'Serum' | replace: 'Discovery, ', '' | replace: ' - Sample', '' | replace: 'Free Gift - ', '' | escape }}
+                                  {{ item.product.title | escape }}
                                 </a>
                               </div>
                             </td>

@@ -260,28 +260,6 @@ class CartItems extends HTMLElement {
 }
 customElements.define("cart-items", CartItems);
 
-class ShippingCountdown extends HTMLElement {
-  constructor() {
-    super();
-
-    this.totalEl = document.getElementById("CartDrawer-Total");
-    this.total = this.totalEl ? this.totalEl.dataset.total : 0;
-    this.threshold = this.dataset.threshold * 100;
-
-    this.percentComplete = (this.total / this.threshold) * 100;
-    if (this.percentComplete > 100) {
-      this.percentComplete = 100;
-    } else if (this.percentComplete < 0) {
-      this.percentComplete = 0;
-    }
-
-    this.progressBar = this.querySelector("progress");
-    this.progressBar.value = this.percentComplete;
-    this.progressBar.innerText = `${this.percentComplete}%`;
-  }
-}
-customElements.define("shipping-countdown", ShippingCountdown);
-
 class GiftWithPurchaseBanner extends HTMLElement {
   constructor() {
     super();
