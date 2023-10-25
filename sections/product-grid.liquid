@@ -7,7 +7,6 @@
         section_id: section.id,
         image_class: section.settings.card_image_classes,
         button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 xl:px-6',
-        subscription: section.settings.is_subscription,
         variant_picker_type: section.settings.variant_picker_type
       %}
     {%- endfor -%}
@@ -35,12 +34,6 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection"
-    },
-    {
-      "type": "checkbox",
-      "id": "is_subscription",
-      "label": "Subscription card",
-      "default": false
     },
     {
       "type": "textarea",
