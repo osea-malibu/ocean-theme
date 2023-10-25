@@ -131,26 +131,9 @@
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
           assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
-          assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1' | split: ', '
           assign set_products = collections['skincare-sets-1'].products | map: 'handle'
           assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
           assign excluded_in_new_benefits = 'energizing, fast-acting, mineral-rich, oil-balance, oil-free, rich-texture, spot-control, tsa-friendly' | split: ', '
-
-          assign is_travel_or_exclusion = false
-          if product.handle == 'anti-aging-body-balm'
-            assign excluded_bbalm_variants = '5 oz, 1 oz' | split: ', '
-            if excluded_bbalm_variants contains normalized_variant_title
-              assign is_travel_or_exclusion = true
-            endif
-          elsif small_products contains product.handle
-            if normalized_variant_title == '0.34 oz'
-              assign is_travel_or_exclusion = true
-            endif
-          else
-            if travel_sizes contains normalized_variant_title
-              assign is_travel_or_exclusion = true
-            endif
-          endif
 
           assign is_fragrance_free = false
           if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'
@@ -427,94 +410,6 @@
               </gift-card-fields>
               <!-- End ShopKeeper -->
             {% endif %}
-          {%- when 'subscription_picker' -%}
-            {%- unless product.selling_plan_groups.size == 0 -%}
-              {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
-              <subscription-radios
-                class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }}{% if is_travel_or_exclusion and product.variants.size > 1 %} max-h-0{% endif %}"
-                data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
-              >
-                <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
-                  <legend class="sr-only">Purchase options</legend>
-                  {%- for option in purchase_options -%}
-                    <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">
-                      <input type="radio"
-                        name="purchase_option"
-                        id="purchase_option-{{ option }}"
-                        class="sr-only peer bg-white"
-                        value="{{ option }}"
-                        {% if option == 'onetime' %}checked{% endif %}
-                      />
-                      <span class="absolute pointer-events-none left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
-                        <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
-                      </span>
-                      <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
-                        <span class="flex justify-between">
-                          <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
-                          {%- if option == 'onetime' -%}
-                            {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
-                          {%- else -%}
-                            {% render 'price', product: product, use_variant: true, subscription: true, price_class: 'text-sm font-medium' %}
-                          {%- endif -%}
-                        </span>
-                      </label>
-                      {%- if option == 'autodeliver' -%}
-                        <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
-                          <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
-                          <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                            <button class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</button>
-                          </modal-opener>
-                        </span>
-                        <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
-                          <fieldset class="js flex mb-2 pb-3">
-                            <legend class="text-sm font-medium">Delivery every</legend>
-                            {%- for value in product.selling_plan_groups -%}
-                              <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
-                                <input type="radio"
-                                  id="{{ block.id }}-{{ forloop.index0 }}"
-                                  class="peer sr-only"
-                                  name="selling_plan"
-                                  value="{{ value.selling_plans[0].id | escape }}"
-                                  form="{{ product_form_id }}"
-                                />
-                                <label
-                                  class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-200"
-                                  for="{{ block.id }}-{{ forloop.index0 }}"
-                                >
-                                  {{- value.name | replace: "Delivery every", "" -}}
-                                </label>
-                              </div>
-                            {%- endfor -%}
-                            <div class="sr-only shrink">
-                              <input type="radio"
-                                id="{{ block.id }}-none"
-                                name="selling_plan"
-                                value=""
-                                form="{{ product_form_id }}"
-                                checked
-                              />
-                              <label for="{{ block.id }}-none">None</label>
-                            </div>
-                          </fieldset>
-                        </div>
-                        <span class="popular-badge hidden absolute -top-2 left-3 bg-seaweed-700 text-white rounded font-bold tracking-wide text-xs px-1 h-4">Popular</span>
-                      {%- endif -%}
-                    </div>
-                  {%- endfor -%}
-                </fieldset>
-                <modal-dialog id="SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                  <div role="dialog" aria-label="{{ block.settings.text }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
-                    <button id="ModalClose-{{ block.id }}" type="button" aria-label="{{ 'accessibility.close' | t }}">
-                      {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
-                    </button>
-                    <div class="w-full">
-                      <h2 class="font-serif text-3xl tracking-tight mb-2">{{ block.settings.subscription_modal_heading }}</h2>
-                      {{ block.settings.subscription_modal_content }}
-                    </div>
-                  </div>
-                </modal-dialog>
-              </subscription-radios>
-            {%- endunless -%}
           {%- when 'buy_buttons' -%}
             {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
               <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
@@ -526,7 +421,6 @@
 
                   {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                     <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-                    <input type="hidden" name="properties[_is_subscription]" value="{% if product.selected_or_first_available_variant.selling_plan_groups.size > 0 %}true{% else %}false{% endif %}">
                     {% if product.type contains 'Gift Card' %}
                       <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
                       <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
@@ -920,33 +814,6 @@
           "type": "checkbox",
           "id": "hide_label",
           "label": "Hide label"
-        }
-      ]
-    },
-    {
-      "type": "subscription_picker",
-      "name": "Subscription picker",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "subscription_classes",
-          "label": "Subscription classes"
-        },
-        {
-          "type": "header",
-          "content": "Subscription information modal"
-        },
-        {
-          "type": "text",
-          "default": "Subscribe & Save 10%",
-          "id": "subscription_modal_heading",
-          "label": "Modal heading"
-        },
-        {
-          "type": "html",
-          "id": "subscription_modal_content",
-          "label": "Modal content"
         }
       ]
     },

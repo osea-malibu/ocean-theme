@@ -98,28 +98,7 @@ if (!customElements.get("product-form")) {
 
         this.handleErrorMessage();
 
-        const purchaseOptionInput = this.form.querySelector(
-          '[name="properties[_is_subscription]"]'
-        );
-        if (purchaseOptionInput && purchaseOptionInput.value == "true") {
-          this.getCartContents().then((cartContents) => {
-            const filteredData = cartContents.items.filter(
-              (i) =>
-                i.properties._is_subscription === "true" &&
-                i.id === parseInt(this.form.querySelector("[name=id]").value) &&
-                i.quantity >= 4
-            );
-
-            if (filteredData.length > 0) {
-              this.handleErrorMessage("You may not subscribe to more than 4 of this product.");
-              return;
-            } else {
-              this.addProductToCart();
-            }
-          });
-        } else {
-          this.addProductToCart();
-        }
+        this.addProductToCart();
       }
 
       handleErrorMessage(errorMessage = false) {

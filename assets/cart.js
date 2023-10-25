@@ -81,47 +81,15 @@ class CartItems extends HTMLElement {
   }
 
   updateCartItem(line, value, name, target) {
-    const lineItemSubscription = document.getElementById(`CartSubscribeCheckbox-${line}`);
-    if (lineItemSubscription && lineItemSubscription.checked && name === "updates[]" && value > 4) {
-      const quantityElement =
-        document.getElementById(`Quantity-${line}`) ||
-        document.getElementById(`Drawer-quantity-${line}`);
-      const errors =
-        document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
-
-      quantityElement.value = 4;
-      errors.textContent = "You may not subscribe to more than 4 of this product.";
-      setTimeout(() => (errors.textContent = ""), 5000);
-
-      return;
-    }
-
     this.enableLoading(line);
     if (window.gwpSettings.enabled && window.gwpSettings.type === "banner") {
       document.getElementById("GwpButton")?.remove();
-    }
-
-    let selling_plan = null;
-    let properties = null;
-
-    if (name === "subscribe") {
-      if (target.checked) {
-        selling_plan = target.dataset.default;
-        properties = { _is_subscription: "true" };
-      } else {
-        properties = { _is_subscription: "false" };
-      }
-    } else if (name === "selling_plan") {
-      selling_plan = value;
     }
 
     const body = JSON.stringify({
       line,
       sections: this.getSectionsToRender().map((section) => section.section),
       sections_url: window.location.pathname,
-      ...(!["subscribe", "selling_plan"].includes(name) && { quantity: value }),
-      ...(["subscribe", "selling_plan"].includes(name) && { selling_plan }),
-      ...(properties && { properties }),
     });
 
     fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })

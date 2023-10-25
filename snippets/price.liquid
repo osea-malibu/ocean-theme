@@ -7,7 +7,6 @@
     - price_id: {String} Id to be applied to outer span (optional)
     - price_class: {String} Adds a price class to the price element (optional)
     - show_price_range: {Boolean} Displays variants as a price range, does not show sale strikeout (optional)
-    - subscription: {Boolean} Displays subscription price with strikeout on compare at price (optional)
     - bundle: {Boolean} Displays bundle price with strikeout on compare at price (optional)
     - default_to_mini: {Boolean} Default variant selection to smallest size (optional)
 
@@ -36,12 +35,7 @@
 -%}
 
 <span class="price whitespace-nowrap flex flex-row{% if price_class %} {{ price_class }}{% endif %}"{% if price_id != blank %} id="{{ price_id }}"{% endif %}>
-  {%- if subscription -%}
-    <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-    <s class="text-wave-700 mr-1">{{ money_price }}</s>
-    <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
-    <span>{{ price | times: 0.9 | money }}</span>
-  {%- elsif bundle -%}
+  {%- if bundle -%}
     <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
     <s class="text-wave-700 mr-1">{{ money_price }}</s>
     <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>

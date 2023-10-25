@@ -638,7 +638,6 @@ class VariantSelects extends HTMLElement {
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
-    //this.updateIsSubscription();
     this.toggleAddButton(true, "", false);
     this.removeErrorMessage();
 
@@ -666,27 +665,6 @@ class VariantSelects extends HTMLElement {
         })
         .includes(false);
     });
-  }
-
-  updateIsSubscription() {
-    const isSubscriptionInput = document.querySelector(
-      'input[name="properties[_is_subscription]"]'
-    );
-    const purchaseOptionInputs = Array.from(
-      document.querySelectorAll('input[name="purchase_option"]')
-    );
-
-    if (this.isTravelOrExclusion()) {
-      isSubscriptionInput.value = false;
-      purchaseOptionInputs?.forEach((input) => {
-        if (input.value === "onetime") {
-          input.checked = true;
-        } else {
-          input.checked = false;
-        }
-        input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked);
-      });
-    }
   }
 
   updateMedia() {
@@ -750,8 +728,6 @@ class VariantSelects extends HTMLElement {
         };
 
         replaceContent(".product .main-price");
-        replaceContent(".subscription .onetime .price");
-        replaceContent(".subscription .autodeliver .price");
         replaceContent(".product .benefits");
         replaceContent(`[value="${id}"] ~ button[name="add"] .price`, ".product .main-price");
 
@@ -792,13 +768,9 @@ class VariantSelects extends HTMLElement {
 
   updateOptionVisibility() {
     if (this.currentVariant && window.location.pathname.includes("/products/")) {
-      const hasSubscriptionOption = this.currentVariant.selling_plan_allocations.length > 0;
       const scentValues = ["Fragrance free", "Scented"];
       const hasScentVariant = this.currentVariant.options.some((r) => scentValues.indexOf(r) >= 0);
 
-      if (hasSubscriptionOption) {
-        this.toggleOption("subscription-radios", "max-h-48");
-      }
       if (hasScentVariant) {
         const scentRadios = document.querySelectorAll('input[name="Scent"]');
         const originalScentInfo = document.querySelectorAll(".scent-scented");
@@ -868,97 +840,6 @@ class VariantRadios extends VariantSelects {
   }
 }
 customElements.define("variant-radios", VariantRadios);
-
-class SubscriptionRadios extends HTMLElement {
-  constructor() {
-    super();
-
-    this.isSubscriptionInput = document.querySelector('input[name="properties[_is_subscription]"]');
-    this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
-    this.sellingPlanInputs = Array.from(this.querySelectorAll('input[name="selling_plan"]'));
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlPurchaseType = urlParams.get("type");
-
-    this.purchaseOptionInputs.forEach((input) => {
-      const isSubscription =
-        urlPurchaseType === "subscription" || document.referrer.includes("/pages/subscribe");
-      if (isSubscription && input.value === "autodeliver") {
-        input.checked = true;
-        this.setActiveState();
-        this.updateMainPrice(input);
-        this.setDefaultSellingPlan();
-
-        document.querySelector("#PayInstallments")?.classList.add("opacity-0");
-      }
-      input.addEventListener("change", this.onPurchaseOptionChange.bind(this));
-    });
-  }
-
-  onPurchaseOptionChange(e) {
-    const { value, checked } = e.currentTarget;
-
-    if (checked) {
-      this.setActiveState();
-      this.updateMainPrice(e.currentTarget);
-
-      const plusButtonEl = document.querySelector('.pdp-quantity button[name="plus"]');
-
-      if (value === "onetime") {
-        this.clearSellingPlanValues();
-        this.isSubscriptionInput.value = false;
-        this.productForm = document.querySelector("product-form.pdp-product-form");
-
-        document.querySelector("#PayInstallments")?.classList.remove("opacity-0");
-
-        if (plusButtonEl && plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
-        this.productForm.handleErrorMessage();
-      } else if (value === "autodeliver") {
-        this.setDefaultSellingPlan();
-        this.isSubscriptionInput.value = true;
-
-        document.querySelector("#PayInstallments")?.classList.add("opacity-0");
-
-        const inputEl = document.querySelector(".pdp-quantity input");
-        if (inputEl) {
-          const inputValueInteger = parseInt(inputEl.value);
-
-          if (inputValueInteger > 4) {
-            inputEl.value = 4;
-            plusButtonEl.setAttribute("disabled", "");
-          } else if (inputValueInteger == 4) {
-            plusButtonEl.setAttribute("disabled", "");
-          }
-        }
-      }
-    }
-  }
-
-  setActiveState() {
-    this.purchaseOptionInputs?.forEach((input) =>
-      input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked)
-    );
-  }
-
-  updateMainPrice(currentTarget) {
-    const currentPrice = currentTarget.closest(".purchase-option").querySelector(".price");
-    const mainPrice = document.querySelector(".main-price.price");
-
-    mainPrice.innerHTML = currentPrice.innerHTML;
-  }
-
-  clearSellingPlanValues() {
-    this.sellingPlanInputs?.forEach((input) => (input.checked = false));
-  }
-
-  setDefaultSellingPlan() {
-    const defaultSellingPlanInt = this.dataset.recommendedInterval || 2;
-    const defaultSellingPlanInput = this.sellingPlanInputs[defaultSellingPlanInt - 1];
-
-    defaultSellingPlanInput.checked = true;
-  }
-}
-customElements.define("subscription-radios", SubscriptionRadios);
 
 class ProductStickyAtc extends HTMLElement {
   constructor() {
