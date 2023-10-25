@@ -18,7 +18,7 @@
       <picture>
         {%- if section.settings.image_mobile != blank -%}
           <source
-            {% if block.settings.image contains '.gif' %}
+            {% if section.settings.image contains '.gif' %}
               srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
             {% else %}
               srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
@@ -28,7 +28,7 @@
         {%- endif %}
         {%- if section.settings.image != blank -%}
           <source
-            {% if block.settings.image contains '.gif' %}
+            {% if section.settings.image contains '.gif' %}
               srcset="{{ desktop_image_src }} 1x, {{ desktop_image_src_2x }} 2x"
             {% else %}
               srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
@@ -36,7 +36,7 @@
             media="(min-width: 640px) and (max-width: 1023px)"
           >
           <source
-            {% if block.settings.image contains '.gif' %}
+            {% if section.settings.image contains '.gif' %}
               srcset="{{ desktop_image_src_2x }} 1x, {{ desktop_image_src_3x }} 2x"
             {% else %}
               srcset="{% render 'imgix', src: desktop_image_src_2x %} 1x, {% render 'imgix', src: desktop_image_src_3x %} 2x"
@@ -45,7 +45,7 @@
           >
         {%- endif %}
         <img
-          {% if block.settings.image contains '.gif' %}
+          {% if section.settings.image contains '.gif' %}
             srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
             src="{{ mobile_image_src }}"
           {% else %}
