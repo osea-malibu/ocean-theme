@@ -7,7 +7,6 @@
   - is_subcollection: {Boolean} Default: false, Is this a subcollection (optional)
   - is_first_subcollection: {Boolean} Default: false, Is this the first subcollection (optional)
   - parent_collection: {Boolean} Default: blank, If is subcollection, what is parent collection (optional)
-  - show_reviews: {Boolean} Default: false, Enables reviews badge on product tiles
 
   Usage:
   {% render 'collection-product-grid', collection: collection %}
@@ -75,8 +74,7 @@
                 section_id: collection.id,
                 image_class: 'pt-2',
                 button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
-                default_to_mini: collection.metafields.my_fields.default_to_mini,
-                show_reviews: show_reviews
+                default_to_mini: collection.metafields.my_fields.default_to_mini
               -%}
             </li>
           {%- endfor -%}

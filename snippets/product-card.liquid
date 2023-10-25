@@ -14,7 +14,6 @@
     - name_class: {String} Tailwind styling classes (optional)
     - description_class: {String} Tailwind styling classes (optional)
     - hide_badge: {Boolean} Hide badge in upper left corner of tile (optional)
-    - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
     - show_benefits: {Boolean} Show benefits icons. Default: false (optional)
     - subscription: {Boolean} Deafult to subscription selection insead of variants (optional)
     - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
@@ -26,9 +25,6 @@
 <div class="{% if card_class == blank %}flex flex-col relative grow h-full{% else %}{{ card_class }}{% endif %}">
   <div class="product-info w-full order-1 grow flex flex-col">
     <div>
-      {%- if show_reviews and card_product.metafields.stamped.reviews_average != blank -%}
-        {% render 'product-rating', product: card_product, compact: true, section_id: section_id, classes: 'product-rating h-5 float-right' %}
-      {%- endif -%}
       <a href="{{ card_product.url | default: '#' }}">
         {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
         <h3 class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
