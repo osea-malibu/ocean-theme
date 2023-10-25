@@ -42,7 +42,7 @@
           "settings": {
             "subscription_classes": "subscription col-span-12",
             "subscription_modal_heading": "Subscribe & Save 10%",
-            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, skip or cancel at anytime through your OSEA account or by <a href=\"/pages/contact-us\" class=\"link\">contacting support</a> via <a href=\"mailto:support@oseamalibu.com\" class=\"link\">email</a> or <button onclick=\"GorgiasChat.open()\" class=\"link\">chat</button>.</p>\n<ul class=\"leading-tight tracking-wide icon-list check mb-4\">\n<li class=\"mb-2\">10% off every order</li>\n<li class=\"mb-2\">Free shipping on recurring orders</li>\n<li class=\"mb-2\">Early access to new products</li>\n<li>Skip, edit or cancel anytime</li>\n</ul>\n<small class=\"block\">Click here for our <a href=\"/pages/terms-of-use\" class=\"underline\">Terms of Use</a>.</small>"
+            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, skip or cancel at anytime through your OSEA account or by <a href=\"\/pages\/contact-us\" class=\"link\">contacting support<\/a> via <a href=\"mailto:support@oseamalibu.com\" class=\"link\">email<\/a> or <button onclick=\"GorgiasChat.open()\" class=\"link\">chat<\/button>.<\/p>\n<ul class=\"leading-tight tracking-wide icon-list check mb-4\">\n<li class=\"mb-2\">10% off every order<\/li>\n<li class=\"mb-2\">Free shipping on recurring orders<\/li>\n<li class=\"mb-2\">Early access to new products<\/li>\n<li>Skip, edit or cancel anytime<\/li>\n<\/ul>\n<small class=\"block\">Click here for our <a href=\"\/pages\/terms-of-use\" class=\"underline\">Terms of Use<\/a>.<\/small>"
           }
         },
         "quantity_selector": {
@@ -128,15 +128,6 @@
             "default_open": false
           }
         },
-        "97e730d5-8abd-4648-a81d-69b2892d12a2": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Sustainability",
-            "content": "",
-            "tab_classes": "hidden info sustainability",
-            "default_open": false
-          }
-        },
         "ab50b385-6599-4b94-8014-2dd6ab1517d4": {
           "type": "benefits",
           "settings": {
@@ -168,7 +159,6 @@
         "1d1eb74a-bad3-4c59-84b1-94797c19dd10",
         "40abb365-da00-4d8c-a3a8-4c6aa168fca5",
         "2be71f88-a851-442c-a3db-86272956d562",
-        "97e730d5-8abd-4648-a81d-69b2892d12a2",
         "ab50b385-6599-4b94-8014-2dd6ab1517d4",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
@@ -216,7 +206,9 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
       "settings": {
         "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
         "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
