@@ -260,33 +260,6 @@ class CartItems extends HTMLElement {
 }
 customElements.define("cart-items", CartItems);
 
-class GiftWithPurchaseBanner extends HTMLElement {
-  constructor() {
-    super();
-
-    this.cart =
-      document.querySelector("cart-notification") || document.querySelector("cart-drawer");
-    this.button = this.querySelector("button");
-    this.button?.addEventListener("click", this.onButtonClick.bind(this));
-  }
-
-  onButtonClick() {
-    const body = JSON.stringify({
-      items: [
-        {
-          id: this.button.dataset.id,
-          quantity: 1,
-        },
-      ],
-    });
-    fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
-      .then((response) => response.json())
-      .then((response) => this.cart.renderContents(response))
-      .catch((error) => console.error(error));
-  }
-}
-customElements.define("gift-with-purchase-banner", GiftWithPurchaseBanner);
-
 if (!customElements.get("cart-note")) {
   customElements.define(
     "cart-note",

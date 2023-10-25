@@ -41,17 +41,13 @@
 
             if is_subcollection
               assign promo_tile_image = parent_collection.metafields.custom.promo_tile_image
-              assign promo_tile_video_portrait = parent_collection.metafields.custom.promo_tile_video_portrait
-              assign promo_tile_video_landscape = parent_collection.metafields.custom.promo_tile_video_landscape
               assign promo_tile_url = parent_collection.metafields.custom_fields.promo_tile_url
             else
               assign promo_tile_image = collection.metafields.custom.promo_tile_image
-              assign promo_tile_video_portrait = collection.metafields.custom.promo_tile_video_portrait
-              assign promo_tile_video_landscape = collection.metafields.custom.promo_tile_video_landscape
               assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
             endif
 
-            if promo_tile_image != blank or promo_tile_video_portrait != blank
+            if promo_tile_image != blank
               assign has_promo_content = true
             else
               assign has_promo_content = false
@@ -61,8 +57,6 @@
             <li class="relative overflow-hidden">
               {%- render 'collection-promo-tile',
                 promo_tile_image: promo_tile_image,
-                promo_tile_video_portrait: promo_tile_video_portrait,
-                promo_tile_video_landscape: promo_tile_video_landscape,
                 promo_tile_url: promo_tile_url
               -%}
             </li>

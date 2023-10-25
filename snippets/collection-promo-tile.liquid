@@ -2,8 +2,6 @@
   Accepts:
   - promo_tile_image: {ImageDrop} Liquid image object
   - promo_tile_url: {String} Link to promo tile destination (optional)
-  - promo_tile_video_portrait: {VideoDrop} Liquid video object (optional)
-  - promo_tile_video_landscape: {VideoDrop} Liquid video object (optional)
 
   Usage:
   {% render 'collection-promo-tile', promo_tile_image: collection.metafields.image.url %}
@@ -29,60 +27,4 @@
   {%- else -%}
     </div>
   {%- endif -%}
-{%- endif -%}
-
-{%- if promo_tile_video_portrait != blank and promo_tile_video_landscape == blank -%}
-  <div class="h-full relative hidden promo-tile-video">
-    <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
-      {%- for source in promo_tile_video_portrait.value.sources -%}
-        <source src="{{ source.url }}" type="video/{{ source.format }}" />
-      {%- endfor -%}
-      <img
-        src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}"
-        alt=""
-        width="{{ promo_tile_video_portrait.value.preview_image.width }}"
-        height="{{ promo_tile_video_portrait.value.preview_image.width | divided_by: promo_tile_video_portrait.value.preview_image.aspect_ratio | round }}"
-        loading=lazy
-      >
-    </video>
-    {%- if promo_tile_url != blank -%}
-      <a href="{{ promo_tile_url }}" class="button button-white py-1.5 absolute bottom-2 xs:bottom-4 w-36 left-1/2 -translate-x-1/2 plp-tile-clickarea">
-    {%- endif -%}
-      {{- 'Shop now' -}}
-    {%- if promo_tile_url != blank -%}
-      </a>
-    {%- endif -%}
-  </div>
-{%- elsif promo_tile_video_portrait != blank and promo_tile_video_landscape != blank -%}
-  <collection-video class="block h-full relative">
-    <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
-      {%- for source in promo_tile_video_portrait.value.sources -%}
-        <source src="{{ source.url }}" type="video/{{ source.format }}" />
-      {%- endfor -%}
-      <img
-        src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}"
-        alt=""
-        width="{{ promo_tile_video_portrait.value.preview_image.width }}"
-        height="{{ promo_tile_video_portrait.value.preview_image.width | divided_by: promo_tile_video_portrait.value.preview_image.aspect_ratio | round }}"
-        loading=lazy
-      >
-    </video>
-    <div class="horizontal-video invisible fixed z-20 rounded-lg bottom-4 left-4 w-64 md:w-80 lg:w-96 overflow-hidden opacity-0 motion-safe:transition-visibility shadow-lg shadow-seaweed-700/10">
-      <button aria-label="Close" class="video-close absolute z-30 right-1 top-1 rounded-full bg-white/75 border border-seaweed-700 before:block before:absolute before:w-10 before:h-10 before:-left-2.5 before:-top-2.5">
-        {%- render 'icon-close', classes: 'w-5 h-5', stroke_width: 2 -%}
-      </button>
-      <video preload="metadata" playsinline autoplay muted loop controls poster="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
-        {%- for source in promo_tile_video_landscape.value.sources -%}
-          <source src="{{ source.url }}" type="video/{{ source.format }}" />
-        {%- endfor -%}
-        <img
-          src="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}"
-          alt=""
-          width="{{ promo_tile_video_landscape.value.preview_image.width }}"
-          height="{{ promo_tile_video_landscape.value.preview_image.width | divided_by: promo_tile_video_landscape.value.preview_image.aspect_ratio | round }}"
-          loading=lazy
-        >
-      </video>
-    </div>
-  </collection-video>
 {%- endif -%}

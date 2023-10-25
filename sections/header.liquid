@@ -2,7 +2,6 @@
 
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 
-<script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
 {%- if settings.cart_type == "drawer" -%}
@@ -15,7 +14,7 @@
       {% comment %} Hamburger menu {% endcomment %}
       {%- if section.settings.hamburger_menu != blank -%}
         {%- assign menu_link_styles = 'px-8 py-2 tracking-wide cursor-pointer' -%}
-        <menu-drawer id="HamburgerMenu" class="mr-1 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
+        <menu-drawer id="HamburgerMenu" class="mr-1 block">
           <details id="Details-menu-drawer-container" class="group">
             {% comment %} Hamburger icon {% endcomment %}
             <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-2 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
@@ -176,7 +175,7 @@
       <details-modal class="header__search flex justify-center items-center">
         <details class="group">
           <summary
-            class="header__icon--search cursor-pointer w-10 h-10{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3{% endunless %}"
+            class="header__icon--search cursor-pointer w-10 h-10"
             aria-haspopup="dialog"
             aria-label="{{ 'general.search.search' | t }}"
           >
@@ -246,60 +245,6 @@
           </div>
         </details>
       </details-modal>
-
-      {% comment %} Inline menu {% endcomment %}
-      {%- if section.settings.inline_menu != blank -%}
-        {%- unless section.settings.enable_navbar -%}
-          <nav class="header__inline-menu flex-1 hidden lg:flex">
-            <ul class="header__menu -ml-4 mr-0 my-0 p-0 flex">
-              {%- for link in section.settings.inline_menu.links -%}
-                <li>
-                  {%- if link.links != blank -%}
-                    <details-disclosure>
-                      <details class="relative group" id="Details-HeaderMenu-{{ forloop.index }}">
-                        <summary class="tracking-wide leading-6 py-3 pl-4 pr-8 font-book">
-                          <span {%- if link.child_active %} class="underline"{% endif %}>{{ link.title | escape }}</span>
-                        </summary>
-                        <ul id="HeaderMenu-MenuList-{{ forloop.index }}" class="opacity-0 -translate-y-6 group-open:opacity-100 group-open:translate-y-0 absolute bg-wave-200 motion-safe:transition-transform-opacity" tabindex="-1">
-                          {%- for childlink in link.links -%}
-                            <li>
-                              {%- if childlink.links == blank -%}
-                                <a href="{{ childlink.url }}" class="header__menu-item caption-large{% if childlink.current %} underline underline-offset-2{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
-                                  {{ childlink.title | escape }}
-                                </a>
-                              {%- else -%}
-                                <details class="group-child" id="Details-HeaderSubMenu-{{ forloop.index }}">
-                                  <summary class="header__menu-item caption-large">
-                                    {{ childlink.title | escape }}
-                                    {% render 'icon-caret', classes: 'w-6 h-6' %}
-                                  </summary>
-                                  <ul id="HeaderMenu-SubMenuList-{{ forloop.index }}" class="opacity-0 -translate-y-6 group-child-open:opacity-100 group-child-open:translate-y-0 motion-safe:transition-transform-opacity">
-                                    {%- for grandchildlink in childlink.links -%}
-                                      <li>
-                                        <a href="{{ grandchildlink.url }}" class="header__menu-item{% if grandchildlink.current %} underline underline-offset-2{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
-                                          {{ grandchildlink.title | escape }}
-                                        </a>
-                                      </li>
-                                    {%- endfor -%}
-                                  </ul>
-                                </details>
-                              {%- endif -%}
-                            </li>
-                          {%- endfor -%}
-                        </ul>
-                      </details>
-                    </details-disclosure>
-                  {%- else -%}
-                    <a href="{{ link.url }}" class="block tracking-wide leading-6 py-3 pl-4 pr-8 font-book whitespace-nowrap"{% if link.current %} aria-current="page"{% endif %}>
-                      <span {%- if link.current %} class="underline"{% endif %}>{{ link.title | escape }}</span>
-                    </a>
-                  {%- endif -%}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </nav>
-        {%- endunless -%}
-      {%- endif -%}
     </div>
 
     {% comment %} OSEA logo {% endcomment %}
@@ -349,7 +294,7 @@
 </header>
 
 {% comment %} Navbar menu {% endcomment %}
-{%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
+{%- if section.settings.navbar_menu != blank -%}
   <nav class="hidden md:block overflow-x-auto sm:overflow-x-hidden scrollbar-hide bg-white -mt-1">
     <ul class="flex md:justify-center">
       {%- for link in section.settings.navbar_menu.links -%}
@@ -498,21 +443,9 @@
     },
     {
       "type": "link_list",
-      "id": "inline_menu",
-      "default": "main-menu",
-      "label": "Inline menu"
-    },
-    {
-      "type": "link_list",
       "id": "hamburger_menu",
       "default": "main-menu",
       "label": "Hamburger Menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_navbar",
-      "default": false,
-      "label": "Enable navbar layout"
     },
     {
       "type": "link_list",

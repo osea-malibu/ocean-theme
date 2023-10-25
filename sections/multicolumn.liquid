@@ -310,23 +310,6 @@
                   {%- if block.settings.code != "" -%}
                     {{- block.settings.code -}}
                   {%- endif -%}
-                {%- when 'countdown' -%}
-                  {%- if block.settings.countdown_date != blank and block.settings.countdown_time != blank -%}
-                    {%- assign increment_array = 'days, hours, minutes, seconds' | split: ', ' -%}
-                    <countdown-component
-                      data-date="{{ block.settings.countdown_date }}"
-                      data-time="{{ block.settings.countdown_time }}"
-                    >
-                      <dl class="flex justify-center {{ block.settings.text_classes }}">
-                        {%- for increment in increment_array -%}
-                          <div class="flex flex-1 flex-col-reverse text-center">
-                            <dt class="{{ block.settings.label_classes }}">{{ increment }}</dt>
-                            <dd class="countdown-{{ increment }} {{ block.settings.count_classes }}">00</dd>
-                          </div>
-                        {%- endfor -%}
-                      </dl>
-                    </countdown-component>
-                  {%- endif -%}
               {%- endcase -%}
             </li>
           {%- endfor -%}
@@ -817,58 +800,6 @@
           "id": "code",
           "info": "This field takes HTML.",
           "label": "Code block"
-        }
-      ]
-    },
-    {
-      "type": "countdown",
-      "name": "Countdown",
-      "settings": [
-        {
-          "type": "header",
-          "content": "General settings"
-        },
-        {
-          "type": "textarea",
-          "id": "column_classes",
-          "label": "Column classes"
-        },
-        {
-          "type": "textarea",
-          "id": "text_classes",
-          "label": "Text block classes"
-        },
-        {
-          "type": "header",
-          "content": "Date styles"
-        },
-        {
-          "type": "text",
-          "id": "countdown_date",
-          "label": "Date",
-          "info": "Format: MM/DD/YYYY"
-        },
-        {
-          "type": "text",
-          "id": "countdown_time",
-          "label": "Time",
-          "info": "Format: HH:MM (24hr, PST)"
-        },
-        {
-          "type": "header",
-          "content": "Text styles"
-        },
-        {
-          "type": "textarea",
-          "id": "count_classes",
-          "info": "This field takes HTML.",
-          "label": "Count classes"
-        },
-        {
-          "type": "textarea",
-          "id": "label_classes",
-          "info": "This field takes HTML.",
-          "label": "Label classes"
         }
       ]
     }

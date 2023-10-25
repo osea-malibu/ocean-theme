@@ -23,26 +23,13 @@
 {%- endif -%}
 
 <div id="ProductGridContainer" class="container mb-12">
-  {%- if section.settings.enable_anchors and subcollections and subcollections.value.size > 0 -%}
-    <collection-anchors class="flex overflow-x-auto mb-3 scrollbar-hide w-[calc(100%+1rem)] xs:w-full">
-      {%- if featured_products.value.count > 0 -%}
-        <a href="#Featured" aria-label="Jump to featured products section" class="button button-xs button-secondary mr-2">Featured</a>
-      {%- endif -%}
-      {%- for subcollection in subcollections.value -%}
-        {%- assign subcollection_title = collections[subcollection].title | replace: "Section: ", "" -%}
-        <a href="#{{ subcollection_title | handle }}" aria-label="Jump to {{ subcollection_title }} section" class="button button-xs button-secondary mr-2">{{ subcollection_title }}</a>
-      {%- endfor -%}
-    </collection-anchors>
-  {%- endif -%}
   {%- if featured_products.value.count > 0 -%}
     {%- capture featured_products_grid -%}
       <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
-        {%- if collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank -%}
+        {%- if collection.metafields.custom.promo_tile_image != blank -%}
           <li class="relative">
             {%- render 'collection-promo-tile',
               promo_tile_image: collection.metafields.custom.promo_tile_image,
-              promo_tile_video_portrait: collection.metafields.custom.promo_tile_video_portrait,
-              promo_tile_video_landscape: collection.metafields.custom.promo_tile_video_landscape,
               promo_tile_url: collection.metafields.custom_fields.promo_tile_url
             -%}
           </li>
@@ -151,13 +138,6 @@
       "info": "Hidden on collections with sections.",
       "default": true,
       "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_anchors",
-      "info": "Shows on collections with sections.",
-      "default": false,
-      "label": "Enable section anchor links"
     }
   ]
 }
