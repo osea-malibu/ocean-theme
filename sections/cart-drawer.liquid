@@ -9,11 +9,7 @@
       aria-label="{{ 'sections.cart.title' | t }}"
       tabindex="-1"
     >
-      {%- liquid
-        assign cart_ids = cart.items | map: 'product_id'
-        assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, Scented / 1 oz' | split: ', '
-        assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1, hyaluronic-sea-serum, advanced-repair-eye-cream, anti-aging-sea-serum, seaglow-resurfacing-scrub' | split: ', '
-      -%}
+      {%- assign cart_ids = cart.items | map: 'product_id' -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
       {% comment %} Gift with purchase {% endcomment %}
       {%- if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto' -%}
@@ -116,63 +112,7 @@
           {%- endfor -%}
         </div>
       {%- else -%}
-        {%- liquid
-          for item in cart.items
-            assign hide_upsell = false
-            assign normalized_variant_title = item.variant.title | replace: 'fl ', ''
-            if small_products contains item.product.handle and normalized_variant_title == '0.34 oz'
-              assign hide_upsell = true
-            elsif travel_sizes contains normalized_variant_title
-              assign hide_upsell = true
-            endif
-
-            if item.product.metafields.my_fields.save_with_sets != nil and item.selling_plan_allocation == nil and hide_upsell == false
-              unless item.variant.title contains 'Fragrance free'
-                assign item_with_set = item
-                assign item_with_set_line = forloop.index
-              endunless
-            endif
-          endfor
-
-          assign first_set = item_with_set.product.metafields.my_fields.save_with_sets.value | first
-          for tag in first_set.tags
-            if tag contains 'badge::save'
-              assign set_save_amount = tag | replace: 'badge::save', ''
-            endif
-          endfor
-        -%}
-
         <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12">
-          {% comment %} Save with sets upsell {% endcomment %}
-          {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or cart_ids contains first_set.id -%}
-            <save-with-sets
-              data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
-              data-item-to-remove="{{ item_with_set_line }}"
-            >
-              <div class="relative rounded-sm bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
-                {%- liquid
-                  assign sws_image_src = first_set.featured_media | image_url: width: 60
-                  assign sws_image_src_2x = first_set.featured_media | image_url: width: 120
-                -%}
-                {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-                <img
-                  srcset="{% render 'imgix', src: sws_image_src_2x %} 2x, {% render 'imgix', src: sws_image_src %} 1x"
-                  src="{% render 'imgix', src: sws_image_src_2x %}"
-                  loading="lazy"
-                  width="60"
-                  height="{{ 60 | divided_by: first_set.featured_media.aspect_ratio | ceil }}"
-                  alt="{{ first_set.featured_media.alt }}"
-                >
-                {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-                <div>
-                  <h3 class="leading-tight font-medium text-sm">Save{{ set_save_amount }} with {{ first_set.title }}</h3>
-                  <p class="text-sm leading-tight">An item in your cart comes in a set!</p>
-                  <button class="button button-xs button-secondary">Upgrade to set</button>
-                </div>
-              </div>
-            </save-with-sets>
-          {%- endunless -%}
-
           {% comment %} Cart items {% endcomment %}
           <cart-drawer-items class="block mx-auto max-w-md mb-12{% if cart == empty %} is-empty{% endif %}" data-cart-ids="{{ cart_ids | json }}">
             <form action="{{ routes.cart_url }}" id="CartDrawer-Form" class="grow flex flex-wrap" method="post">
