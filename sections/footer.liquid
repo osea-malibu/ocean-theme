@@ -64,55 +64,26 @@
               {%- if section.settings.newsletter_paragraph != blank -%}
                 <p class="text-center text-md tracking-wide leading-tight mb-4">{{ section.settings.newsletter_paragraph }}</p>
               {%- endif -%}
-              {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
-              <tab-controller id="footer-newsletter-tabs">
-                <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex justify-center button-group">
-                  {%- for tab in newsletter_tabs -%}
-                    <li
-                      role="tab"
-                      aria-controls="footer-tab-{{ forloop.index }}"
-                      tabindex="0"
-                      aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="button button-xs button-secondary px-3 sm:px-4{% if forloop.first %} bg-wave-200{% endif %}"
-                    >
-                      {{ tab }}
-                    </li>
-                  {%- endfor -%}
-                </ul>
-
-                <div class="relative mt-1.5">
-                  <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
-                  <div class="relative z-10 -mt-10 min-h-[40px]">
-                    {%- for tab in newsletter_tabs -%}
-                      <div id="footer-tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
-                        {%- if tab == 'Email' -%}
-                          <div class="klaviyo-email-form relative">
-                            {% render 'icon-email',
-                              aria_hidden: true,
-                              classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3 z-10",
-                              stroke_width: 2
-                            %}
-                            <div class="klaviyo-form-T3gN5Z"></div>
-                          </div>
-                        {%- else -%}
-                          <div class="klaviyo-phone-form relative">
-                            <div class="klaviyo-form-TA8JnT"></div>
-                            <small class="block text-xs leading-none mt-1">*By providing your cell phone number and clicking “SUBSCRIBE” below, you are agreeing to receive recurring automated marketing text messages (e.g. cart reminders) at the phone number provided, which may be sent using an autodialer, from OSEA. The text messages may contain marketing content and will be sent in accordance with <a class="underline" href="https://oseamalibu.com/pages/sms-terms-of-service">OSEA’s Text Messaging Terms and Conditions</a> and the <a class="underline" href="https://oseamalibu.com/pages/privacy-policy">OSEA Privacy Policy</a>. Consent is not a condition of purchase. Msg & data rates may apply. Msg frequency varies. Reply HELP for help and STOP to cancel.</small>
-                          </div>
-                        {%- endif -%}
-                      </div>
-                    {%- endfor -%}
+              <div class="relative mt-1.5">
+                <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
+                <div class="relative z-10 -mt-10 min-h-[40px]">
+                  <div class="klaviyo-email-form relative">
+                    {% render 'icon-email',
+                      aria_hidden: true,
+                      classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3 z-10",
+                      stroke_width: 2
+                    %}
+                    <div class="klaviyo-form-T3gN5Z"></div>
                   </div>
                 </div>
-              </tab-controller>
+              </div>
             </div>
             
             {% comment %} Social media icons {% endcomment %}
             {% render 'social-media-icons', classes: 'flex gap-8 items-center justify-center mb-4' %}
             
             {% comment %} Customer service {% endcomment %}
-            <p class="text-center tracking-wide leading-none mb-2 hidden lg:block">Customer Support: <a href="mailto:support@oseamalibu.com" class="link">support@oseamalibu.com</a></p>
-            <p class="text-center hidden leading-none lg:block">Skincare Studio: <a href="mailto:skincarestudio@oseamalibu.com" class="link">skincarestudio@oseamalibu.com</a></p>
+            <p class="text-center tracking-wide leading-none mb-2 hidden lg:block">Customer Support: <a href="mailto:wholesalesupport@oseamalibu.com" class="link">wholesalesupport@oseamalibu.com</a></p>
           </div>
         {%- endif -%}
       </div>
