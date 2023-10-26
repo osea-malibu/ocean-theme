@@ -26,9 +26,6 @@
     {% liquid
       render 'meta-tags'
       render 'prefetch'
-      render 'google-tag-manager'
-      render 'northbeam'
-      render 'bing-uet-tag'
     %}
     
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
@@ -48,8 +45,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 </head>
 
-  <body class="antialiased {% if template.name == 'product' %}pdp{% endif%}">
-    {% render 'adswizz' %}
+  <body class="antialiased {% if template.name == 'product' %}pdp{% endif %}">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
     </a>
@@ -120,11 +116,6 @@
     
       render 'gorgias-chat-widget'
     -%}
-   
-    <script>function myInit(){ StampedFn.init({ apiKey: 'pubkey-4oB4VG51Cx1881U1R762Z6cpQtC50C', storeUrl: '33056' }); }</script>
-    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-    <script async onload="myInit()" type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
-    {% comment %}theme-check-enable RemoteAsset{% endcomment %}
     
     {% render 'content_for_footer' %}
 </body>

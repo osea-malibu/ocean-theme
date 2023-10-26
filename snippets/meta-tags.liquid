@@ -21,18 +21,11 @@
 <meta property="og:type" content="{{ og_type }}">
 <meta property="og:description" content="{{ og_description | escape }}">
 
-{%- liquid
-  if request.page_type == 'product' and product.metafields.my_fields.white_image_bg != blank
-    assign page_image_custom = product.metafields.my_fields.white_image_bg
-  else
-    assign page_image_custom = page_image
-  endif
--%}
-{%- if page_image_custom -%}
-  <meta property="og:image" content="http:{{ page_image_custom | image_url: width: 5760 }}">
-  <meta property="og:image:secure_url" content="https:{{ page_image_custom | image_url: width: 5760 }}">
-  <meta property="og:image:width" content="{{ page_image_custom.width }}">
-  <meta property="og:image:height" content="{{ page_image_custom.height }}">
+{%- if page_image -%}
+  <meta property="og:image" content="http:{{ page_image | image_url: width: 5760 }}">
+  <meta property="og:image:secure_url" content="https:{{ page_image | image_url: width: 5760 }}">
+  <meta property="og:image:width" content="{{ page_image.width }}">
+  <meta property="og:image:height" content="{{ page_image.height }}">
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
