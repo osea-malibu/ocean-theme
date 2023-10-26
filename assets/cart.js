@@ -185,20 +185,6 @@ class CartItems extends HTMLElement {
     }
   }
 
-  removeGift(line) {
-    const body = JSON.stringify({
-      line,
-      quantity: 0,
-    });
-    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
-      .then((response) => response.text())
-      .then((state) => {
-        const parsedState = JSON.parse(state);
-        this.replaceSections(parsedState);
-      })
-      .catch((error) => console.error(error));
-  }
-
   updateLiveRegions(line, itemCount) {
     if (this.currentItemCount === itemCount) {
       const lineItemError =

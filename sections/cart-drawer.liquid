@@ -58,7 +58,7 @@
                             <td class="cart-item__media p-0 [grid-area:image]" role="cell" headers="CartDrawer-ColumnImage">
                               {% if item.image %}
                                 <div class="flex h-full items-center">
-                                  <a {% unless item.product.type == 'Sample' or item.product.type == 'Free Gift' %}href="{{ item.url }}"{% endunless %}
+                                  <a href="{{ item.url }}"
                                     class="sr-only"
                                     tabindex="-1"
                                     aria-hidden="true"
@@ -81,18 +81,17 @@
                               {% endif %}
                             </td>
                             <td class="cart-item__name p-0 [grid-area:name]" role="cell" headers="CartDrawer-ColumnName">
-                              <div class="flex items-center h-full{% if item.product.type == 'Bundle' %} pr-8 pb-1{% endif %}">
+                              <div class="flex items-center h-full">
                                 {%- if settings.show_vendor -%}
                                   <p class="text-xs text-wave-600">{{ item.product.vendor }}</p>
                                 {%- endif -%}
-                                <a {% unless item.product.type == 'Sample' or item.product.type == 'Free Gift' %}href="{{ item.url }}"{% endunless %}
-                                  class="block leading-none 2xs:w-full w-60">
+                                <a href="{{ item.url }}" class="block leading-none 2xs:w-full w-60">
                                   {{ item.product.title | escape }}
                                 </a>
                               </div>
                             </td>
                             <td class="cart-item__size p-0 [grid-area:size]{% if item.product.has_only_default_variant or item.properties.size == 0 %} h-0{% endif %}" role="cell" headers="CartDrawer-ColumnSize">
-                              {%- if item.product.has_only_default_variant == false or item.properties.size != 0 and item.product.type != 'Sample' and item.product.type != 'Free Gift' -%}
+                              {%- if item.product.has_only_default_variant == false or item.properties.size != 0 -%}
                                 <dl class="flex items-center h-full text-sm pb-1 gap-2">
                                   {%- if item.product.has_only_default_variant == false -%}
                                     {%- for option in item.options_with_values -%}
@@ -123,37 +122,35 @@
                               {%- endif -%}
                             </td>
                             <td class="cart-item__quantity p-0 [grid-area:quant]" role="cell" headers="CartDrawer-ColumnQuantity">
-                              <div class="flex items-center{% if item.product.type != 'Sample' and item.product.type != 'Free Gift' and item.product.has_only_default_variant or item.properties.size == 0 %} sm:mt-[-14px] -mt-2{% endif %}">
-                                {%- unless item.product.type == 'Sample' or item.product.type == 'Free Gift' -%}
-                                  <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-md mr-1">
-                                    <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -ml-px box-content border-transparent rounded-l-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
-                                      <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
-                                      {% render 'icon-minus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-                                    </button>
-                                    <input class="quantity__input w-8 h-6 border-0 p-1 text-center"
-                                      type="number"
-                                      name="updates[]"
-                                      value="{{ item.quantity }}"
-                                      min="0"
-                                      aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
-                                      id="Drawer-quantity-{{ item.index | plus: 1 }}"
-                                      data-index="{{ item.index | plus: 1 }}"
-                                    >
-                                    <button
-                                      class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -mr-px box-content border-transparent rounded-r-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent"
-                                      name="plus"
-                                      type="button"
-                                    >
-                                      <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
-                                      {% render 'icon-plus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-                                    </button>
-                                  </quantity-input>
-                                {%- endunless -%}
+                              <div class="flex items-center{% if item.product.has_only_default_variant or item.properties.size == 0 %} sm:mt-[-14px] -mt-2{% endif %}">
+                                <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-md mr-1">
+                                  <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -ml-px box-content border-transparent rounded-l-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" name="minus" type="button">
+                                    <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
+                                    {% render 'icon-minus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                                  </button>
+                                  <input class="quantity__input w-8 h-6 border-0 p-1 text-center"
+                                    type="number"
+                                    name="updates[]"
+                                    value="{{ item.quantity }}"
+                                    min="0"
+                                    aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                                    id="Drawer-quantity-{{ item.index | plus: 1 }}"
+                                    data-index="{{ item.index | plus: 1 }}"
+                                  >
+                                  <button
+                                    class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -mr-px box-content border-transparent rounded-r-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent"
+                                    name="plus"
+                                    type="button"
+                                  >
+                                    <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
+                                    {% render 'icon-plus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                                  </button>
+                                </quantity-input>
 
                                 <cart-remove-button
                                   id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
                                   data-index="{{ item.index | plus: 1 }}"
-                                  class="{% if item.product.type == 'Sample' or item.product.type == 'Free Gift' %}block{% else %}hidden xs:block{% endif %}"
+                                  class="hidden xs:block"
                                 >
                                   <button class="block button button-secondary button-sm px-2" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}" name="remove" type="button">
                                     {% render 'icon-remove', classes: 'w-4 h-4 pointer-events-none', stroke_width: 2, aria_hidden: true %}
@@ -185,13 +182,7 @@
                                       <span class="whitespace-nowrap">{{ item.variant.price | times: item.quantity | money }}</span>
                                     </div>
                                   {%- else -%}
-                                      {%- if item.product.type == 'Sample' -%}
-                                        <span class="flex bg-sand-300 rounded-sm px-1.5 py-0.5 text-xs font-book tracking-wide whitespace-nowrap text-seaweed-600">Sample</span>
-                                      {%- elsif item.product.type == 'Free Gift' -%}
-                                        <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">Free Gift</span>
-                                      {%- else -%}
-                                        <span class="flex">{{ item.original_line_price | money }}</span>
-                                      {%- endif -%}
+                                    <span class="flex">{{ item.original_line_price | money }}</span>
                                   {%- endif -%}
 
                                   {%- if item.variant.available and item.unit_price_measurement -%}

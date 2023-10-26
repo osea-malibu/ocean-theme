@@ -123,7 +123,7 @@
                           <div>
                             {%- assign product_form_id = 'product-form-' | append: block.settings.atc_button_product.id | append: '-' | append: block.id -%}
                             {%- if block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false -%}
-                              {%- if block.settings.variant_picker_type == 'dropdown' or block.settings.atc_button_product.handle == 'gift-card' -%}
+                              {%- if block.settings.variant_picker_type == 'dropdown' -%}
                                 <variant-selects
                                   class="no-js-hidden block mt-2"
                                   data-section="{{ block.settings.atc_button_product.id }}-{{ block.id }}"

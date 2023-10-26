@@ -183,40 +183,38 @@
               </div>
             {%- endif -%}
           {%- when 'quantity_selector' -%}
-            {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
-              <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
-                <label class="sr-only" for="Quantity-{{ section.id }}">
-                  {{ 'products.product.quantity.label' | t }}
-                </label>
-                <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
-                  <button
-                    class="{{ quantity_classes }} rounded-l-md"
-                    name="minus"
-                    type="button"
-                  >
-                    <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-                    {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-                  </button>
-                  <input
-                    class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
-                    type="number"
-                    name="quantity"
-                    id="Quantity-{{ section.id }}"
-                    min="1"
-                    value="1"
-                    form="{{ product_form_id }}"
-                  >
-                  <button
-                    class="{{ quantity_classes }} rounded-r-md"
-                    name="plus"
-                    type="button"
-                  >
-                    <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-                    {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-                  </button>
-                </quantity-input>
-              </div>
-            {%- endif -%}
+            <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
+              <label class="sr-only" for="Quantity-{{ section.id }}">
+                {{ 'products.product.quantity.label' | t }}
+              </label>
+              <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
+                <button
+                  class="{{ quantity_classes }} rounded-l-md"
+                  name="minus"
+                  type="button"
+                >
+                  <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+                  {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                </button>
+                <input
+                  class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
+                  type="number"
+                  name="quantity"
+                  id="Quantity-{{ section.id }}"
+                  min="1"
+                  value="1"
+                  form="{{ product_form_id }}"
+                >
+                <button
+                  class="{{ quantity_classes }} rounded-r-md"
+                  name="plus"
+                  type="button"
+                >
+                  <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+                  {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                </button>
+              </quantity-input>
+            </div>
           {%- when 'variant_picker' -%}
             <div class="{{ block.settings.variant_classes }}">
               {%- unless product.has_only_default_variant -%}
@@ -287,55 +285,48 @@
               </noscript>
             </div>
           {%- when 'buy_buttons' -%}
-            {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
-              <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
-                <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
-                  <div class="product-form__error-message-wrapper absolute left-0 -mt-6 text-coral-800 text-sm" role="alert" hidden>
-                    {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
-                    <span class="product-form__error-message leading-4 align-bottom"></span>
-                  </div>
+            <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
+              <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
+                <div class="product-form__error-message-wrapper absolute left-0 -mt-6 text-coral-800 text-sm" role="alert" hidden>
+                  {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
+                  <span class="product-form__error-message leading-4 align-bottom"></span>
+                </div>
 
-                  {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-                    {% if product.type contains 'Gift Card' %}
-                      <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
-                      <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
-                      <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
-                    {%- endif -%}
-                    <div class="product-form__buttons relative grid grid-cols-2 gap-2" id="AddToCart">
-                      <button
-                        type="submit"
-                        name="add"
-                        class="product-form__submit relative button button-primary button-md w-full disabled:opacity-50 col-span-2"
-                        {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                      >
-                          <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
-                            {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-                          </span>
-                          <span class="label">
-                            {%- if product.selected_or_first_available_variant.available -%}
-                              {{ 'products.product.add_to_cart' | t }}
-                            {%- else -%}
-                              {{ 'products.product.sold_out' | t }}
-                            {%- endif -%}
-                          </span>
-                          {%- if block.settings.atc_show_price -%}
-                            {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
+                {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+                  <div class="product-form__buttons relative grid grid-cols-2 gap-2" id="AddToCart">
+                    <button
+                      type="submit"
+                      name="add"
+                      class="product-form__submit relative button button-primary button-md w-full disabled:opacity-50 col-span-2"
+                      {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                    >
+                        <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
+                          {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+                        </span>
+                        <span class="label">
+                          {%- if product.selected_or_first_available_variant.available -%}
+                            {{ 'products.product.add_to_cart' | t }}
+                          {%- else -%}
+                            {{ 'products.product.sold_out' | t }}
                           {%- endif -%}
-                      </button>
-                    </div>
-                    {%- assign product_collection_handles = product.collections | map: 'handle' -%}
-                    {%- if product_collection_handles contains 'skincare-sets-1' -%}
-                      <div id="PayInstallments" class="mb-10 sm:mb-8 transition-opacity">
-                        <div class="absolute inset-x-0 leading-tight py-2 text-sm">
-                          {{ form | payment_terms }}
-                        </div>
+                        </span>
+                        {%- if block.settings.atc_show_price -%}
+                          {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
+                        {%- endif -%}
+                    </button>
+                  </div>
+                  {%- assign product_collection_handles = product.collections | map: 'handle' -%}
+                  {%- if product_collection_handles contains 'skincare-sets-1' -%}
+                    <div id="PayInstallments" class="mb-10 sm:mb-8 transition-opacity">
+                      <div class="absolute inset-x-0 leading-tight py-2 text-sm">
+                        {{ form | payment_terms }}
                       </div>
-                    {%- endif -%}
-                  {%- endform -%}
-                </product-form>
-              </div>
-            {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endform -%}
+              </product-form>
+            </div>
           {%- endcase -%}
         {%- endfor -%}
       </div>
@@ -406,13 +397,6 @@
     "description": {{ product.description | strip_html | json }},
     {%- if product.selected_or_first_available_variant.sku != blank -%}
       "sku": {{ product.selected_or_first_available_variant.sku | json }},
-    {%- endif -%}
-    {%- if product.metafields.stamped.reviews_count != blank -%}
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": {{ product.metafields.stamped.reviews_average | round: 1 | json }},
-        "reviewCount": {{ product.metafields.stamped.reviews_count }}
-      },
     {%- endif -%}
     "brand": {
       "@type": "Brand",

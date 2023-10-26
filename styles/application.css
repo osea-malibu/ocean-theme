@@ -549,34 +549,6 @@
 
 /* this will always be included in your compiled CSS */
 
-/* Stamped */
-.stamped-badge,
-.stamped-badge .stamped-starrating {
-  @apply leading-4;
-}
-.stamped-badge .stamped-fa-star {
-  @apply -mr-0.5 leading-4;
-}
-.stamped-badge .stamped-fa-star:before {
-  @apply text-base leading-4;
-}
-.stamped-badge .stamped-badge-caption {
-  @apply text-xs underline ml-0.5;
-}
-.compact .stamped-badge .stamped-badge-caption[data-reviews][data-label] > span {
-  @apply !hidden;
-}
-.compact .stamped-badge,
-.compact .stamped-badge .stamped-starrating {
-  @apply leading-3;
-}
-.compact .stamped-badge .stamped-fa-star {
-  @apply leading-3;
-}
-.compact .stamped-badge .stamped-fa-star:before {
-  @apply text-sm leading-3;
-}
-
 /* Workable job listing */
 .whr-date {
   @apply hidden;

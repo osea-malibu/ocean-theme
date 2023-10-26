@@ -32,164 +32,162 @@
       </a>
     </div>
 
-      <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
-        {{- card_product.metafields.custom_fields.short_description | escape -}}
-      </p>
+    <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
+      {{- card_product.metafields.custom_fields.short_description | escape -}}
+    </p>
 
-    {%- unless card_product.type == 'Free Gift' -%}
-      <div class="mt-auto overflow-hidden px-1 -mx-1">
-        {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
-        {%- if card_product.variants.size > 1 and variant_picker_type != 'none' -%}
-          {%- assign dropdown_product_handles = 'undaria-algae-oil, anti-aging-body-balm' | split: ', ' -%}
-          {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' or dropdown_product_handles contains card_product.handle -%}
-            <variant-selects
-              class="no-js-hidden block mt-1"
-              data-section="{{ card_product.id }}-{{ section_id }}"
-              data-url="{{ card_product.url }}"
-              data-update-url="false"
-            >
+    <div class="mt-auto overflow-hidden px-1 -mx-1">
+      {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
+      {%- if card_product.variants.size > 1 and variant_picker_type != 'none' -%}
+        {%- assign dropdown_product_handles = 'undaria-algae-oil, anti-aging-body-balm' | split: ', ' -%}
+        {%- if variant_picker_type == 'dropdown' or dropdown_product_handles contains card_product.handle -%}
+          <variant-selects
+            class="no-js-hidden block mt-1"
+            data-section="{{ card_product.id }}-{{ section_id }}"
+            data-url="{{ card_product.url }}"
+            data-update-url="false"
+          >
+          {%- for option in card_product.options_with_values -%}
+            <div class="relative block">
+              <label class="absolute top-0 sm:top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
+                {{- option.name -}}
+              </label>
+              <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
+                class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}"
+                name="options[{{ option.name | escape }}]"
+                form="{{ product_form_id }}"
+              >
+                {%- for value in option.values -%}
+                  <option
+                    value="{{ value | escape }}"
+                    {% if default_to_mini and forloop.last %}
+                      selected="selected"
+                    {% elsif default_to_mini != true and option.selected_value == value %}
+                      selected="selected"
+                    {% endif %}
+                  >
+                    {{ value }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endfor -%}
+
+            <script type="application/json">
+              {{ card_product.variants | json }}
+            </script>
+          </variant-selects>
+        {%- else -%}
+          <variant-radios
+            class="no-js-hidden block mt-1.5"
+            data-section="{{ card_product.id }}-{{ section_id }}"
+            data-url="{{ card_product.url }}"
+            data-update-url="false"
+          >
             {%- for option in card_product.options_with_values -%}
-              <div class="relative block">
-                <label class="absolute top-0 sm:top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
-                  {{- option.name -}}
-                </label>
-                <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                  class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}"
-                  name="options[{{ option.name | escape }}]"
-                  form="{{ product_form_id }}"
-                >
-                  {%- for value in option.values -%}
-                    <option
+              <fieldset class="js flex{% if option.name == 'Scent' %} sr-only{% endif %}">
+                <legend class="sr-only">{{ option.name }}</legend>
+                {%- for value in option.values -%}
+                  <div>
+                    <input type="radio"
+                      id="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
+                      class="peer hidden"
+                      name="{{ option.name }}"
                       value="{{ value | escape }}"
+                      form="{{ product_form_id }}"
                       {% if default_to_mini and forloop.last %}
-                        selected="selected"
+                        checked
                       {% elsif default_to_mini != true and option.selected_value == value %}
-                        selected="selected"
+                        checked
                       {% endif %}
                     >
+                    <label
+                      class="button button-xs block button-secondary rounded-full lowercase peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
+                      for="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
+                      tabindex="0"
+                    >
                       {{ value }}
-                    </option>
-                  {%- endfor -%}
-                </select>
-              </div>
+                    </label>
+                  </div>
+                {%- endfor -%}
+              </fieldset>
             {%- endfor -%}
 
-              <script type="application/json">
-                {{ card_product.variants | json }}
-              </script>
-            </variant-selects>
-          {%- else -%}
-            <variant-radios
-              class="no-js-hidden block mt-1.5"
-              data-section="{{ card_product.id }}-{{ section_id }}"
-              data-url="{{ card_product.url }}"
-              data-update-url="false"
-            >
-              {%- for option in card_product.options_with_values -%}
-                <fieldset class="js flex{% if option.name == 'Scent' %} sr-only{% endif %}">
-                  <legend class="sr-only">{{ option.name }}</legend>
-                  {%- for value in option.values -%}
-                    <div>
-                      <input type="radio"
-                        id="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
-                        class="peer hidden"
-                        name="{{ option.name }}"
-                        value="{{ value | escape }}"
-                        form="{{ product_form_id }}"
-                        {% if default_to_mini and forloop.last %}
-                          checked
-                        {% elsif default_to_mini != true and option.selected_value == value %}
-                          checked
-                        {% endif %}
-                      >
-                      <label
-                        class="button button-xs block button-secondary rounded-full lowercase peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
-                        for="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
-                        tabindex="0"
-                      >
-                        {{ value }}
-                      </label>
-                    </div>
-                  {%- endfor -%}
-                </fieldset>
-              {%- endfor -%}
-
-              <script type="application/json">
-                {{ card_product.variants | json }}
-              </script>
-            </variant-radios>
-          {%- endif -%}
+            <script type="application/json">
+              {{ card_product.variants | json }}
+            </script>
+          </variant-radios>
         {%- endif -%}
-        <product-form data-cart-type="{{ settings.cart_type }}" class="relative">
-          <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
-            {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
-            <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
-          </div>
+      {%- endif -%}
+      <product-form data-cart-type="{{ settings.cart_type }}" class="relative">
+        <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
+          {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
+          <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
+        </div>
 
-          {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-            {%- liquid
-              if default_to_mini
-                assign mini_index = card_product.variants.size | minus: 1
-                assign default_id = card_product.variants[mini_index].id
-              else 
-                assign default_id = card_product.selected_or_first_available_variant.id
-              endif
-            -%}
-            <input type="hidden" name="id" value="{{ default_id }}" disabled />
-            <button
-              id="{{ product_form_id }}-submit"
-              type="submit"
-              name="add"
-              aria-haspopup="dialog"
-              aria-live="polite"
-              class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
-              {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-            >
-              <span class="sr-only">{{ card_product.title }} - </span>
-              {%- if card_product.selected_or_first_available_variant.available -%}
-                <span class="label">{{ 'products.product.add_to_cart' | t }}</span>
-                <span class="sr-only"> - </span>
-                {%- liquid
-                  assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
-                  assign set_products = collections['skincare-sets-1'].products | map: 'handle'
-                  assign is_set = false
-                  assign show_range = true
-                  assign price_class = 'tracking-wide'
-                  if set_products contains card_product.handle
-                    assign is_set = true
-                  endif
-                  if is_set
-                    assign show_range = false
-                    assign price_class = 'tracking-wide set-price'
-                  endif
-                -%}
-                {%- render 'price',
-                  product: card_product,
-                  price_id: price_id,
-                  price_class: price_class,
-                  show_price_range: show_range,
-                  use_variant: true,
-                  default_to_mini: default_to_mini
-                -%}
-              {%- else -%}
-                <span class="label">{{ 'products.product.sold_out' | t }}</span>
-              {%- endif -%}
-            </button>
-            {%- if card_product.selected_or_first_available_variant.available == false -%}
-              <div class="absolute z-10 inset-x-0 bottom-0 h-10 sm:h-[42px]">
-                <div
-                  class="klaviyo-product-container"
-                  data-klaviyo-handle="{{ card_product.handle }}"
-                  id="klaviyo-data-handle-{{ card_product.handle }}-{{ section_id }}"
-                >
-                  <div class="klaviyo-button-container !inset-0 !w-full !opacity-100 !-ml-0"></div>
-                </div>
-              </div>
+        {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          {%- liquid
+            if default_to_mini
+              assign mini_index = card_product.variants.size | minus: 1
+              assign default_id = card_product.variants[mini_index].id
+            else 
+              assign default_id = card_product.selected_or_first_available_variant.id
+            endif
+          -%}
+          <input type="hidden" name="id" value="{{ default_id }}" disabled />
+          <button
+            id="{{ product_form_id }}-submit"
+            type="submit"
+            name="add"
+            aria-haspopup="dialog"
+            aria-live="polite"
+            class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
+            {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+          >
+            <span class="sr-only">{{ card_product.title }} - </span>
+            {%- if card_product.selected_or_first_available_variant.available -%}
+              <span class="label">{{ 'products.product.add_to_cart' | t }}</span>
+              <span class="sr-only"> - </span>
+              {%- liquid
+                assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
+                assign set_products = collections['skincare-sets-1'].products | map: 'handle'
+                assign is_set = false
+                assign show_range = true
+                assign price_class = 'tracking-wide'
+                if set_products contains card_product.handle
+                  assign is_set = true
+                endif
+                if is_set
+                  assign show_range = false
+                  assign price_class = 'tracking-wide set-price'
+                endif
+              -%}
+              {%- render 'price',
+                product: card_product,
+                price_id: price_id,
+                price_class: price_class,
+                show_price_range: show_range,
+                use_variant: true,
+                default_to_mini: default_to_mini
+              -%}
+            {%- else -%}
+              <span class="label">{{ 'products.product.sold_out' | t }}</span>
             {%- endif -%}
-          {%- endform -%}
-        </product-form>
-      </div>
-    {%- endunless -%}
+          </button>
+          {%- if card_product.selected_or_first_available_variant.available == false -%}
+            <div class="absolute z-10 inset-x-0 bottom-0 h-10 sm:h-[42px]">
+              <div
+                class="klaviyo-product-container"
+                data-klaviyo-handle="{{ card_product.handle }}"
+                id="klaviyo-data-handle-{{ card_product.handle }}-{{ section_id }}"
+              >
+                <div class="klaviyo-button-container !inset-0 !w-full !opacity-100 !-ml-0"></div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+      </product-form>
+    </div>
   </div>
 
   <div class="relative block overflow-hidden no-underline mb-2" tabindex="-1">
