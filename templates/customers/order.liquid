@@ -88,17 +88,11 @@
                       {%- endif -%}
 
                       {%- assign property_size = line_item.properties | size -%}
-                      {%- unless line_item.selling_plan_allocation == nil and property_size == 0 -%}
+                      {%- unless property_size == 0 -%}
                         <div class="properties text-sm">
                           {%- unless line_item.product.has_only_default_variant -%}
                             <span>
                               {{ line_item.variant.title }}
-                            </span>
-                          {%- endunless -%}
-                          {%- unless line_item.selling_plan_allocation == nil -%}
-                            <span class="flex items-center gap-1 whitespace-nowrap">
-                              {%- render 'icon-recurring', classes: 'w-3 h-3 hidden 2xs:block', aria_hidden: true, stroke_width: 2.5 -%}
-                              {{- line_item.selling_plan_allocation.selling_plan.name | replace: 'Delivery', 'Deliver' -}}
                             </span>
                           {%- endunless -%}
                         </div>
