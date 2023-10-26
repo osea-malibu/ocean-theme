@@ -23,10 +23,7 @@
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
     
-    {% liquid
-      render 'meta-tags'
-      render 'prefetch'
-    %}
+    {% render 'meta-tags' %}
     
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
