@@ -57,13 +57,6 @@
                 <button type="submit" id="checkout" class="button button-primary w-full md:w-auto" name="checkout"{% if cart == empty %} disabled{% endif %} form="cart">
                   {{ 'sections.cart.checkout' | t }}
                 </button>
-
-                <catch-callout
-                  id="catch-callout-cart"
-                  price="{{ cart.total_price | money_without_currency | times: 100 | ceil }}"
-                  page-type="cart"
-                  border-style="none-no-padding">
-                </catch-callout>
               </div>
 
               {%- if additional_checkout_buttons -%}

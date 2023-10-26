@@ -400,11 +400,7 @@
     {%- if product.selected_or_first_available_variant.featured_media -%}
       {%- assign media_size = product.selected_or_first_available_variant.featured_media.preview_image.width -%}
       "image": [
-        {%- if product.metafields.my_fields.white_image_bg != blank -%}
-          {{ product.metafields.my_fields.white_image_bg | image_url: width: 1200 | prepend: "https:" | json }}
-        {%- else -%}
-          {{ product.selected_or_first_available_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
-        {%- endif -%}
+        {{ product.selected_or_first_available_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
       ],
     {%- endif -%}
     "description": {{ product.description | strip_html | json }},
