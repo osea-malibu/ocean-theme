@@ -185,6 +185,7 @@
     },
     "key-ingredients": {
       "type": "product-key-ingredients",
+      "disabled": true,
       "settings": {
         "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
         "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
@@ -209,7 +210,6 @@
       "block_order": [
         "95142030-9e11-4090-aa41-a3e9d4183397"
       ],
-      "disabled": true,
       "custom_css": [
 
       ],
