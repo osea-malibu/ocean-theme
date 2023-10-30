@@ -168,9 +168,18 @@
             {%- when '@app' -%}
               {% render block %}
             {%- when 'text' -%}
-              <p class="{{ block.settings.text_classes }}" {{ block.shopify_attributes }}>
-                {{- block.settings.text -}}
-              </p>
+              <div class="{{ block.settings.text_block_classes }}" {{ block.shopify_attributes }}>
+                {%- if block.settings.text_block_heading_classes != blank -%}
+                  <h2 class="{{ block.settings.text_block_heading_classes }}">
+                    {{- block.settings.text_block_heading -}}
+                  </h2>
+                {%- endif -%}
+                {%- if block.settings.text_classes != blank -%}
+                  <p class="{{ block.settings.text_classes }}">
+                    {{- block.settings.text -}}
+                  </p>
+                {%- endif -%}
+              </div>
             {%- when 'title' -%}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
                 {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' -}}
@@ -863,6 +872,22 @@
       "type": "text",
       "name": "t:sections.main-product.blocks.text.name",
       "settings": [
+        {
+          "type": "textarea",
+          "id": "text_block_classes",
+          "label": "Text block classes"
+        },
+        {
+          "type": "text",
+          "id": "text_block_heading",
+          "default": "Text heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "text_block_heading_classes",
+          "label": "Heading classes"
+        },
         {
           "type": "text",
           "id": "text",
