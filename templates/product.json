@@ -59,24 +59,10 @@
             "upsell_enable_partner": true
           }
         },
-        "b9fca756-f349-4d7c-9a6f-f6288a4504bf": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text_block_heading": "Scent profile",
-            "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "text": "{{ product.metafields.custom.scent_profile_short.value }}",
-            "text_block_type": "paragraph",
-            "text_fallback": "{{ product.metafields.custom.scent_profile.value }}",
-            "text_fallback_type": "paragraph",
-            "text_classes": "text-sm font-book",
-            "text_block_classes": "col-span-4 mt-6 hidden"
-          }
-        },
         "ab50b385-6599-4b94-8014-2dd6ab1517d4": {
           "type": "benefits",
           "settings": {
-            "benefits_classes": "benefits col-span-4 mt-6 hidden",
+            "benefits_classes": "benefits col-span-4 mt-6",
             "benefits_hide_icons": true,
             "benefits_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "benefits_content_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book"
@@ -85,7 +71,7 @@
         "9b65c02a-2972-449a-b590-d40d4a256d04": {
           "type": "skin_types",
           "settings": {
-            "skin_types_classes": "skin-types col-span-4 mt-6 hidden",
+            "skin_types_classes": "skin-types col-span-4 mt-6",
             "skin_types_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "skin_types_content_classes": "text-sm font-book leading-tight tracking-wide li:mb-2"
           }
@@ -93,7 +79,7 @@
         "d08cdbd7-b608-45ad-bfec-e65bb7339509": {
           "type": "scent_profile",
           "settings": {
-            "scent_profile_classes": "scent-profile col-span-4 mt-6 hidden",
+            "scent_profile_classes": "scent-profile col-span-4 mt-6",
             "scent_profile_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "scent_profile_content_classes": "text-sm font-book"
           }
@@ -114,30 +100,12 @@
             "is_collapsible": true
           }
         },
-        "831925fc-94e3-4711-a5f3-84a1ed980d42": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Skin Types",
-            "content": "{{ product.metafields.custom_fields.skin_types.value }}",
-            "tab_classes": "info skin-types col-span-12",
-            "default_open": false
-          }
-        },
         "1d1eb74a-bad3-4c59-84b1-94797c19dd10": {
           "type": "collapsible_tab",
           "settings": {
             "heading": "How to Use",
             "content": "{{ product.metafields.custom_fields.how_it_works.value }}",
             "tab_classes": "info how-to-use col-span-12",
-            "default_open": false
-          }
-        },
-        "2be71f88-a851-442c-a3db-86272956d562": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Scent Profile",
-            "content": "{{ product.metafields.custom.scent_profile.value }}",
-            "tab_classes": "info scent-profile col-span-12",
             "default_open": false
           }
         },
@@ -157,15 +125,12 @@
         "quantity_selector",
         "buy_buttons",
         "f8ca449b-3a83-411f-ac44-40e011b825f3",
-        "b9fca756-f349-4d7c-9a6f-f6288a4504bf",
         "ab50b385-6599-4b94-8014-2dd6ab1517d4",
         "9b65c02a-2972-449a-b590-d40d4a256d04",
         "d08cdbd7-b608-45ad-bfec-e65bb7339509",
         "b8e1b69d-3824-4a7b-b330-2ce69f67159c",
         "9daf20a0-2368-43a0-89b0-22bd74e7779e",
-        "831925fc-94e3-4711-a5f3-84a1ed980d42",
         "1d1eb74a-bad3-4c59-84b1-94797c19dd10",
-        "2be71f88-a851-442c-a3db-86272956d562",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
       "settings": {
