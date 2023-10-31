@@ -181,7 +181,7 @@
                     </p>
                   {%- elsif block.settings.text_block_type == 'list' -%}
                     <ul class="{{ block.settings.text_classes }}">
-                      {%- assign text_list = block.settings.text | split: ', ' | remove: 'and ' -%}
+                      {%- assign text_list = block.settings.text | remove: 'and ' | split: ', ' -%}
                       {%- for list_item in text_list -%}
                         <li>{{- list_item -}}</li>
                       {%- endfor -%}
