@@ -78,7 +78,7 @@
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "text_block_type": "list",
             "text": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
-            "text_fallback": "",
+            "text_fallback": "{{ product.metafields.custom_fields.skin_types.value }}",
             "text_classes": "icon-list bullet !pl-5 li:mb-2 text-sm -ml-0.5 font-book",
             "text_block_classes": "col-span-4 mt-6 hidden"
           }
