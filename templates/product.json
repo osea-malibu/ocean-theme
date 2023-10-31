@@ -75,11 +75,11 @@
           "type": "text",
           "disabled": true,
           "settings": {
-            "text_block_heading": "Benefits",
+            "text_block_heading": "Skin Types",
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-1",
             "text_block_type": "list",
-            "text": "{{ product.metafields.custom.benefits | metafield_text }}",
-            "text_classes": "icon-list check icon-list-sm li:mb-1",
+            "text": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
+            "text_classes": "icon-list bullet !pl-5 li:mb-1",
             "text_block_classes": "col-span-4 mt-6"
           }
         },
