@@ -264,86 +264,23 @@
                   {%- endif -%}
                 </div>
               {%- endif -%}
-            {%- when 'description' -%}
-              {%- if product.description != blank -%}
-                <div class="{{ block.settings.description_classes }}">
-                  {%- if block.settings.is_collapsible -%}
-                    {%- assign description_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
-                    {% render 'accordion-item',
-                      id: description_id,
-                      summary: "Product description",
-                      content: product.description,
-                      default_open: true,
-                      content_classes: 'max-h-80 overflow-y-auto'
-                    %}
-                  {%- else -%}
-                    {{ product.description }}
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-            {%- when 'how_to_use' -%}
-              {%- assign how_to_use = product.metafields.custom.how_to_use -%}
-              {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works -%}
-                {%- capture how_to_html -%} 
-                  {%- if how_to_use != blank -%}
-                    <table>
-                      <tr class="align-top td:pb-2">
-                        <td><b class="mr-1">How:</b></td>
-                        <td>{{ how_to_use.value.how }}</td>
-                      </tr>
-                      <tr class="align-top td:pb-2">
-                        <td><b class="mr-1">When:</b></td>
-                        <td>{{ how_to_use.value.when }}</td>
-                      </tr>
-                      {%- if how_to_use.value.pro_tip != nil -%}
-                        <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
-                          <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
-                          <td>{{ how_to_use.value.pro_tip }}</td>
-                        </tr>
-                      {%- endif -%}
-                      {%- if how_to_use.value.warnings.size > 0 -%}
-                        <tr class="align-top">
-                          <td><b class="sr-only">Warnings:</b></td>
-                          <td>
-                            <ul class="text-sm">
-                              {%- for warning in how_to_use.value.warnings -%}
-                                <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
-                              {%- endfor -%}
-                            </ul>
-                          </td>
-                        </tr>
-                      {%- endif -%}
-                    </table>
-                  {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
-                    {{ product.metafields.custom_fields.how_it_works }}
-                  {%- endif -%}
-                {%- endcapture -%}
-                <div class="{{ block.settings.wrapper_classes }}">
-                  {%- if block.settings.is_collapsible -%}
-                    {%- assign how_to_use_id = "HowToUse-" | append: block.id | append: "-" | append: section.id -%}
-                    {% render 'accordion-item',
-                      id: how_to_use_id,
-                      summary: "How to Use",
-                      content: how_to_html,
-                      default_open: false,
-                      content_classes: 'max-h-80 overflow-y-auto'
-                    %}
-                  {%- else -%}
-                    {{ how_to_html }}
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
             {%- when 'info_tabs' -%}
+              {%- liquid
+                assign tabs = '' | split: ', '
+                if block.settings.info_tab_description
+                  assign tabs = tabs | concat: 'Description'
+                endif
+              -%}
+              <script>console.log("tabs", {{ tabs }})</script>
               <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="pdp-info-tabs hidden col-span-12 mt-4">
                 <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
-                  {%- assign tabs = 'Description, How to Use, Sustainability' | split: ', ' -%}
                   {%- for tab in tabs -%}
                     <li
                       role="tab"
                       aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
                       tabindex="0"
                       aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 font-bold uppercase text-xs tracking-widest px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %}{% if tab == 'Sustainability' %} sustainability hidden{% endif %}"
+                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 font-bold uppercase text-xs tracking-widest px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %}"
                     >
                       {{ tab }}
                     </li>
@@ -361,9 +298,9 @@
                       <div>{{ product.metafields.custom_fields.description }}</div>
                     {%- when 'How to Use' -%}
                       {%- assign how_to_use = product.metafields.custom.how_to_use -%}
-                      {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works -%}
+                      {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank -%}
                         {%- capture how_to_html -%} 
-                          {%- if how_to_use != blank -%}
+                          {%- if product.metafields.custom.how_to_use != blank -%}
                             <table>
                               <tr class="align-top td:pb-2">
                                 <td><b class="mr-1">How:</b></td>
@@ -401,7 +338,7 @@
                         </div>
                       {%- endif -%}
                     {%- when 'Sustainability' -%}
-                      <div class="sustainability hidden">
+                      <div class="sustainability">
                         <div class="skeleton bg-wave-200 absolute z-0 inset-4 rounded-xl"></div>
                         <div class="relative z-10">
                           {%- comment -%} theme-check-disable RemoteAsset {% endcomment %}
@@ -940,40 +877,6 @@
           "type": "checkbox",
           "id": "atc_show_price",
           "label": "Show price in button"
-        }
-      ]
-    },
-    {
-      "type": "description",
-      "name": "t:sections.main-product.blocks.description.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "description_classes",
-          "label": "Description classes"
-        },
-        {
-          "type": "checkbox",
-          "id": "is_collapsible",
-          "label": "Is collapsible tab"
-        }
-      ]
-    },
-    {
-      "type": "how_to_use",
-      "name": "How to Use",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "wrapper_classes",
-          "label": "Wrapper classes"
-        },
-        {
-          "type": "checkbox",
-          "id": "is_collapsible",
-          "label": "Is collapsible tab"
         }
       ]
     },
