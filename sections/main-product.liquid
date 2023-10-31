@@ -268,7 +268,7 @@
                 <div class="{{ block.settings.skin_types_classes }}">
                   <h2 class="{{ block.settings.skin_types_label_classes }}">Skin types</h2>
                   {%- if product.metafields.custom.skin_types_list != blank -%}
-                    <ul class="icon-list bullet {{ block.settings.skin_types_content_classes }}">
+                    <ul class="icon-list bullet !pl-5 {{ block.settings.skin_types_content_classes }}">
                       {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
                         {%- if skin_type == 'Not for sensitive' -%}
                           <li class="flex items-center before:!hidden">
@@ -648,27 +648,6 @@
               {%- endif -%}
 
               <div class="quick-info col-span-12 gap-4 sm:gap-6 mt-8 hidden">
-                {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
-                  <div class="flex-1">
-                    <h2 class="font-medium tracking-wide mb-3">Skin types</h2>
-                    {%- if product.metafields.custom.skin_types_list != blank -%}
-                      <ul class="text-sm font-book tracking-wide icon-list bullet !pl-5">
-                        {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
-                          {%- if skin_type == 'Not for sensitive' -%}
-                            <li class="flex items-center before:!hidden">
-                              {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5', stroke_width: 2 %}
-                              <span>{{ skin_type }}</span>
-                            </li>
-                          {%- else -%}
-                            <li class="mb-4 !leading-4 last:mb-0">{{ skin_type }}</li>
-                          {%- endif -%}
-                        {%- endfor -%}
-                      </ul>
-                    {%- elsif product.metafields.custom_fields.skin_types != blank -%}
-                      <p class="text-sm font-book leading-none tracking-wide">{{ product.metafields.custom_fields.skin_types }}</p>
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
                 {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
                   <div class="flex-1">
                     <h2 class="font-medium tracking-wide mb-2">Scent profile</h2>
