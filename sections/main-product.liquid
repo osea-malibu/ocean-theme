@@ -225,9 +225,7 @@
             {%- when 'benefits' -%}
               {%- if product.metafields.custom.benefits.value.size > 0 -%}
                 <div class="{{ block.settings.benefits_classes }}">
-                  {%- unless block.settings.benefits_hide_label -%}
-                    <h2 class="{{ block.settings.benefits_label_classes }}">Benefits</h2>
-                  {%- endunless -%}
+                  <h2 class="{{ block.settings.benefits_label_classes }}">Benefits</h2>
                   <ul class="{{ block.settings.benefits_content_classes }}">
                     {%- if is_fragrance_free -%}
                       {%- if block.settings.benefits_hide_icons -%}
@@ -263,6 +261,28 @@
                       {%- endif -%}
                     {%- endfor -%}
                   </ul>
+                </div>
+              {%- endif -%}
+            {%- when 'skin_types' -%}
+              {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
+                <div class="{{ block.settings.skin_types_classes }}">
+                  <h2 class="{{ block.settings.skin_types_label_classes }}">Skin types</h2>
+                  {%- if product.metafields.custom.skin_types_list != blank -%}
+                    <ul class="icon-list bullet {{ block.settings.skin_types_content_classes }}">
+                      {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
+                        {%- if skin_type == 'Not for sensitive' -%}
+                          <li class="flex items-center before:!hidden">
+                            {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5', stroke_width: 2 %}
+                            <span>{{ skin_type }}</span>
+                          </li>
+                        {%- else -%}
+                          <li>{{ skin_type }}</li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- elsif product.metafields.custom_fields.skin_types != blank -%}
+                    <p class="{{ block.settings.skin_types_content_classes }}">{{ product.metafields.custom_fields.skin_types }}</p>
+                  {%- endif -%}
                 </div>
               {%- endif -%}
             {%- when 'description' -%}
@@ -1116,17 +1136,7 @@
         {
           "type": "textarea",
           "id": "benefits_classes",
-          "label": "Benefits wrapper classes"
-        },
-        {
-          "type": "checkbox",
-          "id": "benefits_hide_label",
-          "label": "Hide label"
-        },
-        {
-          "type": "textarea",
-          "id": "benefits_label_classes",
-          "label": "Label classes"
+          "label": "Wrapper classes"
         },
         {
           "type": "checkbox",
@@ -1135,7 +1145,34 @@
         },
         {
           "type": "textarea",
+          "id": "benefits_label_classes",
+          "label": "Label classes"
+        },
+        {
+          "type": "textarea",
           "id": "benefits_content_classes",
+          "label": "Content classes"
+        }
+      ]
+    },
+    {
+      "type": "skin_types",
+      "name": "Skin types",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "skin_types_classes",
+          "label": "Wrapper classes"
+        },
+        {
+          "type": "textarea",
+          "id": "skin_types_label_classes",
+          "label": "Label classes"
+        },
+        {
+          "type": "textarea",
+          "id": "skin_types_content_classes",
           "label": "Content classes"
         }
       ]
