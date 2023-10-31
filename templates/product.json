@@ -66,7 +66,7 @@
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "text_block_type": "list",
             "text": "{{ product.metafields.custom.benefits | metafield_text }}",
-            "text_classes": "icon-list check icon-list-sm li:mb-2 text-sm",
+            "text_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book",
             "text_block_classes": "col-span-4 mt-6 hidden"
           }
         },
@@ -77,7 +77,7 @@
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "text_block_type": "list",
             "text": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
-            "text_classes": "icon-list bullet !pl-5 li:mb-2 text-sm -ml-0.5",
+            "text_classes": "icon-list bullet !pl-5 li:mb-2 text-sm -ml-0.5 font-book",
             "text_block_classes": "col-span-4 mt-6 hidden"
           }
         },
@@ -88,7 +88,7 @@
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "text_block_type": "paragraph",
             "text": "{{ product.metafields.custom.scent_profile_short.value }}",
-            "text_classes": "text-sm",
+            "text_classes": "text-sm font-book",
             "text_block_classes": "col-span-4 mt-6 hidden"
           }
         },
