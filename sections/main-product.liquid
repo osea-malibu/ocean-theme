@@ -168,33 +168,40 @@
             {%- when '@app' -%}
               {% render block %}
             {%- when 'text' -%}
-              {%- if block.settings.text != blank -%}
+              {%- if block.settings.text != blank or block.settings.text_fallback != blank -%}
                 <div class="{{ block.settings.text_block_classes }}" {{ block.shopify_attributes }}>
                   {%- if block.settings.text_block_heading != blank -%}
                     <h2 class="{{ block.settings.text_block_heading_classes }}">
                       {{- block.settings.text_block_heading -}}
                     </h2>
                   {%- endif -%}
-                  {%- if block.settings.text != blank -%}
-                    {%- if block.settings.text_block_type == 'paragraph' -%}
-                      <div class="{{ block.settings.text_classes }}">
-                        {{- block.settings.text -}}
-                      </div>
-                    {%- elsif block.settings.text_block_type == 'list' -%}
-                      <ul class="{{ block.settings.text_classes }}">
-                        {%- assign text_list = block.settings.text | replace: ', and', ',' | replace: ' and', ',' | split: ', ' -%}
-                        {%- for list_item in text_list -%}
-                          {%- if list_item == 'Not for sensitive' -%}
-                            <li class="flex items-center before:!hidden">
-                              {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5', stroke_width: 2 %}
-                              <span>{{- list_item -}}</span>
-                            </li>
-                          {%- else -%}
-                          <li>{{- list_item -}}</li>
-                          {%- endif -%}
-                        {%- endfor -%}
-                      </ul>
-                    {%- endif -%}
+                  {%- liquid
+                    if block.settings.text != blank
+                      assign text_content = block.settings.text
+                      assign text_content_type = block.settings.text_block_type
+                    else
+                      assign text_content = block.settings.text_fallback
+                      assign text_content_type = block.settings.text_fallback_type
+                    endif
+                  -%}
+                  {%- if text_content_type == 'paragraph' -%}
+                    <div class="{{ block.settings.text_classes }}">
+                      {{- text_content -}}
+                    </div>
+                  {%- elsif text_content_type == 'list' -%}
+                    <ul class="{{ block.settings.text_classes }}">
+                      {%- assign text_list = text_content | replace: ', and', ',' | replace: ' and', ',' | split: ', ' -%}
+                      {%- for list_item in text_list -%}
+                        {%- if list_item == 'Not for sensitive' -%}
+                          <li class="flex items-center before:!hidden">
+                            {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5', stroke_width: 2 %}
+                            <span>{{- list_item -}}</span>
+                          </li>
+                        {%- else -%}
+                        <li>{{- list_item -}}</li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -902,6 +909,11 @@
           "label": "Heading classes"
         },
         {
+          "type": "text",
+          "id": "text",
+          "label": "Text content"
+        },
+        {
           "type": "select",
           "id": "text_block_type",
           "label": "Text content type",
@@ -918,14 +930,24 @@
         },
         {
           "type": "text",
-          "id": "text",
-          "label": "Text content"
-        },
-        {
-          "type": "text",
           "id": "text_fallback",
           "label": "Text content fallback",
           "info": "This will populate the content area if text content is not available"
+        },
+        {
+          "type": "select",
+          "id": "text_fallback_type",
+          "label": "Text content type",
+          "options": [
+            {
+              "value": "paragraph",
+              "label": "Paragraph"
+            },
+            {
+              "value": "list",
+              "label": "List"
+            }
+          ]
         },
         {
           "type": "textarea",
