@@ -226,13 +226,15 @@
             {%- when 'benefits' -%}
               {%- if product.metafields.custom.benefits.value.size > 0 -%}
                 <div class="{{ block.settings.benefits_classes }}">
-                  <h2 class="font-medium tracking-wide mb-2{% if block.settings.hide_label %} sr-only{% endif %}">Benefits</h2>
-                  <ul class="benefits flex">
+                  {%- unless block.settings.benefits_hide_label -%}
+                    <h2 class="{{ block.settings.benefits_label_classes }}">Benefits</h2>
+                  {%- endunless -%}
+                  <ul class="{{ block.settings.benefits_content_classes }}">
                     {%- if is_fragrance_free -%}
                       <li class="w-24 flex flex-start">
                         <div class="flex flex-col items-center">
-                          {%- render 'icon-benefit', icon: 'fragrance-free', stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
-                          <span class="text-center text-sm font-book leading-none">Fragrance<br><span class="tracking-wide">free</span></span>
+                          {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+                          <span class="text-sm font-book leading-none">Fragrance free</span>
                         </div>
                       </li>
                     {%- endif -%}
@@ -243,18 +245,17 @@
                       endif
                     -%}
                     {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
-                      <li class="w-24 flex flex-start">
-                        <div class="flex flex-col items-center">
-                          {%- assign benefit_icon = benefit | handle -%}
-                          {%- render 'icon-benefit', icon: benefit_icon, stroke_width: 4, classes: 'w-14 h-14 block mb-1', aria_hidden: true -%}
-                          {%- assign benefit_title_array = benefit | split: ' ' -%}
-                          <span class="text-center text-sm font-book leading-none tracking-wide">
-                            {%- for string in benefit_title_array -%}
-                              {{ string }}{%- unless forloop.last -%}<br/>{%- endunless -%}
-                            {%- endfor -%}
-                          </span>
-                        </div>
-                      </li>
+                      {%- assign benefit_icon = benefit | handle -%}
+                      {%- unless excluded_in_new_benefits contains benefit_icon -%}
+                        <li class="flex">
+                          <div class="flex flex-row items-center">
+                            {%- render 'icon-benefit-mini', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+                            <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
+                              {{ benefit }}
+                            </span>
+                          </div>
+                        </li>
+                      {%- endunless -%}
                     {%- endfor -%}
                   </ul>
                 </div>
@@ -1144,12 +1145,22 @@
         {
           "type": "textarea",
           "id": "benefits_classes",
-          "label": "Benefits classes"
+          "label": "Benefits wrapper classes"
         },
         {
           "type": "checkbox",
-          "id": "hide_label",
+          "id": "benefits_hide_label",
           "label": "Hide label"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_label_classes",
+          "label": "Label classes"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_content_classes",
+          "label": "Content classes"
         }
       ]
     },
