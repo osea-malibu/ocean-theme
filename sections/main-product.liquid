@@ -176,9 +176,9 @@
                 {%- endif -%}
                 {%- if block.settings.text != blank -%}
                   {%- if block.settings.text_block_type == 'paragraph' -%}
-                    <p class="{{ block.settings.text_classes }}">
+                    <div class="{{ block.settings.text_classes }}">
                       {{- block.settings.text -}}
-                    </p>
+                    </div>
                   {%- elsif block.settings.text_block_type == 'list' -%}
                     <ul class="{{ block.settings.text_classes }}">
                       {%- assign text_list = block.settings.text | remove: 'and ' | split: ', ' -%}
