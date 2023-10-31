@@ -175,9 +175,17 @@
                   </h2>
                 {%- endif -%}
                 {%- if block.settings.text != blank -%}
-                  <p class="{{ block.settings.text_classes }}">
-                    {{- block.settings.text -}}
-                  </p>
+                  {%- if block.settings.text_block_type == 'paragraph' -%}
+                    <p class="{{ block.settings.text_classes }}">
+                      {{- block.settings.text -}}
+                    </p>
+                  {%- elsif block.settings.text_block_type == 'list' -%}
+                    <ul class="{{ block.settings.text_classes }}">
+                      {%- for list_item in block.settings.text -%}
+                        <li>{{- list_item -}}</li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
                 {%- endif -%}
               </div>
             {%- when 'title' -%}
@@ -873,11 +881,6 @@
       "name": "t:sections.main-product.blocks.text.name",
       "settings": [
         {
-          "type": "textarea",
-          "id": "text_block_classes",
-          "label": "Text block classes"
-        },
-        {
           "type": "text",
           "id": "text_block_heading",
           "default": "Text heading",
@@ -913,6 +916,11 @@
           "type": "textarea",
           "id": "text_classes",
           "label": "Text classes"
+        },
+        {
+          "type": "textarea",
+          "id": "text_block_classes",
+          "label": "Text block classes"
         }
       ]
     },
