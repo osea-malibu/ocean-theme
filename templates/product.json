@@ -87,7 +87,7 @@
             "text_block_heading": "Scent profile",
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "text_block_type": "paragraph",
-            "text": "{{ product.metafields.custom.scent_profile_short.value }}",
+            "text": "{{ product.metafields.custom.scent_profile_short.value }}{{ product.metafields.custom.scent_profile.value }}",
             "text_classes": "text-sm",
             "text_block_classes": "col-span-4 mt-6 hidden"
           }
