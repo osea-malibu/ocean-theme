@@ -67,7 +67,7 @@
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-sm",
             "text_block_type": "list",
             "text": "{{ product.metafields.custom.benefits | metafield_text }}",
-            "text_classes": "icon-list check",
+            "text_classes": "icon-list check li:before:text-sm",
             "text_block_classes": "col-span-4 mt-6"
           }
         },
