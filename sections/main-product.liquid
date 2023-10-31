@@ -285,6 +285,17 @@
                   {%- endif -%}
                 </div>
               {%- endif -%}
+            {%- when 'scent_profile' -%}
+              {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
+                <div class="{{ block.settings.scent_profile_classes }}">
+                  <h2 class="{{ block.settings.scent_profile_label_classes }}">Scent profile</h2>
+                  {%- if product.metafields.custom.scent_profile_short -%}
+                    <div class="{{ block.settings.scent_profile_content_classes }}">{{ product.metafields.custom.scent_profile_short }}</div>
+                  {%- else -%}
+                    <div class="{{ block.settings.scent_profile_content_classes }}">{{ product.metafields.custom.scent_profile }}</div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
             {%- when 'description' -%}
               {%- if product.description != blank -%}
                 <div class="{{ block.settings.description_classes }}">
@@ -646,19 +657,6 @@
                   {%- endif -%}
                 </div>
               {%- endif -%}
-
-              <div class="quick-info col-span-12 gap-4 sm:gap-6 mt-8 hidden">
-                {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
-                  <div class="flex-1">
-                    <h2 class="font-medium tracking-wide mb-2">Scent profile</h2>
-                    {%- if product.metafields.custom.scent_profile_short -%}
-                      <div class="text-sm font-book">{{ product.metafields.custom.scent_profile_short }}</div>
-                    {%- else -%}
-                      <div class="text-sm font-book">{{ product.metafields.custom.scent_profile }}</div>
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
-              </div>
 
               <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="pdp-info-tabs hidden col-span-12 mt-4">
                 <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
@@ -1152,6 +1150,28 @@
         {
           "type": "textarea",
           "id": "skin_types_content_classes",
+          "label": "Content classes"
+        }
+      ]
+    },
+    {
+      "type": "scent_profile",
+      "name": "Scent profile",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "scent_profile_classes",
+          "label": "Wrapper classes"
+        },
+        {
+          "type": "textarea",
+          "id": "scent_profile_label_classes",
+          "label": "Label classes"
+        },
+        {
+          "type": "textarea",
+          "id": "scent_profile_content_classes",
           "label": "Content classes"
         }
       ]
