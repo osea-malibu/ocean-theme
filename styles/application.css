@@ -527,7 +527,7 @@
     @apply pl-4;
   }
   .icon-list.icon-list-sm li {
-    @apply before:text-[80%] before:-ml-4 before:mr-0.5;
+    @apply before:text-[80%] before:-ml-4 before:subpixel-antialiased;
   }
 
   /* fancy scrollbars */

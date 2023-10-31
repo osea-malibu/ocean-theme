@@ -272,24 +272,12 @@
         tabindex="-1"
       >
         {%- liquid
-          comment
           if custom_default_image != nil
             assign default_image = custom_default_image
           elsif default_to_mini and card_product.title != 'Digital Gift Card'
             assign default_image = card_product.variants[mini_index].featured_media
-          elsif card_product.metafields.custom.product_image_transparent != blank
+          elsif card_product.metafields.custom.product_image_transparent != nil
             assign default_image = card_product.metafields.custom.product_image_transparent
-          elsif card_product.selected_or_first_available_variant.featured_media != nil
-            assign default_image = card_product.selected_or_first_available_variant.featured_media
-          else
-            assign default_image = card_product.featured_media
-          endif
-          endcomment
-          
-          if custom_default_image != nil
-            assign default_image = custom_default_image
-          elsif default_to_mini and card_product.title != 'Digital Gift Card'
-            assign default_image = card_product.variants[mini_index].featured_media
           elsif card_product.selected_or_first_available_variant.featured_media != nil
             assign default_image = card_product.selected_or_first_available_variant.featured_media
           else
