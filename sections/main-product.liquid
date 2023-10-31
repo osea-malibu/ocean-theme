@@ -233,7 +233,7 @@
               {%- endif -%}
             {%- when 'skin_types' -%}
               {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
-                <div class="{{ block.settings.skin_types_classes }}">
+                <div class="{{ block.settings.skin_types_classes }}{% if product.metafields.custom.scent_profile == blank and product.metafields.custom.scent_profile_short == blank %} -mr-4{% endif %}">
                   <h2 class="{{ block.settings.skin_types_label_classes }}">Skin types</h2>
                   {%- if product.metafields.custom.skin_types_list != blank -%}
                     <ul class="icon-list bullet !pl-5 {{ block.settings.skin_types_content_classes }}">
