@@ -274,7 +274,7 @@
                       aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
                       tabindex="0"
                       aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tabs_label_classes }}"
+                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }}"
                     >
                       {{ tab }}
                     </li>
