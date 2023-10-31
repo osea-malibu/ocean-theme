@@ -61,36 +61,42 @@
         },
         "f032012f-e14d-45aa-bbc2-5a863adcb18e": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text_block_heading": "Benefits",
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "text_block_type": "list",
             "text": "{{ product.metafields.custom.benefits | metafield_text }}",
+            "text_block_type": "list",
             "text_fallback": "",
+            "text_fallback_type": "paragraph",
             "text_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book",
             "text_block_classes": "col-span-4 mt-6 hidden"
           }
         },
         "d98cb801-a4cc-4468-8744-33fbd0bd06ef": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text_block_heading": "Skin Types",
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "text_block_type": "list",
             "text": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
+            "text_block_type": "list",
             "text_fallback": "{{ product.metafields.custom_fields.skin_types.value }}",
+            "text_fallback_type": "paragraph",
             "text_classes": "icon-list bullet !pl-5 li:mb-2 text-sm -ml-0.5 font-book",
             "text_block_classes": "col-span-4 mt-6 hidden"
           }
         },
         "b9fca756-f349-4d7c-9a6f-f6288a4504bf": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text_block_heading": "Scent profile",
             "text_block_heading_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "text_block_type": "paragraph",
             "text": "{{ product.metafields.custom.scent_profile_short.value }}",
+            "text_block_type": "paragraph",
             "text_fallback": "{{ product.metafields.custom.scent_profile.value }}",
+            "text_fallback_type": "paragraph",
             "text_classes": "text-sm font-book",
             "text_block_classes": "col-span-4 mt-6 hidden"
           }
