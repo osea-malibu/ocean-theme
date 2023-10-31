@@ -265,14 +265,8 @@
                 </div>
               {%- endif -%}
             {%- when 'info_tabs' -%}
-              {%- liquid
-                assign tabs = '' | split: ', '
-                if block.settings.info_tab_description
-                  assign tabs = tabs | concat: 'Description'
-                endif
-              -%}
-              <script>console.log("tabs", {{ tabs }})</script>
-              <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="pdp-info-tabs hidden col-span-12 mt-4">
+              {%- assign tabs = 'Description, How to Use' | split: ', ' -%}
+              <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
                 <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
                   {%- for tab in tabs -%}
                     <li
@@ -280,7 +274,7 @@
                       aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
                       tabindex="0"
                       aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 font-bold uppercase text-xs tracking-widest px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %}"
+                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tabs_label_classes }}"
                     >
                       {{ tab }}
                     </li>
@@ -291,53 +285,53 @@
                     id="tab-{{ forloop.index }}-{{ block.id }}"
                     role="tabpanel"
                     aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-                    class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px"
+                    class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
                   >
                     {%- case tab -%}
-                    {%- when 'Description' -%}
-                      <div>{{ product.metafields.custom_fields.description }}</div>
-                    {%- when 'How to Use' -%}
-                      {%- assign how_to_use = product.metafields.custom.how_to_use -%}
-                      {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank -%}
-                        {%- capture how_to_html -%} 
-                          {%- if product.metafields.custom.how_to_use != blank -%}
-                            <table>
-                              <tr class="align-top td:pb-2">
-                                <td><b class="mr-1">How:</b></td>
-                                <td>{{ how_to_use.value.how }}</td>
-                              </tr>
-                              <tr class="align-top td:pb-2">
-                                <td><b class="mr-1">When:</b></td>
-                                <td>{{ how_to_use.value.when }}</td>
-                              </tr>
-                              {%- if how_to_use.value.pro_tip != nil -%}
-                                <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
-                                  <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
-                                  <td>{{ how_to_use.value.pro_tip }}</td>
+                      {%- when 'Description' -%}
+                        <div>{{ product.metafields.custom_fields.description }}</div>
+                      {%- when 'How to Use' -%}
+                        {%- assign how_to_use = product.metafields.custom.how_to_use -%}
+                        {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank -%}
+                          {%- capture how_to_html -%} 
+                            {%- if product.metafields.custom.how_to_use != blank -%}
+                              <table>
+                                <tr class="align-top td:pb-2">
+                                  <td><b class="mr-1">How:</b></td>
+                                  <td>{{ how_to_use.value.how }}</td>
                                 </tr>
-                              {%- endif -%}
-                              {%- if how_to_use.value.warnings.size > 0 -%}
-                                <tr class="align-top">
-                                  <td><b class="sr-only">Warnings:</b></td>
-                                  <td>
-                                    <ul class="text-sm">
-                                      {%- for warning in how_to_use.value.warnings -%}
-                                        <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
-                                      {%- endfor -%}
-                                    </ul>
-                                  </td>
+                                <tr class="align-top td:pb-2">
+                                  <td><b class="mr-1">When:</b></td>
+                                  <td>{{ how_to_use.value.when }}</td>
                                 </tr>
-                              {%- endif -%}
-                            </table>
-                          {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
-                            {{ product.metafields.custom_fields.how_it_works }}
-                          {%- endif -%}
-                        {%- endcapture -%}
-                        <div class="">
-                          {{ how_to_html }}
-                        </div>
-                      {%- endif -%}
-                    {%- when 'Sustainability' -%}
+                                {%- if how_to_use.value.pro_tip != nil -%}
+                                  <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
+                                    <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
+                                    <td>{{ how_to_use.value.pro_tip }}</td>
+                                  </tr>
+                                {%- endif -%}
+                                {%- if how_to_use.value.warnings.size > 0 -%}
+                                  <tr class="align-top">
+                                    <td><b class="sr-only">Warnings:</b></td>
+                                    <td>
+                                      <ul class="text-sm">
+                                        {%- for warning in how_to_use.value.warnings -%}
+                                          <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
+                                        {%- endfor -%}
+                                      </ul>
+                                    </td>
+                                  </tr>
+                                {%- endif -%}
+                              </table>
+                            {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
+                              {{ product.metafields.custom_fields.how_it_works }}
+                            {%- endif -%}
+                          {%- endcapture -%}
+                          <div class="">
+                            {{ how_to_html }}
+                          </div>
+                        {%- endif -%}
+                      {%- when 'Sustainability' -%}
                       <div class="sustainability">
                         <div class="skeleton bg-wave-200 absolute z-0 inset-4 rounded-xl"></div>
                         <div class="relative z-10">
@@ -899,25 +893,6 @@
           "type": "textarea",
           "id": "info_tab_content_classes",
           "label": "Content classes"
-        },
-        {
-          "type": "header",
-          "content": "Tabs to include"
-        },
-        {
-          "type": "checkbox",
-          "id": "info_tab_description",
-          "label": "Description"
-        },
-        {
-          "type": "checkbox",
-          "id": "info_tab_how_to_use",
-          "label": "How to Use"
-        },
-        {
-          "type": "checkbox",
-          "id": "info_tab_sustainability",
-          "label": "Sustainability"
         }
       ]
     },
