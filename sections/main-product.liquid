@@ -168,27 +168,36 @@
             {%- when '@app' -%}
               {% render block %}
             {%- when 'text' -%}
-              <div class="{{ block.settings.text_block_classes }}" {{ block.shopify_attributes }}>
-                {%- if block.settings.text_block_heading != blank -%}
-                  <h2 class="{{ block.settings.text_block_heading_classes }}">
-                    {{- block.settings.text_block_heading -}}
-                  </h2>
-                {%- endif -%}
-                {%- if block.settings.text != blank -%}
-                  {%- if block.settings.text_block_type == 'paragraph' -%}
-                    <div class="{{ block.settings.text_classes }}">
-                      {{- block.settings.text -}}
-                    </div>
-                  {%- elsif block.settings.text_block_type == 'list' -%}
-                    <ul class="{{ block.settings.text_classes }}">
-                      {%- assign text_list = block.settings.text | remove: 'and ' | split: ', ' -%}
-                      {%- for list_item in text_list -%}
-                        <li>{{- list_item -}}</li>
-                      {%- endfor -%}
-                    </ul>
+              {%- if block.settings.text != blank -%}
+                <div class="{{ block.settings.text_block_classes }}" {{ block.shopify_attributes }}>
+                  {%- if block.settings.text_block_heading != blank -%}
+                    <h2 class="{{ block.settings.text_block_heading_classes }}">
+                      {{- block.settings.text_block_heading -}}
+                    </h2>
                   {%- endif -%}
-                {%- endif -%}
-              </div>
+                  {%- if block.settings.text != blank -%}
+                    {%- if block.settings.text_block_type == 'paragraph' -%}
+                      <div class="{{ block.settings.text_classes }}">
+                        {{- block.settings.text -}}
+                      </div>
+                    {%- elsif block.settings.text_block_type == 'list' -%}
+                      <ul class="{{ block.settings.text_classes }}">
+                        {%- assign text_list = block.settings.text | replace: ', and', ',' | replace: ' and', ',' | split: ', ' -%}
+                        {%- for list_item in text_list -%}
+                          {%- if list_item == 'Not for sensitive' -%}
+                            <li class="flex items-center before:!hidden">
+                              {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5', stroke_width: 2 %}
+                              <span>{{- list_item -}}</span>
+                            </li>
+                          {%- else -%}
+                          <li>{{- list_item -}}</li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
             {%- when 'title' -%}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
                 {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' -}}
@@ -910,8 +919,13 @@
         {
           "type": "text",
           "id": "text",
-          "default": "Text block",
-          "label": "t:sections.main-product.blocks.text.settings.text.label"
+          "label": "Text content"
+        },
+        {
+          "type": "text",
+          "id": "text_fallback",
+          "label": "Text content fallback",
+          "info": "This will populate the content area if text content is not available"
         },
         {
           "type": "textarea",
