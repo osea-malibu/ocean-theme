@@ -511,6 +511,9 @@
   .icon-list.\!pl-5 li {
     @apply before:-ml-5;
   }
+  .icon-list.icon-list-sm li {
+    @apply before:text-sm;
+  }
   .icon-list.bullet.\!pl-5 li {
     @apply before:mr-1;
   }
