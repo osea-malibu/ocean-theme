@@ -567,12 +567,6 @@
                 onclick="beginCheckoutDataLayer()"
                 {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
-            <catch-callout
-              id="catch-callout-minicart"
-              price="{{ cart.total_price | money_without_currency | times: 100 | ceil }}"
-              page-type="mini-cart"
-              border-style="none-no-padding">
-            </catch-callout>
             <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
               {%- if settings.cart_disclaimer != blank -%}{{ settings.cart_disclaimer }}{%- endif -%}
             </small>
