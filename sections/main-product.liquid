@@ -265,7 +265,15 @@
                 </div>
               {%- endif -%}
             {%- when 'info_tabs' -%}
-              {%- assign tabs = 'Description, How to Use' | split: ', ' -%}
+              {%- liquid
+                assign tabs = 'Description' | sort
+                assign how_to_use = product.metafields.custom.how_to_use
+
+                if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank
+                  assign how_to_use_array = 'How to Use' | sort
+                  assign tabs = tabs | concat: how_to_use_array
+                endif
+              -%}
               <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
                 <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
                   {%- for tab in tabs -%}
@@ -291,7 +299,6 @@
                       {%- when 'Description' -%}
                         <div>{{ product.metafields.custom_fields.description }}</div>
                       {%- when 'How to Use' -%}
-                        {%- assign how_to_use = product.metafields.custom.how_to_use -%}
                         {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank -%}
                           {%- capture how_to_html -%} 
                             {%- if product.metafields.custom.how_to_use != blank -%}
