@@ -3,7 +3,8 @@
     "main": {
       "type": "main-page",
       "disabled": true,
-      "settings": {}
+      "settings": {
+      }
     },
     "b16ece37-6cf1-4a1c-86f5-f3d323b933ce": {
       "type": "multicolumn",
@@ -12,8 +13,8 @@
           "type": "column",
           "settings": {
             "column_classes": "relative",
-            "image": "shopify://shop_images/subscribe-banner-1_945c0faf-58c5-4f96-b51a-952ae02d9d1d.jpg",
-            "image_desktop": "shopify://shop_images/subscribe-banner-desktop.jpg",
+            "image": "shopify:\/\/shop_images\/subscribe-banner-1_945c0faf-58c5-4f96-b51a-952ae02d9d1d.jpg",
+            "image_desktop": "shopify:\/\/shop_images\/subscribe-banner-desktop.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "w-full sm:h-72 object-cover object-right h-96",
@@ -30,7 +31,7 @@
             "link": "#shop",
             "target_blank": false,
             "button_classes": "button button-link button-xs gap-1 border-none underline flex-col sm:hidden",
-            "button_icon": "<svg class=\"h-4 w-4\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"></line><polyline points=\"19 12 12 19 5 12\"></polyline></svg>",
+            "button_icon": "<svg class=\"h-4 w-4\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"><\/line><polyline points=\"19 12 12 19 5 12\"><\/polyline><\/svg>",
             "is_atc_button": false,
             "is_subscription": false,
             "atc_button_product": "",
@@ -60,7 +61,7 @@
             "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
-            "paragraph": "<ul class=\"icon-list check li:mb-2 tracking-wide\">\n<li>10% off every order</li>\n<li class=\"tracking-normal\">Free shipping on recurring orders</li>\n<li>Early access to new products</li>\n<li class=\"tracking-normal -mr-1\">Exclusive access to deluxe samples</li>\n<li>Skip, edit or cancel anytime</li>\n</ul>",
+            "paragraph": "<ul class=\"icon-list check li:mb-2 tracking-wide\">\n<li>10% off every order<\/li>\n<li class=\"tracking-normal\">Free shipping on recurring orders<\/li>\n<li>Early access to new products<\/li>\n<li class=\"tracking-normal -mr-1\">Exclusive access to deluxe samples<\/li>\n<li>Skip, edit or cancel anytime<\/li>\n<\/ul>",
             "paragraph_classes": "",
             "button_label": "",
             "button_aria_label": "",
@@ -98,9 +99,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "acf68431-9c40-4c22-8716-74c9cdde0135": {
@@ -110,7 +111,7 @@
           "type": "paragraph",
           "settings": {
             "paragraph": "2 Days Only",
-            "paragraph_classes": "font-bold text-sm sm:text-xl uppercase sm:text-white mb-4 mt-8 lg:mb-6"
+            "paragraph_classes": "font-bold text-sm sm:text-xl uppercase sm:text-white mb-4 mt-8 lg:mb-6 sm:mt-0"
           }
         },
         "template--15703204069559__acf68431-9c40-4c22-8716-74c9cdde0135-heading-1": {
@@ -124,7 +125,7 @@
           "type": "paragraph",
           "settings": {
             "paragraph": "Use Code: Extra11",
-            "paragraph_classes": "badge mb-6 px-3 rounded-full sm:text-seaweed-700 text-white bg-seaweed-700 sm:bg-neon-green uppercase lg:mb-10"
+            "paragraph_classes": "badge mb-6 px-3 rounded-full sm:text-seaweed-700 text-white bg-seaweed-700 sm:bg-neon-green uppercase"
           }
         },
         "3e44bccd-bef9-4ecb-aea8-cedaa9246253": {
@@ -132,7 +133,7 @@
           "settings": {
             "button_label": "Shop Now >",
             "button_aria_label": "",
-            "button_link": "",
+            "button_link": "#shop",
             "target_blank": false,
             "button_classes": "button button-link button-lg gap-1 border-none uppercase flex-col text-white hidden sm:block"
           }
@@ -140,8 +141,8 @@
         "177d2cac-63a5-45ee-97a9-84e8db233de1": {
           "type": "paragraph",
           "settings": {
-            "paragraph": "Offer ends 11/11/23",
-            "paragraph_classes": "font-bold mb-2 lg:mb-6  px-6 text-sm sm:text-lg mt-auto pb-2 sm:absolute sm:bottom-0"
+            "paragraph": "Offer ends 11\/11\/23",
+            "paragraph_classes": "font-bold mb-2 lg:mb-6  px-6 text-sm sm:text-base mt-auto pb-2 sm:absolute sm:-bottom-2"
           }
         }
       },
@@ -154,13 +155,13 @@
       ],
       "disabled": true,
       "settings": {
-        "image_mobile": "shopify://shop_images/Singles_Day_2023_LP_Banner_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/Singles_Day_2023_LP_Banner_Desktop_BLANK.jpg",
+        "image_mobile": "shopify:\/\/shop_images\/Singles_Day_2023_LP_Banner_Mobile_BLANK.jpg",
+        "image": "shopify:\/\/shop_images\/Singles_Day_2023_LP_Banner_Desktop_BLANK.jpg",
         "is_lazy": false,
         "image_link": "",
         "banner_classes": "container px-0 xs:px-6 mb-10",
         "image_classes": "w-full",
-        "text_block_classes": "absolute inset-y-0 left-0 pl-6 sm:pl-12 pr-6 right-0 sm:right-1/2 text-center flex flex-col items-center justify-center"
+        "text_block_classes": "absolute inset-y-0 left-0 pl-6 sm:pl-12 pr-6 right-0 sm:right-1\/2 text-center flex flex-col items-center justify-center"
       }
     },
     "4a4c4be9-f591-438e-b516-82be2e6bd076": {
@@ -169,7 +170,7 @@
         "ce687610-b392-4849-8abd-980bf9ce0f69": {
           "type": "paragraph",
           "settings": {
-            "paragraph_text": "<a class=\"anchor\" id=\"shop\"></a>",
+            "paragraph_text": "<a class=\"anchor\" id=\"shop\"><\/a>",
             "paragraph_classes": ""
           }
         },
@@ -210,7 +211,7 @@
         "2e1c113b-7782-4671-b05e-13bf73cb7322": {
           "type": "paragraph",
           "settings": {
-            "paragraph_text": "<a class=\"anchor\" id=\"faq\"></a>",
+            "paragraph_text": "<a class=\"anchor\" id=\"faq\"><\/a>",
             "paragraph_classes": ""
           }
         },
@@ -219,7 +220,7 @@
           "settings": {
             "heading_text": "Subscription FAQs",
             "heading_classes": "font-serif text-3xl lg:text-4xl tracking-tight mb-1",
-            "subheading_text": "Click here for our <a href=\"/pages/terms-of-use\" class=\"link\">Terms of Use</a>",
+            "subheading_text": "Click here for our <a href=\"\/pages\/terms-of-use\" class=\"link\">Terms of Use<\/a>",
             "subheading_classes": "lg:text-lg"
           }
         },
@@ -250,7 +251,7 @@
           "settings": {
             "summary": "Which items are eligible for a subscription?",
             "summary_classes": "py-3",
-            "content": "<p class=\"font-medium mb-2\">We currently offer subscription on the following products:</p>\n<ul>\n<li>Undaria Algae Body Oil (9.6 oz)</li>\n<li>Undaria Algae Body Butter (6.7 oz)</li>\n<li>Anti-Aging Body Balm (5 oz)</li>\n<li>Ocean Cleanser (5 oz)</li>\n<li>Ocean Cleansing Milk (5 oz)</li>\n<li>Ocean Cleansing Mudd (5 oz)</li>\n<li>Seaglow Resurfacing Scrub (1.7 oz)</li>\n<li>Dayglow Face Oil (1 oz)</li>\n<li>Essential Hydrating Oil (1 oz)</li>\n<li>Seabiotic Water Cream (1.6 oz)</li>\n<li>Blemish Balm (2 oz)</li>\n<li>Atmosphere Protection Cream (2 oz)</li>\n<li>Advanced Protection Cream (2 oz)</li>\n<li>Ocean Eyes Serum (0.58 oz)</li>\n<li>Hyaluronic Sea Serum (1 oz)</li>\n<li>Anti-Aging Sea Serum (1.2 oz)</li>\n<li>Seaglow Overnight Serum (1 oz)</li>\n<li>Sea Minerals Mist (3.4 oz)</li>\n<li>Advanced Repair Eye Cream (0.6 oz)</li>\n</ul>\n<br>\n<p>*OSEA customers can subscribe to receiving up to 4 units per product on a recurring basis.</p>",
+            "content": "<p class=\"font-medium mb-2\">We currently offer subscription on the following products:<\/p>\n<ul>\n<li>Undaria Algae Body Oil (9.6 oz)<\/li>\n<li>Undaria Algae Body Butter (6.7 oz)<\/li>\n<li>Anti-Aging Body Balm (5 oz)<\/li>\n<li>Ocean Cleanser (5 oz)<\/li>\n<li>Ocean Cleansing Milk (5 oz)<\/li>\n<li>Ocean Cleansing Mudd (5 oz)<\/li>\n<li>Seaglow Resurfacing Scrub (1.7 oz)<\/li>\n<li>Dayglow Face Oil (1 oz)<\/li>\n<li>Essential Hydrating Oil (1 oz)<\/li>\n<li>Seabiotic Water Cream (1.6 oz)<\/li>\n<li>Blemish Balm (2 oz)<\/li>\n<li>Atmosphere Protection Cream (2 oz)<\/li>\n<li>Advanced Protection Cream (2 oz)<\/li>\n<li>Ocean Eyes Serum (0.58 oz)<\/li>\n<li>Hyaluronic Sea Serum (1 oz)<\/li>\n<li>Anti-Aging Sea Serum (1.2 oz)<\/li>\n<li>Seaglow Overnight Serum (1 oz)<\/li>\n<li>Sea Minerals Mist (3.4 oz)<\/li>\n<li>Advanced Repair Eye Cream (0.6 oz)<\/li>\n<\/ul>\n<br>\n<p>*OSEA customers can subscribe to receiving up to 4 units per product on a recurring basis.<\/p>",
             "content_classes": "pb-6"
           }
         },
@@ -259,7 +260,7 @@
           "settings": {
             "summary": "Do I have to have an OSEA account to place a subscription order?",
             "summary_classes": "py-3",
-            "content": "<p>No, you do not need to have an OSEA account to manage your subscription preferences. You'll be able to access your subscription account by clicking <a href=\"/account/login\" class=\"link\" aria-label=\"Click here to manage your account\">here</a> and then selecting \"Manage Subscription\". If you do have an account with OSEA, you'll be able to access your subscription preferences directly in your account.</p>",
+            "content": "<p>No, you do not need to have an OSEA account to manage your subscription preferences. You'll be able to access your subscription account by clicking <a href=\"\/account\/login\" class=\"link\" aria-label=\"Click here to manage your account\">here<\/a> and then selecting \"Manage Subscription\". If you do have an account with OSEA, you'll be able to access your subscription preferences directly in your account.<\/p>",
             "content_classes": "pb-6"
           }
         },
@@ -313,7 +314,7 @@
           "settings": {
             "summary": "Can I return a subscription order?",
             "summary_classes": "py-3",
-            "content": "<p>Yes, our subscription products will follow the same returns process as our one-time orders. To learn more about our returns process, click <a href=\"/pages/customer-care\" class=\"link\" aria-label=\"Learn about our returns here\">here</a>.  Returning a subscription order won't cancel your subscription. If you wish to cancel, you'll need to do so by navigating to your subscription account.</p>",
+            "content": "<p>Yes, our subscription products will follow the same returns process as our one-time orders. To learn more about our returns process, click <a href=\"\/pages\/customer-care\" class=\"link\" aria-label=\"Learn about our returns here\">here<\/a>.  Returning a subscription order won't cancel your subscription. If you wish to cancel, you'll need to do so by navigating to your subscription account.<\/p>",
             "content_classes": "pb-6"
           }
         },
@@ -331,7 +332,7 @@
           "settings": {
             "summary": "What is the cancellation policy on my subscription?",
             "summary_classes": "py-3",
-            "content": "You can cancel your subscription at any time before your next order ships, as follows:\n<br>\n\ni) By reaching out to customer support via chat/email/telephone; OR\n<br>\nii) By accessing your subscription account on the OSEA website and canceling in your account.",
+            "content": "You can cancel your subscription at any time before your next order ships, as follows:\n<br>\n\ni) By reaching out to customer support via chat\/email\/telephone; OR\n<br>\nii) By accessing your subscription account on the OSEA website and canceling in your account.",
             "content_classes": "pb-6"
           }
         }
