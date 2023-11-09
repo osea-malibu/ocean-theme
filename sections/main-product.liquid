@@ -611,7 +611,7 @@
                         <button
                           type="submit"
                           name="add"
-                          class="product-form__submit relative button button-primary button-md w-full disabled:opacity-50 col-span-2"
+                          class="product-form__submit relative button button-neon md:button-primary button-md w-full disabled:opacity-50 col-span-2"
                           {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                         >
                             <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
@@ -680,7 +680,7 @@
           <button
             type="submit"
             name="add"
-            class="product-form__submit button button-primary button-md w-full disabled:opacity-50"
+            class="product-form__submit button button-neon button-md w-full disabled:opacity-50"
             {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
             form="{{ product_form_id }}"
           >
