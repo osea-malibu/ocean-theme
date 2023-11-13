@@ -697,8 +697,10 @@ class VariantSelects extends HTMLElement {
       // change first image in product page image gallery
       const variantImageEl = document.querySelector("#Product-VariantImage");
       const newImageSrc = this.currentVariant.featured_image.src;
-      variantImageEl.srcset = `${newImageSrc}&width=294 1x, ${newImageSrc}&width=588 2x`;
-      variantImageEl.src = newImageSrc;
+      if (variantImageEl) {
+        variantImageEl.srcset = `${newImageSrc}&width=294 1x, ${newImageSrc}&width=588 2x`;
+        variantImageEl.src = newImageSrc;
+      }
     } else {
       // change image in product card
       const imageElement = document.getElementById(

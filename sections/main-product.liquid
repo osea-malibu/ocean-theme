@@ -280,7 +280,6 @@
                   assign tabs = tabs | concat: custom_tab_array
                 endif
               -%}
-              <script>console.log({{ custom_tab_handles | json }});</script>
               <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
                 <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
                   {%- for tab in tabs -%}
@@ -452,7 +451,7 @@
                           </div>
                         </fieldset>
                       {%- endfor -%}
-                      <script type="application/json">
+                      <script type="application/json" class="variant-data">
                         {{ product.variants | json }}
                       </script>
                     </variant-radios>
