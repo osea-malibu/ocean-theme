@@ -18,6 +18,7 @@
     - show_benefits: {Boolean} Show benefits icons. Default: false (optional)
     - subscription: {Boolean} Deafult to subscription selection insead of variants (optional)
     - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
+    - percent_discount: {Boolean} Show % off instead of $ off in savings badge (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -319,6 +320,8 @@
       </h2>
     {%- endif -%}
 
-    {% if hide_badge != true %}{% render 'product-badge', product: card_product, classes: badge_class %}{% endif %}
+    {% if hide_badge != true %}
+      {% render 'product-badge', product: card_product, classes: badge_class, percent_discount: percent_discount %}
+    {% endif %}
   </div>
 </div>

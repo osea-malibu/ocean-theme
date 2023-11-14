@@ -4,11 +4,13 @@
     Accepts:
     - product: {Object} Product Liquid object
     - classes: {Object} Tailwind CSS classes
+    - percent_discount: {Boolean} Show % off instead of $ off in savings badge (optional)
 
     Usage:
     {% render 'product-badge', product: product %}
 {% endcomment %}
 {%- liquid
+  assign set_products = collections['skincare-sets-1'].products | map: 'handle'
   assign badge_text = ''
   assign badge_class = ''
 
@@ -18,6 +20,11 @@
     assign badge_text = 'New'
   elsif product.tags contains 'badge::editor_pick'
     assign badge_text = "Editor's Pick"
+  elsif percent_discount and set_products contains product.handle
+    assign discount_amount = product.compare_at_price | minus: product.price
+    assign original_price_float = product.compare_at_price | times: 1.0
+    assign discount_percent = discount_amount | divided_by: original_price_float | times: 100 | ceil
+    assign badge_text = "Save " | append: discount_percent | append: '%'
   else
     for tag in product.tags
       if tag contains 'badge::'
@@ -35,6 +42,7 @@
     assign badge_class = product.metafields.custom.badge_classes
   endif
 -%}
+<script>console.log({{ discount_amount }}, {{ product.compare_at_price }}, {{ discount_percent }});</script>
 
 {%- if badge_text != '' -%}
   <div class="badge absolute top-1 right-1 mb-1 text-xs whitespace-nowrap overflow-hidden capitalize{% if badge_class != '' %} {{ badge_class }}{% endif %}{% if classes != nil %} {{ classes }}{% endif %}">
