@@ -136,6 +136,7 @@ module.exports = {
       "bbalm-light": "#F4F3EE",
       "eho-light": "#F7F5EF",
       "hss-light": "#EFF4EC",
+      "oc-light": "#F7F9F6",
       "oey-light": "#FBF6F6",
       "sos-light": "#F8F1EF",
       "swc-light": "#EFF7F9",
