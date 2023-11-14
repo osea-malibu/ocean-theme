@@ -50,23 +50,61 @@
         "2f57429c-24c5-4ddc-9641-3e0321d33ea7": {
           "type": "countdown",
           "settings": {
-            "column_classes": "",
+            "column_classes": "mb-6",
             "text_classes": "max-w-sm mx-auto text-white grid grid-cols-4 gap-1 child:rounded-xl child:bg-black",
             "countdown_date": "11\/20\/2023",
             "countdown_time": "24:00",
             "count_classes": "text-5xl pt-2",
             "label_classes": "tracking-wide font-medium pb-2"
           }
+        },
+        "efb649f3-b14d-458e-948d-997c2d07524c": {
+          "type": "column",
+          "settings": {
+            "column_classes": "text-center",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "Shop now",
+            "button_aria_label": "Shop now: All products",
+            "link": "shopify:\/\/collections\/shop",
+            "target_blank": false,
+            "button_classes": "button button-lg button-neon mb-10 lg:mb-12",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
         }
       },
       "block_order": [
         "788c448d-8ede-49c1-b762-2aed4f0c5a16",
         "template--15723658117303__987661ba-a2db-4ef1-beda-d181c20c526b-16685421750ee2ba61-0",
-        "2f57429c-24c5-4ddc-9641-3e0321d33ea7"
+        "2f57429c-24c5-4ddc-9641-3e0321d33ea7",
+        "efb649f3-b14d-458e-948d-997c2d07524c"
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "mt-8 lg:mt-12 mb-6",
+        "section_classes": "eb-countdown order-1 mt-8 lg:mt-12 mb-6",
         "container_classes": "container lg:max-w-screen-lg justify-center flex-col",
         "is_slider": false,
         "slider_indicator_count": 3,
@@ -76,30 +114,6 @@
         "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
-      }
-    },
-    "6ac086c6-ae58-4d16-a63b-a2ae9c989edd": {
-      "type": "rich-text",
-      "blocks": {
-        "template--15723658117303__6ac086c6-ae58-4d16-a63b-a2ae9c989edd-166856130386fa2630-2": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_link": "shopify:\/\/collections\/shop",
-            "button_aria_label": "",
-            "target_blank": false,
-            "button_icon": "",
-            "button_classes": "button button-lg button-neon mb-10 lg:mb-12"
-          }
-        }
-      },
-      "block_order": [
-        "template--15723658117303__6ac086c6-ae58-4d16-a63b-a2ae9c989edd-166856130386fa2630-2"
-      ],
-      "settings": {
-        "section_heading": "",
-        "section_classes": "",
-        "container_classes": "container text-center"
       }
     },
     "166415601283823358": {
@@ -180,16 +194,54 @@
             "prod_slider_handles": "",
             "prod_slider_classes": ""
           }
+        },
+        "36d7c629-2a13-4f48-9c58-689e09511290": {
+          "type": "column",
+          "settings": {
+            "column_classes": "col-span-2 text-center",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "flex flex-col gap-1",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "Offer ends 11\/20\/23",
+            "paragraph_classes": "order-2 font-medium text-black",
+            "button_label": "Shop now",
+            "button_aria_label": "Shop now: All products",
+            "link": "shopify:\/\/collections\/shop",
+            "target_blank": false,
+            "button_classes": "order-1 button button-primary button-black mx-auto",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
         }
       },
       "block_order": [
         "16641560116a862be5-0",
-        "621686f6-4940-495f-b5f6-9ae72431c802"
+        "621686f6-4940-495f-b5f6-9ae72431c802",
+        "36d7c629-2a13-4f48-9c58-689e09511290"
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "md:max-w-screen-md mx-auto px-6 mb-6",
-        "container_classes": "flex-col sm:flex-row justify-center gap-4 lg:gap-6",
+        "section_classes": "eb-offer order-2 md:max-w-screen-md mx-auto px-6 mb-12",
+        "container_classes": "justify-center gap-x-4 lg:gap-x-6 grid grid-cols-2 gap-y-6",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -198,38 +250,6 @@
         "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
-      }
-    },
-    "52018cff-3fa1-4e75-9f92-0d76c6b9307e": {
-      "type": "rich-text",
-      "blocks": {
-        "template--15723658117303__52018cff-3fa1-4e75-9f92-0d76c6b9307e-16683559781b0d184c-2": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_link": "shopify:\/\/collections\/shop",
-            "button_aria_label": "",
-            "target_blank": false,
-            "button_icon": "",
-            "button_classes": "button button-primary button-black"
-          }
-        },
-        "880a39ff-49d8-497c-88c7-fcf030973c98": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph_text": "Offer ends 11\/20\/23",
-            "paragraph_classes": "font-medium mt-1 text-black"
-          }
-        }
-      },
-      "block_order": [
-        "template--15723658117303__52018cff-3fa1-4e75-9f92-0d76c6b9307e-16683559781b0d184c-2",
-        "880a39ff-49d8-497c-88c7-fcf030973c98"
-      ],
-      "settings": {
-        "section_heading": "",
-        "section_classes": "px-6 mb-12 text-center",
-        "container_classes": ""
       }
     },
     "1664155073c2362da0": {
@@ -943,9 +963,7 @@
   },
   "order": [
     "987661ba-a2db-4ef1-beda-d181c20c526b",
-    "6ac086c6-ae58-4d16-a63b-a2ae9c989edd",
     "166415601283823358",
-    "52018cff-3fa1-4e75-9f92-0d76c6b9307e",
     "1664155073c2362da0",
     "ee90faef-6b1b-46c6-add1-f46e9bf24038",
     "fb6e3987-a620-4976-a455-8e7737446aed",
