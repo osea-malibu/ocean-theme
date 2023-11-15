@@ -275,7 +275,7 @@
         {%- liquid
           if custom_default_image != nil
             assign default_image = custom_default_image
-          elsif default_to_mini and card_product.title != 'Digital Gift Card'
+          elsif default_to_mini and is_set == false and card_product.title != 'Digital Gift Card'
             assign default_image = card_product.variants[mini_index].featured_media
           elsif card_product.selected_or_first_available_variant.featured_media != nil
             assign default_image = card_product.selected_or_first_available_variant.featured_media
