@@ -42,7 +42,6 @@
     assign badge_class = product.metafields.custom.badge_classes
   endif
 -%}
-<script>console.log({{ discount_amount }}, {{ product.compare_at_price }}, {{ discount_percent }});</script>
 
 {%- if badge_text != '' -%}
   <div class="badge absolute top-1 right-1 mb-1 text-xs whitespace-nowrap overflow-hidden capitalize{% if badge_class != '' %} {{ badge_class }}{% endif %}{% if classes != nil %} {{ classes }}{% endif %}">
