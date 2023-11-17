@@ -1,5 +1,48 @@
 {
   "sections": {
+    "5825ef80-7eba-428f-aef6-379126e7f97c": {
+      "type": "image-banner",
+      "blocks": {
+        "3bf5d04f-2542-49e7-9cd3-19e77ccf0a1e": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Early Access",
+            "paragraph_classes": "badge bg-white rounded-full px-4 mt-4 text-black sm:mt-8"
+          }
+        },
+        "9195fc1d-8294-43c3-ac51-092eca7a1e1d": {
+          "type": "heading",
+          "settings": {
+            "heading": "Black Friday<br>4 Days Only",
+            "heading_classes": "text-white text-4xl md:text-6xl lg:text-7xl xl:text-8xl lg:leading-tighter mb-3 lg:mb-4 mt-3 uppercase font-bold xl:pt-10 md:mt-4 max-width-2xl tracking-wide"
+          }
+        },
+        "7eb522a8-bb3f-4f41-861e-d83c72ac42db": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop all of our products",
+            "button_link": "shopify:\/\/collections\/shop",
+            "target_blank": false,
+            "button_classes": "button button-white md:button-lg mb-4 text-black"
+          }
+        }
+      },
+      "block_order": [
+        "3bf5d04f-2542-49e7-9cd3-19e77ccf0a1e",
+        "9195fc1d-8294-43c3-ac51-092eca7a1e1d",
+        "7eb522a8-bb3f-4f41-861e-d83c72ac42db"
+      ],
+      "settings": {
+        "image_mobile": "shopify:\/\/shop_images\/BFCM_EARLY_ACCESS_2023_HP_Banner_Mobile_FINAL_-_BLANK.jpg",
+        "image": "shopify:\/\/shop_images\/BFCM_EARLY_ACCESS_2023_HP_Banner_Desktop_FINAL-_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify:\/\/collections\/shop",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-y-0 right-0 pr-6 pl-6 left-0 text-center flex flex-col items-center justify-start"
+      }
+    },
     "c4d3f8bc-418e-4184-a588-698c391f3344": {
       "type": "image-banner",
       "blocks": {
@@ -41,6 +84,7 @@
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-button-1",
         "2f1b6943-60cf-40c9-a661-3304a2459f20"
       ],
+      "disabled": true,
       "settings": {
         "image_mobile": "shopify:\/\/shop_images\/Bestsellers_HP_V3_HSS_Clinicals_Mobile_BLANK_2_d21aa5e6-283e-465d-9cbc-83fc329b4670.jpg",
         "image": "shopify:\/\/shop_images\/Bestsellers_HP_V3_HSS_Clinicals_Desktop_BLANK_2_c951a0f2-9fbc-44b2-ac09-b268d4ad5703.jpg",
@@ -49,50 +93,6 @@
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-center sm:w-2\/3 xl:w-1\/2 sm:px-6 md:pr-16 lg:pr-32 xl:pr-0 sm:mb-8 sm:pb-4 sm:pl-8 sm:pt-8 sm:mt-8"
-      }
-    },
-    "5825ef80-7eba-428f-aef6-379126e7f97c": {
-      "type": "image-banner",
-      "blocks": {
-        "3bf5d04f-2542-49e7-9cd3-19e77ccf0a1e": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Early Access",
-            "paragraph_classes": "badge bg-white rounded-full px-4 mt-4 text-black sm:mt-8"
-          }
-        },
-        "9195fc1d-8294-43c3-ac51-092eca7a1e1d": {
-          "type": "heading",
-          "settings": {
-            "heading": "Black Friday<br>4 Days Only",
-            "heading_classes": "text-white text-4xl md:text-6xl lg:text-7xl xl:text-8xl lg:leading-tighter mb-3 lg:mb-4 mt-3 uppercase font-bold xl:pt-10 md:mt-4 max-width-2xl tracking-wide"
-          }
-        },
-        "7eb522a8-bb3f-4f41-861e-d83c72ac42db": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_aria_label": "Shop all of our products",
-            "button_link": "shopify:\/\/collections\/shop",
-            "target_blank": false,
-            "button_classes": "button button-white md:button-lg mb-4 text-black"
-          }
-        }
-      },
-      "block_order": [
-        "3bf5d04f-2542-49e7-9cd3-19e77ccf0a1e",
-        "9195fc1d-8294-43c3-ac51-092eca7a1e1d",
-        "7eb522a8-bb3f-4f41-861e-d83c72ac42db"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify:\/\/shop_images\/BFCM_EARLY_ACCESS_2023_HP_Banner_Mobile_FINAL_-_BLANK.jpg",
-        "image": "shopify:\/\/shop_images\/BFCM_EARLY_ACCESS_2023_HP_Banner_Desktop_FINAL-_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify:\/\/collections\/shop",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-y-0 right-0 pr-6 pl-6 left-0 text-center flex flex-col items-center justify-start"
       }
     },
     "165703204544efb73d": {
@@ -1122,8 +1122,8 @@
     }
   },
   "order": [
-    "c4d3f8bc-418e-4184-a588-698c391f3344",
     "5825ef80-7eba-428f-aef6-379126e7f97c",
+    "c4d3f8bc-418e-4184-a588-698c391f3344",
     "165703204544efb73d",
     "16570286821ae9514b",
     "8968f5e1-c259-4782-a431-48a3e04544db",
