@@ -320,7 +320,7 @@
     {%- endif -%}
 
     <div class="flex-1 flex justify-end items-center">
-      {% comment %} Accounts link {% endcomment %}   
+      {% comment %} Accounts link {% endcomment %}
       {%- if shop.customer_accounts_enabled -%}
         <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="h-10 w-10 justify-center items-center ml-1 flex md:ml-4">
           {%- render 'icon-account', classes: 'h-6 w-6 hover:text-seaweed-500', aria_hidden: true, stroke_width: 1.75 -%}
