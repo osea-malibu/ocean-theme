@@ -389,7 +389,13 @@
                   {%- endif -%}
                 {%- when 'countdown' -%}
                   {%- if block.settings.countdown_date != blank and block.settings.countdown_time != blank -%}
-                    {%- assign increment_array = 'days, hours, minutes, seconds' | split: ', ' -%}
+                    {%- liquid
+                      if block.settings.short_labels
+                        assign increment_array = 'd, h, m, s' | split: ', '
+                      else
+                        assign increment_array = 'days, hours, minutes, seconds' | split: ', '
+                      endif
+                    -%}
                     <countdown-component
                       data-date="{{ block.settings.countdown_date }}"
                       data-time="{{ block.settings.countdown_time }}"
@@ -982,6 +988,11 @@
           "id": "label_classes",
           "info": "This field takes HTML.",
           "label": "Label classes"
+        },
+        {
+          "type": "checkbox",
+          "id": "short_labels",
+          "label": "Use short labels (d:h:m:s)"
         }
       ]
     }
