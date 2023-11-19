@@ -389,21 +389,22 @@
                   {%- endif -%}
                 {%- when 'countdown' -%}
                   {%- if block.settings.countdown_date != blank and block.settings.countdown_time != blank -%}
-                    {%- liquid
-                      if block.settings.short_labels
-                        assign increment_array = 'd, h, m, s' | split: ', '
-                      else
-                        assign increment_array = 'days, hours, minutes, seconds' | split: ', '
-                      endif
-                    -%}
+                    {%- assign increment_array = 'days, hours, minutes, seconds' | split: ', ' -%}
                     <countdown-component
                       data-date="{{ block.settings.countdown_date }}"
                       data-time="{{ block.settings.countdown_time }}"
                     >
                       <dl class="flex justify-center {{ block.settings.text_classes }}">
                         {%- for increment in increment_array -%}
+                          {%- liquid
+                            if block.settings.short_labels
+                              assign increment_label = increment | split: '' | first
+                            else
+                              assign increment_label = increment
+                            endif
+                          -%}
                           <div class="flex flex-1 flex-col-reverse text-center">
-                            <dt class="{{ block.settings.label_classes }}">{{ increment }}</dt>
+                            <dt class="{{ block.settings.label_classes }}">{{ increment_label }}</dt>
                             <dd class="countdown-{{ increment }} {{ block.settings.count_classes }}">00</dd>
                           </div>
                         {%- endfor -%}
