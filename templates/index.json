@@ -53,14 +53,14 @@
           "type": "heading",
           "settings": {
             "heading": "Black Friday<br>Free Gift",
-            "heading_classes": "text-4xl pt-2 sm:text-6xl xl:text-8xl mb-2 lg:mb-2 max-w-xs lg:max-w-md xl:max-w-lg mt-2 text-white uppercase font-bold tracking-wide"
+            "heading_classes": "text-4xl pt-2 sm:text-6xl lg:text-7xl xl:text-8xl mb-2 lg:mb-2 max-w-xs lg:max-w-md xl:max-w-lg mt-2 text-white uppercase font-bold tracking-wide"
           }
         },
         "db2a28be-a55f-4717-9077-a8c0db6f0a84": {
           "type": "paragraph",
           "settings": {
             "paragraph": "Full-Size Hyaluronic Sea Serum<br>With Purchase of $135+",
-            "paragraph_classes": "text-white font-bold mb-2 lg:mb-6 mt-2 text-lg sm:text-xl"
+            "paragraph_classes": "text-white font-bold mb-2 lg:mb-6 mt-0 text-lg sm:text-xl"
           }
         },
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-button-1": {
@@ -68,9 +68,9 @@
           "settings": {
             "button_label": "Shop now",
             "button_aria_label": "Shop our gifts and sets",
-            "button_link": "shopify:\/\/products\/hyaluronic-sea-serum",
+            "button_link": "shopify:\/\/collections\/shop",
             "target_blank": false,
-            "button_classes": "button button-white sm:button-primary md:button-lg sm:mt-1  sm:mt-4 mb-16 mt-auto"
+            "button_classes": "button button-white md:button-lg mb-4 text-black mt-auto sm:mt-0"
           }
         }
       },
@@ -80,6 +80,9 @@
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-button-1"
       ],
       "disabled": true,
+      "custom_css": [
+        ".badge {color: #000 !important;}"
+      ],
       "settings": {
         "image_mobile": "shopify:\/\/shop_images\/BFCM_2023_HP_Banner_Mobile_CORE_-_BLANK.jpg",
         "image": "shopify:\/\/shop_images\/BFCM_2023_HP_Banner_Desktop_CORE_EXTENDED_-_BLANK.jpg",
