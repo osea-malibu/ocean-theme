@@ -155,9 +155,7 @@
 
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
 
-    {%- if template.name == 'index' or template.name == 'article' or handle == 'holiday-gift-guide' -%}
-      <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
+    <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
     {%- if settings.enable_gwp and settings.gwp_type == 'url' -%}
       <gift-with-purchase-url
