@@ -141,6 +141,9 @@
                             {%- if link.title contains 'Popular:' -%}
                               <span class="popular-badge inline-block rounded-md bg-seaweed-700 text-white text-xs font-bold px-1 py-px ml-1 relative -top-px">Popular</span>
                             {%- endif -%}
+                            {%- if link.title contains 'Black Friday' -%}
+                              <span class="popular-badge inline-block rounded-md bg-seaweed-700 text-white text-xs font-bold px-1 py-px ml-1 relative -top-px">Ends Tonight</span>
+                            {%- endif -%}
                           </a>
                         {%- endif -%}
                       </li>
