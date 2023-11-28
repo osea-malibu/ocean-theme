@@ -41,6 +41,7 @@
         "40ba16f8-0bc7-4189-ba08-e45ab8453770",
         "7eb522a8-bb3f-4f41-861e-d83c72ac42db"
       ],
+      "disabled": true,
       "custom_css": [
 
       ],
@@ -57,18 +58,25 @@
     "c4d3f8bc-418e-4184-a588-698c391f3344": {
       "type": "image-banner",
       "blocks": {
+        "0900939b-c6a4-4ed4-9379-8db21ba7f403": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Extended!",
+            "paragraph_classes": "badge bg-transparent rounded-full px-4 mt-4 sm:mt-8 border-2 border-white text-white uppercase"
+          }
+        },
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-heading-1": {
           "type": "heading",
           "settings": {
             "heading": "Black Friday<br>Free Gift",
-            "heading_classes": "text-5xl pt-2 sm:text-6xl lg:text-7xl  mb-2 lg:mb-2 max-w-lg mt-2 text-white uppercase font-bold"
+            "heading_classes": "text-5xl pt-1 sm:text-6xl lg:text-7xl  mb-2 lg:mb-2 max-w-lg mt-1 text-white uppercase font-bold"
           }
         },
         "db2a28be-a55f-4717-9077-a8c0db6f0a84": {
           "type": "paragraph",
           "settings": {
             "paragraph": "Full-Size Hyaluronic Sea Serum<br>With Purchase of $135+",
-            "paragraph_classes": "text-white font-bold mb-2 lg:mb-6 mt-0 text-lg sm:text-xl"
+            "paragraph_classes": "text-white font-bold mb-2 lg:mb-6 mt-0 text-md sm:text-xl"
           }
         },
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-button-1": {
@@ -83,16 +91,16 @@
         }
       },
       "block_order": [
+        "0900939b-c6a4-4ed4-9379-8db21ba7f403",
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-heading-1",
         "db2a28be-a55f-4717-9077-a8c0db6f0a84",
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-button-1"
       ],
-      "disabled": true,
       "custom_css": [
         ".button {color: #000 !important;}"
       ],
       "settings": {
-        "image_mobile": "shopify:\/\/shop_images\/BFCM_2023_HP_Banner_Mobile_CORE_-_BLANK_5f76897f-f038-4fb7-afb7-e69fcd5eb589.jpg",
+        "image_mobile": "shopify:\/\/shop_images\/BFCM_2023_HP_Banner_Mobile_EXTENDED_-_BLANK.jpg",
         "image": "shopify:\/\/shop_images\/BFCM_2023_HP_Banner_Desktop_CORE_EXTENDED_-_BLANK_FINAL2.jpg",
         "is_lazy": false,
         "image_link": "shopify:\/\/collections\/shop",
