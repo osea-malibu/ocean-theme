@@ -676,9 +676,11 @@ ul.whr-items .whr-item.active h3::after {
   @apply mb-4;
 }
 .recharge-gifting-widget fieldset {
-  @apply border border-seaweed-400 rounded-lg p-4;
+  @apply pb-0;
 }
-.recharge-gifting-widget legend,
+.recharge-gifting-widget legend {
+  @apply sr-only;
+}
 .recharge-gifting-widget label {
   @apply font-medium mb-1;
 }
