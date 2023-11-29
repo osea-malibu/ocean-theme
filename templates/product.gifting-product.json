@@ -30,7 +30,7 @@
           }
         },
         "3a1f6e16-b9af-4923-a9dd-4271524fff1d": {
-          "type": "shopify://apps/recharge-subscriptions/blocks/gifting-widget/371eed76-0b44-4869-9813-730372ea378e",
+          "type": "shopify:\/\/apps\/recharge-subscriptions\/blocks\/gifting-widget\/371eed76-0b44-4869-9813-730372ea378e",
           "settings": {
             "rc_show_sender_name": true,
             "rc_show_send_date": true,
@@ -170,8 +170,12 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
-      "custom_css": [],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
+      "custom_css": [
+
+      ],
       "settings": {
         "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
         "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
@@ -198,12 +202,6 @@
         "card_classes": "",
         "show_secondary_image": false
       }
-    },
-    "bd93d0c6-6f26-404d-856e-be6535d732dc": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<style>\n.recharge-gifting-widget {\n  grid-column: 1/12;\n}\n</style>"
-      }
     }
   },
   "order": [
@@ -213,7 +211,6 @@
     "key-ingredients",
     "ingredients",
     "product-reviews",
-    "product-recommendations",
-    "bd93d0c6-6f26-404d-856e-be6535d732dc"
+    "product-recommendations"
   ]
 }
