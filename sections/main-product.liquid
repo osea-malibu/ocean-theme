@@ -441,7 +441,7 @@
                                   {% if option.selected_value == value %}checked{% endif %}
                                 >
                                 <label
-                                  class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1 peer-disabled:opacity-50 {% if option.name == 'Scent' %}normal-case tracking-wide{% else %}lowercase{% endif %}"
+                                  class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
                                   for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                                 >
                                   {{ value }}
