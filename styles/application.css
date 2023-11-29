@@ -690,6 +690,9 @@ ul.whr-items .whr-item.active h3::after {
 .recharge-gifting-widget .rc_gift_message_label_count_container {
   @apply -mb-4;
 }
+.recharge-gifting-widget .rc_gifting_recipient_block_name {
+  @apply flex-wrap sm:flex-nowrap;
+}
 
 /* Klaviyo - Footer Form */
 .klaviyo-email-form form.klaviyo-form input {
