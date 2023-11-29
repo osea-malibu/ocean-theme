@@ -652,6 +652,27 @@ ul.whr-items .whr-item.active h3::after {
   @apply relative block items-center justify-center border px-6 py-2 rounded-md font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-colors bg-white border-seaweed-400 hover:bg-seafoam-100 hover:border-seaweed-500 text-white before:cursor-pointer before:content-['Manage_subscription'] before:absolute before:inset-0 before:text-seaweed-700 before:flex before:items-center before:justify-center;
 }
 
+.recharge-gifting-widget {
+  @apply col-span-12;
+}
+.recharge-gifting-widget [multiple],
+.recharge-gifting-widget [type="date"],
+.recharge-gifting-widget [type="datetime-local"],
+.recharge-gifting-widget [type="email"],
+.recharge-gifting-widget [type="month"],
+.recharge-gifting-widget [type="number"],
+.recharge-gifting-widget [type="password"],
+.recharge-gifting-widget [type="search"],
+.recharge-gifting-widget [type="tel"],
+.recharge-gifting-widget [type="text"],
+.recharge-gifting-widget [type="time"],
+.recharge-gifting-widget [type="url"],
+.recharge-gifting-widget [type="week"],
+.recharge-gifting-widget select,
+.recharge-gifting-widget textarea {
+  @apply cursor-text bg-white border border-seaweed-400 rounded-md px-4 tracking-wide focus:ring-1;
+}
+
 /* Klaviyo - Footer Form */
 .klaviyo-email-form form.klaviyo-form input {
   @apply cursor-text border !border-seaweed-400 !rounded-md !pl-11;
