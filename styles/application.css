@@ -672,11 +672,15 @@ ul.whr-items .whr-item.active h3::after {
 .recharge-gifting-widget textarea {
   @apply cursor-text bg-white border border-seaweed-400 rounded-md px-4 tracking-wide focus:ring-1;
 }
+.recharge-gifting-widget fieldset {
+  @apply mb-4;
+}
+.recharge-gifting-widget legend,
+.recharge-gifting-widget label {
+  @apply font-medium mb-1;
+}
 .recharge-gifting-widget .field {
   @apply flex flex-col-reverse;
-}
-.recharge-gifting-widget .field legend {
-  @apply font-medium mb-1;
 }
 
 /* Klaviyo - Footer Form */
