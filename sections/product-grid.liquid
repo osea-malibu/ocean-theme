@@ -9,6 +9,7 @@
         button_class: 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 xl:px-6',
         subscription: section.settings.is_subscription,
         variant_picker_type: section.settings.variant_picker_type
+        variant_picker_classes: section.settings.variant_picker_classes
       %}
     {%- endfor -%}
   </div>
@@ -62,6 +63,11 @@
           "label": "Dropdown"
         }
       ]
+    },
+    {
+      "type": "textarea",
+      "id": "variant_picker_classes",
+      "label": "Variant picker classes"
     }
   ],
   "presets": [
