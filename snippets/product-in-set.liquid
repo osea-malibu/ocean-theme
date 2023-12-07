@@ -80,7 +80,26 @@
       </section>
       <section class="mb-4">
         <h5 class="font-bold mb-2">Key ingredients</h5>
-        <div class="li:text-sm">{{ product.metafields.custom.key_ingredients_text }}</div>
+        {%- if product.metafields.custom.key_ingredients_list -%}
+          {%- for ingredient in product.metafields.custom.key_ingredients_list.value -%}
+            <div class="text-sm mb-2 last:mb-0">
+              <p class="text-sm">
+                <b class="font-medium">{{ ingredient.name | split: ' [' | first }}</b>
+                {%- if ingredient.scientific_name != blank -%}
+                  {{ ' ' }}<em class="text-sm text-seaweed-600">({{ ingredient.scientific_name }})</em>
+                {%- endif -%}
+              </p>
+              {%- if ingredient.description != blank -%}
+                <p>{{ ingredient.description }}</p>
+              {%- endif -%}
+              {%- if ingredient.citation != blank -%}
+                <cite>{{ ingredient.citation }}</cite>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- elsif product.metafields.custom.key_ingredients_text != blank -%}
+          <div class="li:text-sm">{{ product.metafields.custom.key_ingredients_text }}</div>
+        {%- endif -%}
         <modal-opener class="no-js-hidden" data-modal="#SetIngredientsPopup-{{ product.handle }}">
           <button class="link text-sm mt-2 font-book">View all ingredients</button>
         </modal-opener>
