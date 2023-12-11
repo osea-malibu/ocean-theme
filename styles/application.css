@@ -591,6 +591,10 @@
 .compact .stamped-badge .stamped-fa-star:before {
   @apply text-sm leading-3;
 }
+.stamped-proxy-write div#stamped-reviews-filter,
+.stamped-proxy-write #stamped-reviews-tab {
+  display: none;
+}
 
 /* Catch pay */
 #catch-callout-cart {
