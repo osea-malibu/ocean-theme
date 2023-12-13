@@ -208,6 +208,11 @@ module.exports = {
       maxWidth: {
         "2xs": "18rem",
       },
+      textShadow: {
+        sm: "0 1px 2px var(--tw-shadow-color)",
+        DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+        lg: "0 8px 16px var(--tw-shadow-color)",
+      },
       transitionProperty: {
         height: "height",
         "max-height": "max-height",
@@ -285,6 +290,17 @@ module.exports = {
           return result.replace(/&(\S+)/, ":merge(.peer)$1 ~ .group &");
         });
       }
+    }),
+    // add support for text-shadow
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") }
+      );
     }),
   ],
 };
