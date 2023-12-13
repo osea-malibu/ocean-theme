@@ -146,6 +146,7 @@ module.exports = {
       "ucbp-light": "#F7F0E2",
       "mystery-green": "#67F700",
       "neon-green": "#DCF5AB",
+      "dream-navy": "#1D284D",
     },
     fontFamily: {
       sans: "Circular, sans-serif",
