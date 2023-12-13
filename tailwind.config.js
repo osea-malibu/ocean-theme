@@ -209,9 +209,9 @@ module.exports = {
         "2xs": "18rem",
       },
       textShadow: {
-        sm: "0 1px 2px var(--tw-shadow-color)",
-        DEFAULT: "0 2px 4px var(--tw-shadow-color)",
-        lg: "0 8px 16px var(--tw-shadow-color)",
+        sm: "0 0 2px var(--tw-shadow-color)",
+        DEFAULT: "0 0 4px var(--tw-shadow-color)",
+        lg: "0 0 16px var(--tw-shadow-color)",
       },
       transitionProperty: {
         height: "height",
