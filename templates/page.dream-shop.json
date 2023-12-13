@@ -16,7 +16,7 @@
             "remove_text_wrapper": false,
             "heading": "The Dream Shop",
             "heading_classes": "text-4xl text-black font-medium mb-1",
-            "paragraph": "A curated collection of our favorite <u class=\"underline-offset-2\">bedtime essentials</u>",
+            "paragraph": "A curated collection of our favorite <u class=\"underline-offset-2\">bedtime essentials<\/u>",
             "paragraph_classes": "text-black leading-tight font-book max-w-2xs",
             "button_label": "",
             "button_aria_label": "",
@@ -82,19 +82,21 @@
         "2949a0fb-6ce4-4570-840b-83f458157bcf",
         "template--16141288472759__9afcf1fe-421c-4e77-86d6-ab8844940c21-column-1"
       ],
+      "custom_css": [
+        "> div {background: linear-gradient( 116deg, #e5dfee 5.38%, #dfd4d2 30.02%, #b8b3b6 48.78%, #a3a6b1 77.18%, #859cb7 97.54% );}"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "py-4 bg-cover mb-4",
         "container_classes": "container flex-col",
-        "row_bg_image": "shopify://shop_images/dreamy-bg-2.jpg",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "666106d2-a3d6-4e52-abdf-5a22d96cd1be": {
@@ -113,7 +115,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "37bc34c5-30c7-48e8-82cf-ec83a23a2acf": {
@@ -129,7 +133,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "b805b7f0-bcce-4113-aabd-eba91a54de56": {
@@ -145,7 +151,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "d12001a5-8d64-47d1-8525-2ce7ddc43f8c": {
@@ -161,7 +169,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "80cff9d9-4a7c-4cf7-8605-475d508c25c3": {
@@ -177,7 +187,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "3a8cc0ec-f085-42d1-b5e9-ddcd272dc3b3": {
@@ -193,7 +205,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "e9d6f484-992d-4d02-b187-e3b65ee39465": {
@@ -209,7 +223,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "feca386a-849a-4d02-9288-9d36f46cac29": {
@@ -225,7 +241,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "6a87e262-9870-46da-b991-6fc25a093f7d": {
@@ -241,7 +259,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         },
         "24a79812-3834-4b64-aa10-bcf407d51145": {
@@ -257,7 +277,9 @@
             "show_reviews": false,
             "show_benefits": false,
             "subscription": false,
-            "percent_discount": false
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
           }
         }
       },
@@ -282,11 +304,14 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     }
   },
-  "order": ["9afcf1fe-421c-4e77-86d6-ab8844940c21", "666106d2-a3d6-4e52-abdf-5a22d96cd1be"]
+  "order": [
+    "9afcf1fe-421c-4e77-86d6-ab8844940c21",
+    "666106d2-a3d6-4e52-abdf-5a22d96cd1be"
+  ]
 }
