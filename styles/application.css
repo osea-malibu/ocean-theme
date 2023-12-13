@@ -593,7 +593,13 @@
 }
 .stamped-proxy-write div#stamped-reviews-filter,
 .stamped-proxy-write #stamped-reviews-tab {
-  display: none;
+  @apply hidden;
+}
+.stamped-proxy-write h2.stamped-proxy-write-title {
+  @apply font-medium text-lg;
+}
+.stamped-proxy-write h2.stamped-proxy-write-title:after {
+  @apply content-["for_Collagen_Dream_Night_Cream"];
 }
 
 /* Catch pay */
