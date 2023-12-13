@@ -602,10 +602,13 @@
   @apply content-["for_Collagen_Dream_Night_Cream"];
 }
 .stamped-proxy-write .stamped-form-actions {
-  @apply flex items-center justify-end;
+  @apply flex items-center;
+}
+.stamped-proxy-write .stamped-file-uploader {
+  @apply ml-auto;
 }
 .stamped-proxy-write .stamped-file-uploader-btn {
-  @apply !border-seaweed-700 !rounded-md text-seaweed-800 py-[11px] !text-base font-bold;
+  @apply !border-seaweed-700 !rounded-md text-seaweed-800 !py-[11px] !text-base font-bold;
 }
 .stamped-proxy-write #stamped-button-submit {
   @apply bg-seaweed-700;
