@@ -21,6 +21,7 @@
     - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
     - percent_discount: {Boolean} Show % off instead of $ off in savings badge (optional)
     - is_pdp_link: {Boolean} Replace ATC button with static button that leads to PDP. For use with products that require input on PDP (optional)
+    - pdp_link_label: {Boolean} For use with PDP link, changes button label (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -45,7 +46,11 @@
       </p>
 
     {%- if is_pdp_link -%}
-      <a class="button button-tertiary" href="{{ card_product.url }}">View Details</a>
+      <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+        <a class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50" href="{{ card_product.url }}">
+          {{- pdp_link_label -}}
+        </a>
+      </div>
     {%- elsif card_product.type != 'Free Gift' -%}
       {%- liquid
         if default_to_mini

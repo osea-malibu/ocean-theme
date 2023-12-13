@@ -366,7 +366,9 @@
                       show_reviews: block.settings.show_reviews,
                       show_benefits: block.settings.show_benefits,
                       subscription: block.settings.subscription,
-                      percent_discount: block.settings.percent_discount
+                      percent_discount: block.settings.percent_discount,
+                      is_pdp_link: section.settings.is_pdp_link,
+                      pdp_link_label: section.settings.pdp_link_label
                     %}
                   {%- endif -%}
                   {% comment %} theme-check-enable LiquidTag {% endcomment %}
@@ -853,6 +855,13 @@
           "label": "Link to PDP",
           "info": "Replace ATC button with static button that leads to PDP. For use with products that require input on PDP.",
           "default": false
+        },
+        {
+          "type": "text",
+          "id": "pdp_link_label",
+          "label": "PDP link label",
+          "info": "For use with PDP link option.",
+          "default": "View product"
         }
       ]
     },

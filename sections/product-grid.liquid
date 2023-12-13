@@ -10,7 +10,8 @@
         subscription: section.settings.is_subscription,
         variant_picker_type: section.settings.variant_picker_type,
         variant_picker_classes: section.settings.variant_picker_classes,
-        is_pdp_link: section.settings.is_pdp_link
+        is_pdp_link: section.settings.is_pdp_link,
+        pdp_link_label: section.settings.pdp_link_label
       %}
     {%- endfor -%}
   </div>
@@ -76,6 +77,13 @@
       "label": "Link to PDP",
       "info": "Replace ATC button with static button that leads to PDP. For use with products that require input on PDP.",
       "default": false
+    },
+    {
+      "type": "text",
+      "id": "pdp_link_label",
+      "label": "PDP link label",
+      "info": "For use with PDP link option.",
+      "default": "View product"
     }
   ],
   "presets": [
