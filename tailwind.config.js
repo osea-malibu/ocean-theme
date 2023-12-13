@@ -200,6 +200,9 @@ module.exports = {
           "100%": { transform: "translate3d(-50%, 0, 0)" },
         },
       },
+      maxHeight: {
+        100: "28rem",
+      },
       maxWidth: {
         "2xs": "18rem",
       },
