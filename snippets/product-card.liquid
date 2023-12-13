@@ -20,6 +20,7 @@
     - subscription: {Boolean} Deafult to subscription selection insead of variants (optional)
     - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
     - percent_discount: {Boolean} Show % off instead of $ off in savings badge (optional)
+    - is_pdp_link: {Boolean} Replace ATC button with static button that leads to PDP. For use with products that require input on PDP (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -43,7 +44,9 @@
         {{- card_product.metafields.custom_fields.short_description | escape -}}
       </p>
 
-    {%- unless card_product.type == 'Free Gift' -%}
+    {%- if is_pdp_link -%}
+      <a class="button button-tertiary" href="{{ card_product.url }}">View Details</a>
+    {%- elsif card_product.type != 'Free Gift' -%}
       {%- liquid
         if default_to_mini
           assign mini_index = card_product.variants.size | minus: 1
@@ -262,7 +265,7 @@
           {%- endform -%}
         </product-form>
       </div>
-    {%- endunless -%}
+    {%- endif -%}
   </div>
 
   <div class="relative block overflow-hidden no-underline mb-2" tabindex="-1">
