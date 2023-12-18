@@ -22,6 +22,13 @@
             "rating_classes": "rating col-span-12 md:col-span h-full"
           }
         },
+        "3706919d-8748-45e5-86e0-4ef3b55a3673": {
+          "type": "text",
+          "settings": {
+            "text": "Choose how many replenishments you’d like to gift and the giftee will be able to customize their subscription delivery dates.",
+            "text_block_classes": "text-sm tracking-wide col-span-12 py-2 font-book"
+          }
+        },
         "ddffbc10-9ed0-49c9-ba32-c6abd4017703": {
           "type": "variant_picker",
           "settings": {
@@ -30,7 +37,7 @@
           }
         },
         "3a1f6e16-b9af-4923-a9dd-4271524fff1d": {
-          "type": "shopify://apps/recharge-subscriptions/blocks/gifting-widget/371eed76-0b44-4869-9813-730372ea378e",
+          "type": "shopify:\/\/apps\/recharge-subscriptions\/blocks\/gifting-widget\/371eed76-0b44-4869-9813-730372ea378e",
           "settings": {
             "rc_show_sender_name": true,
             "rc_show_send_date": true,
@@ -114,6 +121,7 @@
         "title",
         "price",
         "6a44c417-fd63-4240-a103-3540393f4f89",
+        "3706919d-8748-45e5-86e0-4ef3b55a3673",
         "ddffbc10-9ed0-49c9-ba32-c6abd4017703",
         "3a1f6e16-b9af-4923-a9dd-4271524fff1d",
         "quantity_selector",
@@ -170,8 +178,12 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
-      "custom_css": [],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
+      "custom_css": [
+
+      ],
       "settings": {
         "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
         "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
