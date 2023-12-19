@@ -596,7 +596,10 @@
   @apply hidden;
 }
 .stamped-proxy-write h2.stamped-proxy-write-title {
-  @apply font-serif tracking-tight text-3xl;
+  @apply font-serif tracking-tight text-3xl text-center;
+}
+.stamped-proxy-write h2.stamped-proxy-write-title:before {
+  @apply block font-sans text-lg font-medium text-center;
 }
 .stamped-proxy-write .stamped-form-actions {
   @apply flex items-center;
