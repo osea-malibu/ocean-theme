@@ -244,7 +244,7 @@
                                   {%- if item.product.has_only_default_variant == false -%}
                                     {%- for option in item.options_with_values -%}
                                       <div class="product-option flex">
-                                        <dt class="mr-1{% if item.options_with_values.size > 1 %} sr-only sm:not-sr-only sm:mr-1{% endif %}">{{ option.name }}{% unless option.name contains ':' %}:{% endunless %} </dt>
+                                        <dt class="mr-1{% if item.options_with_values.size > 1 %} sr-only sm:not-sr-only sm:mr-1{% endif %}">{{ option.name | replace: 'Number of Deliveries', 'Deliveries' }}{% unless option.name contains ':' %}:{% endunless %} </dt>
                                         <dd class="whitespace-nowrap">{{ option.value }}{% unless forloop.last %}, {% endunless %}</dd>
                                       </div>
                                     {%- endfor -%}
