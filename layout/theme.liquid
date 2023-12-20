@@ -184,9 +184,13 @@
       render 'data-layer'
     -%}
    
-    <script>function myInit(){ StampedFn.init({ apiKey: 'pubkey-4oB4VG51Cx1881U1R762Z6cpQtC50C', storeUrl: '33056' }); }</script>
-    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-    <script async onload="myInit()" type="text/javascript" data-src="https://cdn1.stamped.io/files/widget.min.js"></script>
+  
+   
+<!-- Stamped - Begin script -->
+<script async type="text/javascript" id="stamped-script-widget" data-api-key="pubkey-4oB4VG51Cx1881U1R762Z6cpQtC50C" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+<!-- Stamped - End script -->
+ 
+    
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
     
     {% render 'content_for_footer' %}
