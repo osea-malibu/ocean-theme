@@ -68,7 +68,7 @@
       -%}
       <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
-        {%- if subscription and card_product.selling_plan_groups.size > 0 -%}
+        {%- if subscription and card_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
           {%- if variant_picker_type == 'button' -%}
             <fieldset class="js flex">
               <legend class="sr-only">Ship every:</legend>
@@ -126,31 +126,31 @@
               data-url="{{ card_product.url }}"
               data-update-url="false"
             >
-            {%- for option in card_product.options_with_values -%}
-              <div class="relative block">
-                <label class="absolute top-0 sm:top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
-                  {{- option.name -}}
-                </label>
-                <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                  class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
-                  name="options[{{ option.name | escape }}]"
-                  form="{{ product_form_id }}"
-                >
-                  {%- for value in option.values -%}
-                    <option
-                      value="{{ value | escape }}"
-                      {% if default_to_mini and forloop.index0 == mini_index %}
-                        selected="selected"
-                      {% elsif default_to_mini != true and option.selected_value == value %}
-                        selected="selected"
-                      {% endif %}
-                    >
-                      {{ value }}
-                    </option>
-                  {%- endfor -%}
-                </select>
-              </div>
-            {%- endfor -%}
+              {%- for option in card_product.options_with_values -%}
+                <div class="relative block">
+                  <label class="absolute top-0 sm:top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
+                    {{- option.name -}}
+                  </label>
+                  <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
+                    class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                    name="options[{{ option.name | escape }}]"
+                    form="{{ product_form_id }}"
+                  >
+                    {%- for value in option.values -%}
+                      <option
+                        value="{{ value | escape }}"
+                        {% if default_to_mini and forloop.index0 == mini_index %}
+                          selected="selected"
+                        {% elsif default_to_mini != true and option.selected_value == value %}
+                          selected="selected"
+                        {% endif %}
+                      >
+                        {{ value }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                </div>
+              {%- endfor -%}
 
               <script type="application/json" class="variant-data">
                 {{ card_product.variants | json }}
