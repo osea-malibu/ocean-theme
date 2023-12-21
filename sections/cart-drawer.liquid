@@ -316,17 +316,13 @@
                             </td>
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
                               {%- liquid
-                                assign hide_subscription = false
-                                assign normalized_current_variant_title = item.variant.title | replace: 'fl ', ''
-                                if small_products contains item.product.handle
-                                  if normalized_current_variant_title == '0.34 oz'
-                                    assign hide_subscription = true
+                                for variant in item.product.variants
+                                  if variant.id == item.id
+                                    assign current_variant = variant
                                   endif
-                                elsif travel_sizes contains normalized_current_variant_title and item.title != 'Advanced Repair Eye Cream - 0.6 oz'
-                                  assign hide_subscription = true
-                                endif
+                                endfor
                               -%}
-                              {%- if item.product.selling_plan_groups.size > 0 and hide_subscription == false -%}
+                              {%- if current_variant and current_variant.selling_plan_allocations.size > 0 -%}
                                 <div class="cart-subscibe flex flex-col items-end h-full">
                                   {%- liquid
                                     assign selling_plans = item.product.selling_plan_groups
