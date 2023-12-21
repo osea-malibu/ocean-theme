@@ -639,7 +639,7 @@ class VariantSelects extends HTMLElement {
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
-    this.updateIsSubscription();
+    //this.updateIsSubscription();
     this.toggleAddButton(true, "", false);
     this.removeErrorMessage();
 
@@ -647,11 +647,11 @@ class VariantSelects extends HTMLElement {
       this.toggleAddButton(true, "", true);
       this.setUnavailable();
     } else {
+      this.updateOptionVisibility();
       this.updateMedia();
       this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
-      this.updateOptionVisibility();
     }
   }
 
@@ -673,13 +673,20 @@ class VariantSelects extends HTMLElement {
     const isSubscriptionInput = document.querySelector(
       'input[name="properties[_is_subscription]"]'
     );
+    const purchaseOptionInputs = Array.from(
+      document.querySelectorAll('input[name="purchase_option"]')
+    );
 
-    if (this.currentVariant) {
-      if (this.currentVariant.selling_plan_allocations.length > 0) {
-        isSubscriptionInput.value = true;
-      } else {
-        isSubscriptionInput.value = false;
-      }
+    if (this.isTravelOrExclusion()) {
+      isSubscriptionInput.value = false;
+      purchaseOptionInputs?.forEach((input) => {
+        if (input.value === "onetime") {
+          input.checked = true;
+        } else {
+          input.checked = false;
+        }
+        input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked);
+      });
     }
   }
 
@@ -750,38 +757,56 @@ class VariantSelects extends HTMLElement {
         replaceContent(".subscription .autodeliver .price");
         replaceContent(".product .benefits");
         replaceContent(`[value="${id}"] ~ button[name="add"] .price`, ".product .main-price");
-        replaceContent(".subscription .selling-plan-options");
 
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
   }
 
+  isTravelOrExclusion() {
+    const normalizedVariantTitle = this.currentVariant.title.replace("fl ", "");
+    const productHandle = this.dataset.url.replace("/products/", "");
+    let isTravelSized = false;
+    if (["dayglow-face-oil", "essential-hydrating-oil-1"].includes(productHandle)) {
+      isTravelSized = normalizedVariantTitle === "0.34 oz";
+    } else {
+      isTravelSized = ["1.7 oz", "1 oz", "0.6 oz", "0.22 oz", "Scented / 1 oz"].includes(
+        normalizedVariantTitle
+      );
+    }
+    const isExclusion = ["UAO-1", "UAO-H22", "B-BALM"].includes(this.currentVariant.sku);
+
+    return isTravelSized || isExclusion;
+  }
+
+  toggleOption(selector, heightClass) {
+    this.renderProductInfo();
+
+    document.querySelector(selector).classList.toggle("max-h-0", this.isTravelOrExclusion());
+    document.querySelector(selector).classList.toggle(heightClass, !this.isTravelOrExclusion());
+  }
+
+  toggleDisabledState(qualifier, selector) {
+    if (qualifier) {
+      this.querySelector(selector).setAttribute("disabled", "");
+    } else {
+      this.querySelector(selector).removeAttribute("disabled");
+    }
+  }
+
   updateOptionVisibility() {
     if (this.currentVariant && window.location.pathname.includes("/products/")) {
-      const subscriptionRadios = document.querySelector("subscription-radios");
-      if (subscriptionRadios) {
-        const hasSubscriptionOption = this.currentVariant.selling_plan_allocations.length > 0;
-        if (hasSubscriptionOption) {
-          subscriptionRadios.classList.add("max-h-48");
-          subscriptionRadios.classList.remove("max-h-0");
-
-          // set default checked on selling plan inputs here
-          setTimeout(() => subscriptionRadios.setDefaultSellingPlan(), 800);
-        } else {
-          subscriptionRadios.classList.add("max-h-0");
-          subscriptionRadios.classList.remove("max-h-48");
-
-          document.getElementsByName("selling_plan").forEach((option) => (option.checked = false));
-        }
-      }
-
+      const hasSubscriptionOption = this.currentVariant.selling_plan_allocations.length > 0;
       const scentValues = ["Fragrance free", "Scented"];
       const hasScentVariant = this.currentVariant.options.some((r) => scentValues.indexOf(r) >= 0);
+
+      if (hasSubscriptionOption) {
+        this.toggleOption("subscription-radios", "max-h-48");
+      }
       if (hasScentVariant) {
-        const scentRadios = document.getElementsByName("Scent");
-        const sizeRadios = document.getElementsByName("Size");
+        const scentRadios = document.querySelectorAll('input[name="Scent"]');
         const originalScentInfo = document.querySelectorAll(".scent-scented");
         const fragranceFreeScentInfo = document.querySelectorAll(".scent-fragrance-free");
+        const isFragranceFreeSelected = this.currentVariant.options.includes("Fragrance free");
 
         originalScentInfo.forEach((i) => {
           i.classList.toggle("hidden", scentRadios[1].checked);
@@ -790,31 +815,8 @@ class VariantSelects extends HTMLElement {
           i.classList.toggle("hidden", scentRadios[0].checked);
         });
 
-        var selectedSize = this.currentVariant.option2;
-        var selectedScent = this.currentVariant.option1;
-
-        // Enable all options initially
-        sizeRadios.forEach((radio) => (radio.disabled = false));
-        scentRadios.forEach((radio) => (radio.disabled = false));
-
-        // Disable options based on selected values
-        if (selectedSize === "1 fl oz") {
-          // Disable Fragrance free when 1 fl oz is selected
-          scentRadios.forEach((radio) => {
-            if (radio.value === "Fragrance free") {
-              radio.disabled = true;
-            }
-          });
-        }
-
-        if (selectedScent === "Fragrance free") {
-          // Disable 1 fl oz when Fragrance free is selected
-          sizeRadios.forEach((radio) => {
-            if (radio.value === "1 fl oz") {
-              radio.disabled = true;
-            }
-          });
-        }
+        this.toggleDisabledState(this.isTravelOrExclusion(), '[value="Fragrance free"]');
+        this.toggleDisabledState(isFragranceFreeSelected, ".travel-input");
       }
     }
   }
@@ -877,6 +879,7 @@ class SubscriptionRadios extends HTMLElement {
 
     this.isSubscriptionInput = document.querySelector('input[name="properties[_is_subscription]"]');
     this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
+    this.sellingPlanInputs = Array.from(this.querySelectorAll('input[name="selling_plan"]'));
 
     const urlParams = new URLSearchParams(window.location.search);
     const urlPurchaseType = urlParams.get("type");
@@ -949,16 +952,12 @@ class SubscriptionRadios extends HTMLElement {
   }
 
   clearSellingPlanValues() {
-    Array.from(this.querySelectorAll('input[name="selling_plan"]'))?.forEach(
-      (input) => (input.checked = false)
-    );
+    this.sellingPlanInputs?.forEach((input) => (input.checked = false));
   }
 
   setDefaultSellingPlan() {
     const defaultSellingPlanInt = this.dataset.recommendedInterval || 2;
-    const defaultSellingPlanInput = Array.from(this.querySelectorAll('input[name="selling_plan"]'))[
-      defaultSellingPlanInt - 1
-    ];
+    const defaultSellingPlanInput = this.sellingPlanInputs[defaultSellingPlanInt - 1];
 
     defaultSellingPlanInput.checked = true;
   }

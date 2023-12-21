@@ -136,8 +136,25 @@
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
           assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+          assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1' | split: ', '
           assign set_products = collections['skincare-sets-1'].products | map: 'handle'
           assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
+
+          assign is_travel_or_exclusion = false
+          if product.handle == 'anti-aging-body-balm'
+            assign excluded_bbalm_variants = '5 oz, 1 oz' | split: ', '
+            if excluded_bbalm_variants contains normalized_variant_title
+              assign is_travel_or_exclusion = true
+            endif
+          elsif small_products contains product.handle
+            if normalized_variant_title == '0.34 oz'
+              assign is_travel_or_exclusion = true
+            endif
+          else
+            if travel_sizes contains normalized_variant_title
+              assign is_travel_or_exclusion = true
+            endif
+          endif
 
           assign is_fragrance_free = false
           if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'
@@ -488,7 +505,7 @@
               {%- unless product.selling_plan_groups.size == 0 -%}
                 {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
                 <subscription-radios
-                  class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }} {% if product.selected_or_first_available_variant.selling_plan_allocations.size == 0 %}max-h-0{% else %}max-h-48{% endif %}"
+                  class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }}{% if is_travel_or_exclusion and product.variants.size > 1 %} max-h-0{% endif %}"
                   data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
                 >
                   <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
@@ -511,7 +528,7 @@
                             {%- if option == 'onetime' -%}
                               {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
                             {%- else -%}
-                              {% render 'price', product: product, subscription: true, price_class: 'text-sm font-medium' %}
+                              {% render 'price', product: product, use_variant: true, subscription: true, price_class: 'text-sm font-medium' %}
                             {%- endif -%}
                           </span>
                         </label>
@@ -523,29 +540,22 @@
                             </modal-opener>
                           </span>
                           <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
-                            <fieldset class="selling-plan-options js flex mb-2 pb-3">
+                            <fieldset class="js flex mb-2 pb-3">
                               <legend class="text-sm font-medium">Delivery every</legend>
-                              {%- for selling_plan in product.selected_or_first_available_variant.selling_plan_allocations -%}
-                                {%- liquid
-                                  for group in product.selling_plan_groups
-                                    if group.id == selling_plan.selling_plan_group_id
-                                      assign selling_plan_group = group
-                                    endif
-                                  endfor
-                                -%}
+                              {%- for value in product.selling_plan_groups -%}
                                 <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
                                   <input type="radio"
-                                    id="{{ selling_plan.selling_plan.id }}"
+                                    id="{{ block.id }}-{{ forloop.index0 }}"
                                     class="peer sr-only"
                                     name="selling_plan"
-                                    value="{{ selling_plan.selling_plan.id }}"
+                                    value="{{ value.selling_plans[0].id | escape }}"
                                     form="{{ product_form_id }}"
                                   />
                                   <label
                                     class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-200"
-                                    for="{{ selling_plan.selling_plan.id }}"
+                                    for="{{ block.id }}-{{ forloop.index0 }}"
                                   >
-                                    {{- selling_plan_group.name | replace: "Delivery every", "" -}}
+                                    {{- value.name | replace: "Delivery every", "" -}}
                                   </label>
                                 </div>
                               {%- endfor -%}
@@ -583,9 +593,14 @@
               {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
                 <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
                   <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
+                    <div class="product-form__error-message-wrapper absolute left-0 -mt-6 text-coral-800 text-sm" role="alert" hidden>
+                      {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
+                      <span class="product-form__error-message leading-4 align-bottom"></span>
+                    </div>
+
                     {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-                      <input type="hidden" name="properties[_is_subscription]" value="{% if product.selected_or_first_available_variant.selling_plan_allocations.size > 0 %}true{% else %}false{% endif %}">
+                      <input type="hidden" name="properties[_is_subscription]" value="{% if product.selected_or_first_available_variant.selling_plan_groups.size > 0 %}true{% else %}false{% endif %}">
                       {% if product.type contains 'Gift Card' %}
                         <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
                         <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
@@ -622,10 +637,6 @@
                         </div>
                       {%- endif -%}
                     {%- endform -%}
-                    <div class="product-form__error-message-wrapper absolute left-0 mt-1 text-coral-800 text-sm" role="alert" hidden>
-                      {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
-                      <span class="product-form__error-message leading-4 align-bottom"></span>
-                    </div>
                   </product-form>
                 </div>
               {%- endif -%}

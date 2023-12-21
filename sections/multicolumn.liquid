@@ -122,7 +122,7 @@
                           <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
                           <div>
                             {%- assign product_form_id = 'product-form-' | append: block.settings.atc_button_product.id | append: '-' | append: block.id -%}
-                            {%- if block.settings.is_subscription and block.settings.atc_button_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
+                            {%- if block.settings.is_subscription and block.settings.atc_button_product.selling_plan_groups.size > 0 -%}
                               {%- if block.settings.variant_picker_type == 'button' -%}
                                 <fieldset class="js flex">
                                   <legend class="sr-only">Ship every:</legend>
