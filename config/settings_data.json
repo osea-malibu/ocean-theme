@@ -52,6 +52,12 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
+          "b38132fb-9532-46aa-ac10-89724f194ee1": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p>Last minute shopping? <a href=\"\/products\/gift-card\" title=\"Digital Gift Card\"><strong>Shop Gift Cards<\/strong><\/a><\/p>"
+            }
+          },
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
@@ -60,11 +66,12 @@
           }
         },
         "block_order": [
+          "b38132fb-9532-46aa-ac10-89724f194ee1",
           "announcement-bar-0"
         ],
         "settings": {
           "slide_interval": 2,
-          "enable_dismissable_announcement": true,
+          "enable_dismissable_announcement": false,
           "dismissable_message": "<p><a href=\"\/products\/gift-card\" title=\"Digital Gift Card\">Shop Gift Cards<\/a> <\/p>",
           "default_message": "<p> Free shipping on all US orders $60+<\/p><p> <a href=\"\/products\/gift-card\" title=\"Digital Gift Card\">Shop Gift Cards<\/a> <\/p>"
         }
