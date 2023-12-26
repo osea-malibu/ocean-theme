@@ -585,7 +585,7 @@
                   <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
                     {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-                      <input type="hidden" name="properties[_is_subscription]" value="{% if product.selected_or_first_available_variant.selling_plan_allocations.size > 0 %}true{% else %}false{% endif %}">
+                      <input type="hidden" name="properties[_is_subscription]" value="false">
                       {% if product.type contains 'Gift Card' %}
                         <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
                         <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />

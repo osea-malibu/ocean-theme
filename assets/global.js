@@ -632,7 +632,6 @@ class VariantSelects extends HTMLElement {
   connectedCallback() {
     this.updateOptions();
     this.updateMasterId();
-    this.updateOptionVisibility();
     this.updateMedia();
   }
 
@@ -642,6 +641,12 @@ class VariantSelects extends HTMLElement {
     this.updateIsSubscription();
     this.toggleAddButton(true, "", false);
     this.removeErrorMessage();
+
+    // reset purchase option to one-time
+    document.querySelector(".purchase-option.onetime").classList.add("bg-wave-200");
+    document.querySelector('input[value="onetime"]').checked = true;
+    document.querySelector(".purchase-option.autodeliver").classList.remove("bg-wave-200");
+    document.querySelector('input[value="autodeliver"]').checked = false;
 
     if (!this.currentVariant) {
       this.toggleAddButton(true, "", true);
@@ -764,14 +769,9 @@ class VariantSelects extends HTMLElement {
         if (hasSubscriptionOption) {
           subscriptionRadios.classList.add("max-h-48");
           subscriptionRadios.classList.remove("max-h-0");
-
-          // set default checked on selling plan inputs here
-          setTimeout(() => subscriptionRadios.setDefaultSellingPlan(), 800);
         } else {
           subscriptionRadios.classList.add("max-h-0");
           subscriptionRadios.classList.remove("max-h-48");
-
-          document.getElementsByName("selling_plan").forEach((option) => (option.checked = false));
         }
       }
 
