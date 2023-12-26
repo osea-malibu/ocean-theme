@@ -29,12 +29,12 @@
     "shipping_countdown_threshold": 60,
     "shipping_countdown_text": "You are remaining_amount away from free shipping!",
     "shipping_countdown_text_success": "Congrats! You get free shipping.",
-    "enable_gwp": false,
+    "enable_gwp": true,
     "gwp_type": "auto",
     "enable_annoucement_bar_message": false,
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
-    "gwp_tier1_product": "free-gift-mini-vagus-nerve-oil",
-    "gwp_tier1_threshold": 75,
+    "gwp_tier1_product": "free-gift-mini-salts-of-the-earth-body-scrub-mini-undaria-algae-body-butter",
+    "gwp_tier1_threshold": 90,
     "gwp_tier1_text": "You're remaining_amount away from a gift_product!",
     "gwp_tier2_product": "",
     "gwp_tier2_threshold": 0,
@@ -52,12 +52,6 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
-          "b38132fb-9532-46aa-ac10-89724f194ee1": {
-            "type": "announcement",
-            "settings": {
-              "text": "<p>Last minute shopping? <a href=\"\/products\/gift-card\" title=\"Digital Gift Card\">Shop Gift Cards<\/a><\/p>"
-            }
-          },
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
@@ -66,7 +60,6 @@
           }
         },
         "block_order": [
-          "b38132fb-9532-46aa-ac10-89724f194ee1",
           "announcement-bar-0"
         ],
         "settings": {
