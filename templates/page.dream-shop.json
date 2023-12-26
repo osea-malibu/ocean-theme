@@ -12,11 +12,11 @@
             "image_classes": "",
             "image_wrapper_classes": "",
             "image_static_size": "",
-            "text_classes": "mb-4 text-dream-navy text-shadow shadow-white/50",
+            "text_classes": "mb-4 text-dream-navy text-shadow shadow-white\/50",
             "remove_text_wrapper": false,
             "heading": "The Dream Shop",
             "heading_classes": "font-serif text-[2.5rem] tracking-tight leading-tight sm:text-5xl sm:mb-1",
-            "paragraph": "Life comes in waves. <em class=\"block sm:inline\">Give your skin a rest.</em>",
+            "paragraph": "Life comes in waves. <em class=\"block sm:inline\">Give your skin a rest.<\/em>",
             "paragraph_classes": "leading-tight font-book max-w-2xs sm:max-w-full font-serif text-2xl",
             "button_label": "",
             "button_aria_label": "",
@@ -67,7 +67,7 @@
             "show_variants": false,
             "variant_picker_type": "button",
             "variant_classes": "",
-            "video_mp4": "shopify://files/videos/OSEA-Web-Dream-Shop-Banner_16x9_v1_1280.mp4",
+            "video_mp4": "shopify:\/\/files\/videos\/OSEA-Web-Dream-Shop-Banner_16x9_v1_1280.mp4",
             "video_autoplay": true,
             "video_loop": true,
             "video_hide_controls": true,
@@ -95,9 +95,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "d00da0d6-b2d1-42b9-83ba-8547fe018443": {
@@ -107,18 +107,18 @@
           "type": "column",
           "settings": {
             "column_classes": "relative bg-white w-full rounded-xl border border-dream-navy overflow-hidden",
-            "image": "shopify://shop_images/Dream_Shop_LP_Banner_-_Mobile_-_LAYOUT.jpg",
-            "image_desktop": "shopify://shop_images/Dream_Shop_LP_Banner_-_Desktop_-_BLANK.jpg",
+            "image": "shopify:\/\/shop_images\/Dream_Shop_LP_Banner_-_Mobile_-_LAYOUT.jpg",
+            "image_desktop": "shopify:\/\/shop_images\/Dream_Shop_LP_Banner_-_Desktop_-_BLANK.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "w-full object-cover",
             "image_wrapper_classes": "",
             "image_static_size": "",
-            "text_classes": "absolute inset-0 z-10 px-4 py-14 xs:py-20 sm:py-10 lg:py-16 xl:py-24 text-center text-white text-shadow shadow-white/50",
+            "text_classes": "absolute inset-0 z-10 px-4 py-14 xs:py-20 sm:py-10 lg:py-16 xl:py-24 text-center text-white text-shadow shadow-white\/50",
             "remove_text_wrapper": false,
             "heading": "The Dream Shop",
             "heading_classes": "font-serif text-[2.5rem] xs:text-5xl xs:mb-2 sm:mb-0 md:text-6xl lg:text-[5.5rem] xl:text-8xl",
-            "paragraph": "Life comes in waves. <em class=\"block sm:inline\">Give your skin a rest.</em> ",
+            "paragraph": "Life comes in waves. <em class=\"block sm:inline\">Give your skin a rest.<\/em> ",
             "paragraph_classes": "font-serif text-2xl xs:text-3xl sm:text-2xl md:text-3xl",
             "button_label": "",
             "button_aria_label": "",
@@ -143,7 +143,9 @@
           }
         }
       },
-      "block_order": ["d1a17ff5-8136-47df-9ce1-fe8ddbebe33a"],
+      "block_order": [
+        "d1a17ff5-8136-47df-9ce1-fe8ddbebe33a"
+      ],
       "custom_css": [
         "> div {background: linear-gradient( 116deg, #e5dfee 5.38%, #dfd4d2 30.02%, #b8b3b6 48.78%, #a3a6b1 77.18%, #859cb7 97.54% );}"
       ],
@@ -156,19 +158,37 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "666106d2-a3d6-4e52-abdf-5a22d96cd1be": {
       "type": "multicolumn",
       "blocks": {
-        "b5b4752a-11a4-433d-bfb0-32bf3bc356fc": {
+        "b8500364-1d0f-4cac-afaa-b36716458248": {
           "type": "product",
           "settings": {
             "column_classes": "",
-            "product": "osea-spa-headband",
+            "product": "collagen-dream-night-cream",
+            "image_classes": "",
+            "button_classes": "flex-col leading-none button-sm",
+            "name_classes": "",
+            "description_classes": "",
+            "hide_badge": false,
+            "show_reviews": false,
+            "show_benefits": false,
+            "subscription": false,
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
+          }
+        },
+        "3a8cc0ec-f085-42d1-b5e9-ddcd272dc3b3": {
+          "type": "product",
+          "settings": {
+            "column_classes": "",
+            "product": "ocean-cleanser",
             "image_classes": "",
             "button_classes": "flex-col leading-none button-sm",
             "name_classes": "",
@@ -236,11 +256,11 @@
             "pdp_link_label": "View product"
           }
         },
-        "80cff9d9-4a7c-4cf7-8605-475d508c25c3": {
+        "b5b4752a-11a4-433d-bfb0-32bf3bc356fc": {
           "type": "product",
           "settings": {
             "column_classes": "",
-            "product": "gua-sha-sculptor",
+            "product": "osea-spa-headband",
             "image_classes": "",
             "button_classes": "flex-col leading-none button-sm",
             "name_classes": "",
@@ -254,11 +274,47 @@
             "pdp_link_label": "View product"
           }
         },
-        "3a8cc0ec-f085-42d1-b5e9-ddcd272dc3b3": {
+        "f0b242f5-1b59-44ea-8e20-e8c1f98eae1a": {
           "type": "product",
           "settings": {
             "column_classes": "",
-            "product": "ocean-cleanser",
+            "product": "undaria-collagen-body-lotion",
+            "image_classes": "",
+            "button_classes": "flex-col leading-none button-sm",
+            "name_classes": "",
+            "description_classes": "",
+            "hide_badge": false,
+            "show_reviews": false,
+            "show_benefits": false,
+            "subscription": false,
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
+          }
+        },
+        "f9dc5b17-178f-4d23-8646-2e061d3f0711": {
+          "type": "product",
+          "settings": {
+            "column_classes": "",
+            "product": "vagus-nerve-pillow-mist",
+            "image_classes": "",
+            "button_classes": "flex-col leading-none button-sm",
+            "name_classes": "",
+            "description_classes": "",
+            "hide_badge": false,
+            "show_reviews": false,
+            "show_benefits": false,
+            "subscription": false,
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
+          }
+        },
+        "80cff9d9-4a7c-4cf7-8605-475d508c25c3": {
+          "type": "product",
+          "settings": {
+            "column_classes": "",
+            "product": "gua-sha-sculptor",
             "image_classes": "",
             "button_classes": "flex-col leading-none button-sm",
             "name_classes": "",
@@ -343,19 +399,60 @@
             "is_pdp_link": false,
             "pdp_link_label": "View product"
           }
+        },
+        "6f687c9e-7002-4599-ba82-c4abe07dd3b9": {
+          "type": "product",
+          "settings": {
+            "column_classes": "",
+            "product": "vagus-nerve-oil",
+            "image_classes": "",
+            "button_classes": "flex-col leading-none button-sm",
+            "name_classes": "",
+            "description_classes": "",
+            "hide_badge": false,
+            "show_reviews": false,
+            "show_benefits": false,
+            "subscription": false,
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
+          }
+        },
+        "a069a006-2d3d-4e95-a6a1-bae0217b1f5c": {
+          "type": "product",
+          "settings": {
+            "column_classes": "",
+            "product": "osea-for-parachute-hydrating-hand-cream",
+            "image_classes": "",
+            "button_classes": "flex-col leading-none button-sm",
+            "name_classes": "",
+            "description_classes": "",
+            "hide_badge": false,
+            "show_reviews": false,
+            "show_benefits": false,
+            "subscription": false,
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
+          }
         }
       },
       "block_order": [
-        "b5b4752a-11a4-433d-bfb0-32bf3bc356fc",
+        "b8500364-1d0f-4cac-afaa-b36716458248",
+        "3a8cc0ec-f085-42d1-b5e9-ddcd272dc3b3",
         "37bc34c5-30c7-48e8-82cf-ec83a23a2acf",
         "b805b7f0-bcce-4113-aabd-eba91a54de56",
         "d12001a5-8d64-47d1-8525-2ce7ddc43f8c",
+        "b5b4752a-11a4-433d-bfb0-32bf3bc356fc",
+        "f0b242f5-1b59-44ea-8e20-e8c1f98eae1a",
+        "f9dc5b17-178f-4d23-8646-2e061d3f0711",
         "80cff9d9-4a7c-4cf7-8605-475d508c25c3",
-        "3a8cc0ec-f085-42d1-b5e9-ddcd272dc3b3",
         "e9d6f484-992d-4d02-b187-e3b65ee39465",
         "feca386a-849a-4d02-9288-9d36f46cac29",
         "6a87e262-9870-46da-b991-6fc25a093f7d",
-        "24a79812-3834-4b64-aa10-bcf407d51145"
+        "24a79812-3834-4b64-aa10-bcf407d51145",
+        "6f687c9e-7002-4599-ba82-c4abe07dd3b9",
+        "a069a006-2d3d-4e95-a6a1-bae0217b1f5c"
       ],
       "settings": {
         "section_heading": "",
@@ -366,9 +463,9 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "f28eadfe-e6da-4a17-a298-e47bd21143ff": {
@@ -376,9 +473,10 @@
       "blocks": {
         "template--16141288472759__f28eadfe-e6da-4a17-a298-e47bd21143ff-column-1": {
           "type": "column",
+          "disabled": true,
           "settings": {
-            "column_classes": "md:w-2/3 relative",
-            "image": "shopify://shop_images/Dream_Shop_LP_-_Editorial_Feature_-_BLANK.jpg",
+            "column_classes": "md:w-2\/3 relative",
+            "image": "shopify:\/\/shop_images\/Dream_Shop_LP_-_Editorial_Feature_-_BLANK.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "h-full object-cover",
@@ -387,14 +485,53 @@
             "text_classes": "bg-cdnc-light md:bg-transparent p-4 md:p-6 lg:p-8 xl:pr-12 xl:pb-12 md:absolute z-10 bottom-0 right-0 text-dream-navy text-center",
             "remove_text_wrapper": false,
             "heading": "The Science<br class=\"hidden md:block\"> of Sleep",
-            "heading_classes": "text-4xl lg:text-5xl xl:text-6xl font-serif tracking-tight mb-1 lg:mb-2 text-shadow shadow-white/50",
+            "heading_classes": "text-4xl lg:text-5xl xl:text-6xl font-serif tracking-tight mb-1 lg:mb-2 text-shadow shadow-white\/50",
             "paragraph": "How to Dream Your Way<br class=\"hidden md:block\"> to Healthy Skin",
-            "paragraph_classes": "mb-3 font-book md:text-lg lg:text-xl xl:text-2xl lg:mb-4 text-shadow shadow-white/50",
+            "paragraph_classes": "mb-3 font-book md:text-lg lg:text-xl xl:text-2xl lg:mb-4 text-shadow shadow-white\/50",
             "button_label": "Read more",
             "button_aria_label": "Read more about the Science of Sleep",
             "link": "",
             "target_blank": false,
-            "button_classes": "button-primary bg-dream-navy border-dream-navy lg:button-lg shadow-lg shadow-white/50",
+            "button_classes": "button-primary bg-dream-navy border-dream-navy lg:button-lg shadow-lg shadow-white\/50",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
+        "ebfc96cc-ef91-49eb-b69b-df8897cc0df9": {
+          "type": "column",
+          "settings": {
+            "column_classes": "md:w-2\/3 relative",
+            "image": "shopify:\/\/shop_images\/CDNC_Launch_Clinical_Text_-_LAYOUT_0ba6087b-7925-4263-9e6a-cdb455447c54.jpg",
+            "image_desktop": "shopify:\/\/shop_images\/CDNC_Launch_Featured_Clinical_Desktop_-_LAYOUT_5d501521-69b7-4edc-aa83-559ea8629b04.jpg",
+            "is_bg_image": false,
+            "image_link": "shopify:\/\/products\/collagen-dream-night-cream",
+            "image_classes": "h-full object-cover max-h-100",
+            "image_wrapper_classes": "",
+            "image_static_size": "",
+            "text_classes": "absolute inset-x-0 bottom-0 text-center",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "*Based on a 3rd party consumer study of 30 women ages 33-60, after 1 use. ",
+            "paragraph_classes": "absolute bottom-0 inset-x-0 bg-white\/75 text-dream-navy font-book leading-none py-1 lg:pb-2 px-4 text-sm",
+            "button_label": "Shop now",
+            "button_aria_label": "Shop Now: Dream Cream",
+            "link": "shopify:\/\/products\/collagen-dream-night-cream",
+            "target_blank": false,
+            "button_classes": "button-white text-dream-navy mb-12 md:button-lg",
             "button_icon": "",
             "is_atc_button": false,
             "is_subscription": false,
@@ -415,9 +552,9 @@
         "ae6fd85e-2930-4036-a36a-b6950e7a4f87": {
           "type": "product",
           "settings": {
-            "column_classes": "md:w-1/3 border border-dream-navy rounded-xl overflow-hidden p-4 max-w-2xs mx-auto shadow-lg shadow-cdnc-light/50",
+            "column_classes": "md:w-1\/3 border border-dream-navy rounded-xl overflow-hidden p-4 max-w-2xs mx-auto shadow-lg shadow-cdnc-light\/50",
             "product": "collagen-dream-night-cream",
-            "image_classes": "!bg-cdnc-light/50",
+            "image_classes": "!bg-cdnc-light\/50",
             "button_classes": "",
             "name_classes": "text-dream-navy",
             "description_classes": "text-dream-navy",
@@ -433,6 +570,7 @@
       },
       "block_order": [
         "template--16141288472759__f28eadfe-e6da-4a17-a298-e47bd21143ff-column-1",
+        "ebfc96cc-ef91-49eb-b69b-df8897cc0df9",
         "ae6fd85e-2930-4036-a36a-b6950e7a4f87"
       ],
       "settings": {
@@ -444,21 +582,21 @@
         "slider_breakpoint_limit": "none",
         "slider_classes": "",
         "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+        "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
       }
     },
     "b4c29710-5471-4708-8987-3ce87d8ad749": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<iframe class=\"fixed z-100 right-2 sm:right-4 sm:bottom-2\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/playlist/1sGUqgmvXB7tDBsz8PtBrB?utm_source=generator&amp;theme=0\" width=\"350\" height=\"150\" frameborder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
+        "custom_liquid": "<iframe class=\"fixed z-100 right-2 sm:right-4 sm:bottom-2\" style=\"border-radius:12px\" src=\"https:\/\/open.spotify.com\/embed\/playlist\/1sGUqgmvXB7tDBsz8PtBrB?utm_source=generator&amp;theme=0\" width=\"350\" height=\"150\" frameborder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"><\/iframe>"
       }
     },
     "2ae3168c-ce64-4156-9a9a-081538ce9b91": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<div class=\"hidden bg-cdnc-light text-cdnc-light\"></div>"
+        "custom_liquid": "<div class=\"hidden bg-cdnc-light text-cdnc-light\"><\/div>"
       }
     }
   },
