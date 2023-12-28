@@ -626,13 +626,18 @@ customElements.define("deferred-media", DeferredMedia);
 class VariantSelects extends HTMLElement {
   constructor() {
     super();
-    this.addEventListener("change", this.onVariantChange);
+    this.addEventListener("change", () => {
+      this.onVariantChange();
+    });
   }
 
   connectedCallback() {
-    this.updateOptions();
-    this.updateMasterId();
-    this.updateMedia();
+    const executeMethods = () => {
+      this.updateOptions();
+      this.updateMasterId();
+      this.updateMedia();
+    };
+    document.addEventListener("DOMContentLoaded", executeMethods);
   }
 
   onVariantChange() {
@@ -641,14 +646,7 @@ class VariantSelects extends HTMLElement {
     this.updateIsSubscription();
     this.toggleAddButton(true, "", false);
     this.removeErrorMessage();
-
-    // reset purchase option to one-time
-    if (window.location.pathname.includes("/products/")) {
-      document.querySelector(".purchase-option.onetime").classList.add("bg-wave-200");
-      document.querySelector('input[value="onetime"]').checked = true;
-      document.querySelector(".purchase-option.autodeliver").classList.remove("bg-wave-200");
-      document.querySelector('input[value="autodeliver"]').checked = false;
-    }
+    this.resetPurchaseOption();
 
     if (!this.currentVariant) {
       this.toggleAddButton(true, "", true);
@@ -687,6 +685,19 @@ class VariantSelects extends HTMLElement {
       } else {
         isSubscriptionInput.value = false;
       }
+    }
+  }
+
+  resetPurchaseOption() {
+    // reset purchase option to one-time
+    if (
+      window.location.pathname.includes("/products/") &&
+      document.querySelector("subscription-radios")
+    ) {
+      document.querySelector(".purchase-option.onetime").classList.add("bg-wave-200");
+      document.querySelector('input[value="onetime"]').checked = true;
+      document.querySelector(".purchase-option.autodeliver").classList.remove("bg-wave-200");
+      document.querySelector('input[value="autodeliver"]').checked = false;
     }
   }
 
