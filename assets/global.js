@@ -643,10 +643,12 @@ class VariantSelects extends HTMLElement {
     this.removeErrorMessage();
 
     // reset purchase option to one-time
-    document.querySelector(".purchase-option.onetime").classList.add("bg-wave-200");
-    document.querySelector('input[value="onetime"]').checked = true;
-    document.querySelector(".purchase-option.autodeliver").classList.remove("bg-wave-200");
-    document.querySelector('input[value="autodeliver"]').checked = false;
+    if (window.location.pathname.includes("/products/")) {
+      document.querySelector(".purchase-option.onetime").classList.add("bg-wave-200");
+      document.querySelector('input[value="onetime"]').checked = true;
+      document.querySelector(".purchase-option.autodeliver").classList.remove("bg-wave-200");
+      document.querySelector('input[value="autodeliver"]').checked = false;
+    }
 
     if (!this.currentVariant) {
       this.toggleAddButton(true, "", true);
