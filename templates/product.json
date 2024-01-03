@@ -25,7 +25,7 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "atc_classes": "atc col-span-12 mt-3",
+            "atc_classes": "atc col-span-8 lg:col-span-9 mt-3",
             "atc_show_price": true
           }
         },
@@ -64,5 +64,8 @@
       }
     }
   },
-  "order": ["main", "product-recommendations"]
+  "order": [
+    "main",
+    "product-recommendations"
+  ]
 }
