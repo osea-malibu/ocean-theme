@@ -289,5 +289,16 @@ module.exports = {
         });
       }
     }),
+    // add support for text-shadow
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") }
+      );
+    }),
   ],
 };
