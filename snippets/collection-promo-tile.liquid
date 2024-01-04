@@ -32,7 +32,7 @@
 {%- endif -%}
 
 {%- if promo_tile_video_portrait != blank and promo_tile_video_landscape == blank -%}
-  <div class="h-full relative hidden promo-tile-video">
+  <div class="h-full relative promo-tile-video">
     <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
       {%- for source in promo_tile_video_portrait.value.sources -%}
         <source src="{{ source.url }}" type="video/{{ source.format }}" />
