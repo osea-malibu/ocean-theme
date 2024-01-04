@@ -205,6 +205,11 @@ module.exports = {
       maxWidth: {
         "2xs": "18rem",
       },
+      textShadow: {
+        sm: "0 0 2px var(--tw-shadow-color)",
+        DEFAULT: "0 0 4px var(--tw-shadow-color)",
+        lg: "0 0 16px var(--tw-shadow-color)",
+      },
       transitionProperty: {
         height: "height",
         "max-height": "max-height",
