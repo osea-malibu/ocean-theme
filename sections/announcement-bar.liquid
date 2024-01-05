@@ -1,3 +1,4 @@
+{%- if section.settings.enable_announcement_bar -%}
 <div class="bg-seaweed-700 flex justify-center px-4 text-sm a:link" id="AnnouncementBar">
   {% comment %} Dismissable announcement bar {% endcomment %}
   {%- if section.settings.enable_dismissable_announcement -%}
@@ -47,6 +48,7 @@
     </div>
   {%- endif -%}
 </div>
+{%- endif -%}
 
 {% schema %}
 {
