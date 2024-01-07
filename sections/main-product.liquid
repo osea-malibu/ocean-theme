@@ -189,6 +189,7 @@
               </label>
               <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
                 <script>
+                  console.log("variant data", {{ product.variants | json }});
                   console.log("variant data", {{ product.selected_or_first_available_variant | json }});
                   console.log("quantity rules", {{ product.selected_or_first_available_variant.quantity_rule | json }});
                 </script>
