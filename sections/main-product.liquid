@@ -200,14 +200,18 @@
                   <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
                   {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
+                {%- assign quantity_rule = product.selected_or_first_available_variant.quantity_rule -%}
                 <input
                   class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
                   type="number"
                   name="quantity"
                   id="Quantity-{{ section.id }}"
                   min="1"
-                  value="1"
+                  value="{{ quantity_rule.min }}"
                   form="{{ product_form_id }}"
+                  min="{{ quantity_rule.min }}"
+                  {% if quantity_rule.max != null %}max="{{ quantity_rule.max }}"{% endif %}
+                  step="{{ quantity_rule.increment }}"
                 >
                 <button
                   class="{{ quantity_classes }} rounded-r-md"
