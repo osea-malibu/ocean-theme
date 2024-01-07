@@ -149,19 +149,6 @@ function onKeyUpEscape(event) {
   summaryElement.focus();
 }
 
-// add border to header on scroll
-let headerBorderObserver = new IntersectionObserver((entries) => {
-  const headerWrapper = document.querySelector("#HeaderContent");
-  if (entries[0].boundingClientRect.y < 0) {
-    headerWrapper.classList.add("border-seaweed-300");
-    headerWrapper.classList.remove("border-transparent");
-  } else {
-    headerWrapper.classList.remove("border-seaweed-300");
-    headerWrapper.classList.add("border-transparent");
-  }
-});
-headerBorderObserver.observe(document.querySelector("#HeaderScrollPixel"));
-
 const lazyVideos = [].slice.call(document.querySelectorAll("video.lazy"));
 let lazyVideoObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach((video) => {
@@ -197,28 +184,20 @@ class QuantityInput extends HTMLElement {
   }
 
   onInputChange(event) {
-    const autodeliverOptionEl = document.querySelector('input[value="autodeliver"]');
-    const inputValueInteger = parseInt(event.currentTarget.value);
-    const plusButtonEl = this.querySelector('button[name="plus"]');
+    const inputValue = event.target.value;
 
-    if (autodeliverOptionEl && autodeliverOptionEl.checked) {
-      this.productForm = document.querySelector("product-form.pdp-product-form");
-      if (inputValueInteger > 4) {
-        this.input.value = 4;
-        this.productForm.handleErrorMessage(
-          "You may not subscribe to more than 4 of this product."
-        );
-        setTimeout(() => this.productForm.handleErrorMessage(), 5000);
-        plusButtonEl.setAttribute("disabled", "");
-      } else if (inputValueInteger == 4) {
-        plusButtonEl.setAttribute("disabled", "");
-      } else {
-        if (plusButtonEl.disabled) {
-          plusButtonEl.removeAttribute("disabled");
-        }
-        this.productForm.handleErrorMessage();
-      }
-    }
+    fetch(`${productUrl}?section_id=${sectionId}&variant=${variantId}`)
+      .then((response) => response.text())
+      .then((responseText) => {
+        // Replace the current HTML in DOM with the updated HTML
+
+        const updatedHtml = new DOMParser().parseFromString(responseText, "text/html");
+
+        // Update the quantity rules
+        const currentQuantityRules = document.querySelector(`#QuantityRules-${sectionId}`);
+        const updatedQuantityRules = updatedHtml.querySelector(`#QuantityRules-${sectionId}`);
+        currentQuantityRules.innerHTML = updatedQuantityRules.innerHTML;
+      });
   }
 
   onButtonClick(event) {

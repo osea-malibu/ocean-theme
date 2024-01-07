@@ -188,6 +188,7 @@
                 {{ 'products.product.quantity.label' | t }}
               </label>
               <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
+                <script>console.log("quantity rules", {{ product.selected_or_first_available_variant.quantity_rule | json }});</script>
                 <button
                   class="{{ quantity_classes }} rounded-l-md"
                   name="minus"
