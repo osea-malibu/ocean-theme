@@ -189,12 +189,6 @@
                 {{ 'products.product.quantity.label' | t }}
               </label>
               <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
-                {% comment %} <script>
-                  console.log("product data", {{ product | json }});
-                  console.log("variants data", {{ product.variants | json }});
-                  console.log("variant data", {{ product.selected_or_first_available_variant | json }});
-                  console.log("quantity rules", {{ product.selected_or_first_available_variant.quantity_rule | json }});
-                </script> {% endcomment %}
                 <button
                   class="{{ quantity_classes }} rounded-l-md -ml-px"
                   name="minus"
@@ -203,7 +197,7 @@
                   <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
                   {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
-                {% comment %} <input
+                <input
                   class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
                   type="number"
                   name="quantity"
@@ -213,17 +207,6 @@
                   min="{{ quantity_rule.min }}"
                   {% if quantity_rule.max != null %}max="{{ quantity_rule.max }}"{% endif %}
                   step="{{ quantity_rule.increment }}"
-                > {% endcomment %}
-                <input
-                  class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
-                  type="number"
-                  name="quantity"
-                  id="Quantity-{{ section.id }}"
-                  value="3"
-                  form="{{ product_form_id }}"
-                  min="3"
-                  max="24"
-                  step="3"
                 >
                 <button
                   class="{{ quantity_classes }} rounded-r-md -mr-px"
@@ -347,6 +330,11 @@
                 {%- endform -%}
               </product-form>
             </div>
+          {%- when 'link' -%}
+            <script>console.log("block.settings.url", {{block.settings.url | json}})</script>
+            <a class="{{ block.settings.url_classes }}" href="{{ block.settings.url.url }}">
+              {{- block.settings.url.label -}}
+            </a>
           {%- endcase -%}
         {%- endfor -%}
       </div>
@@ -577,6 +565,22 @@
           "type": "checkbox",
           "id": "default_open",
           "label": "Open by default"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "textarea",
+          "id": "url_classes",
+          "label": "URL classes"
         }
       ]
     }
