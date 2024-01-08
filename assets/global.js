@@ -184,7 +184,8 @@ class QuantityInput extends HTMLElement {
   }
 
   onInputChange(event) {
-    const { max, min, step, value } = event.target;
+    const { max, min, name, step, value } = event.target;
+    const index = event.target.dataset.index;
     const isMultiple = value % step === 0;
     const errorWrapper = document.querySelector(".product-form__error-message-wrapper");
     const errorMessage = errorWrapper.querySelector(".product-form__error-message");
@@ -196,22 +197,28 @@ class QuantityInput extends HTMLElement {
       errorMessage.textContent = "";
     };
 
-    if (parseInt(value) === 0) {
-      console.log("zero");
-    } else if (parseInt(value) > parseInt(max)) {
+    if (parseInt(value) > parseInt(max)) {
       this.input.value = max;
-      errorMessage.textContent = `Maximum quantity is ${max}.`;
-      errorWrapper.removeAttribute("hidden");
-      setTimeout(() => clearErrorMessage(), 3000);
+      if (name === "quantity") {
+        errorMessage.textContent = `Maximum quantity is ${max}.`;
+        errorWrapper.removeAttribute("hidden");
+        setTimeout(() => clearErrorMessage(), 3000);
+      }
     } else if (parseInt(value) < parseInt(min)) {
       this.input.value = min;
-      errorMessage.textContent = `Minimum quantity is ${min}.`;
-      errorWrapper.removeAttribute("hidden");
-      setTimeout(() => clearErrorMessage(), 3000);
+      if (name === "quantity") {
+        errorMessage.textContent = `Minimum quantity is ${min}.`;
+        errorWrapper.removeAttribute("hidden");
+        setTimeout(() => clearErrorMessage(), 3000);
+      }
     } else if (!isMultiple) {
-      atcButton.setAttribute("disabled", "");
-      errorWrapper.removeAttribute("hidden");
-      errorMessage.textContent = `Value must be a multiple of ${step}.`;
+      if (name === "quantity") {
+        atcButton.setAttribute("disabled", "");
+        errorWrapper.removeAttribute("hidden");
+        errorMessage.textContent = `Value must be a multiple of ${step}.`;
+      } else if (name === "updates[]") {
+        this.input.value = Math.round(value / step) * step;
+      }
     } else {
       clearErrorMessage();
     }

@@ -174,8 +174,8 @@
                               </div>
 
                               <div id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}" class="absolute text-coral-800 text-sm hidden" role="alert">
-                                <small class="cart-item__error-text"></small>
-                                {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4', aria_hidden: true, stroke_width: 2 %}
+                                <small class="cart-item__error-text gap-1 flex flex-row-reverse items-center"></small>
+                                {% render 'icon-error-circle', classes: 'icon icon-error w-3 h-3', aria_hidden: true, stroke_width: 2 %}
                               </div>
                             </td>
                             <td class="cart-item__totals p-0 [grid-area:price]" role="cell" headers="CartDrawer-ColumnTotal">

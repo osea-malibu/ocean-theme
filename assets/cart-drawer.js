@@ -171,6 +171,10 @@ class CartDrawer extends HTMLElement {
         id: "cart-icon-bubble",
         selector: "#cart-icon-bubble",
       },
+      /* {
+        id: "announcement-bar",
+        selector: "#AnnouncementBar",
+      }, */
     ];
   }
 

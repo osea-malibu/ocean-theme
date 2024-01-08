@@ -64,20 +64,20 @@ class CartItems extends HTMLElement {
         section: document.getElementById("main-cart-footer").dataset.id,
         selector: ".js-contents",
       },
-      {
+      /* {
         id: "shopify-section-announcement-bar",
         section: "announcement-bar",
         selector: ".shopify-section",
-      },
+      }, */
     ];
   }
 
   updateCartItem(line, value, name, target) {
-    console.log("updateCartItem", line, value, name, target);
     this.enableLoading(line);
 
     const body = JSON.stringify({
       line,
+      ...(["updates[]", "remove"].includes(name) ? { quantity: value } : {}),
       sections: this.getSectionsToRender().map((section) => section.section),
       sections_url: window.location.pathname,
     });
