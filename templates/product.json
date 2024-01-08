@@ -41,7 +41,8 @@
           "settings": {
             "url": "{{ product.metafields.custom.product_one_sheet.value }}",
             "url_label": "Product one-sheet",
-            "url_classes": "col-span-12 font-medium button button-secondary button-sm gap-2 items-center"
+            "url_wrapper_classes": "col-span-12 mt-2 mb-3",
+            "url_classes": "font-medium button button-tertiary button-md gap-2 items-center normal-case tracking-wide"
           }
         },
         "318f0427-e412-48b0-9fda-97e42108e94e": {
@@ -49,7 +50,8 @@
           "settings": {
             "url": "{{ product.metafields.custom.link_to_assets.value }}",
             "url_label": "Photo assets",
-            "url_classes": "col-span-12 underline flex items-center gap-1 font-medium underline-offset-2"
+            "url_wrapper_classes": "col-span-12",
+            "url_classes": "font-medium button button-tertiary button-md gap-2 items-center normal-case tracking-wide"
           }
         }
       },
@@ -82,5 +84,8 @@
       }
     }
   },
-  "order": ["main", "product-recommendations"]
+  "order": [
+    "main",
+    "product-recommendations"
+  ]
 }
