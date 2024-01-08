@@ -331,8 +331,9 @@
               </product-form>
             </div>
           {%- when 'link' -%}
-            <a class="{{ block.settings.url_classes }}" href="{{ block.settings.url.url }}">
-              {{- block.settings.url_label -}}
+            <a class="{{ block.settings.url_classes }}" href="{{ block.settings.url.url }}" target="_blank">
+              {%- render 'icon-external-link', classes: 'w-10 h-10 text-seaweed-700', aria_hidden: true -%}
+              <span>{{ block.settings.url_label }}</span>
             </a>
           {%- endcase -%}
         {%- endfor -%}
