@@ -128,15 +128,30 @@
                                     <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
                                     {% render 'icon-minus', classes: 'h-4 w-4 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                                   </button>
-                                  <input class="quantity__input w-8 h-6 border-0 p-1 text-center"
+                                  <input
+                                    class="quantity__input w-8 h-6 border-0 p-1 text-center"
                                     type="number"
                                     name="updates[]"
                                     value="{{ item.quantity }}"
                                     min="0"
+                                    max="24"
+                                    step="3"
                                     aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
                                     id="Drawer-quantity-{{ item.index | plus: 1 }}"
                                     data-index="{{ item.index | plus: 1 }}"
                                   >
+
+                                  {% comment %} <input
+                                    class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
+                                    type="number"
+                                    name="quantity"
+                                    id="Quantity-{{ section.id }}"
+                                    value="{{ quantity_rule.min }}"
+                                    form="{{ product_form_id }}"
+                                    min="{{ quantity_rule.min }}"
+                                    {% if quantity_rule.max != null %}max="{{ quantity_rule.max }}"{% endif %}
+                                    step="{{ quantity_rule.increment }}"
+                                  > {% endcomment %}
                                   <button
                                     class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -mr-px box-content border-transparent rounded-r-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent"
                                     name="plus"

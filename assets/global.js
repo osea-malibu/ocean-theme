@@ -184,28 +184,45 @@ class QuantityInput extends HTMLElement {
   }
 
   onInputChange(event) {
-    const inputValue = event.target.value;
+    const { max, min, step, value } = event.target;
+    const isMultiple = value % step === 0;
+    const errorWrapper = document.querySelector(".product-form__error-message-wrapper");
+    const errorMessage = errorWrapper.querySelector(".product-form__error-message");
+    const atcButton = document.querySelector(".product-form__submit");
 
-    fetch(`${productUrl}?section_id=${sectionId}&variant=${variantId}`)
-      .then((response) => response.text())
-      .then((responseText) => {
-        // Replace the current HTML in DOM with the updated HTML
+    const clearErrorMessage = () => {
+      atcButton.removeAttribute("disabled");
+      errorWrapper.setAttribute("hidden", true);
+      errorMessage.textContent = "";
+    };
 
-        const updatedHtml = new DOMParser().parseFromString(responseText, "text/html");
-
-        // Update the quantity rules
-        const currentQuantityRules = document.querySelector(`#QuantityRules-${sectionId}`);
-        const updatedQuantityRules = updatedHtml.querySelector(`#QuantityRules-${sectionId}`);
-        currentQuantityRules.innerHTML = updatedQuantityRules.innerHTML;
-      });
+    if (parseInt(value) === 0) {
+      console.log("zero");
+    } else if (parseInt(value) > parseInt(max)) {
+      this.input.value = max;
+      errorMessage.textContent = `Maximum quantity is ${max}.`;
+      errorWrapper.removeAttribute("hidden");
+      setTimeout(() => clearErrorMessage(), 3000);
+    } else if (parseInt(value) < parseInt(min)) {
+      this.input.value = min;
+      errorMessage.textContent = `Minimum quantity is ${min}.`;
+      errorWrapper.removeAttribute("hidden");
+      setTimeout(() => clearErrorMessage(), 3000);
+    } else if (!isMultiple) {
+      atcButton.setAttribute("disabled", "");
+      errorWrapper.removeAttribute("hidden");
+      errorMessage.textContent = `Value must be a multiple of ${step}.`;
+    } else {
+      clearErrorMessage();
+    }
   }
 
   onButtonClick(event) {
     event.preventDefault();
-    const previousValue = this.input.value;
+    const value = parseInt(this.input.value);
 
     event.target.name === "plus" ? this.input.stepUp() : this.input.stepDown();
-    if (previousValue !== this.input.value) this.input.dispatchEvent(this.changeEvent);
+    if (value !== this.input.value) this.input.dispatchEvent(this.changeEvent);
   }
 }
 customElements.define("quantity-input", QuantityInput);

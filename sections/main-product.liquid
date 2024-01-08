@@ -129,7 +129,8 @@
       <div id="ProductInfo-{{ section.id }}" class="{{ section.settings.product_info_classes }}">
         {%- liquid
           assign product_form_id = 'product-form-' | append: section.id
-          assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
+          assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
+          assign quantity_rule = product.selected_or_first_available_variant.quantity_rule
           assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
         -%}
 
@@ -188,35 +189,44 @@
                 {{ 'products.product.quantity.label' | t }}
               </label>
               <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
-                <script>
+                {% comment %} <script>
                   console.log("product data", {{ product | json }});
-                  console.log("variant data", {{ product.variants | json }});
+                  console.log("variants data", {{ product.variants | json }});
                   console.log("variant data", {{ product.selected_or_first_available_variant | json }});
                   console.log("quantity rules", {{ product.selected_or_first_available_variant.quantity_rule | json }});
-                </script>
+                </script> {% endcomment %}
                 <button
-                  class="{{ quantity_classes }} rounded-l-md"
+                  class="{{ quantity_classes }} rounded-l-md -ml-px"
                   name="minus"
                   type="button"
                 >
                   <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
                   {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
                 </button>
-                {%- assign quantity_rule = product.selected_or_first_available_variant.quantity_rule -%}
-                <input
+                {% comment %} <input
                   class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
                   type="number"
                   name="quantity"
                   id="Quantity-{{ section.id }}"
-                  min="1"
                   value="{{ quantity_rule.min }}"
                   form="{{ product_form_id }}"
                   min="{{ quantity_rule.min }}"
                   {% if quantity_rule.max != null %}max="{{ quantity_rule.max }}"{% endif %}
                   step="{{ quantity_rule.increment }}"
+                > {% endcomment %}
+                <input
+                  class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
+                  type="number"
+                  name="quantity"
+                  id="Quantity-{{ section.id }}"
+                  value="3"
+                  form="{{ product_form_id }}"
+                  min="3"
+                  max="24"
+                  step="3"
                 >
                 <button
-                  class="{{ quantity_classes }} rounded-r-md"
+                  class="{{ quantity_classes }} rounded-r-md -mr-px"
                   name="plus"
                   type="button"
                 >
@@ -297,7 +307,7 @@
           {%- when 'buy_buttons' -%}
             <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
               <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
-                <div class="product-form__error-message-wrapper absolute left-0 -mt-6 text-coral-800 text-sm" role="alert" hidden>
+                <div class="product-form__error-message-wrapper absolute left-0 !mt-10 text-coral-800 text-sm" role="alert" hidden>
                   {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
                   <span class="product-form__error-message leading-4 align-bottom"></span>
                 </div>

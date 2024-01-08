@@ -42,14 +42,6 @@ class CartItems extends HTMLElement {
     );
   }
 
-  updateCatchCalloutPrice(price) {
-    const callout = document.querySelector("#catch-callout-cart");
-
-    if (callout && price) {
-      callout.setAttribute("price", price);
-    }
-  }
-
   getSectionsToRender() {
     return [
       {
@@ -81,6 +73,7 @@ class CartItems extends HTMLElement {
   }
 
   updateCartItem(line, value, name, target) {
+    console.log("updateCartItem", line, value, name, target);
     this.enableLoading(line);
 
     const body = JSON.stringify({
@@ -100,8 +93,6 @@ class CartItems extends HTMLElement {
         if (parsedState.items.filter((i) => i.product_type !== "Sample").length === 0) {
           this.cart.clearCart();
         }
-
-        this.updateCatchCalloutPrice(parsedState.total_price);
 
         this.classList.toggle("is-empty", parsedState.item_count === 0);
         const cartDrawerWrapper = document.querySelector("cart-drawer");
