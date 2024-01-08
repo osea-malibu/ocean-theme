@@ -110,8 +110,7 @@
       if template.name == 'product'
         render 'klaviyo-add-to-cart'
       endif
-    
-      render 'gorgias-chat-widget'
     -%}
+    {% comment %} {% render 'gorgias-chat-widget' %} {% endcomment %}
   </body>
 </html>
