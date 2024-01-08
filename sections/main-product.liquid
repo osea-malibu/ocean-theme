@@ -331,9 +331,8 @@
               </product-form>
             </div>
           {%- when 'link' -%}
-            <script>console.log("block.settings.url", {{block.settings.url | json}})</script>
             <a class="{{ block.settings.url_classes }}" href="{{ block.settings.url.url }}">
-              {{- block.settings.url.label -}}
+              {{- block.settings.url_label -}}
             </a>
           {%- endcase -%}
         {%- endfor -%}
