@@ -41,7 +41,7 @@
           "settings": {
             "url": "{{ product.metafields.custom.product_one_sheet.value }}",
             "url_label": "Product one-sheet",
-            "url_classes": ""
+            "url_classes": "col-span-12 underline flex items-center gap-1 font-medium underline-offset-2"
           }
         },
         "318f0427-e412-48b0-9fda-97e42108e94e": {
@@ -49,7 +49,7 @@
           "settings": {
             "url": "{{ product.metafields.custom.link_to_assets.value }}",
             "url_label": "Photo assets",
-            "url_classes": ""
+            "url_classes": "col-span-12 underline flex items-center gap-1 font-medium underline-offset-2"
           }
         }
       },
@@ -82,5 +82,8 @@
       }
     }
   },
-  "order": ["main", "product-recommendations"]
+  "order": [
+    "main",
+    "product-recommendations"
+  ]
 }
