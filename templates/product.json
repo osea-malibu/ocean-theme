@@ -40,6 +40,7 @@
           "type": "link",
           "settings": {
             "url": "{{ product.metafields.custom.product_one_sheet.value }}",
+            "url_label": "Product one-sheet",
             "url_classes": ""
           }
         },
@@ -47,6 +48,7 @@
           "type": "link",
           "settings": {
             "url": "{{ product.metafields.custom.link_to_assets.value }}",
+            "url_label": "Photo assets",
             "url_classes": ""
           }
         }
@@ -80,5 +82,8 @@
       }
     }
   },
-  "order": ["main", "product-recommendations"]
+  "order": [
+    "main",
+    "product-recommendations"
+  ]
 }
