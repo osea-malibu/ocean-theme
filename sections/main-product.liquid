@@ -331,10 +331,12 @@
               </product-form>
             </div>
           {%- when 'link' -%}
-            <a class="{{ block.settings.url_classes }}" href="{{ block.settings.url.url }}" target="_blank">
-              {%- render 'icon-external-link', classes: 'w-4 h-4 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
-              <span>{{ block.settings.url_label }}</span>
-            </a>
+            <div class="{{ block.settings.url_wrapper_classes }}">
+              <a class="{{ block.settings.url_classes }}" href="{{ block.settings.url.url }}" target="_blank">
+                {%- render 'icon-external-link', classes: 'w-4 h-4 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
+                <span>{{ block.settings.url_label }}</span>
+              </a>
+            </div>
           {%- endcase -%}
         {%- endfor -%}
       </div>
@@ -581,6 +583,11 @@
           "type": "text",
           "id": "url_label",
           "label": "Link text"
+        },
+        {
+          "type": "textarea",
+          "id": "url_wrapper_classes",
+          "label": "Wrapper classes"
         },
         {
           "type": "textarea",
