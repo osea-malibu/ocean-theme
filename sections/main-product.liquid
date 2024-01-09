@@ -188,6 +188,11 @@
               assign tabs = 'Description' | sort
               assign custom_tab_handles = block.settings.info_tab_custom_tab_handles | split: ', '
 
+              if product.metafields.custom.product_one_sheet != blank or product.metafields.custom.link_to_assets != blank
+                assign assets_array = 'Assets' | sort
+                assign tabs = tabs | concat: assets_array
+              endif
+
               if block.settings.info_tab_custom_tab_label != blank and custom_tab_handles contains product.handle
                 assign custom_tab_array = 'Custom' | sort
                 assign tabs = tabs | concat: custom_tab_array
@@ -221,6 +226,21 @@
                   {%- case tab -%}
                     {%- when 'Description' -%}
                       <div>{{ product.description }}</div>
+                    {%- when 'Assets' -%}
+                      <div>
+                        {%- if product.metafields.custom.product_one_sheet -%}
+                          <a href="{{ product.metafields.custom.product_one_sheet }}" class="font-medium button button-tertiary button-md gap-2 items-center normal-case tracking-wide">
+                            {%- render 'icon-external-link', classes: 'w-4 h-4 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
+                            <span>Product One Sheet</span>
+                          </a>
+                        {%- endif -%}
+                        {%- if product.metafields.custom.link_to_assets -%}
+                          <a href="{{ product.metafields.custom.link_to_assets }}" class="font-medium button button-tertiary button-md gap-2 items-center normal-case tracking-wide">
+                            {%- render 'icon-external-link', classes: 'w-4 h-4 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
+                            <span>Photo Assets</span>
+                          </a>
+                        {%- endif -%}
+                      </div>
                     {%- when 'Custom' -%}
                       <div>{{ block.settings.info_tab_custom_tab_content }}</div>
                   {%- endcase -%}
