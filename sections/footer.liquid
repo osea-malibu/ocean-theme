@@ -3,23 +3,23 @@
   {%- unless section.settings.hide_brand_icons -%}
     <div class="relative bg-seafoam-100 pt-6 pb-28 lg:pb-6">
       <ul class="container px-2 flex justify-between sm:max-w-lg lg:max-w-4xl">
-        <li class="flex-1 text-center text-xs xs:text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
+        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
           {%- render 'icon-value', icon: 'clean-beauty', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
           <span><span class="whitespace-nowrap">Clean Beauty</span> <br />Since 1996</span>
         </li>
-        <li class="flex-1 text-center text-xs xs:text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
+        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
           {%- render 'icon-value', icon: 'vegan-cruelty-free', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
           <span>Vegan & <br /><span class="tracking-tight whitespace-nowrap">Cruelty-Free</span></span>
         </li>
-        <li class="flex-1 text-center text-xs xs:text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
+        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased hidden sm:block">
           {%- render 'icon-value', icon: 'climate-neutral', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
           <span><span class="tracking-tight whitespace-nowrap">Climate Neutral Certified</span> <br />+ Ocean Positive</span>
         </li>
-        <li class="flex-1 text-center text-xs xs:text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased hidden sm:block">
+        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
           {%- render 'icon-value', icon: 'california-made', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
           <span>Born in <br />California</span>
         </li>
-        <li class="flex-1 text-center text-xs xs:text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
+        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
           {%- render 'icon-value', icon: 'mother-daughter-founded', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
           <span>Mother & <br /><span class="tracking-tight whitespace-nowrap">Daughter Founded</span></span>
         </li>
@@ -29,7 +29,7 @@
 
   <div class="footer-main bg-seafoam-200 pt-40 lg:pt-12 pb-12">
     {%- if section.blocks.size > 0 -%}
-      <div class="relative container lg:max-w-6xl mx-auto py-8 px-12 sm:pb-12 flex justify-around">
+      <div class="relative container lg:max-w-6xl mx-auto pt-12 pb-8 px-12 sm:pb-12 flex justify-around">
         {% comment %} Menus {% endcomment %}
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
@@ -57,7 +57,7 @@
         {%- if section.settings.newsletter_enable -%}
           <div class="absolute -top-64 left-1/2 -translate-x-1/2 w-full max-w-lg lg:px-0 lg:w-1/3 lg:relative lg:-top-6 lg:left-0 lg:translate-x-0">
             {% comment %} Newsletter form {% endcomment %}
-            <div class="bg-seafoam-300 px-4 md:px-6 py-6 flex flex-col justify-center mb-6">
+            <div class="bg-seafoam-300 px-4 md:px-6 py-6 flex flex-col justify-center mb-8 lg:mb-4">
               {%- if section.settings.newsletter_heading != blank -%}
                 <h2 class="text-center font-serif text-4xl tracking-tight">{{ section.settings.newsletter_heading | escape }}</h2>
               {%- endif -%}
@@ -107,23 +107,24 @@
               </tab-controller>
             </div>
             
-            {% comment %} Social media icons {% endcomment %}
-            {% render 'social-media-icons', classes: 'flex gap-8 items-center justify-center mb-4' %}
+            <div class="flex items-center justify-between gap-5 px-4 mx-auto lg:mb-4 lg:px-0">
+              {% render 'logo-peta', classes: 'shrink-0' %}
+              {% render 'logo-leaping-bunny', classes: 'shrink-0' %}
+              {% render 'logo-climate-neutral', classes: 'shrink-0' %}
+              {% render 'logo-ocean-positive', classes: 'shrink-0' %}
+            </div>
             
             {% comment %} Customer service {% endcomment %}
             <p class="text-center tracking-wide leading-none mb-2 hidden lg:block">Customer Support: <a href="mailto:support@oseamalibu.com" class="link">support@oseamalibu.com</a></p>
-            <p class="text-center hidden leading-none lg:block">Skincare Studio: <a href="mailto:skincarestudio@oseamalibu.com" class="link">skincarestudio@oseamalibu.com</a></p>
+            <p class="text-center tracking-tight hidden leading-none lg:block">Skincare Studio: <a href="mailto:skincarestudio@oseamalibu.com" class="link">skincarestudio@oseamalibu.com</a></p>
           </div>
         {%- endif -%}
       </div>
     {%- endif -%}
 
     <div class="container">
-      <div class="flex items-center justify-between gap-6 mb-4 max-w-xs mx-auto scale-75 sm:scale-90">
-        {% render 'logo-ocean-positive' %}
-        {% render 'logo-climate-neutral' %}
-        {% render 'logo-cruelty-free' %}
-      </div>
+      {% comment %} Social media icons {% endcomment %}
+      {% render 'social-media-icons', classes: 'flex gap-8 items-center justify-center mb-4' %}
 
       {% comment %} Copyright {% endcomment %}
       <small class="block text-center tracking-wide leading-tight">Copyright &copy; {{ 'now' | date: "%Y" }} OSEA International. All rights reserved.</small>
