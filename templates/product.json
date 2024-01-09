@@ -42,6 +42,7 @@
         },
         "f4a9e5dc-cdce-4c14-8035-54a84305ece9": {
           "type": "description",
+          "disabled": true,
           "settings": {
             "description_classes": "col-span-12 mt-8 p:mb-3",
             "is_collapsible": false
@@ -49,6 +50,7 @@
         },
         "3cdc52ee-4ac5-4a1f-aa30-9a482771c26a": {
           "type": "link",
+          "disabled": true,
           "settings": {
             "url": "{{ product.metafields.custom.product_one_sheet.value }}",
             "url_label": "Product one-sheet",
@@ -58,6 +60,7 @@
         },
         "318f0427-e412-48b0-9fda-97e42108e94e": {
           "type": "link",
+          "disabled": true,
           "settings": {
             "url": "{{ product.metafields.custom.link_to_assets.value }}",
             "url_label": "Photo assets",
@@ -96,5 +99,8 @@
       }
     }
   },
-  "order": ["main", "product-recommendations"]
+  "order": [
+    "main",
+    "product-recommendations"
+  ]
 }
