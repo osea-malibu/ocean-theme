@@ -227,7 +227,7 @@
                     {%- when 'Description' -%}
                       <div>{{ product.description }}</div>
                     {%- when 'Assets' -%}
-                      <div>
+                      <div class="flex flex-col gap-2">
                         {%- if product.metafields.custom.product_one_sheet -%}
                           <a href="{{ product.metafields.custom.product_one_sheet }}" class="font-medium button button-tertiary button-md gap-2 items-center normal-case tracking-wide">
                             {%- render 'icon-external-link', classes: 'w-4 h-4 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
