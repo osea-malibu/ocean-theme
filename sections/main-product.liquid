@@ -183,6 +183,50 @@
                 -%}
               </div>
             {%- endif -%}
+          {%- when 'info_tabs' -%}
+            {%- liquid
+              assign tabs = 'Description' | sort
+              assign custom_tab_handles = block.settings.info_tab_custom_tab_handles | split: ', '
+
+              if block.settings.info_tab_custom_tab_label != blank and custom_tab_handles contains product.handle
+                assign custom_tab_array = 'Custom' | sort
+                assign tabs = tabs | concat: custom_tab_array
+              endif
+            -%}
+            <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
+              <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
+                {%- for tab in tabs -%}
+                  <li
+                    role="tab"
+                    aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
+                    tabindex="0"
+                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                    class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }}"
+                  >
+                    {%- if tab == 'Custom' -%}
+                      {{ block.settings.info_tab_custom_tab_label }}
+                    {%- else -%}
+                      {{ tab }}
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+              {%- for tab in tabs -%}
+                <div
+                  id="tab-{{ forloop.index }}-{{ block.id }}"
+                  role="tabpanel"
+                  aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                  class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
+                >
+                  {%- case tab -%}
+                    {%- when 'Description' -%}
+                      <div>{{ product.description }}</div>
+                    {%- when 'Custom' -%}
+                      <div>{{ block.settings.info_tab_custom_tab_content }}</div>
+                  {%- endcase -%}
+                </div>
+              {%- endfor -%}
+            </tab-controller>
           {%- when 'quantity_selector' -%}
             <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
               <label class="sr-only" for="Quantity-{{ section.id }}">
