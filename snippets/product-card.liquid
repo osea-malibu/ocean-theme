@@ -190,7 +190,7 @@
     </div>
   </div>
 
-  <div class="relative block overflow-hidden no-underline mb-2" tabindex="-1">
+  <div class="relative block overflow-hidden no-underline mb-2{% if card_product.media.size == 0 %} grow-1{% endif %}" tabindex="-1">
     {%- if card_product.featured_media -%}
       <a
         aria-label="{{ card_product.title | escape }}"
