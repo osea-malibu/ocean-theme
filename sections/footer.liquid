@@ -29,7 +29,7 @@
 
   <div class="footer-main bg-seafoam-200 pt-40 lg:pt-12 pb-12">
     {%- if section.blocks.size > 0 -%}
-      <div class="relative container lg:max-w-6xl mx-auto pt-12 pb-8 px-12 sm:pb-12 flex justify-around">
+      <div class="relative container lg:max-w-6xl mx-auto pt-20 pb-8 px-12 sm:pb-12 flex justify-around">
         {% comment %} Menus {% endcomment %}
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
@@ -107,11 +107,11 @@
               </tab-controller>
             </div>
             
-            <div class="flex items-center justify-between gap-5 px-4 mx-auto lg:mb-4 lg:px-0">
-              {% render 'logo-peta', classes: 'shrink-0' %}
+            <div class="flex items-center justify-between gap-5 px-4 max-w-sm mx-auto lg:mb-4 lg:px-0">
+              {% render 'logo-climate-neutral', variant: 'vertical', classes: 'shrink-0' %}
+              {% render 'logo-ocean-positive', variant: 'vertical', classes: 'shrink-0' %}
               {% render 'logo-leaping-bunny', classes: 'shrink-0' %}
-              {% render 'logo-climate-neutral', classes: 'shrink-0' %}
-              {% render 'logo-ocean-positive', classes: 'shrink-0' %}
+              {% render 'logo-peta', classes: 'shrink-0' %}
             </div>
             
             {% comment %} Customer service {% endcomment %}
