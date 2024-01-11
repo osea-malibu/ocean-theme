@@ -602,6 +602,13 @@ ul.whr-items .whr-item.active h3::after {
 }
 
 /* Klaviyo - Footer Form */
+.klaviyo-email-form form.klaviyo-form > div {
+  @apply !min-h-0;
+}
+.klaviyo-email-form form.klaviyo-form,
+.klaviyo-email-form form.klaviyo-form > div > div > div {
+  @apply !p-0;
+}
 .klaviyo-email-form form.klaviyo-form input {
   @apply cursor-text border !border-seaweed-400 !rounded-md !pl-11;
 }
