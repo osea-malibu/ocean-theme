@@ -36,15 +36,19 @@
 
   if product.tags contains 'badge::new jumbo size'
     assign badge_class= 'bg-[#F1E1AA]'
+  elsif product.tags contains 'badge::round'
+    assign badge_class = 'rounded-full w-12 h-12 lg:w-16 lg:h-16 text-sm uppercase flex items-center justify-center'
   elsif product.available == false
     assign badge_class = 'bg-wave-200 text-wave-800'
-  elsif product.metafields.custom.badge_classes != blank
-    assign badge_class = product.metafields.custom.badge_classes
+  endif
+
+  if product.metafields.custom.badge_classes != blank
+    assign badge_class = badge_class | append: ' ' | append: product.metafields.custom.badge_classes
   endif
 -%}
 
 {%- if badge_text != '' -%}
-  <div class="badge absolute top-1 right-1 mb-1 text-xs whitespace-nowrap overflow-hidden capitalize{% if badge_class != '' %} {{ badge_class }}{% endif %}{% if classes != nil %} {{ classes }}{% endif %}">
+  <div class="badge absolute top-1 right-1 mb-1 whitespace-nowrap overflow-hidden{% if badge_class != '' %} {{ badge_class }}{% endif %}{% if classes != nil %} {{ classes }}{% endif %}{% unless product.tags contains 'badge::round' %} text-xs capitalize{% endunless %}">
     {{ badge_text | replace: 'Best Seller', 'Bestseller' }}
   </div>
 {%- endif -%}
