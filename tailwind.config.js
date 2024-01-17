@@ -129,6 +129,11 @@ module.exports = {
       "shell-600": "#CBAB82",
       "shell-700": "#BA9763",
       "shell-800": "#A98045",
+      "retro-teal": "#00db96",
+      "retro-purple": "#49297E",
+      "retro-blue": "#90DCFF",
+      "retro-pink": "#E10086",
+      "retro-yellow": "#FDFB76",
       "aas-light": "#FAF7EC",
       "adv-light": "#F6F2F0",
       "apc-light": "#E9EFEB",
@@ -151,7 +156,8 @@ module.exports = {
     },
     fontFamily: {
       sans: "Circular, sans-serif",
-      serif: "Canela, serif",
+      serif: "Thunderstorm, serif",
+      mono: "Fake Receipt, monospace",
     },
     fontWeight: {
       light: 300,
@@ -212,6 +218,7 @@ module.exports = {
         sm: "0 0 2px var(--tw-shadow-color)",
         DEFAULT: "0 0 4px var(--tw-shadow-color)",
         lg: "0 0 16px var(--tw-shadow-color)",
+        hard: "1px 1px 1px var(--tw-shadow-color)",
       },
       transitionProperty: {
         height: "height",

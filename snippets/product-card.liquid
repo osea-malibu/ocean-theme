@@ -225,22 +225,23 @@
               class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
               {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
             >
+              <span class="effect"></span>
               <span class="sr-only">{{ card_product.title }} - </span>
               {%- if card_product.selected_or_first_available_variant.available -%}
-                <span class="label">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
+                <span class="label text">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
                 <span class="sr-only"> - </span>
                 {%- liquid
                   assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
                   assign set_products = collections['skincare-sets-1'].products | map: 'handle'
                   assign is_set = false
                   assign show_range = true
-                  assign price_class = 'tracking-wide'
+                  assign price_class = 'tracking-wide z-10'
                   if set_products contains card_product.handle
                     assign is_set = true
                   endif
                   if is_set
                     assign show_range = false
-                    assign price_class = 'tracking-wide set-price'
+                    assign price_class = 'tracking-wide set-price z-10'
                   endif
                 -%}
                 {%- render 'price',
@@ -253,7 +254,7 @@
                   default_to_mini: default_to_mini
                 -%}
               {%- else -%}
-                <span class="label">{{ 'products.product.sold_out' | t }}</span>
+                <span class="label text">{{ 'products.product.sold_out' | t }}</span>
               {%- endif -%}
             </button>
             {%- if card_product.selected_or_first_available_variant.available == false -%}

@@ -1,89 +1,91 @@
-<div class="bg-seaweed-700 flex justify-center px-2 text-sm a:link" id="AnnouncementBar">
-  {% comment %} Dismissable announcement bar {% endcomment %}
-  {%- if section.settings.enable_dismissable_announcement -%}
-    <dismissable-announcement class="container px-0 text-white text-center leading-none pr-2 2xs:pr-3 md:px-6 py-0.5 md:flex md:items-start">
-      <div id="DismissableMessage" class="sm:max-w-screen-sm mx-auto">{{ section.settings.dismissable_message }}</div>
-      <div id="DismissableDefault" class="hidden tracking-wider font-book py-0.5 sm:max-w-screen-sm mx-auto">{{ section.settings.default_message }}</div>
-      <button id="DismissableClose" type="button" class="absolute top-1 right-0.5 md:relative md:right-0 md:top-0">{% render 'icon-close', classes: 'text-white w-6 h-6', stroke_width: 1.5 %}</button>
-    </dismissable-announcement>
-  {% comment %} Gift with purchase {% endcomment %}
-  {%- elsif settings.enable_gwp and settings.enable_annoucement_bar_message and settings.gwp_type == 'auto' -%}
-    {%- liquid
-      assign cart_ids = cart.items | map: 'product_id'
-      assign tier1_product = all_products[settings.gwp_tier1_product]
-      assign tier2_product = all_products[settings.gwp_tier2_product]
-      assign tier3_product = all_products[settings.gwp_tier2_product]
+<div class="container bg-white py-0.5" id="AnnouncementBar">
+  <div class="bg-retro-purple font-mono flex justify-center text-xs a:link rounded-full shadow-inner shadow-black">
+    {% comment %} Dismissable announcement bar {% endcomment %}
+    {%- if section.settings.enable_dismissable_announcement -%}
+      <dismissable-announcement class="container px-0 text-white text-center leading-none pr-2 2xs:pr-3 md:px-6 py-0.5 md:flex md:items-start">
+        <div id="DismissableMessage" class="sm:max-w-screen-sm mx-auto">{{ section.settings.dismissable_message }}</div>
+        <div id="DismissableDefault" class="hidden tracking-wider font-book py-0.5 sm:max-w-screen-sm mx-auto">{{ section.settings.default_message }}</div>
+        <button id="DismissableClose" type="button" class="absolute top-1 right-0.5 md:relative md:right-0 md:top-0">{% render 'icon-close', classes: 'text-white w-6 h-6', stroke_width: 1.5 %}</button>
+      </dismissable-announcement>
+    {% comment %} Gift with purchase {% endcomment %}
+    {%- elsif settings.enable_gwp and settings.enable_annoucement_bar_message and settings.gwp_type == 'auto' -%}
+      {%- liquid
+        assign cart_ids = cart.items | map: 'product_id'
+        assign tier1_product = all_products[settings.gwp_tier1_product]
+        assign tier2_product = all_products[settings.gwp_tier2_product]
+        assign tier3_product = all_products[settings.gwp_tier2_product]
 
-      assign gwp_threshold = settings.gwp_tier1_threshold | times: 100
-      assign remaining_amount = gwp_threshold | minus: cart.total_price
-      assign remaining_amount_money = remaining_amount | money_without_trailing_zeros
-      assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
-      assign countdown_text_mobile = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', 'gift' | replace: 'Free Gift - '
+        assign gwp_threshold = settings.gwp_tier1_threshold | times: 100
+        assign remaining_amount = gwp_threshold | minus: cart.total_price
+        assign remaining_amount_money = remaining_amount | money_without_trailing_zeros
+        assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
+        assign countdown_text_mobile = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', 'gift' | replace: 'Free Gift - '
 
-      if cart_ids contains tier2_product.id
-        if settings.gwp_tier3_product != nil
-          assign tier3_product = all_products[settings.gwp_tier3_product]
-          assign gwp_threshold = settings.gwp_tier3_threshold | times: 100
-          assign countdown_text = settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - '
+        if cart_ids contains tier2_product.id
+          if settings.gwp_tier3_product != nil
+            assign tier3_product = all_products[settings.gwp_tier3_product]
+            assign gwp_threshold = settings.gwp_tier3_threshold | times: 100
+            assign countdown_text = settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - '
+          endif
+        elsif cart_ids contains tier1_product.id
+          if settings.gwp_tier2_product != nil
+            assign gwp_threshold = settings.gwp_tier2_threshold | times: 100
+            assign countdown_text = settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - '
+          endif
         endif
-      elsif cart_ids contains tier1_product.id
-        if settings.gwp_tier2_product != nil
-          assign gwp_threshold = settings.gwp_tier2_threshold | times: 100
-          assign countdown_text = settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - '
-        endif
-      endif
-    -%}
+      -%}
 
-    {%- unless settings.gwp_tier1_product == nil -%}
-      <p class="text-white font-book text-center py-0.5 tracking-wide">
-        {%- if remaining_amount > 0 -%}
-          <span class="hidden sm:block">{{ countdown_text }}</span>
-          <span class="sm:hidden">{{ countdown_text_mobile }}</span>
-        {%- else -%}
-          {{ settings.gwp_success_text }}
-        {%- endif -%}
-      </p>
-    {%- endunless -%}
-  {% comment %} Slider announcement bar {% endcomment %}
-  {%- elsif section.blocks.size > 1 -%}
-    <glide-slider
-      class="glide type-carousel gap-0 autoplay-{{ section.settings.slide_interval | times: 1000 }} max-w-xl mx-auto"
-      id="slider-announcement-bar"
-      data-breakpoint-limit="none"
-    >
-      <div class="glide__track" data-glide-el="track">
-        <ul class="glide__slides">
-          {%- for block in section.blocks -%}
-            {%- if block.settings.text != blank -%}
-              <li class="glide__slide text-white text-base font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
-                {{ block.settings.text }}
-              </li>
-            {%- endif -%}
-          {%- endfor -%}
-        </ul>
-        <div class="glide__arrows" data-glide-el="controls">
-          <button
-            class="glide__arrow glide__arrow--left top-1 opacity-50 left-0 z-10"
-            aria-label="Go to previous"
-            data-glide-dir="<"
-          >
-            {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white bg-seaweed-700 block' %}
-          </button>
-          <button
-            class="glide__arrow glide__arrow--right top-1 opacity-50 right-0 z-10"
-            aria-label="Go to next"
-            data-glide-dir=">"
-          >
-            {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white bg-seaweed-700 block rotate-180' %}
-          </button>
+      {%- unless settings.gwp_tier1_product == nil -%}
+        <p class="text-white font-book text-center py-0.5 tracking-wide">
+          {%- if remaining_amount > 0 -%}
+            <span class="hidden sm:block">{{ countdown_text }}</span>
+            <span class="sm:hidden">{{ countdown_text_mobile }}</span>
+          {%- else -%}
+            {{ settings.gwp_success_text }}
+          {%- endif -%}
+        </p>
+      {%- endunless -%}
+    {% comment %} Slider announcement bar {% endcomment %}
+    {%- elsif section.blocks.size > 1 -%}
+      <glide-slider
+        class="glide type-carousel gap-0 autoplay-{{ section.settings.slide_interval | times: 1000 }} max-w-xl mx-auto"
+        id="slider-announcement-bar"
+        data-breakpoint-limit="none"
+      >
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.text != blank -%}
+                <li class="glide__slide text-white text-base font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
+                  {{ block.settings.text }}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+          <div class="glide__arrows" data-glide-el="controls">
+            <button
+              class="glide__arrow glide__arrow--left top-1 opacity-50 left-0 z-10"
+              aria-label="Go to previous"
+              data-glide-dir="<"
+            >
+              {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white bg-seaweed-700 block' %}
+            </button>
+            <button
+              class="glide__arrow glide__arrow--right top-1 opacity-50 right-0 z-10"
+              aria-label="Go to next"
+              data-glide-dir=">"
+            >
+              {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white bg-seaweed-700 block rotate-180' %}
+            </button>
+          </div>
         </div>
+      </glide-slider>
+    {%- else -%}
+      <div class="text-white font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
+        {{- section.blocks[0].settings.text -}}
       </div>
-    </glide-slider>
-  {%- else -%}
-    <div class="text-white font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
-      {{- section.blocks[0].settings.text -}}
-    </div>
-  {%- endif -%}
+    {%- endif -%}
+  </div>
 </div>
 
 {% schema %}

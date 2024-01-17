@@ -154,7 +154,19 @@
   /* Buttons */
   .button,
   .shopify-challenge__button {
-    @apply cursor-pointer inline-flex items-center justify-center border px-6 py-2 rounded-md font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-colors active:ring-2 focus:ring-2 focus:ring-offset-2;
+    box-shadow: 2px 2px 4px 0px rgba(255, 255, 255, 0.45) inset,
+      0px -2.43678px 4.87356px 0px rgba(0, 0, 0, 0.75) inset, 0px 2.43678px 4.87356px 0px #000 inset,
+      0px 0px 2.43678px 0px rgba(0, 0, 0, 0.7) inset;
+    @apply relative cursor-pointer inline-flex items-center justify-center border px-6 py-2 rounded-full font-mono font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-colors active:ring-2 focus:ring-2 focus:ring-offset-2;
+  }
+  .button .text {
+    @apply relative z-10 text-shadow-hard shadow-retro-purple/50;
+  }
+  .button .effect {
+    @apply absolute z-0 inset-1 rounded-[30px] transition-all overflow-hidden;
+  }
+  .button .effect:after {
+    @apply content-[''] absolute inset-x-1 bottom-1/2 h-10 rounded-[30px] transition-all;
   }
   .button-xs {
     @apply px-3 py-0.5 text-xs;
@@ -166,19 +178,28 @@
     @apply px-6 py-2 text-base;
   }
   .button-lg {
-    @apply px-7 py-3 text-lg rounded-lg;
+    @apply px-7 py-3 text-lg;
   }
   .button-xl {
-    @apply px-8 py-4 text-xl rounded-lg;
+    @apply px-8 py-4 text-xl;
   }
   .button-primary {
-    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-600 hover:border-seaweed-600 hover:text-white visited:bg-seaweed-700 visited:text-white link:bg-seaweed-700 link:text-white link:hover:bg-seaweed-500 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
+    @apply bg-retro-teal border-retro-teal text-white visited:bg-retro-teal visited:text-white link:bg-retro-teal link:text-white link:hover:bg-seaweed-500 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
+  }
+  .button-primary .effect:after {
+    background: radial-gradient(51.93% 37.62% at 50% 62.38%, #fcfcfc 0%, #00db96 100%);
   }
   .button-secondary {
     @apply bg-white border-seaweed-400 text-seaweed-800 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-800 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
   }
   .button-tertiary {
-    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-800 hover:bg-seaweed-200 hover:border-seaweed-400 hover:text-seaweed-800 visited:bg-seaweed-200 visited:text-seaweed-700 link:bg-seaweed-200 link:text-seaweed-800 active:bg-seaweed-200 active:text-seaweed-800 focus:bg-seaweed-200 focus:text-seaweed-800;
+    @apply bg-retro-blue border-retro-blue text-seaweed-800 visited:bg-seaweed-200 visited:text-seaweed-700 link:bg-seaweed-200 link:text-seaweed-800 active:bg-seaweed-200 active:text-seaweed-800 focus:bg-seaweed-200 focus:text-seaweed-800;
+  }
+  .button-tertiary .effect:after {
+    background: radial-gradient(51.93% 37.62% at 50% 62.38%, #fcfcfc 0%, #90dcff 100%);
+  }
+  .button-tertiary .text {
+    @apply shadow-white;
   }
   .button-white {
     @apply bg-white border-white text-seaweed-800 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-800 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
