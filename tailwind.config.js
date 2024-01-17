@@ -156,7 +156,7 @@ module.exports = {
     },
     fontFamily: {
       sans: "Circular, sans-serif",
-      serif: "Thunderstorm, serif",
+      serif: "Perfectly Nineties, serif",
       mono: "Fake Receipt, monospace",
     },
     fontWeight: {

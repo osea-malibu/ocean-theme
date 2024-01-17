@@ -152,6 +152,78 @@
   }
 
   /* Buttons */
+  .button-jelly {
+    touch-action: manipulation;
+    cursor: pointer;
+    position: relative;
+    padding: 1.25rem 3.75rem;
+    border-radius: 1.87rem;
+    line-height: 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 150ms ease-in-out;
+    border: 1px solid #012880;
+    background-image: linear-gradient(-180deg, #ff89d6 0%, #c01f9e 100%);
+    box-shadow: 0 0.5rem 0.625rem 0 rgba(0, 0, 0, 0.2),
+      0 -0.125rem 0.75rem rgba(110, 15, 155, 1) inset,
+      0 0.375rem 0.125rem rgba(255, 255, 255, 0.4) inset,
+      0 0.125rem 0.25rem 0 rgba(180, 70, 207, 1) inset;
+  }
+  .button-jelly span {
+    color: transparent;
+    background-image: linear-gradient(0deg, #ee82da -10%, #fefafd 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 2px 2px hsla(290, 100%, 20%, 1));
+  }
+  .button-jelly::before {
+    content: "";
+    display: block;
+    height: 0.125rem;
+    position: absolute;
+    top: 0.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 3.75rem);
+    background: #fff;
+    border-radius: 100%;
+    opacity: 0.7;
+    background-image: linear-gradient(
+      -270deg,
+      rgba(255, 255, 255, 0) 0%,
+      #ffffff 20%,
+      #ffffff 80%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+  .button-jelly::after {
+    content: "";
+    display: block;
+    height: 0.125rem;
+    position: absolute;
+    bottom: 0.375rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 3.75rem);
+    background: #fff;
+    border-radius: 100%;
+    filter: blur(1px);
+    opacity: 0.05;
+    background-image: linear-gradient(
+      -270deg,
+      rgba(255, 255, 255, 0) 0%,
+      #ffffff 20%,
+      #ffffff 80%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+  .button-jelly:hover {
+    filter: brightness(1.1);
+  }
+  .button-jelly:active {
+    transform: scale(0.96);
+  }
+
   .button,
   .shopify-challenge__button {
     box-shadow: 2px 2px 4px 0px rgba(255, 255, 255, 0.45) inset,
