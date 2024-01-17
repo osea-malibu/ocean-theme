@@ -81,8 +81,21 @@
         </div>
       </glide-slider>
     {%- else -%}
-      <div class="text-white font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
-        {{- section.blocks[0].settings.text -}}
+      <div
+        class="relative overflow-x-hidden flex text-white text-center py-0.5 tracking-wider"
+        role="region"
+        aria-label="{{ section.blocks[0].settings.text | strip_html }}"
+      >
+        <div class="motion-safe:animate-marquee whitespace-nowrap flex">
+          {%- for i in (1..5) -%}
+            <span class="mx-4">{{ section.blocks[0].settings.text }}</span>
+          {%- endfor -%}
+        </div>
+        <div class="absolute top-0.5 motion-safe:animate-marquee2 whitespace-nowrap flex">
+          {%- for i in (1..5) -%}
+            <span class="mx-4">{{ section.blocks[0].settings.text }}</span>
+          {%- endfor -%}
+        </div>
       </div>
     {%- endif -%}
   </div>

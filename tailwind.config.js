@@ -196,7 +196,8 @@ module.exports = {
     },
     extend: {
       animation: {
-        marquee: "marquee 100s linear infinite",
+        marquee: "marquee 50s linear infinite",
+        marquee2: "marquee2 50s linear infinite",
         skeleton: "skeleton 2s cubic-bezier(.4,0,.6,1) infinite",
       },
       backgroundImage: {
@@ -204,8 +205,12 @@ module.exports = {
       },
       keyframes: {
         marquee: {
-          "0%": { transform: "translate3d(0, 0, 0)" },
-          "100%": { transform: "translate3d(-50%, 0, 0)" },
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        marquee2: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0%)" },
         },
       },
       maxHeight: {
