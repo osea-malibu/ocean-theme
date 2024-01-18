@@ -381,6 +381,21 @@
         "id": "cart_disclaimer",
         "info": "Appears in cart drawer footer, under checkout button",
         "label": "Disclaimer"
+      },
+      {
+        "type": "header",
+        "content": "Minimum order"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_min_order",
+        "label": "Require minimum order value",
+        "default": false
+      },
+      {
+        "type": "number",
+        "id": "min_order_value",
+        "label": "Minimum order value in dollars"
       }
     ]
   }
