@@ -9,19 +9,21 @@
     "colors_background_2": "#F3F3F3",
     "type_header_font": "assistant_n4",
     "type_body_font": "assistant_n4",
-    "social_facebook_link": "https://www.facebook.com/oseamalibu",
-    "social_pinterest_link": "https://www.pinterest.com/oseamalibu/",
-    "social_instagram_link": "https://instagram.com/oseamalibu",
-    "social_tiktok_link": "https://www.tiktok.com/@oseamalibu?lang=en",
+    "social_facebook_link": "https:\/\/www.facebook.com\/oseamalibu",
+    "social_pinterest_link": "https:\/\/www.pinterest.com\/oseamalibu\/",
+    "social_instagram_link": "https:\/\/instagram.com\/oseamalibu",
+    "social_tiktok_link": "https:\/\/www.tiktok.com\/@oseamalibu?lang=en",
     "predictive_search_exclude_page": "",
     "predictive_search_popular_searches": "ocean-popular-searches",
-    "favicon": "shopify://shop_images/favicon.png",
+    "favicon": "shopify:\/\/shop_images\/favicon.png",
     "cart_type": "drawer",
     "show_cart_note": false,
     "cart_empty_state_links": "ocean-empty-cart-links",
-    "cart_disclaimer": "By checking out, I accept the <a href=\"https://cdn.shopify.com/s/files/1/1654/9591/files/OSEA_Authorized_Retailer_Policy_FINAL_November_2022.pdf?v=1668619420\">Authorized Retailer Policy</a>, the <a href=\"/pages/terms-of-use\">Terms of Use</a> and acknowledge that my info will be used in accordance with the <a href=\"/pages/privacy-policy\">Privacy Policy</a>.",
+    "cart_disclaimer": "By checking out, I accept the <a href=\"https:\/\/cdn.shopify.com\/s\/files\/1\/1654\/9591\/files\/OSEA_Authorized_Retailer_Policy_FINAL_November_2022.pdf?v=1668619420\">Authorized Retailer Policy<\/a>, the <a href=\"\/pages\/terms-of-use\">Terms of Use<\/a> and acknowledge that my info will be used in accordance with the <a href=\"\/pages\/privacy-policy\">Privacy Policy<\/a>.",
+    "enable_min_order": true,
+    "min_order_value": 250,
     "enable_annoucement_bar_message": true,
-    "shopifyCdnUrl": "//oseamalibu.com/cdn/shop",
+    "shopifyCdnUrl": "\/\/oseamalibu.com\/cdn\/shop",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
@@ -29,29 +31,31 @@
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text": "<p>Free shipping on orders $60+</p>"
+              "text": "<p>Free shipping on orders $60+<\/p>"
             }
           }
         },
-        "block_order": ["announcement-bar-0"],
+        "block_order": [
+          "announcement-bar-0"
+        ],
         "settings": {
           "enable_announcement_bar": false,
           "slide_interval": 5,
           "enable_dismissable_announcement": false,
-          "dismissable_message": "<p>With the rise in cost of raw materials, ingredients & shipping, some of our prices will be increasing starting 1/1/23. We wanted to let you know early so that you can stock up on any favorites beforehand. <a href=\"https://oseamalibu.com/pages/customer-care?tab=7&question=2\" title=\"https://oseamalibu.com/pages/customer-care?tab=7&question=2\">Learn more here</a>.</p>",
-          "default_message": "<p>Free shipping on all US orders $60+</p>"
+          "dismissable_message": "<p>With the rise in cost of raw materials, ingredients & shipping, some of our prices will be increasing starting 1\/1\/23. We wanted to let you know early so that you can stock up on any favorites beforehand. <a href=\"https:\/\/oseamalibu.com\/pages\/customer-care?tab=7&question=2\" title=\"https:\/\/oseamalibu.com\/pages\/customer-care?tab=7&question=2\">Learn more here<\/a>.<\/p>",
+          "default_message": "<p>Free shipping on all US orders $60+<\/p>"
         }
       },
       "header": {
         "type": "header",
         "settings": {
-          "logo": "shopify://shop_images/osea-email-logo.png",
+          "logo": "shopify:\/\/shop_images\/osea-email-logo.png",
           "hamburger_menu": "ocean-hamburger-menu",
           "navbar_menu": "ocean-navbar-menu",
-          "promo_image": "shopify://shop_images/2023-06-09_Mega_Menu_-_Body_Care_Favorites.jpg",
+          "promo_image": "shopify:\/\/shop_images\/2023-06-09_Mega_Menu_-_Body_Care_Favorites.jpg",
           "promo_heading": "This Just In",
-          "promo_paragraph": "<p>Meet our latest launches.</p>",
-          "promo_link": "shopify://collections/all",
+          "promo_paragraph": "<p>Meet our latest launches.<\/p>",
+          "promo_link": "shopify:\/\/collections\/all",
           "promo_button": "Shop Now"
         }
       },
@@ -67,26 +71,32 @@
             }
           }
         },
-        "block_order": ["3fb731dc-023e-4356-823c-228a53615b6c"],
+        "block_order": [
+          "3fb731dc-023e-4356-823c-228a53615b6c"
+        ],
         "settings": {
           "hide_brand_icons": false,
           "legal_links": "",
           "newsletter_enable": true,
           "newsletter_heading": "",
-          "newsletter_paragraph": "<b class=\"font-medium text-lg leading-tight\">Sign up to receive our Wholesale Partner Newsletter</b>"
+          "newsletter_paragraph": "<b class=\"font-medium text-lg leading-tight\">Sign up to receive our Wholesale Partner Newsletter<\/b>"
         }
       },
       "cart-drawer": {
         "type": "cart-drawer",
-        "settings": {}
+        "settings": {
+        }
       }
     },
-    "content_for_index": [],
+    "content_for_index": [
+
+    ],
     "blocks": {
       "855628211100114053": {
-        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/klaviyo-onsite-embed\/2632fe16-c075-4321-a88b-50b567f42507",
         "disabled": false,
-        "settings": {}
+        "settings": {
+        }
       }
     }
   },
@@ -107,11 +117,15 @@
           "blocks": {
             "announcement-bar-0": {
               "type": "announcement",
-              "settings": {}
+              "settings": {
+              }
             }
           },
-          "block_order": ["announcement-bar-0"],
-          "settings": {}
+          "block_order": [
+            "announcement-bar-0"
+          ],
+          "settings": {
+          }
         }
       }
     }
