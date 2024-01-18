@@ -9,6 +9,16 @@
       {%- endif -%}
 
       <div class="cart__blocks">
+        {%- liquid
+          assign total_in_dollars = cart.total_price | divided_by : 100
+
+          if settings.enable_min_order and total_in_dollars <= settings.min_order_value
+            assign disable_checkout = true
+            assign warning_message = "You must have a minimum order of $" | append: settings.min_order_value | append: " to checkout."
+          else
+            assign disable_checkout = false
+          endif
+        -%}
         {% for block in section.blocks %}
           {%- case block.type -%}
             {%- when '@app' -%}
@@ -45,25 +55,43 @@
                     {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
                   {%- endif -%}
                 </small>
+                
+                {%- if disable_checkout %}
+                  <div class="flex items-center justify-end mb-2 mt-1">
+                    <p class="text-sm flex items-center justify-center gap-1 border rounded px-2 bg-sand-300 border-sand-600">
+                      {% render 'icon-error-circle', aria_hidden: true, classes: 'w-4 h-4 text-sand-800', stroke_width: 2.5 %}
+                      <span>{{ warning_message }}</span>
+                    </p>
+                  </div>
+                {%- endif -%}
               </div>
             {%- else -%}
-              <div class="cart__ctas text-right mb-6" {{ block.shopify_attributes }}>
-                <noscript>
-                  <button type="submit" class="cart__update-button button button--secondary" form="cart">
-                    {{ 'sections.cart.update' | t }}
+              <div class="cart-ctas">
+                <div class="cart__ctas text-right mb-6" {{ block.shopify_attributes }}>
+                  <noscript>
+                    <button type="submit" class="cart__update-button button button--secondary" form="cart">
+                      {{ 'sections.cart.update' | t }}
+                    </button>
+                  </noscript>
+                  
+                  <button
+                    type="submit"
+                    id="checkout"
+                    class="button button-primary w-full md:w-auto disabled:opacity-25 disabled:cursor-not-allowed"
+                    name="checkout"
+                    {% if cart == empty or disable_checkout %}disabled{% endif %}
+                    form="cart"
+                  >
+                    {{- 'sections.cart.checkout' | t -}}
                   </button>
-                </noscript>
-
-                <button type="submit" id="checkout" class="button button-primary w-full md:w-auto" name="checkout"{% if cart == empty %} disabled{% endif %} form="cart">
-                  {{ 'sections.cart.checkout' | t }}
-                </button>
-              </div>
-
-              {%- if additional_checkout_buttons -%}
-                <div class="additional-checkout-buttons">
-                  {{ content_for_additional_checkout_buttons }}
                 </div>
-              {%- endif -%}
+
+                {%- if additional_checkout_buttons -%}
+                  <div class="additional-checkout-buttons">
+                    {{ content_for_additional_checkout_buttons }}
+                  </div>
+                {%- endif -%}
+              </div>
           {%- endcase -%}
         {% endfor %}
 

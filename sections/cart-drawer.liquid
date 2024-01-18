@@ -232,6 +232,17 @@
               </details>
             {%- endif -%}
 
+
+            {%- liquid
+              assign total_in_dollars = cart.total_price | divided_by : 100
+
+              if settings.enable_min_order and total_in_dollars <= settings.min_order_value
+                assign disable_checkout = true
+                assign warning_message = "You must have a minimum order of $" | append: settings.min_order_value | append: " to checkout."
+              else
+                assign disable_checkout = false
+              endif
+            -%}
             <!-- Subtotals-->
             <div {{ block.shopify_attributes }}>
               <div class="flex justify-between items-center w-full" role="status">
@@ -250,6 +261,14 @@
                     {%- endfor -%}
                   </ul>
                 {%- endif -%}
+                {%- if disable_checkout %}
+                  <div class="flex items-center justify-center mb-2 mt-1">
+                    <p class="text-sm flex items-center justify-center gap-1 border rounded px-2 bg-sand-300 border-sand-600">
+                      {% render 'icon-error-circle', aria_hidden: true, classes: 'w-4 h-4 text-sand-800', stroke_width: 2.5 %}
+                      <span>{{ warning_message }}</span>
+                    </p>
+                  </div>
+                {%- endif -%}
               </div>
             </div>
 
@@ -261,11 +280,11 @@
               <button
                 type="submit"
                 id="CartDrawer-Checkout"
-                class="cart__checkout-button button button-primary w-full"
+                class="cart__checkout-button button button-primary w-full disabled:opacity-25 disabled:cursor-not-allowed"
                 name="checkout"
                 form="CartDrawer-Form"
                 onclick="beginCheckoutDataLayer()"
-                {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
+                {% if cart == empty or disable_checkout %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
             <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
               {%- if settings.cart_disclaimer != blank -%}{{ settings.cart_disclaimer }}{%- endif -%}

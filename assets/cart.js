@@ -64,6 +64,11 @@ class CartItems extends HTMLElement {
         section: document.getElementById("main-cart-footer").dataset.id,
         selector: ".js-contents",
       },
+      {
+        id: "main-cart-footer",
+        section: document.getElementById("main-cart-footer").dataset.id,
+        selector: ".cart-ctas",
+      },
       /* {
         id: "shopify-section-announcement-bar",
         section: "announcement-bar",
@@ -138,6 +143,7 @@ class CartItems extends HTMLElement {
   }
 
   replaceSections(parsedState) {
+    console.log("replace sections", parsedState.sections);
     // BUG WORKAROUND FOR SHOPIFY CLI
     // cart/add does not return sections via dev server
     // if sections are null, fall back on Section Rendering API
@@ -168,15 +174,19 @@ class CartItems extends HTMLElement {
         const elementToReplace =
           document.getElementById(section.id).querySelector(section.selector) ||
           document.getElementById(section.id);
+
         elementToReplace.innerHTML = this.getSectionInnerHTML(
           parsedState.sections[section.section],
           section.selector
         );
+
+        console.log("elementToReplace", elementToReplace);
       });
     }
   }
 
   updateLiveRegions(line, itemCount) {
+    console.log("update live regions");
     if (this.currentItemCount === itemCount) {
       const lineItemError =
         document.getElementById(`Line-item-error-${line}`) ||
