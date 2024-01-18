@@ -71,7 +71,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-  <body class="{% if template.name == 'product' %}pdp{% endif %}">
+  <body class="antialiased {% if template.name == 'product' %}pdp{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
@@ -84,7 +84,7 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
-    <div id="HeaderContent" class="sticky top-0 z-40 motion-safe:transition-colors border-b border-transparent duration-300">
+    <div id="HeaderContent" class="sticky top-0 z-40 motion-safe:transition-colors border-b border-transparent duration-300 bg-gradient-to-b from-wave-300 to-wave-300 via-wave-100">
       {% section 'announcement-bar' %}
       {% section 'header' %}
     </div>
