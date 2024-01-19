@@ -54,13 +54,21 @@
         "blocks": {
           "announcement-bar-0": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p>Free shipping on orders $60+<\/p>"
+            }
+          },
+          "announcement_gQkGbr": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p>This weekend only! Free shipping on all US orders<\/p>"
             }
           }
         },
         "block_order": [
-          "announcement-bar-0"
+          "announcement-bar-0",
+          "announcement_gQkGbr"
         ],
         "settings": {
           "slide_interval": 2,
