@@ -33,7 +33,7 @@
     %}
     
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
-    <script src="{{ 'global.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'global.js' | asset_url }}" defer></script>
 
     {% comment %} {{ content_for_header }} {% endcomment %}
     {% comment %}theme-check-disable ContentForHeaderModification,RemoteAsset{% endcomment %}
@@ -71,7 +71,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-  <body class="antialiased {% if template.name == 'product' %}pdp{% endif %}">
+  <body class="antialiased bg-gradient-to-br from-seafoam-300 to-wave-300 {% if template.name == 'product' %}pdp{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
@@ -84,13 +84,15 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
-    <div id="HeaderContent" class="sticky top-0 z-40 motion-safe:transition-colors border-b border-transparent duration-300 bg-gradient-to-b from-wave-300 to-wave-300 via-wave-100">
+    <div id="HeaderContent" class="sticky top-0 z-40 container">
       {% section 'announcement-bar' %}
       {% section 'header' %}
     </div>
 
-    <main id="MainContent" class="content-for-layout outline-0 shadow-none" tabindex="-1">
-      {{ content_for_layout }}
+    <main id="MainContent" class="content-for-layout outline-0 shadow-none container" tabindex="-1">
+      <div class="bg-white">
+        {{ content_for_layout }}
+      </div>
     </main>
 
     {% section 'footer' %}
@@ -99,8 +101,6 @@
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
       <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
     </ul>
-
-    <div id="HeaderScrollPixel"></div>
     
     <script>
       window.shopUrl = '{{ shop.url }}';

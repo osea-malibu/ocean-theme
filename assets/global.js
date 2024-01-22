@@ -149,19 +149,6 @@ function onKeyUpEscape(event) {
   summaryElement.focus();
 }
 
-// add border to header on scroll
-let headerBorderObserver = new IntersectionObserver((entries) => {
-  const headerWrapper = document.querySelector("#HeaderContent");
-  if (entries[0].boundingClientRect.y < 0) {
-    headerWrapper.classList.add("border-seaweed-300");
-    headerWrapper.classList.remove("border-transparent");
-  } else {
-    headerWrapper.classList.remove("border-seaweed-300");
-    headerWrapper.classList.add("border-transparent");
-  }
-});
-headerBorderObserver.observe(document.querySelector("#HeaderScrollPixel"));
-
 const lazyVideos = [].slice.call(document.querySelectorAll("video.lazy"));
 let lazyVideoObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach((video) => {
