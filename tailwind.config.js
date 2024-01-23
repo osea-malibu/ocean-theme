@@ -158,6 +158,11 @@ module.exports = {
       sans: "Circular, sans-serif",
       serif: "Perfectly Nineties, serif",
       mono: "Fake Receipt, monospace",
+      receipt: "Fake Receipt, monospace",
+      ninetiesHeadliner: "Nineties Headliner, sans-serif",
+      perfectlyNineties: "Perfectly Nineties, sans-serif",
+      vice: "Vice, script",
+      thunderstorm: "Thunderstorm, script",
     },
     fontWeight: {
       light: 300,
