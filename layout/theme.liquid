@@ -71,7 +71,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-  <body class="antialiased bg-gradient-to-br from-retro-blue to-retro-teal {% if template.name == 'product' %}pdp{% endif %}">
+  <body class="antialiased bg-gradient-to-br from-retro-blue/50 to-retro-teal/50 {% if template.name == 'product' %}pdp{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
@@ -191,5 +191,16 @@
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
 
     {% render 'content_for_footer' %}
+
+    {% comment %}theme-check-disable ParserBlockingJavaScript{% endcomment %}
+      <script src="{{ 'cursor-effect.js' | asset_url }}"></script>
+      <script>
+        cursorTrail({
+            pattern: 'colorGlitter',
+            animationType: 'rotation90',
+            theme: 'light',
+        });
+      </script>
+    {% comment %}theme-check-enable ParserBlockingJavaScript{% endcomment %}
   </body>
 </html>

@@ -149,6 +149,18 @@ function onKeyUpEscape(event) {
   summaryElement.focus();
 }
 
+window.addEventListener("load", () => {
+  /* new cursoreffects.rainbowCursor({
+    length: 40,
+    colors: ["#00db96", "#90DCFF", "#E10086", "#FDFB76"],
+    size: 4,
+  });
+  new cursoreffects.fairyDustCursor({
+    colors: ["#00db96", "#90DCFF", "#FFFFFF", "#E7F1EF", "#E6ECEE", "#DBE5D3", "#F6FCFA"],
+  }); */
+  new cursoreffects.bubbleCursor();
+});
+
 const lazyVideos = [].slice.call(document.querySelectorAll("video.lazy"));
 let lazyVideoObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach((video) => {
