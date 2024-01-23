@@ -18,7 +18,7 @@
           {%- for block in section.blocks -%}
             {%- assign bg_image_src = block.settings.image | image_url: width: 1420 -%}
             <li
-              class="{% if block.settings.column_classes != blank %}{{ block.settings.column_classes }}{% endif %}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
+              class="{% if block.settings.column_classes != blank %}{{ block.settings.column_classes }}{% endif %}{% if section.settings.is_slider %} glide__slide{% endif %}"
               {% if block.settings.is_bg_image %}style="background-image: url({% render 'imgix', src: bg_image_src %})"{% endif %}
               {{ block.shopify_attributes }}
             >
