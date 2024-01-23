@@ -154,7 +154,7 @@
   /* Buttons */
   .button,
   .shopify-challenge__button {
-    @apply relative cursor-pointer inline-flex items-center justify-center px-6 py-2 font-mono font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-colors active:ring-2 focus:ring-2 focus:ring-offset-2;
+    @apply relative cursor-pointer inline-flex items-center justify-center px-6 py-2 font-mono font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-all motion-safe:duration-75 active:ring-2 focus:ring-2 focus:ring-offset-2;
   }
   .button-xs {
     @apply px-3 py-0.5 text-xs;
@@ -172,7 +172,7 @@
     @apply px-8 py-4 text-xl;
   }
   .button-primary {
-    @apply border-outset border-4 bg-retro-teal border-retro-teal-light border-b-retro-teal outline outline-retro-purple shadow-md shadow-retro-purple text-white hover:border-inset hover:border-retro-teal-light visited:bg-retro-teal visited:text-white link:bg-retro-teal link:text-white link:hover:bg-seaweed-500 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
+    @apply border-outset border-4 bg-retro-teal border-retro-teal-light border-b-retro-teal outline outline-retro-purple shadow-md shadow-retro-purple text-white hover:border-inset hover:border-retro-teal-light hover:shadow-sm visited:bg-retro-teal visited:text-white link:bg-retro-teal link:text-white link:hover:bg-seaweed-500 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
   }
   .button-secondary {
     @apply border-ridge border bg-retro-teal border-white outline outline-[blue] text-white visited:bg-seaweed-200 visited:text-seaweed-700 link:bg-seaweed-200 link:text-seaweed-800 active:bg-seaweed-200 active:text-seaweed-800 focus:bg-seaweed-200 focus:text-seaweed-800;

@@ -29,7 +29,8 @@ class CartDrawer extends HTMLElement {
   open(triggeredBy) {
     if (triggeredBy) this.setActiveElement(triggeredBy);
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');
-    if (cartDrawerNote && !cartDrawerNote.hasAttribute("role")) this.setSummaryAccessibility(cartDrawerNote);
+    if (cartDrawerNote && !cartDrawerNote.hasAttribute("role"))
+      this.setSummaryAccessibility(cartDrawerNote);
     // here the animation doesn't seem to always get triggered. A timeout seem to help
     setTimeout(() => {
       this.classList.remove("invisible");
@@ -39,7 +40,9 @@ class CartDrawer extends HTMLElement {
     this.addEventListener(
       "transitionend",
       () => {
-        const containerToTrapFocusOn = this.classList.contains("is-empty") ? this.querySelector(".cart-empty") : document.getElementById("CartDrawer");
+        const containerToTrapFocusOn = this.classList.contains("is-empty")
+          ? this.querySelector(".cart-empty")
+          : document.getElementById("CartDrawer");
         const focusElement = this.drawer || this.querySelector(".cart-close");
         trapFocus(containerToTrapFocusOn, focusElement);
       },
@@ -66,7 +69,10 @@ class CartDrawer extends HTMLElement {
     }
 
     cartDrawerNote.addEventListener("click", (event) => {
-      event.currentTarget.setAttribute("aria-expanded", !event.currentTarget.closest("details").hasAttribute("open"));
+      event.currentTarget.setAttribute(
+        "aria-expanded",
+        !event.currentTarget.closest("details").hasAttribute("open")
+      );
     });
 
     cartDrawerNote.parentElement.addEventListener("keyup", onKeyUpEscape);
@@ -80,14 +86,23 @@ class CartDrawer extends HTMLElement {
     // if sections are null, fall back on Section Rendering API
     // https://github.com/Shopify/shopify-cli/issues/1797
     if (!parsedState.sections) {
-      fetch(`${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map((section) => section.id)}`)
+      fetch(
+        `${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map(
+          (section) => section.id
+        )}`
+      )
         .then((response) => response.json())
         .then((response) => {
           parsedState.sections = response;
 
           this.getSectionsToRender().forEach((section) => {
-            const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
-            sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+            const sectionElement = section.selector
+              ? document.querySelector(section.selector)
+              : document.getElementById(section.id);
+            sectionElement.innerHTML = this.getSectionInnerHTML(
+              parsedState.sections[section.id],
+              section.selector
+            );
           });
 
           setTimeout(() => {
@@ -98,8 +113,13 @@ class CartDrawer extends HTMLElement {
         .catch((error) => console.error(error));
     } else {
       this.getSectionsToRender().forEach((section) => {
-        const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
-        sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+        const sectionElement = section.selector
+          ? document.querySelector(section.selector)
+          : document.getElementById(section.id);
+        sectionElement.innerHTML = this.getSectionInnerHTML(
+          parsedState.sections[section.id],
+          section.selector
+        );
       });
 
       setTimeout(() => {
@@ -123,7 +143,7 @@ class CartDrawer extends HTMLElement {
         const emptyCartHTML =
           '<div class="cart-empty h-full overflow-hidden flex flex-col items-center justify-center w-60 mx-auto"><h2 class="text-lg tracking-wide font-book mb-4">Your cart is empty</h2><a href="/collections/bestsellers" class="button button-secondary mb-4 w-full">Shop Best Sellers</a><a href="/collections/skincare" class="button button-secondary mb-4 w-full">Shop Skincare</a><a href="/collections/body-care" class="button button-secondary mb-4 w-full">Shop Body Care</a><a href="/collections/shop" class="button button-secondary mb-4 w-full">Shop All</a><a href="/pages/quiz" class="button button-secondary mb-4 w-full">Take Skin Quiz</a></div>';
         const emptyCartBubbleHTML =
-          '<a href="/cart" class="header__icon header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble"><span class="hidden">Cart</span><div class="w-8 h-8 bg-seafoam-300 rounded-full flex justify-center items-center"><span aria-hidden="true" class="leading-8 font-book text-lg">0</span><span class="hidden">0 items</span></div></a>';
+          '<a href="/cart" class="header__icon header__icon--cart cursor-pointer flex gap-1 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble"><span>Cart</span><div class="relative w-6 h-6 rounded-full flex justify-center items-center bg-[radial-gradient(circle_at_6px_6px,_var(--tw-gradient-stops))] from-retro-teal to-retro-teal-dark border border-retro-teal-dark/50 before:content-[""] before:block before:w-1 before:h-1 before:rounded-full before:bg-white before:absolute before:top-1 before:left-1 before:opacity-50"><span aria-hidden="true" class="leading-8 font-book text-lg">0</span><span class="hidden">0 items</span></div></a>';
         const cartBubble = document.getElementById("cart-icon-bubble");
         const cartDrawerWrapper = document.querySelector("cart-drawer");
         const cartFooter = document.getElementById("main-cart-footer");
@@ -136,7 +156,10 @@ class CartDrawer extends HTMLElement {
         if (cartFooter) cartFooter.classList.add("is-empty");
         if (cartDrawerWrapper) {
           cartDrawerWrapper.classList.add("is-empty");
-          trapFocus(cartDrawerWrapper.querySelector(".cart-empty"), cartDrawerWrapper.querySelector("a"));
+          trapFocus(
+            cartDrawerWrapper.querySelector(".cart-empty"),
+            cartDrawerWrapper.querySelector("a")
+          );
         }
       })
       .catch((error) => console.error(error));

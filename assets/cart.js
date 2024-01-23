@@ -42,14 +42,6 @@ class CartItems extends HTMLElement {
     );
   }
 
-  updateCatchCalloutPrice(price) {
-    const callout = document.querySelector("#catch-callout-cart");
-
-    if (callout && price) {
-      callout.setAttribute("price", price);
-    }
-  }
-
   getSectionsToRender() {
     return [
       {
@@ -162,8 +154,6 @@ class CartItems extends HTMLElement {
             }
           });
         }
-
-        this.updateCatchCalloutPrice(parsedState.total_price);
 
         this.classList.toggle("is-empty", parsedState.item_count === 0);
         const cartDrawerWrapper = document.querySelector("cart-drawer");
