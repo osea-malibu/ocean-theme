@@ -15,10 +15,10 @@
       {% comment %} Hamburger menu {% endcomment %}
       {%- if section.settings.hamburger_menu != blank -%}
         {%- assign menu_link_styles = 'px-8 py-2 tracking-wide cursor-pointer' -%}
-        <menu-drawer id="HamburgerMenu" class="mr-1 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
+        <menu-drawer id="HamburgerMenu" class="mr-2 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="group">
             {% comment %} Hamburger icon {% endcomment %}
-            <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-2 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
+            <summary class="header__icon--menu button button-primary px-1 cursor-pointer w-10 h-10 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
               <span class="flex items-center justify-center h-full">
                 {% render 'icon-hamburger', classes: 'icon-hamburger h-6 w-6 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 group-open:invisible group-open:opacity-0 group-open:scale-75', aria_hidden: true, stroke_width: 1.75 %}
                 {% render 'icon-close', classes: 'icon-close h-7 w-7 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 invisible group-open:visible opacity-0 group-open:opacity-100 scale-75 group-open:scale-100', aria-hidden: true, stroke_width: 1.75 %}
@@ -179,7 +179,7 @@
       <details-modal class="header__search flex justify-center items-center">
         <details class="group">
           <summary
-            class="header__icon--search cursor-pointer w-10 h-10{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3{% endunless %}"
+            class="header__icon--search button button-primary px-1 cursor-pointer w-10 h-10{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3{% endunless %}"
             aria-haspopup="dialog"
             aria-label="{{ 'general.search.search' | t }}"
           >
@@ -308,13 +308,7 @@
     {% comment %} OSEA logo {% endcomment %}
     <a href="{{ routes.root_url }}" class="cursor-pointer flex-initial hover:text-seaweed-500" aria-label="OSEA Malibu">
       <span class="sr-only">OSEA Malibu</span>
-      {% comment %} <svg class="mx-auto h-10 w-20 motion-safe:transition-colors" width="316" height="156" viewBox="0 0 316 156" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M76.6855 156L75.5465 145.173C77.7705 144.941 80.0971 144.015 82.5641 143.035C83.4439 142.683 84.3562 142.321 85.2631 141.953C108.254 133.584 114.289 121.095 116.529 103.675C117.824 93.666 116.691 81.9679 115.59 70.6542C112.891 42.9165 109.851 11.4816 144.038 -0.00543213L147.482 10.3123C121.484 19.0493 123.757 42.4726 126.386 69.5986C127.546 81.5078 128.739 93.8393 127.282 105.077C124.945 123.136 118.688 141.346 89.004 152.173C88.2105 152.465 87.3846 152.785 86.5587 153.126C83.6653 154.273 80.3832 155.578 76.6855 155.973" fill="#1D4D41"/>
-        <path d="M13.3873 103.865C21.4953 110.938 30.6433 114.475 40.8313 114.475C52.3473 114.475 62.1754 110.494 70.3158 102.533C78.4561 94.572 82.5101 84.9219 82.4777 73.5829C82.4777 62.2727 78.4417 52.5865 70.3698 44.5244C62.2978 36.4622 52.6568 32.4311 41.4467 32.4311C30.0639 32.4311 20.3185 36.4279 12.2105 44.4215C4.10256 52.4151 0.0323887 61.9786 0 73.1119C0 85.7898 4.46244 96.039 13.3873 103.859V103.865ZM20.4912 52.2545C26.1484 46.5164 33.0814 43.6474 41.2901 43.6474C49.4989 43.6474 56.4157 46.5164 62.0405 52.2545C67.6581 57.9637 70.4687 65.0371 70.4723 73.4746C70.4723 81.8111 67.6275 88.8826 61.9379 94.6893C56.2483 100.427 49.2632 103.296 40.9825 103.296C33.3495 103.296 26.6217 100.478 20.7989 94.8408C14.9762 89.2038 12.0468 82.0132 12.0108 73.2689C12.0108 64.9324 14.8376 57.9276 20.4912 52.2545Z" fill="#1D4D41"/>
-        <path d="M168.848 34.185V113.311H212.389V102.089H180.756V79.2614H211.466V68.0397H180.756V45.4067H212.389V34.185H168.848Z" fill="#1D4D41"/>
-        <path d="M278.138 57.1102L289.835 82.8667H265.873L278.138 57.1102ZM239.298 113.311H252.124L260.912 94.0938H294.694L302.969 113.311H316L278.391 34.185L239.298 113.311Z" fill="#1D4D41"/>
-      </svg>
-      {% render 'logo-retro', variant: 'withtag', classes: 'mx-auto h-12 w-40 relative -right-4 text-retro-teal' %} {% endcomment %}
+      {% comment %} {% render 'logo-retro', variant: 'withtag', classes: 'mx-auto h-12 w-40 relative -right-4 text-retro-teal' %} {% endcomment %}
       {% comment %} theme-check-disable ImgLazyLoading, ImgWidthAndHeight {% endcomment %}
       <img src="{{ 'logo-retro-distressed.png' | asset_url }}" class="mx-auto w-40 relative" />
       {% comment %} theme-check-enable ImgLazyLoading, ImgWidthAndHeight {% endcomment %}
@@ -323,7 +317,10 @@
     <div class="flex-1 flex justify-end items-center">
       {% comment %} Accounts link {% endcomment %}
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="h-10 w-10 justify-center items-center ml-1 flex md:ml-4">
+        <a
+          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+          class="button button-primary px-1 h-10 w-10 justify-center items-center ml-1 flex md:ml-4"
+        >
           {%- render 'icon-account', classes: 'h-6 w-6 hover:text-seaweed-500', aria_hidden: true, stroke_width: 1.75 -%}
           <span class="sr-only">
             {%- liquid
@@ -338,11 +335,13 @@
       {%- endif -%}
 
       {% comment %} Cart menu {% endcomment %}
-      <a href="{{ routes.cart_url }}" class="header__icon--cart button button-primary button-sm px-1 cursor-pointer flex gap-1 h-10 justify-center items-center ml-1 md:ml-2" id="cart-icon-bubble">
-        <span>Cart</span>
-        <div class="relative w-6 h-6 rounded-full flex justify-center items-center bg-[radial-gradient(circle_at_6px_6px,_var(--tw-gradient-stops))] from-retro-teal to-retro-teal-dark border border-retro-teal-dark/50 before:content-[''] before:block before:w-1 before:h-1 before:rounded-full before:bg-white before:absolute before:top-1 before:left-1 before:opacity-50">
-          <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
-        </div>
+      <a href="{{ routes.cart_url }}" class="header__icon--cart button button-primary button-sm px-1 cursor-pointer h-10 ml-1 md:ml-2 group" id="cart-icon-bubble">
+        <span class="relative group-hover:scale-[95%] flex gap-1 justify-center items-center">
+          <span>Cart</span>
+          <div class="relative w-6 h-6 rounded-full flex justify-center items-center bg-[radial-gradient(circle_at_6px_6px,_var(--tw-gradient-stops))] from-retro-teal to-retro-teal-dark border border-retro-teal-dark/50 before:content-[''] before:block before:w-1 before:h-1 before:rounded-full before:bg-white before:absolute before:top-1 before:left-1 before:opacity-50">
+            <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
+          </div>
+        </span>
       </a>
     </div>
   </div>
