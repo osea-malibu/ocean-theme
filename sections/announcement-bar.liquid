@@ -1,4 +1,4 @@
-<div class="container bg-white pt-1" id="AnnouncementBar">
+<div class="container pt-1" id="AnnouncementBar">
   <div class="bg-retro-purple font-mono flex justify-center text-xs a:link rounded-full shadow-inner shadow-black">
     {% comment %} Dismissable announcement bar {% endcomment %}
     {%- if section.settings.enable_dismissable_announcement -%}
@@ -86,12 +86,12 @@
         role="region"
         aria-label="{{ section.blocks[0].settings.text | strip_html }}"
       >
-        <div class="motion-safe:animate-marquee whitespace-nowrap flex">
+        <div class="motion-safe:animate-marquee whitespace-nowrap flex shrink-0">
           {%- for i in (1..5) -%}
             <span class="mx-4">{{ section.blocks[0].settings.text }}</span>
           {%- endfor -%}
         </div>
-        <div class="absolute top-0.5 motion-safe:animate-marquee2 whitespace-nowrap flex">
+        <div class="absolute top-0.5 motion-safe:animate-marquee2 whitespace-nowrap flex shrink-0">
           {%- for i in (1..5) -%}
             <span class="mx-4">{{ section.blocks[0].settings.text }}</span>
           {%- endfor -%}
