@@ -172,13 +172,13 @@
     @apply px-8 py-4 text-xl;
   }
   .button-primary {
-    @apply border-outset border-4 bg-retro-teal border-retro-teal-light border-b-retro-teal outline outline-retro-purple shadow-md shadow-retro-purple text-white visited:bg-retro-teal visited:text-white link:bg-retro-teal link:text-white link:hover:bg-seaweed-500 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
+    @apply border-outset border-4 bg-retro-teal border-retro-teal-light border-b-retro-teal outline outline-retro-purple shadow-md shadow-retro-purple text-white hover:border-inset hover:border-retro-teal-light visited:bg-retro-teal visited:text-white link:bg-retro-teal link:text-white link:hover:bg-seaweed-500 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
   }
   .button-secondary {
-    @apply border-ridge border bg-retro-pink border-white outline outline-[blue] text-white hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-800 visited:bg-retro-pink visited:text-white link:bg-retro-pink link:text-white active:bg-retro-pink active:text-white focus:bg-retro-pink focus:text-white;
+    @apply border-ridge border bg-retro-teal border-white outline outline-[blue] text-white visited:bg-seaweed-200 visited:text-seaweed-700 link:bg-seaweed-200 link:text-seaweed-800 active:bg-seaweed-200 active:text-seaweed-800 focus:bg-seaweed-200 focus:text-seaweed-800;
   }
   .button-tertiary {
-    @apply bg-retro-blue border-retro-blue text-seaweed-800 visited:bg-seaweed-200 visited:text-seaweed-700 link:bg-seaweed-200 link:text-seaweed-800 active:bg-seaweed-200 active:text-seaweed-800 focus:bg-seaweed-200 focus:text-seaweed-800;
+    @apply border-ridge border bg-retro-pink border-white outline outline-[blue] text-white hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-800 visited:bg-retro-pink visited:text-white link:bg-retro-pink link:text-white active:bg-retro-pink active:text-white focus:bg-retro-pink focus:text-white;
   }
   .button-tertiary .text {
     @apply shadow-white;
