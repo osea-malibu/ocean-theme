@@ -10,7 +10,7 @@
 {%- endif -%}
 
 <header class="header px-4 relative">
-  <div class="py-1 flex items-center justify-between">
+  <div class="py-1 flex items-center justify-between gap-2">
     <div class="flex-1 flex items-center justify-start">
       {% comment %} Hamburger menu {% endcomment %}
       {%- if section.settings.hamburger_menu != blank -%}
@@ -18,10 +18,11 @@
         <menu-drawer id="HamburgerMenu" class="mr-2 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="group">
             {% comment %} Hamburger icon {% endcomment %}
-            <summary class="header__icon--menu button button-primary px-1 cursor-pointer w-10 h-10 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
+            <summary class="header__icon--menu button button-primary button-sm px-3 cursor-pointer h-10" aria-label="{{ 'sections.header.menu' | t }}">
               <span class="flex items-center justify-center h-full">
-                {% render 'icon-hamburger', classes: 'icon-hamburger h-6 w-6 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 group-open:invisible group-open:opacity-0 group-open:scale-75', aria_hidden: true, stroke_width: 1.75 %}
-                {% render 'icon-close', classes: 'icon-close h-7 w-7 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 invisible group-open:visible opacity-0 group-open:opacity-100 scale-75 group-open:scale-100', aria-hidden: true, stroke_width: 1.75 %}
+                Menu
+                {% render 'icon-hamburger', classes: 'hidden icon-hamburger h-6 w-6 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 group-open:invisible group-open:opacity-0 group-open:scale-75', aria_hidden: true, stroke_width: 1.75 %}
+                {% render 'icon-close', classes: 'hidden icon-close h-7 w-7 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 invisible group-open:visible opacity-0 group-open:opacity-100 scale-75 group-open:scale-100', aria-hidden: true, stroke_width: 1.75 %}
               </span>
             </summary>
             {% comment %} Scrim - closes menu on click {% endcomment %}
@@ -176,7 +177,7 @@
       {%- endif -%}
 
       {% comment %} Predictive search {% endcomment %}
-      <details-modal class="header__search flex justify-center items-center">
+      <details-modal class="header__search justify-center items-center hidden sm:flex">
         <details class="group">
           <summary
             class="header__icon--search button button-primary px-1 cursor-pointer w-10 h-10{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3{% endunless %}"
@@ -184,8 +185,8 @@
             aria-label="{{ 'general.search.search' | t }}"
           >
             <span class="flex items-center justify-center h-full">
-              {% render 'icon-search', classes: 'modal__toggle-open icon-search h-6 w-6 hover:text-seaweed-500', aria-hidden: true, stroke_width: 2 %}
-              {% render 'icon-close', classes: 'modal__toggle-close icon-close h-7 w-7 hover:text-seaweed-500', aria-hidden: true, stroke_width: 1.5 %}
+              {% render 'icon-search', classes: 'modal__toggle-open icon-search h-6 w-6', aria-hidden: true, stroke_width: 2 %}
+              {% render 'icon-close', classes: 'modal__toggle-close icon-close h-7 w-7', aria-hidden: true, stroke_width: 1.5 %}
             </span>
           </summary>
           <div class="search-modal absolute inset-0 z-40 opacity-0 h-full motion-safe:transition-opacity group-open:opacity-100" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
@@ -222,7 +223,7 @@
                       <label class="hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
                       <input type="hidden" name="options[prefix]" value="last">
                       <button class="cursor-pointer w-10 h-10 flex items-center justify-center ml-2 md:ml-4 shrink-0" aria-label="{{ 'general.search.search' | t }}">
-                        {% render 'icon-search', classes: 'h-6 w-6 hover:text-seaweed-500', aria-hidden: true, stroke_width: 2 %}
+                        {% render 'icon-search', classes: 'h-6 w-6', aria-hidden: true, stroke_width: 2 %}
                       </button>
                     </div>
                     <div
@@ -242,7 +243,7 @@
                   </form>
                 </predictive-search>
                 <button type="button" class="cursor-pointer -mr-2 w-10 h-10 flex items-center justify-center shrink-0" aria-label="{{ 'accessibility.close' | t }}">
-                  {% render 'icon-close', classes: 'h-7 w-7 hover:text-seaweed-500', aria-hidden: true, stroke_width: 1.75 %}
+                  {% render 'icon-close', classes: 'h-7 w-7', aria-hidden: true, stroke_width: 1.75 %}
                 </button>
               </div>
             </div>
@@ -306,7 +307,7 @@
     </div>
 
     {% comment %} OSEA logo {% endcomment %}
-    <a href="{{ routes.root_url }}" class="cursor-pointer flex-initial hover:text-seaweed-500" aria-label="OSEA Malibu">
+    <a href="{{ routes.root_url }}" class="cursor-pointer flex-initial" aria-label="OSEA Malibu">
       <span class="sr-only">OSEA Malibu</span>
       {% comment %} {% render 'logo-retro', variant: 'withtag', classes: 'mx-auto h-12 w-40 relative -right-4 text-retro-teal' %} {% endcomment %}
       {% comment %} theme-check-disable ImgLazyLoading, ImgWidthAndHeight {% endcomment %}
@@ -319,9 +320,9 @@
       {%- if shop.customer_accounts_enabled -%}
         <a
           href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-          class="button button-primary px-1 h-10 w-10 justify-center items-center ml-1 flex md:ml-4"
+          class="hidden button button-primary px-1 h-10 w-10 justify-center items-center ml-1 sm:flex md:ml-4"
         >
-          {%- render 'icon-account', classes: 'h-6 w-6 hover:text-seaweed-500', aria_hidden: true, stroke_width: 1.75 -%}
+          {%- render 'icon-account', classes: 'h-6 w-6', aria_hidden: true, stroke_width: 1.75 -%}
           <span class="sr-only">
             {%- liquid
               if customer
@@ -336,7 +337,7 @@
 
       {% comment %} Cart menu {% endcomment %}
       <a href="{{ routes.cart_url }}" class="header__icon--cart button button-primary button-sm px-1 cursor-pointer h-10 ml-1 md:ml-2 group" id="cart-icon-bubble">
-        <span class="relative group-hover:scale-[95%] flex gap-1 justify-center items-center">
+        <span class="relative group-hover:scale-[96%] flex gap-1 justify-center items-center">
           <span>Cart</span>
           <div class="relative w-6 h-6 rounded-full flex justify-center items-center bg-[radial-gradient(circle_at_6px_6px,_var(--tw-gradient-stops))] from-retro-teal to-retro-teal-dark border border-retro-teal-dark/50 before:content-[''] before:block before:w-1 before:h-1 before:rounded-full before:bg-white before:absolute before:top-1 before:left-1 before:opacity-50">
             <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>

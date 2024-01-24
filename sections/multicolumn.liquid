@@ -275,16 +275,18 @@
                           </div>
                         {%- else -%}
                           <a
-                            class="button {{ block.settings.button_classes }}"
+                            class="button group {{ block.settings.button_classes }}"
                             {% if block.settings.link == blank %}role="link" aria-disabled="true"
                             {% else %}href="{{ block.settings.link }}"{% endif %}
                             {% if block.settings.target_blank %}target="_blank"{% endif %}
                             {% if block.settings.button_aria_label != blank %}aria-label="{{ block.settings.button_aria_label }}"{% endif %}
                           >
-                            {{- block.settings.button_label | escape -}}
-                            {%- if block.settings.button_icon -%}
-                              {{- block.settings.button_icon -}}
-                            {%- endif -%}
+                            <span class="group-hover:scale-[98%] inline-flex">
+                              {{- block.settings.button_label | escape -}}
+                              {%- if block.settings.button_icon -%}
+                                {{- block.settings.button_icon -}}
+                              {%- endif -%}
+                            </span>
                           </a>
                         {%- endif -%}
                       {%- endif -%}
