@@ -85,12 +85,11 @@
               {% if block.settings.button_link == blank %}role="link" aria-disabled="true"
               {% else %}href="{{ block.settings.button_link }}"{% endif %}
               {% if block.settings.target_blank %}target="_blank"{% endif %}
-              class="button {{ block.settings.button_classes }}"
+              class="button group {{ block.settings.button_classes }}"
               {% if block.settings.button_aria_label != blank %}aria-label="{{ block.settings.button_aria_label }}"{% endif %}
               {{ block.shopify_attributes }}
             >
-              <span class="effect"></span>
-              <span class="text">{{ block.settings.button_label | escape }}</span>
+              <span class="group-hover:scale-[98%]">{{ block.settings.button_label | escape }}</span>
             </a>
           {%- endif -%}
       {%- endcase -%}

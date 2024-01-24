@@ -222,40 +222,41 @@
               name="add"
               aria-haspopup="dialog"
               aria-live="polite"
-              class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
+              class="group button button-tertiary px-2 w-full motion-safe:transition mt-2 disabled:opacity-50 {{ button_class }}"
               {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
             >
-              <span class="effect"></span>
-              <span class="sr-only">{{ card_product.title }} - </span>
-              {%- if card_product.selected_or_first_available_variant.available -%}
-                <span class="label text">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
-                <span class="sr-only"> - </span>
-                {%- liquid
-                  assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
-                  assign set_products = collections['skincare-sets-1'].products | map: 'handle'
-                  assign is_set = false
-                  assign show_range = true
-                  assign price_class = 'tracking-wide z-10'
-                  if set_products contains card_product.handle
-                    assign is_set = true
-                  endif
-                  if is_set
-                    assign show_range = false
-                    assign price_class = 'tracking-wide set-price z-10'
-                  endif
-                -%}
-                {%- render 'price',
-                  product: card_product,
-                  price_id: price_id,
-                  price_class: price_class,
-                  show_price_range: show_range,
-                  use_variant: true,
-                  subscription: subscription,
-                  default_to_mini: default_to_mini
-                -%}
-              {%- else -%}
-                <span class="label text">{{ 'products.product.sold_out' | t }}</span>
-              {%- endif -%}
+              <span class="group-hover:scale-[96%] flex w-full text-current {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %}">
+                <span class="sr-only">{{ card_product.title }} - </span>
+                {%- if card_product.selected_or_first_available_variant.available -%}
+                  <span class="label text-current">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
+                  <span class="sr-only"> - </span>
+                  {%- liquid
+                    assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
+                    assign set_products = collections['skincare-sets-1'].products | map: 'handle'
+                    assign is_set = false
+                    assign show_range = true
+                    assign price_class = 'z-10'
+                    if set_products contains card_product.handle
+                      assign is_set = true
+                    endif
+                    if is_set
+                      assign show_range = false
+                      assign price_class = 'set-price z-10'
+                    endif
+                  -%}
+                  {%- render 'price',
+                    product: card_product,
+                    price_id: price_id,
+                    price_class: price_class,
+                    show_price_range: show_range,
+                    use_variant: true,
+                    subscription: subscription,
+                    default_to_mini: default_to_mini
+                  -%}
+                {%- else -%}
+                  <span class="label text">{{ 'products.product.sold_out' | t }}</span>
+                {%- endif -%}
+              </span>
             </button>
             {%- if card_product.selected_or_first_available_variant.available == false -%}
               <div class="absolute z-10 inset-x-0 bottom-0 h-10 sm:h-[42px]">

@@ -47,22 +47,22 @@
 <span class="price whitespace-nowrap flex flex-row{% if price_class %} {{ price_class }}{% endif %}"{% if price_id != blank %} id="{{ price_id }}"{% endif %}>
   {%- if subscription -%}
     <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-    <s class="text-wave-700 mr-1">{{ product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros }}</s>
+    <s class="text-[gainsboro] mr-1">{{ product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros }}</s>
     <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
     <span>{{ product.selected_or_first_available_selling_plan_allocation.price | money }}</span>
   {%- elsif bundle -%}
     <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-    <s class="text-wave-700 mr-1">{{ money_price }}</s>
+    <s class="text-[gainsboro] mr-1">{{ money_price }}</s>
     <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
     <span>{{ price | times: 0.8 | money }}</span>
   {%- elsif show_price_range and default_to_mini != true -%}
     <span class="sr-only">Price: </span>
-    <span>{% if product.price_varies %}{{ min_price | money_without_trailing_zeros }} - {{ max_price | money_without_trailing_zeros }}{% else %}{{ money_price }}{% endif %}</span>
+    <span>{% if product.price_varies %}{{ min_price | money_without_trailing_zeros }}-{{ max_price | money_without_trailing_zeros }}{% else %}{{ money_price }}{% endif %}</span>
   {%- else -%}
     {%- if compare_at_price > price -%}
       {%- unless product.price_varies == false and product.compare_at_price_varies %}
         <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-        <s class="text-wave-700 mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
+        <s class="text-[gainsboro] mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
       {%- endunless -%}
       <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
       <span>{{ money_price }}</span>
