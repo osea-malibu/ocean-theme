@@ -116,6 +116,13 @@
     "c4d3f8bc-418e-4184-a588-698c391f3344": {
       "type": "image-banner",
       "blocks": {
+        "heading_a9amtf": {
+          "type": "heading",
+          "settings": {
+            "heading": "Free Gift",
+            "heading_classes": "uppercase text-6xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-sm md:max-w-full lg:max-w-md xl:max-w-lg mb-0 xs:mb-3 sm:mb-1 md:mb-1 ![line-height:1.15] text-shadow shadow-cdnc-light\/50 tracking-tight sm:hidden font-bold mt-2"
+          }
+        },
         "paragraph_ae6rMP": {
           "type": "paragraph",
           "settings": {
@@ -127,14 +134,14 @@
           "type": "heading",
           "settings": {
             "heading": "Collagen Dream Night Cream",
-            "heading_classes": "font-serif text-5xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-sm md:max-w-full lg:max-w-md xl:max-w-lg mb-0 xs:mb-3 sm:mb-1 md:mb-1 ![line-height:1.15] text-shadow shadow-cdnc-light\/50 tracking-tight"
+            "heading_classes": "font-serif text-5xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-sm md:max-w-full lg:max-w-md xl:max-w-lg mb-0 xs:mb-3 sm:mb-1 md:mb-1 ![line-height:1.15] text-shadow shadow-cdnc-light\/50 tracking-tight hidden sm:block"
           }
         },
         "8301fdc6-b4c5-4cbb-89b0-f6213a247ef5": {
           "type": "paragraph",
           "settings": {
-            "paragraph": "on all domestic orders",
-            "paragraph_classes": "text-white uppercase font-bold text-md tracking-wide sm:text-lg"
+            "paragraph": "Mini Collagen Dream Night Cream With Purchase of $75+",
+            "paragraph_classes": "font-bold text-md tracking-wide sm:text-lg max-w-2xs sm:hidden"
           }
         },
         "template--15166819893431__c4d3f8bc-418e-4184-a588-698c391f3344-button-1": {
@@ -144,11 +151,12 @@
             "button_aria_label": "Shop all products",
             "button_link": "shopify:\/\/collections\/shop",
             "target_blank": false,
-            "button_classes": "text-white md:button-lg !bg-dream-navy mt-auto"
+            "button_classes": "text-white md:button-lg !bg-dream-navy mt-auto sm:mt-0 mb-6 sm:mb-0"
           }
         }
       },
       "block_order": [
+        "heading_a9amtf",
         "paragraph_ae6rMP",
         "699486b2-cec7-4024-bc99-85a9da98b805",
         "8301fdc6-b4c5-4cbb-89b0-f6213a247ef5",
