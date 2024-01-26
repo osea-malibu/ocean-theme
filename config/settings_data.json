@@ -57,18 +57,10 @@
             "settings": {
               "text": "<p>Free shipping on orders $60+<\/p>"
             }
-          },
-          "announcement_gQkGbr": {
-            "type": "announcement",
-            "disabled": true,
-            "settings": {
-              "text": "<p>This weekend only! Free shipping on all US orders<\/p>"
-            }
           }
         },
         "block_order": [
-          "announcement-bar-0",
-          "announcement_gQkGbr"
+          "announcement-bar-0"
         ],
         "settings": {
           "slide_interval": 2,
@@ -80,12 +72,10 @@
       "header": {
         "type": "header",
         "settings": {
-          "logo": "shopify:\/\/shop_images\/osea-logo-dark-200.png",
-          "inline_menu": "ocean-inline",
-          "hamburger_menu": "ocean-hamburger",
+          "inline_menu": "main-menu",
+          "hamburger_menu": "main-menu",
           "enable_navbar": true,
-          "navbar_menu": "ocean-navbar",
-          "promo_image": "shopify:\/\/shop_images\/GTSSS_Mega_Menu.jpg",
+          "navbar_menu": "main-menu",
           "promo_heading": "Glow to Sleep Starter Set",
           "promo_paragraph": "<p>Try our new night cream in a set & save.<\/p>",
           "promo_link": "shopify:\/\/products\/glow-to-sleep-starter-set",
@@ -99,7 +89,7 @@
             "type": "link_list",
             "settings": {
               "heading": "About",
-              "menu": "footer-about-menu",
+              "menu": "",
               "menu_classes": "flex-1"
             }
           },
@@ -107,7 +97,7 @@
             "type": "link_list",
             "settings": {
               "heading": "Help",
-              "menu": "footer-help-menu",
+              "menu": "",
               "menu_classes": "flex-1"
             }
           },
@@ -115,7 +105,7 @@
             "type": "link_list",
             "settings": {
               "heading": "More",
-              "menu": "footer-more-menu",
+              "menu": "",
               "menu_classes": "flex-1 lg:mr-12"
             }
           }
@@ -141,49 +131,7 @@
     },
     "content_for_index": [
 
-    ],
-    "blocks": {
-      "8232603958289840080": {
-        "type": "shopify:\/\/apps\/seo-manager\/blocks\/seomanager-404\/c54c366f-d4bb-4d52-8d2f-dd61ce8e7e12",
-        "disabled": false,
-        "settings": {
-        }
-      },
-      "17992116214976573926": {
-        "type": "shopify:\/\/apps\/seo-manager\/blocks\/seomanager\/c54c366f-d4bb-4d52-8d2f-dd61ce8e7e12",
-        "disabled": false,
-        "settings": {
-        }
-      },
-      "6251270934270006384": {
-        "type": "shopify:\/\/apps\/stape-server-gtm\/blocks\/gtm\/7e13c847-7971-409d-8fe0-29ec14d5f048",
-        "disabled": false,
-        "settings": {
-        }
-      },
-      "17151115064775110295": {
-        "type": "shopify:\/\/apps\/recharge-subscriptions\/blocks\/recharge-theme\/371eed76-0b44-4869-9813-730372ea378e",
-        "disabled": false,
-        "settings": {
-          "color_brand": "#1d4d41",
-          "contrast_color": "#ffffff",
-          "color_brand_secondary": "#1d4d41",
-          "corners": "8px",
-          "app_background": "#f1f5f4",
-          "app_container": 1200,
-          "app_vertical_padding": 32,
-          "images_aspect_ratio": "1\/1.33",
-          "cards_background": "#ffffff",
-          "cards_border_color": "rgba(0,0,0,0)"
-        }
-      },
-      "855628211100114053": {
-        "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/klaviyo-onsite-embed\/2632fe16-c075-4321-a88b-50b567f42507",
-        "disabled": true,
-        "settings": {
-        }
-      }
-    }
+    ]
   },
   "presets": {
     "Default": {
