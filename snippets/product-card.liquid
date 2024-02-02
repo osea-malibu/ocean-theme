@@ -83,7 +83,7 @@
                       form="{{ product_form_id }}"
                     >
                     <label
-                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-normal w-full text-left"
+                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-[darkgrey] px-1 tracking-normal w-full text-left"
                       for="{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
                       tabindex="0"
                     >
@@ -183,7 +183,7 @@
                         {% endif %}
                       >
                       <label
-                        class="button button-xs block button-secondary rounded-full lowercase peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                        class="button button-xs block button-secondary rounded-full lowercase peer-checked:bg-[darkgray] peer-checked:outline-[blue] py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
                         for="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
                         tabindex="0"
                       >
@@ -228,7 +228,7 @@
               <span class="group-hover:scale-[96%] flex w-full text-current {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %}">
                 <span class="sr-only">{{ card_product.title }} - </span>
                 {%- if card_product.selected_or_first_available_variant.available -%}
-                  <span class="label text-current">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
+                  <span class="label">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
                   <span class="sr-only"> - </span>
                   {%- liquid
                     assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id

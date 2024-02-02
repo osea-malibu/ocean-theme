@@ -1,4 +1,4 @@
-<div class="container {{ section.settings.wrapper_classes }}">
+<div class="px-4 {{ section.settings.wrapper_classes }}">
   {%- if section.blocks.size > 1 -%}
   <tab-controller id="featured-collections-tabs">
     <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-center mb-4">
@@ -28,7 +28,7 @@
           class="glide relative gap-16 peek.after-124 perView-4 lg:perView-3 md:perView-2 sm:perView-1"
           data-breakpoint-limit="none"
         >
-          <div class="glide__track -mr-4 2xs:-mr-6 sm:mr-0 w-[calc(100%+1rem)] 2xs:w-[calc(100%+1.5rem)] sm:w-full pb-2" data-glide-el="track">
+          <div class="glide__track -mr-4 w-[calc(100%+1rem)] pb-2" data-glide-el="track">
             <ul class="glide__slides min-h-full xs:w-full xs:mr-0 p-1">
               {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
                 <li class="glide__slide" data-media-id="{{ section.id }}-{{ media.id }}">
