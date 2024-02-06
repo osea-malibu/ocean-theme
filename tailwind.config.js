@@ -220,7 +220,7 @@ module.exports = {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0%)" },
         },
-        shakeRotate: {
+        shake: {
           "0%, 100%": { transform: "rotate(0deg)" },
           "10%": { transform: "rotate(8deg)" },
           "20%, 40%, 60%": { transform: "rotate(-10deg)" },
