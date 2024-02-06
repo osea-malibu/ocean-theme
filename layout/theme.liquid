@@ -192,7 +192,7 @@
 
     {% render 'content_for_footer' %}
 
-    {% comment %}theme-check-disable ParserBlockingJavaScript{% endcomment %}
+    {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
       <script src="{{ 'cursor-effect.js' | asset_url }}"></script>
       <script>
         cursorTrail({
@@ -201,6 +201,6 @@
             theme: 'light',
         });
       </script>
-    {% comment %}theme-check-enable ParserBlockingJavaScript{% endcomment %}
+    {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
   </body>
 </html>

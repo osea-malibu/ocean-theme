@@ -18,17 +18,17 @@
         <menu-drawer id="HamburgerMenu" class="mr-2 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="group">
             {% comment %} Hamburger icon {% endcomment %}
-            <summary class="header__icon--menu button button-primary button-sm px-3 cursor-pointer h-10" aria-label="{{ 'sections.header.menu' | t }}">
-              <span class="flex items-center justify-center h-full">
+            <summary class="header__icon--menu button button-primary button-sm px-3 cursor-pointer h-10 group" aria-label="{{ 'sections.header.menu' | t }}">
+              <span class="flex items-center justify-center h-full group-hover:scale-[96%]">
                 Menu
                 {% render 'icon-hamburger', classes: 'hidden icon-hamburger h-6 w-6 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 group-open:invisible group-open:opacity-0 group-open:scale-75', aria_hidden: true, stroke_width: 1.75 %}
                 {% render 'icon-close', classes: 'hidden icon-close h-7 w-7 block absolute opacity-100 motion-safe:transition-transform-opacity scale-100 invisible group-open:visible opacity-0 group-open:opacity-100 scale-75 group-open:scale-100', aria-hidden: true, stroke_width: 1.75 %}
               </span>
             </summary>
             {% comment %} Scrim - closes menu on click {% endcomment %}
-            <div class="menu-scrim block fixed inset-x-0 top-[72px] md:top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 motion-safe:transition-opacity"></div>
+            <div class="menu-scrim block fixed inset-x-0 top-[103px] sm:top-[117px] bottom-0 bg-seaweed-800/50 opacity-0 z-10 motion-safe:transition-opacity"></div>
             {% comment %} L1 Drawer {% endcomment %}
-            <div class="menu-drawer fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-[72px] md:top-24 overyflow-y-auto" tabindex="-1">
+            <div class="menu-drawer fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-[103px] sm:top-[117px] overyflow-y-auto" tabindex="-1">
               <div class="relative flex flex-col h-full">
                 <nav class="py-6">
                   <ul>
@@ -180,13 +180,14 @@
       <details-modal class="header__search justify-center items-center hidden sm:flex">
         <details class="group">
           <summary
-            class="header__icon--search button button-primary px-1 cursor-pointer w-10 h-10{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3{% endunless %}"
+            class="header__icon--search group button button-primary px-1 cursor-pointer w-10 h-10{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3{% endunless %}"
             aria-haspopup="dialog"
             aria-label="{{ 'general.search.search' | t }}"
           >
-            <span class="flex items-center justify-center h-full">
-              {% render 'icon-search', classes: 'modal__toggle-open icon-search h-6 w-6', aria-hidden: true, stroke_width: 2 %}
-              {% render 'icon-close', classes: 'modal__toggle-close icon-close h-7 w-7', aria-hidden: true, stroke_width: 1.5 %}
+            <span class="flex items-center justify-center h-full group-hover:scale-[96%]">
+              <img src="{{ 'icon-search.png' | asset_url }}" width="100" height="100">
+              {% render 'icon-search', classes: 'hidden modal__toggle-open icon-search h-6 w-6', aria-hidden: true, stroke_width: 2 %}
+              {% render 'icon-close', classes: 'hidden modal__toggle-close icon-close h-7 w-7', aria-hidden: true, stroke_width: 1.5 %}
             </span>
           </summary>
           <div class="search-modal absolute inset-0 z-40 opacity-0 h-full motion-safe:transition-opacity group-open:opacity-100" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
@@ -307,11 +308,11 @@
     </div>
 
     {% comment %} OSEA logo {% endcomment %}
-    <a href="{{ routes.root_url }}" class="cursor-pointer flex-initial" aria-label="OSEA Malibu">
+    <a href="{{ routes.root_url }}" class="cursor-pointer flex-initial shrink-0" aria-label="OSEA Malibu">
       <span class="sr-only">OSEA Malibu</span>
       {% comment %} {% render 'logo-retro', variant: 'withtag', classes: 'mx-auto h-12 w-40 relative -right-4 text-retro-teal' %} {% endcomment %}
       {% comment %} theme-check-disable ImgLazyLoading, ImgWidthAndHeight {% endcomment %}
-      <img src="{{ 'logo-retro-distressed.png' | asset_url }}" class="mx-auto w-40 relative" />
+      <img src="{{ 'logo-retro-distressed.png' | asset_url }}" class="mx-auto w-32 sm:w-40 relative" />
       {% comment %} theme-check-enable ImgLazyLoading, ImgWidthAndHeight {% endcomment %}
     </a>
 
@@ -320,9 +321,10 @@
       {%- if shop.customer_accounts_enabled -%}
         <a
           href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-          class="hidden button button-primary px-1 h-10 w-10 justify-center items-center ml-1 sm:flex md:ml-4"
+          class="hidden button button-primary px-1 h-10 w-10 justify-center items-center ml-1 sm:flex md:ml-4 group"
         >
-          {%- render 'icon-account', classes: 'h-6 w-6', aria_hidden: true, stroke_width: 1.75 -%}
+          <img src="{{ 'icon-user.png' | asset_url }}" width="100" height="100" class="group-hover:scale-[96%]">
+          {%- render 'icon-account', classes: 'hidden h-6 w-6', aria_hidden: true, stroke_width: 1.75 -%}
           <span class="sr-only">
             {%- liquid
               if customer
