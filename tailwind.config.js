@@ -220,6 +220,14 @@ module.exports = {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0%)" },
         },
+        shakeRotate: {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "10%": { transform: "rotate(8deg)" },
+          "20%, 40%, 60%": { transform: "rotate(-10deg)" },
+          "30%, 50%, 70%": { transform: "rotate(10deg)" },
+          "80%": { transform: "rotate(-8deg)" },
+          "90%": { transform: "rotate(8deg)" },
+        },
       },
       maxHeight: {
         100: "28rem",
