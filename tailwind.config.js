@@ -207,6 +207,7 @@ module.exports = {
         marquee: "marquee 50s linear infinite",
         marquee2: "marquee2 50s linear infinite",
         skeleton: "skeleton 2s cubic-bezier(.4,0,.6,1) infinite",
+        shake: "shake 6s ease 0s infinite normal forwards",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
