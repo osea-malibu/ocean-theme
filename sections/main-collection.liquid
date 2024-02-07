@@ -107,7 +107,7 @@
   {%- endif -%}
 
   {%- if collection.metafields.custom.seo_description != nil -%}
-    <div class="!mt-10 max-w-screen-md mx-auto">
+    <div class="!mt-10 max-w-screen-md mx-auto text-black">
       {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
         <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
       {%- endif -%}
@@ -115,8 +115,8 @@
         {{ collection.metafields.custom.seo_description }}
       </div>
       {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
-        <label aria-hidden="true" for="collapsible" class="link mt-1.5 block peer-checked:hidden">Read more</label>
-        <label aria-hidden="true" for="collapsible" class="link mt-1.5 hidden peer-checked:block">Read less</label>
+        <label aria-hidden="true" for="collapsible" class="link mt-1.5 block peer-checked:hidden text-[blue]">Read more</label>
+        <label aria-hidden="true" for="collapsible" class="link mt-1.5 hidden peer-checked:block text-[blue]">Read less</label>
       {%- endif -%}
     </div>
   {%- endif -%}

@@ -243,6 +243,7 @@ module.exports = {
         DEFAULT: "0 0 4px var(--tw-shadow-color)",
         lg: "0 0 16px var(--tw-shadow-color)",
         hard: "1px 1px 0 var(--tw-shadow-color)",
+        hard2: "2px 2px 0 var(--tw-shadow-color)",
       },
       transitionProperty: {
         height: "height",
