@@ -193,7 +193,7 @@
     @apply bg-black border-black text-white hover:bg-seaweed-500 hover:border-seaweed-500 hover:text-white visited:bg-black visited:text-white link:bg-black link:text-white link:hover:bg-seaweed-500 active:bg-black active:text-white focus:bg-seaweed-800 focus:text-white;
   }
   .button-neon {
-    @apply bg-neon-green border-neon-green text-seaweed-800 hover:bg-seaweed-200 hover:border-seaweed-200 hover:text-seaweed-800 visited:bg-neon-green visited:text-seaweed-700 link:bg-neon-green link:text-seaweed-800 active:bg-neon-green active:text-seaweed-800 focus:bg-neon-green focus:text-seaweed-800;
+    @apply border-outset border-4 bg-neon-green border-white/50 border-b-neon-green outline outline-retro-purple shadow-md shadow-retro-purple/50 text-black text-raised hover:border-inset hover:border-retro-teal-light hover:shadow-sm visited:bg-neon-green visited:text-black link:bg-neon-green link:text-black link:hover:bg-neon-green active:bg-neon-green active:text-black focus:bg-neon-green focus:text-black focus:ring-2 focus:ring-[blue];
   }
   .button-icon.button-xs svg {
     @apply w-3 h-3 stroke-2;
