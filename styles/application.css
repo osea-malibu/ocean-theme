@@ -146,6 +146,20 @@
     @apply hidden;
   }
 
+  /* Text stroke */
+  .text-stroke-retro-teal-light {
+    -webkit-text-stroke: 3px #99f0d5;
+  }
+  .text-stroke-retro-teal {
+    -webkit-text-stroke: 3px #00db96;
+  }
+  .text-stroke-retro-pink-light {
+    -webkit-text-stroke: 3px #f080c3;
+  }
+  .text-stroke-retro-pink {
+    -webkit-text-stroke: 3px #e10086;
+  }
+
   /* Links */
   .link {
     @apply underline underline-offset-2 decoration-1 hover:text-seaweed-500 transition-colors;
