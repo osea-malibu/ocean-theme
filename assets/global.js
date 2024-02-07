@@ -364,6 +364,7 @@ class MenuDrawer extends HTMLElement {
       summary.addEventListener("click", this.onSummaryClick.bind(this))
     );
     this.querySelector(".menu-scrim").addEventListener("click", this.onSummaryClick.bind(this));
+    this.querySelector(".menu-close").addEventListener("click", this.onSummaryClick.bind(this));
     this.querySelectorAll(".submenu-close").forEach((button) =>
       button.addEventListener("click", this.onCloseSubmenu.bind(this))
     );
