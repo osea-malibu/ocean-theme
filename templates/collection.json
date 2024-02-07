@@ -24,7 +24,7 @@
           "type": "heading",
           "settings": {
             "heading_text": "Questions? Take our Quiz.",
-            "heading_classes": "font-medium tracking-wide text-lg mb-2 lg:text-xl",
+            "heading_classes": "font-medium tracking-wide text-lg mb-2 lg:text-xl text-black",
             "subheading_text": "",
             "subheading_classes": ""
           }
@@ -33,14 +33,14 @@
           "type": "paragraph",
           "settings": {
             "paragraph_text": "Get a Custom Routine with Clean Essentials",
-            "paragraph_classes": "font-serif tracking-tight text-3xl lg:text-4xl leading-none mb-3"
+            "paragraph_classes": "font-ninetiesHeadliner tracking-tight text-5xl lg:text-6xl leading-none mb-3 text-retro-purple text-shadow-hard shadow-retro-pink"
           }
         },
         "template--15166819401911__eec6e816-c976-4406-bfd7-b416c719939e-button-1": {
           "type": "button",
           "settings": {
             "button_label": "Take the quiz",
-            "button_link": "shopify://pages/quiz",
+            "button_link": "shopify:\/\/pages\/quiz",
             "button_aria_label": "",
             "target_blank": false,
             "button_icon": "",
@@ -55,10 +55,15 @@
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "bg-seafoam-200 py-8",
-        "container_classes": "container text-center"
+        "section_classes": "border-t-4 border-ridge",
+        "container_classes": "container text-center py-8 bg-[length:60px]",
+        "bg_image": "shopify:\/\/shop_images\/pattern-90s-squiggles.jpg"
       }
     }
   },
-  "order": ["banner", "product-grid", "eec6e816-c976-4406-bfd7-b416c719939e"]
+  "order": [
+    "banner",
+    "product-grid",
+    "eec6e816-c976-4406-bfd7-b416c719939e"
+  ]
 }
