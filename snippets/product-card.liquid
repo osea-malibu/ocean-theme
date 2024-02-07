@@ -83,7 +83,7 @@
                       form="{{ product_form_id }}"
                     >
                     <label
-                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-[darkgrey] px-1 tracking-normal w-full text-left"
+                      class="button button-xs tracking-tighter lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-[darkgrey] px-0.5 w-full text-left"
                       for="{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
                       tabindex="0"
                     >
@@ -184,11 +184,11 @@
                         {% endif %}
                       >
                       <label
-                        class="button button-xs block button-secondary rounded-full lowercase peer-checked:bg-[darkgray] peer-checked:outline-[blue] py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                        class="button button-xs leading-none tracking-tighter block button-secondary rounded-full lowercase peer-checked:bg-[darkgray] peer-checked:outline-[blue] py-px sm:py-0.5 mr-1 xs:mr-2 px-1.5 xs:px-3{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
                         for="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
                         tabindex="0"
                       >
-                        {{ value }}
+                        {{ value | replace: 'fl ', ''}}
                       </label>
                     </div>
                   {%- endfor -%}
