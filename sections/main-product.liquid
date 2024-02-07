@@ -424,7 +424,7 @@
                                   {% if option.selected_value == value %}checked{% endif %}
                                 >
                                 <label
-                                  class="button button-xs button-secondary rounded-full peer-checked:bg-[darkgray] peer-checked:outline-[blue] mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
+                                  class="button button-xs button-secondary rounded-full peer-checked:bg-[darkgray] peer-checked:outline-[blue] peer-checked:border-inset mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
                                   for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                                 >
                                   {{ value }}
@@ -502,10 +502,10 @@
                           value="{{ option }}"
                           {% if option == 'onetime' %}checked{% endif %}
                         />
-                        <span class="absolute pointer-events-none left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
+                        <span class="absolute pointer-events-none left-2 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
                           <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
                         </span>
-                        <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
+                        <label for="purchase_option-{{ option }}" class="block py-3 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4">
                           <span class="flex justify-between">
                             <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
                             {%- if option == 'onetime' -%}
@@ -516,13 +516,13 @@
                           </span>
                         </label>
                         {%- if option == 'autodeliver' -%}
-                          <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
+                          <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4 mb-3">
                             <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
                             <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
                               <button class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</button>
                             </modal-opener>
                           </span>
-                          <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
+                          <div class="overflow-hidden max-h-0 pl-4 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
                             <fieldset class="selling-plan-options js flex mb-2 pb-3">
                               <legend class="text-sm font-medium">Delivery every</legend>
                               {%- for selling_plan in product.selected_or_first_available_variant.selling_plan_allocations -%}
@@ -542,7 +542,7 @@
                                     form="{{ product_form_id }}"
                                   />
                                   <label
-                                    class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-200"
+                                    class="w-full button button-xs tracking-tighter leading-none button-secondary py-px px-1 rounded-full peer-checked:bg-[darkgray] peer-checked:outline-[blue] peer-checked:border-inset"
                                     for="{{ selling_plan.selling_plan.id }}"
                                   >
                                     {{- selling_plan_group.name | replace: "Delivery every", "" -}}
