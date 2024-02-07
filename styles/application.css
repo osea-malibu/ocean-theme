@@ -145,19 +145,27 @@
   .no-js details[open] .modal__toggle-open {
     @apply hidden;
   }
-
   /* Text stroke */
+  .text-stroke-1 {
+    -webkit-text-stroke-width: 1px;
+  }
+  .text-stroke-2 {
+    -webkit-text-stroke-width: 2px;
+  }
+  .text-stroke-3 {
+    -webkit-text-stroke-width: 3px;
+  }
   .text-stroke-retro-teal-light {
-    -webkit-text-stroke: 3px #99f0d5;
+    -webkit-text-stroke-color: #99f0d5;
   }
   .text-stroke-retro-teal {
-    -webkit-text-stroke: 3px #00db96;
+    -webkit-text-stroke-color: #00db96;
   }
   .text-stroke-retro-pink-light {
-    -webkit-text-stroke: 3px #f080c3;
+    -webkit-text-stroke-color: #f080c3;
   }
   .text-stroke-retro-pink {
-    -webkit-text-stroke: 3px #e10086;
+    -webkit-text-stroke-color: #e10086;
   }
 
   /* Links */
