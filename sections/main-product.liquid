@@ -401,7 +401,7 @@
                     {%- for option in product.options_with_values -%}
                       <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
                       {%- for value in option.values -%}
-                        <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
+                        <div class="button button-xs button-secondary rounded-full lowercase bg-[darkgray] outline-[blue] mr-2 mb-2">
                           {{ value }}
                         </div>
                       {%- endfor -%}
@@ -424,7 +424,7 @@
                                   {% if option.selected_value == value %}checked{% endif %}
                                 >
                                 <label
-                                  class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
+                                  class="button button-xs button-secondary rounded-full peer-checked:bg-[darkgray] peer-checked:outline-[blue] mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
                                   for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                                 >
                                   {{ value }}

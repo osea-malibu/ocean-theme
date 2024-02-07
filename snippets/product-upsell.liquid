@@ -26,7 +26,7 @@
         <button
           type="submit"
           name="add"
-          class="button button-sm button-tertiary w-full flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}"
+          class="button button-sm button-secondary px-1.5 w-full flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}"
           {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
         >
           {%- if product.selected_or_first_available_variant.available -%}
