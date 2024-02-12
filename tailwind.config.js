@@ -213,6 +213,9 @@ module.exports = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
+      content: {
+        starGif: 'url("https://oseamalibu.com/cdn/shop/files/icon-list-star.gif?v=1707774010")',
+      },
       keyframes: {
         marquee: {
           "0%": { transform: "translateX(0%)" },
