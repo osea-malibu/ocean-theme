@@ -8,6 +8,12 @@
     @apply bg-white text-seaweed-700;
   }
 
+  /* Logo */
+  .main-logo {
+    filter: drop-shadow(0 0 1px #49297e) drop-shadow(3px 1px 0 #e10086)
+      drop-shadow(0 0 3px rgba(0, 0, 0, 0.25));
+  }
+
   /* System fonts */
   .system-sans {
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
