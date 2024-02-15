@@ -1411,6 +1411,13 @@ class CollectionVideo extends HTMLElement {
 }
 customElements.define("collection-video", CollectionVideo);
 
+class StickerBank extends HTMLElement {
+  constructor() {
+    super();
+  }
+}
+customElements.define("sticker-bank", StickerBank);
+
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {
   constructor(el) {
