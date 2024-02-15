@@ -2,7 +2,7 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <section id="main-product">
-  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start xl:gap-10 xl:max-w-screen-lg">
+  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-4 lg:px-6 md:gap-4 lg:gap-6 md:py-6 md:items-start xl:gap-10 xl:max-w-screen-lg">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
@@ -62,7 +62,9 @@
                       <template>
                         <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}">
                           {%- for source in media.sources -%}
+                            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                             <source src="{{ source.url }}" type="video/{{ source.format }}" />
+                            {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                           {%- endfor -%}
                           <img
                             src="{{ media.preview_image | image_url: width: 480, height: 500, crop: 'center' }}"
@@ -516,19 +518,21 @@
                           </span>
                         </label>
                         {%- if option == 'autodeliver' -%}
-                          <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4 mb-3">
+                          <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4 mb-2">
                             {% assign leap_year_exemptions = 'UAO-295, B-BALM-295, UCBL-1, PHD-1, CDNC-1' | split: ', ' %}
                             {%- if leap_year_exemptions contains product.selected_or_first_available_variant.sku -%}
                               <span><b class="font-medium">FREE US shipping</b>, skip or cancel anytime.</span>
                             {%- else -%}
-                              <span>Save $x on your first order. Recurring orders will reflect the discounted subscription price of $x.</span>
+                              {%- assign subscription_price = product.metafields.custom.msrp.value -%}
+                              {%- assign subscription_savings = subscription_price | minus: product.selected_or_first_available_variant.price -%}
+                              <span class="tracking-normal">Save {{ subscription_savings | money }} on your first order. Recurring orders reflect the <span class="md:hidden lg:inline">discounted </span>subscription price of {{ subscription_price | money }}.</span>
                             {%- endif -%}
                             <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                              <button class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</button>
+                              <button class="product-popup-modal__button underline cursor-pointer tracking-tight" type="button" aria-haspopup="dialog">Learn more</button>
                             </modal-opener>
                           </span>
-                          <div class="overflow-hidden max-h-0 pl-4 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
-                            <fieldset class="selling-plan-options js flex mb-2 pb-3">
+                          <div class="overflow-hidden max-h-0 pl-2 2xs:pl-9 md:px-2 lg:pl-9 pr-2 2xs:pr-3 xs:pr-4 lg:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
+                            <fieldset class="selling-plan-options js flex mb-2 pb-2 sm:gap-2 md:gap-0 lg:gap-1">
                               <legend class="text-sm font-medium">Delivery every</legend>
                               {%- for selling_plan in product.selected_or_first_available_variant.selling_plan_allocations -%}
                                 {%- liquid
@@ -547,7 +551,7 @@
                                     form="{{ product_form_id }}"
                                   />
                                   <label
-                                    class="w-full button button-xs tracking-tighter leading-none button-secondary py-px px-1 rounded-full peer-checked:bg-[darkgray] peer-checked:outline-[blue] peer-checked:border-inset"
+                                    class="w-full button button-xs border-[3px] xs:border-4 tracking-tighter leading-none button-secondary py-px px-1 rounded-full peer-checked:bg-[darkgray] peer-checked:outline-[blue] peer-checked:border-inset"
                                     for="{{ selling_plan.selling_plan.id }}"
                                   >
                                     {{- selling_plan_group.name | replace: "Delivery every", "" -}}

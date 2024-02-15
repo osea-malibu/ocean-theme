@@ -4,6 +4,7 @@
   {% if section.settings.row_bg_image != blank %}style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"{% endif %}
 >
   {%- if section.settings.is_slider and section.blocks.size > 1 -%}
+    {% comment %} theme-check-disable UnclosedHTMLElement {% endcomment %}
     <glide-slider
       class="glide{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %}{% if section.settings.slider_classes != '' %} {{ section.settings.slider_classes }}{% endif %}"
       id="slider-{{ section.id }}"
@@ -458,6 +459,7 @@
         </ol>
       {%- endif -%}
     </glide-slider>
+    {% comment %} theme-check-enable UnclosedHTMLElement {% endcomment %}
   {%- endif -%}
 </div>
 

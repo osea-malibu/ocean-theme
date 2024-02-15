@@ -73,7 +73,7 @@ module.exports = {
       center: true,
       padding: {
         DEFAULT: "0.75rem",
-        "2xs": "1.5rem",
+        xs: "1.5rem",
       },
     },
     colors: {
