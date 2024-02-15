@@ -273,7 +273,7 @@
                       aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
                       tabindex="0"
                       aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }}"
+                      class="relative border-x-2 border-t-2 border-outset bg-[#f6f6f6] border-t-[#f9f9f9] border-l-[#f9f9f9] px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10{% endif %} {{ block.settings.info_tab_label_classes }}"
                     >
                       {%- if tab == 'Custom' -%}
                         {{ block.settings.info_tab_custom_tab_label }}
@@ -288,7 +288,7 @@
                     id="tab-{{ forloop.index }}-{{ block.id }}"
                     role="tabpanel"
                     aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-                    class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
+                    class="relative border-2 border-outset p-4 z-0 -mt-0.5 bg-[#f6f6f6] border-t-[#f9f9f9] border-l-[#f9f9f9] shadow {{ block.settings.info_tab_content_classes }}"
                   >
                     {%- case tab -%}
                       {%- when 'Description' -%}
