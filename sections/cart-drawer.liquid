@@ -86,12 +86,12 @@
       {%- endif -%}
 
       {% comment %} Shipping countdown {% endcomment %}
-      <shipping-countdown data-threshold="{{ settings.shipping_countdown_threshold }}" class="block px-6 pt-4 pb-2 text-center">
+      <shipping-countdown data-threshold="{{ settings.shipping_countdown_threshold }}" class="block px-6 pt-4 pb-2 text-center w-11/12 sm:w-full">
         {%- liquid
           assign remaining_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price
           assign cart_subscription_items = cart.items | map: 'properties' | where: '_is_subscription', 'true'
         -%}
-        <h3 class="mb-1 text-black">
+        <h3 class="mb-1 text-black text-sm 2xs:text-base">
           {%- if remaining_amount > 0 and cart_subscription_items.size != cart.items.size -%}
             {%- assign formatted_remaining_amount = remaining_amount | money %}
             {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
@@ -104,12 +104,12 @@
 
       {% comment %} Close button {% endcomment %}
       <button
-        class="cart-close absolute top-0.5 right-0 p-1 sm:p-4"
+        class="cart-close button-secondary absolute top-4 right-1 xs:right-4"
         type="button"
         onclick="this.closest('cart-drawer').close()"
         aria-label="{{ 'accessibility.close' | t }}"
       >
-        {% render 'icon-close', classes: 'w-8 h-8', stroke_width: 1.5, aria_hidden: true %}
+        {% render 'icon-close', classes: 'w-8 h-8 text-black', stroke_width: 1.5, aria_hidden: true %}
       </button>
 
       {%- if cart == empty -%}
