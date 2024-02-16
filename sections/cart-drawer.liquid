@@ -91,7 +91,7 @@
           assign remaining_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price
           assign cart_subscription_items = cart.items | map: 'properties' | where: '_is_subscription', 'true'
         -%}
-        <h3 class="mb-1">
+        <h3 class="mb-1 text-black">
           {%- if remaining_amount > 0 and cart_subscription_items.size != cart.items.size -%}
             {%- assign formatted_remaining_amount = remaining_amount | money %}
             {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}

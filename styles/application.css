@@ -379,13 +379,13 @@
 
   /* Progress bar */
   .progress-bar {
-    @apply appearance-none h-2 w-full border border-white shadow-[0_0_0_1px_rgba(0,0,0,1)] shadow-seaweed-400;
+    @apply appearance-none h-3 w-full rounded-full border-2 border-outset border-white shadow-[0_0_0_1px_rgba(0,0,0,1)] shadow-[blue];
   }
   .progress-bar::-webkit-progress-bar {
-    @apply bg-seafoam-300;
+    @apply bg-retro-blue/50 rounded-full;
   }
   .progress-bar::-webkit-progress-value {
-    @apply bg-seaweed-700;
+    @apply bg-[deepskyblue] rounded-full;
   }
 
   /* Modal dialog (popup modal) */
