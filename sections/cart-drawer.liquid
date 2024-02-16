@@ -480,7 +480,7 @@
             <div class="max-w-md mx-auto mb-6 bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
               <h3 class="tracking-wide font-medium text-sm mb-1">Select up to 3 free samples</h3>
               <div class="overflow-x-auto pb-3">
-                <ul class="grid gap-2" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
+                <ul class="grid gap-2 pl-1" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
                   {%- for sample in settings.cart_samples_collection.products limit: 6 -%}
                     {%- if sample.available and sample.price == 0 -%}
                       {%- unless cart_ids contains sample.id -%}
