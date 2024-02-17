@@ -28,15 +28,16 @@
         >
       {%- endif -%}
         <glide-slider
-          class="glide relative gap-16 peek.after-124 perView-4 lg:perView-3 md:perView-2 sm:perView-1"
+          class="glide relative gap-8 peek.after-124 perView-4 lg:perView-3 md:perView-2 sm:perView-1"
           data-breakpoint-limit="none"
         >
           <div class="glide__track -mr-4 w-[calc(100%+1rem)] pb-2" data-glide-el="track">
-            <ul class="glide__slides min-h-full xs:w-full xs:mr-0 p-1">
+            <ul class="glide__slides min-h-full xs:w-full xs:mr-0 px-1 pb-1">
               {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
-                <li class="glide__slide" data-media-id="{{ section.id }}-{{ media.id }}">
+                <li class="glide__slide" data-media-id="{{ section.id }}-{{ product.selected_or_first_available_variant.featured_media.id }}">
                   {%- assign section_id = section.id | append: block.id -%}
                   {%- render 'product-card',
+                    card_class: 'bg-white flex flex-col relative grow h-full p-1',
                     card_product: product,
                     section_id: section_id,
                     show_secondary_image_on_hover: false,
