@@ -1,4 +1,7 @@
-<div class="px-4 {{ section.settings.wrapper_classes }}">
+<div
+  class="px-4 {{ section.settings.wrapper_classes }}"
+  {% if section.settings.row_bg_image != blank %}style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"{% endif %}
+>
   {%- if section.blocks.size > 1 -%}
   <tab-controller id="featured-collections-tabs">
     <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-center mb-4">
@@ -116,6 +119,11 @@
       "type": "textarea",
       "id": "wrapper_classes",
       "label": "Wrapper classes"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_bg_image",
+      "label": "Background image (optional)"
     },
     {
       "type": "checkbox",
