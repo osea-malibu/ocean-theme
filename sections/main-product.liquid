@@ -14,7 +14,7 @@
           data-breakpoint-limit="none"
         >
           {% render 'product-badge', product: product, classes: 'z-10 left-1 !right-auto md:!left-auto md:!right-1' %}
-          <div class="glide__track" data-glide-el="track">
+          <div class="glide__track border-4 border-ridge" data-glide-el="track">
             <ul class="glide__slides min-h-full">
               {%- for media in product.media limit: section.settings.gallery_limit -%}
                 <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">

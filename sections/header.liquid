@@ -29,8 +29,8 @@
             <div class="menu-scrim block fixed inset-x-0 top-0 bottom-0 bg-seaweed-800/50 opacity-0 z-50 motion-safe:transition-opacity"></div>
             {% comment %} L1 Drawer {% endcomment %}
             <div class="menu-drawer fixed invisible z-60 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-0 overyflow-y-auto" tabindex="-1">
-              <button class="menu-close button-secondary absolute top-4 right-4 z-20">
-                {% render 'icon-close', classes: 'icon-close h-7 w-7 block text-black', aria-hidden: true, stroke_width: 1.75 %}
+              <button class="menu-close button-secondary absolute top-4 right-4 z-20 group">
+                {% render 'icon-close', classes: 'icon-close h-7 w-7 block text-black group-hover:scale-[94%]', aria-hidden: true, stroke_width: 1.75 %}
               </button>
               <div class="relative flex flex-col h-full">
                 <nav class="py-6">
@@ -194,8 +194,8 @@
             </span>
           </summary>
           <div class="search-modal absolute inset-0 z-40 opacity-0 h-full motion-safe:transition-opacity group-open:opacity-100" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
-            <div class="modal-overlay fixed z-0 inset-x-0 top-6 bottom-0 bg-seaweed-800/50"></div>
-            <div class="search-modal__content relative z-10 bg-white w-screen h-full left-1/2 -translate-x-1/2 px-4 2xs:px-6 opacity-0 group-open:opacity-100 motion-safe:transition-opacity" tabindex="-1">
+            <div class="modal-overlay fixed z-0 inset-x-0 top-0 bottom-0 bg-seaweed-800/50"></div>
+            <div class="search-modal__content relative -mt-9 z-10 bg-white w-screen h-full left-1/2 -translate-x-1/2 px-4 2xs:px-6 opacity-0 group-open:opacity-100 motion-safe:transition-opacity" tabindex="-1">
               <div class="sm:container h-full flex items-center justify-center">
                 <predictive-search
                   class="w-full md:relative"
@@ -374,6 +374,7 @@
             {{- link.title | replace: 'Mobile - ', '' | escape -}}
           </a>
           {%- if link.links != blank -%}
+            {% comment %} theme-check-disable UnclosedHTMLElement {% endcomment %}
             {%- if link.levels >= 2 -%}
               <ul class="invisible group-hover:visible hidden sm:flex absolute z-100 bg-sand-200 py-4 shadow-md shadow-seaweed-400/10 flex-col sm:flex-row justify-center gap-4 sm:gap-6 mx-auto px-6 inset-x-0">
             {%- else -%}
@@ -442,6 +443,7 @@
                 </li>
               {%- endif -%}
             </ul>
+            {% comment %} theme-check-enable UnclosedHTMLElement {% endcomment %}
           {%- endif -%}
         </li>
       {%- endfor -%}

@@ -104,12 +104,12 @@
 
       {% comment %} Close button {% endcomment %}
       <button
-        class="cart-close button-secondary absolute top-4 right-1 xs:right-4"
+        class="cart-close button-secondary absolute top-4 right-1 xs:right-4 group"
         type="button"
         onclick="this.closest('cart-drawer').close()"
         aria-label="{{ 'accessibility.close' | t }}"
       >
-        {% render 'icon-close', classes: 'w-8 h-8 text-black', stroke_width: 1.5, aria_hidden: true %}
+        {% render 'icon-close', classes: 'w-8 h-8 text-black group-hover:scale-[94%]', stroke_width: 1.5, aria_hidden: true %}
       </button>
 
       {%- if cart == empty -%}
