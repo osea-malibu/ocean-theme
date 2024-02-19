@@ -14,7 +14,7 @@
     <div class="flex-1 flex items-center justify-start">
       {% comment %} Hamburger menu {% endcomment %}
       {%- if section.settings.hamburger_menu != blank -%}
-        {%- assign menu_link_styles = 'px-8 py-2 tracking-wide cursor-pointer' -%}
+        {%- assign menu_link_styles = 'px-8 py-2 tracking-wide cursor-pointer text-black' -%}
         <menu-drawer id="HamburgerMenu" class="mr-2 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="group">
             {% comment %} Hamburger icon {% endcomment %}
@@ -28,7 +28,7 @@
             {% comment %} Scrim - closes menu on click {% endcomment %}
             <div class="menu-scrim block fixed inset-x-0 top-0 bottom-0 bg-seaweed-800/50 opacity-0 z-50 motion-safe:transition-opacity"></div>
             {% comment %} L1 Drawer {% endcomment %}
-            <div class="menu-drawer fixed invisible z-60 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-0 overyflow-y-auto" tabindex="-1">
+            <div class="menu-drawer fixed invisible z-60 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-[#FFFEDF] top-0 overyflow-y-auto" tabindex="-1">
               <button class="menu-close button-secondary absolute top-4 right-4 z-20 group">
                 {% render 'icon-close', classes: 'icon-close h-7 w-7 block text-black group-hover:scale-[94%]', aria-hidden: true, stroke_width: 1.75 %}
               </button>
@@ -39,7 +39,7 @@
                       <li>
                         {% comment %} Convert link with title 'Divider' into divider {% endcomment %}
                         {%- if link.title == 'Divider' -%}
-                          <hr class="ml-8 my-4 w-8 border-seaweed-500" />
+                          <hr class="ml-8 my-4 w-8 border-[blue]" />
                         {% comment %} Convert link with title 'Accordion' into accordion {% endcomment %}
                         {%- elsif link.title contains 'Accordion' -%}
                           <details>
@@ -61,7 +61,7 @@
                           <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
                             {%- assign l1_id = "Link-" | append: link.title | replace: " ", "" -%}
                             <summary
-                              class="flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}"
+                              class="inline-flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}"
                               aria-controls="{{ l1_id }}"
                             >
                               <span class="mr-3">{{ link.title | escape }}</span>
@@ -143,10 +143,7 @@
                           <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
                             {{ link.title | replace: 'Popular: ', '' | escape }}
                             {%- if link.title contains 'Popular:' -%}
-                              <span class="popular-badge inline-block rounded-md bg-seaweed-700 text-white text-xs font-bold px-1 py-px ml-1 relative -top-px">Popular</span>
-                            {%- endif -%}
-                            {%- if link.title contains 'Black Friday' -%}
-                              <span class="popular-badge inline-block rounded-md bg-seaweed-700 text-white text-xs font-bold px-1 py-px ml-1 relative -top-px">Ends Tonight</span>
+                              <span class="popular-badge inline-block rounded-md bg-[blue] text-white text-xs font-bold px-1 py-px ml-1 relative -top-px">Popular</span>
                             {%- endif -%}
                           </a>
                         {%- endif -%}
@@ -156,20 +153,26 @@
                 </nav>
                 {% comment %} Customer service menu {% endcomment %}
                 <div class="px-8">
-                  <div class="border-seaweed-500 border p-4 mb-24 max-w-md">
-                    <h4 class="text-center font-serif text-2xl tracking-tight mb-3">Customer Support</h4>
-                    <p class="text-center">Monday - Friday 8am - 5pm PT</p>
-                    <p class="text-center mb-3"><em>Except for major holidays</em></p>
-                    <a class="block mb-2 text-center tracking-wide" href="tel:+13103610547">Call Us: <b class="font-medium">(310) 361-0547</b></a>
-                    <div class="flex items-center justify-center flex-col sm:flex-row">
-                      <a class="button button-secondary button-sm button-icon button-icon-left w-full mr-0 mb-2 sm:mb-0 sm:mr-4" href="/pages/contact-osea">
-                        {% render 'icon-email', classes: 'w-6 h-6', aria_hidden: true %}
-                        <span>Email</span>
-                      </a>
-                      <button onclick="GorgiasChat.open()" class="button button-secondary button-sm button-icon button-icon-left w-full">
-                        {% render 'icon-chat', classes: 'w-6 h-6', aria_hidden: true %}
-                        <span>Chat</span>
-                      </button>
+                  <div class="border-[blue] bg-[#DFFFF8] border-2 mb-24 max-w-md rounded-lg">
+                    <h4 class="bg-[blue] px-4 py-1 text-center font-ninetiesHeadliner text-2xl tracking-tight text-[#FECCE1]">Customer Support</h4>
+                    <div class="p-4">
+                      <p class="text-center text-[#19079A]">Monday - Friday 8am - 5pm PT</p>
+                      <p class="text-center mb-3 text-[#19079A]"><em>Except for major holidays</em></p>
+                      <a class="block mb-3 text-center tracking-wide text-[#19079A]" href="tel:+13103610547">Call Us: <b class="font-medium">(310) 361-0547</b></a>
+                      <div class="flex items-center justify-center flex-col sm:flex-row">
+                        <a class="button button-primary button-sm button-icon button-icon-left w-full mr-0 mb-2 sm:mb-0 sm:mr-4 group2" href="/pages/contact-osea">
+                          <span class="group2-hover:scale-[96%] flex">
+                            {% render 'icon-email', classes: 'w-6 h-6', aria_hidden: true %}
+                            <span>Email</span>
+                          </span>
+                        </a>
+                        <button onclick="GorgiasChat.open()" class="button button-primary button-sm button-icon button-icon-left w-full group2">
+                          <span class="group2-hover:scale-[96%] flex">
+                            {% render 'icon-chat', classes: 'w-6 h-6', aria_hidden: true %}
+                            <span>Chat</span>
+                          </span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

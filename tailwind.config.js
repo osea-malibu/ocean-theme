@@ -265,7 +265,7 @@ module.exports = {
         100: "100",
       },
     },
-    groups: ["accordion", "child"],
+    groups: ["accordion", "child", "group2"],
   },
   plugins: [
     require("@tailwindcss/forms"),

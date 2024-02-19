@@ -219,8 +219,10 @@
   .button-tertiary {
     @apply border-outset border-4 bg-retro-pink border-retro-pink-light border-b-retro-pink outline outline-retro-purple shadow-md shadow-retro-purple/50 text-white text-raised hover:border-inset hover:border-retro-pink-light hover:shadow-sm visited:bg-retro-pink visited:text-white link:bg-retro-pink link:text-white link:hover:bg-retro-pink active:bg-retro-pink active:text-white focus:bg-retro-pink focus:text-white focus:ring-2 focus:ring-[blue];
   }
-  .button-tertiary .text {
-    @apply shadow-white;
+  .button-primary:hover span,
+  .button-secondary:hover span,
+  .button-tertiary:hover span {
+    @apply scale-[96%];
   }
   .button-white {
     @apply bg-white border-white text-seaweed-800 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-800 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
