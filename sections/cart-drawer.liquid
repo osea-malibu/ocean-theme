@@ -529,7 +529,7 @@
             {%- endif -%}
 
             <!-- Subtotals-->
-            <div {{ block.shopify_attributes }}>
+            <div>
               <div class="flex justify-between items-center w-full" role="status">
                 <h3>{{ 'sections.cart.subtotal' | t }}</h3>
                 <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p>
@@ -550,7 +550,7 @@
             </div>
 
             <!-- CTAs -->
-            <div class="mb-2" {{ block.shopify_attributes }}>
+            <div class="mb-2">
               <noscript>
                 <button type="submit" class="cart__update-button button button-primary w-full mb-2" form="CartDrawer-Form">{{ 'sections.cart.update' | t }}</button>
               </noscript>

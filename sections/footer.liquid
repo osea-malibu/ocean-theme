@@ -1,42 +1,44 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 <footer>
   {%- unless section.settings.hide_brand_icons -%}
-    <div class="relative bg-seafoam-100 pt-6 pb-28 lg:pb-6">
-      <ul class="container px-2 flex justify-between sm:max-w-lg lg:max-w-4xl">
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
-          {%- render 'icon-value', icon: 'clean-beauty', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span><span class="whitespace-nowrap">Clean Beauty</span> <br />Since 1996</span>
-        </li>
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
-          {%- render 'icon-value', icon: 'vegan-cruelty-free', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span>Vegan & <br /><span class="tracking-tight whitespace-nowrap">Cruelty-Free</span></span>
-        </li>
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased hidden sm:block">
-          {%- render 'icon-value', icon: 'climate-neutral', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span><span class="tracking-tight whitespace-nowrap">Climate Neutral Certified</span> <br />+ Ocean Positive</span>
-        </li>
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
-          {%- render 'icon-value', icon: 'california-made', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span>Born in <br />California</span>
-        </li>
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
-          {%- render 'icon-value', icon: 'mother-daughter-founded', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span>Mother & <br /><span class="tracking-tight whitespace-nowrap">Daughter Founded</span></span>
-        </li>
-      </ul>
+    <div class="relative container lg:max-w-screen-lg pb-28 lg:pb-6">
+      <div class="border-4 border-ridge bg-[length:100px]" style="background-image: url('https://cdn.shopify.com/s/files/1/1368/9993/files/90s-osea-teal-light.jpg?v=1708194364');">
+        <ul class="mx-auto py-2 px-2 flex justify-between sm:max-w-lg lg:max-w-4xl">
+          <li class="flex-1 text-center font-ninetiesHeadliner leading-none xs:leading-none lg:leading-none">
+            {%- render 'icon-value', icon: 'clean-beauty', stroke_width: 3.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible drop-shadow-[2px_2px_2px_rgba(255,255,255,0.75)] text-black" -%}
+            <span class="text-black text-shadow shadow-white"><span class="whitespace-nowrap">Clean Beauty</span> <br />Since 1996</span>
+          </li>
+          <li class="flex-1 text-center font-ninetiesHeadliner leading-none xs:leading-none lg:leading-none">
+            {%- render 'icon-value', icon: 'vegan-cruelty-free', stroke_width: 3.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible drop-shadow-[2px_2px_2px_rgba(255,255,255,0.75)] text-black" -%}
+            <span class="text-black text-shadow shadow-white">Vegan & <br /><span class="whitespace-nowrap">Cruelty-Free</span></span>
+          </li>
+          <li class="flex-1 text-center font-ninetiesHeadliner leading-none xs:leading-none lg:leading-none hidden sm:block">
+            {%- render 'icon-value', icon: 'climate-neutral', stroke_width: 3.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible drop-shadow-[2px_2px_2px_rgba(255,255,255,0.75)] text-black" -%}
+            <span class="text-black text-shadow shadow-white"><span class="whitespace-nowrap">Climate Neutral Certified</span> <br />+ Ocean Positive</span>
+          </li>
+          <li class="flex-1 text-center font-ninetiesHeadliner leading-none xs:leading-none lg:leading-none">
+            {%- render 'icon-value', icon: 'california-made', stroke_width: 3.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible drop-shadow-[2px_2px_2px_rgba(255,255,255,0.75)] text-black" -%}
+            <span class="text-black text-shadow shadow-white">Born in <br />California</span>
+          </li>
+          <li class="flex-1 text-center font-ninetiesHeadliner leading-none xs:leading-none lg:leading-none">
+            {%- render 'icon-value', icon: 'mother-daughter-founded', stroke_width: 3.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible drop-shadow-[2px_2px_2px_rgba(255,255,255,0.75)] text-black" -%}
+            <span class="text-black text-shadow shadow-white">Mother & <br /><span class="whitespace-nowrap">Daughter Founded</span></span>
+          </li>
+        </ul>
+      </div>
     </div>
   {%- endunless -%}
 
-  <div class="footer-main bg-seafoam-200 pt-40 lg:pt-20 pb-20">
+  <div class="footer-main pt-32 lg:pt-8 pb-20 container lg:max-w-screen-lg">
     {%- if section.blocks.size > 0 -%}
-      <div class="relative container sm:max-w-lg lg:max-w-6xl mx-auto pt-20 pb-8 lg:pt-0 px-6 flex justify-around">
+      <div class="relative bg-[#FFC0F1] border-4 border-ridge mx-auto mb-4 pt-36 pb-8 lg:pt-6 lg:pb-0 px-6 lg:pl-12 flex justify-around">
         {% comment %} Menus {% endcomment %}
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'link_list' -%}
-              <div class="{{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
+              <div class="text-retro-purple {{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
                 {%- if block.settings.heading != blank -%}
-                  <h2 class="font-serif text-2xl sm:text-3xl tracking-tight mb-2">{{- block.settings.heading | escape -}}</h2>
+                  <h2 class="font-ninetiesHeadliner text-2xl sm:text-3xl tracking-tight mb-2">{{- block.settings.heading | escape -}}</h2>
                 {%- endif -%}
 
                 {%- if block.settings.menu != blank and block.settings.heading != blank -%}
@@ -55,14 +57,14 @@
           {%- endfor -%}
         {%- endif -%}
         {%- if section.settings.newsletter_enable -%}
-          <div class="absolute -top-64 left-1/2 -translate-x-1/2 w-full max-w-lg lg:px-0 lg:w-1/3 lg:relative lg:-top-6 lg:left-0 lg:translate-x-0">
+          <div class="absolute -top-56 left-1/2 -translate-x-1/2 w-full max-w-lg lg:px-0 lg:relative lg:-top-6 lg:left-0 lg:translate-x-0 lg:w-96">
             {% comment %} Newsletter form {% endcomment %}
-            <div class="bg-seafoam-300 px-4 md:px-6 py-6 flex flex-col justify-center mb-8 lg:mb-4">
+            <div class="border-4 border-ridge bg-[#d7c2fb] px-4 md:px-6 py-6 flex flex-col justify-center mb-8 lg:mb-4 lg:-mt-8">
               {%- if section.settings.newsletter_heading != blank -%}
-                <h2 class="text-center font-serif text-4xl tracking-tight">{{ section.settings.newsletter_heading | escape }}</h2>
+                <h2 class="text-center font-ninetiesHeadliner text-4xl tracking-tight text-retro-purple text-shadow-hard2 shadow-retro-pink-light uppercase">{{ section.settings.newsletter_heading | escape }}</h2>
               {%- endif -%}
               {%- if section.settings.newsletter_paragraph != blank -%}
-                <p class="text-center text-md tracking-wide leading-tight mb-4">{{ section.settings.newsletter_paragraph }}</p>
+                <p class="text-center text-md tracking-wide leading-none mb-4 text-black">{{ section.settings.newsletter_paragraph }}</p>
               {%- endif -%}
               {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
               <tab-controller id="footer-newsletter-tabs">
@@ -73,7 +75,7 @@
                       aria-controls="footer-tab-{{ forloop.index }}"
                       tabindex="0"
                       aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="button button-xs button-secondary px-3 sm:px-4{% if forloop.first %} bg-wave-200{% endif %}"
+                      class="button button-xs button-secondary px-3 sm:px-4{% if forloop.first %} bg-[darkgray] border-inset{% endif %}"
                     >
                       {{ tab }}
                     </li>
@@ -107,7 +109,7 @@
               </tab-controller>
             </div>
             
-            <div class="flex items-center justify-between gap-5 px-4 max-w-sm mx-auto lg:mb-4 lg:px-0">
+            <div class="flex items-center justify-between gap-5 px-4 max-w-sm mx-auto lg:px-0 text-[#6737CE] relative -bottom-4 lg:bottom-0 lg:mb-4">
               {% render 'logo-climate-neutral', variant: 'vertical', classes: 'shrink-0' %}
               {% render 'logo-ocean-positive', variant: 'vertical', classes: 'shrink-0' %}
               {% render 'logo-leaping-bunny', classes: 'shrink-0' %}
@@ -115,8 +117,8 @@
             </div>
             
             {% comment %} Customer service {% endcomment %}
-            <p class="text-center tracking-wide leading-none mb-2 hidden lg:block">Customer Support: <a href="mailto:support@oseamalibu.com" class="link">support@oseamalibu.com</a></p>
-            <p class="text-center tracking-tight hidden leading-none lg:block">Skincare Studio: <a href="mailto:skincarestudio@oseamalibu.com" class="link">skincarestudio@oseamalibu.com</a></p>
+            <p class="text-sm text-center tracking-wide leading-none mb-2 hidden lg:block text-black">Customer Support: <a href="mailto:support@oseamalibu.com" class="link text-[blue]">support@oseamalibu.com</a></p>
+            <p class="text-sm text-center tracking-tight hidden leading-none lg:block text-black">Skincare Studio: <a href="mailto:skincarestudio@oseamalibu.com" class="link text-[blue]">skincarestudio@oseamalibu.com</a></p>
           </div>
         {%- endif -%}
       </div>
@@ -127,7 +129,7 @@
       {% render 'social-media-icons', classes: 'flex gap-8 items-center justify-center mb-4' %}
 
       {% comment %} Copyright {% endcomment %}
-      <small class="block text-center tracking-wide leading-tight">Copyright &copy; {{ 'now' | date: "%Y" }} OSEA International. All rights reserved.</small>
+      <small class="block text-center tracking-wide leading-none">Copyright &copy; {{ 'now' | date: "%Y" }} OSEA International. All rights reserved.</small>
     </div>
   </div>
 </footer>
