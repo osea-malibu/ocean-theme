@@ -36,17 +36,17 @@
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'link_list' -%}
-              <div class="text-[#6737CE] {{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
+              <div class="{{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
                 {%- if block.settings.heading != blank -%}
-                  <h2 class="font-ninetiesHeadliner text-2xl sm:text-3xl tracking-tight mb-2">{{- block.settings.heading | escape -}}</h2>
+                  <h2 class="font-ninetiesHeadliner text-2xl sm:text-3xl tracking-tight mb-2 text-black">{{- block.settings.heading | escape -}}</h2>
                 {%- endif -%}
 
                 {%- if block.settings.menu != blank and block.settings.heading != blank -%}
                   <ul class="footer-block__details-content list-unstyled">
                     {%- for link in block.settings.menu.links -%}
                       <li>
-                        <a href="{{ link.url }}" class="block tracking-wide text-sm sm:text-base py-2{% if link.active %} underline underline-offset-2{% endif %}{% if link.title contains 'mobile::' %} sm:hidden{% endif %}">
-                          {{ link.title | replace: "mobile::", "" }} 
+                        <a href="{{ link.url }}" class="block text-sm sm:text-base py-2 text-[blue] underline whitespace-nowrap{% if link.title contains 'mobile::' %} sm:hidden{% endif %} {% if link.title.size > 17 %}tracking-tight{% else %}tracking-wide{% endif %}">
+                          {{- link.title | replace: "mobile::", "" -}} 
                         </a>
                       </li>
                     {%- endfor -%}
