@@ -39,7 +39,7 @@
                       <li>
                         {% comment %} Convert link with title 'Divider' into divider {% endcomment %}
                         {%- if link.title == 'Divider' -%}
-                          <hr class="ml-8 my-4 w-8 border-[blue]" />
+                          <hr class="ml-8 my-4 fancy-divider w-24 h-2 border-0" />
                         {% comment %} Convert link with title 'Accordion' into accordion {% endcomment %}
                         {%- elsif link.title contains 'Accordion' -%}
                           <details>
