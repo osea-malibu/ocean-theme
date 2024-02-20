@@ -61,51 +61,52 @@
                           <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
                             {%- assign l1_id = "Link-" | append: link.title | replace: " ", "" -%}
                             <summary
-                              class="inline-flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}"
+                              class="inline-flex items-center {{ menu_link_styles }}"
                               aria-controls="{{ l1_id }}"
                             >
                               <span class="mr-3">{{ link.title | escape }}</span>
-                              {% render 'icon-arrow', variant: 'short', aria_hidden: true, classes: 'h-5 w-5', stroke_width: '1.75' %}
+                              <img src="{{ 'icon-arrow-short.png' | asset_url }}" class="w-4" width="20" height="27" alt="" aria-hidden="true" />
                             </summary>
                             {% comment %} L2 Drawer {% endcomment %}
-                            <div id="{{ l1_id }}" class="menu-submenu translate-x-full invisible absolute inset-0 overflow-y-auto bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
+                            <div id="{{ l1_id }}" class="menu-submenu translate-x-full invisible absolute inset-0 overflow-y-auto bg-[#FFECF8] z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
                               <div class="pb-10">
                                 {% comment %} Back button {% endcomment %}
                                 <button class="submenu-close flex items-center px-8 pt-4 pb-2 w-full text-xs leading-6 font-bold uppercase tracking-widest" aria-expanded="true">
-                                  {% render 'icon-arrow', variant: 'long', aria_hidden: true, classes: 'h-5 w-5 rotate-180 mr-2', stroke_width: '1.75' %}
-                                  Back
+                                  <img src="{{ 'icon-arrow-back.png' | asset_url }}" width="75" height="27" alt="Back" />
                                 </button>
                                 <ul tabindex="-1">
                                   {%- for childlink in link.links -%}
                                     <li>
                                       {% comment %} Convert childlinklink with title 'PromoBlock' into promo block {% endcomment %}
                                       {%- if childlink.title == 'PromoBlock' -%}
-                                        <figure class="shrink-0 tracking-wide px-8 mt-6">
-                                          {%- if section.settings.promo_image != nil -%}
-                                            {%- if section.settings.promo_link != nil -%}<a href="{{ section.settings.promo_link.url }}">{%- endif -%}
-                                              <img
-                                                srcset="{{ section.settings.promo_image | image_url: width: 250 }} 1x, {{ section.settings.promo_image | image_url: width: 500 }} 2x"
-                                                src="{{ section.settings.promo_image | image_url: width: 250 }}"
-                                                width="250"
-                                                height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio | round }}"
-                                                alt="{{ section.settings.promo_heading }}"
-                                                loading="lazy"
-                                                class="mb-2"
-                                              >
-                                            {%- if section.settings.promo_link != nil -%}</a>{%- endif -%}
-                                          {%- endif -%}
-                                          <figcaption>
-                                            {%- if section.settings.promo_heading != blank -%}
-                                              <h3 class="text-xl font-medium">{{ section.settings.promo_heading }}</h3>
+                                        <div class="px-8">
+                                          <figure class="shrink-0 tracking-wide p-4 mt-6 border-2 border-[blue] bg-[#DFFFF8] rounded-lg">
+                                            {%- if section.settings.promo_image != nil -%}
+                                              {%- if section.settings.promo_link != nil -%}<a href="{{ section.settings.promo_link.url }}">{%- endif -%}
+                                                <img
+                                                  srcset="{{ section.settings.promo_image | image_url: width: 250 }} 1x, {{ section.settings.promo_image | image_url: width: 500 }} 2x"
+                                                  src="{{ section.settings.promo_image | image_url: width: 250 }}"
+                                                  width="250"
+                                                  height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio | round }}"
+                                                  alt="{{ section.settings.promo_heading }}"
+                                                  loading="lazy"
+                                                  class="mb-2"
+                                                >
+                                              {%- if section.settings.promo_link != nil -%}</a>{%- endif -%}
                                             {%- endif -%}
-                                            {%- if section.settings.promo_paragraph != blank -%}
-                                              {{ section.settings.promo_paragraph }}
-                                            {%- endif -%}
-                                            {%- if section.settings.promo_link != nil -%}
-                                              <a href="{{ section.settings.promo_link.url }}" class="button button-secondary button-sm mt-2">{{ section.settings.promo_button }}</a>
-                                            {%- endif -%}
-                                          </figcaption>
-                                        </figure>
+                                            <figcaption>
+                                              {%- if section.settings.promo_heading != blank -%}
+                                                <h3 class="text-xl font-medium">{{ section.settings.promo_heading }}</h3>
+                                              {%- endif -%}
+                                              {%- if section.settings.promo_paragraph != blank -%}
+                                                {{ section.settings.promo_paragraph }}
+                                              {%- endif -%}
+                                              {%- if section.settings.promo_link != nil -%}
+                                                <a href="{{ section.settings.promo_link.url }}" class="button button-secondary button-sm mt-2">{{ section.settings.promo_button }}</a>
+                                              {%- endif -%}
+                                            </figcaption>
+                                          </figure>
+                                        </div>
                                       {% comment %} L2 - Link without sub menu {% endcomment %}
                                       {%- elsif childlink.links == blank -%}
                                         <a href="{{ childlink.url }}" class="block {{ menu_link_styles }}{% if childlink.current %} text-seaweed-800{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
@@ -114,7 +115,7 @@
                                       {% comment %} L2 - Link with sub menu {% endcomment %}
                                       {%- else -%}
                                         <details class="group-child" open>
-                                          <summary class="flex items-center px-8 mt-3 mb-2">
+                                          <summary class="flex items-center px-8 mt-3 mb-2 text-black">
                                             {% render 'icon-caret', classes: 'w-4 h-4 mr-3 scale-90 -rotate-90 group-child-open:rotate-0 motion-safe:transition-transform' %}
                                             <span class="tracking-wide cursor-pointer font-bold">
                                               {{ childlink.title | escape }}
