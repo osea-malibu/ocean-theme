@@ -31,14 +31,14 @@
 
   <div class="footer-main pt-32 lg:pt-8 pb-20 container lg:max-w-screen-lg">
     {%- if section.blocks.size > 0 -%}
-      <div class="relative bg-[#FFC0F1] border-4 border-ridge mx-auto mb-4 pt-36 pb-8 lg:pt-6 lg:pb-0 px-6 lg:pl-12 flex justify-around">
+      <div class="relative bg-[#FFC0F1] border-4 border-ridge mx-auto mb-4 pt-36 pb-8 lg:pt-6 lg:pb-0 px-6 lg:pl-12 flex gap-3 justify-around">
         {% comment %} Menus {% endcomment %}
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'link_list' -%}
               <div class="{{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
                 {%- if block.settings.heading != blank -%}
-                  <h2 class="font-ninetiesHeadliner text-2xl sm:text-3xl tracking-tight mb-2 text-black">{{- block.settings.heading | escape -}}</h2>
+                  <h2 class="font-ninetiesHeadliner text-2xl sm:text-3xl tracking-tight mb-2 text-[blue]">{{- block.settings.heading | escape -}}</h2>
                 {%- endif -%}
 
                 {%- if block.settings.menu != blank and block.settings.heading != blank -%}
@@ -109,7 +109,7 @@
               </tab-controller>
             </div>
             
-            <div class="flex items-center justify-between gap-5 px-4 max-w-sm mx-auto lg:px-0 text-[#6737CE] relative -bottom-4 lg:bottom-0 lg:mb-4">
+            <div class="flex items-center justify-between gap-5 px-4 max-w-sm mx-auto lg:px-0 text-black relative -bottom-4 lg:bottom-0 lg:mb-4">
               {% render 'logo-climate-neutral', variant: 'vertical', classes: 'shrink-0' %}
               {% render 'logo-ocean-positive', variant: 'vertical', classes: 'shrink-0' %}
               {% render 'logo-leaping-bunny', classes: 'shrink-0' %}
