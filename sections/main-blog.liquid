@@ -116,7 +116,7 @@
                 href="{% if tag == 'All' %}{{ blog.url | append: '#nav' }}{% else %}{{ blog.url | append: '/tagged/' | append: tag_handle | append: '#nav' }}{% endif %}"
                 class="block py-1 px-3 tracking-wide whitespace-nowrap hover:text-seaweed-500 motion-safe:transition-colors{% if current_tags contains tag %} {{ category_color }} font-medium{% endif %}{% if current_tags == nil and tag == 'All' %} bg-seafoam-200 font-medium{% endif %}"
               >
-                {{- tag | replace: '-', ' ' | replace: 'How To', 'How-To' -}}
+                {{- tag | replace: '-', ' ' | replace: 'How To', 'How-To' | replace: 'Osea', 'OSEA' -}}
               </a>
             </li>
           {%- endfor -%}
