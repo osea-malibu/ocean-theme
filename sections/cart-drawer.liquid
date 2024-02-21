@@ -147,7 +147,7 @@
         -%}
 
         <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12">
-          {% comment %} Save with sets upsell {% endcomment %}
+          {% comment %} Save with sets upsell
           {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or cart_ids contains first_set.id -%}
             <save-with-sets
               data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
@@ -176,6 +176,7 @@
               </div>
             </save-with-sets>
           {%- endunless -%}
+           {% endcomment %}
 
           {% comment %} Cart items {% endcomment %}
           <cart-drawer-items class="block mx-auto max-w-md mb-12{% if cart == empty %} is-empty{% endif %}" data-cart-ids="{{ cart_ids | json }}">
@@ -335,7 +336,9 @@
                                       endfor
                                     endif
                                   -%}
-                                  <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
+                                  <script>console.log("thing", {{ item.selling_plan_allocation.selling_plan | json }});</script>
+                                  {% if item.selling_plan_allocation != nil %}<span class="text-sm">Subscribed: {{ item.selling_plan_allocation.selling_plan.name | remove: 'Delivery every' }}</span>{% endif %}
+                                  {% comment %} <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
                                     <input
                                       id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
                                       type="checkbox"
@@ -363,7 +366,7 @@
                                         {%- endfor -%}
                                       </select>
                                     {%- endif -%}
-                                  </div>
+                                  </div> {% endcomment %}
                                 </div>
                               {%- endif -%}
                             </td>
@@ -448,7 +451,7 @@
               assign only_gc_in_cart = false
             endif
           -%}
-          {% comment %} Printed gift note {% endcomment %}
+          {% comment %} Printed gift note
           {%- if settings.enable_printed_gift_note and only_gc_in_cart == false -%}
             <printed-gift-note>
               <div class="max-w-md mx-auto mb-4">
@@ -473,6 +476,7 @@
               </div>
             </printed-gift-note>
           {%- endif -%}
+           {% endcomment %}
 
           {% comment %} Free samples {% endcomment %}
           {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
