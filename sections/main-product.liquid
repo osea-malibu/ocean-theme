@@ -641,12 +641,12 @@
             {%- when 'upsells' -%}
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
                 <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
-                  {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
+                  {% comment %} {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
                     {%- for set in product.metafields.my_fields.save_with_sets.value -%}
                       {%- if forloop.first %}<h2 class="font-medium tracking-wide mb-1">Save with Sets</h2>{%- endif -%}
                       {%- render 'product-upsell', product: set -%}
                     {%- endfor -%}
-                  {%- endif -%}
+                  {%- endif -%} {% endcomment %}
                   {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
                     <h2 class="font-medium tracking-wide mb-1">Pairs Well With</h2>
                     {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
