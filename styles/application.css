@@ -698,11 +698,10 @@
   @apply leading-4 flex items-center;
 }
 .stamped-badge .stamped-fa-star {
-  background-image: url("https://cdn.shopify.com/s/files/1/1368/9993/files/icon-review-star.png?v=1708476968");
-  @apply leading-4 bg-contain bg-center bg-no-repeat w-[14px] h-[14px];
+  @apply leading-4;
 }
 .stamped-badge .stamped-fa-star:before {
-  @apply text-base leading-4 opacity-0;
+  @apply text-base leading-4;
 }
 .stamped-badge .stamped-badge-caption {
   @apply text-xs underline ml-0.5 text-[blue];
