@@ -40,10 +40,21 @@
     assign star_badge = false
   endif
 
+  if badge_text contains 'Save' or badge_text contains 'save'
+    assign save_badge = true
+  else
+    assign save_badge = false
+  endif
+
   if product.tags contains 'badge::new jumbo size'
     assign badge_class= 'bg-[#F1E1AA]'
   elsif star_badge
     assign badge_class = "badge-round w-12 h-12 lg:w-16 lg:h-16 text-sm uppercase flex flex-col items-center justify-center tracking-tight leading-none text-center"
+    if save_badge
+      assign badge_class = badge_class | append: ' !bg-[#E6FDED] text-[#00aa74]'
+    else
+      assign badge_class = badge_class | append: ' !bg-[#DFFFF8] !text-[blue]'
+    endif
   elsif product.available == false
     assign badge_class = 'bg-wave-200 text-wave-800'
   endif
@@ -55,9 +66,9 @@
 
 {%- if badge_text != '' -%}
   {%- if star_badge -%}
-  <div class="badge-outline -rotate-6 bg-[blue] w-[3.2rem] h-[3.2rem] lg:w-[4.2rem] lg:h-[4.2rem] flex items-center justify-center absolute top-1 right-1 mb-1 shadow">
+  <div class="badge-outline {% if save_badge %}bg-retro-teal{% else %}bg-[blue]{% endif %} -rotate-6 w-[3.2rem] h-[3.2rem] lg:w-[4.2rem] lg:h-[4.2rem] flex items-center justify-center absolute top-1 right-1 mb-1 shadow">
   {%- endif -%}
-    <div class="badge{% if badge_class != '' %} {{ badge_class }}{% endif %}{% if classes != nil %} {{ classes }}{% endif %} {% if star_badge %}!bg-[#DFFFF8] !text-[blue]{% else %}text-xs capitalize absolute top-1 right-1 mb-1{% endif %}">
+    <div class="badge{% if badge_class != '' %} {{ badge_class }}{% endif %}{% if classes != nil %} {{ classes }}{% endif %}{% unless star_badge %} text-xs capitalize absolute top-1 right-1 mb-1{% endunless %}">
       {%- if badge_text contains 'Save' or badge_text contains 'save' -%}<span class="text-xs lg:text-sm leading-none lg:leading-none mt-0.5">Save</span>{%- endif -%}
       <span>{{ badge_text | replace: 'Best Seller', 'Bestseller' | remove: 'Save' | remove: 'save'}}</span>
     </div>

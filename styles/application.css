@@ -695,16 +695,17 @@
 /* Stamped */
 .stamped-badge,
 .stamped-badge .stamped-starrating {
-  @apply leading-4;
+  @apply leading-4 flex items-center;
 }
 .stamped-badge .stamped-fa-star {
-  @apply -mr-0.5 leading-4;
+  background-image: url("https://cdn.shopify.com/s/files/1/1368/9993/files/icon-review-star.png?v=1708476968");
+  @apply leading-4 bg-contain bg-center bg-no-repeat w-[14px] h-[14px];
 }
 .stamped-badge .stamped-fa-star:before {
-  @apply text-base leading-4;
+  @apply text-base leading-4 opacity-0;
 }
 .stamped-badge .stamped-badge-caption {
-  @apply text-xs underline ml-0.5;
+  @apply text-xs underline ml-0.5 text-[blue];
 }
 .compact .stamped-badge .stamped-badge-caption[data-reviews][data-label] > span {
   @apply !hidden;
