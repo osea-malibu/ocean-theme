@@ -1417,11 +1417,12 @@ class StickerBank extends HTMLElement {
     super();
 
     this.querySelectorAll("img").forEach((img) => {
-      img.addEventListener("mousedown", this.dragElement(img));
+      img.addEventListener("mousedown", this.dragElementMouse(img));
+      img.addEventListener("ontouchstart", this.dragElementTouch(img));
     });
   }
 
-  dragElement(element) {
+  dragElementMouse(element) {
     let pos1 = 0;
     let pos2 = 0;
     let pos3 = 0;
@@ -1434,8 +1435,9 @@ class StickerBank extends HTMLElement {
       // get the mouse cursor position at startup:
       pos3 = e.clientX;
       pos4 = e.clientY;
+
       document.onmouseup = closeDragElement;
-      // call a function whenever the cursor moves:
+      // call a function when the cursor moves:
       document.onmousemove = elementDrag;
     }
 
@@ -1455,6 +1457,46 @@ class StickerBank extends HTMLElement {
       // stop moving when mouse button is released:
       document.onmouseup = null;
       document.onmousemove = null;
+    }
+  }
+
+  dragElementTouch(element) {
+    let pos1 = 0;
+    let pos2 = 0;
+    let pos3 = 0;
+    let pos4 = 0;
+
+    element.ontouchstart = dragTouchStart;
+
+    function dragTouchStart(e) {
+      e.preventDefault();
+      // get the mouse cursor position at startup:
+      const touch = e.touches[0];
+      pos3 = touch.pageX;
+      pos4 = touch.pageY;
+
+      document.ontouchend = closeDragElement;
+      // call a function when the finger moves:
+      document.ontouchmove = elementDrag;
+    }
+
+    function elementDrag(e) {
+      e.preventDefault();
+      // calculate the new cursor position:
+      const touch = e.touches[0];
+      pos1 = pos3 - touch.pageX;
+      pos2 = pos4 - touch.pageY;
+      pos3 = touch.pageX;
+      pos4 = touch.pageY;
+      // set the element's new position:
+      element.style.top = element.offsetTop - pos2 + "px";
+      element.style.left = element.offsetLeft - pos1 + "px";
+    }
+
+    function closeDragElement() {
+      // stop moving when mouse button is released:
+      document.ontouchend = null;
+      document.ontouchmove = null;
     }
   }
 }

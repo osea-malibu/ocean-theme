@@ -683,6 +683,11 @@
   .scrollbar-hide::-webkit-scrollbar {
     @apply w-0 h-0 bg-transparent;
   }
+
+  /* Sticker bank */
+  sticker-bank img {
+    touch-action: none;
+  }
 }
 
 /* this will always be included in your compiled CSS */
