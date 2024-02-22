@@ -10,7 +10,7 @@
     {% render 'product-upsell', product: section.settings.product %}
 {% endcomment %}
 
-<div class="flex flex-row relative bg-white pr-4 gap-4 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
+<div class="flex flex-row relative pr-4 gap-4 items-center mb-4 last:mb-0 border-2 border-outset bg-[#f6f6f6] {{ classes }}">
   <div class="w-full order-1 grow flex flex-col items-start py-1">
     <a href="{{ product.url | default: '#' }}" class="group text-sm tracking-wide leading-tight">
       <h4 class="font-medium group-hover:underline mb-0.5">
@@ -61,7 +61,7 @@
     <a
       aria-label="{{ product.title | escape }}"
       href="{{ product.url | default: '#' }}"
-      class="group relative block mx-auto no-underline shrink-0 w-24 bg-wave-100 rounded-l-lg"
+      class="group relative block mx-auto no-underline shrink-0 w-24 bg-white"
       tabindex="-1"
     >
       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
