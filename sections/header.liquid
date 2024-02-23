@@ -61,11 +61,15 @@
                           <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
                             {%- assign l1_id = "Link-" | append: link.title | replace: " ", "" -%}
                             <summary
-                              class="inline-flex items-center {{ menu_link_styles }}"
+                              class="inline-flex items-center {{ menu_link_styles }}{% if link.title == 'Shop' %} border-r-2 border-y-2 border-[blue] bg-[#DFFFF8] rounded-r-lg font-ninetiesHeadliner text-lg !text-[blue] pr-4{% endif %}"
                               aria-controls="{{ l1_id }}"
                             >
                               <span class="mr-3">{{ link.title | escape }}</span>
+                              {% if link.title == 'Shop' %}
+                              <img src="{{ 'icon-arrow-short-pink.png' | asset_url }}" class="w-4" width="20" height="27" alt="" aria-hidden="true" />
+                              {% else %}
                               <img src="{{ 'icon-arrow-short.png' | asset_url }}" class="w-4" width="20" height="27" alt="" aria-hidden="true" />
+                              {% endif %}
                             </summary>
                             {% comment %} L2 Drawer {% endcomment %}
                             <div id="{{ l1_id }}" class="menu-submenu translate-x-full invisible absolute inset-0 overflow-y-auto bg-[#FFECF8] z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
