@@ -165,14 +165,14 @@
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
                 {%- render 'price', product: product, use_variant: true -%}
                 {%- if product.metafields.custom.set_value -%}
-                  <span class="ml-2 self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
+                  <span class="ml-2 self-center text-sm bg-[#DFFFF8] text-[blue] font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
                 {%- endif -%}
               </div>
             {%- when 'rating' -%}
               {% render 'product-rating', product: product, classes: block.settings.rating_classes %}
               {%- if product.metafields.custom.set_value -%}
                 <div class="col-span-12 relative -bottom-2">
-                  <span class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
+                  <span class="self-center text-sm bg-[#DFFFF8] text-[blue] font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
                 </div>
               {%- endif -%}
             {%- when 'benefits' -%}

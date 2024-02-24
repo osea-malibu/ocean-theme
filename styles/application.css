@@ -700,11 +700,19 @@
 .stamped-badge .stamped-starrating {
   @apply leading-4 flex items-center;
 }
-.stamped-badge .stamped-fa-star {
-  @apply leading-4;
+.stamped-badge .stamped-fa-star,
+.stamped-badge .stamped-fa-star-half-o {
+  @apply leading-4 bg-cover bg-center w-3.5 h-3.5;
 }
-.stamped-badge .stamped-fa-star:before {
-  @apply text-base leading-4;
+.stamped-badge .stamped-fa-star {
+  background-image: url("https://cdn.shopify.com/s/files/1/1368/9993/files/icon-review-star.png?v=1708476968");
+}
+.stamped-badge .stamped-fa-star-half-o {
+  background-image: url("https://cdn.shopify.com/s/files/1/1368/9993/files/icon-review-star-half_96070997-6cf3-4f50-bc5a-7f5051d9652f.png?v=1708798860");
+}
+.stamped-badge .stamped-fa-star:before,
+.stamped-badge .stamped-fa-star-half-o:before {
+  @apply text-base leading-4 opacity-0;
 }
 .stamped-badge .stamped-badge-caption {
   @apply text-xs underline ml-0.5 text-[blue];
