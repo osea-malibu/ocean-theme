@@ -1,7 +1,7 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 <div class="{{ section.settings.section_classes }}">
   <div class="{{ section.settings.container_classes }}">
-    {%- assign button_classes = 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 xl:px-6 tracking-tight sm:tracking-normal font-bold sm:font-normal text-white transition-colors duration-200 {{ button_classes }}' -%}
+    {%- assign button_classes = 'flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 xl:px-6 tracking-tight sm:tracking-normal font-bold sm:font-normal text-white transition-colors duration-200' | append: section.settings.button_classes -%}
     {%- for product in section.settings.collection.products -%}
       {% render 'product-card',
         card_product: product,
