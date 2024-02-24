@@ -134,7 +134,7 @@
                     {{- option.name -}}
                   </label>
                   <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                    class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                    class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}{% if variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
                     name="options[{{ option.name | escape }}]"
                     form="{{ product_form_id }}"
                   >

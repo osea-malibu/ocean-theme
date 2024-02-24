@@ -372,6 +372,7 @@
                       percent_discount: block.settings.percent_discount,
                       is_pdp_link: section.settings.is_pdp_link,
                       pdp_link_label: section.settings.pdp_link_label
+                      variant_picker_classes: block.settings.variant_picker_classes
                       variant_button_classes: block.settings.variant_button_classes
                     %}
                   {%- endif -%}
@@ -816,6 +817,11 @@
         {
           "type": "textarea",
           "id": "variant_button_classes",
+          "label": "Variant button classes"
+        },
+        {
+          "type": "textarea",
+          "id": "variant_picker_classes",
           "label": "Variant picker classes"
         },
         {
