@@ -62,7 +62,7 @@
     {%- if compare_at_price > price -%}
       {%- unless product.price_varies == false and product.compare_at_price_varies %}
         <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-        <s class="text-[gainsboro] mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
+        <s class="text-white mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
       {%- endunless -%}
       <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
       <span>{{ money_price }}</span>
