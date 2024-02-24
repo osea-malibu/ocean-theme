@@ -184,27 +184,29 @@ class QuantityInput extends HTMLElement {
   }
 
   onInputChange(event) {
-    const autodeliverOptionEl = document.querySelector('input[value="autodeliver"]');
     const inputValueInteger = parseInt(event.currentTarget.value);
     const plusButtonEl = this.querySelector('button[name="plus"]');
+    const cartErrors = document.querySelector("#CartDrawer-CartErrors");
+    this.productForm = document.querySelector("product-form.pdp-product-form");
 
-    if (autodeliverOptionEl && autodeliverOptionEl.checked) {
-      this.productForm = document.querySelector("product-form.pdp-product-form");
-      if (inputValueInteger > 4) {
-        this.input.value = 4;
-        this.productForm.handleErrorMessage(
-          "You may not subscribe to more than 4 of this product."
-        );
-        setTimeout(() => this.productForm.handleErrorMessage(), 5000);
-        plusButtonEl.setAttribute("disabled", "");
-      } else if (inputValueInteger == 4) {
-        plusButtonEl.setAttribute("disabled", "");
-      } else {
-        if (plusButtonEl.disabled) {
-          plusButtonEl.removeAttribute("disabled");
-        }
-        this.productForm.handleErrorMessage();
+    if (inputValueInteger > 4) {
+      this.input.value = 4;
+
+      // Show PDP error message
+      this.productForm.handleErrorMessage("You may not add more than 4 of this product.");
+      setTimeout(() => this.productForm.handleErrorMessage(), 5000);
+
+      // Show cart drawer line item error
+      cartErrors.textContent = "You may not add more than 4 of any item.";
+
+      plusButtonEl.setAttribute("disabled", "");
+    } else if (inputValueInteger == 4) {
+      plusButtonEl.setAttribute("disabled", "");
+    } else {
+      if (plusButtonEl.disabled) {
+        plusButtonEl.removeAttribute("disabled");
       }
+      this.productForm.handleErrorMessage();
     }
   }
 
