@@ -212,6 +212,8 @@ module.exports = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "retro-osea-green":
+          "url('https://cdn.shopify.com/s/files/1/1368/9993/files/90s-osea-green-light.png?v=1708403558')",
       },
       content: {
         starGif: 'url("https://oseamalibu.com/cdn/shop/files/icon-list-star.gif?v=1707774010")',

@@ -476,13 +476,13 @@
               </div>
             </printed-gift-note>
           {%- endif -%}
-           {% endcomment %}
+          {% endcomment %}
 
           {% comment %} Free samples {% endcomment %}
           {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
           {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 and only_gc_in_cart == false -%}
-            <div class="max-w-md mx-auto mb-6 bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
-              <h3 class="tracking-wide font-medium text-sm mb-1">Select up to 3 free samples</h3>
+            <div class="max-w-md mx-auto mb-6 bg-[gainsboro]/25 pt-4 pl-4 pb-1 border-4 border-ridge">
+              <h3 class="tracking-wide font-medium text-sm mb-1 text-black">Select up to 3 free samples</h3>
               <div class="overflow-x-auto pb-3">
                 <ul class="grid gap-2 pl-1" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
                   {%- for sample in settings.cart_samples_collection.products limit: 6 -%}
@@ -518,7 +518,7 @@
           </cart-recommendations>
         </div>
 
-        <div class="cart-drawer-footer bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-2">
+        <div class="cart-drawer-footer bg-retro-osea-green bg-[length:60px] flex-shrink-0 px-4 2xs:px-6 py-2 border-t border-retro-teal">
           <div class="max-w-md mx-auto">
             {%- if settings.show_cart_note -%}
               <details id="Details-CartDrawer mb-4">
@@ -533,10 +533,10 @@
             {%- endif -%}
 
             <!-- Subtotals-->
-            <div>
+            <div class="text-black">
               <div class="flex justify-between items-center w-full" role="status">
                 <h3>{{ 'sections.cart.subtotal' | t }}</h3>
-                <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p>
+                <p id="CartDrawer-Total" data-total="{{ cart.total_price }}"><b>{{ cart.total_price | money }}</b></p>
               </div>
               <div>
                 {%- if cart.cart_level_discount_applications.size > 0 -%}
@@ -567,7 +567,7 @@
                 onclick="beginCheckoutDataLayer()"
                 {% if cart == empty %}disabled{% endif %}>{{ 'sections.cart.checkout' | t }}</button>
             </div>
-            <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal">
+            <small class="block mx-auto text-xs leading-tight text-center max-w-md child:underline tracking-tight 2xs:tracking-normal text-black a:text-[blue]">
               {%- if settings.cart_disclaimer != blank -%}{{ settings.cart_disclaimer }}{%- endif -%}
             </small>
           </div>

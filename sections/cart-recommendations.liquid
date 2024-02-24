@@ -1,6 +1,6 @@
 {%- if recommendations.performed and recommendations.products_count > 0 -%}
-  <div class="block max-w-md mx-auto bg-wave-100 p-4 rounded-sm">
-    <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
+  <div class="block max-w-md mx-auto bg-[gainsboro]/25 p-4 border-4 border-ridge">
+    <h3 class="tracking-wide font-medium text-sm mb-1 text-black">You may also like</h3>
     <ul class="grid grid-cols-3 gap-4">
       {%- liquid
         assign cart_ids = cart.items | map: 'product_id'
