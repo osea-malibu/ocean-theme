@@ -60,7 +60,7 @@
                               class="flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}"
                               aria-controls="{{ l1_id }}"
                             >
-                              <span class="mr-3">{{ link.title | escape }}</span>
+                              <span class="mr-3">{{ link.title | replace:'Bold: ', '' | escape }}</span>
                               {% render 'icon-arrow', variant: 'short', aria_hidden: true, classes: 'h-5 w-5', stroke_width: '1.75' %}
                             </summary>
                             {% comment %} L2 Drawer {% endcomment %}
@@ -105,7 +105,7 @@
                                       {% comment %} L2 - Link without sub menu {% endcomment %}
                                       {%- elsif childlink.links == blank -%}
                                         <a href="{{ childlink.url }}" class="block {{ menu_link_styles }}{% if childlink.current %} text-seaweed-800{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
-                                          {{ childlink.title | escape }}
+                                          {{ childlink.title | replace:'Bold: ', '' | escape }}
                                         </a>
                                       {% comment %} L2 - Link with sub menu {% endcomment %}
                                       {%- else -%}
@@ -113,7 +113,7 @@
                                           <summary class="flex items-center px-8 mt-3 mb-2">
                                             {% render 'icon-caret', classes: 'w-4 h-4 mr-3 scale-90 -rotate-90 group-child-open:rotate-0 motion-safe:transition-transform' %}
                                             <span class="tracking-wide cursor-pointer font-bold">
-                                              {{ childlink.title | escape }}
+                                              {{ childlink.title | replace:'Bold: ', '' | escape }}
                                             </span>
                                           </summary>
                                           {% comment %} L3 menu {% endcomment %}
@@ -137,7 +137,7 @@
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
                           <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
-                            {{ link.title | replace: 'Popular: ', '' | escape }}
+                            {{ link.title | replace: 'Popular: ', '' | replace:'Bold: ', '' | escape }}
                             {%- if link.title contains 'Popular:' -%}
                               <span class="popular-badge inline-block rounded-md bg-seaweed-700 text-white text-xs font-bold px-1 py-px ml-1 relative -top-px">Popular</span>
                             {%- endif -%}
