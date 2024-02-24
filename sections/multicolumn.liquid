@@ -372,6 +372,7 @@
                       percent_discount: block.settings.percent_discount,
                       is_pdp_link: section.settings.is_pdp_link,
                       pdp_link_label: section.settings.pdp_link_label
+                      variant_picker_classes: block.settings.variant_classes
                     %}
                   {%- endif -%}
                   {% comment %} theme-check-enable LiquidTag {% endcomment %}
@@ -811,6 +812,11 @@
           "type": "textarea",
           "id": "image_classes",
           "label": "Image classes"
+        },
+        {
+          "type": "textarea",
+          "id": "variant_classes",
+          "label": "Variant picker classes"
         },
         {
           "type": "textarea",
