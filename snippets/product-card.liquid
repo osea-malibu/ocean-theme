@@ -8,6 +8,7 @@
     - custom_default_image: {Boolean} Make the secondary image appear first. Default: false (optional)
     - variant_picker_type: {'button', 'dropdown', or 'none'} Display mode of variant options, default: 'button' (optional)
     - variant_picker_classes: {String} Tailwind styling classes (optional)
+    - variant_button_classes: {String} Tailwind styling classes (optional)
     - card_class: {String} Tailwind styling classes (optional)
     - button_class: {String} Tailwind styling classes (optional)
     - image_class: {String} Tailwind styling classes (optional)
@@ -184,7 +185,7 @@
                         {% endif %}
                       >
                       <label
-                        class="button button-xs leading-none tracking-tighter block button-secondary rounded-full lowercase peer-checked:bg-[darkgray] peer-checked:outline-[blue] py-px sm:py-0.5 mr-1 xs:mr-2 px-1.5 xs:px-3{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                        class="button button-xs leading-none tracking-tighter block button-secondary rounded-full lowercase peer-checked:bg-[darkgray] peer-checked:outline-[blue] py-px sm:py-0.5 mr-1 xs:mr-2 px-1.5 xs:px-3{% if variant_button_classes != blank %} {{ variant_button_classes }}{% endif %}"
                         for="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
                         tabindex="0"
                       >
