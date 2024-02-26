@@ -164,7 +164,6 @@ module.exports = {
       mono: "Fake Receipt, monospace",
       receipt: "Fake Receipt, monospace",
       ninetiesHeadliner: "Nineties Headliner, sans-serif",
-      perfectlyNineties: "Perfectly Nineties, sans-serif",
       vice: "Vice, script",
       system:
         'BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
