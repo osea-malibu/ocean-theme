@@ -697,7 +697,13 @@
 
   /* Guestbook modal */
   #GuestbookPopup [role="dialog"] {
-    @apply p-0;
+    @apply p-0 border-2 border-outset rounded-none;
+  }
+  #GuestbookPopup .header-bar {
+    @apply flex flex-row justify-between bg-gradient-to-r from-[#59dfff] to-[#d97ff1];
+  }
+  #GuestbookPopup .header-bar button {
+    @apply relative top-0 left-auto right-0 text-black !text-lg font-regular;
   }
 }
 
