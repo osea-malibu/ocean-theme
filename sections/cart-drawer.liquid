@@ -273,7 +273,7 @@
                             <td class="cart-item__quantity p-0 [grid-area:quant]" role="cell" headers="CartDrawer-ColumnQuantity">
                               <div class="flex items-center{% if item.product.type != 'Sample' and item.product.type != 'Free Gift' and item.product.has_only_default_variant or item.properties.size == 0 %} sm:mt-[-14px] -mt-2{% endif %}">
                                 {%- unless item.product.type == 'Sample' or item.product.type == 'Free Gift' -%}
-                                  <quantity-input class="quantity inline-flex border-2 border-outset border-[gainsboro] outline outline-retro-purple mr-2">
+                                  <quantity-input class="quantity inline-flex border border-outset border-[gainsboro] outline outline-retro-purple mr-2">
                                     <button class="quantity__button no-js-hidden cursor-pointer bg-[silver] flex items-center justify-center shrink-0 w-6 h-6 -ml-px box-content border-ridge hover:bg-[darkgray] motion-safe:transition-colors" name="minus" type="button">
                                       <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
                                       {% render 'icon-minus', classes: 'h-4 w-4 text-black pointer-events-none', stroke_width: 2, aria_hidden: true %}
@@ -305,7 +305,7 @@
                                   data-index="{{ item.index | plus: 1 }}"
                                   class="{% if item.product.type == 'Sample' or item.product.type == 'Free Gift' %}block{% else %}hidden xs:block{% endif %}"
                                 >
-                                  <button class="block button button-secondary button-sm py-0 px-0.5" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}" name="remove" type="button">
+                                  <button class="block button button-secondary button-sm border py-0 px-0.5" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}" name="remove" type="button">
                                     <img class="w-6 h-6" src="{{ 'icon-trash.png' | asset_url }}" width="40" height="40"/>
                                   </button>
                                 </cart-remove-button>
