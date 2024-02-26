@@ -694,6 +694,11 @@
   sticker-bank img {
     touch-action: none;
   }
+
+  /* Guestbook modal */
+  #GuestbookPopup [role="dialog"] {
+    @apply p-0;
+  }
 }
 
 /* this will always be included in your compiled CSS */
