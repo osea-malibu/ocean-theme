@@ -243,6 +243,7 @@ module.exports = {
         "2xs": "18rem",
       },
       textShadow: {
+        none: "none",
         xs: "0 0 1px var(--tw-shadow-color)",
         sm: "0 0 2px var(--tw-shadow-color)",
         DEFAULT: "0 0 4px var(--tw-shadow-color)",
