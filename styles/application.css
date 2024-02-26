@@ -717,6 +717,17 @@
   #GuestbookPopup .klaviyo-phone-form form.klaviyo-form div div div div div.needsclick {
     @apply !border-2 !border-inset !rounded-none !border-[silver];
   }
+  #GuestbookPopup
+    .klaviyo-phone-form
+    form.klaviyo-form
+    div
+    div
+    div
+    div
+    div.needsclick
+    + div.needsclick {
+    @apply !border-none;
+  }
   #GuestbookPopup .klaviyo-email-form form.klaviyo-form input {
     @apply !pl-9;
   }
