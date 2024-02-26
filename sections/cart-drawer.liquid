@@ -478,6 +478,20 @@
           {%- endif -%}
           {% endcomment %}
 
+          {% comment %} Product recommendations {% endcomment %}
+          {%- liquid
+            assign filtered_items = null | sort
+            for item in cart.items
+              unless item.product.type == 'Sample' or item.product.type == 'Free Gift' or item.product.type == 'Bundle'
+                assign item_array = item | sort
+                assign filtered_items = filtered_items | concat: item_array
+              endunless
+            endfor 
+          -%}
+          <cart-recommendations data-ids="{{ filtered_items | map: 'product_id' | escape }}">
+            <div id="CartDrawer-Recommendations"></div>
+          </cart-recommendations>
+
           {% comment %} Free samples {% endcomment %}
           {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
           {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 and only_gc_in_cart == false -%}
@@ -502,20 +516,6 @@
               </div>
             </div>
           {%- endif -%}
-
-          {% comment %} Product recommendations {% endcomment %}
-          {%- liquid
-            assign filtered_items = null | sort
-            for item in cart.items
-              unless item.product.type == 'Sample' or item.product.type == 'Free Gift' or item.product.type == 'Bundle'
-                assign item_array = item | sort
-                assign filtered_items = filtered_items | concat: item_array
-              endunless
-            endfor 
-          -%}
-          <cart-recommendations data-ids="{{ filtered_items | map: 'product_id' | escape }}">
-            <div id="CartDrawer-Recommendations"></div>
-          </cart-recommendations>
         </div>
 
         <div class="cart-drawer-footer bg-retro-osea-green bg-[length:60px] flex-shrink-0 px-4 2xs:px-6 py-2 border-t border-retro-teal">
