@@ -1,6 +1,7 @@
 {%- if recommendations.performed and recommendations.products_count > 0 -%}
   <div class="block max-w-md mx-auto bg-[gainsboro]/25 px-4 pb-4 pt-2 border-4 border-ridge">
     <h3 class="tracking-wide font-medium text-sm mb-1 text-black">You may also like</h3>
+    <script>console.log("colection", {{ collections['samples-1'] | json }})</script>
     <ul class="grid grid-cols-3 gap-4">
       {%- liquid
         assign cart_ids = cart.items | map: 'product_id'

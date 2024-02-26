@@ -1053,6 +1053,7 @@ class TabController extends HTMLElement {
   // This can be called by the developer too.
   setActiveTab(id, skipFocus = false) {
     const activeTabClass = this.dataset.activeClass?.split(" ") || ["bg-wave-200"];
+    console.log("activeTabClass", activeTabClass);
     for (let tab of this.tabs) {
       if (tab.getAttribute("aria-controls") == id) {
         tab.setAttribute("aria-selected", "true");
