@@ -64,7 +64,11 @@
                               class="inline-flex items-center {{ menu_link_styles }}{% if link.title == 'Shop' %} border-r-2 border-y-2 border-[blue] bg-[#DFFFF8] rounded-r-lg font-ninetiesHeadliner text-lg !text-[blue] pr-4{% endif %}"
                               aria-controls="{{ l1_id }}"
                             >
-                              <span class="mr-3">{{ link.title | escape }}</span>
+                              <span class="mr-3">
+                                {%- if link.title contains 'Bold:' -%}<b>{%- endif -%}
+                                {{- link.title | replace: 'Bold: ', '' | escape -}}
+                                {%- if link.title contains 'Bold:' -%}</b>{%- endif -%}
+                              </span>
                               {% if link.title == 'Shop' %}
                               <img src="{{ 'icon-arrow-short-pink.png' | asset_url }}" class="w-4" width="20" height="27" alt="" aria-hidden="true" />
                               {% else %}
@@ -84,7 +88,7 @@
                                       {% comment %} Convert childlinklink with title 'PromoBlock' into promo block {% endcomment %}
                                       {%- if childlink.title == 'PromoBlock' -%}
                                         <div class="px-8">
-                                          <figure class="shrink-0 tracking-wide p-4 mt-6 border-2 border-[blue] bg-[#DFFFF8] rounded-lg">
+                                          <figure class="shrink-0 tracking-wide p-4 mt-6 border-2 border-[blue] bg-[#DFFFF8] rounded-lg inline-block">
                                             {%- if section.settings.promo_image != nil -%}
                                               {%- if section.settings.promo_link != nil -%}<a href="{{ section.settings.promo_link.url }}">{%- endif -%}
                                                 <img
@@ -98,7 +102,7 @@
                                                 >
                                               {%- if section.settings.promo_link != nil -%}</a>{%- endif -%}
                                             {%- endif -%}
-                                            <figcaption>
+                                            <figcaption class="text-[#19079A]">
                                               {%- if section.settings.promo_heading != blank -%}
                                                 <h3 class="text-xl font-medium">{{ section.settings.promo_heading }}</h3>
                                               {%- endif -%}
@@ -146,7 +150,9 @@
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
                           <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
-                            {{ link.title | replace: 'Popular: ', '' | escape }}
+                            {%- if link.title contains 'Bold:' -%}<b>{%- endif -%}
+                            {{- link.title | replace: 'Popular: ', '' | replace: 'Bold: ', '' | escape -}}
+                            {%- if link.title contains 'Bold:' -%}</b>{%- endif -%}
                             {%- if link.title contains 'Popular:' -%}
                               <span class="popular-badge inline-block rounded-md bg-[blue] text-white text-xs font-bold px-1 py-px ml-1 relative -top-px">Popular</span>
                             {%- endif -%}
@@ -158,8 +164,8 @@
                 </nav>
                 {% comment %} Customer service menu {% endcomment %}
                 <div class="px-8">
-                  <div class="border-[blue] bg-[#DFFFF8] border-2 mb-24 max-w-md rounded-lg">
-                    <h4 class="bg-[blue] px-4 py-1 text-center font-ninetiesHeadliner text-2xl tracking-tight text-[#FECCE1]">Customer Support</h4>
+                  <div class="border-[blue]/50 bg-[#DFFFF8]/50 border-2 mb-24 max-w-md rounded-lg overflow-hidden">
+                    <h4 class="bg-[blue]/50 px-4 py-1 text-center font-ninetiesHeadliner text-2xl tracking-tight{% comment %}  text-[#FECCE1] {% endcomment %} text-white">Customer Support</h4>
                     <div class="p-4">
                       <p class="text-center text-[#19079A]">Monday - Friday 8am - 5pm PT</p>
                       <p class="text-center mb-3 text-[#19079A]"><em>Except for major holidays</em></p>
