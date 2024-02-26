@@ -67,7 +67,7 @@
                 <p class="text-center text-md tracking-wide leading-none mb-4 text-black">{{ section.settings.newsletter_paragraph }}</p>
               {%- endif -%}
               {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
-              <tab-controller id="footer-newsletter-tabs">
+              <tab-controller id="footer-newsletter-tabs" data-active-class="bg-[darkgray] border-inset">
                 <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex justify-center button-group">
                   {%- for tab in newsletter_tabs -%}
                     <li
