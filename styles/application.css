@@ -705,10 +705,10 @@
     @apply relative top-0 left-auto right-0 w-5 h-5 button button-secondary button-xs p-0 border-2 outline-none shadow-sm;
   }
   #GuestbookPopup .header-bar button span {
-    @apply text-black font-regular !leading-4 !text-2xl text-shadow-none !font-system;
+    @apply text-black font-regular text-2xl text-shadow-none font-system -mt-1;
   }
   #GuestbookPopup .header-bar h1 {
-    @apply leading-5 text-white font-bold font-system text-shadow-xs shadow-black/25;
+    @apply leading-5 text-white font-bold font-system text-shadow-xs shadow-black/25 pl-0.5;
   }
   #GuestbookPopup .content {
     @apply p-4 border-2 border-inset bg-[gainsboro];
