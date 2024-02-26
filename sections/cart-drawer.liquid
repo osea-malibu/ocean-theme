@@ -300,7 +300,7 @@
                                   </quantity-input>
                                 {%- endunless -%}
 
-                                {% comment %} <cart-remove-button
+                                <cart-remove-button
                                   id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
                                   data-index="{{ item.index | plus: 1 }}"
                                   class="{% if item.product.type == 'Sample' or item.product.type == 'Free Gift' %}block{% else %}hidden xs:block{% endif %}"
@@ -308,7 +308,7 @@
                                   <button class="block button button-secondary button-sm py-0 px-0.5" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}" name="remove" type="button">
                                     <img class="w-6 h-6" src="{{ 'icon-trash.png' | asset_url }}" width="40" height="40"/>
                                   </button>
-                                </cart-remove-button> {% endcomment %}
+                                </cart-remove-button>
                               </div>
 
                               <div id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}" class="absolute text-coral-800 text-sm hidden" role="alert">
