@@ -703,7 +703,10 @@
     @apply flex flex-row justify-between bg-gradient-to-r from-[#59dfff] to-[#d97ff1];
   }
   #GuestbookPopup .header-bar button {
-    @apply relative top-0 left-auto right-0 text-black !text-lg font-regular;
+    @apply relative top-0 left-auto right-0 text-black !text-lg font-regular button button-secondary button-xs p-0 w-5 h-5 border-2;
+  }
+  #GuestbookPopup .header-bar h1 {
+    @apply leading-5;
   }
 }
 
