@@ -166,7 +166,6 @@ module.exports = {
       ninetiesHeadliner: "Nineties Headliner, sans-serif",
       perfectlyNineties: "Perfectly Nineties, sans-serif",
       vice: "Vice, script",
-      thunderstorm: "Thunderstorm, script",
       system:
         'BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
     },
