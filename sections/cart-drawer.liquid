@@ -488,6 +488,7 @@
               endunless
             endfor 
           -%}
+          <script>console.log("colection", {{ collections['samples-1'] | json }})</script>
           <cart-recommendations data-ids="{{ filtered_items | map: 'product_id' | escape }}">
             <div id="CartDrawer-Recommendations"></div>
           </cart-recommendations>

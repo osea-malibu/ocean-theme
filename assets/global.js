@@ -544,7 +544,7 @@ class ModalDialog extends HTMLElement {
       i.addEventListener("click", this.hide.bind(this))
     );
     this.addEventListener("keyup", (event) => {
-      if (event.code.toUpperCase() === "ESCAPE") this.hide();
+      if (event.key.toUpperCase() === "ESCAPE") this.hide();
     });
     if (this.classList.contains("media-modal")) {
       this.addEventListener("pointerup", (event) => {
@@ -1053,7 +1053,6 @@ class TabController extends HTMLElement {
   // This can be called by the developer too.
   setActiveTab(id, skipFocus = false) {
     const activeTabClass = this.dataset.activeClass?.split(" ") || ["bg-wave-200"];
-    console.log("activeTabClass", activeTabClass);
     for (let tab of this.tabs) {
       if (tab.getAttribute("aria-controls") == id) {
         tab.setAttribute("aria-selected", "true");
