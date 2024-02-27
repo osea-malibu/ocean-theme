@@ -8,7 +8,7 @@
       -%}
       {%- for product in recommendations.products -%}
         <script>console.log("product collections", {{ product.collections | json }})</script>
-        {%- unless cart_ids contains product.id or item_count >= 3 or product.collections contains 'subscription-gifting' or product.type == 'Free Gift' or product.type == 'Sample'  -%}
+        {%- unless cart_ids contains product.id or item_count >= 3 or product.type == 'Subscription Gift' or product.type == 'Free Gift' or product.type == 'Sample'  -%}
           {%- assign item_count = item_count | plus: 1 -%}
           {%- render 'product-card-mini',
             card_product: product,
