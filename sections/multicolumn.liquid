@@ -375,7 +375,8 @@
                       pdp_link_label: section.settings.pdp_link_label,
                       variant_picker_type: block.settings.variant_picker_type,
                       variant_picker_classes: block.settings.variant_picker_classes,
-                      variant_button_classes: block.settings.variant_button_classes
+                      variant_button_classes: block.settings.variant_button_classes,
+                      default_to_mini: block.settings.default_to_mini
                     %}
                   {%- endif -%}
                   {% comment %} theme-check-enable LiquidTag {% endcomment %}
@@ -876,6 +877,11 @@
           "type": "checkbox",
           "id": "subscription",
           "label": "Subscription tile"
+        },
+        {
+          "type": "checkbox",
+          "id": "default_to_mini",
+          "label": "Default to mini"
         },
         {
           "type": "checkbox",
