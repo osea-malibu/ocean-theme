@@ -9,6 +9,7 @@
     - hide_price: {Boolean} Removes price from button element. Default: false (optional)
     - section_id: {String} Unique id of section that card is in (required),
     - disable_links: {Boolean} remove link on image / title. Default: false (optional)
+    - hide_slashed_pricing: {Boolean} Hides slashed pricing (optional)
 
     Usage:
     {% render 'product-card-mini', card_product: section.settings.product %}
@@ -43,7 +44,8 @@
                   product: card_product,
                   show_price_range: false,
                   use_variant: true,
-                  price_id: price_id
+                  price_id: price_id,
+                  hide_slashed_pricing: hide_slashed_pricing
                 %}
               {%- endunless -%}
             {%- else -%}
