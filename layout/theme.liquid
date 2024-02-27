@@ -71,7 +71,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-  <body class="antialiased bg-gradient-to-br from-retro-blue/50 to-retro-teal/50 {% if template.name == 'product' %}pdp{% endif %}">
+  <body class="antialiased bg-gradient-to-br from-[#d0edfd] to-[#bfece3] {% if template.name == 'product' %}pdp{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
@@ -85,7 +85,8 @@
     {%- endif -%}
 
     <div id="HeaderContent" class="sticky top-0 z-50 container pt-2">
-      <div class="bg-[length:150px] border-4 border-ridge" style="background-image:url({{ 'pattern-90s-sprinkles.jpg' | asset_url }})">
+      <div class="bg-gradient-to-r from-[#d0edfd] to-[#c1ece6] fixed top-0 inset-x-0 h-12 z-0"></div>
+      <div class="relative z-10 bg-[length:150px] border-4 border-ridge" style="background-image:url({{ 'pattern-90s-sprinkles.jpg' | asset_url }})">
         {% section 'announcement-bar' %}
         {% section 'header' %}
       </div>

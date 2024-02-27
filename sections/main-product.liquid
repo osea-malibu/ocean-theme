@@ -159,7 +159,7 @@
               {%- endif -%}
             {%- when 'title' -%}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
-                {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' -}}
+                {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[40%] -mr-1 relative -top-3 -left-0.5">™</sup>' -}}
               </h1>
             {%- when 'price' -%}
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
@@ -426,7 +426,7 @@
                                   {% if option.selected_value == value %}checked{% endif %}
                                 >
                                 <label
-                                  class="button button-xs button-secondary rounded-full peer-checked:bg-[darkgray] peer-checked:outline-[blue] peer-checked:border-inset mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
+                                  class="button button-xs text-[10px] sm:text-xs py-px lg:py-0.5 px-2 lg:px-3 button-secondary rounded-full peer-checked:bg-[darkgray] peer-checked:outline-[blue] peer-checked:border-inset mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
                                   for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                                 >
                                   {{ value }}
@@ -493,10 +493,10 @@
                   class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }} {% if product.selected_or_first_available_variant.selling_plan_allocations.size == 0 %}max-h-0{% else %}max-h-48{% endif %}"
                   data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
                 >
-                  <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
+                  <fieldset class="border-2 border-outset border-[silver] overflow-hidden mt-2">
                     <legend class="sr-only">Purchase options</legend>
                     {%- for option in purchase_options -%}
-                      <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">
+                      <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-[gainsboro]/50 border-b-2 border-[gainsboro] border-groove{% else %}bg-white{% endif %}">
                         <input type="radio"
                           name="purchase_option"
                           id="purchase_option-{{ option }}"
@@ -504,21 +504,21 @@
                           value="{{ option }}"
                           {% if option == 'onetime' %}checked{% endif %}
                         />
-                        <span class="absolute pointer-events-none left-2 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
-                          <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
+                        <span class="absolute pointer-events-none left-2 top-3 cursor-pointer w-5 h-5 border-2 border-[blue] bg-white rounded-full flex justify-center items-center peer-checked:border-[blue]/50 peer-checked:child:scale-100 motion-safe:transition-colors">
+                          <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-[blue] rounded-full scale-0 motion-safe:transition-transform"></span>
                         </span>
                         <label for="purchase_option-{{ option }}" class="block py-3 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4">
                           <span class="flex justify-between">
-                            <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
+                            <strong class="block leading-5 font-bold tracking-widest uppercase text-sm text-black">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
                             {%- if option == 'onetime' -%}
-                              {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
+                              {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium', slashed_color: 'text-[gray]' %}
                             {%- else -%}
-                              {% render 'price', product: product, subscription: true, price_class: 'text-sm font-medium' %}
+                              {% render 'price', product: product, subscription: true, price_class: 'text-sm font-medium', slashed_color: 'text-[gray]' %}
                             {%- endif -%}
                           </span>
                         </label>
                         {%- if option == 'autodeliver' -%}
-                          <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4 mb-2">
+                          <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4 mb-2 text-black">
                             {% assign leap_year_exemptions = 'UAO-295, B-BALM-295, UCBL-1, PHD-1, CDNC-1' | split: ', ' %}
                             {%- if leap_year_exemptions contains product.selected_or_first_available_variant.sku -%}
                               <span><b class="font-medium">FREE US shipping</b>, skip or cancel anytime.</span>
@@ -528,12 +528,12 @@
                               <span class="tracking-normal">Save {{ subscription_savings | money }} on your first order. Recurring orders reflect the <span class="md:hidden lg:inline">discounted </span>subscription price of {{ subscription_price | money }}.</span>
                             {%- endif -%}
                             <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                              <button class="product-popup-modal__button underline cursor-pointer tracking-tight" type="button" aria-haspopup="dialog">Learn more</button>
+                              <button class="product-popup-modal__button underline cursor-pointer tracking-tight text-[blue]" type="button" aria-haspopup="dialog">Learn more</button>
                             </modal-opener>
                           </span>
                           <div class="overflow-hidden max-h-0 pl-2 2xs:pl-9 md:px-2 lg:pl-9 pr-2 2xs:pr-3 xs:pr-4 lg:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
                             <fieldset class="selling-plan-options js flex mb-2 pb-2 sm:gap-2 md:gap-0 lg:gap-1">
-                              <legend class="text-sm font-medium">Delivery every</legend>
+                              <legend class="text-sm font-medium text-black">Delivery every</legend>
                               {%- for selling_plan in product.selected_or_first_available_variant.selling_plan_allocations -%}
                                 {%- liquid
                                   for group in product.selling_plan_groups
@@ -618,7 +618,7 @@
                               {%- endif -%}
                             </span>
                             {%- if block.settings.atc_show_price -%}
-                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
+                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto', slashed_color: 'text-[gray] md:text-[gainsboro]' -%}
                             {%- endif -%}
                         </button>
                       </div>

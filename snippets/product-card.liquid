@@ -218,34 +218,34 @@
             -%}
             <input type="hidden" name="id" value="{{ default_id }}" disabled />
             <input type="hidden" name="properties[_is_subscription]" value="{% if subscription %}true{% else %}false{% endif %}" />
+            {%- liquid
+              assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
+              assign set_products = collections['skincare-sets-1'].products | map: 'handle'
+              assign is_set = false
+              assign show_range = true
+              assign price_class = 'z-10'
+              if set_products contains card_product.handle
+                assign is_set = true
+              endif
+              if is_set
+                assign show_range = false
+                assign price_class = 'set-price z-10 tracking-[-0.075em]'
+              endif
+            -%}
             <button
               id="{{ product_form_id }}-submit"
               type="submit"
               name="add"
               aria-haspopup="dialog"
               aria-live="polite"
-              class="group button button-tertiary px-2 w-full motion-safe:transition mt-2 disabled:opacity-50 {{ button_class }}"
+              class="group button button-tertiary {% if is_set %}px-1{% else %}px-2{% endif %} w-full motion-safe:transition mt-2 disabled:opacity-50 {{ button_class }}"
               {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
             >
-              <span class="group-hover:scale-[96%] flex gap-2 w-full text-current tracking-tighter {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %}">
+              <span class="group-hover:scale-[96%] flex gap-1 w-full text-current tracking-tighter {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %}">
                 <span class="sr-only">{{ card_product.title }} - </span>
                 {%- if card_product.selected_or_first_available_variant.available -%}
                   <span class="label">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}</span>
                   <span class="sr-only"> - </span>
-                  {%- liquid
-                    assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
-                    assign set_products = collections['skincare-sets-1'].products | map: 'handle'
-                    assign is_set = false
-                    assign show_range = true
-                    assign price_class = 'z-10'
-                    if set_products contains card_product.handle
-                      assign is_set = true
-                    endif
-                    if is_set
-                      assign show_range = false
-                      assign price_class = 'set-price z-10'
-                    endif
-                  -%}
                   {%- render 'price',
                     product: card_product,
                     price_id: price_id,

@@ -11,6 +11,7 @@
     - bundle: {Boolean} Displays bundle price with strikeout on compare at price (optional)
     - default_to_mini: {Boolean} Default variant selection to smallest size (optional)
     - hide_slashed_pricing: {Boolean} Hides slashed pricing (optional)
+    - slashed_color: {String} Color of slashed pricing (optional)
 
     Usage:
     {% render 'price', product: product %}
@@ -49,14 +50,14 @@
   {%- if subscription -%}
     {%- unless hide_slashed_pricing -%}
       <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-      <s class="text-white mr-1">{{ product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros }}</s>
+      <s class="{% if slashed_color %}{{ slashed_color }}{% else %}text-white{% endif %} mr-1">{{ product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros }}</s>
     {%- endunless -%}
     <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
     <span>{{ product.selected_or_first_available_selling_plan_allocation.price | money }}</span>
   {%- elsif bundle -%}
     {%- unless hide_slashed_pricing -%}
       <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-      <s class="text-white mr-1">{{ money_price }}</s>
+      <s class="{% if slashed_color %}{{ slashed_color }}{% else %}text-white{% endif %} mr-1">{{ money_price }}</s>
     {%- endunless -%}
     <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
     <span>{{ price | times: 0.8 | money }}</span>
@@ -67,7 +68,7 @@
     {%- if compare_at_price > price -%}
       {%- unless hide_slashed_pricing or product.price_varies == false and product.compare_at_price_varies -%}
         <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-        <s class="text-white mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
+        <s class="{% if slashed_color %}{{ slashed_color }}{% else %}text-white{% endif %} mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
       {%- endunless -%}
       <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
       <span>{{ money_price }}</span>
