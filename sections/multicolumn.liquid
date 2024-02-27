@@ -217,7 +217,7 @@
                                             {% if option.selected_value == value %}checked{% endif %}
                                           >
                                           <label
-                                            class="button button-xs lowercase button-secondary peer-checked:bg-[darkgray] peer-checked:outline-[blue] peer-checked:border-inset mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
+                                            class="button button-xs lowercase button-secondary rounded-full text-[10px] peer-checked:bg-[darkgray] peer-checked:outline-[blue] peer-checked:border-inset mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
                                             for="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
                                             tabindex="0"
                                           >
