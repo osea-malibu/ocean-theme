@@ -372,8 +372,9 @@
                       subscription: block.settings.subscription,
                       percent_discount: block.settings.percent_discount,
                       is_pdp_link: section.settings.is_pdp_link,
-                      pdp_link_label: section.settings.pdp_link_label
-                      variant_picker_classes: block.settings.variant_picker_classes
+                      pdp_link_label: section.settings.pdp_link_label,
+                      variant_picker_type: block.settings.variant_picker_type,
+                      variant_picker_classes: block.settings.variant_picker_classes,
                       variant_button_classes: block.settings.variant_button_classes
                     %}
                   {%- endif -%}
@@ -814,6 +815,22 @@
           "type": "textarea",
           "id": "image_classes",
           "label": "Image classes"
+        },
+        {
+          "type": "select",
+          "id": "variant_picker_type",
+          "label": "Variant picker",
+          "default": "button",
+          "options": [
+            {
+              "value": "button",
+              "label": "Buttons"
+            },
+            {
+              "value": "dropdown",
+              "label": "Dropdown"
+            }
+          ]
         },
         {
           "type": "textarea",
