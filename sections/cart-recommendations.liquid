@@ -7,7 +7,7 @@
         assign item_count = 0
       -%}
       {%- for product in recommendations.products -%}
-        {%- unless cart_ids contains product.id or item_count >= 3 -%}
+        {%- unless cart_ids contains product.id or item_count >= 3 or product.type == 'Subscription Gift' or product.type == 'Free Gift' or product.type == 'Sample' -%}
           {%- assign item_count = item_count | plus: 1 -%}
           {%- render 'product-card-mini',
             card_product: product,
