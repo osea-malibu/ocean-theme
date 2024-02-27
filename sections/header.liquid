@@ -198,7 +198,7 @@
                           </details>
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
-                          <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+                          <a href="{{ link.url }}" class="block {{ menu_link_styles }}"{% if link.current %} aria-current="page"{% endif %}>
                             {%- if link.title contains 'Bold:' -%}<b>{%- endif -%}
                             {{- link.title | replace: 'Popular: ', '' | replace: 'Bold: ', '' | escape -}}
                             {%- if link.title contains 'Bold:' -%}</b>{%- endif -%}
@@ -209,6 +209,20 @@
                         {%- endif -%}
                       </li>
                     {%- endfor -%}
+                    <li class="">
+                      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="flex items-center gap-2 {{ menu_link_styles }}">
+                        <img src="{{ 'icon-user.png' | asset_url }}" width="100" height="100" class="w-4 h-4">
+                        <span>
+                          {%- liquid
+                            if customer
+                              echo 'customer.account_fallback' | t
+                            else
+                              echo 'customer.log_in' | t
+                            endif
+                          -%}
+                        </span>
+                      </a>
+                    </li>
                   </ul>
                 </nav>
                 {% comment %} Customer service menu {% endcomment %}
@@ -397,7 +411,6 @@
           class="hidden button button-primary px-1 h-10 w-10 justify-center items-center ml-1 sm:flex md:ml-4 group"
         >
           <img src="{{ 'icon-user.png' | asset_url }}" width="100" height="100" class="group-hover:scale-[96%]">
-          {%- render 'icon-account', classes: 'hidden h-6 w-6', aria_hidden: true, stroke_width: 1.75 -%}
           <span class="sr-only">
             {%- liquid
               if customer
