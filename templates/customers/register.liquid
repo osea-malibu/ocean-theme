@@ -3,12 +3,12 @@
     <h1 class="text-center font-ninetiesHeadliner text-4xl uppercase text-retro-purple mb-6">
       {{- 'customer.register.title' | t -}}
     </h1>
-    <div class="flex mb-6 gap-4 tracking-wide">
-      <a  href="{{ routes.account_login_url }}" aria-label="You are on sign in tab" class="flex-1 button button-sm button-white">
+    <div class="flex mb-6 gap-2 sm:gap-4 tracking-wide">
+      <a  href="{{ routes.account_login_url }}" aria-label="You are on sign in tab" class="flex-1 button button-sm button-secondary">
         {{ 'customer.login_page.sign_in' | t }}
       </a>
 
-      <a aria-label="Go to create account tab" href="#" class="flex-1 button button-sm button-tertiary">
+      <a aria-label="Go to create account tab" href="#" class="flex-1 button button-sm button-tertiary px-2">
         {{ 'customer.login_page.create_account' | t }}
       </a>
     </div>
