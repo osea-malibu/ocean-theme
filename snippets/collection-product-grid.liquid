@@ -70,6 +70,13 @@
           {%- endif -%}
           {%- for product in collection.products -%}
             <li>
+              {%- liquid
+                if product.variants.size > 3
+                  assign variant_type = 'dropdown'
+                else
+                  assign variant_type = 'button'
+                endif
+              -%}
               {%- render 'product-card',
                 card_product: product,
                 section_id: collection.id,
@@ -77,7 +84,8 @@
                 button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 tracking-tight md:tracking-normal lg:px-4'
                 default_to_mini: collection.metafields.my_fields.default_to_mini,
                 subscription: collection.metafields.custom.default_to_subscription,
-                show_reviews: show_reviews
+                show_reviews: show_reviews,
+                variant_picker_type: variant_type
               -%}
             </li>
           {%- endfor -%}
