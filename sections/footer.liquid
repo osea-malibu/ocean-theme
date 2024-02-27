@@ -57,7 +57,7 @@
           {%- endfor -%}
         {%- endif -%}
         {%- if section.settings.newsletter_enable -%}
-          <div class="absolute -top-56 left-1/2 -translate-x-1/2 w-full max-w-lg lg:px-0 lg:relative lg:-top-6 lg:left-0 lg:translate-x-0 lg:w-96">
+          <div class="absolute -top-56 left-1/2 -translate-x-1/2 w-full max-w-lg lg:px-0 lg:relative lg:-top-6 lg:left-0 lg:translate-x-0 lg:w-96{% if template == 'page.skincare-quiz' %} hidden{% endif %}">
             {% comment %} Newsletter form {% endcomment %}
             <div class="border-4 border-ridge bg-[#d7c2fb] px-4 md:px-6 py-6 flex flex-col justify-center mb-8 lg:mb-4 lg:-mt-8">
               {%- if section.settings.newsletter_heading != blank -%}
