@@ -40,7 +40,7 @@
                   class="search w-full relative"
                 >
                   <div class="relative left-4 w-64 flex items-center outline outline-retro-purple shadow-sm shadow-retro-purple/50">
-                    <input class="border-inset border-2 border-[gainsboro] w-full h-8 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
+                    <input class="border-inset border-y-2 border-l-2 border-[gainsboro] w-full h-8 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
                       id="Search-In-Modal"
                       type="text"
                       name="q"
@@ -58,7 +58,7 @@
                     >
                     <label class="hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
                     <input type="hidden" name="options[prefix]" value="last">
-                    <button class="cursor-pointer w-8 h-8 flex items-center justify-center shrink-0 button button-secondary p-0 outline-none shadow-none" aria-label="{{ 'general.search.search' | t }}">
+                    <button class="cursor-pointer w-8 h-8 flex items-center justify-center shrink-0 button button-secondary p-0 outline-none shadow-none border-2" aria-label="{{ 'general.search.search' | t }}">
                       <img src="{{ 'icon-search.png' | asset_url }}" width="100" height="100" class="w-5 h-5">
                     </button>
                   </div>
