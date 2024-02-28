@@ -45,7 +45,6 @@
     assign money_price = price | money_with_currency
   endif
 -%}
-
 <span class="price whitespace-nowrap flex flex-row{% if price_class %} {{ price_class }}{% endif %}"{% if price_id != blank %} id="{{ price_id }}"{% endif %}>
   {%- if subscription -%}
     {%- unless hide_slashed_pricing -%}
@@ -65,6 +64,7 @@
     <span class="sr-only">Price: </span>
     <span>{% if product.price_varies %}{{ min_price | money_without_trailing_zeros }}-{{ max_price | money_without_trailing_zeros }}{% else %}{{ money_price }}{% endif %}</span>
   {%- else -%}
+    <script> console.log("{{ product.title }}", "else"); </script>
     {%- if compare_at_price > price -%}
       {%- unless hide_slashed_pricing or product.price_varies == false and product.compare_at_price_varies -%}
         <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
