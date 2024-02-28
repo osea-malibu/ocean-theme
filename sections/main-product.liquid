@@ -566,7 +566,8 @@
                         </span>
                         <label for="purchase_option-{{ option }}" class="block py-3 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4">
                           <span class="flex justify-between">
-                            <strong class="block leading-5 font-bold tracking-widest uppercase text-sm text-black">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
+                            {%- assign leap_year_exemptions = 'UAO-295, B-BALM-295, UCBL-1, PHD-1, CDNC-1' | split: ', ' -%}
+                            <strong class="block leading-5 font-bold tracking-widest uppercase text-sm text-black">{% if option == 'onetime' %}One-time purchase{% else %}Subscribe & save{%-if leap_year_exemptions contains product.selected_or_first_available_variant.sku %} 10%{% endif %}{%- endif -%}</strong>
                             {%- if option == 'onetime' -%}
                               {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium', slashed_color: 'text-[gray]' %}
                             {%- else -%}
@@ -576,7 +577,6 @@
                         </label>
                         {%- if option == 'autodeliver' -%}
                           <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-8 2xs:pl-9 pr-2 2xs:pr-3 xs:pr-4 mb-2 text-black">
-                            {% assign leap_year_exemptions = 'UAO-295, B-BALM-295, UCBL-1, PHD-1, CDNC-1' | split: ', ' %}
                             {%- if leap_year_exemptions contains product.selected_or_first_available_variant.sku -%}
                               <span><b class="font-medium">FREE US shipping</b>, skip or cancel anytime.</span>
                             {%- else -%}
