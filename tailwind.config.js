@@ -204,8 +204,8 @@ module.exports = {
     },
     extend: {
       animation: {
-        marquee: "marquee 50s linear infinite",
-        marquee2: "marquee2 50s linear infinite",
+        marquee: "marquee 75s linear infinite",
+        marquee2: "marquee2 75s linear infinite",
         skeleton: "skeleton 2s cubic-bezier(.4,0,.6,1) infinite",
         shake: "shake 6s ease 0s infinite normal forwards",
         shake2: "shake 6s ease 3s infinite normal forwards",
