@@ -196,15 +196,8 @@
         "code_3paBAj": {
           "type": "code",
           "settings": {
-            "column_classes": "",
+            "column_classes": "absolute",
             "code": "<div id=\"total-body-glow-trio\" class=\"anchor\"><\/div>"
-          }
-        },
-        "b054357f-d75c-48b4-8d6f-d70875184432": {
-          "type": "code",
-          "settings": {
-            "column_classes": "lg:col-span-1 lg:col-start-2 lg:row-start-2 xl:col-span-3 xl:col-start-3 xl:row-start-2 flex flex-col md:flex-row py-4 md:py-8 lg:py-0",
-            "code": "<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%<\/sup>\n<\/h3>\n<p class=\"tracking-wide md:text-sm\">showed an instant improvement in <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">moisturization<\/mark><\/b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">skin elasticity<\/mark><\/b>*<\/p>\n<\/div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%<\/sup>\n<\/h3>\n<p class=\"md:text-sm\">agreed skin looked <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">firmer<\/mark><\/b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">less crepey<\/mark><\/b>*<\/p>\n<\/div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%<\/sup>\n<\/h3>\n<p class=\"md:text-sm\">agreed skin felt <b class=\"font-medium\"> softer, <mark class=\"bg-white text-seaweed-700\">smoother<\/mark><\/b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">more supple<\/mark><\/b>*<\/p>\n<\/div>"
           }
         },
         "1a23aa2d-1a71-4bc5-8bb1-6b01e36cfffb": {
@@ -244,17 +237,24 @@
             "prod_slider_handles": "",
             "prod_slider_classes": ""
           }
+        },
+        "b054357f-d75c-48b4-8d6f-d70875184432": {
+          "type": "code",
+          "settings": {
+            "column_classes": "lg:col-span-1 lg:col-start-2 lg:row-start-2 xl:col-span-3 xl:col-start-3 xl:row-start-2 flex flex-col md:flex-row py-4 md:py-8 lg:py-0",
+            "code": "<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%<\/sup>\n<\/h3>\n<p class=\"tracking-wide md:text-sm\">showed an instant improvement in <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">moisturization<\/mark><\/b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">skin elasticity<\/mark><\/b>*<\/p>\n<\/div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%<\/sup>\n<\/h3>\n<p class=\"md:text-sm\">agreed skin looked <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">firmer<\/mark><\/b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">less crepey<\/mark><\/b>*<\/p>\n<\/div>\n<div class=\"md:flex-1 py-4 md:py-0\">\n<h3 class=\"font-serif text-6xl\">100<sup class=\"-top-4 text-4xl\">%<\/sup>\n<\/h3>\n<p class=\"md:text-sm\">agreed skin felt <b class=\"font-medium\"> softer, <mark class=\"bg-white text-seaweed-700\">smoother<\/mark><\/b> &amp; <b class=\"font-medium\"><mark class=\"bg-white text-seaweed-700\">more supple<\/mark><\/b>*<\/p>\n<\/div>"
+          }
         }
       },
       "block_order": [
         "code_3paBAj",
-        "b054357f-d75c-48b4-8d6f-d70875184432",
-        "1a23aa2d-1a71-4bc5-8bb1-6b01e36cfffb"
+        "1a23aa2d-1a71-4bc5-8bb1-6b01e36cfffb",
+        "b054357f-d75c-48b4-8d6f-d70875184432"
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "container px-0 2xs:px-6 mb-3",
-        "container_classes": "px-4 md:px-6 py-6 text-center grid lg:grid-cols-2 lg:grid-rows-3 xl:grid-cols-5",
+        "section_classes": "container mb-4",
+        "container_classes": "flex flex-col",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
