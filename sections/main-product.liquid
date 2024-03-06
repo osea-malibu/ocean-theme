@@ -264,11 +264,6 @@
                   assign custom_tab_array = 'Custom' | sort
                   assign tabs = tabs | concat: custom_tab_array
                 endif
-
-                if product.handle == 'limited-edition-90s-crewneck'
-                  assign custom_tab_array = 'Size Chart' | sort
-                  assign tabs = tabs | concat: custom_tab_array
-                endif
               -%}
               <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
                 <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
@@ -278,7 +273,7 @@
                       aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
                       tabindex="0"
                       aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="relative border-x-2 border-t-2 border-outset bg-[#f6f6f6] border-t-[#f9f9f9] border-l-[#f9f9f9] px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10{% endif %} {{ block.settings.info_tab_label_classes }}"
+                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }}"
                     >
                       {%- if tab == 'Custom' -%}
                         {{ block.settings.info_tab_custom_tab_label }}
@@ -293,7 +288,7 @@
                     id="tab-{{ forloop.index }}-{{ block.id }}"
                     role="tabpanel"
                     aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-                    class="relative border-2 border-outset p-4 z-0 -mt-0.5 bg-[#f6f6f6] border-t-[#f9f9f9] border-l-[#f9f9f9] shadow {{ block.settings.info_tab_content_classes }}"
+                    class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
                   >
                     {%- case tab -%}
                       {%- when 'Description' -%}
@@ -349,58 +344,6 @@
                         </div>
                       {%- when 'Custom' -%}
                         <div>{{ block.settings.info_tab_custom_tab_content }}</div>
-                      {%- when 'Size Chart' -%}
-                        <div>
-                          <b class="block mb-2">Unisex fit</b>
-                          <table class="border-collapse border border-[darkgray] bg-[gainsboro]/50 bg-white">
-                            <thead>
-                              <tr>
-                                <th class="border border-[darkgray] px-2 py-0.5 bg-[gainsboro]/50 leading-none"><span class="sr-only">Size</span></th>
-                                <th class="border border-[darkgray] px-2 py-0.5 bg-[gainsboro]/50 leading-none">Body Length</th>
-                                <th class="border border-[darkgray] px-2 py-0.5 bg-[gainsboro]/50 leading-none">Chest Width</th>
-                                <th class="border border-[darkgray] px-2 py-0.5 bg-[gainsboro]/50 leading-none">Sleeve Length</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td class="bg-[gainsboro]/50 border border-[darkgray] px-2 py-0.5 font-bold">XS</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">25.5 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">18 in.<br></td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">23 in.</td>
-                              </tr>
-                              <tr>
-                                <td class="bg-[gainsboro]/50 border border-[darkgray] px-2 py-0.5 font-bold">S</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">26.5 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">20 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">23.5 in.</td>
-                              </tr>
-                              <tr>
-                                <td class="bg-[gainsboro]/50 border border-[darkgray] px-2 py-0.5 font-bold">M</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">28 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">22 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">24 in.</td>
-                              </tr>
-                              <tr>
-                                <td class="bg-[gainsboro]/50 border border-[darkgray] px-2 py-0.5 font-bold">L</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">29 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">24 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">24.5 in.</td>
-                              </tr>
-                              <tr>
-                                <td class="bg-[gainsboro]/50 border border-[darkgray] px-2 py-0.5 font-bold">XL</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">30 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">26 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">25 in.</td>
-                              </tr>
-                              <tr>
-                                <td class="bg-[gainsboro]/50 border border-[darkgray] px-2 py-0.5 font-bold">2XL</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">31 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">28 in.</td>
-                                <td class="border border-[darkgray] px-2 py-0.5 bg-white">25.5 in.</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
                     {%- endcase -%}
                   </div>
                 {%- endfor -%}
