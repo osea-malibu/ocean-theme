@@ -146,7 +146,7 @@
           endfor
         -%}
 
-        <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12">
+        <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12 flex flex-col">
           {% comment %} Save with sets upsell {% endcomment %}
           {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or cart_ids contains first_set.id -%}
             <save-with-sets
@@ -234,7 +234,7 @@
                                 {%- endif -%}
                                 <a {% unless item.product.type == 'Sample' or item.product.type == 'Free Gift' %}href="{{ item.url }}"{% endunless %}
                                   class="block leading-none 2xs:w-full {% if item.selling_plan_allocation %}w-52{% else %}w-60{% endif %}">
-                                  {{ item.product.title | replace: 'Plant Based Salicylic', 'Salicylic' | replace: 'Eye Serum', 'Serum' | replace: 'Discovery, ', '' | replace: ' - Sample', '' | replace: 'Free Gift - ', '' | escape }}
+                                  {{ item.product.title | replace: 'Plant Based Salicylic', 'Salicylic' | replace: 'Eye Serum', 'Serum' | replace: 'Discovery, ', '' | replace: 'AHA Treatment', '' | replace: ' - Sample', '' | replace: 'Free Gift - ', '' | escape }}
                                 </a>
                               </div>
                             </td>
@@ -253,7 +253,7 @@
                                     {%- assign property_first_char = property.first | slice: 0 -%}
                                     {%- if property.last != blank and property_first_char != '_' -%}
                                       <div class="product-option flex">
-                                        <dt class="mr-1">{{ property.first }}{% unless option.name contains ':' %}:{% endunless %} </dt>
+                                        <dt class="mr-1">{{ property.first }}{% unless property.first contains ':' %}:{% endunless %} </dt>
                                         <dd class="whitespace-nowrap">
                                           {%- if property.last contains '/uploads/' -%}
                                             <a href="{{ property.last }}" class="link" target="_blank" aria-describedby="a11y-new-window-message">
@@ -477,7 +477,7 @@
           {% comment %} Free samples {% endcomment %}
           {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
           {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 and only_gc_in_cart == false -%}
-            <div class="max-w-md mx-auto mb-6 bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
+            <div class="cart-samples w-full max-w-md mx-auto mb-6 bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
               <h3 class="tracking-wide font-medium text-sm mb-1">Select up to 3 free samples</h3>
               <div class="overflow-x-auto pb-3">
                 <ul class="grid gap-2" style="grid-template-columns: repeat({{ settings.cart_samples_collection.products.size }}, 20%);">
@@ -529,7 +529,7 @@
             {%- endif -%}
 
             <!-- Subtotals-->
-            <div {{ block.shopify_attributes }}>
+            <div>
               <div class="flex justify-between items-center w-full" role="status">
                 <h3>{{ 'sections.cart.subtotal' | t }}</h3>
                 <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">{{ cart.total_price | money }}</p>
@@ -550,7 +550,7 @@
             </div>
 
             <!-- CTAs -->
-            <div class="mb-2" {{ block.shopify_attributes }}>
+            <div class="mb-2">
               <noscript>
                 <button type="submit" class="cart__update-button button button-primary w-full mb-2" form="CartDrawer-Form">{{ 'sections.cart.update' | t }}</button>
               </noscript>
