@@ -949,9 +949,10 @@ class SubscriptionRadios extends HTMLElement {
   }
 
   setActiveState() {
-    this.purchaseOptionInputs?.forEach((input) =>
-      input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked)
-    );
+    this.purchaseOptionInputs?.forEach((input) => {
+      input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked);
+      input.closest(".purchase-option").classList.toggle("bg-white", !input.checked);
+    });
   }
 
   updateMainPrice(currentTarget) {
