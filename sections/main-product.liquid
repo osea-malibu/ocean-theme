@@ -264,6 +264,11 @@
                   assign custom_tab_array = 'Custom' | sort
                   assign tabs = tabs | concat: custom_tab_array
                 endif
+
+                if product.handle == 'limited-edition-90s-crewneck'
+                  assign custom_tab_array = 'Size Chart' | sort
+                  assign tabs = tabs | concat: custom_tab_array
+                endif
               -%}
               <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
                 <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
