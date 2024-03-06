@@ -561,12 +561,19 @@
                           value="{{ option }}"
                           {% if option == 'onetime' %}checked{% endif %}
                         />
-                        <span class="absolute pointer-events-none left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
+                        <span class="absolute pointer-events-none left-2 2xs:left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
                           <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
                         </span>
                         <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
                           <span class="flex justify-between">
-                            <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">{%- if option == 'onetime' -%}One-time purchase{%- else -%}Subscribe & save 10%{%- endif -%}</strong>
+                            <strong class="block leading-5 font-bold tracking-widest uppercase text-sm">
+                              {%- if option == 'onetime' -%}
+                                <span>One-time purchase</span>
+                              {%- else -%}
+                                <span>Subscribe & save 10%</span>
+                                <span class="popular-badge hidden normal-case bg-neon-green text-seaweed-700 rounded font-bold tracking-normal text-xs px-1 h-4">Popular</span>
+                              {%- endif -%}
+                            </strong>
                             {%- if option == 'onetime' -%}
                               {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
                             {%- else -%}
@@ -575,10 +582,10 @@
                           </span>
                         </label>
                         {%- if option == 'autodeliver' -%}
-                          <span class="text-xs 2xs:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
+                          <span class="text-xs 2xs:tracking-wide md:tracking-normal lg:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
                             <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
                             <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                              <button class="product-popup-modal__button underline cursor-pointer" type="button" aria-haspopup="dialog">Learn more</button>
+                              <button class="product-popup-modal__button underline cursor-pointer md:tracking-tight lg:tracking-wide" type="button" aria-haspopup="dialog">Learn more</button>
                             </modal-opener>
                           </span>
                           <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
@@ -620,7 +627,6 @@
                               </div>
                             </fieldset>
                           </div>
-                          <span class="popular-badge hidden absolute -top-2 left-3 bg-seaweed-700 text-white rounded font-bold tracking-wide text-xs px-1 h-4">Popular</span>
                         {%- endif -%}
                       </div>
                     {%- endfor -%}
