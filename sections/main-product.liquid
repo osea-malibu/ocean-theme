@@ -349,6 +349,58 @@
                         </div>
                       {%- when 'Custom' -%}
                         <div>{{ block.settings.info_tab_custom_tab_content }}</div>
+                      {%- when 'Size Chart' -%}
+                        <div>
+                          <b class="block mb-2">Unisex fit</b>
+                          <table class="border-collapse border border-seaweed-400 bg-wave-200">
+                            <thead>
+                              <tr>
+                                <th class="border border-seaweed-400 px-2 py-0.5 bg-wave-200 leading-none"><span class="sr-only">Size</span></th>
+                                <th class="border border-seaweed-400 px-2 py-0.5 bg-wave-200 leading-none">Body Length</th>
+                                <th class="border border-seaweed-400 px-2 py-0.5 bg-wave-200 leading-none">Chest Width</th>
+                                <th class="border border-seaweed-400 px-2 py-0.5 bg-wave-200 leading-none">Sleeve Length</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">XS</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">25.5 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">18 in.<br></td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">23 in.</td>
+                              </tr>
+                              <tr>
+                                <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">S</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">26.5 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">20 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">23.5 in.</td>
+                              </tr>
+                              <tr>
+                                <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">M</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">28 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">22 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">24 in.</td>
+                              </tr>
+                              <tr>
+                                <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">L</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">29 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">24 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">24.5 in.</td>
+                              </tr>
+                              <tr>
+                                <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">XL</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">30 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">26 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">25 in.</td>
+                              </tr>
+                              <tr>
+                                <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">2XL</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">31 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">28 in.</td>
+                                <td class="border border-seaweed-400 px-2 py-0.5 bg-white">25.5 in.</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                     {%- endcase -%}
                   </div>
                 {%- endfor -%}
