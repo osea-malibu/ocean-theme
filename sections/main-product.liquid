@@ -466,7 +466,13 @@
                       {%- endfor -%}
                     {%- endfor -%}
                   {%- else -%}
-                    <variant-radios class="no-js-hidden block" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                    <variant-radios
+                      class="no-js-hidden block"
+                      data-section="{{ section.id }}"
+                      data-url="{{ product.url }}"
+                      data-transparent-image="{% if product.metafields.custom.product_image_transparent %}{{ product.metafields.custom.product_image_transparent | image_url }}{% endif %}"
+                      {{ block.shopify_attributes }}
+                    >
                       {%- for option in product.options_with_values -%}
                         <fieldset class="js group">
                           <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">

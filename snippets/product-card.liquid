@@ -126,6 +126,7 @@
               data-section="{{ card_product.id }}-{{ section_id }}"
               data-url="{{ card_product.url }}"
               data-update-url="false"
+              data-transparent-image="{% if card_product.metafields.custom.product_image_transparent %}{{ card_product.metafields.custom.product_image_transparent | image_url }}{% endif %}"
             >
               {%- for option in card_product.options_with_values -%}
                 <div class="relative block">
@@ -163,6 +164,7 @@
               data-section="{{ card_product.id }}-{{ section_id }}"
               data-url="{{ card_product.url }}"
               data-update-url="false"
+              data-transparent-image="{% if card_product.metafields.custom.product_image_transparent %}{{ card_product.metafields.custom.product_image_transparent | image_url }}{% endif %}"
             >
               {%- for option in card_product.options_with_values -%}
                 <fieldset class="js flex{% if option.name == 'Scent' %} sr-only{% endif %}">

@@ -179,7 +179,6 @@ let lazyVideoObserver = new IntersectionObserver((entries, observer) => {
     }
   });
 });
-
 lazyVideos.forEach((lazyVideo) => {
   lazyVideoObserver.observe(lazyVideo);
 });
@@ -707,7 +706,11 @@ class VariantSelects extends HTMLElement {
     if (window.location.pathname.includes("/products/")) {
       // change first image in product page image gallery
       const variantImageEl = document.querySelector("#Product-VariantImage");
-      const newImageSrc = this.currentVariant.featured_image.src;
+      let newImageSrc = this.currentVariant.featured_image.src;
+      if (this.currentVariant.featured_image.position === 1 && this.dataset.transparentImage) {
+        newImageSrc = this.dataset.transparentImage;
+      }
+
       if (variantImageEl) {
         variantImageEl.srcset = `${newImageSrc}&width=294 1x, ${newImageSrc}&width=588 2x`;
         variantImageEl.src = newImageSrc;
@@ -717,7 +720,10 @@ class VariantSelects extends HTMLElement {
       const imageElement = document.getElementById(
         `ProductCard-DefaultImage-${this.dataset.section}`
       );
-      const newImageSrc = this.currentVariant.featured_media.preview_image.src;
+      let newImageSrc = this.currentVariant.featured_media.preview_image.src;
+      if (this.currentVariant.featured_media.position === 1 && this.dataset.transparentImage) {
+        newImageSrc = this.dataset.transparentImage;
+      }
 
       if (imageElement) {
         imageElement.srcset = `${newImageSrc}&width=328 1x, ${newImageSrc}&width=656 2x`;
