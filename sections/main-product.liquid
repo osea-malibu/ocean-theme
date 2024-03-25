@@ -652,7 +652,8 @@
                 </subscription-radios>
               {%- endunless -%}
             {%- when 'buy_buttons' -%}
-              {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
+              {%- assign product_collections_handles = product.collections | map: 'handle' -%}
+              {%- unless product_collections_handles contains 'exclude-from-site' -%}
                 <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
                   <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
                     {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
@@ -700,7 +701,7 @@
                     </div>
                   </product-form>
                 </div>
-              {%- endif -%}
+              {%- endunless -%}
             {%- when 'upsells' -%}
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
                 <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
