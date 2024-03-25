@@ -265,6 +265,11 @@
                   assign tabs = tabs | concat: custom_tab_array
                 endif
 
+                if product.metafields.custom.recycling != blank
+                  assign recycling_array = 'Recycling' | sort
+                  assign tabs = tabs | concat: recycling_array
+                endif
+
                 if product.handle == 'limited-edition-90s-crewneck'
                   assign custom_tab_array = 'Size Chart' | sort
                   assign tabs = tabs | concat: custom_tab_array
@@ -278,7 +283,7 @@
                       aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
                       tabindex="0"
                       aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-3 py-1 cursor-pointer {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }}"
+                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-2 2xs:px-3 py-1 cursor-pointer whitespace-nowrap {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }}"
                     >
                       {%- if tab == 'Custom' -%}
                         {{ block.settings.info_tab_custom_tab_label }}
@@ -334,21 +339,32 @@
                               <div class="p:mb-3">{{ product.metafields.custom_fields.how_it_works }}</div>
                             {%- endif -%}
                           {%- endcapture -%}
-                          <div class="">
+                          <div>
                             {{ how_to_html }}
                           </div>
                         {%- endif -%}
-                      {%- when 'Sustainability' -%}
-                        <div class="sustainability">
-                          <div class="skeleton bg-wave-200 absolute z-0 inset-4 rounded-xl"></div>
-                          <div class="relative z-10">
-                            {%- comment -%} theme-check-disable RemoteAsset {% endcomment %}
-                            <script src="https://learn.bluebirdclimate.com/embed/ilia-beauty?id=sample-SustainabilityReport" async="" type="text/javascript"></script>
-                            {%- comment -%} theme-check-enable RemoteAsset {% endcomment %}
-                          </div>
-                        </div>
                       {%- when 'Custom' -%}
                         <div>{{ block.settings.info_tab_custom_tab_content }}</div>
+                      {%- when 'Recycling' -%}
+                        <div class="recycling">
+                          <table>
+                            {%- if product.metafields.custom.recycling.value.packaging != nil -%}
+                              <tr class="align-top">
+                                <td><b class="mr-1 whitespace-nowrap">Packaging:</b></td>
+                                <td>{{ product.metafields.custom.recycling.value.packaging }}</td>
+                              </tr>
+                            {%- endif -%}
+                            {%- if product.metafields.custom.recycling.value.recycling != nil -%}
+                              <tr class="align-top">
+                                <td><b class="mr-1 whitespace-nowrap">Recycling:</b></td>
+                                <td>{{ product.metafields.custom.recycling.value.recycling }}</td>
+                              </tr>
+                            {%- endif -%}
+                          </table>
+                          {%- if product.metafields.custom.recycling.value.disclaimer != nil -%}
+                            <small class="block leading-tight mt-2">{{ product.metafields.custom.recycling.value.disclaimer }}</small>
+                          {%- endif -%}
+                        </div>
                       {%- when 'Size Chart' -%}
                         <div>
                           <b class="block mb-2">Unisex fit</b>
