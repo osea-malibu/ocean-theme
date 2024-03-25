@@ -28,6 +28,14 @@
       <div id="product-grid-{{ collection.id }}" data-id="{{ collection.id }}">
         <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
           {%- liquid
+            if collection.handle == 'exclude-from-site'
+              assign hide_atc = true
+              assign remove_linking = true
+            else
+              assign hide_atc = false
+              assign remove_linking = false
+            endif
+
             if parent_collection.metafields.my_fields.featured_products != blank
               assign no_featured_products = false
             else
@@ -77,7 +85,9 @@
                 button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
                 default_to_mini: collection.metafields.my_fields.default_to_mini,
                 subscription: collection.metafields.custom.default_to_subscription,
-                show_reviews: show_reviews
+                show_reviews: show_reviews,
+                hide_atc: hide_atc,
+                remove_linking: remove_linking
               -%}
             </li>
           {%- endfor -%}

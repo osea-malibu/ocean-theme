@@ -22,6 +22,8 @@
     - percent_discount: {Boolean} Show % off instead of $ off in savings badge (optional)
     - is_pdp_link: {Boolean} Replace ATC button with static button that leads to PDP. For use with products that require input on PDP (optional)
     - pdp_link_label: {Boolean} For use with PDP link, changes button label (optional)
+    - hide_atc: {Boolean} Hide add to cart button, default: false (optional)
+    - remove_linking: {Boolean} Remove linking from product title, default: false (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -33,17 +35,17 @@
       {%- if show_reviews and card_product.metafields.stamped.reviews_average != blank -%}
         {% render 'product-rating', product: card_product, compact: true, section_id: section_id, classes: 'product-rating h-5 float-right' %}
       {%- endif -%}
-      <a href="{{ card_product.url | default: '#' }}">
+      {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}">{% endunless %}
         {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
         <h3 class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
           {{- card_product.title | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' -}}
         </h3>
-      </a>
+      {% unless remove_linking %}</a>{% endunless %}
     </div>
 
-      <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
-        {{- card_product.metafields.custom_fields.short_description | escape -}}
-      </p>
+    <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
+      {{- card_product.metafields.custom_fields.short_description | escape -}}
+    </p>
 
     {%- if is_pdp_link -%}
       <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
@@ -51,7 +53,7 @@
           {{- pdp_link_label -}}
         </a>
       </div>
-    {%- elsif card_product.type != 'Free Gift' -%}
+    {%- elsif card_product.type != 'Free Gift' and hide_atc != true -%}
       {%- liquid
         if default_to_mini
           assign mini_index = card_product.variants.size | minus: 1
@@ -281,12 +283,16 @@
 
   <div class="relative block overflow-hidden no-underline mb-2" tabindex="-1">
     {%- if card_product.featured_media -%}
-      <a
-        aria-label="{{ card_product.title | escape }}"
-        href="{{ card_product.url | default: '#' }}"
-        class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}"
-        tabindex="-1"
-      >
+      {%- if remove_linking -%}
+        <div class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
+      {%- else -%}
+        <a
+          aria-label="{{ card_product.title | escape }}"
+          href="{{ card_product.url | default: '#' }}"
+          class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}"
+          tabindex="-1"
+        >
+      {%- endif -%}
         {%- liquid
           if custom_default_image != nil
             assign default_image = custom_default_image
@@ -328,7 +334,7 @@
           >
         {%- endif -%}
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-      </a>
+        {% if remove_linking %}</div>{% else %}</a>{% endif %}
     {%- else -%}
       <h2 class="h3">
         <a href="{{ card_product.url | default: '#' }}">
