@@ -503,7 +503,8 @@
           {%- liquid
             assign filtered_items = null | sort
             for item in cart.items
-              unless item.product.type == 'Sample' or item.product.type == 'Free Gift' or item.product.type == 'Bundle'
+              assign item_collections_handles = item.product.collections | map: 'handle'
+              unless item_collections_handles contains 'exclude-from-site'
                 assign item_array = item | sort
                 assign filtered_items = filtered_items | concat: item_array
               endunless
