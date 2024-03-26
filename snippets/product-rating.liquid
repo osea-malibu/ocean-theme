@@ -14,4 +14,6 @@
 {% if product != blank %} 
    {% capture product_data_attribute %}data-oke-reviews-product-id="shopify-{{ product.id }}"{% endcapture %} 
 {% endif %} 
-<div data-oke-star-rating {{ product_data_attribute }} class="{{ classes }}">{{ product.metafields.okendo.StarRatingSnippet }}</div>
+<div data-oke-star-rating {{ product_data_attribute }} class="{% if classes != blank %}{{ classes }}{% endif %}{% if compact %} compact{% endif %}{% if hide_count %} hide-count{% endif %}">
+  {{- product.metafields.okendo.StarRatingSnippet -}}
+</div>
