@@ -1,0 +1,208 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_classes": "title text-2xl tracking-wide col-span-12"
+          }
+        },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {
+            "price_classes": "col-span-4 md:col-span-6 text-lg"
+          }
+        },
+        "6a44c417-fd63-4240-a103-3540393f4f89": {
+          "type": "rating",
+          "settings": {
+            "rating_classes": "rating col-span-12 md:col-span h-full"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "variant_classes": "variants col-span-12 mt-4",
+            "hide_label": true
+          }
+        },
+        "b1cbaec2-3770-42c2-906e-d3f144bcda1f": {
+          "type": "subscription_picker",
+          "settings": {
+            "subscription_classes": "subscription col-span-12",
+            "subscription_modal_heading": "Subscribe & Save 10%",
+            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, skip or cancel at anytime through your OSEA account or by <a href=\"\/pages\/contact-us\" class=\"link\">contacting support<\/a> via <a href=\"mailto:support@oseamalibu.com\" class=\"link\">email<\/a> or <button onclick=\"GorgiasChat.open()\" class=\"link\">chat<\/button>.<\/p>\n<ul class=\"leading-tight tracking-wide icon-list check mb-4\">\n<li class=\"mb-2\">10% off every order<\/li>\n<li class=\"mb-2\">Free shipping on recurring orders<\/li>\n<li class=\"mb-2\">Early access to new products<\/li>\n<li>Skip, edit or cancel anytime<\/li>\n<\/ul>\n<small class=\"block\">Click here for our <a href=\"\/pages\/terms-of-use\" class=\"underline\">Terms of Use<\/a>.<\/small>"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {
+            "qty_classes": "col-span-4 lg:col-span-3 mr-2 mt-3"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "atc_classes": "atc col-span-12 mt-3",
+            "atc_show_price": true
+          }
+        },
+        "f8ca449b-3a83-411f-ac44-40e011b825f3": {
+          "type": "upsells",
+          "settings": {
+            "upsell_classes": "upsells col-span-12 mt-6",
+            "upsell_enable_sets": true,
+            "upsell_enable_partner": true
+          }
+        },
+        "ab50b385-6599-4b94-8014-2dd6ab1517d4": {
+          "type": "benefits",
+          "settings": {
+            "benefits_classes": "benefits col-span-4 mt-6",
+            "benefits_hide_icons": true,
+            "benefits_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
+            "benefits_content_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book"
+          }
+        },
+        "9b65c02a-2972-449a-b590-d40d4a256d04": {
+          "type": "skin_types",
+          "settings": {
+            "skin_types_classes": "skin-types col-span-4 mt-6",
+            "skin_types_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
+            "skin_types_content_classes": "text-sm font-book li:mb-2"
+          }
+        },
+        "d08cdbd7-b608-45ad-bfec-e65bb7339509": {
+          "type": "scent_profile",
+          "settings": {
+            "scent_profile_classes": "scent-profile col-span-4 mt-6",
+            "scent_profile_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
+            "scent_profile_content_classes": "text-sm font-book leading-tight"
+          }
+        },
+        "2431ba77-22b9-43d0-a67d-f9858b6d8b58": {
+          "type": "info_tabs",
+          "settings": {
+            "info_tab_wrapper_classes": "col-span-12 mt-4",
+            "info_tab_label_classes": "font-bold uppercase text-xs tracking-widest",
+            "info_tab_content_classes": "",
+            "info_tab_custom_tab_label": "Ingredients",
+            "info_tab_custom_tab_content": "{{ product.metafields.custom_fields.ingredients.value }}",
+            "info_tab_custom_tab_handles": "osea-for-parachute-hydrating-hand-cream, osea-for-parachute-purifying-hand-soap"
+          }
+        },
+        "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6": {
+          "type": "set_includes",
+          "settings": {
+            "set_includes_classes": "col-span-12 mt-6"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "6a44c417-fd63-4240-a103-3540393f4f89",
+        "variant_picker",
+        "b1cbaec2-3770-42c2-906e-d3f144bcda1f",
+        "quantity_selector",
+        "buy_buttons",
+        "f8ca449b-3a83-411f-ac44-40e011b825f3",
+        "ab50b385-6599-4b94-8014-2dd6ab1517d4",
+        "9b65c02a-2972-449a-b590-d40d4a256d04",
+        "d08cdbd7-b608-45ad-bfec-e65bb7339509",
+        "2431ba77-22b9-43d0-a67d-f9858b6d8b58",
+        "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
+      ],
+      "settings": {
+        "product_info_classes": "grid grid-cols-12 mb-8 relative gap-x-2",
+        "enable_sticky_info": true,
+        "gallery_limit": 6
+      }
+    },
+    "product-video": {
+      "type": "product-video",
+      "settings": {
+        "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
+        "wrapper_classes": "container mx-auto px-4 2xs:px-6 xl:max-w-screen-lg mb-12"
+      }
+    },
+    "product-clinicals": {
+      "type": "product-clinicals",
+      "settings": {
+        "section_classes": "",
+        "header": "Results You Can Sea<span class=\"font-sans text-lg relative -top-2\">™<\/span>",
+        "subheader": "Our products are clinically proven to ensure the highest levels of efficacy."
+      }
+    },
+    "key-ingredients": {
+      "type": "product-key-ingredients",
+      "disabled": true,
+      "settings": {
+        "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
+        "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
+        "header": "Key Ingredients",
+        "paragraph": "{{ product.metafields.custom.key_ingredients_text.value }}"
+      }
+    },
+    "ingredients": {
+      "type": "product-ingredients",
+      "blocks": {
+        "95142030-9e11-4090-aa41-a3e9d4183397": {
+          "type": "key_ingredient",
+          "repeater": "{{ product.metafields.custom.key_ingredients_list.value }}",
+          "settings": {
+            "ingredient_name": "{{ block.repeater.name.value }}",
+            "ingredient_scientific_name": "{{ block.repeater.scientific_name.value }}",
+            "ingredient_description": "{{ block.repeater.description.value }}",
+            "ingredient_citation": "{{ block.repeater.citation.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
+      "custom_css": [
+
+      ],
+      "settings": {
+        "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
+        "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
+        "header": "Ingredients",
+        "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
+      }
+    },
+    "product-reviews": {
+      "type": "product-reviews",
+      "settings": {
+        "heading": "Customer Reviews",
+        "wrapper_classes": ""
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "section_classes": "bg-wave-100",
+        "container_classes": "container mx-auto px-6 py-8",
+        "heading": "You may also like",
+        "heading_classes": "",
+        "wrapper_classes": "grid grid-cols-5 gap-4",
+        "card_classes": "",
+        "show_secondary_image": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product-video",
+    "product-clinicals",
+    "key-ingredients",
+    "ingredients",
+    "product-reviews",
+    "product-recommendations"
+  ]
+}
