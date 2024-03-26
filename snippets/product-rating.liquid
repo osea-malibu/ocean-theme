@@ -3,7 +3,6 @@
 
     Accepts:
     - product: {Object} Product Liquid object
-    - section_id: {String} Unique id to prevent duplicates (optional)
     - classes: {Object} Tailwind CSS classes (optional)
     - compact: {Boolean} Removes "reviews" from count string. Default: false (optional)
     - hide_count: {Boolean} Hides count string. Default: false (optional)
@@ -11,59 +10,8 @@
     Usage:
     {% render 'product-rating', product: product %}
 {% endcomment %}
-{% comment %} {%- liquid
-  assign rating_value = product.metafields.stamped.reviews_average | slice: 0, 4
-  assign full_stars = rating_value | floor
-  assign partial_stars = rating_value | modulo: 1 | times: 100
-  assign empty_stars = 5 | minus: full_stars | minus: 1
--%} {% endcomment %}
-{%- assign rating_value = product.metafields.stamped.reviews_average | slice: 0, 4 -%}
-{%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
-  <a
-    class="{{ classes }}"
-    href="{{ product.url | append: '#reviews' }}"
-    aria-label="{{ product.title }}: {{ 'accessibility.star_reviews_info' | t: rating_value: rating_value, rating_max: product.metafields.reviews.rating.value.scale_max }} with {{ review_count }} {{ "accessibility.total_reviews" | t }}"
-  >
-    <span 
-      class="stamped-product-reviews-badge stamped-main-badge block{% if compact %} compact{% endif %}" 
-      data-id="{{ product.id }}" 
-      data-product-sku="{{ product.handle }}" 
-      data-product-title="{{ product.title }}" 
-      data-product-type="{{ product.type }}" 
-    >
-    </span>
-    {% comment %} <span class="flex items-center">
-      {%- for full_star in (1..full_stars) -%}
-        <svg aria-hidden="true" class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg> 
-      
-      
-      {%- endfor -%}
-      {%- if full_stars < 5 -%}
-        <svg class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-          <defs>
-            <linearGradient id="grad-{{ product.id }}{{ section_id }}">
-              <stop offset="{{ partial_stars }}%" stop-color="#1D4D41"/>
-              <stop offset="{{ partial_stars }}%" stop-color="#F1F5F4"/>
-            </linearGradient>
-          </defs>
-          <polygon fill="url(#grad-{{ product.id }}{{ section_id }})" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg>
-      {%- endif -%}
-      {%- for full_star in (1..empty_stars) -%}
-        <svg class="h-3 w-3 text-seaweed-700" viewBox="0 0 24 24" fill="#F1F5F4" stroke="currentColor" stroke-width="2">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg>
-      {%- endfor -%} 
-      {%- liquid
-        if product.metafields.stamped.reviews_count
-          assign review_count = product.metafields.stamped.reviews_count
-        else
-          assign review_count = 0
-        endif
-      -%}
-      <span aria-hidden="true" class="underline text-xs ml-0.5{% if hide_count %} hidden{% endif %}">{{ review_count }}{% unless compact %} reviews{% endunless %}</span>
-    </span> {% endcomment %}
-  </a>
-{% endif %}
+
+{% if product != blank %} 
+   {% capture product_data_attribute %}data-oke-reviews-product-id="shopify-{{ product.id }}"{% endcapture %} 
+{% endif %} 
+<div data-oke-star-rating {{ product_data_attribute }} class="{{ classes }}">{{ product.metafields.okendo.StarRatingSnippet }}</div>

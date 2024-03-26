@@ -33,7 +33,7 @@
   <div class="product-info w-full order-1 grow flex flex-col">
     <div>
       {%- if show_reviews and card_product.metafields.stamped.reviews_average != blank -%}
-        {% render 'product-rating', product: card_product, compact: true, section_id: section_id, classes: 'product-rating h-5 float-right' %}
+        {% render 'product-rating', product: card_product, compact: true, classes: 'product-rating h-5 float-right' %}
       {%- endif -%}
       {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}">{% endunless %}
         {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
