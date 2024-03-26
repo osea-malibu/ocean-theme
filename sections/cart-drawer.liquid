@@ -148,15 +148,20 @@
 
         <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12 flex flex-col">
           {% comment %} Save with sets upsell {% endcomment %}
-          {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or cart_ids contains first_set.id -%}
+          {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or first_set.selected_or_first_available_variant.available == false or cart_ids contains first_set.id -%}
             <save-with-sets
               data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
               data-item-to-remove="{{ item_with_set_line }}"
             >
               <div class="relative rounded-sm bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
                 {%- liquid
-                  assign sws_image_src = first_set.featured_media | image_url: width: 60
-                  assign sws_image_src_2x = first_set.featured_media | image_url: width: 120
+                  if first_set.metafields.custom.product_image_transparent != blank
+                    assign sws_image_src = first_set.metafields.custom.product_image_transparent | image_url: width: 60
+                    assign sws_image_src_2x = first_set.metafields.custom.product_image_transparent | image_url: width: 120
+                  else
+                    assign sws_image_src = first_set.featured_media | image_url: width: 60
+                    assign sws_image_src_2x = first_set.featured_media | image_url: width: 120
+                  endif
                 -%}
                 {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                 <img
