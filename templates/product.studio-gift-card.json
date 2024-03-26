@@ -34,7 +34,7 @@
           "settings": {
             "subscription_classes": "subscription col-span-12",
             "subscription_modal_heading": "Subscribe & Save 10%",
-            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, skip or cancel at anytime through your OSEA account or by <a href=\"/pages/contact-us\" class=\"link\">contacting support</a> via <a href=\"mailto:support@oseamalibu.com\" class=\"link\">email</a> or <button onclick=\"GorgiasChat.open()\" class=\"link\">chat</button>.</p>\n<ul class=\"leading-tight tracking-wide icon-list check mb-4\">\n<li class=\"mb-2\">10% off every order</li>\n<li class=\"mb-2\">Free shipping on recurring orders</li>\n<li class=\"mb-2\">Early access to new products</li>\n<li>Skip, edit or cancel anytime</li>\n</ul>\n<small class=\"block\">Click here for our <a href=\"/pages/terms-of-use\" class=\"underline\">Terms of Use</a>.</small>"
+            "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, skip or cancel at anytime through your OSEA account or by <a href=\"\/pages\/contact-us\" class=\"link\">contacting support<\/a> via <a href=\"mailto:support@oseamalibu.com\" class=\"link\">email<\/a> or <button onclick=\"GorgiasChat.open()\" class=\"link\">chat<\/button>.<\/p>\n<ul class=\"leading-tight tracking-wide icon-list check mb-4\">\n<li class=\"mb-2\">10% off every order<\/li>\n<li class=\"mb-2\">Free shipping on recurring orders<\/li>\n<li class=\"mb-2\">Early access to new products<\/li>\n<li>Skip, edit or cancel anytime<\/li>\n<\/ul>\n<small class=\"block\">Click here for our <a href=\"\/pages\/terms-of-use\" class=\"underline\">Terms of Use<\/a>.<\/small>"
           }
         },
         "quantity_selector": {
@@ -117,6 +117,7 @@
         "2431ba77-22b9-43d0-a67d-f9858b6d8b58",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
+      "disabled": true,
       "settings": {
         "product_info_classes": "grid grid-cols-12 mb-8 relative gap-x-2",
         "enable_sticky_info": true,
@@ -126,9 +127,12 @@
     "mangomint": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": ""
+        "custom_liquid": "<iframe src=\"https:\/\/clients.mangomint.com\/gift-cards\/oseamalibu\" style=\"border:0px #ffffff none;\" name=\"myiFrame\" scrolling=\"no\" frameborder=\"1\" marginheight=\"0px\" marginwidth=\"0px\" height=\"1750px\" width=\"100%\" allowfullscreen><\/iframe>"
       }
     }
   },
-  "order": ["main", "mangomint"]
+  "order": [
+    "main",
+    "mangomint"
+  ]
 }
