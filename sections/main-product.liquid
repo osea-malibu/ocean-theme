@@ -821,13 +821,21 @@
     {%- if product.selected_or_first_available_variant.sku != blank -%}
       "sku": {{ product.selected_or_first_available_variant.sku | json }},
     {%- endif -%}
-    {%- if product.metafields.stamped.reviews_count != blank -%}
+    {% if product.metafields.okendo.summaryData.reviewCount > 0 %}
       "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": {{ product.metafields.stamped.reviews_average | round: 1 | json }},
-        "reviewCount": {{ product.metafields.stamped.reviews_count }}
-      },
-    {%- endif -%}
+      "@type": "AggregateRating",
+      "description": "Okendo Reviews",
+      "ratingValue": "{{ product.metafields.okendo.summaryData.reviewAverageValue }}",
+      "ratingCount": "{{ product.metafields.okendo.summaryData.reviewCount }}"
+    },
+    {% elsif product.metafields.okendo.ReviewCount > 0 %}
+      "aggregateRating": {
+      "@type": "AggregateRating",
+      "description": "Okendo Reviews",
+      "ratingValue": "{{ product.metafields.okendo.ReviewAverageValue }}",
+      "ratingCount": "{{ product.metafields.okendo.ReviewCount }}"
+    },
+    {% endif %}
     "brand": {
       "@type": "Brand",
       "name": {{ product.vendor | json }}
