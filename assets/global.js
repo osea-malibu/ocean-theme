@@ -786,11 +786,11 @@ class VariantSelects extends HTMLElement {
       if (subscriptionRadios) {
         const hasSubscriptionOption = this.currentVariant.selling_plan_allocations.length > 0;
         if (hasSubscriptionOption) {
-          subscriptionRadios.classList.add("max-h-48");
+          subscriptionRadios.classList.add("max-h-52");
           subscriptionRadios.classList.remove("max-h-0");
         } else {
           subscriptionRadios.classList.add("max-h-0");
-          subscriptionRadios.classList.remove("max-h-48");
+          subscriptionRadios.classList.remove("max-h-52");
         }
       }
 
