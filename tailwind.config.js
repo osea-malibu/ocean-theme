@@ -10,9 +10,10 @@ module.exports = {
     "./assets/*.js",
     "./config/settings_data.json",
   ],
-  /* safelist: [
+  safelist: [
     {
-      pattern: /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
+      pattern:
+        /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
       variants: ["xs", "sm", "md", "lg", "hover"],
     },
     {
@@ -24,11 +25,13 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
     {
-      pattern: /(w|max-w|min-w|h|max-h|min-h|bottom|top|left|right|basis)-(1\/5|1\/4|1\/3|2\/5|1\/2|3\/5|2\/3|3\/4|4\/5|full|screen)/,
+      pattern:
+        /(w|max-w|min-w|h|max-h|min-h|bottom|top|left|right|basis)-(1\/5|1\/4|1\/3|2\/5|1\/2|3\/5|2\/3|3\/4|4\/5|full|screen)/,
       variants: ["xs", "sm", "md", "lg", "xl", "2xl"],
     },
     {
-      pattern: /(w|h|p|px|py|pb|pt|pl|pr|m|mx|my|mt|mb|ml|mr|bottom|top|left|right|gap|gap-x|gap-y)-(0|1|2|3|4|5|6|7|8|9|10|12|16|20|24|26|32|36|40|44|48|52|56|60|64|72|80|auto)/,
+      pattern:
+        /(w|h|p|px|py|pb|pt|pl|pr|m|mx|my|mt|mb|ml|mr|bottom|top|left|right|gap|gap-x|gap-y)-(0|1|2|3|4|5|6|7|8|9|10|12|16|20|24|26|32|36|40|44|48|52|56|60|64|72|80|auto)/,
       variants: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
     },
     {
@@ -67,7 +70,7 @@ module.exports = {
       pattern: /bg-(auto|contain|cover)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
-  ], */
+  ],
   theme: {
     container: {
       center: true,
