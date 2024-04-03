@@ -12,43 +12,43 @@
 {%- liquid
   assign set_products = collections['skincare-sets-1'].products | map: 'handle'
   assign badge_text = ''
-  assign badge_class = ''
+  assign badge_class = 'badge absolute top-1 right-1 mb-1 whitespace-nowrap overflow-hidden'
 
   if product.available == false
     assign badge_text = 'Out of Stock'
-  elsif product.tags contains 'badge::new'
-    assign badge_text = 'New'
-  elsif product.tags contains 'badge::editor_pick'
-    assign badge_text = "Editor's Pick"
-  elsif percent_discount and set_products contains product.handle
+  elsif product.metafields.badge.text != blank
+    assign badge_text = product.metafields.badge.text
+  elsif set_products contains product.handle
     assign discount_amount = product.compare_at_price | minus: product.price
-    assign original_price_float = product.compare_at_price | times: 1.0
-    assign discount_percent = discount_amount | divided_by: original_price_float | times: 100 | ceil
-    assign badge_text = "Save " | append: discount_percent | append: '%'
-  else
-    for tag in product.tags
-      if tag contains 'badge::'
-        assign string_array = tag | split: '::'
-        assign badge_text = string_array[1]
-      endif
-    endfor
+    if percent_discount
+      assign original_price_float = product.compare_at_price | times: 1.0
+      assign discount_percent = discount_amount | divided_by: original_price_float | times: 100 | ceil
+      assign badge_text = "Save " | append: discount_percent | append: '%'
+    else
+      assign discount_amount_money = discount_amount | money_without_trailing_zeros
+      assign badge_text = "Save " | append: discount_amount_money
+    endif
   endif
 
-  if product.tags contains 'badge::new jumbo size'
-    assign badge_class= 'bg-[#F1E1AA]'
-  elsif product.tags contains 'badge::round'
-    assign badge_class = 'rounded-full w-12 h-12 lg:w-16 lg:h-16 text-sm uppercase flex items-center justify-center'
-  elsif product.available == false
-    assign badge_class = 'bg-wave-200 text-wave-800'
+  if product.available == false
+    assign badge_class = badge_class | append: ' ' | append: 'bg-wave-200 text-wave-800 text-xs'
+  elsif product.metafields.badge.type == blank or product.metafields.badge.type == 'Default'
+    assign badge_class = badge_class | append: ' ' | append: 'text-xs'
+  elsif product.metafields.badge.type == 'Round'
+    assign badge_class = badge_class | append: ' ' | append: 'rounded-full w-12 h-12 lg:w-16 lg:h-16 text-sm uppercase flex items-center justify-center'
   endif
 
-  if product.metafields.custom.badge_classes != blank
-    assign badge_class = badge_class | append: ' ' | append: product.metafields.custom.badge_classes
+  if product.metafields.badge.classes != blank
+    assign badge_class = badge_class | append: ' ' | append: product.metafields.badge.classes
+  endif
+
+  if classes != nil
+    assign badge_class = badge_class | append: ' ' | append: classes
   endif
 -%}
 
 {%- if badge_text != '' -%}
-  <div class="badge absolute top-1 right-1 mb-1 whitespace-nowrap overflow-hidden{% if badge_class != '' %} {{ badge_class }}{% endif %}{% if classes != nil %} {{ classes }}{% endif %}{% unless product.tags contains 'badge::round' %} text-xs capitalize{% endunless %}">
-    {{ badge_text | replace: 'Best Seller', 'Bestseller' }}
+  <div class="{{ badge_class }}">
+    {{ badge_text }}
   </div>
 {%- endif -%}
