@@ -2,14 +2,14 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <section id="main-product">
-  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start xl:gap-10 xl:max-w-screen-lg">
+  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-10 lg:max-w-screen-lg">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {%- if product.media.size > 1 -%}
       <div class="md:flex-1 relative md:sticky md:top-[120px] overflow-hidden">
         <glide-slider
-          class="glide type-carousel gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 mb-6 overflow-hidden max-w-full xl:flex xl:flex-row-reverse xl:gap-2"
+          class="glide type-carousel gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 mb-6 overflow-hidden max-w-full lg:flex lg:flex-row-reverse lg:gap-2"
           id="Product-Slider"
           data-breakpoint-limit="none"
         >
@@ -81,9 +81,9 @@
               {%- endfor -%}
             </ul>
           </div>
-          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 xl:flex-col xl:shrink-0" data-glide-el="controls[nav]">
+          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:flex-col lg:shrink-0 lg:max-h-[520px] lg:overflow-y-auto" data-glide-el="controls[nav]">
             {%- for media in product.media limit: section.settings.gallery_limit -%}
-              <button class="glide__bullet relative p-2 md:px-0 xl:py-0" data-glide-dir="={{ forloop.index0 }}">
+              <button class="glide__bullet relative p-2 md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
                 <span class="sr-only">Go to slide {{ forloop.index }}</span>
                 {%- if media.media_type == 'image' -%}
                   <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
