@@ -161,6 +161,15 @@
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
+    "faqs": {
+      "type": "product-faqs",
+      "blocks": {},
+      "block_order": [],
+      "custom_css": [],
+      "settings": {
+        "header": "FAQs"
+      }
+    },
     "reviews": {
       "type": "product-reviews",
       "settings": {
@@ -182,5 +191,5 @@
       }
     }
   },
-  "order": ["main", "video", "clinicals", "ingredients", "reviews", "recommendations"]
+  "order": ["main", "video", "clinicals", "ingredients", "faqs", "reviews", "recommendations"]
 }
