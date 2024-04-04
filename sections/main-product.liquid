@@ -81,7 +81,7 @@
               {%- endfor -%}
             </ul>
           </div>
-          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:gap-1 lg:flex-col lg:shrink-0 lg:max-h-[520px] lg:overflow-y-auto" data-glide-el="controls[nav]">
+          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:gap-1 lg:flex-col lg:shrink-0 lg:h-[520px] lg:overflow-y-auto" data-glide-el="controls[nav]">
             {%- for media in product.media limit: section.settings.gallery_limit -%}
               <button class="glide__bullet relative p-2 md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
                 <span class="sr-only">Go to slide {{ forloop.index }}</span>
