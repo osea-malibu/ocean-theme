@@ -143,6 +143,7 @@ module.exports = {
       "swc-light": "#EFF7F9",
       "uabb-light": "#FAF5EA",
       "uao-light": "#FFF8E1",
+      "uao-medium": "#FFE49F",
       "ucbl-light": "#FFFAF0",
       "ucbp-light": "#F7F0E2",
       "mystery-green": "#67F700",
