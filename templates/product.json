@@ -123,29 +123,19 @@
         "gallery_limit": 6
       }
     },
-    "product-video": {
+    "video": {
       "type": "product-video",
       "settings": {
         "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
         "wrapper_classes": "container mx-auto px-4 2xs:px-6 xl:max-w-screen-lg mb-12"
       }
     },
-    "product-clinicals": {
+    "clinicals": {
       "type": "product-clinicals",
       "settings": {
         "section_classes": "",
         "header": "Results You Can Sea<span class=\"font-sans text-lg relative -top-2\">™</span>",
         "subheader": "Our products are clinically proven to ensure the highest levels of efficacy."
-      }
-    },
-    "key-ingredients": {
-      "type": "product-key-ingredients",
-      "disabled": true,
-      "settings": {
-        "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
-        "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
-        "header": "Key Ingredients",
-        "paragraph": "{{ product.metafields.custom.key_ingredients_text.value }}"
       }
     },
     "ingredients": {
@@ -171,14 +161,14 @@
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
-    "product-reviews": {
+    "reviews": {
       "type": "product-reviews",
       "settings": {
         "heading": "Customer Reviews",
         "wrapper_classes": ""
       }
     },
-    "product-recommendations": {
+    "recommendations": {
       "type": "product-recommendations",
       "disabled": true,
       "settings": {
@@ -192,13 +182,5 @@
       }
     }
   },
-  "order": [
-    "main",
-    "product-video",
-    "product-clinicals",
-    "key-ingredients",
-    "ingredients",
-    "product-reviews",
-    "product-recommendations"
-  ]
+  "order": ["main", "video", "clinicals", "ingredients", "reviews", "recommendations"]
 }
