@@ -145,6 +145,13 @@
           if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'
             assign is_fragrance_free = true
           endif
+
+          assign product_collections_handles = product.collections | map: 'handle'
+          if product_collections_handles contains 'exclude-from-site'
+            assign excluded_from_site = true
+          else
+            assign excluded_from_site = false
+          endif
         -%}
 
         {%- for block in section.blocks -%}
@@ -435,7 +442,7 @@
                 </div>
               {%- endif -%}
             {%- when 'quantity_selector' -%}
-              {%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
+              {%- unless excluded_from_site -%}
                 <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
                   <label class="sr-only" for="Quantity-{{ section.id }}">
                     {{ 'products.product.quantity.label' | t }}
@@ -468,7 +475,7 @@
                     </button>
                   </quantity-input>
                 </div>
-              {%- endif -%}
+              {%- endunless -%}
             {%- when 'variant_picker' -%}
               <div class="{{ block.settings.variant_classes }}">
                 {%- unless product.has_only_default_variant -%}
@@ -669,8 +676,7 @@
                 </subscription-radios>
               {%- endunless -%}
             {%- when 'buy_buttons' -%}
-              {%- assign product_collections_handles = product.collections | map: 'handle' -%}
-              {%- unless product_collections_handles contains 'exclude-from-site' -%}
+              {%- unless excluded_from_site -%}
                 <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
                   <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
                     {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
@@ -750,7 +756,7 @@
       </div>
     </div>
   </div>
-  {%- if product.type != 'Sample' and product.type != 'Free Gift' and product.type != 'Gift Card' -%}
+  {%- if excluded_from_site == false and product.type != 'Gift Card' and product.type != 'Subscription Gift' -%}
     <product-sticky-atc class="fixed z-40 inset-x-0 bottom-0 py-2.5 bg-white border-t border-seaweed-300 invisible opacity-0 transition-visibility">
       <div class="flex gap-2 justify-between items-center pl-4 sm:pl-6 pr-20 md:pr-24 xl:max-w-screen-xl xl:mx-auto min-[1400px]:pr-6">
         <h3 class="tracking-wide leading-none text-lg sr-only sm:!not-sr-only">{{- product.title | escape -}}</h3>

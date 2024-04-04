@@ -34,10 +34,18 @@
 
             <tbody>
               {%- for item in cart.items -%}
+                {%- liquid
+                  assign item_collections_handles = item.product.collections | map: 'handle'
+                  if item_collections_handles contains 'exclude-from-site'
+                    assign excluded_from_site = true
+                  else
+                    assign excluded_from_site = false
+                  endif
+                -%}
                 <tr class="cart-item td:py-2 relative" id="CartItem-{{ item.index | plus: 1 }}">
                   <td class="cart-item__media shrink-0">
                     {% if item.image %}
-                      {% if item.url %}<a href="{{ item.url }}" aria-label="{{ item.title }}" tabindex="-1">{% endif %}
+                      {% if item.url and excluded_from_site == false %}<a href="{{ item.url }}" aria-label="{{ item.title }}" tabindex="-1">{% endif %}
                         <img class="cart-item__image shrink-0"
                           src="{{ item.image | image_url: width: 120 }}"
                           alt="{{ item.image.alt | escape }}"
@@ -45,12 +53,16 @@
                           width="60"
                           height="{{ 60 | divided_by: item.image.aspect_ratio | ceil }}"
                         >
-                      {% if item.url %}</a>{% endif %}
+                      {% if item.url and excluded_from_site == false %}</a>{% endif %}
                     {% endif %}
                   </td>
 
                   <td class="cart-item__details">
-                    <a href="{{ item.url }}" class="cart-item__name link leading-tight block mb-1">{{ item.product.title | escape }}</a>
+                    {% if excluded_from_site %}
+                      <div class="cart-item__name leading-tight block mb-1">{{ item.product.title | escape }}</div>
+                    {% else %}
+                      <a href="{{ item.url }}" class="cart-item__name link leading-tight block mb-1">{{ item.product.title | escape }}</a>
+                    {% endif %}
 
                     {%- if item.original_price != item.final_price -%}
                       <div class="cart-item__discounted-prices flex">
@@ -125,7 +137,7 @@
 
                   <td class="cart-item__quantity align-top">
                     <div class="flex items-center absolute sm:relative -right-2 top-10 sm:top-0 sm:right-0">
-                      {%- unless item.product.type == 'Sample' or item.product.type == 'Free Gift' -%}
+                      {%- unless excluded_from_site -%}
                         <label class="sr-only" for="Quantity-{{ item.index | plus: 1 }}">
                           {{ 'products.product.quantity.label' | t }}
                         </label>

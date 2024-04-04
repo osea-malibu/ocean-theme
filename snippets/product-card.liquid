@@ -46,14 +46,22 @@
     <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
       {{- card_product.metafields.custom_fields.short_description | escape -}}
     </p>
-
+    
+    {%- liquid
+      assign product_collections_handles = card_product.collections | map: 'handle'
+      if product_collections_handles contains 'exclude-from-site'
+        assign excluded_from_site = true
+      else
+        assign excluded_from_site = false
+      endif
+    -%}
     {%- if is_pdp_link -%}
       <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         <a class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50" href="{{ card_product.url }}">
           {{- pdp_link_label -}}
         </a>
       </div>
-    {%- elsif card_product.type != 'Free Gift' and hide_atc != true -%}
+    {%- elsif excluded_from_site == false and hide_atc != true -%}
       {%- liquid
         if default_to_mini
           assign mini_index = card_product.variants.size | minus: 1
