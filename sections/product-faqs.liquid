@@ -1,15 +1,15 @@
-{%- if section.blocks.size > 0 -%}
-  <div class="product-ingredients container mb-12 flex w-full lg:max-w-screen-lg relative overflow-hidden">
-    <div class="relative w-full bg-white/90">
+{%- if product.metafields.custom.faq != nil -%}
+  <div class="product-faqs mb-12 container lg:max-w-screen-lg">
+    <div class="{% if product.metafields.custom.product_color_light != blank %}{{ product.metafields.custom.product_color_light }}{% else %}bg-wave-200{% endif %} w-full p-4 sm:p-6">
       <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
       <div class="mb-4">
-        {%- for faq in product.metafields.custom.faq -%}
+        {%- for faq in product.metafields.custom.faq.value -%}
           <div class="relative overflow-hidden{% unless forloop.last %} border-b border-seaweed-400{% endunless %}">
-            <input type="checkbox" name="panel" id="panel-{{ forloop.index }}" class="hidden peer">
-            <label for="panel-{{ forloop.index }}" class="relative block py-2 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-4 after:w-4 before:h-0.5 after:h-0.5 before:rounded-full after:rounded-full before:bg-seaweed-500 after:bg-seaweed-500 before:scale-75 after:scale-75 before:my-0.5 after:my-0.5 before:top-4 after:top-4 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform after:motion-safe:duration-200">
-              <b class="font-medium">{{ faq.question }}</b>
+            <input type="checkbox" name="panel" id="faq_panel-{{ forloop.index }}" class="hidden peer">
+            <label for="faq_panel-{{ forloop.index }}" class="relative block py-2 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-4 after:w-4 before:h-0.5 after:h-0.5 before:rounded-full after:rounded-full before:bg-seaweed-500 after:bg-seaweed-500 before:scale-75 after:scale-75 before:my-0.5 after:my-0.5 before:top-4 after:top-4 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform after:motion-safe:duration-200">
+              <b class="font-medium pr-5 block leading-tight">{{ faq.question }}</b>
             </label>
-            <div class="max-h-0 peer-checked:max-h-24 motion-safe:transition-max-height motion-safe:duration-500">
+            <div class="max-h-0 peer-checked:max-h-80 motion-safe:transition-max-height motion-safe:duration-500">
               <div class="pb-5 leading-tight">
                 {%- if faq.answer != blank -%}
                   <p>{{ faq.answer }}</p>
