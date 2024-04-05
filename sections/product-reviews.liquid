@@ -1,6 +1,13 @@
-{{ 'section-product-reviews.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign product_collections_handles = product.collections | map: 'handle'
+  if product_collections_handles contains 'exclude-from-site'
+    assign excluded_from_site = true
+  else
+    assign excluded_from_site = false
+  endif
+-%}
 
-{%- if product.type != 'Sample' and product.type != 'Free Gift' -%}
+{%- unless excluded_from_site -%}
   <div class="{{ section.settings.wrapper_classes }}">
     <span class="block relative -top-32 invisible" id="reviews"></span>
     <div class="container xl:max-w-screen-lg tracking-tight">
@@ -13,24 +20,10 @@
           {%- endif -%}
         </div>
       {%- endif -%}
-      <div
-        id="stamped-main-widget"
-        data-product-id="{{ product.id }}"
-        data-name="{{ product.title | escape }}"
-        data-url="{{ shop.url }}{{ product.url }}"
-        data-image-url="{{ product.featured_image | image_url: "large" | replace: '?', '%3F' | replace: '&', '%26' }}"
-        data-description="{{ product.description | strip_html | strip_newlines }}"
-        data-product-sku="{{product.selected_or_first_available_variant.sku}}"
-        data-product-title="{{ product.title }}"
-        data-product-type="{{ product.type }}"
-        data-widget-type="minimal"
-        data-sort="most-recent"
-      >
-        
-      </div>
+      <div data-oke-widget data-oke-reviews-product-id="shopify-{{ product.id }}">{{ product.metafields.okendo.ReviewsWidgetSnippet }}</div>
     </div>
   </div>
-{% endif %}
+{% endunless %}
 
 {% schema %}
 {
@@ -39,7 +32,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Stamped reviews widget"
+      "content": "Reviews widget"
     },
     {
       "type": "text",

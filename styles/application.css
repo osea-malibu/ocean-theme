@@ -172,7 +172,7 @@
     @apply px-8 py-4 text-xl rounded-lg;
   }
   .button-primary {
-    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-600 hover:border-seaweed-600 hover:text-white visited:bg-seaweed-700 visited:text-white link:bg-seaweed-700 link:text-white link:hover:bg-seaweed-500 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
+    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-800 hover:border-seaweed-800 hover:text-white visited:bg-seaweed-700 visited:text-white link:bg-seaweed-700 link:text-white link:hover:bg-seaweed-800 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
   }
   .button-secondary {
     @apply bg-white border-seaweed-400 text-seaweed-800 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-800 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
@@ -564,54 +564,22 @@
 
 /* this will always be included in your compiled CSS */
 
-/* Stamped */
-.stamped-badge,
-.stamped-badge .stamped-starrating {
-  @apply leading-4;
+/* Okendo */
+div.oke-sr {
+  @apply h-4 flex items-center ml-1;
 }
-.stamped-badge .stamped-fa-star {
-  @apply -mr-0.5 leading-4;
+div.oke-sr > div {
+  @apply h-4 flex items-center;
 }
-.stamped-badge .stamped-fa-star:before {
-  @apply text-base leading-4;
+.oke-sr .oke-sr-stars {
+  @apply mr-0.5;
 }
-.stamped-badge .stamped-badge-caption {
-  @apply text-xs underline ml-0.5;
+.oke-sr .oke-sr-count {
+  @apply h-4 items-center text-xs underline lowercase;
 }
-.compact .stamped-badge .stamped-badge-caption[data-reviews][data-label] > span {
-  @apply !hidden;
-}
-.compact .stamped-badge,
-.compact .stamped-badge .stamped-starrating {
-  @apply leading-3;
-}
-.compact .stamped-badge .stamped-fa-star {
-  @apply leading-3;
-}
-.compact .stamped-badge .stamped-fa-star:before {
-  @apply text-sm leading-3;
-}
-.stamped-proxy-write div#stamped-reviews-filter,
-.stamped-proxy-write #stamped-reviews-tab {
-  @apply hidden;
-}
-.stamped-proxy-write h2.stamped-proxy-write-title {
-  @apply font-serif tracking-tight text-3xl text-center;
-}
-.stamped-proxy-write h2.stamped-proxy-write-title:before {
-  @apply block font-sans text-lg font-medium text-center tracking-wide mb-0.5;
-}
-.stamped-proxy-write .stamped-form-actions {
-  @apply flex items-center;
-}
-.stamped-proxy-write .stamped-file-uploader {
-  @apply ml-auto;
-}
-.stamped-proxy-write .stamped-file-uploader-btn {
-  @apply !border-seaweed-700 !rounded-md text-seaweed-800 !py-[11px] !text-base font-bold;
-}
-.stamped-proxy-write #stamped-button-submit {
-  @apply bg-seaweed-700;
+.compact .oke-sr .oke-sr-label-text,
+.hide-count .oke-sr .oke-count {
+  @apply sr-only;
 }
 
 /* Catch pay */
