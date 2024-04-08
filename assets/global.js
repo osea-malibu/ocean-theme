@@ -909,6 +909,11 @@ class SubscriptionRadios extends HTMLElement {
         this.updateMainPrice(input);
         this.setDefaultSellingPlan();
 
+        const isSubscriptionInput = document.querySelector(
+          'input[name="properties[_is_subscription]"]'
+        );
+        isSubscriptionInput.value = true;
+
         document.querySelector("#PayInstallments")?.classList.add("opacity-0");
       }
       input.addEventListener("change", this.onPurchaseOptionChange.bind(this));
