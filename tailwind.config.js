@@ -135,6 +135,7 @@ module.exports = {
       "areye-light": "#F5F4EF",
       "bbalm-light": "#F4F3EE",
       "cdnc-light": "#F1EFF5",
+      "ecc-light": "#F5F5F0",
       "eho-light": "#F7F5EF",
       "hss-light": "#EFF4EC",
       "oc-light": "#F7F9F6",
