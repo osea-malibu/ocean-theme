@@ -36,7 +36,7 @@
       {{- card_product.metafields.custom_fields.short_description | escape -}}
     </p>
 
-    <div class="mt-auto overflow-hidden px-1 -mx-1">
+    <div class="mt-auto overflow-hidden px-1 -mx-1 pb-1">
       {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
       {%- if card_product.variants.size > 1 and variant_picker_type != 'none' -%}
         {%- assign dropdown_product_handles = 'undaria-algae-oil, anti-aging-body-balm' | split: ', ' -%}
