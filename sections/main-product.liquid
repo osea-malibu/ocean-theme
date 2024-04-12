@@ -57,7 +57,9 @@
                       <template>
                         <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}">
                           {%- for source in media.sources -%}
+                            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                             <source src="{{ source.url }}" type="video/{{ source.format }}" />
+                            {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                           {%- endfor -%}
                           <img
                             src="{{ media.preview_image | image_url: width: 480, height: 500, crop: 'center' }}"

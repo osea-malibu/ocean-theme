@@ -133,8 +133,20 @@
             else 
               assign default_id = card_product.selected_or_first_available_variant.id
             endif
+
+            assign quantity_rule = card_product.selected_or_first_available_variant.quantity_rule
           -%}
           <input type="hidden" name="id" value="{{ default_id }}" disabled />
+          <input
+            type="hidden"
+            name="quantity"
+            id="Quantity-{{ section.id }}"
+            value="{{ quantity_rule.min }}"
+            form="{{ product_form_id }}"
+            min="{{ quantity_rule.min }}"
+            {% if quantity_rule.max != null %}max="{{ quantity_rule.max }}"{% endif %}
+            step="{{ quantity_rule.increment }}"
+          >
           <button
             id="{{ product_form_id }}-submit"
             type="submit"
