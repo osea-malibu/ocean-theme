@@ -61,7 +61,7 @@
           {{- pdp_link_label -}}
         </a>
       </div>
-    {%- elsif excluded_from_site == false and hide_atc != true -%}
+    {%- elsif excluded_from_site == false and hide_atc != true and card_product.handle != 'studio-gift-card' -%}
       {%- liquid
         if default_to_mini
           assign mini_index = card_product.variants.size | minus: 1
