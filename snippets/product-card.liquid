@@ -11,6 +11,7 @@
     - card_class: {String} Tailwind styling classes (optional)
     - button_class: {String} Tailwind styling classes (optional)
     - image_class: {String} Tailwind styling classes (optional)
+    - image_element_class: {String} Tailwind styling classes (optional)
     - badge_class: {String} Tailwind styling classes (optional)
     - name_class: {String} Tailwind styling classes (optional)
     - description_class: {String} Tailwind styling classes (optional)
@@ -328,6 +329,7 @@
           width="{{ default_image.width }}"
           height="{{ default_image.height }}"
           id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+          {% if image_element_class != blank %}class="{{ image_element_class }}"{% endif %}
         >
         {%- if card_product.media[1] != nil and show_secondary_image_on_hover -%}
           <img

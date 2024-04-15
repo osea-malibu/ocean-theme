@@ -246,17 +246,17 @@ module.exports = {
       addVariant("span", "& > span");
       addVariant("video", "& > video");
       addVariant("label", "& label");
+      addVariant("img", "& img");
       addVariant("li", "& li");
       addVariant("td", "& > td");
       addVariant("tr", "& > tr");
       addVariant("th", "& > th");
       addVariant("h1", "& h1");
+      addVariant("h2", "& h2");
       addVariant("a", "& a");
       addVariant("b", "& b");
       addVariant("i", "& i");
       addVariant("p", "& p");
-      addVariant("h1", "& h1");
-      addVariant("h2", "& h2");
     },
     // add backface classes
     plugin(function ({ addUtilities }) {
