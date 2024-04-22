@@ -158,6 +158,7 @@ module.exports = {
       },
       cdnc: {
         light: "#F1EFF5",
+        medium: "#D3C3E0",
       },
       ecc: {
         light: "#F5F5F0",
