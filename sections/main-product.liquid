@@ -17,16 +17,11 @@
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides min-h-full">
               {%- for media in product.media limit: section.settings.gallery_limit -%}
-                <li class="glide__slide{% if forloop.first %} bg-wave-100{% endif %}" data-media-id="{{ section.id }}-{{ media.id }}">
+                <li class="glide__slide" data-media-id="{{ section.id }}-{{ media.id }}">
                   {%- if media.media_type == 'image' -%}
                     {%- liquid
-                      if forloop.first and product.metafields.custom.product_image_transparent != blank
-                        assign image_object = product.metafields.custom.product_image_transparent
-                      else
-                        assign image_object = media
-                      endif
-                      assign main_image_src = image_object | image_url: width: 400, height: 500, crop: 'center'
-                      assign main_image_src_2x = image_object | image_url: width: 800, height: 1000, crop: 'center'
+                      assign main_image_src = media | image_url: width: 400, height: 500, crop: 'center'
+                      assign main_image_src_2x = media | image_url: width: 800, height: 1000, crop: 'center'
                     -%}
                     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                     <img
@@ -489,13 +484,10 @@
                       {%- endfor -%}
                     {%- endfor -%}
                   {%- else -%}
-                    {%- assign product_image_transparent_src = product.metafields.custom.product_image_transparent | image_url -%}
                     <variant-radios
                       class="no-js-hidden block"
                       data-section="{{ section.id }}"
                       data-url="{{ product.url }}"
-                      data-transparent-image="{% if product.metafields.custom.product_image_transparent %}{% render 'imgix', src: product_image_transparent_src %}{% endif %}"
-                      {{ block.shopify_attributes }}
                     >
                       {%- for option in product.options_with_values -%}
                         <fieldset class="js group">

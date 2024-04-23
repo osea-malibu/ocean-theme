@@ -706,11 +706,7 @@ class VariantSelects extends HTMLElement {
     if (window.location.pathname.includes("/products/")) {
       // change first image in product page image gallery
       const variantImageEl = document.querySelector("#Product-VariantImage");
-      let newImageSrc = this.currentVariant.featured_image.src;
-      if (this.currentVariant.featured_image.position === 1 && this.dataset.transparentImage) {
-        newImageSrc = this.dataset.transparentImage;
-      }
-
+      const newImageSrc = this.currentVariant.featured_image.src;
       if (variantImageEl) {
         variantImageEl.srcset = `${newImageSrc}&width=294 1x, ${newImageSrc}&width=588 2x`;
         variantImageEl.src = newImageSrc;
