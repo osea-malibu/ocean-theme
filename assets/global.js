@@ -720,10 +720,7 @@ class VariantSelects extends HTMLElement {
       const imageElement = document.getElementById(
         `ProductCard-DefaultImage-${this.dataset.section}`
       );
-      let newImageSrc = this.currentVariant.featured_media.preview_image.src;
-      if (this.currentVariant.featured_media.position === 1 && this.dataset.transparentImage) {
-        newImageSrc = this.dataset.transparentImage;
-      }
+      const newImageSrc = this.currentVariant.featured_media.preview_image.src;
 
       if (imageElement) {
         imageElement.srcset = `${newImageSrc}&width=328 1x, ${newImageSrc}&width=656 2x`;
