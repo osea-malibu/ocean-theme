@@ -707,6 +707,11 @@ ul.whr-items .whr-item.active h3::after {
   @apply w-4 h-4;
 }
 
+/* Klaviyo - Back in Stock PDP button */
+.pdp .klaviyo-bis-trigger.button {
+  @apply button-neon;
+}
+
 /* Postscript - Back in Stock PDP button */
 #ps__bis_container_root {
   @apply !z-10;
