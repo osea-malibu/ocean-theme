@@ -709,12 +709,12 @@ ul.whr-items .whr-item.active h3::after {
 
 /* Klaviyo - Back in Stock PDP button */
 .pdp .klaviyo-bis-trigger.button {
-  @apply button-neon h-11 absolute top-[50px] w-[calc(50%-2px)];
+  @apply button-neon h-11 absolute top-[50px] !w-[calc(50%-2px)];
 }
 
 /* Postscript - Back in Stock PDP button */
 #ps__bis_container_root {
-  @apply !z-10 absolute top-[50px] w-[calc(50%-2px)] right-0;
+  @apply !z-10 absolute top-[50px] !w-[calc(50%-2px)] right-0;
 }
 #ps__bis_container_root #ps-bis-widget__button.ps-bis-button {
   @apply button button-neon button-sm h-11 block whitespace-normal leading-tight;
