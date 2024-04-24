@@ -700,6 +700,10 @@
                               {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
                             {%- endif -%}
                         </button>
+                        {%- unless product.selected_or_first_available_variant.available -%}
+                          <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
+                          <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
+                        {%- endunless -%}
                       </div>
                       {%- assign product_collection_handles = product.collections | map: 'handle' -%}
                       {%- if product_collection_handles contains 'skincare-sets-1' -%}
