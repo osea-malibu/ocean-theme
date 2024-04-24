@@ -701,8 +701,10 @@
                             {%- endif -%}
                         </button>
                         {%- unless product.selected_or_first_available_variant.available -%}
-                          <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
-                          <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
+                          <div class="absolute flex gap-2">
+                            <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
+                            <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
+                          </div>
                         {%- endunless -%}
                       </div>
                       {%- assign product_collection_handles = product.collections | map: 'handle' -%}
