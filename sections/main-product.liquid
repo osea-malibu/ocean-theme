@@ -619,7 +619,13 @@
                               <script>console.log("selling plan groups", {{ product.selling_plan_groups | json }})</script>
                               {%- for selling_plan in product.selected_or_first_available_variant.selling_plan_allocations -%}
                                 {%- liquid
-                                  for group in product.selling_plan_groups
+                                  if product.title contains 'LOOP TEST'
+                                    assign groups = product.selling_plan_groups.first.selling_plans
+                                  else
+                                    assign groups = product.selling_plan_groups
+                                  endif
+
+                                  for group in groups
                                     if group.id == selling_plan.selling_plan_group_id
                                       assign selling_plan_group = group
                                     endif
