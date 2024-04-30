@@ -1,5 +1,49 @@
 {
   "sections": {
+    "image_banner_cPTTKe": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_YhQJRt": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_classes": ""
+          }
+        },
+        "paragraph_N64hc7": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "",
+            "paragraph_classes": ""
+          }
+        },
+        "button_LU4QeG": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "",
+            "button_link": "",
+            "target_blank": false,
+            "button_classes": "button-primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_YhQJRt",
+        "paragraph_N64hc7",
+        "button_LU4QeG"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify:\/\/shop_images\/HBS_Launch_-_HP_Banner_Mobile_-_BLANK.jpg",
+        "image": "shopify:\/\/shop_images\/HBS_Launch_-_HP_Banner_Desktop_-_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "max-w-md top-1\/3"
+      }
+    },
     "5825ef80-7eba-428f-aef6-379126e7f97c": {
       "type": "image-banner",
       "blocks": {
@@ -228,6 +272,7 @@
     }
   },
   "order": [
+    "image_banner_cPTTKe",
     "5825ef80-7eba-428f-aef6-379126e7f97c",
     "image_banner_hzGeAP",
     "image_banner_miYQ6K",
