@@ -645,7 +645,7 @@
                                     <script>console.log("selling_plan_group", {{ selling_plan_group | json }})</script>
                                   {% endif %}
                                 {% endfor %}
-                                <script>console.log("selling_plan_group.selling_plans", {{ selling_plan_group.selling_plans }})</script>
+                                <script>console.log("selling_plan_group.selling_plans", {{ selling_plan_group.selling_plans | json }})</script>
                                 {% for selling_plan in selling_plan_group.selling_plans %}
                                   {% if selling_plan.id == selling_plan_allocation.selling_plan_id %}
                                     {% assign selling_plan_final = selling_plan %}
