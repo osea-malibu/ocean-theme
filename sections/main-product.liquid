@@ -615,6 +615,7 @@
                             <fieldset class="selling-plan-options js flex mb-2 pb-3">
                               <legend class="text-sm font-medium">Delivery every</legend>
                               <script>console.log("product", {{ product.selected_or_first_available_variant | json }})</script>
+                              <script>console.log("variant", {{ product.selected_or_first_available_variant | json }})</script>
                               <script>console.log("selling plan groups", {{ product.selling_plan_groups | json }})</script>
                               {%- for selling_plan in product.selected_or_first_available_variant.selling_plan_allocations -%}
                                 {%- liquid
