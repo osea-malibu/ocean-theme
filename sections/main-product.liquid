@@ -626,9 +626,9 @@
                                       endif
                                     endfor
 
-                                    for plan in selling_plan_group.selling_plans
-                                      if plan.id == selling_plan_allocation.selling_plan_id
-                                        assign selling_plan_final = plan
+                                    for selling_plan in selling_plan_group.selling_plans
+                                      if selling_plan.id == selling_plan_allocation.selling_plan_id
+                                        assign selling_plan_final = selling_plan
                                       endif
                                     endfor
                                   else
@@ -639,6 +639,12 @@
                                     endfor
                                   endif
                                 -%}
+                                {% for group in product.selling_plan_groups %}
+                                  {% if group.id == selling_plan_allocation.selling_plan_group_id %}
+                                    {% assign selling_plan_group = group %}
+                                    <script>console.log("selling_plan_group", {{ selling_plan_group }})</script>
+                                  {% endif %}
+                                {% endfor %}
                                 <script>console.log("selling_plan_final", {{ selling_plan_final }})</script>
                                 <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
                                   <input type="radio"
