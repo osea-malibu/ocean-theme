@@ -620,18 +620,20 @@
                               {%- for selling_plan in product.selected_or_first_available_variant.selling_plan_allocations -%}
                                 {%- liquid
                                   if product.title contains 'LOOP TEST'
-                                    assign groups = product.selling_plan_groups.first.selling_plans
+                                    for group in product.selling_plan_groups.first.selling_plans
+                                      if group.id == selling_plan.id
+                                        assign selling_plan_group = group
+                                      endif
+                                    endfor
                                   else
-                                    assign groups = product.selling_plan_groups
+                                    for group in product.selling_plan_groups
+                                      if group.id == selling_plan.selling_plan_group_id
+                                        assign selling_plan_group = group
+                                      endif
+                                    endfor
                                   endif
-
-                                  for group in groups
-                                    if group.id == selling_plan.selling_plan_group_id
-                                      assign selling_plan_group = group
-                                    endif
-                                  endfor
                                 -%}
-                                <script>console.log("selling plan", {{ selling_plan.name }})</script>
+                                <script>console.log("selling_plan_group", {{ selling_plan_group }})</script>
                                 <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
                                   <input type="radio"
                                     id="{{ selling_plan.selling_plan.id }}"
