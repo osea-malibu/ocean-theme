@@ -642,7 +642,7 @@
                                 <script>console.log("selling_plan_group.selling_plans", {{ selling_plan_group.selling_plans | json }})</script>
                                 {% for selling_plan in selling_plan_group.selling_plans %}
                                   <script>console.log("selling_plan.id", {{ selling_plan.id }})</script>
-                                  <script>console.log("selling_plan_allocation", {{ selling_plan_allocation | json }})</script>
+                                  <script>console.log("selling_plan_allocation", "{{ selling_plan_allocation }}")</script>
                                   {% if selling_plan.id == selling_plan_allocation.selling_plan_id %}
                                     {% assign selling_plan_final = selling_plan %}
                                     <script>console.log("selling_plan_final", {{ selling_plan_final | json }})</script>
