@@ -614,7 +614,7 @@
                           <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
                             <fieldset class="selling-plan-options js flex mb-2 pb-3">
                               <legend class="text-sm font-medium">Delivery every</legend>
-                              <script>console.log("selling plan groups", {{ product.selling_plan_groups }})</script>
+                              <script>console.log("selling plan groups", {{ product.selling_plan_groups | json }})</script>
                               {%- for selling_plan in product.selected_or_first_available_variant.selling_plan_allocations -%}
                                 {%- liquid
                                   for group in product.selling_plan_groups
@@ -623,7 +623,7 @@
                                     endif
                                   endfor
                                 -%}
-                                <script>console.log("selling plan", {{ selling_plan }})</script>
+                                <script>console.log("selling plan", {{ selling_plan | json }})</script>
                                 <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
                                   <input type="radio"
                                     id="{{ selling_plan.selling_plan.id }}"
