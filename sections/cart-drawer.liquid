@@ -328,6 +328,7 @@
                               </div>
                             </td>
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
+                              <script>console.log("item", {{ item | json }})</script>
                               {%- liquid
                                 for variant in item.product.variants
                                   if variant.id == item.id
