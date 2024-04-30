@@ -642,7 +642,7 @@
                                 {% for group in product.selling_plan_groups %}
                                   {% if group.id == selling_plan_allocation.selling_plan_group_id %}
                                     {% assign selling_plan_group = group %}
-                                    <script>console.log("selling_plan_group", {{ selling_plan_group }})</script>
+                                    <script>console.log("selling_plan_group", {{ selling_plan_group | json }})</script>
                                   {% endif %}
                                 {% endfor %}
                                 <script>console.log("selling_plan_final", {{ selling_plan_final }})</script>
