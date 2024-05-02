@@ -312,6 +312,9 @@
                       poster="{% render 'imgix', src: video_poster_url %}"
                       class="lazy bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
                     >
+                      {%- for source in block.settings.video_mp4_desktop.sources -%}
+                        <source data-src="{{ source.url }}" type="video/{{ source.format }}" media="(min-width:768px)">
+                      {%- endfor -%}
                       {%- for source in block.settings.video_mp4.sources -%}
                         <source data-src="{{ source.url }}" type="video/{{ source.format }}">
                       {%- endfor -%}
@@ -739,6 +742,12 @@
           "id": "video_mp4",
           "info": "Format: mp4 preferred",
           "label": "Video file"
+        },
+        {
+          "type": "video",
+          "id": "video_mp4_desktop",
+          "info": "Format: mp4 preferred",
+          "label": "Video file (desktop)"
         },
         {
           "type": "checkbox",
