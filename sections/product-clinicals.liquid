@@ -13,7 +13,7 @@
                 <div class="snap-start w-40 lg:w-52 shrink-0 sm:shrink bg-white rounded-xl p-4{% if forloop.last %} mr-6{% endif %}">
                   {%- if stat.value != nil -%}
                     <h5 class="whitespace-nowrap">
-                      <span class="text-5xl">{{ stat.value }}</span>
+                      <span class="{% if stat.value_type == 'text' %}text-3xl block mt-2.5 mb-0.5 font-medium{% else %}text-5xl{% endif %}">{{ stat.value }}</span>
                       {%- unless stat.value_type == 'text' -%}
                         <sub class="text-2xl bottom-0">{% if stat.value_type == 'percent' %}%{% else %}hours{% endif %}</sub>
                       {%- endunless -%}
