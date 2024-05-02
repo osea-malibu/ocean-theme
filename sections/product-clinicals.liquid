@@ -15,7 +15,7 @@
                     <h5 class="whitespace-nowrap">
                       <span class="{% if stat.value_type == 'text' %}text-3xl block mt-2.5 mb-0.5 font-medium{% else %}text-5xl{% endif %}">{{ stat.value }}</span>
                       {%- unless stat.value_type == 'text' -%}
-                        <sub class="text-2xl bottom-0">{% if stat.value_type == 'percent' %}%{% else %}hours{% endif %}</sub>
+                        <sub class="text-2xl bottom-0">&nbsp;{% if stat.value_type == 'percent' %}%{% else %}hours{% endif %}</sub>
                       {%- endunless -%}
                     </h5>
                   {%- endif -%}
