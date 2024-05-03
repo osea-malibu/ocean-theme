@@ -221,7 +221,11 @@
                                             for="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
                                             tabindex="0"
                                           >
-                                            {{ value }}
+                                            {%- if block.settings.variant_button_nofl -%}
+                                              {{- value | replace: 'fl ', '<span class="hidden sm:inline">fl </span>' -}}
+                                            {%- else -%}
+                                              {{- value -}}
+                                            {%- endif -%}
                                           </label>
                                         </div>
                                       {%- endfor -%}
@@ -735,6 +739,11 @@
           "type": "textarea",
           "id": "variant_button_wrapper_classes",
           "label": "Variant button wrapper classes"
+        },
+        {
+          "type": "textarea",
+          "id": "variant_button_nofl",
+          "label": "Hide 'fl' in variant button (mobile)"
         },
         {
           "type": "header",
