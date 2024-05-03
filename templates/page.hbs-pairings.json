@@ -287,14 +287,22 @@
             "prod_slider_handles": "",
             "prod_slider_classes": ""
           }
+        },
+        "code_e4DAPY": {
+          "type": "code",
+          "settings": {
+            "column_classes": "",
+            "code": "<div class=\"h-8 w-px border-r border-dashed\"><\/div>"
+          }
         }
       },
       "block_order": [
-        "column_mFAB9R"
+        "column_mFAB9R",
+        "code_e4DAPY"
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "bg-neon-green\/40 container py-8",
+        "section_classes": "bg-neon-green\/40 container pt-8",
         "container_classes": "flex flex-col justify-center items-center",
         "is_slider": false,
         "slider_indicator_count": 3,
@@ -309,6 +317,13 @@
     "multicolumn_yXBBhz": {
       "type": "multicolumn",
       "blocks": {
+        "code_p9QjRF": {
+          "type": "code",
+          "settings": {
+            "column_classes": "",
+            "code": ""
+          }
+        },
         "column_fKFx6Y": {
           "type": "column",
           "settings": {
@@ -430,6 +445,7 @@
         }
       },
       "block_order": [
+        "code_p9QjRF",
         "column_fKFx6Y",
         "column_8xHNFk",
         "column_pcU4bb"
@@ -437,7 +453,7 @@
       "settings": {
         "section_heading": "",
         "section_classes": "container bg-neon-green\/40",
-        "container_classes": "border border-seaweed-700 rounded-xl px-3 py-6 grid grid-cols-2 gap-2",
+        "container_classes": "border border-seaweed-700 rounded-xl px-3 pt-4 pb-6 grid grid-cols-2 gap-2",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
