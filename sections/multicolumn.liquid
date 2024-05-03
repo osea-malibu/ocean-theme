@@ -207,7 +207,7 @@
                                     <fieldset class="js flex{% if block.settings.variant_classes != blank %} {{ block.settings.variant_classes }}{% endif %}">
                                       <legend class="sr-only">{{ option.name }}</legend>
                                       {%- for value in option.values -%}
-                                        <div {% if block.settings.variant_button_wrapper_classes != blank %}class="{{ block.settings.variant_button_wrapper_classes }}"{% endif %}>
+                                        <div>
                                           <input type="radio"
                                             id="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
                                             class="peer hidden"
@@ -217,7 +217,7 @@
                                             {% if option.selected_value == value %}checked{% endif %}
                                           >
                                           <label
-                                            class="button button-xs rounded-full lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
+                                            class="button button-xs rounded-full lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}{% if block.settings.variant_button_classes != blank %} {{ block.settings.variant_button_classes }}{% endif %}"
                                             for="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
                                             tabindex="0"
                                           >
@@ -737,8 +737,8 @@
         },
         {
           "type": "textarea",
-          "id": "variant_button_wrapper_classes",
-          "label": "Variant button wrapper classes"
+          "id": "variant_button_classes",
+          "label": "Variant button classes"
         },
         {
           "type": "textarea",
