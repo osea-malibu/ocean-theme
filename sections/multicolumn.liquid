@@ -207,7 +207,7 @@
                                     <fieldset class="js flex{% if block.settings.variant_classes != blank %} {{ block.settings.variant_classes }}{% endif %}">
                                       <legend class="sr-only">{{ option.name }}</legend>
                                       {%- for value in option.values -%}
-                                        <div>
+                                        <div {% if block.settings.variant_button_wrapper_classes != blank %}class="{{ block.settings.variant_button_wrapper_classes }}"{% endif %}>
                                           <input type="radio"
                                             id="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
                                             class="peer hidden"
@@ -730,6 +730,11 @@
           "type": "textarea",
           "id": "variant_classes",
           "label": "Variant classes"
+        },
+        {
+          "type": "textarea",
+          "id": "variant_button_wrapper_classes",
+          "label": "Variant button wrapper classes"
         },
         {
           "type": "header",
