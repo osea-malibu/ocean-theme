@@ -376,7 +376,7 @@
                                     endif
                                   -%}
                                   <script>console.log("item.product.selling_plan_groups", {{ item.product.selling_plan_groups | json }})</script>
-                                  <script>console.log("current_variant.selling_plan_allocations", {{ current_variant.selling_plan_allocations | json }})</script>
+                                  <script>console.log("current_variant", {{ current_variant | json }})</script>
                                   <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
                                     <input
                                       id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
