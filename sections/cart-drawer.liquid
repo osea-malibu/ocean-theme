@@ -342,16 +342,22 @@
                                     assign selling_plans = item.product.selling_plan_groups
                                     if item.title contains 'LOOP TEST'
                                       assign default_option = selling_plans[0].selling_plans[0].id
+                                      if item.product.metafields.custom.subscription_interval != blank
+                                        for plan in selling_plans[0].selling_plans
+                                          if plan.name contains item.product.metafields.custom.subscription_interval
+                                            assign default_option = plan.selling_plans[0].id
+                                          endif
+                                        endfor
+                                      endif
                                     else
                                       assign default_option = selling_plans[1].selling_plans[0].id
-                                    endif
-
-                                    if item.product.metafields.custom.subscription_interval != blank
-                                      for plan in selling_plans
-                                        if plan.name contains item.product.metafields.custom.subscription_interval
-                                          assign default_option = plan.selling_plans[0].id
-                                        endif
-                                      endfor
+                                      if item.product.metafields.custom.subscription_interval != blank
+                                        for plan in selling_plans
+                                          if plan.name contains item.product.metafields.custom.subscription_interval
+                                            assign default_option = plan.selling_plans[0].id
+                                          endif
+                                        endfor
+                                      endif
                                     endif
                                   -%}
                                   <script>console.log("selling_plans", {{ selling_plans | json }})</script>
