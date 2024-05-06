@@ -379,7 +379,10 @@
                                       >
                                         {%- if item.title contains 'LOOP TEST' -%}
                                           {%- for option in selling_plans[0].selling_plans -%}
-                                            <option value="{{ option.selling_plans[0].id }}" {%- if option.selling_plans[0].id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}>
+                                            <option
+                                              value="{{ option.id }}"
+                                              {%- if option.id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}
+                                            >
                                               {{- option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' -}}
                                             </option>
                                           {%- endfor -%}
