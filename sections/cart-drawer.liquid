@@ -349,6 +349,7 @@
                                       endfor
                                     endif
                                   -%}
+                                  <script>console.log("default_option", {{ selling_plans }})</script>
                                   <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
                                     <input
                                       id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
