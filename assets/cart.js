@@ -106,6 +106,7 @@ class CartItems extends HTMLElement {
 
     if (name === "subscribe") {
       if (target.checked) {
+        console.log("target.dataset.default", target.dataset.default);
         selling_plan = target.dataset.default;
         properties = { _is_subscription: "true" };
       } else {
