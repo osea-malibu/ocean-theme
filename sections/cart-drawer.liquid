@@ -354,7 +354,8 @@
                                       endfor
                                     endif
                                   -%}
-                                  <script>console.log("selling_plans.selling_plans", {{ selling_plans.selling_plans | json }})</script>
+                                  <script>console.log("selling_plans", {{ selling_plans | json }})</script>
+                                  <script>console.log("selling_plans.selling_plans", {{ selling_plans[0].selling_plans | json }})</script>
                                   <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
                                     <input
                                       id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
@@ -377,7 +378,7 @@
                                         data-index="{{ item.index | plus: 1 }}"
                                       >
                                         {%- if item.title contains 'LOOP TEST' -%}
-                                          {%- for option in selling_plans.selling_plans -%}
+                                          {%- for option in selling_plans[0].selling_plans -%}
                                             <option value="{{ option.selling_plans[0].id }}" {%- if option.selling_plans[0].id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}>
                                               {{- option.name | replace: 'Delivery every ', '' | replace: 'Month', 'month' -}}
                                             </option>
