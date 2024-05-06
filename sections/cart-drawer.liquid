@@ -339,17 +339,44 @@
                               {%- if current_variant and current_variant.selling_plan_allocations.size > 0 -%}
                                 <div class="cart-subscibe flex flex-col items-end h-full">
                                   {%- liquid
-                                    assign selling_plans = item.product.selling_plan_groups
-                                    assign default_option = selling_plans[1].selling_plans[0].id
-                                    if item.product.metafields.custom.subscription_interval != blank
-                                      for plan in selling_plans
-                                        if plan.name contains item.product.metafields.custom.subscription_interval
-                                          assign default_option = plan.selling_plans[0].id
-                                        endif
-                                      endfor
+                                    if item.title contains 'LOOP TEST'
+                                      comment
+                                        for group in item.product.selling_plan_groups
+                                          if group.id == allocation.selling_plan_group_id
+                                            assign selling_plan_group = group
+                                          endif
+                                        endfor
+
+                                        for plan in selling_plan_group.selling_plans
+                                          if plan.id == allocation.selling_plan.id
+                                            assign selling_plan = plan
+                                          endif
+                                        endfor
+                                      endcomment
+
+                                      assign selling_plans = item.product.selling_plan_groups
+                                      assign default_option = selling_plans[1].selling_plans[0].id
+                                      if item.product.metafields.custom.subscription_interval != blank
+                                        for plan in selling_plans
+                                          if plan.name contains item.product.metafields.custom.subscription_interval
+                                            assign default_option = plan.selling_plans[0].id
+                                          endif
+                                        endfor
+                                      endif
+                                    else
+                                      assign selling_plans = item.product.selling_plan_groups
+                                      assign default_option = selling_plans[1].selling_plans[0].id
+                                      if item.product.metafields.custom.subscription_interval != blank
+                                        for plan in selling_plans
+                                          if plan.name contains item.product.metafields.custom.subscription_interval
+                                            assign default_option = plan.selling_plans[0].id
+                                          endif
+                                        endfor
+                                      endif
                                     endif
                                   -%}
-                                  <script>console.log("default_option", {{ selling_plans }})</script>
+                                  <script>console.log("item.product.selling_plan_groups", {{ item.product.selling_plan_groups | json }})</script>
+                                  <script>console.log("current_variant.selling_plan_allocations", {{ current_variant.selling_plan_allocations | json }})</script>
                                   <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
                                     <input
                                       id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
