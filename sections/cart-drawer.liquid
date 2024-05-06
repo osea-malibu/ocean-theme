@@ -328,7 +328,6 @@
                               </div>
                             </td>
                             <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
-                              <script>console.log("item", {{ item | json }})</script>
                               {%- liquid
                                 for variant in item.product.variants
                                   if variant.id == item.id
@@ -360,8 +359,6 @@
                                       endif
                                     endif
                                   -%}
-                                  <script>console.log("selling_plans", {{ selling_plans | json }})</script>
-                                  <script>console.log("selling_plans.selling_plans", {{ selling_plans[0].selling_plans | json }})</script>
                                   <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
                                     <input
                                       id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
