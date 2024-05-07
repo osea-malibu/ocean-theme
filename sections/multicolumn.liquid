@@ -27,7 +27,7 @@
                 {%- when 'column' %}
                   {%- if block.settings.image != blank and block.settings.is_bg_image == false -%}
                     {%- if block.settings.image_link != blank -%}
-                      <a href="{{ block.settings.image_link }}">
+                      <a href="{{ block.settings.image_link }}"{% if block.settings.image_link_classes != blank %} class="{{ block.settings.image_link_classes }}"{% endif %}>
                     {%- endif -%}
                       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                       {%- if block.settings.image contains '.gif' -%}
@@ -616,6 +616,11 @@
           "type": "textarea",
           "id": "image_wrapper_classes",
           "label": "Image wrapper classes"
+        },
+        {
+          "type": "textarea",
+          "id": "image_link_classes",
+          "label": "Image link classes"
         },
         {
           "type": "text",
