@@ -678,6 +678,7 @@ class VariantSelects extends HTMLElement {
       'input[name="properties[_is_subscription]"]'
     );
 
+    console.log("this.currentVariant", this.currentVariant);
     if (this.currentVariant) {
       if (this.currentVariant.selling_plan_allocations.length > 0) {
         isSubscriptionInput.value = true;
