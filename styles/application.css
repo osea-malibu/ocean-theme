@@ -8,6 +8,11 @@
     @apply bg-white text-seaweed-700;
   }
 
+  /* fix z-index issue in safari */
+  video {
+    -webkit-transform-style: preserve-3d;
+  }
+
   /* System fonts */
   .system-sans {
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
