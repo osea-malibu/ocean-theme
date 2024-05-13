@@ -36,6 +36,13 @@
     "1280fb70-09a1-41aa-98a0-7baeb1651a4b": {
       "type": "page-banner",
       "blocks": {
+        "heading_jB9XTq": {
+          "type": "heading",
+          "settings": {
+            "heading": "Win a Free PR Box",
+            "heading_classes": "tracking-widest font-bold uppercase text-xl lg:text-2xl hidden sm:block"
+          }
+        },
         "7e965826-d9b1-4b9a-9667-6fc6ad55fd1a": {
           "type": "paragraph",
           "settings": {
@@ -45,12 +52,13 @@
         }
       },
       "block_order": [
+        "heading_jB9XTq",
         "7e965826-d9b1-4b9a-9667-6fc6ad55fd1a"
       ],
       "settings": {
         "is_text_only": true,
         "is_lazy": false,
-        "section_classes": "relative px-6 bg-uao-light  pb-0 px-6 container mb-0 sm:hidden",
+        "section_classes": "relative px-6 bg-uao-light  pb-0 px-6 container mb-0",
         "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
         "text_block_classes": "absolute top-4 inset-x-0 px-6 text-center py-0"
       }
