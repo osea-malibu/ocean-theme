@@ -22,6 +22,7 @@
         "heading_q7MHht",
         "paragraph_4mndaF"
       ],
+      "disabled": true,
       "settings": {
         "image_mobile": "shopify:\/\/shop_images\/Frame_26_1.png",
         "image": "shopify:\/\/shop_images\/Frame_25.png",
@@ -98,14 +99,6 @@
     "1280fb70-09a1-41aa-98a0-7baeb1651a4b": {
       "type": "page-banner",
       "blocks": {
-        "template--15591149306039__1280fb70-09a1-41aa-98a0-7baeb1651a4b-166586670390045180-0": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "Win a Free PR Box",
-            "heading_classes": "tracking-widest font-bold text-2xl lg:text-3xl"
-          }
-        },
         "7e965826-d9b1-4b9a-9667-6fc6ad55fd1a": {
           "type": "paragraph",
           "settings": {
@@ -115,13 +108,12 @@
         }
       },
       "block_order": [
-        "template--15591149306039__1280fb70-09a1-41aa-98a0-7baeb1651a4b-166586670390045180-0",
         "7e965826-d9b1-4b9a-9667-6fc6ad55fd1a"
       ],
       "settings": {
         "is_text_only": true,
         "is_lazy": false,
-        "section_classes": "relative px-6 bg-uao-light  pb-0 px-6 container mb-0",
+        "section_classes": "relative px-6 bg-uao-light  pb-0 px-6 container mb-0 sm:hidden",
         "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
         "text_block_classes": "absolute top-4 inset-x-0 px-6 text-center py-0"
       }
