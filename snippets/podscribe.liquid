@@ -1,0 +1,18 @@
+<!-- Podscribe pixel -->
+<script>
+  (function (w, d) {
+      var id = 'podscribe-capture',
+      n = 'script';
+      var e = d.createElement(n);
+      e.id = id;
+      e.async = true;
+      e.src = 'https://d34r8q7sht0t9k.cloudfront.net/tag.js';
+      var s = d.getElementsByTagName(n)[0];
+      s.parentNode.insertBefore(e, s);
+      e.addEventListener('load', function() {
+        w.podscribe('init', { user_id: 'd8656980-7862-4277-ac8d-6a5f81a2dc01', advertiser: 'oseamalibu' });
+        w.podscribe('view');
+      })
+    })(window, document);
+  </script>
+<!-- /Podscribe pixel -->
