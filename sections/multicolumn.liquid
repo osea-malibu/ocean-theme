@@ -135,7 +135,6 @@
                                         name="selling_plan"
                                         value="{{ value.id | escape }}"
                                         form="{{ product_form_id }}"
-                                        {% if option.selected_value == value.id %}checked{% endif %}
                                       >
                                       <label
                                         class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-normal w-full text-left"
@@ -158,7 +157,7 @@
                                     form="{{ product_form_id }}"
                                   >
                                     {%- for value in block.settings.atc_button_product.selling_plan_groups[0].selling_plans -%}
-                                      <option value="{{ value.id | escape }}" {% if option.selected_value == value.id %}selected="selected"{% endif %}>
+                                      <option value="{{ value.id | escape }}">
                                         {{ value.name | replace: 'Delivery every ', '' }}
                                       </option>
                                     {%- endfor -%}
