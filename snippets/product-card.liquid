@@ -117,7 +117,7 @@
             </fieldset>
           {%- else -%}
             <div class="relative block mt-0.5 tracking-wide">
-              <label class="absolute top-px left-2 xs:left-3 z-10 text-xs font-medium block leading-5 tracking-wide" for="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
+              <label class="absolute top-px left-2 xs:left-3 z-10 text-xs font-medium block leading-5 tracking-wide pointer-events-none" for="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
                 Ship every:
               </label>
               <select id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
@@ -133,18 +133,6 @@
                     {{- option.name -}}
                   </option>
                 {%- endfor -%}
-                {% comment %} {%- for value in card_product.selling_plan_groups -%}
-                  <option
-                    value="{{ value.selling_plans[0].id | escape }}"
-                    {% if card_product.metafields.custom.subscription_interval != blank and value.name contains card_product.metafields.custom.subscription_interval %}
-                      selected
-                    {% elsif card_product.metafields.custom.subscription_interval == blank and forloop.index == 2 %}
-                      selected
-                    {% endif %}
-                  >
-                    {{ value.name | replace: 'Delivery every ', '' }}
-                  </option>
-                {%- endfor -%} {% endcomment %}
               </select>
             </div>
           {%- endif -%}
