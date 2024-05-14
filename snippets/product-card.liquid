@@ -94,9 +94,9 @@
           {%- if variant_picker_type == 'button' -%}
             <fieldset class="js flex">
               <legend class="sr-only">Ship every:</legend>
-              <div class="overflow-scroll flex">
+              <div class="overflow-x-auto flex">
                 {%- for option in groups[0].selling_plans -%}
-                  <div class="flex-grow{% unless forloop.last %} mr-1 sm:mr-2{% endunless %}">
+                  <div class="flex-grow{% unless forloop.last %} mr-0.5{% endunless %}">
                     <input type="radio"
                       id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
                       class="peer hidden"
