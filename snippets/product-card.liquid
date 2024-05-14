@@ -103,6 +103,7 @@
                       name="selling_plan"
                       value="{{ option.id }}"
                       form="{{ product_form_id }}"
+                      {%- if option.id == default_option -%}checked{%- endif -%}
                     >
                     <label
                       class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-normal w-full text-left"
