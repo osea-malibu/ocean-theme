@@ -80,6 +80,17 @@
       <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
         {%- if subscription and card_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
+          {%- liquid
+            assign groups = card_product.selling_plan_groups
+            assign default_option = groups[0].selling_plans[1].id
+            if card_product.metafields.custom.subscription_interval != blank
+              for plan in groups[0].selling_plans
+                if plan.name contains card_product.metafields.custom.subscription_interval
+                  assign default_option = plan.id
+                endif
+              endfor
+            endif
+          -%}
           {%- if variant_picker_type == 'button' -%}
             <fieldset class="js flex">
               <legend class="sr-only">Ship every:</legend>
@@ -114,7 +125,15 @@
                 name="selling_plan"
                 form="{{ product_form_id }}"
               >
-                {%- for value in card_product.selling_plan_groups -%}
+                {%- for option in groups[0].selling_plans -%}
+                  <option
+                    value="{{ option.id }}"
+                    {%- if option.id == card_product.selected_or_first_available_variant.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}
+                  >
+                    {{- option.name -}}
+                  </option>
+                {%- endfor -%}
+                {% comment %} {%- for value in card_product.selling_plan_groups -%}
                   <option
                     value="{{ value.selling_plans[0].id | escape }}"
                     {% if card_product.metafields.custom.subscription_interval != blank and value.name contains card_product.metafields.custom.subscription_interval %}
@@ -125,7 +144,7 @@
                   >
                     {{ value.name | replace: 'Delivery every ', '' }}
                   </option>
-                {%- endfor -%}
+                {%- endfor -%} {% endcomment %}
               </select>
             </div>
           {%- endif -%}
