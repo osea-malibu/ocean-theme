@@ -113,24 +113,6 @@
                     </label>
                   </div>
                 {%- endfor -%}
-                {%- for value in card_product.selling_plan_groups -%}
-                  <div class="flex-grow{% unless forloop.last %} mr-1 sm:mr-2{% endunless %}">
-                    <input type="radio"
-                      id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                      class="peer hidden"
-                      name="selling_plan"
-                      value="{{ value.selling_plans[0].id | escape }}"
-                      form="{{ product_form_id }}"
-                    >
-                    <label
-                      class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-normal w-full text-left"
-                      for="{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                      tabindex="0"
-                    >
-                      {{ value.name | replace: 'Delivery every ', '' }}
-                    </label>
-                  </div>
-                {%- endfor -%}
               </div>
             </fieldset>
           {%- else -%}
