@@ -94,7 +94,7 @@
           {%- if variant_picker_type == 'button' -%}
             <fieldset class="js flex">
               <legend class="sr-only">Ship every:</legend>
-              <div class="overflow-scroll">
+              <div class="overflow-scroll flex">
                 {%- for option in groups[0].selling_plans -%}
                   <div class="flex-grow{% unless forloop.last %} mr-1 sm:mr-2{% endunless %}">
                     <input type="radio"
