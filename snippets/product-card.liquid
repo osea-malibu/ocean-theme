@@ -128,7 +128,7 @@
                 {%- for option in groups[0].selling_plans -%}
                   <option
                     value="{{ option.id }}"
-                    {%- if option.id == card_product.selected_or_first_available_variant.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}
+                    {%- if option.id == default_option -%}selected{%- endif -%}
                   >
                     {{- option.name -}}
                   </option>
