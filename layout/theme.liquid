@@ -41,12 +41,6 @@
     {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" content="" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" content="" id="amazon-payments-metadata"' }}
     {% comment %}theme-check-enable ContentForHeaderModification,RemoteAsset{% endcomment %}
 
-    {%- if template contains 'product' or template contains 'login' -%}
-      {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-      <script type="text/javascript" src="https://static.rechargecdn.com/assets/js/widget.min.js?shop=osea-malibu.myshopify.com" defer></script>
-      {% comment %}theme-check-enable RemoteAsset{% endcomment %}
-    {%- endif -%}
-
     {% style %}
       {% render 'font-face' %}
     {% endstyle %}
