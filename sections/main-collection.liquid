@@ -48,7 +48,9 @@
           </li>
         {%- endif -%}
         {%- for product in featured_products.value -%}
+          {% if forloop.index < 4 %}
           <script>console.log("forloop.index", {{ forloop.index }});</script>
+          {% endif %}
           <li>
             {% render 'product-card',
               card_product: product,
