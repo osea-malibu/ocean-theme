@@ -171,10 +171,10 @@
                 {%- endif -%}
               </div>
             {%- when 'rating' -%}
-              <div class="{{ block.settings.rating_classes }} flex gap-2">
+              <div class="{{ block.settings.rating_classes }} flex gap-2 items-center">
                 {% render 'product-rating', product: product %}
                 {%- if product.metafields.custom.faq != nil -%}
-                  <a href="#ProductFaqs" class="link anchor hidden">Product FAQs</a>
+                  <a href="#ProductFaqs" class="link hidden text-xs">Product FAQs</a>
                 {%- endif -%}
               </div>
               {%- if product.metafields.custom.set_value -%}

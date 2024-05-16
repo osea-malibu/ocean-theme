@@ -1,5 +1,6 @@
 {%- if product.metafields.custom.faq != nil -%}
-  <div id="ProductFaqs" class="product-faqs mb-12 container lg:max-w-screen-lg">
+  <div class="anchor" id="ProductFaqs"></div>
+  <div class="product-faqs mb-12 container lg:max-w-screen-lg">
     <div class="{% if product.metafields.custom.product_color_light != blank %}{{ product.metafields.custom.product_color_light }}{% else %}bg-wave-200{% endif %} w-full p-4 sm:p-6">
       <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
       <div class="mb-4">
