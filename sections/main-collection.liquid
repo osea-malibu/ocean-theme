@@ -48,16 +48,15 @@
           </li>
         {%- endif -%}
         {%- for product in featured_products.value -%}
-          {%- if forloop.index < 5 and collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank -%}
-            {% assign remove_lazy_loading = true %}
-            <script>console.log("promo block");</script>
-          {%- elsif forloop.index < 4 %}
-            {% assign remove_lazy_loading = true %}
-            <script>console.log("no promo block", {{ forloop.index }});</script>
-          {%- else %}
-            {% assign remove_lazy_loading = false %}
-            <script>console.log("no featured section", {{ forloop.index }});</script>
-          {% endif %}
+          {%- liquid
+            if forloop.index < 4 and collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank
+              assign remove_lazy_loading = true
+            elsif forloop.index < 5
+              assign remove_lazy_loading = true
+            else
+              assign remove_lazy_loading = false
+            endif
+          -%}
           <li>
             {% render 'product-card',
               card_product: product,
