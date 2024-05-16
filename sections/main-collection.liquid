@@ -48,8 +48,15 @@
           </li>
         {%- endif -%}
         {%- for product in featured_products.value -%}
-          {% if forloop.index < 4 %}
-          <script>console.log("forloop.index", {{ forloop.index }});</script>
+          {%- if forloop.index < 5 and collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank -%}
+            {% assign remove_lazy_loading = true %}
+            <script>console.log("promo block");</script>
+          {%- elsif forloop.index < 4 %}
+            {% assign remove_lazy_loading = true %}
+            <script>console.log("no promo block", {{ forloop.index }});</script>
+          {%- else %}
+            {% assign remove_lazy_loading = false %}
+            <script>console.log("no featured section", {{ forloop.index }});</script>
           {% endif %}
           <li>
             {% render 'product-card',
@@ -57,7 +64,7 @@
               section_id: section.id,
               button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
               show_reviews: section.settings.show_reviews,
-              remove_lazy_loading: forloop.index < 4
+              remove_lazy_loading: remove_lazy_loading
             %}
           </li>
         {%- endfor -%}
