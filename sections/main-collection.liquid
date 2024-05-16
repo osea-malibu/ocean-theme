@@ -48,6 +48,7 @@
           </li>
         {%- endif -%}
         {%- for product in featured_products.value -%}
+          <script>console.log("forloop.index", {{ forloop.index }});</script>
           <li>
             {% render 'product-card',
               card_product: product,
