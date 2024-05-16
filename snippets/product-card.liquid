@@ -26,7 +26,7 @@
     - hide_atc: {Boolean} Hide add to cart button, default: false (optional)
     - remove_linking: {Boolean} Remove linking from product title, default: false (optional)
     - remove_lazy_loading: {Boolean} Remove lazy loading from images, default: false (optional)
-    - two_column_layout: {Boolean} Renders card in two column layout, makes image smaller default: false (optional)
+    - plp_card: {Boolean} Renders card in two column layout, makes image smaller default: false (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -318,22 +318,58 @@
             assign default_image = card_product.featured_media
           endif
 
+          assign default_image_src_390 = default_image | image_url: width: 175
+          assign default_image_src_390_2x = default_image | image_url: width: 350
+          assign default_image_src_472 = default_image | image_url: width: 208
+          assign default_image_src_472_2x = default_image | image_url: width: 416
+          assign default_image_src_640 = default_image | image_url: width: 288
+          assign default_image_src_640_2x = default_image | image_url: width: 576
+          assign default_image_src_768 = default_image | image_url: width: 232
+          assign default_image_src_768_2x = default_image | image_url: width: 464
+
           assign default_image_src = default_image | image_url: width: 328
           assign default_image_src_2x = default_image | image_url: width: 656
           assign hover_image_src = card_product.media[1] | image_url: width: 328
           assign hover_image_src_2x = card_product.media[1] | image_url: width: 656
         -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-        <img
-          srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
-          src="{% render 'imgix', src: default_image_src %}"
-          alt="{{ default_image.alt | escape }}"
-          width="{{ default_image.width }}"
-          height="{{ default_image.height }}"
-          id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
-          {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
-          {% if image_element_class != blank %}class="{{ image_element_class }}"{% endif %}
-        >
+        {%- if plp_card -%}
+          <picture>
+            <source
+              srcset="{% render 'imgix', src: default_image_src_472 %} 1x, {% render 'imgix', src: default_image_src_472_2x %} 2x"
+              media="(min-width: 472px)"
+            >
+            <source
+              srcset="{% render 'imgix', src: default_image_src_640 %} 1x, {% render 'imgix', src: default_image_src_640_2x %} 2x"
+              media="(min-width: 640px)"
+            >
+            <source
+              srcset="{% render 'imgix', src: default_image_src_768 %} 1x, {% render 'imgix', src: default_image_src_768_2x %} 2x"
+              media="(min-width: 768px)"
+            >
+            <source srcset="{% render 'imgix', src: default_image_src_390 %} 1x, {% render 'imgix', src: default_image_src_390_2x %} 2x">
+            <img
+              src="{% render 'imgix', src: default_image_src %}"
+              alt="{{ default_image.alt | escape }}"
+              width="{{ default_image.width }}"
+              height="{{ default_image.height }}"
+              id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+              {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
+              {% if image_element_class != blank %}class="{{ image_element_class }}"{% endif %}
+            >
+          </picture>
+        {%- else -%}
+          <img
+            srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
+            src="{% render 'imgix', src: default_image_src %}"
+            alt="{{ default_image.alt | escape }}"
+            width="{{ default_image.width }}"
+            height="{{ default_image.height }}"
+            id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+            {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
+            {% if image_element_class != blank %}class="{{ image_element_class }}"{% endif %}
+          >
+        {%- endif -%}
         {%- if card_product.media[1] != nil and show_secondary_image_on_hover -%}
           <img
             srcset="{% render 'imgix', src: hover_image_src %} 1x, {% render 'imgix', src: hover_image_src_2x %} 2x"
