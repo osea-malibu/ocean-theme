@@ -21,7 +21,6 @@
     alt="{{ promo_tile_image.value.alt }}"
     width="{{ promo_tile_image.value.width }}"
     height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
-    loading=lazy
     class="absolute inset-0 object-cover object-center h-full w-full"
   >
   {%- if promo_tile_url != blank -%}
@@ -35,7 +34,9 @@
   <div class="h-full relative promo-tile-video">
     <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
       {%- for source in promo_tile_video_portrait.value.sources -%}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <source src="{{ source.url }}" type="video/{{ source.format }}" />
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       {%- endfor -%}
       <img
         src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}"
@@ -55,7 +56,9 @@
   <collection-video class="block h-full relative">
     <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
       {%- for source in promo_tile_video_portrait.value.sources -%}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <source src="{{ source.url }}" type="video/{{ source.format }}" />
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       {%- endfor -%}
       <img
         src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}"
@@ -71,7 +74,9 @@
       </button>
       <video preload="metadata" playsinline autoplay muted loop controls poster="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}">
         {%- for source in promo_tile_video_landscape.value.sources -%}
+          {% comment %} theme-check-disable RemoteAsset {% endcomment %}
           <source src="{{ source.url }}" type="video/{{ source.format }}" />
+          {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         {%- endfor -%}
         <img
           src="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}"

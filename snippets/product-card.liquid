@@ -25,6 +25,7 @@
     - pdp_link_label: {Boolean} For use with PDP link, changes button label (optional)
     - hide_atc: {Boolean} Hide add to cart button, default: false (optional)
     - remove_linking: {Boolean} Remove linking from product title, default: false (optional)
+    - remove_lazy_loading: {Boolean} Remove lazy loading from images, default: false (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -326,10 +327,10 @@
           srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
           src="{% render 'imgix', src: default_image_src %}"
           alt="{{ default_image.alt | escape }}"
-          loading="lazy"
           width="{{ default_image.width }}"
           height="{{ default_image.height }}"
           id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+          {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
           {% if image_element_class != blank %}class="{{ image_element_class }}"{% endif %}
         >
         {%- if card_product.media[1] != nil and show_secondary_image_on_hover -%}
