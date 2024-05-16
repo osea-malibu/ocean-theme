@@ -177,6 +177,9 @@
                   <span class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
                 </div>
               {%- endif -%}
+              {%- if product.metafields.custom.faq != nil -%}
+                <a href="#ProductFaqs" class="link anchor hidden">Product FAQs</a>
+              {%- endif -%}
             {%- when 'benefits' -%}
               {%- if product.metafields.custom.benefits.value.size > 0 -%}
                 <div class="{{ block.settings.benefits_classes }}">
