@@ -228,7 +228,7 @@
                 <div class="{{ block.settings.skin_types_classes }}{% if product.metafields.custom.scent_profile == blank and product.metafields.custom.scent_profile_short == blank %} -mr-4{% endif %}">
                   <h2 class="{{ block.settings.skin_types_label_classes }}">Skin types</h2>
                   {%- if product.metafields.custom.skin_types_list != blank -%}
-                    <script>console.log("product", {{ product.options | json }})</script>
+                    <script>console.log("product", {{ product | json }})</script>
                     <ul class="icon-list bullet !pl-5{% if product.options contains 'Scent' %} scent-scented{% endif %} {{ block.settings.skin_types_content_classes }}">
                       {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
                         {%- if skin_type == 'Not for sensitive' -%}
