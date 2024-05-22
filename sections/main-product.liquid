@@ -228,8 +228,7 @@
                 <div class="{{ block.settings.skin_types_classes }}{% if product.metafields.custom.scent_profile == blank and product.metafields.custom.scent_profile_short == blank %} -mr-4{% endif %}">
                   <h2 class="{{ block.settings.skin_types_label_classes }}">Skin types</h2>
                   {%- if product.metafields.custom.skin_types_list != blank -%}
-                    <script>console.log("product", {{ product.selected_or_first_available_variant | json }})</script>
-                    <ul class="icon-list bullet !pl-5{% if product.options contains 'Scent' %} scent-scented{% endif %} {{ block.settings.skin_types_content_classes }}">
+                    <ul class="icon-list bullet !pl-5{% if product.options contains 'Scent' %} scent-scented{% if product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endif %}{% endif %} {{ block.settings.skin_types_content_classes }}">
                       {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
                         {%- if skin_type == 'Not for sensitive' -%}
                           <li class="flex items-start before:!hidden">
@@ -242,7 +241,7 @@
                       {%- endfor -%}
                     </ul>
                     {%- if product.options contains 'Scent' -%}
-                      <ul class="icon-list bullet !pl-5 scent-fragrance-free hidden {{ block.settings.skin_types_content_classes }}">
+                      <ul class="icon-list bullet !pl-5 scent-fragrance-free{% unless product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endunless %} {{ block.settings.skin_types_content_classes }}">
                         <li>All Skin Types</li>
                       </ul>
                     {%- endif -%}
