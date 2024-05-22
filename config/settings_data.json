@@ -54,13 +54,21 @@
         "blocks": {
           "announcement-bar-0": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p>Free shipping on orders $60+<\/p>"
+            }
+          },
+          "announcement_gBbEG3": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p>Free gift on orders $135+ | <a href=\"https:\/\/oseamalibu.com\/pages\/memorial-day-2024\" title=\"https:\/\/oseamalibu.com\/pages\/memorial-day-2024\">See details<\/a><\/p>"
             }
           }
         },
         "block_order": [
-          "announcement-bar-0"
+          "announcement-bar-0",
+          "announcement_gBbEG3"
         ],
         "settings": {
           "slide_interval": 2,
