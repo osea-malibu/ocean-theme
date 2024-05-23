@@ -1,136 +1,221 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
-{%- liquid
-  assign subcollections = collection.metafields.my_fields.subcollections
-  assign featured_products = collection.metafields.my_fields.featured_products
--%}
+<div class="container mb-12">
+  {%- paginate collection.products by section.settings.products_per_page -%}
+    {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
+    {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
+      <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
+        <form class="facets-vertical-form" id="FacetSortForm">
+          <div class="facet-filters sorting caption">
+            <div class="facet-filters__field">
+              <h2 class="facet-filters__label caption-large text-body">
+                <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
+              </h2>
+              <div class="select">
+                {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                <select
+                  name="sort_by"
+                  class="facet-filters__sort select__select caption-large"
+                  id="SortBy"
+                  aria-describedby="a11y-refresh-page-message"
+                >
+                  {%- for option in collection.sort_options -%}
+                    <option
+                      value="{{ option.value | escape }}"
+                      {% if option.value == sort_by %}
+                        selected="selected"
+                      {% endif %}
+                    >
+                      {{ option.name | escape }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+                {% render 'icon-caret' %}
+              </div>
+            </div>
+          </div>
 
-{% comment %} {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-  {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+          <div class="product-count-vertical light" role="status">
+            <h2 class="product-count__text text-body">
+              <span id="ProductCountDesktop">
+                {%- if collection.results_count -%}
+                  {{
+                    'templates.search.results_with_count'
+                    | t: terms: collection.terms, count: collection.results_count
+                  }}
+                {%- elsif collection.products_count == collection.all_products_count -%}
+                  {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+                {%- else -%}
+                  {{
+                    'products.facets.product_count'
+                    | t: product_count: collection.products_count, count: collection.all_products_count
+                  }}
+                {%- endif -%}
+              </span>
+            </h2>
+            {%- render 'loading-spinner', classes: 'w-4 h-4 text-seaweed-700' -%}
+          </div>
+        </form>
+      </facet-filters-form>
+    {%- endif -%}
 
-  <div class="container mb-6" id="main-collection-filters" data-id="{{ section.id }}">
-    {% render 'facets',
-      results: collection,
-      enable_filtering: section.settings.enable_filtering,
-      enable_sorting: section.settings.enable_filtering
-    %}
-  </div>
-  {%- unless subcollections or subcollections.value.size > 0 -%}
-  {%- endunless -%}
-{%- else -%}
-  <div class="sr-only container whitespace-nowrap leading-relaxed mb-0.5">{{ collection.products_count }} items</div>
-{%- endif -%} {% endcomment %}
-
-  {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
-
-  <div class="container mb-6" id="main-collection-filters" data-id="{{ section.id }}">
-    {% render 'facets',
-      results: collection,
-      enable_filtering: section.settings.enable_filtering,
-      enable_sorting: section.settings.enable_filtering
-    %}
-  </div>
-  {%- unless subcollections or subcollections.value.size > 0 -%}
-  {%- endunless -%}
-
-  <div class="sr-only container whitespace-nowrap leading-relaxed mb-0.5">{{ collection.products_count }} items</div>
-
-
-<div id="ProductGridContainer" class="container mb-12">
-  {%- if section.settings.enable_anchors and subcollections and subcollections.value.size > 0 -%}
-    <collection-anchors class="flex overflow-x-auto mb-3 scrollbar-hide w-[calc(100%+1rem)] xs:w-full">
+    {%- if paginate.current_page == 1 -%}
+      {%- assign featured_products = collection.metafields.my_fields.featured_products -%}
       {%- if featured_products.value.count > 0 -%}
-        <a href="#Featured" aria-label="Jump to featured products section" class="button button-xs button-secondary mr-2">Featured</a>
+        {%- capture featured_products_grid -%}
+          <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
+            {%- if collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank -%}
+              <li class="relative">
+                {%- render 'collection-promo-tile',
+                  promo_tile_image: collection.metafields.custom.promo_tile_image,
+                  promo_tile_video_portrait: collection.metafields.custom.promo_tile_video_portrait,
+                  promo_tile_video_landscape: collection.metafields.custom.promo_tile_video_landscape,
+                  promo_tile_url: collection.metafields.custom_fields.promo_tile_url
+                -%}
+              </li>
+            {%- endif -%}
+            {%- for product in featured_products.value -%}
+              {%- liquid
+                if forloop.index < 4 and collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank
+                  assign remove_lazy_loading = true
+                elsif forloop.index < 5
+                  assign remove_lazy_loading = true
+                else
+                  assign remove_lazy_loading = false
+                endif
+              -%}
+              <li>
+                {% render 'product-card',
+                  card_product: product,
+                  section_id: section.id,
+                  button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
+                  show_reviews: section.settings.show_reviews,
+                  remove_lazy_loading: remove_lazy_loading,
+                  plp_card: true
+                %}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endcapture -%}
+
+        {% render 'accordion-item',
+          id: 'Featured',
+          classes: 'subcollection',
+          summary: 'Featured',
+          summary_classes: 'py-2 text-lg',
+          content: featured_products_grid,
+          content_classes: 'pb-6',
+          default_open: true,
+          transition_duration: 800,
+          icon_type: 'caret'
+        %}
       {%- endif -%}
-      {%- for subcollection in subcollections.value -%}
-        {%- assign subcollection_title = collections[subcollection].title | replace: "Section: ", "" -%}
-        <a href="#{{ subcollection_title | handle }}" aria-label="Jump to {{ subcollection_title }} section" class="button button-xs button-secondary mr-2">{{ subcollection_title }}</a>
-      {%- endfor -%}
-    </collection-anchors>
-  {%- endif -%}
-  {%- if featured_products.value.count > 0 -%}
-    {%- capture featured_products_grid -%}
-      <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
-        {%- if collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank -%}
-          <li class="relative">
-            {%- render 'collection-promo-tile',
-              promo_tile_image: collection.metafields.custom.promo_tile_image,
-              promo_tile_video_portrait: collection.metafields.custom.promo_tile_video_portrait,
-              promo_tile_video_landscape: collection.metafields.custom.promo_tile_video_landscape,
-              promo_tile_url: collection.metafields.custom_fields.promo_tile_url
-            -%}
-          </li>
+    {%- endif -%}
+
+    <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
+      {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+        <aside
+          aria-labelledby="verticalTitle"
+          class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+          id="main-collection-filters"
+          data-id="{{ section.id }}"
+        >
+          {% render 'facets',
+            results: collection,
+            enable_filtering: section.settings.enable_filtering,
+            enable_sorting: section.settings.enable_sorting,
+            filter_type: section.settings.filter_type,
+            paginate: paginate
+          %}
+        </aside>
+      {%- endif -%}
+
+      <div id="ProductGridContainer">
+        {%- if collection.products.size == 0 -%}
+          <div class="container text-center" id="product-grid" data-id="{{ section.id }}">
+            <div class="loading-overlay gradient"></div>
+            <div class="title-wrapper center">
+              <h2 class="title title--primary">
+                {{ 'sections.collection_template.empty' | t -}}
+                <br>
+                {{
+                  'sections.collection_template.use_fewer_filters_html'
+                  | t: link: collection.url, class: 'underlined-link link'
+                }}
+              </h2>
+            </div>
+          </div>
+        {%- else -%}
+          <div
+            class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+          >
+            <div class="loading-overlay gradient"></div>
+            <ul
+              id="product-grid"
+              data-id="{{ section.id }}"
+              class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4"
+            >
+              {%- liquid
+                if collection.handle == 'exclude-from-site'
+                  assign hide_atc = true
+                  assign remove_linking = true
+                else
+                  assign hide_atc = false
+                  assign remove_linking = false
+                endif
+
+                assign promo_tile_image = collection.metafields.custom.promo_tile_image
+                assign promo_tile_video_portrait = collection.metafields.custom.promo_tile_video_portrait
+                assign promo_tile_video_landscape = collection.metafields.custom.promo_tile_video_landscape
+                assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
+    
+                if promo_tile_image != blank or promo_tile_video_portrait != blank
+                  assign has_promo_content = true
+                else
+                  assign has_promo_content = false
+                endif
+              -%}
+              {%- if has_promo_content and featured_products.value.count == 0 -%}
+                <li class="relative overflow-hidden">
+                  {%- render 'collection-promo-tile',
+                    promo_tile_image: promo_tile_image,
+                    promo_tile_video_portrait: promo_tile_video_portrait,
+                    promo_tile_video_landscape: promo_tile_video_landscape,
+                    promo_tile_url: promo_tile_url
+                  -%}
+                </li>
+              {%- endif -%}
+              {%- for product in collection.products -%}
+                {% assign remove_lazy_loading = false %}
+                {%- if forloop.index < 3 -%}
+                  {%- assign remove_lazy_loading = true -%}
+                {%- endif -%}
+                <li>
+                  {%- render 'product-card',
+                    card_product: product,
+                    section_id: collection.id,
+                    button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
+                    default_to_mini: collection.metafields.my_fields.default_to_mini,
+                    subscription: collection.metafields.custom.default_to_subscription,
+                    show_reviews: section.settings.show_reviews,
+                    hide_atc: hide_atc,
+                    remove_linking: remove_linking,
+                    remove_lazy_loading: remove_lazy_loading
+                  -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
         {%- endif -%}
-        {%- for product in featured_products.value -%}
-          {%- liquid
-            if forloop.index < 4 and collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank
-              assign remove_lazy_loading = true
-            elsif forloop.index < 5
-              assign remove_lazy_loading = true
-            else
-              assign remove_lazy_loading = false
-            endif
-          -%}
-          <li>
-            {% render 'product-card',
-              card_product: product,
-              section_id: section.id,
-              button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
-              show_reviews: section.settings.show_reviews,
-              remove_lazy_loading: remove_lazy_loading,
-              plp_card: true
-            %}
-          </li>
-        {%- endfor -%}
-      </ul>
-    {%- endcapture -%}
+      </div>
+    </div>
 
-    {% render 'accordion-item',
-      id: 'Featured',
-      classes: 'subcollection',
-      summary: 'Featured',
-      summary_classes: 'py-2 text-lg',
-      content: featured_products_grid,
-      content_classes: 'pb-6',
-      default_open: true,
-      transition_duration: 800,
-      icon_type: 'caret'
-    %}
-  {%- endif -%}
-
-  {%- if subcollections and subcollections.value.size > 0 -%}
-    {%- for subcollection in subcollections.value -%}
-      {%- liquid
-        assign summary = collections[subcollection].title | replace: "Section: ", ""
-        assign summary_handle = summary | handle
-
-        capture subcollection_grid
-          render 'collection-product-grid', collection: collections[subcollection], products_per_page: 200, is_subcollection: true, is_first_subcollection: forloop.first, parent_collection: collection, show_reviews: section.settings.show_reviews
-        endcapture
-
-        if featured_products.value.count > 0
-          assign summary_classes = 'border-t border-seaweed-300 py-2 text-lg'
-        else
-          assign summary_classes = 'py-2 text-lg'
-        endif
-      -%}
-      {% render 'accordion-item',
-        id: summary_handle,
-        classes: 'subcollection',
-        summary: summary,
-        summary_classes: summary_classes,
-        content: subcollection_grid,
-        content_classes: 'pb-6',
-        default_open: true,
-        transition_duration: 800,
-        icon_type: 'caret'
-      %}
-    {%- endfor -%}
-  {%- else -%}
-    {% render 'collection-product-grid', collection: collection, products_per_page: section.settings.products_per_page, show_reviews: section.settings.show_reviews %}
-  {%- endif -%}
+    {%- if paginate.pages > 1 -%}
+      {% render 'pagination', paginate: paginate, anchor: '' %}
+    {%- endif -%}
+  {%- endpaginate -%}
 
   {%- if collection.metafields.custom.seo_description != nil -%}
     <div class="!mt-10 max-w-screen-md mx-auto">
@@ -178,13 +263,6 @@
       "info": "Hidden on collections with sections.",
       "default": true,
       "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_anchors",
-      "info": "Shows on collections with sections.",
-      "default": false,
-      "label": "Enable section anchor links"
     },
     {
       "type": "checkbox",
