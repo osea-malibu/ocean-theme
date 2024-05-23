@@ -1,0 +1,196 @@
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign subcollections = collection.metafields.my_fields.subcollections
+  assign featured_products = collection.metafields.my_fields.featured_products
+-%}
+
+{% comment %} {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+  {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+  <div class="container mb-6" id="main-collection-filters" data-id="{{ section.id }}">
+    {% render 'facets',
+      results: collection,
+      enable_filtering: section.settings.enable_filtering,
+      enable_sorting: section.settings.enable_filtering
+    %}
+  </div>
+  {%- unless subcollections or subcollections.value.size > 0 -%}
+  {%- endunless -%}
+{%- else -%}
+  <div class="sr-only container whitespace-nowrap leading-relaxed mb-0.5">{{ collection.products_count }} items</div>
+{%- endif -%} {% endcomment %}
+
+  {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+  <div class="container mb-6" id="main-collection-filters" data-id="{{ section.id }}">
+    {% render 'facets',
+      results: collection,
+      enable_filtering: section.settings.enable_filtering,
+      enable_sorting: section.settings.enable_filtering
+    %}
+  </div>
+  {%- unless subcollections or subcollections.value.size > 0 -%}
+  {%- endunless -%}
+
+  <div class="sr-only container whitespace-nowrap leading-relaxed mb-0.5">{{ collection.products_count }} items</div>
+
+
+<div id="ProductGridContainer" class="container mb-12">
+  {%- if section.settings.enable_anchors and subcollections and subcollections.value.size > 0 -%}
+    <collection-anchors class="flex overflow-x-auto mb-3 scrollbar-hide w-[calc(100%+1rem)] xs:w-full">
+      {%- if featured_products.value.count > 0 -%}
+        <a href="#Featured" aria-label="Jump to featured products section" class="button button-xs button-secondary mr-2">Featured</a>
+      {%- endif -%}
+      {%- for subcollection in subcollections.value -%}
+        {%- assign subcollection_title = collections[subcollection].title | replace: "Section: ", "" -%}
+        <a href="#{{ subcollection_title | handle }}" aria-label="Jump to {{ subcollection_title }} section" class="button button-xs button-secondary mr-2">{{ subcollection_title }}</a>
+      {%- endfor -%}
+    </collection-anchors>
+  {%- endif -%}
+  {%- if featured_products.value.count > 0 -%}
+    {%- capture featured_products_grid -%}
+      <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
+        {%- if collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank -%}
+          <li class="relative">
+            {%- render 'collection-promo-tile',
+              promo_tile_image: collection.metafields.custom.promo_tile_image,
+              promo_tile_video_portrait: collection.metafields.custom.promo_tile_video_portrait,
+              promo_tile_video_landscape: collection.metafields.custom.promo_tile_video_landscape,
+              promo_tile_url: collection.metafields.custom_fields.promo_tile_url
+            -%}
+          </li>
+        {%- endif -%}
+        {%- for product in featured_products.value -%}
+          {%- liquid
+            if forloop.index < 4 and collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank
+              assign remove_lazy_loading = true
+            elsif forloop.index < 5
+              assign remove_lazy_loading = true
+            else
+              assign remove_lazy_loading = false
+            endif
+          -%}
+          <li>
+            {% render 'product-card',
+              card_product: product,
+              section_id: section.id,
+              button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
+              show_reviews: section.settings.show_reviews,
+              remove_lazy_loading: remove_lazy_loading,
+              plp_card: true
+            %}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endcapture -%}
+
+    {% render 'accordion-item',
+      id: 'Featured',
+      classes: 'subcollection',
+      summary: 'Featured',
+      summary_classes: 'py-2 text-lg',
+      content: featured_products_grid,
+      content_classes: 'pb-6',
+      default_open: true,
+      transition_duration: 800,
+      icon_type: 'caret'
+    %}
+  {%- endif -%}
+
+  {%- if subcollections and subcollections.value.size > 0 -%}
+    {%- for subcollection in subcollections.value -%}
+      {%- liquid
+        assign summary = collections[subcollection].title | replace: "Section: ", ""
+        assign summary_handle = summary | handle
+
+        capture subcollection_grid
+          render 'collection-product-grid', collection: collections[subcollection], products_per_page: 200, is_subcollection: true, is_first_subcollection: forloop.first, parent_collection: collection, show_reviews: section.settings.show_reviews
+        endcapture
+
+        if featured_products.value.count > 0
+          assign summary_classes = 'border-t border-seaweed-300 py-2 text-lg'
+        else
+          assign summary_classes = 'py-2 text-lg'
+        endif
+      -%}
+      {% render 'accordion-item',
+        id: summary_handle,
+        classes: 'subcollection',
+        summary: summary,
+        summary_classes: summary_classes,
+        content: subcollection_grid,
+        content_classes: 'pb-6',
+        default_open: true,
+        transition_duration: 800,
+        icon_type: 'caret'
+      %}
+    {%- endfor -%}
+  {%- else -%}
+    {% render 'collection-product-grid', collection: collection, products_per_page: section.settings.products_per_page, show_reviews: section.settings.show_reviews %}
+  {%- endif -%}
+
+  {%- if collection.metafields.custom.seo_description != nil -%}
+    <div class="!mt-10 max-w-screen-md mx-auto">
+      {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
+        <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
+      {%- endif -%}
+      <div class="a:link p:mb-4 h2:font-medium h2:mb-2{% if collection.metafields.custom.seo_description.value.size > 400 %} overflow-hidden max-h-[4.5rem] peer-checked:max-h-screen transition-max-height leading-6{% endif %}">
+        {{ collection.metafields.custom.seo_description }}
+      </div>
+      {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
+        <label aria-hidden="true" for="collapsible" class="link mt-1.5 block peer-checked:hidden">Read more</label>
+        <label aria-hidden="true" for="collapsible" class="link mt-1.5 hidden peer-checked:block">Read less</label>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-product-grid.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 16,
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "info": "Hidden on collections with sections.",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_anchors",
+      "info": "Shows on collections with sections.",
+      "default": false,
+      "label": "Enable section anchor links"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show product reviews"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,64 @@
+{
+  "sections": {
+    "banner": {
+      "type": "collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false
+      }
+    },
+    "product-grid": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 20,
+        "enable_filtering": false,
+        "enable_sorting": false,
+        "enable_anchors": false,
+        "show_reviews": false
+      }
+    },
+    "eec6e816-c976-4406-bfd7-b416c719939e": {
+      "type": "rich-text",
+      "blocks": {
+        "template--15166819401911__eec6e816-c976-4406-bfd7-b416c719939e-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "Questions? Take our Quiz.",
+            "heading_classes": "font-medium tracking-wide text-lg mb-2 lg:text-xl",
+            "subheading_text": "",
+            "subheading_classes": ""
+          }
+        },
+        "template--15166819401911__eec6e816-c976-4406-bfd7-b416c719939e-paragraph-1": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph_text": "Get a Custom Routine with Clean Essentials",
+            "paragraph_classes": "font-serif tracking-tight text-3xl lg:text-4xl leading-none mb-3"
+          }
+        },
+        "template--15166819401911__eec6e816-c976-4406-bfd7-b416c719939e-button-1": {
+          "type": "button",
+          "settings": {
+            "button_label": "Take the quiz",
+            "button_link": "shopify://pages/quiz",
+            "button_aria_label": "",
+            "target_blank": false,
+            "button_icon": "",
+            "button_classes": "button button-primary"
+          }
+        }
+      },
+      "block_order": [
+        "template--15166819401911__eec6e816-c976-4406-bfd7-b416c719939e-heading-1",
+        "template--15166819401911__eec6e816-c976-4406-bfd7-b416c719939e-paragraph-1",
+        "template--15166819401911__eec6e816-c976-4406-bfd7-b416c719939e-button-1"
+      ],
+      "settings": {
+        "section_heading": "",
+        "section_classes": "bg-seafoam-200 py-8",
+        "container_classes": "container text-center"
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "eec6e816-c976-4406-bfd7-b416c719939e"]
+}
