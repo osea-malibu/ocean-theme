@@ -30,13 +30,13 @@
                     </option>
                   {%- endfor -%}
                 </select>
-                {% render 'icon-caret' %}
+                {% render 'icon-caret', aria_hidden: true, classes: 'w-4 h-4' %}
               </div>
             </div>
           </div>
 
           <div class="product-count-vertical light" role="status">
-            <h2 class="product-count__text text-body">
+            <h2 class="text-sm">
               <span id="ProductCountDesktop">
                 {%- if collection.results_count -%}
                   {{
@@ -126,7 +126,6 @@
             results: collection,
             enable_filtering: section.settings.enable_filtering,
             enable_sorting: section.settings.enable_sorting,
-            filter_type: section.settings.filter_type,
             paginate: paginate
           %}
         </aside>
@@ -256,27 +255,6 @@
       "default": true,
       "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
       "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
-    },
-    {
-      "type": "select",
-      "id": "filter_type",
-      "options": [
-        {
-          "value": "horizontal",
-          "label": "Horizontal"
-        },
-        {
-          "value": "vertical",
-          "label": "Vertical"
-        },
-        {
-          "value": "drawer",
-          "label": "Drawer"
-        }
-      ],
-      "default": "horizontal",
-      "label": "Filter type",
-      "info": "Drawer is the default mobile layout."
     },
     {
       "type": "checkbox",
