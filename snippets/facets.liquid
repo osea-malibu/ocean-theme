@@ -27,7 +27,7 @@
   endif
 -%}
 
-<div class="grid grid-cols-2{% if filter_type == 'drawer' %} facets-container-drawer{% endif %}">
+<div class="grid grid-cols-2 mb-4">
   <facet-filters-form class="facets hidden sm:block">
     <form
       id="FacetFiltersForm"
@@ -92,10 +92,7 @@
                           {{- 'products.facets.filters_selected' | t: count: filter.active_values.size -}}
                         </span>
                         {%- if filter.operator == 'AND' -%}
-                          <span class="facets__and-helptext">
-                            and
-                            {% comment %} {{ 'products.facets.filter_and_operator_subtitle' | t }} {% endcomment %}
-                          </span>
+                          <span class="facets__and-helptext">and</span>
                         {%- endif -%}
                       </div>
                       <facet-remove>
@@ -262,14 +259,14 @@
           {%- endfor -%}
         </div>
         {% comment %} Pills after filters {% endcomment %}
-        <div class="active-facets active-facets-desktop">
+        <div class="flex flex-wrap w-full col-span-2 row-start-2 active-facets-desktop">
           {%- for filter in results.filters -%}
             {%- for value in filter.active_values -%}
               <facet-remove>
-                <a href="{{ value.url_to_remove }}" class="active-facets__button">
-                  <span class="button button-xs button-secondary rounded-full pr-2">
+                <a href="{{ value.url_to_remove }}" class="block p-1">
+                  <span class="button button-xs button-tertiary normal-case tracking-wide rounded-full pr-2">
                     {{ filter.label | escape }}: {{ value.label | escape }}
-                    {% render 'icon-close', aria_hidden: true, classes: 'w-4 h-4' %}
+                    {% render 'icon-close', stroke_width: 2, aria_hidden: true, classes: 'w-4 h-4 self-center shrink-0 pointer-events-none' %}
                     <span class="sr-only">{{ 'products.facets.clear_filter' | t }}</span>
                   </span>
                 </a>
@@ -280,10 +277,10 @@
               {% assign max = filter.max_value.value %}
               {%- if min != null or max != null -%}
                 <facet-remove>
-                  <a href="{{ filter.url_to_remove }}" class="active-facets__button">
-                    <span class="button button-xs button-secondary rounded-full pr-2">
+                  <a href="{{ filter.url_to_remove }}" class="block p-1">
+                    <span class="button button-xs button-tertiary normal-case tracking-wide rounded-full pr-2">
                       {{ min | default: 0 | money }} - {{ max | default: filter.range_max | money }}
-                      {% render 'icon-close', aria_hidden: true, classes: 'w-4 h-4' %}
+                      {% render 'icon-close', stroke_width: 2, aria_hidden: true, classes: 'w-4 h-4 self-center shrink-0 pointer-events-none' %}
                       <span class="sr-only">{{ 'products.facets.clear_filter' | t }}</span>
                     </span>
                   </a>
@@ -291,8 +288,8 @@
               {%- endif -%}
             {% endif %}
           {%- endfor -%}
-          <facet-remove class="active-facets__button-wrapper">
-            <a href="{{ results_url }}" class="active-facets__button-remove underlined-link">
+          <facet-remove class="flex items-center">
+            <a href="{{ results_url }}" class="link text-xs font-book p-1 block">
               <span>{{ 'products.facets.clear_all' | t }}</span>
             </a>
           </facet-remove>
@@ -360,7 +357,7 @@
   >
     <details class="mobile-facets__disclosure disclosure-has-popup">
       <summary class="mobile-facets__open-wrapper focus-offset">
-        <span class="mobile-facets__open{% if filter_type == 'drawer' and enable_filtering == false %} sm:hidden{% endif %}">
+        <span class="mobile-facets__open">
           {% render 'icon-filter', aria_hidden: true, classes: 'w-4 h-4' %}
           <span class="mobile-facets__open-label button-label sm:hidden">
             {%- if enable_filtering and enable_sorting -%}
@@ -382,8 +379,8 @@
       {% comment %} Scrim - closes menu on click {% endcomment %}
       <div class="menu-scrim block fixed inset-x-0 top-[72px] md:top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 motion-safe:transition-opacity"></div>
       <facet-filters-form>
-        <form id="FacetFiltersFormMobile" class="mobile-facets">
-          <div class="mobile-facets__inner gradient">
+        <form id="FacetFiltersFormMobile" class="mobile-facets fixed z-100 inset-x-0 bottom-0 top-[72px] md:top-24">
+          <div class="mobile-facets__inner flex flex-col w-11/12 sm:w-10/12 bg-seafoam-200 h-full overflow-y-auto ml-auto">
             <div class="mobile-facets__header">
               <div class="mobile-facets__header-inner">
                 <h2 class="mobile-facets__heading sm:hidden">
@@ -644,7 +641,7 @@
               {%- if enable_sorting -%}
                 <div
                   id="Details-Mobile-SortBy-{{ section.id }}"
-                  class="mobile-facets__details js-filter{% if filter_type == 'drawer' %} sm:hidden{% endif %}"
+                  class="mobile-facets__details js-filter"
                   data-index="mobile-{{ forloop.index }}"
                 >
                   <div class="mobile-facets__summary">
@@ -705,14 +702,14 @@
     </details>
   </menu-drawer>
 
-  <div class="active-facets active-facets-mobile sm:!hidden">
+  <div class="flex flex-wrap w-full col-span-2 row-start-2 active-facets-mobile sm:hidden">
     {%- for filter in results.filters -%}
       {%- for value in filter.active_values -%}
         <facet-remove>
-          <a href="{{ value.url_to_remove }}" class="active-facets__button">
-            <span class="button button-xs button-secondary rounded-full pr-2">
+          <a href="{{ value.url_to_remove }}" class="block p-1">
+            <span class="button button-xs button-tertiary normal-case tracking-wide rounded-full pr-2">
               {{ filter.label | escape }}: {{ value.label | escape }}
-              {% render 'icon-close', aria_hidden: true, classes: 'w-4 h-4' %}
+              {% render 'icon-close', stroke_width: 2, aria_hidden: true, classes: 'w-4 h-4 self-center shrink-0 pointer-events-none' %}
               <span class="sr-only">{{ 'products.facets.clear_filter' | t }}</span>
             </span>
           </a>
@@ -724,10 +721,10 @@
         {% assign max = filter.max_value.value %}
         {%- if min != null or max != null -%}
           <facet-remove>
-            <a href="{{ filter.url_to_remove }}" class="active-facets__button">
-              <span class="button button-xs button-secondary rounded-full pr-2">
+            <a href="{{ filter.url_to_remove }}" class="block p-1">
+              <span class="button button-xs button-tertiary normal-case tracking-wide rounded-full pr-2">
                 {{ min | default: 0 | money }} - {{ max | default: filter.range_max | money }}
-                {% render 'icon-close', aria_hidden: true, classes: 'w-4 h-4' %}
+                {% render 'icon-close', stroke_width: 2, aria_hidden: true, classes: 'w-4 h-4 self-center shrink-0 pointer-events-none' %}
                 <span class="sr-only">{{ 'products.facets.clear_filter' | t }}</span>
               </span>
             </a>
@@ -735,58 +732,14 @@
         {%- endif -%}
       {%- endif -%}
     {%- endfor -%}
-    <facet-remove class="active-facets__button-wrapper">
-      <a href="{{ results_url }}" class="active-facets__button-remove underlined-link">
+    <facet-remove class="flex items-center">
+      <a href="{{ results_url }}" class="link text-xs font-book p-1 block">
         <span>{{ 'products.facets.clear_all' | t }}</span>
       </a>
     </facet-remove>
   </div>
-  {% comment %} Sort, product count and filter pills at the end when filter is type of Drawer for the correct tabbing order {% endcomment %}
-  {%- if enable_sorting and filter_type == 'drawer' -%}
-    <facet-filters-form class="facets hidden sm:block">
-      <form id="FacetSortDrawerForm" class="facets__form">
-        <div class="facet-filters sorting caption hidden sm:block">
-          <div class="facet-filters__field">
-            <h2 class="facet-filters__label caption-large text-body">
-              <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-            </h2>
-            <div class="select">
-              {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
-              <select
-                name="sort_by"
-                class="facet-filters__sort select__select caption-large"
-                id="SortBy"
-                aria-describedby="a11y-refresh-page-message"
-              >
-                {%- for option in results.sort_options -%}
-                  <option
-                    value="{{ option.value | escape }}"
-                    {% if option.value == sort_by %}
-                      selected="selected"
-                    {% endif %}
-                  >
-                    {{ option.name | escape }}
-                  </option>
-                {%- endfor -%}
-              </select>
-              {% render 'icon-caret', aria_hidden: true, classes: 'w-4 h-4' %}
-            </div>
-          </div>
-        </div>
-
-        {% if results.current_vendor or results.current_type %}
-          <input type="hidden" name="q" value="{{ results.current_vendor }}{{ results.current_type }}">
-        {% endif %}
-
-        {%- if results.terms -%}
-          <input type="hidden" name="q" value="{{ results.terms | escape }}">
-          <input name="options[prefix]" type="hidden" value="last">
-        {%- endif -%}
-      </form>
-    </facet-filters-form>
-  {%- endif -%}
   <div
-    class="product-count{% if filter_type == 'horizontal' %} sm:hidden{% endif %}"
+    class="product-count sm:hidden"
     role="status"
   >
     <h2 class="text-sm">
@@ -805,46 +758,4 @@
     </h2>
     {%- render 'loading-spinner', classes: 'w-4 h-4 text-seaweed-700' -%}
   </div>
-  {%- if filter_type == 'drawer' -%}
-    <facet-filters-form class="facets facets-pill hidden sm:block">
-      <form id="FacetFiltersPillsForm" class="facets__form">
-        <div class="active-facets active-facets-desktop">
-          {%- for filter in results.filters -%}
-            {%- for value in filter.active_values -%}
-              <facet-remove>
-                <a href="{{ value.url_to_remove }}" class="active-facets__button">
-                  <span class="button button-xs button-secondary rounded-full pr-2">
-                    {{ filter.label | escape }}: {{ value.label | escape }}
-                    {% render 'icon-close', aria_hidden: true, classes: 'w-4 h-4' %}
-                    <span class="sr-only">{{ 'products.facets.clear_filter' | t }}</span>
-                  </span>
-                </a>
-              </facet-remove>
-            {%- endfor -%}
-
-            {%- if filter.type == 'price_range' -%}
-              {% assign min = filter.min_value.value %}
-              {% assign max = filter.max_value.value %}
-              {%- if min != null or max != null -%}
-                <facet-remove>
-                  <a href="{{ filter.url_to_remove }}" class="active-facets__button">
-                    <span class="button button-xs button-secondary rounded-full pr-2">
-                      {{ min | default: 0 | money }} - {{ max | default: filter.range_max | money }}
-                      {% render 'icon-close', aria_hidden: true, classes: 'w-4 h-4' %}
-                      <span class="sr-only">{{ 'products.facets.clear_filter' | t }}</span>
-                    </span>
-                  </a>
-                </facet-remove>
-              {%- endif -%}
-            {%- endif -%}
-          {%- endfor -%}
-          <facet-remove class="active-facets__button-wrapper">
-            <a href="{{ results_url }}" class="active-facets__button-remove underlined-link">
-              <span>{{ 'products.facets.clear_all' | t }}</span>
-            </a>
-          </facet-remove>
-        </div>
-      </form>
-    </facet-filters-form>
-  {%- endif -%}
 </div>

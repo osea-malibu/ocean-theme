@@ -642,57 +642,9 @@ ul.whr-items .whr-item.active h3::after {
   @apply rotate-45;
 }
 
-/* ReCharge */
-#rc_login {
-  @apply hidden mb-0;
-}
-#rc_login h5 {
-  @apply mb-2 tracking-wide;
-}
-#rc_login a {
-  @apply relative block items-center justify-center border px-6 py-2 rounded-md font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-colors bg-white border-seaweed-400 hover:bg-seafoam-100 hover:border-seaweed-500 text-white before:cursor-pointer before:content-['Manage_subscription'] before:absolute before:inset-0 before:text-seaweed-700 before:flex before:items-center before:justify-center;
-}
-
-.recharge-gifting-widget {
-  @apply col-span-12;
-}
-.recharge-gifting-widget [multiple],
-.recharge-gifting-widget [type="date"],
-.recharge-gifting-widget [type="datetime-local"],
-.recharge-gifting-widget [type="email"],
-.recharge-gifting-widget [type="month"],
-.recharge-gifting-widget [type="number"],
-.recharge-gifting-widget [type="password"],
-.recharge-gifting-widget [type="search"],
-.recharge-gifting-widget [type="tel"],
-.recharge-gifting-widget [type="text"],
-.recharge-gifting-widget [type="time"],
-.recharge-gifting-widget [type="url"],
-.recharge-gifting-widget [type="week"],
-.recharge-gifting-widget select,
-.recharge-gifting-widget textarea {
-  @apply cursor-text bg-white border border-seaweed-400 rounded-md px-4 tracking-wide focus:ring-1;
-}
-.recharge-gifting-widget form {
-  @apply mb-4;
-}
-.recharge-gifting-widget fieldset {
-  @apply pb-0;
-}
-.recharge-gifting-widget legend {
-  @apply sr-only;
-}
-.recharge-gifting-widget label {
-  @apply font-medium mb-1 leading-tight;
-}
-.recharge-gifting-widget .field {
-  @apply flex flex-col-reverse;
-}
-.recharge-gifting-widget .rc_gift_message_label_count_container {
-  @apply -mb-4;
-}
-.recharge-gifting-widget .rc_gifting_recipient_block_name {
-  @apply flex-wrap sm:flex-nowrap;
+/* Facets */
+.active-facets facet-remove:only-child {
+  @apply hidden;
 }
 
 /* Klaviyo - Footer Form */
