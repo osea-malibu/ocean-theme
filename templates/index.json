@@ -58,18 +58,25 @@
     "image_banner_GjnLnG": {
       "type": "image-banner",
       "blocks": {
+        "paragraph_6kTCzw": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Memorial Day Offer",
+            "paragraph_classes": "badge bg-neon-green rounded-full px-3 mb-2"
+          }
+        },
         "heading_Mft3F7": {
           "type": "heading",
           "settings": {
             "heading": "Free Gift",
-            "heading_classes": "text-6xl pt-4 sm:mt-2 lg:text-8xl mb-2 font-bold text-white max-w-xl uppercase"
+            "heading_classes": "text-6xl lg:text-8xl mb-2 font-bold text-white max-w-xl uppercase"
           }
         },
         "paragraph_BrJccd": {
           "type": "paragraph",
           "settings": {
             "paragraph": "Full-Size Undaria Collagen Body Lotion<br>with purchase of $135+",
-            "paragraph_classes": "font-bold mb-2 lg:mb-4 sm:mt-2 text-lg sm:text-2xl text-white max-w-lg px-4"
+            "paragraph_classes": "font-bold mb-2 lg:mb-4 text-lg sm:text-2xl text-white max-w-lg px-4 leading-tight"
           }
         },
         "button_kENmAe": {
@@ -79,11 +86,12 @@
             "button_aria_label": "Shop all OSEA Products",
             "button_link": "shopify:\/\/collections\/shop",
             "target_blank": false,
-            "button_classes": "button-primary md:button-lg mb-6 sm:mt-2 mt-auto"
+            "button_classes": "button-primary sm:button-lg mt-auto"
           }
         }
       },
       "block_order": [
+        "paragraph_6kTCzw",
         "heading_Mft3F7",
         "paragraph_BrJccd",
         "button_kENmAe"
@@ -95,7 +103,7 @@
         "image_link": "shopify:\/\/collections\/shop",
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
-        "text_block_classes": "absolute inset-y-0 left-0 sm:pl-4  sm:pr-0 right-0 text-center flex flex-col items-center justify-start sm:justify-center  sm:right-1\/3"
+        "text_block_classes": "absolute inset-0 sm:pl-4  sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center sm:right-1\/3 py-4"
       }
     },
     "image_banner_wTWLhy": {
