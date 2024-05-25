@@ -352,14 +352,14 @@
   </facet-filters-form>
   {% comment %}  Drawer and mobile filter {% endcomment %}
   <menu-drawer
-    class="mobile-facets__wrapper flex ml-0 sm:hidden"
+    class="mobile-facets flex ml-0 sm:hidden"
     data-breakpoint="mobile"
   >
-    <details class="mobile-facets__disclosure disclosure-has-popup">
-      <summary class="mobile-facets__open-wrapper focus-offset">
-        <span class="mobile-facets__open">
-          {% render 'icon-filter', aria_hidden: true, classes: 'w-4 h-4' %}
-          <span class="mobile-facets__open-label button-label sm:hidden">
+    <details class="flex">
+      <summary class="inline-block">
+        <span class="mobile-facets__open flex items-center gap-2 py-2 w-full font-book">
+          {% render 'icon-filter', classes: 'h-4 w-4', aria_hidden: true, stroke_width: 2 %}
+          <span class="sm:hidden link">
             {%- if enable_filtering and enable_sorting -%}
               {{ 'products.facets.filter_and_sort' | t }}
             {%- elsif enable_filtering -%}
@@ -368,22 +368,21 @@
               {{ 'products.facets.sort_button' | t }}
             {%- endif -%}
           </span>
-          <span class="mobile-facets__open-label button-label hidden sm:block">
+          <span class="hidden sm:block link">
             {%- if enable_filtering -%}
               {{ 'products.facets.filter_button' | t }}
             {%- endif -%}
           </span>
         </span>
-        <span tabindex="0" class="mobile-facets__close">{%- render 'icon-close' -%}</span>
       </summary>
       {% comment %} Scrim - closes menu on click {% endcomment %}
       <div class="menu-scrim block fixed inset-x-0 top-[72px] md:top-24 bottom-0 bg-seaweed-800/50 opacity-0 z-10 motion-safe:transition-opacity"></div>
-      <facet-filters-form>
-        <form id="FacetFiltersFormMobile" class="mobile-facets fixed z-100 inset-x-0 bottom-0 top-[72px] md:top-24">
-          <div class="mobile-facets__inner flex flex-col w-11/12 sm:w-10/12 bg-seafoam-200 h-full overflow-y-auto ml-auto">
-            <div class="mobile-facets__header">
-              <div class="mobile-facets__header-inner">
-                <h2 class="mobile-facets__heading sm:hidden">
+      <facet-filters-form class="menu-drawer fixed z-20 right-0 bottom-0 top-[72px] md:top-24 w-11/12 sm:w-10/12 translate-x-full bg-seafoam-200 overflow-y-auto">
+        <form id="FacetFiltersFormMobile">
+          <div class="flex flex-col">
+            <div class="flex justify-between sticky top-0 z-20 bg-seafoam-200 py-2 px-6">
+              <div class="relative flex flex-col pt-2">
+                <h2 class="font-medium text-lg leading-none">
                   {%- if enable_filtering and enable_sorting -%}
                     {{ 'products.facets.filter_and_sort' | t }}
                   {%- elsif enable_filtering -%}
@@ -392,12 +391,7 @@
                     {{ 'products.facets.sort_button' | t }}
                   {%- endif -%}
                 </h2>
-                <h2 class="mobile-facets__heading hidden sm:block">
-                  {%- if enable_filtering -%}
-                    {{ 'products.facets.filter_button' | t }}
-                  {%- endif -%}
-                </h2>
-                <p class="mobile-facets__count">
+                <p class="mobile-facets__count text-sm leading-tight">
                   {%- if results.results_count -%}
                     {{ 'templates.search.results_with_count' | t: terms: results.terms, count: results.results_count }}
                   {%- elsif results.products_count == results.all_products_count -%}
@@ -410,10 +404,11 @@
                   {%- endif -%}
                 </p>
               </div>
+              {% render 'icon-close', classes: 'menu-close h-10 w-10 block p-2 -mr-4', aria-hidden: true, stroke_width: 1.75 %}
             </div>
             <div
               id="FacetsWrapperMobile"
-              class="mobile-facets__main has-submenu gradient"
+              class="flex flex-col overflow-y-auto grow px-6 pt-4"
             >
               {%- if enable_filtering -%}
                 {%- for filter in results.filters -%}
@@ -430,29 +425,24 @@
                     {% when 'boolean', 'list' %}
                       <details
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
-                        class="mobile-facets__details js-filter"
+                        class="mobile-facets__details js-filter group"
                         data-index="mobile-{{ forloop.index }}"
                       >
-                        <summary class="mobile-facets__summary focus-inset">
-                          <div>
-                            <span>{{ filter.label | escape }}</span>
-                            <span class="mobile-facets__arrow">{% render 'icon-arrow' %}</span>
-                          </div>
+                        <summary class="flex justify-between py-2">
+                          <span>{{ filter.label | escape }}</span>
+                          {% render 'icon-arrow', variant: 'long', aria_hidden: true, classes: 'block w-5 h-5', stroke_width: 2 %}
                         </summary>
                         <div
                           id="FacetMobile-{{ forloop.index }}-{{ section.id }}"
-                          class="mobile-facets__submenu gradient"
+                          class="absolute inset-y-0 left-0 w-full z-30 translate-x-full invisible flex flex-col transition-transform-visibility group-open:translate-x-0 group-open:visible bg-sand-200"
                         >
                           <button
-                            class="mobile-facets__close-button link link--text focus-inset"
+                            class="mobile-facets__close-button link flex items-center gap-1"
                             aria-expanded="true"
                             type="button"
                           >
-                            {% render 'icon-arrow' %}
-                            <span>{{ filter.label | escape }}</span>
-                            {%- if filter.operator == 'AND' -%}
-                              <span class="facets__and-helptext">and</span>
-                            {%- endif -%}
+                            {% render 'icon-arrow', variant: 'long', aria_hidden: true, classes: 'w-4 h-4 rotate-180', stroke_width: 2 %}
+                            {{ filter.label | escape }}
                           </button>
                           <ul class="{{ visual_layout_class }} mobile-facets__list list-unstyled" role="list">
                             {%- liquid
@@ -578,7 +568,7 @@
                             <button
                               type="button"
                               class="button button--primary"
-                              onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                              onclick="this.closest('.mobile-facets').querySelector('summary').click()"
                             >
                               {{ 'products.facets.apply' | t }}
                             </button>
@@ -588,25 +578,23 @@
                     {% when 'price_range' %}
                       <details
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
-                        class="mobile-facets__details js-filter"
+                        class="mobile-facets__details js-filter group"
                         data-index="mobile-{{ forloop.index }}"
                       >
-                        <summary class="mobile-facets__summary focus-inset">
-                          <div>
-                            <span>{{ filter.label | escape }}</span>
-                            <span class="mobile-facets__arrow">{% render 'icon-arrow' %}</span>
-                          </div>
+                        <summary class="flex justify-between py-2">
+                          <span>{{ filter.label | escape }}</span>
+                          {% render 'icon-arrow', variant: 'long', aria_hidden: true, classes: 'block w-5 h-5', stroke_width: 2 %}
                         </summary>
                         <div
                           id="FacetMobile-{{ forloop.index }}-{{ section.id }}"
-                          class="mobile-facets__submenu gradient"
+                          class="absolute inset-y-0 left-0 w-full z-30 translate-x-full invisible flex flex-col transition-transform-visibility group-open:translate-0 group-open:visible bg-sand-200 gradient"
                         >
                           <button
-                            class="mobile-facets__close-button link link--text focus-inset"
+                            class="mobile-facets__close-button link flex items-center gap-1"
                             aria-expanded="true"
                             type="button"
                           >
-                            {% render 'icon-arrow' %}
+                            {% render 'icon-arrow', variant: 'long', aria_hidden: true, classes: 'w-4 h-4 rotate-180', stroke_width: 2 %}
                             {{ filter.label | escape }}
                           </button>
 
@@ -627,7 +615,7 @@
                             <button
                               type="button"
                               class="button button--primary"
-                              onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                              onclick="this.closest('.mobile-facets').querySelector('summary').click()"
                             >
                               {{ 'products.facets.apply' | t }}
                             </button>
@@ -644,7 +632,7 @@
                   class="mobile-facets__details js-filter"
                   data-index="mobile-{{ forloop.index }}"
                 >
-                  <div class="mobile-facets__summary">
+                  <div class="">
                     <div class="mobile-facets__sort">
                       <label for="SortBy-mobile">{{ 'products.facets.sort_by_label' | t }}</label>
                       <div class="select">
@@ -681,7 +669,7 @@
                 <button
                   type="button"
                   class="button button--primary"
-                  onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                  onclick="this.closest('.mobile-facets').querySelector('summary').click()"
                 >
                   {{ 'products.facets.apply' | t }}
                 </button>
