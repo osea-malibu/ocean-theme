@@ -21,7 +21,7 @@
         {%- liquid
           assign tier1_product = all_products[settings.gwp_tier1_product]
           assign tier2_product = all_products[settings.gwp_tier2_product]
-          assign tier3_product = all_products[settings.gwp_tier2_product]
+          assign tier3_product = all_products[settings.gwp_tier3_product]
 
           assign hide_gwp = false
           assign gwp_threshold = settings.gwp_tier1_threshold | times: 100
