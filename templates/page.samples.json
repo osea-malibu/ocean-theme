@@ -500,13 +500,23 @@
             "content": "No, we only allow 1 of each samples.",
             "content_classes": "pb-6"
           }
+        },
+        "item_RqndPP": {
+          "type": "item",
+          "settings": {
+            "summary": "Can I add samples once the order is created?",
+            "summary_classes": "py-3",
+            "content": "Samples cannot be added to an existing order. They must be selected in your cart before checkout.",
+            "content_classes": "pb-6"
+          }
         }
       },
       "block_order": [
         "item_g77nNa",
         "template--15166819565751__ff4a2be6-7914-4d87-bc3d-5e37e651c740-166561525395e88a3f-0",
         "da70ed5c-6c53-44d7-a62a-18aa353276a6",
-        "9f89f02e-721e-485e-98c5-8a2822d2c33e"
+        "9f89f02e-721e-485e-98c5-8a2822d2c33e",
+        "item_RqndPP"
       ],
       "settings": {
         "section_classes": "container lg:max-w-screen-lg mb-12",
