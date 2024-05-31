@@ -53,17 +53,17 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
-          "announcement_NNqRkU": {
+          "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text": "<p>Enter code <strong>SUMMERGLOW<\/strong> at checkout for free shipping!<\/p>"
+              "text": "<p>Free shipping on orders $60+<\/p>"
             }
           },
-          "announcement-bar-0": {
+          "announcement_NNqRkU": {
             "type": "announcement",
             "disabled": true,
             "settings": {
-              "text": "<p>Free shipping on orders $60+<\/p>"
+              "text": "<p>Enter code <strong>SUMMERGLOW<\/strong> at checkout for free shipping!<\/p>"
             }
           },
           "announcement_gBbEG3": {
@@ -75,8 +75,8 @@
           }
         },
         "block_order": [
-          "announcement_NNqRkU",
           "announcement-bar-0",
+          "announcement_NNqRkU",
           "announcement_gBbEG3"
         ],
         "settings": {
