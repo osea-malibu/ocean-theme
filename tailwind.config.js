@@ -10,8 +10,11 @@ module.exports = {
     "./assets/*.js",
     "./config/settings_data.json",
   ],
-  /* safelist: [
+  safelist: [
     {
+      pattern: /order-(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20)/,
+    },
+    /* {
       pattern: /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
       variants: ["xs", "sm", "md", "lg", "hover"],
     },
@@ -66,8 +69,8 @@ module.exports = {
     {
       pattern: /bg-(auto|contain|cover)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
-    },
-  ], */
+    }, */
+  ],
   theme: {
     container: {
       center: true,
@@ -257,6 +260,16 @@ module.exports = {
       maxWidth: {
         "2xs": "18rem",
       },
+      order: {
+        13: "13",
+        14: "14",
+        15: "15",
+        16: "16",
+        17: "17",
+        18: "18",
+        19: "19",
+        20: "20",
+      },
       textShadow: {
         sm: "0 0 2px var(--tw-shadow-color)",
         DEFAULT: "0 0 4px var(--tw-shadow-color)",
@@ -265,6 +278,7 @@ module.exports = {
       transitionProperty: {
         height: "height",
         "max-height": "max-height",
+        "max-width": "max-width",
         spacing: "margin, padding",
         "transform-opacity": "transform, opacity",
         visibility: "visibility, opacity",
@@ -289,7 +303,7 @@ module.exports = {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
       addVariant("link", "&:link");
-      addVariant("small", "& > small");
+      addVariant("small", "& small");
       addVariant("span", "& > span");
       addVariant("video", "& > video");
       addVariant("label", "& label");

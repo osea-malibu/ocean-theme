@@ -10,7 +10,7 @@ class FacetFiltersForm extends HTMLElement {
     const facetForm = this.querySelector("form");
     facetForm.addEventListener("input", this.debouncedOnSubmit.bind(this));
 
-    const facetWrapper = this.querySelector("#FacetsWrapperDesktop");
+    const facetWrapper = this.querySelector("#FacetsWrapperInline");
     if (facetWrapper) facetWrapper.addEventListener("keyup", onKeyUpEscape);
   }
 
@@ -35,9 +35,9 @@ class FacetFiltersForm extends HTMLElement {
     FacetFiltersForm.searchParamsPrev = searchParams;
     const sections = FacetFiltersForm.getSections();
     const countContainer = document.getElementById("ProductCount");
-    const countContainerDesktop = document.getElementById("ProductCountDesktop");
+    const filterContainer = document.querySelector("facet-filters-form.inline-facets");
     const loadingSpinners = document.querySelectorAll(
-      ".facets-container .loading__spinner, facet-filters-form .loading__spinner"
+      ".product-count .loading__spinner, .facets-container .loading__spinner, facet-filters-form .loading__spinner"
     );
     loadingSpinners.forEach((spinner) => spinner.classList.remove("hidden"));
     document
@@ -45,10 +45,10 @@ class FacetFiltersForm extends HTMLElement {
       .querySelector(".collection")
       .classList.add("loading");
     if (countContainer) {
-      countContainer.classList.add("loading");
+      countContainer.classList.add("opacity-50");
     }
-    if (countContainerDesktop) {
-      countContainerDesktop.classList.add("loading");
+    if (filterContainer) {
+      filterContainer.classList.add("opacity-50");
     }
 
     sections.forEach((section) => {
@@ -104,15 +104,12 @@ class FacetFiltersForm extends HTMLElement {
       .parseFromString(html, "text/html")
       .getElementById("ProductCount").innerHTML;
     const container = document.getElementById("ProductCount");
-    const containerDesktop = document.getElementById("ProductCountDesktop");
+    const filterContainer = document.querySelector("facet-filters-form.inline-facets");
     container.innerHTML = count;
-    container.classList.remove("loading");
-    if (containerDesktop) {
-      containerDesktop.innerHTML = count;
-      containerDesktop.classList.remove("loading");
-    }
+    container.classList.remove("opacity-50");
+    filterContainer.classList.remove("opacity-50");
     const loadingSpinners = document.querySelectorAll(
-      ".facets-container .loading__spinner, facet-filters-form .loading__spinner"
+      ".product-count .loading__spinner, .facets-container .loading__spinner, facet-filters-form .loading__spinner"
     );
     loadingSpinners.forEach((spinner) => spinner.classList.add("hidden"));
   }
@@ -196,7 +193,7 @@ class FacetFiltersForm extends HTMLElement {
   }
 
   static renderActiveFacets(html) {
-    const activeFacetElementSelectors = [".active-facets-mobile", ".active-facets-desktop"];
+    const activeFacetElementSelectors = [".active-facets"];
 
     activeFacetElementSelectors.forEach((selector) => {
       const activeFacetsElement = html.querySelector(selector);
@@ -215,7 +212,8 @@ class FacetFiltersForm extends HTMLElement {
       document.querySelector(selector).innerHTML = html.querySelector(selector).innerHTML;
     });
 
-    document.getElementById("FacetFiltersFormMobile").closest("menu-drawer").bindEvents();
+    // TODO: Unsure what this does now that menu drawer is optional.
+    //document.getElementById("FacetFiltersFormMobile").closest("menu-drawer").bindEvents();
   }
 
   static renderCounts(source, target) {
@@ -237,15 +235,6 @@ class FacetFiltersForm extends HTMLElement {
     const sourceWrapElement = source.querySelector(".facets-wrap");
 
     if (sourceWrapElement && targetWrapElement) {
-      const isShowingMore = Boolean(
-        target.querySelector("show-more-button .label-show-more.hidden")
-      );
-      if (isShowingMore) {
-        sourceWrapElement
-          .querySelectorAll(".facets__item.hidden")
-          .forEach((hiddenItem) => hiddenItem.classList.replace("hidden", "show-more-item"));
-      }
-
       targetWrapElement.outerHTML = sourceWrapElement.outerHTML;
     }
   }

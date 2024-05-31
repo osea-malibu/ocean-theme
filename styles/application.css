@@ -475,6 +475,11 @@
     @apply bg-white/50;
   }
 
+  /* Loading states */
+  #ProductGridContainer .collection.loading .loading-overlay {
+    @apply block;
+  }
+
   /* Recover password */
   #recover,
   #recover + div {
@@ -640,11 +645,6 @@ ul.whr-items .whr-item.active h3::before {
 }
 ul.whr-items .whr-item.active h3::after {
   @apply rotate-45;
-}
-
-/* Facets */
-.active-facets facet-remove:only-child {
-  @apply hidden;
 }
 
 /* Klaviyo - Footer Form */
