@@ -53,8 +53,15 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
+          "announcement_NNqRkU": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p>Enter code <strong>SUMMERGLOW<\/strong> at checkout for free shipping!<\/p>"
+            }
+          },
           "announcement-bar-0": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p>Free shipping on orders $60+<\/p>"
             }
@@ -68,6 +75,7 @@
           }
         },
         "block_order": [
+          "announcement_NNqRkU",
           "announcement-bar-0",
           "announcement_gBbEG3"
         ],
