@@ -147,13 +147,13 @@
               </li>
             {%- endfor -%}
           </ul>
+
+          {%- if paginate.pages > 1 -%}
+            {% render 'pagination', paginate: paginate, anchor: '' %}
+          {%- endif -%}
         </div>
       {%- endif -%}
     </div>
-
-    {%- if paginate.pages > 1 -%}
-      {% render 'pagination', paginate: paginate, anchor: '' %}
-    {%- endif -%}
   {%- endpaginate -%}
 
   {%- if collection.metafields.custom.seo_description != nil -%}

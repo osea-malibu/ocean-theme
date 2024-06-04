@@ -16,7 +16,6 @@
 {%- liquid
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
-  assign default_presentation = 'text'
   if results.url
     assign results_url = results.url
   else
@@ -56,7 +55,7 @@
 
         {% comment %} Sorting {% endcomment %}
         {%- if enable_sorting -%}
-          <div class="facet-filters sorting absolute right-0 top-0">
+          <div class="sorting absolute right-0 top-0">
             <div class="flex items-center gap-1">
               <label for="SortBy" class="text-sm font-medium">Sort:</label>
               <div class="select">
@@ -94,16 +93,7 @@
 
             {% comment %} Filters {% endcomment %}
             {%- for filter in results.filters -%}
-              {% liquid
-                assign total_active_values = total_active_values | plus: filter.active_values.size
-                assign presentation = filter.presentation | default: default_presentation
-
-                if presentation == 'image'
-                  assign visual_layout_class = 'facets-layout facets-layout-grid facets-layout-grid--' | append: presentation
-                else
-                  assign visual_layout_class = 'facets-layout facets-layout-list facets-layout-list--' | append: presentation
-                endif
-              %}
+              {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
 
               {%- if filter.label == 'Skin Type' -%}
                 <div id="Facet-{{ forloop.index }}-{{ section.id }}">
@@ -198,7 +188,7 @@
                             {{- 'products.facets.filters_selected' | t: count: filter.active_values.size -}}
                           </span>
                           <facet-remove>
-                            <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link">
+                            <a href="{{ filter.url_to_remove }}" class="link underlined-link">
                               {{ 'products.facets.reset' | t }}
                             </a>
                           </facet-remove>
@@ -214,10 +204,7 @@
                               assign sorted_values = active_filter_values | concat: inactive_filter_values
                             endif
                           -%}
-                          <ul
-                            class="{{ visual_layout_class }}"
-                            role="list"
-                          >
+                          <ul role="list">
                             {%- for value in sorted_values -%}
                               {% liquid
                                 assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
@@ -226,13 +213,10 @@
                                   assign is_disabled = true
                                 endif
                               %}
-                              {%- capture label_class -%}
-                              facets__label facet-checkbox{% if is_disabled %} disabled{% endif %}{% if value.active %} active{% endif %}
-                              {%- endcapture -%}
 
                               {%- capture text_value -%}
-                                <span class="facet-checkbox__text" aria-hidden="true">
-                                  <span class="facet-checkbox__text-label">{{- value.label | escape }}</span> ({{- value.count -}})
+                                <span aria-hidden="true">
+                                  <span>{{- value.label | escape }}</span> ({{- value.count -}})
                                 </span>
                                 <span class="sr-only">
                                   {{- value.label | escape }} (
@@ -246,7 +230,7 @@
                               {%- endcapture -%}
 
                               <li>
-                                <label for="{{ input_id }}" class="{{ label_class }}">
+                                <label for="{{ input_id }}" class="{% if is_disabled %}pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
                                   <input
                                     type="checkbox"
                                     name="{{ value.param_name }}"
@@ -259,45 +243,30 @@
                                       disabled
                                     {% endif %}
                                   >
-
-                                  {%- if presentation == 'image' -%}
-                                    <div class="facets__image-wrapper">
-                                      {%- if value.image -%}
-                                        {{
-                                          value.image
-                                          | image_url: width: 300
-                                          | image_tag: class: 'facets__image', alt: value.alt
-                                        }}
-                                      {%- endif -%}
-                                    </div>
-                                  {%- else -%}
-                                    <svg
-                                      width="1.6rem"
-                                      height="1.6rem"
-                                      viewBox="0 0 16 16"
-                                      aria-hidden="true"
-                                      focusable="false"
-                                    >
-                                      <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
-                                    </svg>
-
-                                    <svg
-                                      aria-hidden="true"
-                                      class="icon icon-checkmark"
-                                      width="1.1rem"
-                                      height="0.7rem"
-                                      viewBox="0 0 11 7"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1"
-                                        stroke="currentColor"
-                                        stroke-width="1.75"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                    </svg>
-                                  {%- endif -%}
-
+                                  <svg
+                                    width="1.6rem"
+                                    height="1.6rem"
+                                    viewBox="0 0 16 16"
+                                    aria-hidden="true"
+                                    focusable="false"
+                                  >
+                                    <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+                                  </svg>
+                                  <svg
+                                    aria-hidden="true"
+                                    class="icon icon-checkmark"
+                                    width="1.1rem"
+                                    height="0.7rem"
+                                    viewBox="0 0 11 7"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1"
+                                      stroke="currentColor"
+                                      stroke-width="1.75"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round" />
+                                  </svg>
                                   {{ text_value }}
                                 </label>
                               </li>
@@ -316,12 +285,12 @@
                             {{- 'products.facets.max_price' | t: price: max_price_amount -}}
                           </span>
                           <facet-remove>
-                            <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link">
+                            <a href="{{ filter.url_to_remove }}" class="link underlined-link">
                               {{ 'products.facets.reset' | t }}
                             </a>
                           </facet-remove>
                         </div>
-                        <price-range class="facets__price">
+                        <price-range>
                           {% render 'price-facet', filter: filter, id_prefix: 'Filter-' %}
                         </price-range>
                       </div>
@@ -403,15 +372,6 @@
               >
                 {%- if enable_filtering -%}
                   {%- for filter in results.filters -%}
-                    {% liquid
-                      assign presentation = filter.presentation | default: default_presentation
-                      if presentation == 'image'
-                        assign visual_layout_class = 'facets-layout facets-layout-grid facets-layout-grid--' | append: presentation
-                      else
-                        assign visual_layout_class = 'facets-layout facets-layout-list facets-layout-list--' | append: presentation
-                      endif
-                    %}
-
                     {% case filter.type %}
                       {% when 'boolean', 'list' %}
                         <details
@@ -435,7 +395,7 @@
                               {% render 'icon-arrow', variant: 'long', aria_hidden: true, classes: 'w-4 h-4 rotate-180', stroke_width: 2 %}
                               {{ filter.label | escape }}
                             </button>
-                            <ul class="{{ visual_layout_class }} mobile-facets__list" role="list">
+                            <ul class="mobile-facets__list overflow-y-auto" role="list">
                               {%- liquid
                                 assign sorted_values = filter.values
                                 # Keep the selected values grouped together when operator is AND
@@ -454,13 +414,9 @@
                                   endif
                                 %}
 
-                                {%- capture label_class -%}
-                                facets__label mobile-facets__label{% if is_disabled %} disabled{% endif %}{% if value.active %} active{% endif %}
-                                {%- endcapture -%}
-
                                 {%- capture text_value -%}
-                                  <span class="facet-checkbox__text" aria-hidden="true">
-                                    <span class="facet-checkbox__text-label">{{- value.label | escape }}</span> ({{- value.count -}})
+                                  <span aria-hidden="true">
+                                    <span>{{- value.label | escape }}</span> ({{- value.count -}})
                                   </span>
                                   <span class="sr-only">
                                     {{- value.label | escape }} (
@@ -474,7 +430,7 @@
                                 {%- endcapture -%}
 
                                 <li class="mobile-facets__item">
-                                  <label for="{{ input_id }}" class="{{ label_class }}">
+                                  <label for="{{ input_id }}" class="mobile-facets__label{% if is_disabled %} pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
                                     <input
                                       class="mobile-facets__checkbox"
                                       type="checkbox"
@@ -488,43 +444,28 @@
                                         disabled
                                       {% endif %}
                                     >
+                                    <span class="mobile-facets__highlight"></span>
+                                    <svg
+                                      width="1.6rem"
+                                      height="1.6rem"
+                                      viewBox="0 0 16 16"
+                                      aria-hidden="true"
+                                      focusable="false"
+                                    >
+                                      <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+                                    </svg>
 
-                                    {%- if presentation == 'image' -%}
-                                      <div class="facets__image-wrapper">
-                                        {%- if value.image -%}
-                                          {{
-                                            value.image
-                                            | image_url: width: 300
-                                            | image_tag: class: 'facets__image', alt: value.alt
-                                          }}
-                                        {%- endif -%}
-                                      </div>
-                                    {%- else -%}
-                                      <span class="mobile-facets__highlight"></span>
-
-                                      <svg
-                                        width="1.6rem"
-                                        height="1.6rem"
-                                        viewBox="0 0 16 16"
-                                        aria-hidden="true"
-                                        focusable="false"
-                                      >
-                                        <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
-                                      </svg>
-
-                                      <svg
-                                        aria-hidden="true"
-                                        class="icon icon-checkmark"
-                                        width="1.1rem"
-                                        height="0.7rem"
-                                        viewBox="0 0 11 7"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-                                      </svg>
-                                    {%- endif %}
-
+                                    <svg
+                                      aria-hidden="true"
+                                      class="icon icon-checkmark"
+                                      width="1.1rem"
+                                      height="0.7rem"
+                                      viewBox="0 0 11 7"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                     {{ text_value }}
                                   </label>
                                 </li>
@@ -575,7 +516,7 @@
                               {{ 'products.facets.max_price' | t: price: max_price_amount }}
                             </p>
 
-                            <price-range class="facets__price">
+                            <price-range>
                               {% render 'price-facet', filter: filter, id_prefix: 'Mobile-Filter-' %}
                             </price-range>
                             <div class="mobile-facets__footer">
