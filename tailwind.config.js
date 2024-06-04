@@ -14,6 +14,9 @@ module.exports = {
     {
       pattern: /order-(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20)/,
     },
+    {
+      pattern: /w-(1\/6|1\/5|1\/4|1\/3|1\/2)/,
+    },
     /* {
       pattern: /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
       variants: ["xs", "sm", "md", "lg", "hover"],

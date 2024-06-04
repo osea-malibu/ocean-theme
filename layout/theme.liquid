@@ -32,7 +32,6 @@
       render 'howl'
       render 'podscribe'
       render 'share-a-sale'
-      render 'audiohook'
     %}
     
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
@@ -166,16 +165,13 @@
     {%- endif -%}
 
     {%- liquid
-      render 'klaviyo-back-in-stock'
-
       if template.name == 'product'
         render 'klaviyo-add-to-cart'
       endif
-    
+      render 'klaviyo-back-in-stock'
       render 'gorgias-chat-widget'
-
       render 'bazaarvoice'
-
+      render 'audiohook'
       render 'data-layer'
     -%}
 
