@@ -1,8 +1,9 @@
 {%- liquid
-  assign matrix_products = collection.metafields.custom.comparison_matrix_products | split: ','
+  assign matrix_product_count = collection.metafields.custom.comparison_matrix_products.value.count
   assign product_form_id = 'product-form-' | append: section.id
 -%}
-{%- if matrix_products.size > 0 -%}
+
+{%- if matrix_product_count > 0 -%}
 <section class="plp-comparison-matrix container mb-8 overflow-hidden">
   <div class="text-center">
     <h2 class="font-serif text-3xl subpixel-antialiased tracking-tight">Compare {{ collection.title }}</h2>
@@ -13,7 +14,7 @@
       <thead>
         <tr class="border-b border-seaweed-300">
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
-            <th class="px-2 py-2 text-center w-1/{{ matrix_products.size }}">
+            <th class="px-2 py-2 text-center w-1/{{ matrix_product_count }}">
               {%- liquid
                 assign image_src = matrix_product.metafields.custom.product_image_transparent | image_url: width: 80
                 assign image_src_2x = matrix_product.metafields.custom.product_image_transparent | image_url: width: 160
@@ -70,7 +71,7 @@
       <tbody>
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Benefits' -%}
           <tr>
-            <th colspan="{{ matrix_products.size }}" class="text-left px-2 text-sm pt-2">Benefits</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Benefits</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -86,7 +87,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Skin Type' -%}
           <tr>
-            <th colspan="{{ matrix_products.size }}" class="text-left px-2 text-sm pt-2">Skin Type</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Skin Type</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -100,7 +101,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Price' -%}
           <tr>
-            <th colspan="{{ matrix_products.size }}" class="text-left px-2 text-sm pt-2">Price</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Price</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -110,9 +111,23 @@
             {%- endfor -%}
           </tr>
         {%- endif -%}
+        {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Finish' -%}
+          <tr>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Finish</th>
+          </tr>
+          <tr class="border-b border-seaweed-300">
+            {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
+              <td class="text-left px-2 align-top text-sm pb-2 leading-tight">
+                {%- if matrix_product.metafields.custom.finish != blank -%}
+                  {{ matrix_product.metafields.custom.finish.value }}
+                {%- endif -%}
+              </td>
+            {%- endfor -%}
+          </tr>
+        {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Scent Profile' -%}
           <tr>
-            <th colspan="{{ matrix_products.size }}" class="text-left px-2 text-sm pt-2">Scent Profile</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Scent Profile</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -128,7 +143,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Scent Profile' -%}
           <tr>
-            <th colspan="{{ matrix_products.size }}" class="text-left px-2 text-sm pt-2">Key Ingredients</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Key Ingredients</th>
           </tr>
           <tr>
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -213,7 +228,7 @@
       <thead>
         <tr>
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
-            <th class="px-1 py-0 text-center w-1/{{ matrix_products.size }}">
+            <th class="px-1 py-0 text-center w-1/{{ matrix_product_count }}">
               <div class="py-2 rounded-t {{ matrix_product.metafields.custom.product_color_light }}">
                 {%- liquid
                   assign image_src = matrix_product.metafields.custom.product_image_transparent | image_url: width: 80

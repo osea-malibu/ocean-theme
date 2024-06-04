@@ -63,10 +63,6 @@
   overflow-y: auto;
 }
 
-.facets-layout-list--swatch {
-  --swatch-input--size: 2.4rem;
-}
-
 /* Hover, active, and focus states */
 .facets__label:hover,
 .facets__label.active,
@@ -77,11 +73,6 @@
 /* Disabled state */
 .facets-layout .facets__label.disabled {
   pointer-events: none;
-}
-
-.facets-layout:not(.facets-layout-list--swatch, .facets-layout-grid--image)
-  .facets__label.disabled {
-  opacity: 0.4;
 }
 /* End disabled state */
 

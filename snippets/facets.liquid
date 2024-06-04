@@ -13,9 +13,6 @@
   {% render 'facets', results: collection, enable_filtering: true, enable_sorting: true, paginate: paginate %}
 {% endcomment %}
 
-{{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
-{{ 'component-swatch.css' | asset_url | stylesheet_tag }}
-
 {%- liquid
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
@@ -146,7 +143,7 @@
                           >
                           <label for="{{ input_id }}" class="border border-seaweed-700 rounded-full pl-2 pr-0.5 peer-checked:bg-neon-green/50 peer-checked:small:max-w-4 transition-colors{% if is_disabled %} disabled{% endif %}{% if value.active %} active{% endif %}">
                             <span aria-hidden="true" class="flex items-center gap-1 whitespace-nowrap">
-                              <span class="text-sm font-book">{{ value.label | replace: 'All Skin Types', 'All' | escape }}</span>
+                              <span class="text-sm font-book">{{ value.label | escape }}</span>
                               <small class="min-w-4 h-4 px-1 bg-wave-300 font-bold text-xs rounded-full text-center leading-4 overflow-hidden max-w-6 transition-max-width">{{ value.count }}</small>
                             </span>
                             <span class="sr-only">
@@ -477,78 +474,59 @@
                                 {%- endcapture -%}
 
                                 <li class="mobile-facets__item">
-                                  {% if presentation == 'swatch' %}
-                                    <div class="{{ label_class }}">
-                                      <div class="swatch-input-wrapper">
-                                        {% render 'swatch-input',
-                                          id: input_id,
-                                          type: 'checkbox',
-                                          name: value.param_name,
-                                          value: value.value,
-                                          product_form_id: 'FacetFiltersFormMobile',
-                                          swatch: value.swatch,
-                                          checked: value.active,
-                                          disabled: is_disabled
-                                        %}
+                                  <label for="{{ input_id }}" class="{{ label_class }}">
+                                    <input
+                                      class="mobile-facets__checkbox"
+                                      type="checkbox"
+                                      name="{{ value.param_name }}"
+                                      value="{{ value.value }}"
+                                      id="{{ input_id }}"
+                                      {% if value.active %}
+                                        checked
+                                      {% endif %}
+                                      {% if is_disabled %}
+                                        disabled
+                                      {% endif %}
+                                    >
+
+                                    {%- if presentation == 'image' -%}
+                                      <div class="facets__image-wrapper">
+                                        {%- if value.image -%}
+                                          {{
+                                            value.image
+                                            | image_url: width: 300
+                                            | image_tag: class: 'facets__image', alt: value.alt
+                                          }}
+                                        {%- endif -%}
                                       </div>
+                                    {%- else -%}
+                                      <span class="mobile-facets__highlight"></span>
 
-                                      {{ text_value }}
-                                    </div>
-                                  {% else %}
-                                    <label for="{{ input_id }}" class="{{ label_class }}">
-                                      <input
-                                        class="mobile-facets__checkbox"
-                                        type="checkbox"
-                                        name="{{ value.param_name }}"
-                                        value="{{ value.value }}"
-                                        id="{{ input_id }}"
-                                        {% if value.active %}
-                                          checked
-                                        {% endif %}
-                                        {% if is_disabled %}
-                                          disabled
-                                        {% endif %}
+                                      <svg
+                                        width="1.6rem"
+                                        height="1.6rem"
+                                        viewBox="0 0 16 16"
+                                        aria-hidden="true"
+                                        focusable="false"
                                       >
+                                        <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+                                      </svg>
 
-                                      {%- if presentation == 'image' -%}
-                                        <div class="facets__image-wrapper">
-                                          {%- if value.image -%}
-                                            {{
-                                              value.image
-                                              | image_url: width: 300
-                                              | image_tag: class: 'facets__image', alt: value.alt
-                                            }}
-                                          {%- endif -%}
-                                        </div>
-                                      {%- else -%}
-                                        <span class="mobile-facets__highlight"></span>
+                                      <svg
+                                        aria-hidden="true"
+                                        class="icon icon-checkmark"
+                                        width="1.1rem"
+                                        height="0.7rem"
+                                        viewBox="0 0 11 7"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                      </svg>
+                                    {%- endif %}
 
-                                        <svg
-                                          width="1.6rem"
-                                          height="1.6rem"
-                                          viewBox="0 0 16 16"
-                                          aria-hidden="true"
-                                          focusable="false"
-                                        >
-                                          <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
-                                        </svg>
-
-                                        <svg
-                                          aria-hidden="true"
-                                          class="icon icon-checkmark"
-                                          width="1.1rem"
-                                          height="0.7rem"
-                                          viewBox="0 0 11 7"
-                                          fill="none"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                      {%- endif %}
-
-                                      {{ text_value }}
-                                    </label>
-                                  {% endif %}
+                                    {{ text_value }}
+                                  </label>
                                 </li>
                               {%- endfor -%}
                             </ul>
