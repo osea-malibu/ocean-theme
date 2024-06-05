@@ -13,7 +13,8 @@
         "products_per_page": 20,
         "enable_filtering": true,
         "enable_sorting": true,
-        "enable_anchors": false,
+        "filter_type_mobile": "drawer",
+        "filter_type_desktop": "inline",
         "show_reviews": false
       }
     },
@@ -40,7 +41,7 @@
           "type": "button",
           "settings": {
             "button_label": "Take the quiz",
-            "button_link": "shopify://pages/quiz",
+            "button_link": "shopify:\/\/pages\/quiz",
             "button_aria_label": "",
             "target_blank": false,
             "button_icon": "",
@@ -60,5 +61,9 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "eec6e816-c976-4406-bfd7-b416c719939e"]
+  "order": [
+    "banner",
+    "product-grid",
+    "eec6e816-c976-4406-bfd7-b416c719939e"
+  ]
 }
