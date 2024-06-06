@@ -24,7 +24,7 @@
   endif
 -%}
 
-<div class="relative mb-4{% if filter_type_mobile == 'drawer' %} flex justify-between items-center{% if filter_type_desktop == 'inline' %} sm:flex-col{% endif %}{% endif %}">
+<div class="relative mb-4">
   {% comment %} Count {% endcomment %}
   <div class="product-count pb-5 pt-1 flex items-center gap-1" role="status">
     <h2 class="text-sm">
@@ -46,7 +46,7 @@
   
   {%- if filter_type_mobile == 'inline' or filter_type_desktop == 'inline' -%}
     {% comment %}  Inline filter {% endcomment %}
-    <facet-filters-form class="inline-facets facets transition-opacity{% if filter_type_mobile == 'drawer' %} hidden sm:block{% endif %}{% if filter_type_desktop == 'inline' %} sm:block{% endif %}">
+    <facet-filters-form class="inline-facets facets transition-opacity{% if filter_type_mobile == 'drawer' %} hidden{% endif %}{% if filter_type_desktop == 'inline' %} sm:block{% endif %}">
       <form id="FacetFiltersForm">
         {%- if results.terms -%}
           <input type="hidden" name="q" value="{{ results.terms | escape }}">
@@ -284,7 +284,7 @@
   {%- if filter_type_mobile == 'drawer' or filter_type_desktop == 'drawer' -%}
     {% comment %}  Drawer filter {% endcomment %}
     <menu-drawer
-      class="mobile-facets flex ml-0 pb-5{% if filter_type_desktop == 'inline' %} sm:hidden{% endif %}"
+      class="mobile-facets flex ml-0 pb-5{% if filter_type_mobile == 'inline' %} hidden{% endif %}{% if filter_type_desktop == 'inline' %} sm:hidden{% endif %}"
       data-breakpoint="mobile"
     >
       <details class="flex">
@@ -401,8 +401,8 @@
                                   </span>
                                 {%- endcapture -%}
 
-                                <li class="mobile-facets__item">
-                                  <label for="{{ input_id }}" class="mobile-facets__label{% if is_disabled %} pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
+                                <li class="relative">
+                                  <label for="{{ input_id }}" class="flex{% if is_disabled %} pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
                                     <input
                                       class="mobile-facets__checkbox"
                                       type="checkbox"
@@ -416,35 +416,13 @@
                                         disabled
                                       {% endif %}
                                     >
-                                    <span class="mobile-facets__highlight"></span>
-                                    <svg
-                                      width="1.6rem"
-                                      height="1.6rem"
-                                      viewBox="0 0 16 16"
-                                      aria-hidden="true"
-                                      focusable="false"
-                                    >
-                                      <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
-                                    </svg>
-
-                                    <svg
-                                      aria-hidden="true"
-                                      class="icon icon-checkmark"
-                                      width="1.1rem"
-                                      height="0.7rem"
-                                      viewBox="0 0 11 7"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
                                     {{ text_value }}
                                   </label>
                                 </li>
                               {%- endfor -%}
                             </ul>
 
-                            <div class="mobile-facets__footer gradient">
+                            <div class="border-t border-seaweed-400 p-4 bottom-0 sticky flex z-20 mt-auto">
                               <facet-remove>
                                 <a href="{{ filter.url_to_remove }}" class="mobile-facets__clear underlined-link">
                                   {{- 'products.facets.clear' | t -}}
@@ -484,14 +462,14 @@
                             </button>
 
                             {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
-                            <p class="mobile-facets__info">
+                            <p>
                               {{ 'products.facets.max_price' | t: price: max_price_amount }}
                             </p>
 
                             <price-range>
                               {% render 'price-facet', filter: filter, id_prefix: 'Mobile-Filter-' %}
                             </price-range>
-                            <div class="mobile-facets__footer">
+                            <div class="border-t border-seaweed-400 p-4 bottom-0 sticky flex z-20 mt-auto">
                               <facet-remove>
                                 <a href="{{ filter.url_to_remove }}" class="mobile-facets__clear underlined-link">
                                   {{- 'products.facets.clear' | t -}}
@@ -517,14 +495,15 @@
                     class="mobile-facets__details js-filter"
                     data-index="mobile-{{ forloop.index }}"
                   >
-                    <div class="">
-                      <div class="mobile-facets__sort">
-                        <label for="SortBy-mobile">{{ 'products.facets.sort_by_label' | t }}</label>
+                    <div>
+                      <div class="flex justify-between">
+                        <label for="SortBy-mobile" class="shrink-0">{{ 'products.facets.sort_by_label' | t }}</label>
                         <div class="select">
                           <select
                             name="sort_by"
                             id="SortBy-mobile"
                             aria-describedby="a11y-refresh-page-message"
+                            class="w-auto"
                           >
                             {%- for option in results.sort_options -%}
                               <option
@@ -537,14 +516,13 @@
                               </option>
                             {%- endfor -%}
                           </select>
-                          {% render 'icon-caret', aria_hidden: true, classes: 'w-4 h-4' %}
                         </div>
                       </div>
                     </div>
                   </div>
                 {%- endif -%}
 
-                <div class="mobile-facets__footer">
+                <div class="border-t border-seaweed-400 p-4 bottom-0 sticky flex z-20 mt-auto">
                   <facet-remove>
                     <a href="{{ results_url }}" class="mobile-facets__clear underlined-link">
                       {{- 'products.facets.clear_all' | t -}}

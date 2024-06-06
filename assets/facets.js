@@ -27,7 +27,8 @@ class FacetFiltersForm extends HTMLElement {
 
   static toggleActiveFacets(disable = true) {
     document.querySelectorAll(".js-facet-remove").forEach((element) => {
-      element.classList.toggle("disabled", disable);
+      element.classList.toggle("pointer-events-none", disable);
+      element.classList.toggle("opacity-50", disable);
     });
   }
 
