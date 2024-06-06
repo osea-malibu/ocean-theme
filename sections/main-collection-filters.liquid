@@ -6,7 +6,7 @@
     <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
     {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
       <aside
-        class="facets-wrapper"
+        class="facets-wrapper relative z-20"
         id="main-collection-filters"
         data-id="{{ section.id }}"
       >
@@ -74,7 +74,7 @@
       {%- endif -%}
     {%- endif -%}
   
-    <div id="ProductGridContainer">
+    <div id="ProductGridContainer" class="relative z-10">
       {%- if collection.products.size == 0 -%}
         <div class="container text-center" id="product-grid" data-id="{{ section.id }}">
           <div class="loading-overlay gradient"></div>

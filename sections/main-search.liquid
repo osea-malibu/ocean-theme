@@ -24,7 +24,7 @@
         <form action="{{ routes.search_url }}" method="get" role="search" class="search">
           <div class="field">
             <input
-              class="search__input field__input"
+              class="search__input"
               id="Search-In-Template"
               type="search"
               name="q"
@@ -108,12 +108,11 @@
                   <li class="w-full">
                     {%- case item.object_type -%}
                       {%- when 'product' -%}
-                          {%- capture product_settings -%}{%- if section.settings.product_show_vendor -%}vendor,{%- endif -%}title,price{%- endcapture -%}
-                          {% render 'product-card',
-                            card_product: all_products[item.handle],
-                            section_id: section.id,
-                            button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
-                          %}
+                        {% render 'product-card',
+                          card_product: all_products[item.handle],
+                          section_id: section.id,
+                          button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
+                        %}
                       {%- when 'article' -%}
                         {%- liquid
                           assign article_title = item.title | truncate: 50

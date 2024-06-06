@@ -1,43 +1,51 @@
-<span class="field-currency">{{ cart.currency.symbol }}</span>
+<div class="flex items-center">
+  <span class="field-currency mr-1">{{ cart.currency.symbol }}</span>
 
-<div class="field">
-  <input
-    class="field__input"
-    name="{{ filter.min_value.param_name }}"
-    id="{{ id_prefix }}{{ filter.label | escape }}-GTE"
-    {%- if filter.min_value.value -%}
-      value="{{ filter.min_value.value | money_without_currency }}"
-    {%- endif -%}
-    type="text"
-    inputmode="decimal"
-    placeholder="0"
-    data-pattern="\d| |,|\."
-    data-min="0"
-    data-max="{{ filter.range_max | money_without_currency }}"
-  >
-  <label class="field__label" for="{{ id_prefix }}{{ filter.label | escape }}-GTE">
-    {{- 'products.facets.from' | t -}}
-  </label>
-</div>
+  <div class="field relative mr-3">
+    <input
+      class="input peer pt-3 placeholder:text-white min-w-24"
+      name="{{ filter.min_value.param_name }}"
+      id="{{ id_prefix }}{{ filter.label | escape }}-GTE"
+      {%- if filter.min_value.value -%}
+        value="{{ filter.min_value.value | money_without_currency }}"
+      {%- endif -%}
+      type="text"
+      inputmode="decimal"
+      placeholder="0"
+      data-pattern="\d| |,|\."
+      data-min="0"
+      data-max="{{ filter.range_max | money_without_currency }}"
+    >
+    <label
+      class="absolute left-4 peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-base text-xs top-px peer-focus:text-xs peer-focus:top-px transition-all placeholder:text-white"
+      for="{{ id_prefix }}{{ filter.label | escape }}-GTE"
+    >
+      {{- 'products.facets.from' | t -}}
+    </label>
+  </div>
 
-<span class="field-currency">{{ cart.currency.symbol }}</span>
+  <span class="field-currency mr-1">{{ cart.currency.symbol }}</span>
 
-<div class="field">
-  <input
-    class="field__input"
-    name="{{ filter.max_value.param_name }}"
-    id="{{ id_prefix }}{{ filter.label | escape }}-LTE"
-    {%- if filter.max_value.value -%}
-      value="{{ filter.max_value.value | money_without_currency }}"
-    {%- endif -%}
-    type="text"
-    inputmode="decimal"
-    placeholder="{{ filter.range_max | money_without_currency }}"
-    data-pattern="\d| |,|\."
-    data-min="0"
-    data-max="{{ filter.range_max | money_without_currency }}"
-  >
-  <label class="field__label" for="{{ id_prefix }}{{ filter.label | escape }}-LTE">
-    {{- 'products.facets.to' | t -}}
-  </label>
+  <div class="field relative">
+    <input
+      class="input peer pt-3 placeholder:text-white min-w-24"
+      name="{{ filter.max_value.param_name }}"
+      id="{{ id_prefix }}{{ filter.label | escape }}-LTE"
+      {%- if filter.max_value.value -%}
+        value="{{ filter.max_value.value | money_without_currency }}"
+      {%- endif -%}
+      type="text"
+      inputmode="decimal"
+      placeholder="{{ filter.range_max | money_without_currency }}"
+      data-pattern="\d| |,|\."
+      data-min="0"
+      data-max="{{ filter.range_max | money_without_currency }}"
+    >
+    <label
+      class="absolute left-4 peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-base text-xs top-px peer-focus:text-xs peer-focus:top-px transition-all"
+      for="{{ id_prefix }}{{ filter.label | escape }}-LTE"
+    >
+      {{- 'products.facets.to' | t -}}
+    </label>
+  </div>
 </div>

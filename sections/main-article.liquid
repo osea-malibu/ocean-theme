@@ -142,7 +142,6 @@
                     <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status">
                     </span>
                     <input type="text"
-                          class="field__input"
                           id="url"
                           value="{{ shop.url | append: article.url }}"
                           placeholder="{{ 'general.share.share_url' | t }}"
@@ -247,7 +246,6 @@
                   type="text"
                   name="comment[author]"
                   id="CommentForm-author"
-                  class="field__input"
                   autocomplete="name"
                   value="{{ form.author }}"
                   aria-required="true"
@@ -270,7 +268,6 @@
                   name="comment[email]"
                   id="CommentForm-email"
                   autocomplete="email"
-                  class="field__input"
                   value="{{ form.email }}"
                   autocorrect="off"
                   autocapitalize="off"
@@ -294,7 +291,7 @@
                 rows="5"
                 name="comment[body]"
                 id="CommentForm-body"
-                class="text-area field__input"
+                class="text-area"
                 aria-required="true"
                 {% if form.errors contains 'body' %}
                   aria-invalid="true"
