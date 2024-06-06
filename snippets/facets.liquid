@@ -189,7 +189,7 @@
                               {{- 'products.facets.filters_selected' | t: count: filter.active_values.size -}}
                             </span>
                             <facet-remove>
-                              <a href="{{ filter.url_to_remove }}" class="link underlined-link">
+                              <a href="{{ filter.url_to_remove }}" class="link">
                                 {{ 'products.facets.reset' | t }}
                               </a>
                             </facet-remove>
@@ -257,7 +257,7 @@
                               {{- 'products.facets.max_price' | t: price: max_price_amount -}}
                             </span>
                             <facet-remove>
-                              <a href="{{ filter.url_to_remove }}" class="link underlined-link">
+                              <a href="{{ filter.url_to_remove }}" class="link">
                                 {{ 'products.facets.reset' | t }}
                               </a>
                             </facet-remove>
@@ -424,7 +424,7 @@
 
                             <div class="border-t border-seaweed-400 p-4 bottom-0 sticky flex z-20 mt-auto">
                               <facet-remove>
-                                <a href="{{ filter.url_to_remove }}" class="mobile-facets__clear underlined-link">
+                                <a href="{{ filter.url_to_remove }}" class="mobile-facets__clear link">
                                   {{- 'products.facets.clear' | t -}}
                                 </a>
                               </facet-remove>
@@ -471,7 +471,7 @@
                             </price-range>
                             <div class="border-t border-seaweed-400 p-4 bottom-0 sticky flex z-20 mt-auto">
                               <facet-remove>
-                                <a href="{{ filter.url_to_remove }}" class="mobile-facets__clear underlined-link">
+                                <a href="{{ filter.url_to_remove }}" class="mobile-facets__clear link">
                                   {{- 'products.facets.clear' | t -}}
                                 </a>
                               </facet-remove>
@@ -522,15 +522,15 @@
                   </div>
                 {%- endif -%}
 
-                <div class="border-t border-seaweed-400 px-4 pt-4 pb-20 bottom-0 inset-x-0 absolute flex justify-between items-center z-20 mt-auto">
+                <div class="border-t border-seaweed-400 px-4 pt-4 pb-16 bottom-0 inset-x-0 absolute flex justify-between items-center z-20 mt-auto">
                   <facet-remove>
-                    <a href="{{ results_url }}" class="mobile-facets__clear underlined-link">
+                    <a href="{{ results_url }}" class="mobile-facets__clear link">
                       {{- 'products.facets.clear_all' | t -}}
                     </a>
                   </facet-remove>
                   <button
                     type="button"
-                    class="button button--primary"
+                    class="button button-primary"
                     onclick="this.closest('.mobile-facets').querySelector('summary').click()"
                   >
                     {{ 'products.facets.apply' | t }}
