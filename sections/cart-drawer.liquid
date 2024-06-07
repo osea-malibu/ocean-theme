@@ -60,7 +60,7 @@
 
         {%- unless settings.gwp_tier1_product == nil or hide_gwp -%}
           <gift-with-purchase-banner class="block {% if cart_ids contains tier1_product.id %}bg-neon-green/25{% else %}bg-seafoam-100{% endif %}">
-            <figure class="flex items-center max-w-md pl-6 pr-8 xs:pr-6 mx-auto gap-2">
+            <figure class="flex items-center max-w-md pl-6 pr-8 xs:pr-6 mx-auto gap-4">
               {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img src="{% render 'imgix', src: gwp_image_src %}" alt="Image of your free gift" loading="lazy" width="64" height="82">
               {% comment %} theme-check-enable RemoteAsset {% endcomment %}
@@ -85,6 +85,40 @@
               </figcaption>
             </figure>
           </gift-with-purchase-banner>
+        {%- endunless -%}
+      {%- endif -%}
+
+      {% comment %} First time customer GWP {% endcomment %}
+      {% if settings.enable_firstime_gwp -%}
+        {%- unless customer and customer.orders_count > 0 -%}
+          <div class="bg-neon-green/25 px-4 2xs:px-6">
+            <figure class="flex items-center max-w-md py-1 pl-6 pr-8 xs:pr-6 mx-auto gap-4">
+            {%- liquid
+              if settings.gwp_firsttime_product.metafields.custom.product_image_transparent != blank
+                assign firsttime_gwp_image_src = settings.gwp_firsttime_product.metafields.custom.product_image_transparent | image_url: width: 60
+                assign firsttime_gwp_image_src_2x = settings.gwp_firsttime_product.metafields.custom.product_image_transparent | image_url: width: 120
+              else
+                assign firsttime_gwp_image_src = settings.gwp_firsttime_product.featured_media | image_url: width: 60
+                assign firsttime_gwp_image_src_2x = settings.gwp_firsttime_product.featured_media | image_url: width: 120
+              endif
+            -%}
+            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+            <img
+              srcset="{% render 'imgix', src: firsttime_gwp_image_src_2x %} 2x, {% render 'imgix', src: firsttime_gwp_image_src %} 1x"
+              src="{% render 'imgix', src: firsttime_gwp_image_src_2x %}"
+              loading="lazy"
+              width="50"
+              height="{{ 50 | divided_by: settings.gwp_firsttime_product.featured_media.aspect_ratio | ceil }}"
+              alt="{{ settings.gwp_firsttime_product.featured_media.alt }}"
+            >
+            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+            <figcaption>
+              <h3 class="leading-tight font-medium text-sm">{{ settings.gwp_firsttime_product.title | remove: 'Free Gift - ' }}</h3>
+              <p class="text-sm leading-tight">Free gift with every first order</p>
+            </figcaption>
+            </figure>
+          </div>
+          <script>console.log("thing", {{ customer.orders_count }})</script>
         {%- endunless -%}
       {%- endif -%}
 
@@ -156,7 +190,7 @@
               data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
               data-item-to-remove="{{ item_with_set_line }}"
             >
-              <div class="relative rounded-sm bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
+              <div class="relative rounded-lg bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
                 {%- liquid
                   if first_set.metafields.custom.product_image_transparent != blank
                     assign sws_image_src = first_set.metafields.custom.product_image_transparent | image_url: width: 60
@@ -184,15 +218,6 @@
               </div>
             </save-with-sets>
           {%- endunless -%}
-
-          {% if settings.enable_firstime_gwp -%}
-            {%- unless customer and customer.orders_count > 0 -%}
-              {% comment %} First time customer GWP {% endcomment %}
-              <div class="relative rounded-sm bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
-              </div>
-              <script>console.log("thing", {{ customer.orders_count }})</script>
-            {%- endunless -%}
-          {%- endif -%}
 
           {% comment %} Cart items {% endcomment %}
           <cart-drawer-items class="block mx-auto max-w-md mb-12{% if cart == empty %} is-empty{% endif %}" data-cart-ids="{{ cart_ids | json }}">
