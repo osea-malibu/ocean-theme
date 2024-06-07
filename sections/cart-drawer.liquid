@@ -185,6 +185,15 @@
             </save-with-sets>
           {%- endunless -%}
 
+          {% if settings.enable_firstime_gwp -%}
+            {%- unless customer and customer.orders_count > 0 -%}
+              {% comment %} First time customer GWP {% endcomment %}
+              <div class="relative rounded-sm bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
+              </div>
+              <script>console.log("thing", {{ customer.orders_count }})</script>
+            {%- endunless -%}
+          {%- endif -%}
+
           {% comment %} Cart items {% endcomment %}
           <cart-drawer-items class="block mx-auto max-w-md mb-12{% if cart == empty %} is-empty{% endif %}" data-cart-ids="{{ cart_ids | json }}">
             <form action="{{ routes.cart_url }}" id="CartDrawer-Form" class="grow flex flex-wrap" method="post">

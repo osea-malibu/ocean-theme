@@ -390,13 +390,6 @@
         "default": false
       },
       {
-        "type": "checkbox",
-        "id": "enable_firstime_gwp",
-        "info": "Display a GWP in cart for first-time purchases.",
-        "label": "Enable first-time GWP",
-        "default": false
-      },
-      {
         "type": "header",
         "content": "Cart drawer"
       },
@@ -589,6 +582,22 @@
         "id": "gwp_urlmodal_image_desktop",
         "label": "Desktop image",
         "info": "Appears on left of modal on mobile, choose vertical image."
+      },
+      {
+        "type": "header",
+        "content": "First-time purchase GWP"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_firstime_gwp",
+        "info": "Display a GWP in cart for first-time purchases.",
+        "label": "Enable first-time GWP",
+        "default": false
+      },
+      {
+        "type": "product",
+        "id": "gwp_firsttime_product",
+        "label": "First-time gift product"
       }
     ]
   },
