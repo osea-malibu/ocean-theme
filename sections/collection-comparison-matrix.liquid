@@ -32,7 +32,7 @@
                 >
                 {% comment %} theme-check-enable RemoteAsset {% endcomment %}
               </a>
-              <a href="{{ matrix_product.url }}" class="block text-sm leading-5 h-5 whitespace-nowrap overflow-ellipsis overflow-hidden max-w-48">{{ matrix_product.title }}</a>
+              <a href="{{ matrix_product.url }}" class="block text-sm leading-5 whitespace-nowrap overflow-ellipsis overflow-hidden h-5{% if matrix_product_count > 3 %} max-w-48{% endif %}">{{ matrix_product.title }}</a>
               {% comment %} <product-form class="product-form plp-matrix-form relative" data-cart-type="{{ settings.cart_type }}">
                 {%- form 'product', matrix_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                   <input type="hidden" name="id" value="{{ matrix_product.selected_or_first_available_variant.id }}" disabled>
@@ -131,7 +131,7 @@
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
-              <td class="text-left px-2 align-top text-sm pb-2 leading-tight">
+              <td class="text-left px-2 align-top text-sm pb-2 leading-tight max-w-60">
                 {%- if matrix_product.metafields.custom.scent_profile_short != blank -%}
                   {{ matrix_product.metafields.custom.scent_profile_short.value }}
                 {%- elsif matrix_product.metafields.custom.scent_profile != blank -%}
@@ -141,7 +141,7 @@
             {%- endfor -%}
           </tr>
         {%- endif -%}
-        {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Scent Profile' -%}
+        {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Key Ingredients' -%}
           <tr>
             <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Key Ingredients</th>
           </tr>
