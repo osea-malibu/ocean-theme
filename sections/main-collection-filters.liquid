@@ -116,6 +116,7 @@
                 assign has_promo_content = false
               endif
             -%}
+            <script>console.log("has_promo_content", {{ has_promo_content }})</script>
             {%- if has_promo_content and featured_products.value.count == 0 -%}
               <li class="relative overflow-hidden">
                 {%- render 'collection-promo-tile',
