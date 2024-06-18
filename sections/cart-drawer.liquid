@@ -57,9 +57,6 @@
             endif
           endif
         -%}
-        {% if settings.gwp_tier1_product == nil %}
-        <script>console.log("settings.gwp_tier1_product == nil");</script>
-          {% endif %}
 
         {%- unless settings.gwp_tier1_product == nil or hide_gwp -%}
           <gift-with-purchase-banner class="block {% if cart_ids contains tier1_product.id %}bg-neon-green/25{% else %}bg-seafoam-100{% endif %}">
