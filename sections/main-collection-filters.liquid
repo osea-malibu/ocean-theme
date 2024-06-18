@@ -115,11 +115,14 @@
               else
                 assign has_promo_content = false
               endif
+
+              if featured_products.value == nil or featured_products.value.count == 0
+                assign no_featured_products = true
+              else
+                assign no_featured_products = false
+              endif
             -%}
-            {% if featured_products.value == nil %}
-            <script>console.log("featured_products.value.count", {{ featured_products.value.count }})</script>
-            {% endif %}
-            {%- if has_promo_content and featured_products.value.count == 0 -%}
+            {%- if has_promo_content and no_featured_products -%}
               <li class="relative overflow-hidden">
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
