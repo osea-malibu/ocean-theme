@@ -116,7 +116,7 @@
                 assign has_promo_content = false
               endif
             -%}
-            {% if featured_products.value.count == 0 %}
+            {% if featured_products.value == nil %}
             <script>console.log("featured_products.value.count", {{ featured_products.value.count }})</script>
             {% endif %}
             {%- if has_promo_content and featured_products.value.count == 0 -%}
