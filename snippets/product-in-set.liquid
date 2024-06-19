@@ -13,11 +13,11 @@
   if product.metafields.custom.parent_product != blank
     assign product_url = product.metafields.custom.parent_product.value.url
     assign short_description = product.metafields.custom.parent_product.value.metafields.custom_fields.short_description
-    assign product_description = product.metafields.custom.parent_product.value.metafields.custom_fields.description
+    assign key_ingredients_list = product.metafields.custom.parent_product.value.metafields.custom.key_ingredients_list
   else
     assign product_url = product.url
     assign short_description = product.metafields.custom_fields.short_description
-    assign product_description = product.metafields.custom_fields.description
+    assign key_ingredients_list = product.metafields.custom.key_ingredients_list
   endif
 -%}
 <div class="relative bg-white px-3 pt-3 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
@@ -80,12 +80,12 @@
     >
       <section class="mb-4">
         <h5 class="font-bold mb-2">Description</h5>
-        <div class="p:text-sm">{{ product_description }}</div>
+        <div class="p:text-sm">{{ product.metafields.custom_fields.description }}</div>
       </section>
       <section class="mb-4">
         <h5 class="font-bold mb-2">Key ingredients</h5>
-        {%- if product.metafields.custom.key_ingredients_list -%}
-          {%- for ingredient in product.metafields.custom.key_ingredients_list.value -%}
+        {%- if key_ingredients_list -%}
+          {%- for ingredient in key_ingredients_list.value -%}
             <div class="text-sm mb-2 last:mb-0">
               <p class="text-sm">
                 <b class="font-medium">{{ ingredient.name | split: ' [' | first }}</b>
