@@ -12,7 +12,6 @@
 {%- liquid
   if product.metafields.custom.parent_product != blank
     assign product_url = product.metafields.custom.parent_product.value.url
-    assign product = product.metafields.custom.parent_product.value
   else
     assign product_url = product.url
   endif
