@@ -12,8 +12,12 @@
 {%- liquid
   if product.metafields.custom.parent_product != blank
     assign product_url = product.metafields.custom.parent_product.value.url
+    assign short_description = product.metafields.custom.parent_product.value.short_description
+    assign product_description = product.metafields.custom.parent_product.value.description
   else
     assign product_url = product.url
+    assign short_description = product.metafields.custom_fields.short_description
+    assign product_description = product.metafields.custom_fields.description
   endif
 -%}
 <div class="relative bg-white px-3 pt-3 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
@@ -23,7 +27,7 @@
         <h4 class="font-medium group-hover:underline mb-0.5">
           {{ product.title | replace: 'Deluxe Sample ', '' | escape }}
         </h4>
-        <p class="group-hover:underline mb-0.5">{{ product.metafields.custom_fields.short_description }}</p>
+        <p class="group-hover:underline mb-0.5">{{ short_description }}</p>
         <p class="group-hover:underline mb-1">{{ product.metafields.my_fields.size }}</p>
       </a>
     </div>
@@ -76,7 +80,7 @@
     >
       <section class="mb-4">
         <h5 class="font-bold mb-2">Description</h5>
-        <div class="p:text-sm">{{ product.metafields.custom_fields.description }}</div>
+        <div class="p:text-sm">{{ product_description }}</div>
       </section>
       <section class="mb-4">
         <h5 class="font-bold mb-2">Key ingredients</h5>
