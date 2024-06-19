@@ -15,11 +15,13 @@
     assign short_description = product.metafields.custom.parent_product.value.metafields.custom_fields.short_description
     assign key_ingredients_list = product.metafields.custom.parent_product.value.metafields.custom.key_ingredients_list
     assign key_ingredients_text = product.metafields.custom.parent_product.value.metafields.custom.key_ingredients_text
+    assign product_ingredients = product.metafields.custom.parent_product.value.metafields.custom_fields.ingredients
   else
     assign product_url = product.url
     assign short_description = product.metafields.custom_fields.short_description
     assign key_ingredients_list = product.metafields.custom.key_ingredients_list
     assign key_ingredients_text = product.metafields.custom.key_ingredients_text
+    assign product_ingredients = product.metafields.custom_fields.ingredients
   endif
 -%}
 <div class="relative bg-white px-3 pt-3 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
@@ -116,7 +118,7 @@
             </button>
             <div class="w-full">
               <h2 class="font-bold mb-2">Ingredients</h2>
-              <div class="p:text-sm p:mb-2">{{ product.metafields.custom_fields.ingredients }}</div>
+              <div class="p:text-sm p:mb-2">{{ product_ingredients }}</div>
             </div>
           </div>
         </modal-dialog>
