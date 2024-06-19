@@ -12,8 +12,8 @@
 {%- liquid
   if product.metafields.custom.parent_product != blank
     assign product_url = product.metafields.custom.parent_product.value.url
-    assign short_description = product.metafields.custom.parent_product.value.short_description
-    assign product_description = product.metafields.custom.parent_product.value.description
+    assign short_description = product.metafields.custom.parent_product.value.metafields.custom_fields.short_description
+    assign product_description = product.metafields.custom.parent_product.value.metafields.custom_fields.description
   else
     assign product_url = product.url
     assign short_description = product.metafields.custom_fields.short_description
