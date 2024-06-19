@@ -14,10 +14,12 @@
     assign product_url = product.metafields.custom.parent_product.value.url
     assign short_description = product.metafields.custom.parent_product.value.metafields.custom_fields.short_description
     assign key_ingredients_list = product.metafields.custom.parent_product.value.metafields.custom.key_ingredients_list
+    assign key_ingredients_text = product.metafields.custom.parent_product.value.metafields.custom.key_ingredients_text
   else
     assign product_url = product.url
     assign short_description = product.metafields.custom_fields.short_description
     assign key_ingredients_list = product.metafields.custom.key_ingredients_list
+    assign key_ingredients_text = product.metafields.custom.key_ingredients_text
   endif
 -%}
 <div class="relative bg-white px-3 pt-3 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
@@ -101,8 +103,8 @@
               {%- endif -%}
             </div>
           {%- endfor -%}
-        {%- elsif product.metafields.custom.key_ingredients_text != blank -%}
-          <div class="li:text-sm">{{ product.metafields.custom.key_ingredients_text }}</div>
+        {%- elsif key_ingredients_text != blank -%}
+          <div class="li:text-sm">{{ key_ingredients_text }}</div>
         {%- endif -%}
         <modal-opener class="no-js-hidden" data-modal="#SetIngredientsPopup-{{ product.handle }}">
           <button class="link text-sm mt-2 font-book">View all ingredients</button>
