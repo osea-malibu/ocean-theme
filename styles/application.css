@@ -390,7 +390,7 @@
     @apply overflow-hidden;
   }
   .glide__slides {
-    @apply relative w-full list-none overflow-hidden p-0 whitespace-nowrap flex flex-nowrap backface-hidden will-change-transform touch-pan-y;
+    @apply relative w-full list-none overflow-hidden pt-0 pr-0 pb-1 pl-1 whitespace-nowrap flex flex-nowrap backface-hidden will-change-transform touch-pan-y;
     transform-style: preserve-3d;
   }
   .glide__slides--dragging {
