@@ -38,7 +38,7 @@
           {% comment %} Heading is the first tabbable element on filter type inline {% endcomment %}
           <div id="FacetsWrapperInline" class="flex flex-wrap items-center gap-1 relative">
             {%- if results.filters != empty -%}
-              <h2 class="text-sm font-medium" id="verticalTitle" tabindex="-1">
+              <h2 class="text-sm font-medium sr-only xs:not-sr-only" id="verticalTitle" tabindex="-1">
                 {{- 'products.facets.filter_by_label' | t -}}
               </h2>
             {%- endif -%}
@@ -52,7 +52,7 @@
                 data-index="{{ forloop.index }}"
               >
                 <summary
-                  class="facets__summary flex justify-between items-center gap-1 input input-sm pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
+                  class="facets__summary flex justify-between items-center gap-1 input input-sm tracking-normal whitespace-nowrap pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
                   aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
                 >
                   <span class="leading-4 text-sm font-book">{{ filter.label | escape }}</span>
@@ -163,7 +163,7 @@
                 {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
                 <select
                   name="sort_by"
-                  class="input input-sm max-w-28 sm:max-w-full"
+                  class="input input-sm max-w-24 sm:max-w-full tracking-normal"
                   id="SortBy"
                   aria-describedby="a11y-refresh-page-message"
                 >
