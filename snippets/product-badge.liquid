@@ -47,7 +47,7 @@
   endif
 -%}
 
-{%- if badge_text != '' -%}
+{%- if badge_text != '' and product.handle != 'gift-card' -%}
   <div class="{{ badge_class }}">
     {{ badge_text }}
   </div>
