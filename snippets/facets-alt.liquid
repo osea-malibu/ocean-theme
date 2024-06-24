@@ -24,69 +24,21 @@
   endif
 -%}
 
-<div class="relative mb-4">
-  {% comment %} Count {% endcomment %}
-  <div class="product-count pb-5 pt-1 flex items-center gap-1" role="status">
-    <h2 class="text-sm">
-      <span id="ProductCount" class="transition-opacity">
-        {%- if results.results_count -%}
-          {{ 'templates.search.results_with_count' | t: terms: results.terms, count: results.results_count }}
-        {%- elsif results.products_count == results.all_products_count -%}
-          {{ 'products.facets.product_count_simple' | t: count: results.products_count }}
-        {%- else -%}
-          {{
-            'products.facets.product_count'
-            | t: product_count: results.products_count, count: results.all_products_count
-          }}
-        {%- endif -%}
-      </span>
-    </h2>
-    {%- render 'loading-spinner', classes: 'w-4 h-4 text-seaweed-700' -%}
-  </div>
-  
+<div class="relative mb-4">  
   {%- if filter_type_mobile == 'inline' or filter_type_desktop == 'inline' -%}
     {% comment %}  Inline filter {% endcomment %}
     <facet-filters-form class="inline-facets facets transition-opacity{% if filter_type_mobile == 'drawer' %} hidden{% endif %}{% if filter_type_desktop == 'inline' %} sm:block{% endif %}">
-      <form id="FacetFiltersForm">
+      <form id="FacetFiltersForm" class="flex flex-wrap gap-2 sm:gap-6 justify-between">
         {%- if results.terms -%}
           <input type="hidden" name="q" value="{{ results.terms | escape }}">
           <input name="options[prefix]" type="hidden" value="last">
         {%- endif -%}
 
-        {% comment %} Sorting {% endcomment %}
-        {%- if enable_sorting -%}
-          <div class="sorting absolute right-0 top-0">
-            <div class="flex items-center gap-1">
-              <label for="SortBy" class="text-sm font-medium">Sort:</label>
-              <div class="select">
-                {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
-                <select
-                  name="sort_by"
-                  class="input input-sm"
-                  id="SortBy"
-                  aria-describedby="a11y-refresh-page-message"
-                >
-                  {%- for option in results.sort_options -%}
-                    <option
-                      value="{{ option.value | escape }}"
-                      {% if option.value == sort_by %}
-                        selected="selected"
-                      {% endif %}
-                    >
-                      {{- option.name | escape -}}
-                    </option>
-                  {%- endfor -%}
-                </select>
-              </div>
-            </div>
-          </div>
-        {%- endif -%}
-
         {% if enable_filtering %}
           {% comment %} Heading is the first tabbable element on filter type inline {% endcomment %}
-          <div id="FacetsWrapperInline" class="flex flex-wrap items-center gap-2 pb-2 relative">
+          <div id="FacetsWrapperInline" class="flex flex-wrap items-center gap-1 relative">
             {%- if results.filters != empty -%}
-              <h2 class="font-medium sr-only" id="verticalTitle" tabindex="-1">
+              <h2 class="text-sm font-medium" id="verticalTitle" tabindex="-1">
                 {{- 'products.facets.filter_by_label' | t -}}
               </h2>
             {%- endif -%}
@@ -202,12 +154,60 @@
           </div>
         {% endif %}
 
+        {% comment %} Sorting {% endcomment %}
+        {%- if enable_sorting -%}
+          <div class="sorting">
+            <div class="flex items-center gap-1">
+              <label for="SortBy" class="text-sm font-medium">Sort:</label>
+              <div class="select">
+                {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
+                <select
+                  name="sort_by"
+                  class="input input-sm max-w-28 sm:max-w-full"
+                  id="SortBy"
+                  aria-describedby="a11y-refresh-page-message"
+                >
+                  {%- for option in results.sort_options -%}
+                    <option
+                      value="{{ option.value | escape }}"
+                      {% if option.value == sort_by %}
+                        selected="selected"
+                      {% endif %}
+                    >
+                      {{- option.name | escape -}}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
         {% if results.current_vendor or results.current_type %}
           <input type="hidden" name="q" value="{{ results.current_vendor }}{{ results.current_type }}">
         {% endif %}
       </form>
     </facet-filters-form>
   {%- endif -%}
+
+  {% comment %} Count {% endcomment %}
+  <div class="product-count pt-2 flex items-center gap-1" role="status">
+    <h2 class="text-sm">
+      <span id="ProductCount" class="transition-opacity">
+        {%- if results.results_count -%}
+          {{ 'templates.search.results_with_count' | t: terms: results.terms, count: results.results_count }}
+        {%- elsif results.products_count == results.all_products_count -%}
+          {{ 'products.facets.product_count_simple' | t: count: results.products_count }}
+        {%- else -%}
+          {{
+            'products.facets.product_count'
+            | t: product_count: results.products_count, count: results.all_products_count
+          }}
+        {%- endif -%}
+      </span>
+    </h2>
+    {%- render 'loading-spinner', classes: 'w-4 h-4 text-seaweed-700' -%}
+  </div>
 
   {%- if filter_type_mobile == 'drawer' or filter_type_desktop == 'drawer' -%}
     {% comment %}  Drawer filter {% endcomment %}
