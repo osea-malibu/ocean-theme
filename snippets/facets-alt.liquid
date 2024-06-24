@@ -97,7 +97,7 @@
                               %}
 
                               {%- capture text_value -%}
-                                <span aria-hidden="true">
+                                <span aria-hidden="true" class="whitespace-nowrap">
                                   <span>{{- value.label | escape }}</span> ({{- value.count -}})
                                 </span>
                                 <span class="sr-only">
@@ -112,7 +112,7 @@
                               {%- endcapture -%}
 
                               <li>
-                                <label for="{{ input_id }}" class="{% if is_disabled %}pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
+                                <label for="{{ input_id }}" class="flex gap-2 py-1 items-center{% if is_disabled %} pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
                                   <input
                                     type="checkbox"
                                     name="{{ value.param_name }}"
