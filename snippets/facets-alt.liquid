@@ -94,183 +94,110 @@
             {% comment %} Filters {% endcomment %}
             {%- for filter in results.filters -%}
               {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
-
-              {%- if filter.label == 'Skin Type' -%}
-                <div id="Facet-{{ forloop.index }}-{{ section.id }}" class="w-full pb-2 overflow-x-auto">
-                  <fieldset class="facets-wrap">
-                    <legend class="sr-only">{{ filter.label | escape }}</legend>
-                    {%- liquid
-                      assign sorted_values = filter.values
-                      # Keep the selected values grouped together when operator is AND
-                      if filter.operator == 'AND'
-                        assign active_filter_values = filter.values | where: 'active', true
-                        assign inactive_filter_values = filter.values | where: 'active', false
-                        assign sorted_values = active_filter_values | concat: inactive_filter_values
-                      endif
-                    -%}
-                    <ul role="list" class="flex gap-1.5 active-facets">
-                      {%- for value in sorted_values -%}
-                        {% liquid
-                          assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
-                          assign is_disabled = false
-                          if value.count == 0 and value.active == false
-                            assign is_disabled = true
-                          endif
-                        %}
-                        <li class="relative flex {% if value.active %}order-{{ forloop.index }}{% else %}order-{{ forloop.index | plus: sorted_values.size }}{% endif %}">
-                          <input
-                            type="checkbox"
-                            name="{{ value.param_name }}"
-                            value="{{ value.value }}"
-                            id="{{ input_id }}"
-                            class="peer absolute w-px h-px opacity-0"
-                            {% if value.active %}
-                              checked
-                            {% endif %}
-                            {% if is_disabled %}
-                              disabled
-                            {% endif %}
-                          >
-                          <label for="{{ input_id }}" class="border border-seaweed-700 rounded-full pl-2 pr-0.5 peer-checked:bg-neon-green/50 peer-checked:small:max-w-4 transition-colors{% if is_disabled %} disabled{% endif %}{% if value.active %} active{% endif %}">
-                            <span aria-hidden="true" class="flex items-center gap-1 whitespace-nowrap">
-                              <span class="text-sm font-book">{{ value.label | escape }}</span>
-                              <small class="min-w-4 h-4 px-1 bg-wave-300 font-bold text-xs rounded-full text-center leading-4 overflow-hidden max-w-6 transition-max-width">{{ value.count }}</small>
-                            </span>
-                            <span class="sr-only">
-                              {{- value.label | escape }} (
-                              {%- if value.count == 1 -%}
-                                {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
-                              {%- else -%}
-                                {{- 'products.facets.product_count_simple.other' | t: count: value.count -}}
-                              {%- endif -%}
-                              )
-                            </span>
-                          </label>
-                          <div class="pointer-events-none absolute right-0.5 top-0.5 p-px opacity-0 peer-checked:opacity-100 transition-opacity">
-                            <div class="bg-white rounded-full w-4 h-4">
-                              {% render 'icon-close', aria_hidden: true, classes: 'w-4 h-4', stroke_width: 2 %}
-                            </div>
-                          </div>
-                        </li>
-                      {%- endfor -%}
-                      {% comment %} <li>
-                        <facet-remove class="flex items-center">
-                          <a href="{{ results_url }}" class="link text-xs font-book p-1 block">
-                            <span>{{ 'products.facets.clear_all' | t }}</span>
-                          </a>
-                        </facet-remove>
-                      </li> {% endcomment %}
-                    </ul>
-                  </fieldset>
-                </div>
-                <div class="gradient-hide absolute inset-y-0 right-0 w-12 bg-gradient-to-r from-transparent to-white"></div>
-              {%- elsif filter.label == 'Product Type' -%}
-              {%- else -%}
-                <details
-                  id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
-                  class="js-filter group"
-                  data-index="{{ forloop.index }}"
+              <details
+                id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
+                class="js-filter group"
+                data-index="{{ forloop.index }}"
+              >
+                <summary
+                  class="facets__summary flex justify-between items-center gap-1 input input-sm pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
+                  aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
                 >
-                  <summary
-                    class="facets__summary flex justify-between items-center gap-1 input input-sm pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
-                    aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
-                  >
-                    <span class="leading-4 text-sm font-book">{{ filter.label | escape }}</span>
-                    {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px', stroke_width: 2 %}
-                  </summary>
-                  <div
-                    id="Facet-{{ forloop.index }}-{{ section.id }}"
-                    class="absolute z-20 pt-1"
-                  >
-                    <div class="bg-white border border-seaweed-400 rounded">
-                      {% case filter.type %}
-                        {% when 'boolean', 'list' %}
-                          <div class="flex justify-between items-center p-2 border-b border-seaweed-400">
-                            <span class="font-medium">
-                              {{- 'products.facets.filters_selected' | t: count: filter.active_values.size -}}
-                            </span>
-                            <facet-remove>
-                              <a href="{{ filter.url_to_remove }}" class="link">
-                                {{ 'products.facets.reset' | t }}
-                              </a>
-                            </facet-remove>
-                          </div>
-                          <fieldset class="facets-wrap p-2 max-h-60 overflow-y-auto">
-                            <legend class="sr-only">{{ filter.label | escape }}</legend>
-                            {%- liquid
-                              assign sorted_values = filter.values
-                              # Keep the selected values grouped together when operator is AND
-                              if filter.operator == 'AND'
-                                assign active_filter_values = filter.values | where: 'active', true
-                                assign inactive_filter_values = filter.values | where: 'active', false
-                                assign sorted_values = active_filter_values | concat: inactive_filter_values
-                              endif
-                            -%}
-                            <ul role="list">
-                              {%- for value in sorted_values -%}
-                                {% liquid
-                                  assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
-                                  assign is_disabled = false
-                                  if value.count == 0 and value.active == false
-                                    assign is_disabled = true
-                                  endif
-                                %}
+                  <span class="leading-4 text-sm font-book">{{ filter.label | escape }}</span>
+                  {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px', stroke_width: 2 %}
+                </summary>
+                <div
+                  id="Facet-{{ forloop.index }}-{{ section.id }}"
+                  class="absolute z-20 pt-1"
+                >
+                  <div class="bg-white border border-seaweed-400 rounded">
+                    {% case filter.type %}
+                      {% when 'boolean', 'list' %}
+                        <div class="flex justify-between items-center p-2 border-b border-seaweed-400">
+                          <span class="font-medium">
+                            {{- 'products.facets.filters_selected' | t: count: filter.active_values.size -}}
+                          </span>
+                          <facet-remove>
+                            <a href="{{ filter.url_to_remove }}" class="link">
+                              {{ 'products.facets.reset' | t }}
+                            </a>
+                          </facet-remove>
+                        </div>
+                        <fieldset class="facets-wrap p-2 max-h-60 overflow-y-auto">
+                          <legend class="sr-only">{{ filter.label | escape }}</legend>
+                          {%- liquid
+                            assign sorted_values = filter.values
+                            # Keep the selected values grouped together when operator is AND
+                            if filter.operator == 'AND'
+                              assign active_filter_values = filter.values | where: 'active', true
+                              assign inactive_filter_values = filter.values | where: 'active', false
+                              assign sorted_values = active_filter_values | concat: inactive_filter_values
+                            endif
+                          -%}
+                          <ul role="list">
+                            {%- for value in sorted_values -%}
+                              {% liquid
+                                assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                                assign is_disabled = false
+                                if value.count == 0 and value.active == false
+                                  assign is_disabled = true
+                                endif
+                              %}
 
-                                {%- capture text_value -%}
-                                  <span aria-hidden="true">
-                                    <span>{{- value.label | escape }}</span> ({{- value.count -}})
-                                  </span>
-                                  <span class="sr-only">
-                                    {{- value.label | escape }} (
-                                    {%- if value.count == 1 -%}
-                                      {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
-                                    {%- else -%}
-                                      {{- 'products.facets.product_count_simple.other' | t: count: value.count -}}
-                                    {%- endif -%}
-                                    )
-                                  </span>
-                                {%- endcapture -%}
+                              {%- capture text_value -%}
+                                <span aria-hidden="true">
+                                  <span>{{- value.label | escape }}</span> ({{- value.count -}})
+                                </span>
+                                <span class="sr-only">
+                                  {{- value.label | escape }} (
+                                  {%- if value.count == 1 -%}
+                                    {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
+                                  {%- else -%}
+                                    {{- 'products.facets.product_count_simple.other' | t: count: value.count -}}
+                                  {%- endif -%}
+                                  )
+                                </span>
+                              {%- endcapture -%}
 
-                                <li>
-                                  <label for="{{ input_id }}" class="{% if is_disabled %}pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
-                                    <input
-                                      type="checkbox"
-                                      name="{{ value.param_name }}"
-                                      value="{{ value.value }}"
-                                      id="{{ input_id }}"
-                                      {% if value.active %}
-                                        checked
-                                      {% endif %}
-                                      {% if is_disabled %}
-                                        disabled
-                                      {% endif %}
-                                    >
-                                    {{ text_value }}
-                                  </label>
-                                </li>
-                              {%- endfor -%}
-                            </ul>
-                          </fieldset>
-                        {% when 'price_range' %}
-                          <div class="flex justify-between items-center p-2 border-b border-seaweed-400">
-                            {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
-                            <span class="font-medium leading-tight">
-                              {{- 'products.facets.max_price' | t: price: max_price_amount -}}
-                            </span>
-                            <facet-remove>
-                              <a href="{{ filter.url_to_remove }}" class="link">
-                                {{ 'products.facets.reset' | t }}
-                              </a>
-                            </facet-remove>
-                          </div>
-                          <price-range class="block px-2 py-4">
-                            {% render 'price-facet', filter: filter, id_prefix: 'Filter-' %}
-                          </price-range>
-                      {% endcase %}
-                    </div>
+                              <li>
+                                <label for="{{ input_id }}" class="{% if is_disabled %}pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
+                                  <input
+                                    type="checkbox"
+                                    name="{{ value.param_name }}"
+                                    value="{{ value.value }}"
+                                    id="{{ input_id }}"
+                                    {% if value.active %}
+                                      checked
+                                    {% endif %}
+                                    {% if is_disabled %}
+                                      disabled
+                                    {% endif %}
+                                  >
+                                  {{ text_value }}
+                                </label>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        </fieldset>
+                      {% when 'price_range' %}
+                        <div class="flex justify-between items-center p-2 border-b border-seaweed-400">
+                          {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
+                          <span class="font-medium leading-tight">
+                            {{- 'products.facets.max_price' | t: price: max_price_amount -}}
+                          </span>
+                          <facet-remove>
+                            <a href="{{ filter.url_to_remove }}" class="link">
+                              {{ 'products.facets.reset' | t }}
+                            </a>
+                          </facet-remove>
+                        </div>
+                        <price-range class="block px-2 py-4">
+                          {% render 'price-facet', filter: filter, id_prefix: 'Filter-' %}
+                        </price-range>
+                    {% endcase %}
                   </div>
-                </details>
-              {%- endif -%}
+                </div>
+              </details>
             {%- endfor -%}
           </div>
         {% endif %}

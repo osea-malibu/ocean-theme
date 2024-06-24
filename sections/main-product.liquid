@@ -286,6 +286,12 @@
                   assign custom_tab_array = 'Size Chart' | sort
                   assign tabs = tabs | concat: custom_tab_array
                 endif
+
+                if block.settings.enable_info_tab_description
+                elsif block.settings.enable_info_tab_howto
+                elsif block.settings.enable_info_tab_sustainability
+                elsif block.settings.enable_info_tab_articles
+                endif
               -%}
               <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
                 <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
