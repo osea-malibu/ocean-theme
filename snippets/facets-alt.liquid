@@ -24,7 +24,7 @@
   endif
 -%}
 
-<div class="relative mb-4">  
+<div class="relative mb-2">  
   {%- if filter_type_mobile == 'inline' or filter_type_desktop == 'inline' -%}
     {% comment %}  Inline filter {% endcomment %}
     <facet-filters-form class="inline-facets facets transition-opacity{% if filter_type_mobile == 'drawer' %} hidden{% endif %}{% if filter_type_desktop == 'inline' %} sm:block{% endif %}">
@@ -52,7 +52,7 @@
                 data-index="{{ forloop.index }}"
               >
                 <summary
-                  class="facets__summary flex justify-between items-center gap-1 input input-sm tracking-normal whitespace-nowrap pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
+                  class="facets__summary flex sm:min-w-28 sm:mr-1 justify-between items-center gap-1 input input-sm tracking-normal whitespace-nowrap pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
                   aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
                 >
                   <span class="leading-4 text-sm font-book">{{ filter.label | escape }}</span>
@@ -65,7 +65,7 @@
                   <div class="bg-white border border-seaweed-400 rounded">
                     {% case filter.type %}
                       {% when 'boolean', 'list' %}
-                        <div class="flex justify-between items-center p-2 border-b border-seaweed-400">
+                        <div class="facets__header flex justify-between items-center p-2 border-b border-seaweed-400">
                           <span class="font-medium whitespace-nowrap">
                             {{- 'products.facets.filters_selected' | t: count: filter.active_values.size -}}
                           </span>
