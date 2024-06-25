@@ -323,16 +323,7 @@
                   >
                     {%- case tab -%}
                       {%- when block.settings.info_tab_description_label -%}
-                        <div>
-                          <div class="mb-2">{{ product.metafields.custom_fields.description }}</div>
-                          <h3 class="font-bold text-sm mb-0.5">Learn more about {{ product.title }}</h3>
-                          <ul class="text-sm/relaxed">
-                            {%- for article_handle in product.metafields.custom.related_articles.value -%}
-                              {%- assign article = articles[article_handle] -%}
-                              <li><a href="{{ article.url }}" class="link">{{ article.title }}</a> →</li>
-                            {%- endfor -%}
-                          </ul>
-                        </div>
+                        <div>{{ product.metafields.custom_fields.description }}</div>
                       {%- when block.settings.info_tab_howto_label -%}
                         {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank -%}
                           {%- capture how_to_html -%} 
