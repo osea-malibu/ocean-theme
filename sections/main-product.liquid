@@ -263,34 +263,41 @@
               {%- endif -%}
             {%- when 'info_tabs' -%}
               {%- liquid
-                assign tabs = 'Description' | sort
                 assign how_to_use = product.metafields.custom.how_to_use
                 assign custom_tab_handles = block.settings.info_tab_custom_tab_handles | split: ', '
 
+                assign tabs = '' | split: ''
+
+                if block.settings.enable_info_tab_description and product.metafields.custom_fields.description != blank
+                  assign description_array = block.settings.info_tab_description_label | sort
+                  assign tabs = tabs | concat: description_array
+                endif
+
                 if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank
-                  assign how_to_use_array = 'How to Use' | sort
-                  assign tabs = tabs | concat: how_to_use_array
+                  if block.settings.enable_info_tab_howto
+                    assign how_to_use_array = block.settings.info_tab_howto_label | sort
+                    assign tabs = tabs | concat: how_to_use_array
+                  endif
                 endif
 
-                if block.settings.info_tab_custom_tab_label != blank and custom_tab_handles contains product.handle
-                  assign custom_tab_array = 'Custom' | sort
-                  assign tabs = tabs | concat: custom_tab_array
-                endif
-
-                if product.metafields.custom.recycling != blank
-                  assign recycling_array = 'Recycling' | sort
+                if product.metafields.custom.recycling != blank and block.settings.enable_info_tab_sustainability
+                  assign recycling_array = block.settings.info_tab_sustainability_label | sort
                   assign tabs = tabs | concat: recycling_array
                 endif
 
-                if product.handle == 'limited-edition-90s-crewneck'
-                  assign custom_tab_array = 'Size Chart' | sort
-                  assign tabs = tabs | concat: custom_tab_array
+                if block.settings.enable_info_tab_custom and custom_tab_handles contains product.handle
+                  assign custom_array = block.settings.info_tab_custom_tab_label | sort
+                  assign tabs = tabs | concat: custom_array
                 endif
 
-                if block.settings.enable_info_tab_description
-                elsif block.settings.enable_info_tab_howto
-                elsif block.settings.enable_info_tab_sustainability
-                elsif block.settings.enable_info_tab_articles
+                if product.handle == 'limited-edition-90s-crewneck'
+                  assign size_chart_array = 'Size Chart' | sort
+                  assign tabs = tabs | concat: size_chart_array
+                endif
+
+                if block.settings.enable_info_tab_articles and product.metafields.custom.related_articles != nil
+                  assign articles_array = block.settings.info_tab_articles_label | sort
+                  assign tabs = tabs | concat: articles_array
                 endif
               -%}
               <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
@@ -301,13 +308,9 @@
                       aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
                       tabindex="0"
                       aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 px-2 2xs:px-3 py-1 cursor-pointer whitespace-nowrap {% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }}"
+                      class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 py-1 cursor-pointer whitespace-nowrap{% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }} {% if tabs.size > 3 %}px-1 xs:px-2 md:px-1 lg:px-3 tracking-wide xs:tracking-widest md:tracking-wider lg:tracking-widest{% else %}px-2 2xs:px-3{% endif %}"
                     >
-                      {%- if tab == 'Custom' -%}
-                        {{ block.settings.info_tab_custom_tab_label }}
-                      {%- else -%}
-                        {{ tab }}
-                      {%- endif -%}
+                      {{ tab }}
                     </li>
                   {%- endfor -%}
                 </ul>
@@ -319,9 +322,18 @@
                     class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
                   >
                     {%- case tab -%}
-                      {%- when 'Description' -%}
-                        <div>{{ product.metafields.custom_fields.description }}</div>
-                      {%- when 'How to Use' -%}
+                      {%- when block.settings.info_tab_description_label -%}
+                        <div>
+                          <div class="mb-2">{{ product.metafields.custom_fields.description }}</div>
+                          <h3 class="font-bold text-sm mb-0.5">Learn more about {{ product.title }}</h3>
+                          <ul class="text-sm/relaxed">
+                            {%- for article_handle in product.metafields.custom.related_articles.value -%}
+                              {%- assign article = articles[article_handle] -%}
+                              <li><a href="{{ article.url }}" class="link">{{ article.title }}</a> →</li>
+                            {%- endfor -%}
+                          </ul>
+                        </div>
+                      {%- when block.settings.info_tab_howto_label -%}
                         {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank -%}
                           {%- capture how_to_html -%} 
                             {%- if product.metafields.custom.how_to_use != blank -%}
@@ -361,9 +373,9 @@
                             {{ how_to_html }}
                           </div>
                         {%- endif -%}
-                      {%- when 'Custom' -%}
+                      {%- when block.settings.info_tab_custom_tab_label -%}
                         <div>{{ block.settings.info_tab_custom_tab_content }}</div>
-                      {%- when 'Recycling' -%}
+                      {%- when block.settings.info_tab_sustainability_label -%}
                         <div class="recycling">
                           <table>
                             {%- if product.metafields.custom.recycling.value.packaging != nil -%}
@@ -382,6 +394,27 @@
                           {%- if product.metafields.custom.recycling.value.disclaimer != nil -%}
                             <small class="block leading-tight mt-2">{{ product.metafields.custom.recycling.value.disclaimer }}</small>
                           {%- endif -%}
+                        </div>
+                      {%- when block.settings.info_tab_articles_label -%}
+                        <div class="articles flex flex-wrap gap-2">
+                          {%- for article_handle in product.metafields.custom.related_articles.value -%}
+                            {%- render 'article-card',
+                              article: articles[article_handle],
+                              unique_id: '-pdp_featured',
+                              show_image: true,
+                              card_classes: 'flex flex-row bg-wave-200 rounded-md w-full',
+                              image_classes: 'rounded-l-md block h-full object-cover absolute inset-0',
+                              title_classes: 'tracking-wide font-medium mb-0.5 text-sm/tight mb-1',
+                              tag_classes: 'sr-only',
+                              date_classes: 'sr-only',
+                              author_classes: 'sr-only',
+                              excerpt_classes: 'text-sm/tight',
+                              link_classes: 'link font-bold uppercase tracking-widest text-xs',
+                              text_wrapper_classes: 'w-2/3 p-2',
+                              image_wrapper_classes: 'w-1/3 h-full relative',
+                              exceprt_length: 10
+                            -%}
+                          {%- endfor -%}
                         </div>
                       {%- when 'Size Chart' -%}
                         <div>
@@ -1090,6 +1123,12 @@
         {
           "type": "header",
           "content": "Custom tab"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_info_tab_custom",
+          "label": "Enable custom tab",
+          "default": true
         },
         {
           "type": "text",

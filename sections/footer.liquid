@@ -43,9 +43,16 @@
                   <ul class="footer-block__details-content list-unstyled">
                     {%- for link in block.settings.menu.links -%}
                       <li>
-                        <a href="{{ link.url }}" class="block tracking-wide text-sm sm:text-base py-2{% if link.active %} underline underline-offset-2{% endif %}{% if link.title contains 'mobile::' %} sm:hidden{% endif %}">
-                          {{ link.title | replace: "mobile::", "" }} 
-                        </a>
+                        {%- if link.title == 'Your Privacy Choices' -%}
+                          <a onclick="showPreferences(this);" class="isense-reopen-widget-link block tracking-wide text-sm sm:text-base py-2" role="button" tabindex="0" aria-haspopup="dialog">
+                            <span>Your Privacy Choices</span>
+                            <img class="inline-flex relative -top-0.5" src="https://cdn.shopify.com/s/files/1/1368/9993/files/privacyoptions123x59.png?v=1719326126" width="29" height="14">
+                          </a>
+                        {%- else -%}
+                          <a href="{{ link.url }}" class="block tracking-wide text-sm sm:text-base py-2{% if link.active %} underline underline-offset-2{% endif %}{% if link.title contains 'mobile::' %} sm:hidden{% endif %}">
+                            {{- link.title | replace: "mobile::", "" -}} 
+                          </a>
+                        {%- endif -%}
                       </li>
                     {%- endfor -%}
                   </ul>
