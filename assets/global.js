@@ -757,11 +757,13 @@ class VariantSelects extends HTMLElement {
         const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
 
         const replaceContent = (selector, sourceSelector) => {
-          console.log("replaceContent");
           const source = responseHTML.querySelector(sourceSelector || selector);
-          console.log("source", source);
           const destination = document.querySelector(selector);
-          console.log("destination", destination);
+          if (sourceSelector) {
+            console.log("replaceContent");
+            console.log("source", source);
+            console.log("destination", destination);
+          }
           if (source && destination) destination.innerHTML = source.innerHTML;
         };
         console.log("start replaceContent");
