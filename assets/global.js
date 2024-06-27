@@ -757,15 +757,19 @@ class VariantSelects extends HTMLElement {
         const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
 
         const replaceContent = (selector, sourceSelector) => {
+          console.log("replaceContent");
           const source = responseHTML.querySelector(sourceSelector || selector);
+          console.log("source", source);
           const destination = document.querySelector(selector);
+          console.log("destination", destination);
           if (source && destination) destination.innerHTML = source.innerHTML;
         };
-
+        console.log("start replaceContent");
         replaceContent(".product .main-price");
         replaceContent(".subscription .onetime .price");
         replaceContent(".subscription .autodeliver .price");
         replaceContent(".product .benefits");
+        console.log("start replace plp button content");
         replaceContent(`[value="${id}"] ~ button[name="add"] .price`, ".product .main-price");
         replaceContent(".subscription .selling-plan-options");
 
