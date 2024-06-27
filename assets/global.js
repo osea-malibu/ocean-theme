@@ -763,6 +763,7 @@ class VariantSelects extends HTMLElement {
             console.log("replaceContent");
             console.log("source", source);
             console.log("destination", destination);
+            console.log("value", document.querySelector(`[value="${id}"]`));
           }
           if (source && destination) destination.innerHTML = source.innerHTML;
         };
