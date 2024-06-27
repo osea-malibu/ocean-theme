@@ -759,21 +759,16 @@ class VariantSelects extends HTMLElement {
         const replaceContent = (selector, sourceSelector) => {
           const source = responseHTML.querySelector(sourceSelector || selector);
           const destination = document.querySelector(selector);
-          if (sourceSelector) {
-            console.log("replaceContent");
-            console.log("source", source);
-            console.log("destination", destination);
-            console.log("value", document.querySelector(`[value="${id}"]`));
-          }
           if (source && destination) destination.innerHTML = source.innerHTML;
         };
-        console.log("start replaceContent");
         replaceContent(".product .main-price");
         replaceContent(".subscription .onetime .price");
         replaceContent(".subscription .autodeliver .price");
         replaceContent(".product .benefits");
-        console.log("start replace plp button content");
-        replaceContent(`[value="${id}"] ~ button[name="add"] .price`, ".product .main-price");
+        replaceContent(
+          `[value="${id}"]:not(.mini-card-id-input) ~ button[name="add"] .price`,
+          ".product .main-price"
+        );
         replaceContent(".subscription .selling-plan-options");
 
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
