@@ -237,8 +237,28 @@
                         </tr>
                       </thead>
 
-                      <tbody role="rowgroup" class="block w-full">
+                      <tbody role="rowgroup" class="LOOP_osea-malibu_bundles_drawer block w-full">
                         {%- for item in cart.items -%}
+{% comment %}
+    LOOP SUBSCRIPTIONS (https://apps.shopify.com/loop-subscriptions)
+    DO NOT modify this source code because
+    It is automatically generated from LOOP SUBSCRIPTIONS BUNDLE DESIGN
+    If you need to make change, please contact the Loop support team
+    LOOP BUNDLE CODE STARTS
+{% endcomment %}
+    {% assign isBundleItem = false %}
+    {%- for property in item.properties -%}
+        {% if property.first == '_bundleId' %}
+            {% assign isBundleItem = true %}
+            {% break %}
+        {% endif %}
+    {%- endfor -%}
+    {% if isBundleItem == true %}
+        {% continue %}
+    {% endif %}
+{% comment %}
+    LOOP BUNDLE CODE ENDS
+{% endcomment %}
                           {%- liquid
                             assign item_collections_handles = item.product.collections | map: 'handle'
                             if item_collections_handles contains 'exclude-from-site'
@@ -693,3 +713,8 @@
 }
 </script>
 {% comment %} theme-check-enable TemplateLength {% endcomment %}
+<script defer="defer">
+  window.Loop = {};
+  window.Loop.bundleCartAllItems = {{ cart.items | json }};
+  initLoopBundle("LOOP_osea-malibu_bundles_drawer");
+</script>
