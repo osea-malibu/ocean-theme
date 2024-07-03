@@ -67,6 +67,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
+<script src="{{ 'loop_bundle.js' | asset_url }}"></script>
   <body class="antialiased {% if template.name == 'product' %}pdp{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
@@ -86,6 +87,11 @@
     </div>
 
     <main id="MainContent" class="content-for-layout outline-0 shadow-none" tabindex="-1">
+
+    {%- if request.path contains 'loop_subscriptions/bundle' or request.path contains 'loop_subscriptions/customer' -%}
+      {% render 'loop_loader' %}
+    {%- endif -%}
+  
       {{ content_for_layout }}
     </main>
 
