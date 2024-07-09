@@ -606,11 +606,26 @@
                 <!-- End ShopKeeper -->
               {% endif %}
             {%- when 'subscription_picker' -%}
+              {%- liquid
+                assign subscription_group = null
+                for group in product.selling_plan_groups
+                  if group.name == 'Subscribe and Save'
+                    assign subscription_group = group
+                  endif
+                endfor
+
+                assign allocations = product.selected_or_first_available_variant.selling_plan_allocations
+                assign non_subscription_allocation = false
+                if allocations.size == 1 and allocations[0].selling_plan_group_id != subscription_group.id
+                  assign non_subscription_allocation = true
+                endif
+              -%}
               {%- unless product.selling_plan_groups.size == 0 -%}
                 {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
                 <subscription-radios
-                  class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }} {% if product.selected_or_first_available_variant.selling_plan_allocations.size == 0 %}max-h-0{% else %}max-h-52{% endif %}"
+                  class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }} {% if product.selected_or_first_available_variant.selling_plan_allocations.size == 0 or non_subscription_allocation %}max-h-0{% else %}max-h-52{% endif %}"
                   data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
+                  data-subscription-group-id = "{{ subscription_group.id }}"
                 >
                   <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
                     <legend class="sr-only">Purchase options</legend>
@@ -654,34 +669,36 @@
                             <fieldset class="selling-plan-options js flex mb-2 pb-3">
                               <legend class="text-sm font-medium">Delivery every</legend>
                               {%- for allocation in product.selected_or_first_available_variant.selling_plan_allocations -%}
-                                {%- liquid
-                                  for group in product.selling_plan_groups
-                                    if group.id == allocation.selling_plan_group_id
-                                      assign selling_plan_group = group
-                                    endif
-                                  endfor
+                                {%- if allocation.selling_plan_group_id == subscription_group.id -%}
+                                  {%- liquid
+                                    for group in product.selling_plan_groups
+                                      if group.id == allocation.selling_plan_group_id
+                                        assign selling_plan_group = group
+                                      endif
+                                    endfor
 
-                                  for plan in selling_plan_group.selling_plans
-                                    if plan.id == allocation.selling_plan.id
-                                      assign selling_plan = plan
-                                    endif
-                                  endfor
-                                -%}
-                                <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
-                                  <input type="radio"
-                                    id="{{ allocation.selling_plan.id }}"
-                                    class="peer sr-only"
-                                    name="selling_plan"
-                                    value="{{ allocation.selling_plan.id }}"
-                                    form="{{ product_form_id }}"
-                                  />
-                                  <label
-                                    class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-100 peer-checked:outline peer-checked:outline-neon-green"
-                                    for="{{ allocation.selling_plan.id }}"
-                                  >
-                                    {{- selling_plan.name | replace: "Delivery every", "" -}}
-                                  </label>
-                                </div>
+                                    for plan in selling_plan_group.selling_plans
+                                      if plan.id == allocation.selling_plan.id
+                                        assign selling_plan = plan
+                                      endif
+                                    endfor
+                                  -%}
+                                  <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
+                                    <input type="radio"
+                                      id="{{ allocation.selling_plan.id }}"
+                                      class="peer sr-only"
+                                      name="selling_plan"
+                                      value="{{ allocation.selling_plan.id }}"
+                                      form="{{ product_form_id }}"
+                                    />
+                                    <label
+                                      class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-100 peer-checked:outline peer-checked:outline-neon-green"
+                                      for="{{ allocation.selling_plan.id }}"
+                                    >
+                                      {{- selling_plan.name | replace: "Delivery every", "" -}}
+                                    </label>
+                                  </div>
+                                {%- endif -%}
                               {%- endfor -%}
                               <div class="sr-only shrink">
                                 <input type="radio"

@@ -628,6 +628,7 @@ class VariantSelects extends HTMLElement {
     this.addEventListener("change", () => {
       this.onVariantChange();
     });
+    this.addEventListener("click", () => {});
   }
 
   connectedCallback() {
@@ -779,7 +780,12 @@ class VariantSelects extends HTMLElement {
     if (this.currentVariant && window.location.pathname.includes("/products/")) {
       const subscriptionRadios = document.querySelector("subscription-radios");
       if (subscriptionRadios) {
-        const hasSubscriptionOption = this.currentVariant.selling_plan_allocations.length > 0;
+        const allcoationGroupIds = this.currentVariant.selling_plan_allocations.map(
+          (i) => i.selling_plan_group_id
+        );
+        const hasSubscriptionOption =
+          this.currentVariant.selling_plan_allocations.length > 0 &&
+          allcoationGroupIds.includes(subscriptionRadios.dataset.subscriptionGroupId);
         if (hasSubscriptionOption) {
           subscriptionRadios.classList.add("max-h-52");
           subscriptionRadios.classList.remove("max-h-0");
