@@ -67,7 +67,6 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-<script src="{{ 'loop_bundle.js' | asset_url }}"></script>
   <body class="antialiased {% if template.name == 'product' %}pdp{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
@@ -156,8 +155,8 @@
     </script>
 
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
-
     <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'loop_bundle.js' | asset_url }}" defer="defer"></script>
 
     {%- if settings.enable_gwp and settings.gwp_type == 'url' -%}
       <gift-with-purchase-url
