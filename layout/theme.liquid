@@ -34,6 +34,7 @@
       render 'share-a-sale'
     %}
     
+    <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
 
@@ -156,7 +157,6 @@
 
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'loop_bundle.js' | asset_url }}" defer="defer"></script>
 
     {%- if settings.enable_gwp and settings.gwp_type == 'url' -%}
       <gift-with-purchase-url
