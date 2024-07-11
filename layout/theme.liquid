@@ -34,9 +34,12 @@
       render 'share-a-sale'
     %}
     
-    <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
+
+    {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
+    <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
+    {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
 
     {% comment %} {{ content_for_header }} {% endcomment %}
     {% comment %}theme-check-disable ContentForHeaderModification,RemoteAsset{% endcomment %}

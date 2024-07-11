@@ -683,10 +683,13 @@ ul.whr-items .whr-item.active h3::after {
   @apply w-full flex my-6;
 }
 [id^="CartBundleItem"] .product-option {
-  @apply text-xs;
+  @apply text-xs grow-0;
+}
+[id^="CartBundleItem"] .product-option p span {
+  @apply block h-4 overflow-hidden whitespace-nowrap text-ellipsis;
 }
 [id^="CartBundleItem"] .cart-item__image {
-  @apply w-[60px];
+  @apply w-[60px] shrink-0;
 }
 [id^="CartBundleItem"] .cart-item__quantity {
   @apply hidden;
