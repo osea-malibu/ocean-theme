@@ -16,35 +16,20 @@ class CartDrawer extends HTMLElement {
     document.addEventListener("loopByobAddToCartSuccessEvent", () => {
       console.log("byob add to cart");
 
-      const config = fetchConfig("javascript");
-      config.headers["X-Requested-With"] = "XMLHttpRequest";
-      delete config.headers["Content-Type"];
-
-      const formData = new FormData(this.form);
-      if (this.dataset.cartType != "page") {
-        formData.append(
-          "sections",
-          this.getSectionsToRender().map((section) => section.id)
-        );
-        formData.append("sections_url", window.location.pathname);
-        console.log("formData", formData);
-        this.setActiveElement(document.activeElement);
-      }
-      config.body = formData;
-
-      fetch(`${routes.cart_add_url}`, config)
+      fetch(window.Shopify.routes.root + "cart.js")
         .then((response) => response.json())
         .then((response) => {
+          console.log("response", response);
           if (response.status) {
             console.log("error", response.status);
-          } else if (!cart) {
+          } else if (!response) {
             window.location = window.routes.cart_url;
             return;
           }
-
-          this.error = false;
+          console.log("start render contents");
           this.renderContents(response);
         })
+
         .catch((e) => console.error(e));
     });
   }
@@ -118,6 +103,7 @@ class CartDrawer extends HTMLElement {
   }
 
   renderContents(parsedState) {
+    console.log("renderContents", parsedState);
     this.drawer.classList.contains("is-empty") && this.drawer.classList.remove("is-empty");
     this.productId = parsedState.id;
     // BUG WORKAROUND FOR SHOPIFY CLI
@@ -125,6 +111,7 @@ class CartDrawer extends HTMLElement {
     // if sections are null, fall back on Section Rendering API
     // https://github.com/Shopify/shopify-cli/issues/1797
     if (!parsedState.sections) {
+      console.log("no sections");
       fetch(
         `${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map(
           (section) => section.id
@@ -133,6 +120,7 @@ class CartDrawer extends HTMLElement {
         .then((response) => response.json())
         .then((response) => {
           parsedState.sections = response;
+          console.log("parsedState.sections", parsedState.sections);
 
           this.getSectionsToRender().forEach((section) => {
             const sectionElement = section.selector
@@ -151,6 +139,7 @@ class CartDrawer extends HTMLElement {
         })
         .catch((error) => console.error(error));
     } else {
+      console.log("sections");
       this.getSectionsToRender().forEach((section) => {
         const sectionElement = section.selector
           ? document.querySelector(section.selector)
