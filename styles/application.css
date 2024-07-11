@@ -703,6 +703,9 @@ ul.whr-items .whr-item.active h3::after {
 [id^="CartBundleItem"] .right button {
   @apply items-center flex gap-1;
 }
+[id^="CartBundleItem"] .cart-item__price-wrapper {
+  @apply !gap-1;
+}
 [id^="CartBundleItem"] .cart-item__price-wrapper .price {
   @apply !font-book first-of-type:text-seaweed-500;
 }
