@@ -688,6 +688,9 @@ ul.whr-items .whr-item.active h3::after {
 [id^="CartBundleItem"] .product-option p span {
   @apply block h-4 overflow-hidden whitespace-nowrap text-ellipsis;
 }
+[id^="CartBundleItem"] .cart-item__media {
+  @apply shrink-0;
+}
 [id^="CartBundleItem"] .cart-item__image {
   @apply w-[60px] shrink-0;
 }
