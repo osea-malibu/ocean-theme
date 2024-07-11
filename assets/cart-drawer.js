@@ -43,7 +43,7 @@ class CartDrawer extends HTMLElement {
           }
 
           this.error = false;
-          cart.renderContents(response);
+          this.renderContents(response);
         })
         .catch((e) => console.error(e));
     });
