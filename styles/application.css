@@ -706,3 +706,10 @@ ul.whr-items .whr-item.active h3::after {
 [id^="CartBundleItem"] .cart-item__price-wrapper .price {
   @apply !font-book first-of-type:text-seaweed-500;
 }
+[id^="CartBundleItem"] .right > button p {
+  @apply !mt-0.5 text-sm;
+}
+[id^="CartBundleItem"] .right > button svg {
+  stroke-width: 0.25px;
+  stroke: #1d4d41;
+}
