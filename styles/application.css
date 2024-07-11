@@ -683,7 +683,7 @@ ul.whr-items .whr-item.active h3::after {
   @apply w-full flex my-6;
 }
 [id^="CartBundleItem"] .product-option {
-  @apply text-xs grow-0 max-w-44;
+  @apply text-xs grow-0 max-w-44 2xs:max-w-full;
 }
 [id^="CartBundleItem"] .product-option p span {
   @apply block h-4 overflow-hidden whitespace-nowrap text-ellipsis;
