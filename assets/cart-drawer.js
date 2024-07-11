@@ -5,9 +5,48 @@ class CartDrawer extends HTMLElement {
     this.overlay = this.querySelector(".cart-scrim");
     this.drawer = this.querySelector(".cart-drawer");
 
+    this.attachEventListeners();
+    this.setHeaderCartIconAccessibility();
+  }
+
+  attachEventListeners() {
     this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
     this.overlay.addEventListener("click", this.close.bind(this));
-    this.setHeaderCartIconAccessibility();
+
+    document.addEventListener("loopByobAddToCartSuccessEvent", () => {
+      console.log("byob add to cart");
+
+      const config = fetchConfig("javascript");
+      config.headers["X-Requested-With"] = "XMLHttpRequest";
+      delete config.headers["Content-Type"];
+
+      const formData = new FormData(this.form);
+      if (this.dataset.cartType != "page") {
+        formData.append(
+          "sections",
+          this.getSectionsToRender().map((section) => section.id)
+        );
+        formData.append("sections_url", window.location.pathname);
+        console.log("formData", formData);
+        this.setActiveElement(document.activeElement);
+      }
+      config.body = formData;
+
+      fetch(`${routes.cart_add_url}`, config)
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.status) {
+            console.log("error", response.status);
+          } else if (!cart) {
+            window.location = window.routes.cart_url;
+            return;
+          }
+
+          this.error = false;
+          cart.renderContents(response);
+        })
+        .catch((e) => console.error(e));
+    });
   }
 
   setHeaderCartIconAccessibility() {
@@ -29,7 +68,8 @@ class CartDrawer extends HTMLElement {
   open(triggeredBy) {
     if (triggeredBy) this.setActiveElement(triggeredBy);
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');
-    if (cartDrawerNote && !cartDrawerNote.hasAttribute("role")) this.setSummaryAccessibility(cartDrawerNote);
+    if (cartDrawerNote && !cartDrawerNote.hasAttribute("role"))
+      this.setSummaryAccessibility(cartDrawerNote);
     // here the animation doesn't seem to always get triggered. A timeout seem to help
     setTimeout(() => {
       this.classList.remove("invisible");
@@ -39,7 +79,9 @@ class CartDrawer extends HTMLElement {
     this.addEventListener(
       "transitionend",
       () => {
-        const containerToTrapFocusOn = this.classList.contains("is-empty") ? this.querySelector(".cart-empty") : document.getElementById("CartDrawer");
+        const containerToTrapFocusOn = this.classList.contains("is-empty")
+          ? this.querySelector(".cart-empty")
+          : document.getElementById("CartDrawer");
         const focusElement = this.drawer || this.querySelector(".cart-close");
         trapFocus(containerToTrapFocusOn, focusElement);
       },
@@ -66,7 +108,10 @@ class CartDrawer extends HTMLElement {
     }
 
     cartDrawerNote.addEventListener("click", (event) => {
-      event.currentTarget.setAttribute("aria-expanded", !event.currentTarget.closest("details").hasAttribute("open"));
+      event.currentTarget.setAttribute(
+        "aria-expanded",
+        !event.currentTarget.closest("details").hasAttribute("open")
+      );
     });
 
     cartDrawerNote.parentElement.addEventListener("keyup", onKeyUpEscape);
@@ -80,14 +125,23 @@ class CartDrawer extends HTMLElement {
     // if sections are null, fall back on Section Rendering API
     // https://github.com/Shopify/shopify-cli/issues/1797
     if (!parsedState.sections) {
-      fetch(`${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map((section) => section.id)}`)
+      fetch(
+        `${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map(
+          (section) => section.id
+        )}`
+      )
         .then((response) => response.json())
         .then((response) => {
           parsedState.sections = response;
 
           this.getSectionsToRender().forEach((section) => {
-            const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
-            sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+            const sectionElement = section.selector
+              ? document.querySelector(section.selector)
+              : document.getElementById(section.id);
+            sectionElement.innerHTML = this.getSectionInnerHTML(
+              parsedState.sections[section.id],
+              section.selector
+            );
           });
 
           setTimeout(() => {
@@ -98,8 +152,13 @@ class CartDrawer extends HTMLElement {
         .catch((error) => console.error(error));
     } else {
       this.getSectionsToRender().forEach((section) => {
-        const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
-        sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+        const sectionElement = section.selector
+          ? document.querySelector(section.selector)
+          : document.getElementById(section.id);
+        sectionElement.innerHTML = this.getSectionInnerHTML(
+          parsedState.sections[section.id],
+          section.selector
+        );
       });
 
       setTimeout(() => {
@@ -136,7 +195,10 @@ class CartDrawer extends HTMLElement {
         if (cartFooter) cartFooter.classList.add("is-empty");
         if (cartDrawerWrapper) {
           cartDrawerWrapper.classList.add("is-empty");
-          trapFocus(cartDrawerWrapper.querySelector(".cart-empty"), cartDrawerWrapper.querySelector("a"));
+          trapFocus(
+            cartDrawerWrapper.querySelector(".cart-empty"),
+            cartDrawerWrapper.querySelector("a")
+          );
         }
       })
       .catch((error) => console.error(error));
