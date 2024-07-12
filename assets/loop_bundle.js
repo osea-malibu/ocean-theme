@@ -243,7 +243,10 @@ role="row">
         </svg>
       </div>
       <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity" style="
+    
     text-decoration: line-through;
+    margin-right: 3px;
+
 ">
         <span class="flex">
           ${bundleItem.priceWithoutDiscount}
