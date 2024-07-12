@@ -135,10 +135,8 @@ const getBundleCartTableTemplateLoop = (bundleItem, index, bundleLink) => {
 </svg>
                     </div>
 
-                    <div class="cart-item__price-wrapper"><span class="price price--end" style="text-decoration:line-through;">
+                    <div class="cart-item__price-wrapper"><span class="price price--end">
                         ${bundleItem.price}
-                        </span><span class="price price--end">
-                        ${bundleItem.priceWithoutDiscount}
                         </span></div>
                   </td>
                 </tr>
