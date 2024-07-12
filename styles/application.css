@@ -720,11 +720,11 @@ ul.whr-items .whr-item.active h3::after {
 tr#bud {
   grid-template-areas:
     "image name name name name name price"
-    "image size size size size size size"
-    "image quant quant quant quant quant quant";
+    "image size size size size size quant"
+    "image size size size size size quant";
 }
 tr#bud cart-remove-button {
-  @apply block;
+  @apply block ml-auto mt-0.5;
 }
 tr#bud quantity-input {
   @apply hidden;
