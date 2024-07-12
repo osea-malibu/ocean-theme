@@ -118,7 +118,6 @@
             </figcaption>
             </figure>
           </div>
-          <script>console.log("thing", {{ customer.orders_count }})</script>
         {%- endunless -%}
       {%- endif -%}
 
@@ -159,20 +158,22 @@
       {%- else -%}
         {%- liquid
           for item in cart.items
-            assign hide_upsell = false
-            assign normalized_variant_title = item.variant.title | replace: 'fl ', ''
-            if small_products contains item.product.handle and normalized_variant_title == '0.34 oz'
-              assign hide_upsell = true
-            elsif travel_sizes contains normalized_variant_title
-              assign hide_upsell = true
-            endif
+            unless item.properties._bundleName == 'Build Your Own Bundle'
+              assign hide_upsell = false
+              assign normalized_variant_title = item.variant.title | replace: 'fl ', ''
+              if small_products contains item.product.handle and normalized_variant_title == '0.34 oz'
+                assign hide_upsell = true
+              elsif travel_sizes contains normalized_variant_title
+                assign hide_upsell = true
+              endif
 
-            if item.product.metafields.my_fields.save_with_sets != nil and item.selling_plan_allocation == nil and hide_upsell == false
-              unless item.variant.title contains 'Fragrance free'
-                assign item_with_set = item
-                assign item_with_set_line = forloop.index
-              endunless
-            endif
+              if item.product.metafields.my_fields.save_with_sets != nil and item.selling_plan_allocation == nil and hide_upsell == false
+                unless item.variant.title contains 'Fragrance free'
+                  assign item_with_set = item
+                  assign item_with_set_line = forloop.index
+                endunless
+              endif
+            endunless
           endfor
 
           assign first_set = item_with_set.product.metafields.my_fields.save_with_sets.value | first
@@ -185,7 +186,7 @@
 
         <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12 flex flex-col">
           {% comment %} Save with sets upsell {% endcomment %}
-          {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == null or first_set.selected_or_first_available_variant.available == false or cart_ids contains first_set.id -%}
+          {%- unless settings.enable_sets_upsell == false or item_with_set == nil or first_set == nil or first_set.selected_or_first_available_variant.available == false or cart_ids contains first_set.id -%}
             <save-with-sets
               data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
               data-item-to-remove="{{ item_with_set_line }}"
