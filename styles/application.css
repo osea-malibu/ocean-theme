@@ -716,3 +716,10 @@ ul.whr-items .whr-item.active h3::after {
   stroke-width: 0.25px;
   stroke: #1d4d41;
 }
+
+tr#bud {
+  grid-template-areas:
+    "image name name name name name price"
+    "image size size size size size size"
+    "image quant quant quant quant quant quant";
+}
