@@ -52,118 +52,204 @@ const getEditCartButton = (bundleTransactionId) => {
 };
 
 const getBundleCartTableTemplateLoop = (bundleItem, index, bundleLink) => {
+  console.log("ffafaaf")
     return `
-        <tr class="cart-item" id="CartBundleItem-${index}">
-    <td class="cart-item__media">
-        <a href="${bundleLink}" class="cart-item__link" aria-hidden="true" tabindex="-1"> </a>
-          <div class="cart-item__image-container gradient global-media-settings">
-            <img src="${
+  <tr class="cart-item td:py-2 relative" id="CartBundleItem-${index}" >
+                  <td class="cart-item__media shrink-0">
+                    
+                      <a href="${bundleLink}"  tabindex="-1">
+                        <img class="cart-item__image shrink-0" src="${
                 bundleItem.image || ""
-            }"  class="cart-item__image" alt="" loading="lazy" width="150" height="94">
-          </div>
-    </td>
+            }" alt="" loading="lazy" width="60" height="77">
+                      </a>
+                    
+                  </td>
 
-    <td class="cart-item__details"><a href="" class="cart-item__name h4 break">${
+                  <td class="cart-item__details">
+                    
+                      <a href="${bundleLink}" class="cart-item__name link leading-tight block mb-1">${
         bundleItem.label
     }</a>
-                <div class="product-option">
-            ${bundleItem.items.map((item) => getItemsHtmlLoop(item)).join("")}
-              <br/>
-        </div>
-        <div class="product-option">
-         ${bundleItem.price}
-        </div><dl></dl>
-        <p class="product-option">${
-            bundleItem.sellingPlan || ""
-        }</p><ul class="discounts list-unstyled" role="list" aria-label="Discount"></ul>
-        ${getEditCartButton(bundleItem.bundleId)}
-    </td>
+     ${bundleItem.items
+                    .map((item) => getItemsHtmlLoop(item))
+                    .join("")}
+                  <br/>
+                    
+<div>
+                         ${bundleItem.price}
+                      </div><dl></dl></td>
 
-    <td class="cart-item__totals right medium-hide large-up-hide">
-      <div class="cart-item__price-wrapper">
-        <span class="price price--end">
-             ${bundleItem.price}
-        </span>
-      </div>
-    </td>
+                  <td class="cart-item__quantity align-top">
+                    <div class="flex items-center absolute sm:relative -right-2 top-10 sm:top-0 sm:right-0"><label class="sr-only" >
+                          Quantity
+                        </label>
+                        <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-md mr-2">
+                          <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -ml-px box-content border-transparent rounded-l-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" disabled >
+                           
+                            
 
-    <td class="cart-item__quantity">
-      <div class="cart-item__quantity-wrapper">
-        <quantity-input class="quantity">
-          <input disabled class="quantity__input" type="number" value="1" min="0">
-        </quantity-input>
-        <cart-remove-button>
-          <a onclick="removeBundleLoop('${
+
+                          </button>
+                          <input class="quantity__input w-8 h-6 border-0 p-1 text-center" type="number" value="1" min="0" disabled>
+                          <button class="quantity__button no-js-hidden cursor-pointer flex items-center justify-center shrink-0 w-6 h-6 border -mt-px -mb-px -mr-px box-content border-transparent rounded-r-md hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors" disabled>
+                          
+                            
+
+
+
+                          </button>
+                        </quantity-input><cart-remove-button class="hidden sm:block" >
+                        <a onclick="removeBundleLoop('${
               bundleItem.bundleId
-          }')" class="button button--tertiary" aria-label="${
-        bundleItem.label
-    }" style="cursor : pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true" role="presentation" class="icon icon-remove">
-                <path d="M14 3h-3.53a3.07 3.07 0 00-.6-1.65C9.44.82 8.8.5 8 .5s-1.44.32-1.87.85A3.06 3.06 0 005.53 3H2a.5.5 0 000 1h1.25v10c0 .28.22.5.5.5h8.5a.5.5 0 00.5-.5V4H14a.5.5 0 000-1zM6.91 1.98c.23-.29.58-.48 1.09-.48s.85.19 1.09.48c.2.24.3.6.36 1.02h-2.9c.05-.42.17-.78.36-1.02zm4.84 11.52h-7.5V4h7.5v9.5z" fill="currentColor"></path>
-                <path d="M6.55 5.25a.5.5 0 00-.5.5v6a.5.5 0 001 0v-6a.5.5 0 00-.5-.5zM9.45 5.25a.5.5 0 00-.5.5v6a.5.5 0 001 0v-6a.5.5 0 00-.5-.5z" fill="currentColor"></path>
-            </svg>
-          </a>
-        </cart-remove-button>
-      </div>
-    </td>
+          }')" class="block button button-secondary button-sm px-2" >
+                          
 
-    <td class="cart-item__totals right small-hide">
-      <div class="cart-item__price-wrapper"><span class="price price--end">
-           ${bundleItem.price}
-          </span></div>
-    </td>
-  </tr>
+<svg aria-hidden="true" focusable="false" class="w-4 h-4 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="3 6 5 6 21 6"></polyline>
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+  <line x1="10" y1="11" x2="10" y2="17"></line>
+  <line x1="14" y1="11" x2="14" y2="17"></line>
+</svg>
+                        </a>
+                      </cart-remove-button>
+                    </div>
+                    <div class="cart-item__error text-coral-800 hidden" id="Line-item-error-1" role="alert">
+                      <small class="cart-item__error-text"></small>
+                      
+
+<svg aria-hidden="true" focusable="false" class="icon icon-error w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"></circle>
+  <line x1="12" y1="8" x2="12" y2="12"></line>
+  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+</svg>
+                    </div>
+                  </td>
+
+                  <td class="cart-item__totals flex flex-row justify-end items-center text-right relative">
+                    <div class="loading-spinner hidden mr-2 -ml-6">
+                      
+
+<svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="" stroke-linecap="round" stroke-linejoin="round">
+  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+</svg>
+                    </div>
+
+                    <div class="cart-item__price-wrapper"><span class="price price--end">
+                        ${bundleItem.price}
+                        </span></div>
+                  </td>
+                </tr>
     `;
 };
 
 const getBundleCartDrawerTemplateLoop = (bundleItem, index, bundleLink) => {
+  console.log(bundleItem)
     return `
-        <tr class="cart-item" id="CartBundleItem-${index}">
-          <td class="cart-item__media" style="text-align:center;">
-            <img class="cart-item__image" 
-              src="${bundleItem.image || ""}" 
-              alt="${bundleItem.label}" loading="lazy" width="75" height="75">
-          </td>
-          <td class="cart-item__details">
-            <a href="${bundleLink}" 
-              class="cart-item__name break">
-              ${bundleItem.label || ""}
-            </a>
-            <dl>
-              <div class="product-option">
-                ${bundleItem.items
-                    .map((item) => getItemsHtmlLoop(item))
-                    .join("")}
-                  <br/>
-                  <p><span class="data-cart-item-selling-plan-name">
-                    ${bundleItem.sellingPlan || ""}
-                  </span></p>
-              </div>
-            </dl>
-          </td>
-          <td class="cart-item__quantity small-hide">
-            ${bundleItem.quantity}
-          </td>
-          <td class="right medium-hide large-up-hide">
-            <div class="cart-item__price-wrapper medium-up" style="display: flex; gap: 10px;">
-              <span class="price price--end" style="text-decoration:line-through;"> 
-                ${bundleItem.priceWithoutDiscount} 
-              </span>
-              <span class="price price--end" style="font-weight: 600;">
-                ${bundleItem.price} 
-              </span>
-            </div>
-            ${getEditCartButton(bundleItem.bundleId)}
-            <div onclick="removeBundleLoop('${
+  <tr id="${bundleItem.bundleId ? 'bud' : 'simp'}" class="cart-item align-top my-6 grid grid-cols-7 grid-rows-auto [grid-template-areas:'image_name_name_name_name_name_price''image_size_size_sub_sub_sub_sub''image_quant_quant_sub_sub_sub_sub'] td:border-collapse td:border-spacing-0 td:border-0"
+role="row">
+  <td class="cart-item__media p-0 [grid-area:image]" role="cell" headers="CartDrawer-ColumnImage">
+    <div class="flex h-full items-center">
+      <a href="${bundleLink}" class="sr-only"
+      tabindex="-1" aria-hidden="true">
+      </a>
+      <img class="cart-item__image max-w-full" 
+      src="${
+                bundleItem.image || ""
+            }"
+       width="60" height="77">
+    </div>
+  </td>
+  <td class="cart-item__name p-0 [grid-area:name]" role="cell" headers="CartDrawer-ColumnName">
+    <div class="flex items-center h-full">
+      <a href="${bundleLink}" class="block leading-none 2xs:w-full w-60">
+      ${
+        bundleItem.label
+    }
+      </a>
+    </div>
+  </td>
+  <td class="cart-item__size p-0 [grid-area:size]" role="cell" headers="CartDrawer-ColumnSize">
+    <dl class="flex items-center h-full text-sm pb-1 gap-2">
+      <div class="product-option flex">
+        <dt class="mr-1">
+         ${bundleItem.items
+                .map((item) =>
+                    getItemsHtmlLoop(item, bundleItem.bundleQuantityMapping)
+                )
+                .join("")}
+        </dt>
+        <dd class="whitespace-nowrap">
+       <p><span>${bundleItem.sellingPlan || ""}</span></p>
+        </dd>
+      </div>
+    </dl>
+  </td>
+  <td class="cart-item__quantity p-0 [grid-area:quant]" role="cell" headers="CartDrawer-ColumnQuantity">
+    <div class="flex items-center">
+      <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-md mr-1">
+       
+        <input class="quantity__input w-8 h-6 border-0 p-1 text-center" type="number" min="0" value="${bundleItem.quantity}" readonly>
+
+      
+        
+      </quantity-input>
+      <cart-remove-button  class="hidden xs:block">
+        <button class="block button button-secondary button-sm px-2" onclick="removeBundleLoop('${
                 bundleItem.bundleId
-            }')" style="cursor:pointer; width: fit-content;height: 15px;display: inline-flex;flex-direction: row-reverse;">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" style="width: 1em; height: 1em;" aria-hidden="true" focusable="false" role="presentation" class="icon icon-remove">
-                    <path d="M14 3h-3.53a3.07 3.07 0 00-.6-1.65C9.44.82 8.8.5 8 .5s-1.44.32-1.87.85A3.06 3.06 0 005.53 3H2a.5.5 0 000 1h1.25v10c0 .28.22.5.5.5h8.5a.5.5 0 00.5-.5V4H14a.5.5 0 000-1zM6.91 1.98c.23-.29.58-.48 1.09-.48s.85.19 1.09.48c.2.24.3.6.36 1.02h-2.9c.05-.42.17-.78.36-1.02zm4.84 11.52h-7.5V4h7.5v9.5z" fill="currentColor"></path>
-                    <path d="M6.55 5.25a.5.5 0 00-.5.5v6a.5.5 0 001 0v-6a.5.5 0 00-.5-.5zM9.45 5.25a.5.5 0 00-.5.5v6a.5.5 0 001 0v-6a.5.5 0 00-.5-.5z" fill="currentColor"></path>
-              </svg>
-            </div>
-          </td>
-        </tr>
+            }')"
+         type="button">
+          <svg aria-hidden="true" focusable="false" class="w-4 h-4 pointer-events-none"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6">
+            </polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+            </path>
+            <line x1="10" y1="11" x2="10" y2="17">
+            </line>
+            <line x1="14" y1="11" x2="14" y2="17">
+            </line>
+          </svg>
+        </button>
+      </cart-remove-button>
+    </div>
+    <div  class="absolute text-coral-800 text-sm hidden"
+    role="alert">
+      <small class="cart-item__error-text">
+      </small>
+      <svg aria-hidden="true" focusable="false" class="icon icon-error w-4 h-4"
+      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10">
+        </circle>
+        <line x1="12" y1="8" x2="12" y2="12">
+        </line>
+        <line x1="12" y1="16" x2="12.01" y2="16">
+        </line>
+      </svg>
+    </div>
+  </td>
+  <td class="cart-item__totals p-0 [grid-area:price]" role="cell" headers="CartDrawer-ColumnTotal">
+    <div class="flex items-center justify-end h-full">
+      <div class="loading-spinner hidden mr-2">
+        <svg class="animate-spin w-4 h-4 text-wave-800" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="" stroke-linecap="round" stroke-linejoin="round">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+          stroke-width="4">
+          </circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+          </path>
+        </svg>
+      </div>
+      <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity">
+        <span class="flex">
+         ${bundleItem.final_line_price_currency}
+        </span>
+      </div>
+    </div>
+  </td>
+</tr>
     `;
 };
 
@@ -554,7 +640,7 @@ const removeDiscountFromSubtotalInCartLoop = (
     currency
 ) => {
     let targetNode = null;
-    targetNode = document.querySelector(`.totals__subtotal-value`);
+    targetNode = document.querySelector(`#CartDrawer-Total`);
     if (targetNode) {
         applyDiscountByCartLineItemsLoop(
             targetNode,
@@ -571,7 +657,7 @@ function applyDiscountByCartLineItemsLoop(
     currencySymbol,
     currency
 ) {
-    const totalLineItemsPrice = window.Loop.bundleCartAllItems.reduce(
+    const totalLineItemsPrice = window?.Loop?.bundleCartAllItems?.reduce(
         (acc, item) => {
             return (
                 acc +
@@ -651,10 +737,11 @@ const renderBundleItemsLoop = (bundleItems, clientId) => {
     if (!_parent) {
         _parent = document.querySelector(`.${BUNDLE_CONTAINER_CLASS}`);
     }
+  // console.log(_parent)
     if (!_parent) {
         return;
     }
-
+// console.log("FAf")
     for (let i = 0; i < bundleItems.length; ++i) {
         let bundleItem = bundleItems[i];
         const _bundleLink = bundleItem.isPresetBundleProduct
@@ -833,5 +920,6 @@ const initLoopBundle = async (clientId) => {
         // setupMutationOldLoop();
         // setupMutationIfElementDelete();
     }
+  // console.log("inside")
     renderBundleItemsLoop(_bundleItems, clientId);
 };

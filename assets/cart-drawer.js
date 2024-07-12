@@ -59,6 +59,8 @@ class CartDrawer extends HTMLElement {
     setTimeout(() => {
       this.classList.remove("invisible");
       this.classList.add("active");
+
+      bootstrapCartProductsSection();
     });
 
     this.addEventListener(
@@ -82,6 +84,11 @@ class CartDrawer extends HTMLElement {
 
     removeTrapFocus(this.activeElement);
     document.body.classList.remove("overflow-hidden");
+
+    const elements = document.querySelectorAll(".cart-items #bud");
+    console.log(elements);
+    // Iterate over each selected element and remove it from the DOM
+    elements.forEach((element) => element.remove());
   }
 
   setSummaryAccessibility(cartDrawerNote) {

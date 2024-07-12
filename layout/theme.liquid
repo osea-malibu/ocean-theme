@@ -37,10 +37,6 @@
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
 
-    {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
-    <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
-    {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
-
     {% comment %} {{ content_for_header }} {% endcomment %}
     {% comment %}theme-check-disable ContentForHeaderModification,RemoteAsset{% endcomment %}
     {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" content="" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" content="" id="amazon-payments-metadata"' }}
@@ -69,6 +65,24 @@
     {% comment %} End VWO Async SmartCode {% endcomment %}
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+    {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
+    <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
+    <script>
+      async function bootstrapCartProductsSection() {
+        // this function is responsible for handling drawer part
+        window.Loop = {};
+        window.Loop.bundleCartAllItems = await getCartItems();
+        // console.log(window.Loop.bundleCartAllItems)
+        initLoopBundle("LOOP_osea-malibu_bundles_drawer");
+      }
+      async function getCartItems() {
+        const url = `https://${Shopify.cdnHost.split("/cdn")[0]}/cart.json`;
+        const res = await fetch(url).then(response => response.json());
+        return res?.items ?? [];
+      }
+    </script>
+    {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
   </head>
 
   <body class="antialiased {% if template.name == 'product' %}pdp{% endif %}">

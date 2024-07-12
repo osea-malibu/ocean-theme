@@ -246,6 +246,8 @@ class CartItems extends HTMLElement {
         );
       });
     }
+
+    bootstrapCartProductsSection();
   }
 
   removeGift(line) {
