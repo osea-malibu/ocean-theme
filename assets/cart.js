@@ -133,7 +133,7 @@ class CartItems extends HTMLElement {
           document.querySelector("cart-notification") || document.querySelector("cart-drawer");
 
         // if the only items in the cart are samples
-        if (parsedState.items.filter((i) => i.product_type !== "Sample").length === 0) {
+        if (parsedState?.items?.filter((i) => i.product_type !== "Sample").length === 0) {
           this.cart.clearCart();
         }
 
