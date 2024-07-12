@@ -5,30 +5,32 @@ class CartDrawer extends HTMLElement {
     this.overlay = this.querySelector(".cart-scrim");
     this.drawer = this.querySelector(".cart-drawer");
 
-    this.attachEventListeners();
+    this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
+    this.overlay.addEventListener("click", this.close.bind(this));
     this.setHeaderCartIconAccessibility();
+    this.attachEventListeners();
   }
 
   attachEventListeners() {
-    this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
-    this.overlay.addEventListener("click", this.close.bind(this));
+    document.addEventListener("loopByobAddToCartSuccessEvent", (e) => {
+      console.log("Add to cart on byob ");
 
-    document.addEventListener("loopByobAddToCartSuccessEvent", () => {
-      console.log("byob add to cart");
-
-      fetch(window.Shopify.routes.root + "cart.js")
+      // console.log(window.Shopify.routes.root)
+      fetch("https://oseamalibu.com/cart.js")
         .then((response) => response.json())
         .then((response) => {
+          console.log("response", response);
           if (response.status) {
             console.log("error", response.status);
           } else if (!response) {
             window.location = window.routes.cart_url;
             return;
           }
+          // console.log("start render contents");
           this.renderContents(response);
         })
-
         .catch((e) => console.error(e));
+      // this.open(e);
     });
   }
 
