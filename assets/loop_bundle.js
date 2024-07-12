@@ -242,6 +242,13 @@ role="row">
           </path>
         </svg>
       </div>
+      <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity" style="
+    text-decoration: line-through;
+">
+        <span class="flex">
+          ${bundleItem.priceWithoutDiscount}
+        </span>
+      </div>
       <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity">
         <span class="flex">
          ${bundleItem.final_line_price_currency}
