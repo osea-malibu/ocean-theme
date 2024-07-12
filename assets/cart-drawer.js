@@ -19,14 +19,12 @@ class CartDrawer extends HTMLElement {
       fetch(window.Shopify.routes.root + "cart.js")
         .then((response) => response.json())
         .then((response) => {
-          console.log("response", response);
           if (response.status) {
             console.log("error", response.status);
           } else if (!response) {
             window.location = window.routes.cart_url;
             return;
           }
-          console.log("start render contents");
           this.renderContents(response);
         })
 
@@ -103,7 +101,6 @@ class CartDrawer extends HTMLElement {
   }
 
   renderContents(parsedState) {
-    console.log("renderContents", parsedState);
     this.drawer.classList.contains("is-empty") && this.drawer.classList.remove("is-empty");
     this.productId = parsedState.id;
     // BUG WORKAROUND FOR SHOPIFY CLI

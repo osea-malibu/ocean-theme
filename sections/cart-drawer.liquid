@@ -1,7 +1,7 @@
 {% comment %} theme-check-disable TemplateLength {% endcomment %}
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 
-<cart-drawer class="fixed z-[2147483001] top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
+<cart-drawer class="fixed z-[2147483002] top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer">
     <div class="cart-scrim block fixed inset-0 bg-seaweed-800/50"></div>
     <div class="cart-drawer bg-white fixed right-0 inset-y-0 w-[40rem] max-w-full overflow-hidden flex flex-col"
