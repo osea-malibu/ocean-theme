@@ -117,7 +117,6 @@ class CartDrawer extends HTMLElement {
     // if sections are null, fall back on Section Rendering API
     // https://github.com/Shopify/shopify-cli/issues/1797
     if (!parsedState.sections) {
-      console.log("no sections");
       fetch(
         `${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map(
           (section) => section.id
@@ -126,7 +125,6 @@ class CartDrawer extends HTMLElement {
         .then((response) => response.json())
         .then((response) => {
           parsedState.sections = response;
-          console.log("parsedState.sections", parsedState.sections);
 
           this.getSectionsToRender().forEach((section) => {
             const sectionElement = section.selector
@@ -145,7 +143,6 @@ class CartDrawer extends HTMLElement {
         })
         .catch((error) => console.error(error));
     } else {
-      console.log("sections");
       this.getSectionsToRender().forEach((section) => {
         const sectionElement = section.selector
           ? document.querySelector(section.selector)

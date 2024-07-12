@@ -729,3 +729,6 @@ tr#bud cart-remove-button {
 tr#bud quantity-input {
   @apply hidden;
 }
+tr#bud .cart-item__price-wrapper:not(:last-of-type) {
+  @apply text-seaweed-500;
+}
