@@ -172,6 +172,16 @@
       }
     </script>
 
+    <script>
+      window.addEventListener("postscriptPopup", function(ev) {
+        if (ev.detail.type == 'formSubmit') {
+          const { popupName } = ev.detail;
+          var _learnq = _learnq || [];
+          _learnq.push(['identify', { 'PostscriptPopup' : popupName, }]);
+        }
+      });
+    </script>
+
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
