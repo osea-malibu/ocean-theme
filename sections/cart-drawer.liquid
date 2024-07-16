@@ -433,6 +433,7 @@
                                       <span id="CartSubscribeCheckbox-label" class="whitespace-nowrap">{% if item.selling_plan_allocation != nil %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
                                     </label>
                                     <div class="relative text-seaweed-700 flex-1">
+                                      <script>consolge.log("groups", {{ groups | json }})</script>
                                       {%- if item.selling_plan_allocation != nil -%}
                                         <label for="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">Ship every</label>
                                         <select
