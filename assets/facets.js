@@ -360,7 +360,6 @@ class PriceRange extends HTMLElement {
     if (value > max) input.value = max;
   }
 }
-
 customElements.define("price-range", PriceRange);
 
 class FacetRemove extends HTMLElement {
@@ -381,5 +380,4 @@ class FacetRemove extends HTMLElement {
     form.onActiveFilterClick(event);
   }
 }
-
 customElements.define("facet-remove", FacetRemove);
