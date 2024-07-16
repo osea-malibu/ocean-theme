@@ -394,7 +394,7 @@
                                 endfor
 
                                 assign subscription_group = null
-                                for group in product.selling_plan_groups
+                                for group in item.product.selling_plan_groups
                                   if group.name == 'Subscribe and Save'
                                     assign subscription_group = group
                                   endif
