@@ -122,13 +122,20 @@
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
                           <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
                           <div>
-                            {%- assign product_form_id = 'product-form-' | append: block.settings.atc_button_product.id | append: '-' | append: block.id -%}
-                            {%- if block.settings.is_subscription and block.settings.atc_button_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
+                            {%- liquid
+                              assign product_form_id = 'product-form-' | append: block.settings.atc_button_product.id | append: '-' | append: block.id
+                              assign subscription_group = nil
+                              for group in block.settings.atc_button_product.selling_plan_groups
+                                if group.name == 'Subscribe and Save'
+                                  assign subscription_group = group
+                                endif
+                              endfor
+                            -%}
+                            {%- if block.settings.is_subscription and block.settings.atc_button_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 and subscription_group -%}
                               {%- liquid
-                                assign groups = block.settings.atc_button_product.selling_plan_groups
-                                assign default_option = groups[0].selling_plans[1].id
+                                assign default_option = subscription_group.selling_plans[1].id
                                 if block.settings.atc_button_product.metafields.custom.subscription_interval != blank
-                                  for plan in groups[0].selling_plans
+                                  for plan in subscription_group.selling_plans
                                     if plan.name contains block.settings.atc_button_product.metafields.custom.subscription_interval
                                       assign default_option = plan.id
                                     endif
@@ -138,7 +145,7 @@
                               {%- if block.settings.variant_picker_type == 'button' -%}
                                 <fieldset class="js flex">
                                   <legend class="sr-only">Ship every:</legend>
-                                  {%- for option in groups[0].selling_plans -%}
+                                  {%- for option in subscription_group.selling_plans -%}
                                     <div class="flex-grow{% unless forloop.last %} mr-0.5{% endunless %}">
                                       <input type="radio"
                                         id="SubscriptionOption-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}"
@@ -168,7 +175,7 @@
                                     name="selling_plan"
                                     form="{{ product_form_id }}"
                                   >
-                                    {%- for option in groups[0].selling_plans -%}
+                                    {%- for option in subscription_group.selling_plans -%}
                                       <option
                                         value="{{ option.id }}"
                                         {%- if option.id == default_option -%}selected{%- endif -%}

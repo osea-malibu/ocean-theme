@@ -80,13 +80,20 @@
         endif
       -%}
       <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
-        {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
-        {%- if subscription and card_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
+        {%- liquid
+          assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id
+          assign subscription_group = nil
+          for group in card_product.selling_plan_groups
+            if group.name == 'Subscribe and Save'
+              assign subscription_group = group
+            endif
+          endfor
+        -%}
+        {%- if subscription and card_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 and subscription_group -%}
           {%- liquid
-            assign groups = card_product.selling_plan_groups
-            assign default_option = groups[0].selling_plans[1].id
+            assign default_option = subscription_group.selling_plans[1].id
             if card_product.metafields.custom.subscription_interval != blank
-              for plan in groups[0].selling_plans
+              for plan in subscription_group.selling_plans
                 if plan.name contains card_product.metafields.custom.subscription_interval
                   assign default_option = plan.id
                 endif
@@ -97,7 +104,7 @@
             <fieldset class="js flex">
               <legend class="sr-only">Ship every:</legend>
               <div class="overflow-x-auto flex">
-                {%- for option in groups[0].selling_plans -%}
+                {%- for option in subscription_group.selling_plans -%}
                   <div class="flex-grow{% unless forloop.last %} mr-0.5{% endunless %}">
                     <input type="radio"
                       id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
@@ -128,7 +135,7 @@
                 name="selling_plan"
                 form="{{ product_form_id }}"
               >
-                {%- for option in groups[0].selling_plans -%}
+                {%- for option in subscription_group.selling_plans -%}
                   <option
                     value="{{ option.id }}"
                     {%- if option.id == default_option -%}selected{%- endif -%}

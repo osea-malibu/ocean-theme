@@ -410,7 +410,6 @@
                                 {%- unless non_subscription_allocation -%}
                                   <div class="cart-subscibe flex flex-col items-end h-full">
                                     {%- liquid
-                                      assign groups = item.product.selling_plan_groups
                                       assign default_option = subscription_group.selling_plans[0].id
                                       if item.product.metafields.custom.subscription_interval != blank
                                         for plan in subscription_group.selling_plans
@@ -434,7 +433,6 @@
                                     </label>
                                     <div class="relative text-seaweed-700 flex-1">
                                       <script>
-                                        console.log("groups", {{ groups | json }});
                                         console.log("subscription_group", {{ subscription_group | json }});
                                         console.log("item", {{ item | json }});
                                       </script>
