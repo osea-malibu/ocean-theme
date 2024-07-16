@@ -435,7 +435,7 @@
                                     <div class="relative text-seaweed-700 flex-1">
                                       <script>
                                         console.log("groups", {{ groups | json }});
-                                        console.log("subscription_group", {{ subscription_group }});
+                                        console.log("subscription_group", {{ subscription_group | json }});
                                         console.log("item", {{ item | json }});
                                       </script>
                                       {%- if item.selling_plan_allocation != nil -%}
