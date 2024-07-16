@@ -16,6 +16,11 @@
     endif
   endif
 
+  if product.handle == 'plant-based-dry-brush'
+    assign care_array = 'Care' | sort
+    assign tabs = tabs | concat: care_array
+  endif
+
   if product.metafields.custom.recycling != blank and block.settings.enable_info_tab_sustainability
     assign recycling_array = block.settings.info_tab_sustainability_label | sort
     assign tabs = tabs | concat: recycling_array
@@ -34,11 +39,6 @@
   if product.handle == 'limited-edition-90s-crewneck'
     assign size_chart_array = 'Size Chart' | sort
     assign tabs = tabs | concat: size_chart_array
-  endif
-
-  if product.handle == 'plant-based-dry-brush'
-    assign care_array = 'Care' | sort
-    assign tabs = tabs | concat: care_array
   endif
 -%}
 <tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
@@ -105,17 +105,6 @@
               {{ how_to_html }}
             </div>
           {%- endif -%}
-        {%- when 'Care' -%}
-          <div>
-            <b class="block mb-2">Care Instructions:</b>
-            <ul class="icon-list bullet">
-              <li>After use tap the brush to remove debris.</li>
-              <li>Then wash the bristles by gently dipping them into soapy water.</li>
-              <li>Do not get water or soap all the way to the roots of the brush.</li>
-              <li>Avoid getting the wood wet.</li>
-              <li>Store in a dry place.</li>
-            </ul>
-          </div>
         {%- when block.settings.info_tab_custom_tab_label -%}
           <div>{{ block.settings.info_tab_custom_tab_content }}</div>
         {%- when block.settings.info_tab_sustainability_label -%}
@@ -210,6 +199,17 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        {%- when 'Care' -%}
+          <div>
+            <b class="block mb-2">Care Instructions:</b>
+            <ul class="icon-list bullet">
+              <li>After use tap the brush to remove debris.</li>
+              <li>Then wash the bristles by gently dipping them into soapy water.</li>
+              <li>Do not get water or soap all the way to the roots of the brush.</li>
+              <li>Avoid getting the wood wet.</li>
+              <li>Store in a dry place.</li>
+            </ul>
           </div>
       {%- endcase -%}
     </div>
