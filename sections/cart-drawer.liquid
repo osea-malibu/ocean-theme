@@ -393,7 +393,7 @@
                                   endif
                                 endfor
 
-                                assign subscription_group = null
+                                assign subscription_group = nil
                                 for group in item.product.selling_plan_groups
                                   if group.name == 'Subscribe and Save'
                                     assign subscription_group = group
@@ -406,14 +406,14 @@
                                   assign non_subscription_allocation = true
                                 endif
                               -%}
-                              {%- if current_variant and current_variant.selling_plan_allocations.size > 0 -%}
+                              {%- if current_variant and current_variant.selling_plan_allocations.size > 0 and subscription_group -%}
                                 {%- unless non_subscription_allocation -%}
                                   <div class="cart-subscibe flex flex-col items-end h-full">
                                     {%- liquid
                                       assign groups = item.product.selling_plan_groups
-                                      assign default_option = groups[0].selling_plans[0].id
+                                      assign default_option = subscription_group.selling_plans[0].id
                                       if item.product.metafields.custom.subscription_interval != blank
-                                        for plan in groups[0].selling_plans
+                                        for plan in subscription_group.selling_plans
                                           if plan.name contains item.product.metafields.custom.subscription_interval
                                             assign default_option = plan.id
                                           endif
