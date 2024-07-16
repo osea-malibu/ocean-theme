@@ -433,7 +433,10 @@
                                       <span id="CartSubscribeCheckbox-label" class="whitespace-nowrap">{% if item.selling_plan_allocation != nil %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
                                     </label>
                                     <div class="relative text-seaweed-700 flex-1">
-                                      <script>console.log("groups", {{ groups | json }})</script>
+                                      <script>
+                                        console.log("groups", {{ groups | json }});
+                                        console.log("item.selling_plan_allocation", {{ item.selling_plan_allocation | json }});
+                                      </script>
                                       {%- if item.selling_plan_allocation != nil -%}
                                         <label for="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">Ship every</label>
                                         <select
@@ -442,7 +445,7 @@
                                           name="selling_plan"
                                           data-index="{{ item.index | plus: 1 }}"
                                         >
-                                          {%- for option in groups[0].selling_plans -%}
+                                          {%- for option in subscription_group.selling_plans -%}
                                             <option value="{{ option.id }}" {%- if option.id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}>
                                               {{- option.name -}}
                                             </option>
