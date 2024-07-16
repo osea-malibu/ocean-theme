@@ -202,7 +202,7 @@
               {%- for value in filter.active_values -%}
                 <facet-remove>
                   <a href="{{ value.url_to_remove }}" class="block p-1">
-                    <span class="button button-xs button-tertiary normal-case tracking-wide rounded-full pr-2">
+                    <span class="button button-xs gap-1 button-tertiary normal-case tracking-wide rounded-full pr-1.5">
                       <span class="sr-only">{{ filter.label | escape }}: </span>{{ value.label | escape }}
                       {% render 'icon-close', stroke_width: 2, aria_hidden: true, classes: 'w-4 h-4 self-center shrink-0 pointer-events-none' %}
                       <span class="sr-only">{{ 'products.facets.clear_filter' | t }}</span>
