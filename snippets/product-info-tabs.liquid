@@ -105,6 +105,17 @@
               {{ how_to_html }}
             </div>
           {%- endif -%}
+        {%- when 'Care' -%}
+          <div>
+            <b class="block mb-2">Care Instructions:</b>
+            <ul class="icon-list bullet">
+              <li>After use tap the brush to remove debris.</li>
+              <li>Then wash the bristles by gently dipping them into soapy water.</li>
+              <li>Do not get water or soap all the way to the roots of the brush.</li>
+              <li>Avoid getting the wood wet.</li>
+              <li>Store in a dry place.</li>
+            </ul>
+          </div>
         {%- when block.settings.info_tab_custom_tab_label -%}
           <div>{{ block.settings.info_tab_custom_tab_content }}</div>
         {%- when block.settings.info_tab_sustainability_label -%}
@@ -199,17 +210,6 @@
                 </tr>
               </tbody>
             </table>
-          </div>
-        {%- when 'Care' -%}
-          <div>
-            <b class="block mb-2">Care Instructions:</b>
-            <ul class="icon-list bullet">
-              <li>After use tap the brush to remove debris</li>
-              <li>Then wash the bristles by gently dipping them into soapy water</li>
-              <li>Do not get water or soap all the way to the roots of the brush</li>
-              <li>Avoid getting the wood wet</li>
-              <li>Store in a dry place</li>
-            </ul>
           </div>
       {%- endcase -%}
     </div>
