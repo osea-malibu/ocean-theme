@@ -1,0 +1,217 @@
+{%- liquid
+  assign how_to_use = product.metafields.custom.how_to_use
+  assign custom_tab_handles = block.settings.info_tab_custom_tab_handles | split: ', '
+
+  assign tabs = '' | split: ''
+
+  if block.settings.enable_info_tab_description and product.metafields.custom_fields.description != blank
+    assign description_array = block.settings.info_tab_description_label | sort
+    assign tabs = tabs | concat: description_array
+  endif
+
+  if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank
+    if block.settings.enable_info_tab_howto
+      assign how_to_use_array = block.settings.info_tab_howto_label | sort
+      assign tabs = tabs | concat: how_to_use_array
+    endif
+  endif
+
+  if product.metafields.custom.recycling != blank and block.settings.enable_info_tab_sustainability
+    assign recycling_array = block.settings.info_tab_sustainability_label | sort
+    assign tabs = tabs | concat: recycling_array
+  endif
+
+  if block.settings.enable_info_tab_custom and custom_tab_handles contains product.handle
+    assign custom_array = block.settings.info_tab_custom_tab_label | sort
+    assign tabs = tabs | concat: custom_array
+  endif
+
+  if block.settings.enable_info_tab_articles and product.metafields.custom.related_articles != nil
+    assign articles_array = block.settings.info_tab_articles_label | sort
+    assign tabs = tabs | concat: articles_array
+  endif
+
+  if product.handle == 'limited-edition-90s-crewneck'
+    assign size_chart_array = 'Size Chart' | sort
+    assign tabs = tabs | concat: size_chart_array
+  endif
+
+  if product.handle == 'plant-based-dry-brush'
+    assign care_array = 'Care' | sort
+    assign tabs = tabs | concat: care_array
+  endif
+-%}
+<tab-controller id="pdp-info-tabs" data-active-class="z-10 !bg-white" class="{{ block.settings.info_tab_wrapper_classes }}">
+  <ul aria-controls="featured-collections-tabs" role="tablist" class="flex justify-start items-bottom">
+    {%- for tab in tabs -%}
+      <li
+        role="tab"
+        aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
+        tabindex="0"
+        aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+        class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 py-1 cursor-pointer whitespace-nowrap{% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }} {% if tabs.size > 3 %}px-1 xs:px-2 md:px-1 lg:px-3 tracking-wide xs:tracking-widest md:tracking-wider lg:tracking-widest{% else %}px-2 2xs:px-3{% endif %}"
+      >
+        {{ tab }}
+      </li>
+    {%- endfor -%}
+  </ul>
+  {%- for tab in tabs -%}
+    <div
+      id="tab-{{ forloop.index }}-{{ block.id }}"
+      role="tabpanel"
+      aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+      class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
+    >
+      {%- case tab -%}
+        {%- when block.settings.info_tab_description_label -%}
+          <div>{{ product.metafields.custom_fields.description }}</div>
+        {%- when block.settings.info_tab_howto_label -%}
+          {%- if how_to_use != blank or product.metafields.custom_fields.how_it_works != blank -%}
+            {%- capture how_to_html -%} 
+              {%- if product.metafields.custom.how_to_use != blank -%}
+                <table>
+                  <tr class="align-top td:pb-2">
+                    <td><b class="mr-1">How:</b></td>
+                    <td>{{ how_to_use.value.how }}</td>
+                  </tr>
+                  <tr class="align-top td:pb-2">
+                    <td><b class="mr-1">When:</b></td>
+                    <td>{{ how_to_use.value.when }}</td>
+                  </tr>
+                  {%- if how_to_use.value.pro_tip != nil -%}
+                    <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
+                      <td><b class="mr-1 whitespace-nowrap">Pro tip:</b></td>
+                      <td>{{ how_to_use.value.pro_tip }}</td>
+                    </tr>
+                  {%- endif -%}
+                  {%- if how_to_use.value.warnings.size > 0 -%}
+                    <tr class="align-top">
+                      <td><b class="sr-only">Warnings:</b></td>
+                      <td>
+                        <ul class="text-sm">
+                          {%- for warning in how_to_use.value.warnings -%}
+                            <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
+                          {%- endfor -%}
+                        </ul>
+                      </td>
+                    </tr>
+                  {%- endif -%}
+                </table>
+              {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
+                <div class="p:mb-3">{{ product.metafields.custom_fields.how_it_works }}</div>
+              {%- endif -%}
+            {%- endcapture -%}
+            <div>
+              {{ how_to_html }}
+            </div>
+          {%- endif -%}
+        {%- when block.settings.info_tab_custom_tab_label -%}
+          <div>{{ block.settings.info_tab_custom_tab_content }}</div>
+        {%- when block.settings.info_tab_sustainability_label -%}
+          <div class="recycling">
+            <table>
+              {%- if product.metafields.custom.recycling.value.packaging != nil -%}
+                <tr class="align-top">
+                  <td><b class="mr-1 whitespace-nowrap">Packaging:</b></td>
+                  <td>{{ product.metafields.custom.recycling.value.packaging }}</td>
+                </tr>
+              {%- endif -%}
+              {%- if product.metafields.custom.recycling.value.recycling != nil -%}
+                <tr class="align-top">
+                  <td><b class="mr-1 whitespace-nowrap">Recycling:</b></td>
+                  <td>{{ product.metafields.custom.recycling.value.recycling }}</td>
+                </tr>
+              {%- endif -%}
+            </table>
+            {%- if product.metafields.custom.recycling.value.disclaimer != nil -%}
+              <small class="block leading-tight mt-2">{{ product.metafields.custom.recycling.value.disclaimer }}</small>
+            {%- endif -%}
+          </div>
+        {%- when block.settings.info_tab_articles_label -%}
+          <div class="articles flex flex-wrap gap-2">
+            {%- for article_handle in product.metafields.custom.related_articles.value -%}
+              {%- render 'article-card',
+                article: articles[article_handle],
+                unique_id: '-pdp_featured',
+                show_image: true,
+                card_classes: 'flex flex-row bg-wave-200 rounded-md w-full',
+                image_classes: 'rounded-l-md block h-full object-cover absolute inset-0',
+                title_classes: 'tracking-wide font-medium mb-0.5 text-sm/tight mb-1',
+                tag_classes: 'sr-only',
+                date_classes: 'sr-only',
+                author_classes: 'sr-only',
+                excerpt_classes: 'text-sm/tight',
+                link_classes: 'link font-bold uppercase tracking-widest text-xs',
+                text_wrapper_classes: 'w-2/3 p-2',
+                image_wrapper_classes: 'w-1/3 h-full relative',
+                exceprt_length: 10
+              -%}
+            {%- endfor -%}
+          </div>
+        {%- when 'Size Chart' -%}
+          <div>
+            <b class="block mb-2">Unisex fit</b>
+            <table class="border-collapse border border-seaweed-400 bg-wave-200">
+              <thead>
+                <tr>
+                  <th class="border border-seaweed-400 px-2 py-0.5 bg-wave-200 leading-none"><span class="sr-only">Size</span></th>
+                  <th class="border border-seaweed-400 px-2 py-0.5 bg-wave-200 leading-none">Body Length</th>
+                  <th class="border border-seaweed-400 px-2 py-0.5 bg-wave-200 leading-none">Chest Width</th>
+                  <th class="border border-seaweed-400 px-2 py-0.5 bg-wave-200 leading-none">Sleeve Length</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">XS</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">25.5 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">18 in.<br></td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">23 in.</td>
+                </tr>
+                <tr>
+                  <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">S</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">26.5 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">20 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">23.5 in.</td>
+                </tr>
+                <tr>
+                  <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">M</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">28 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">22 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">24 in.</td>
+                </tr>
+                <tr>
+                  <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">L</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">29 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">24 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">24.5 in.</td>
+                </tr>
+                <tr>
+                  <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">XL</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">30 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">26 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">25 in.</td>
+                </tr>
+                <tr>
+                  <td class="bg-wave-200 border border-seaweed-400 px-2 py-0.5 font-bold">2XL</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">31 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">28 in.</td>
+                  <td class="border border-seaweed-400 px-2 py-0.5 bg-white">25.5 in.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        {%- when 'Care' -%}
+          <div>
+            <b class="block mb-2">Care Instructions:</b>
+            <ul class="icon-list bullet">
+              <li>After use tap the brush to remove debris</li>
+              <li>Then wash the bristles by gently dipping them into soapy water</li>
+              <li>Do not get water or soap all the way to the roots of the brush</li>
+              <li>Avoid getting the wood wet</li>
+              <li>Store in a dry place</li>
+            </ul>
+          </div>
+      {%- endcase -%}
+    </div>
+  {%- endfor -%}
+</tab-controller>
