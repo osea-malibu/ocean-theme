@@ -36,7 +36,7 @@
     "shipping_countdown_threshold": 60,
     "shipping_countdown_text": "You are remaining_amount away from free shipping!",
     "shipping_countdown_text_success": "Congrats! You get free shipping.",
-    "enable_gwp": true,
+    "enable_gwp": false,
     "gwp_type": "auto",
     "enable_annoucement_bar_message": true,
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
@@ -71,17 +71,16 @@
               "text": "<p>Free gift with every first order<\/p>"
             }
           },
+          "announcement_gBbEG3": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p><a href=\"https:\/\/oseamalibu.com\/a\/loop_subscriptions\/bundle\/eee9c289024140ab984c3fb75988e223\" title=\"https:\/\/oseamalibu.com\/a\/loop_subscriptions\/bundle\/eee9c289024140ab984c3fb75988e223\">Build your own bundle & save up to 20%<\/a><\/p>"
+            }
+          },
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
               "text": "<p>Free shipping on orders $60+<\/p>"
-            }
-          },
-          "announcement_gBbEG3": {
-            "type": "announcement",
-            "disabled": true,
-            "settings": {
-              "text": "<p><a href=\"https:\/\/oseamalibu.com\/a\/loop_subscriptions\/bundle\/eee9c289024140ab984c3fb75988e223\" title=\"https:\/\/oseamalibu.com\/a\/loop_subscriptions\/bundle\/eee9c289024140ab984c3fb75988e223\">Build your own bundle & save up to 20%<\/a><\/p>"
             }
           },
           "announcement_FibP3b": {
@@ -94,8 +93,8 @@
         },
         "block_order": [
           "announcement_3qbKGP",
-          "announcement-bar-0",
           "announcement_gBbEG3",
+          "announcement-bar-0",
           "announcement_FibP3b"
         ],
         "settings": {
