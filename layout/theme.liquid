@@ -172,16 +172,6 @@
       }
     </script>
 
-    <script>
-      window.addEventListener("postscriptPopup", function(ev) {
-        if (ev.detail.type == 'formSubmit') {
-          const { popupName } = ev.detail;
-          var _learnq = _learnq || [];
-          _learnq.push(['identify', { 'PostscriptPopup' : popupName, }]);
-        }
-      });
-    </script>
-
     <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
@@ -206,6 +196,20 @@
       render 'audiohook'
       render 'data-layer'
     -%}
+    
+    <script>
+      var klaviyo = klaviyo || [];
+      window.addEventListener("postscriptPopup", function(ev) {
+        setTimeout(function() {
+          if (ev.detail.type == 'formSubmit') {
+            const {popupName} = ev.detail;
+            klaviyo.push(['identify', {
+              'PostscriptPopup': popupName,
+            }]);
+          }
+        }, 1000);
+      });
+    </script>
 
     {% render 'content_for_footer' %}
   </body>
