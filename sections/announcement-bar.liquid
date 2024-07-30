@@ -52,10 +52,10 @@
       data-breakpoint-limit="none"
     >
       <div class="glide__track" data-glide-el="track">
-        <ul class="glide__slides">
+        <ul class="glide__slides pb-0">
           {%- for block in section.blocks -%}
             {%- if block.settings.text != blank -%}
-              <li class="glide__slide text-white text-base font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
+              <li class="glide__slide text-white font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
                 {{ block.settings.text }}
               </li>
             {%- endif -%}
@@ -63,18 +63,18 @@
         </ul>
         <div class="glide__arrows" data-glide-el="controls">
           <button
-            class="glide__arrow glide__arrow--left top-1 opacity-50 left-0 z-10"
+            class="glide__arrow glide__arrow--left top-0 opacity-50 left-0 z-10"
             aria-label="Go to previous"
             data-glide-dir="<"
           >
-            {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white bg-seaweed-700 block' %}
+            {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white block' %}
           </button>
           <button
-            class="glide__arrow glide__arrow--right top-1 opacity-50 right-0 z-10"
+            class="glide__arrow glide__arrow--right top-0 opacity-50 right-0 z-10"
             aria-label="Go to next"
             data-glide-dir=">"
           >
-            {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white bg-seaweed-700 block rotate-180' %}
+            {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white block rotate-180' %}
           </button>
         </div>
       </div>

@@ -1,0 +1,123 @@
+{%- liquid
+  assign subscription_group = null
+  for group in product.selling_plan_groups
+    if group.name == 'Subscribe and Save'
+      assign subscription_group = group
+    endif
+  endfor
+
+  assign allocations = product.selected_or_first_available_variant.selling_plan_allocations
+  assign non_subscription_allocation = false
+  if allocations.size == 1 and allocations[0].selling_plan_group_id != subscription_group.id
+    assign non_subscription_allocation = true
+  endif
+-%}
+{%- unless product.selling_plan_groups.size == 0 -%}
+  {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
+  <subscription-radios
+    class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }} {% if product.selected_or_first_available_variant.selling_plan_allocations.size == 0 or non_subscription_allocation %}max-h-0{% else %}max-h-52{% endif %}"
+    data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
+    data-subscription-group-id = "{{ subscription_group.id }}"
+  >
+    <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
+      <legend class="sr-only">Purchase options</legend>
+      {%- for option in purchase_options -%}
+        <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">
+          <input type="radio"
+            name="purchase_option"
+            id="purchase_option-{{ option }}"
+            class="sr-only peer bg-white"
+            value="{{ option }}"
+            {% if option == 'onetime' %}checked{% endif %}
+          />
+          <span class="absolute pointer-events-none left-2 2xs:left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
+            <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
+          </span>
+          <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
+            <span class="flex justify-between">
+              <strong class="block leading-5 font-bold tracking-wide xs:tracking-widest md:tracking-wide lg:tracking-widest uppercase text-sm">
+                {%- if option == 'onetime' -%}
+                  <span>One-time purchase</span>
+                {%- else -%}
+                  <span>Subscribe & save 10%</span>
+                  <span class="popular-badge hidden normal-case bg-neon-green text-seaweed-700 rounded font-bold tracking-normal text-xs px-1 h-4">Popular</span>
+                {%- endif -%}
+              </strong>
+              {%- if option == 'onetime' -%}
+                {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
+              {%- else -%}
+                {% render 'price', product: product, subscription: true, price_class: 'text-sm font-medium' %}
+              {%- endif -%}
+            </span>
+          </label>
+          {%- if option == 'autodeliver' -%}
+            <span class="text-xs 2xs:tracking-wide md:tracking-normal lg:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
+              <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
+              <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+                <button class="product-popup-modal__button underline cursor-pointer md:tracking-tight lg:tracking-wide" type="button" aria-haspopup="dialog">Learn more</button>
+              </modal-opener>
+            </span>
+            <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
+              <fieldset class="selling-plan-options js flex mb-2 pb-3">
+                <legend class="text-sm font-medium">Delivery every</legend>
+                {%- for allocation in product.selected_or_first_available_variant.selling_plan_allocations -%}
+                  {%- if allocation.selling_plan_group_id == subscription_group.id -%}
+                    {%- liquid
+                      for group in product.selling_plan_groups
+                        if group.id == allocation.selling_plan_group_id
+                          assign selling_plan_group = group
+                        endif
+                      endfor
+
+                      for plan in selling_plan_group.selling_plans
+                        if plan.id == allocation.selling_plan.id
+                          assign selling_plan = plan
+                        endif
+                      endfor
+                    -%}
+                    <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
+                      <input type="radio"
+                        id="{{ allocation.selling_plan.id }}"
+                        class="peer sr-only"
+                        name="selling_plan"
+                        value="{{ allocation.selling_plan.id }}"
+                        form="{{ product_form_id }}"
+                      />
+                      <label
+                        class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-100 peer-checked:outline peer-checked:outline-neon-green"
+                        for="{{ allocation.selling_plan.id }}"
+                      >
+                        {{- selling_plan.name | replace: "Delivery every", "" -}}
+                      </label>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+                <div class="sr-only shrink">
+                  <input type="radio"
+                    id="{{ block.id }}-none"
+                    name="selling_plan"
+                    value=""
+                    form="{{ product_form_id }}"
+                    checked
+                  />
+                  <label for="{{ block.id }}-none">None</label>
+                </div>
+              </fieldset>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </fieldset>
+    <modal-dialog id="SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+      <div role="dialog" aria-label="{{ block.settings.text }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+        <button id="ModalClose-{{ block.id }}" type="button" aria-label="{{ 'accessibility.close' | t }}">
+          {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
+        </button>
+        <div class="w-full">
+          <h2 class="font-serif text-3xl tracking-tight mb-2">{{ block.settings.subscription_modal_heading }}</h2>
+          {{ block.settings.subscription_modal_content }}
+        </div>
+      </div>
+    </modal-dialog>
+  </subscription-radios>
+{%- endunless -%}
