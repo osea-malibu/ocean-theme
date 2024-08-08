@@ -191,6 +191,10 @@ module.exports = {
       uabb: {
         light: "#FAF5EA",
       },
+      uabw: {
+        light: "#FFF6E4",
+        medium: "#FF8400",
+      },
       uao: {
         light: "#FFF8E1",
         medium: "#FFE49F",
