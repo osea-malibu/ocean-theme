@@ -149,6 +149,8 @@ module.exports = {
       "mystery-green": "#67F700",
       "neon-green": "#DCF5AB",
       "dream-navy": "#1D284D",
+      "uabw-light": "#FFF8E1",
+      "uabw-medium": "#FFE49F",
     },
     fontFamily: {
       sans: "Circular, sans-serif",
