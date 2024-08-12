@@ -53,6 +53,49 @@
         "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:right-1\/3"
       }
     },
+    "image_banner_wTWLhy": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_hRLYhL": {
+          "type": "heading",
+          "settings": {
+            "heading": "Your Endless <br>Summer Glow",
+            "heading_classes": "text-5xl font-serif md:text-6xl xl:text-7xl tracking-tight w-full"
+          }
+        },
+        "paragraph_9LbzqA": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Dive into dewy, luminous skin essentials",
+            "paragraph_classes": "font-bold text-2xl hidden sm:block"
+          }
+        },
+        "button_BbyYWW": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "",
+            "button_link": "shopify:\/\/collections\/seasonal-favorites",
+            "target_blank": false,
+            "button_classes": "sm:button-lg sm:mt-4 mb-0 border-seaweed-700 button-primary mt-1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hRLYhL",
+        "paragraph_9LbzqA",
+        "button_BbyYWW"
+      ],
+      "settings": {
+        "image_mobile": "shopify:\/\/shop_images\/7.25_Summer_Skincare_Mobile_BLANK.jpg",
+        "image": "shopify:\/\/shop_images\/7.25_Summer_Skincare_Desktop_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify:\/\/collections\/seasonal-favorites",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-0 sm:right-1\/3"
+      }
+    },
     "multicolumn_UTFqMp": {
       "type": "multicolumn",
       "blocks": {
@@ -199,49 +242,6 @@
         "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
-      }
-    },
-    "image_banner_wTWLhy": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_hRLYhL": {
-          "type": "heading",
-          "settings": {
-            "heading": "Your Endless <br>Summer Glow",
-            "heading_classes": "text-5xl font-serif md:text-6xl xl:text-7xl tracking-tight w-full"
-          }
-        },
-        "paragraph_9LbzqA": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Dive into dewy, luminous skin essentials",
-            "paragraph_classes": "font-bold text-2xl hidden sm:block"
-          }
-        },
-        "button_BbyYWW": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_aria_label": "",
-            "button_link": "shopify:\/\/collections\/seasonal-favorites",
-            "target_blank": false,
-            "button_classes": "sm:button-lg sm:mt-4 mb-0 border-seaweed-700 button-primary mt-1"
-          }
-        }
-      },
-      "block_order": [
-        "heading_hRLYhL",
-        "paragraph_9LbzqA",
-        "button_BbyYWW"
-      ],
-      "settings": {
-        "image_mobile": "shopify:\/\/shop_images\/7.25_Summer_Skincare_Mobile_BLANK.jpg",
-        "image": "shopify:\/\/shop_images\/7.25_Summer_Skincare_Desktop_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify:\/\/collections\/seasonal-favorites",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-0 sm:right-1\/3"
       }
     },
     "165703204544efb73d": {
@@ -1726,8 +1726,8 @@
   },
   "order": [
     "image_banner_GjnLnG",
-    "multicolumn_UTFqMp",
     "image_banner_wTWLhy",
+    "multicolumn_UTFqMp",
     "165703204544efb73d",
     "8968f5e1-c259-4782-a431-48a3e04544db",
     "rich_text_abBMrD",
