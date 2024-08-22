@@ -592,6 +592,20 @@
                     </div>
                   </product-form>
                 </div>
+                <div class="shipping-calculator hidden col-span-12 mt-4">
+                  <shipping-calculator class="flex items-end gap-2">
+                    <form class="relative">
+                      <label for="shippingzip" class="font-medium">Estimated shipping time:</label><br/>
+                      <input class="input input-sm py-2 w-60" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
+                      <input class="button button-tertiary button-sm absolute right-1 bottom-1 py-0.5 px-2" type="submit" value="Submit">
+                    </form>
+                    <div
+                      id="transitTimeOutput"
+                      data-transition-end="opacity-100 translate-x-0"
+                      data-transition-start="-translate-x-4 opacity-0"
+                      class="leading-8 mb-px -translate-x-4 opacity-0 transition-transform-opacity duration-300 inline-flex bg-seafoam-300 font-bold rounded-lg px-2 mt-2 pointer-events-none"></div>
+                  </shipping-calculator>
+                </div>
               {%- endunless -%}
             {%- when 'upsells' -%}
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}

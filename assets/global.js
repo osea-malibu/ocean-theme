@@ -376,10 +376,10 @@ class ShippingCalculator extends HTMLElement {
   onZipSubmit(e) {
     e.preventDefault();
 
-    const { state, transitTime } = this.getStateData(this.zipInput.value);
+    const { st, transitTime } = this.getStateData(this.zipInput.value);
     const { transitionStart, transitionEnd } = this.output.dataset;
 
-    this.output.innerHTML = `${state}: ${transitTime}`;
+    this.output.innerHTML = `${st}: ${transitTime}`;
     this.output.classList.remove(...transitionStart.split(" "));
     this.output.classList.add(...transitionEnd.split(" "));
   }
