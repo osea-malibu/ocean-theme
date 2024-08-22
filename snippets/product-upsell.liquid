@@ -5,6 +5,8 @@
     - product: {Object} Product Liquid object (optional)
     - classes: {String} Tailwind styling classes (optional)
     - hide_price: {Boolean} Removes price from button element. Default: false (optional)
+    - button_style: {'button' or 'link'} Type of add to bag button (optional)
+    - step_number: {String} Adds a badge for step number (routine). Default: false (optional)
 
     Usage:
     {% render 'product-upsell', product: section.settings.product %}
@@ -12,6 +14,9 @@
 
 <div class="flex flex-row relative bg-white pr-4 gap-4 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
   <div class="w-full order-1 grow flex flex-col items-start py-1">
+    {%- if step_number -%}
+      <div class="badge bg-neon-green/50 text-xs rounded mb-0.5 py-px">Step {{ step_number }}</div>
+    {%- endif -%}
     <a href="{{ product.url | default: '#' }}" class="group text-sm tracking-wide leading-tight">
       <h4 class="font-medium group-hover:underline mb-0.5">
         {{ product.title | replace: ' - Sample', '' | escape }}
@@ -26,12 +31,18 @@
         <button
           type="submit"
           name="add"
-          class="button button-sm button-tertiary w-full flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}"
+          class="{% if button_style == 'link' %}link font-bold uppercase text-xs tracking-widest flex gap-1 items-center{% else %}button button-sm button-tertiary w-full flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}{% endif %}"
           {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
         >
           {%- if product.selected_or_first_available_variant.available -%}
+            {%- if button_style == 'link' -%}
+              <svg class="h-3 w-3 text-seaweed-700 shrink-0" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line class="group-accordion-open:rotate-90 origin-center motion-safe:transition-transform duration-300" x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+            {%- endif -%}
             <span>Add to bag</span>
-            {%- unless hide_price -%}
+            {%- unless hide_price or button_style == 'link' -%}
               <span id="price-{{ product.id }}-{{ random_number }}">
                 {% render 'price',
                   product: product,
@@ -71,7 +82,7 @@
         alt="{{ product.featured_media.alt | escape }}"
         loading="lazy"
         width="72"
-        height="72"
+        height="{{ 72 | times: image_object.aspect_ratio }}"
         class="mx-auto"
       >
       {% comment %} theme-check-enable RemoteAsset {% endcomment %}

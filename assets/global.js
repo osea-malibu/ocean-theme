@@ -248,6 +248,11 @@ function fetchConfig(type = "json") {
   };
 }
 
+/* Manual Redirects */
+if (window.location.pathname === "/a/loop_subscriptions/bundle/eee9c289024140ab984c3fb75988e223") {
+  console.log("Redirecting Loop BYOB");
+}
+
 /* Shopify Common JS */
 if (typeof window.Shopify == "undefined") {
   window.Shopify = {};
