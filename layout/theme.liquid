@@ -37,7 +37,10 @@
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer></script>
 
-    {{ content_for_header }}
+    {% comment %} {{ content_for_header }} {% endcomment %}
+    {% comment %}theme-check-disable ContentForHeaderModification,RemoteAsset{% endcomment %}
+    {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" content="" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" content="" id="amazon-payments-metadata"' }}
+    {% comment %}theme-check-enable ContentForHeaderModification,RemoteAsset{% endcomment %}
 
     {% style %}
       {% render 'font-face' %}
