@@ -59,7 +59,7 @@
         -%}
 
         {%- unless settings.gwp_tier1_product == nil or hide_gwp -%}
-          <gift-with-purchase-banner class="block {% if cart_ids contains tier1_product.id %}bg-neon-green/25{% else %}bg-seafoam-100{% endif %}">
+          <gift-with-purchase-banner class="block bg-neon-green/25">
             <figure class="flex items-center max-w-md pl-6 pr-8 xs:pr-6 mx-auto gap-4">
               {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img src="{% render 'imgix', src: gwp_image_src %}" alt="Image of your free gift" loading="lazy" width="64" height="82">
