@@ -252,6 +252,11 @@ function fetchConfig(type = "json") {
 if (window.location.pathname === "/a/loop_subscriptions/bundle/eee9c289024140ab984c3fb75988e223") {
   window.location.replace("https://oseamalibu.com/collections/skincare-sets-1");
 }
+if (window.location.pathname === "/pages/labor-day-2024") {
+  if (utmSource === "facebook_ad" && utmMedium === "display") {
+    window.location.replace("https://oseamalibu.com/collections/body-care");
+  }
+}
 
 /* Shopify Common JS */
 if (typeof window.Shopify == "undefined") {
