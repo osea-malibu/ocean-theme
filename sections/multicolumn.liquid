@@ -442,6 +442,10 @@
                       </dl>
                     </countdown-component>
                   {%- endif -%}
+                {%- when 'upsell' -%}
+                  {%- if block.settings.product -%}
+                      {%- render 'product-upsell', product: block.settings.product -%}
+                  {%- endif -%}
               {%- endcase -%}
             </li>
           {%- endfor -%}
@@ -1060,6 +1064,22 @@
           "type": "checkbox",
           "id": "short_labels",
           "label": "Use short labels (d:h:m:s)"
+        }
+      ]
+    },
+    {
+      "type": "upsell",
+      "name": "Product Upsell",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "column_classes",
+          "label": "Column classes"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
         }
       ]
     }
