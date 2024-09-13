@@ -34,7 +34,7 @@
     assign grid_styles = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 mb-6'
     assign link_styles = 'block w-full pt-1 pb-2 text-lg leading-tight'
   -%}
-<script>console.log("collectionList", {{ collectionList | json }});</script>
+
   <div id="predictive-search-results" class="px-6 container mx-auto">
     {%- if allResults.size > 0 -%}
       <div class="flex flex-col mb-6 sm:flex-row-reverse">
