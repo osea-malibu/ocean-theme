@@ -9,6 +9,58 @@
 */
 {
   "sections": {
+    "image_banner_GjnLnB": {
+      "type": "image-banner",
+      "blocks": {
+        "paragraph_GtTRQm": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "NEW!",
+            "paragraph_classes": "border-2 border-white rounded-full uppercase text-white px-3 py-0.5 font-bold mb-2 tracking-wider lg:text-xl xl:text-2xl lg:px-5 lg:py-1"
+          }
+        },
+        "heading_Mft3F7": {
+          "type": "heading",
+          "settings": {
+            "heading": "Undaria Body Collection",
+            "heading_classes": "font-serif text-white mb-1 text-6xl lg:text-8xl xl:text-9xl racking-normal"
+          }
+        },
+        "paragraph_wMYA9H": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "<b>Full-Size Ocean Cleanser<\/b><br>\n<span>With Purchase of $125+<\/span>",
+            "paragraph_classes": "text-white leading-tight text-xl lg:text-3xl xl:text-4xl hidden sm:block"
+          }
+        },
+        "button_kENmAe": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop all OSEA Bestsellers",
+            "button_link": "shopify:\/\/collections\/bestsellers",
+            "target_blank": false,
+            "button_classes": "sm:button-lg mt-auto sm:mt-4 mb-2 button-white border-seaweed-700"
+          }
+        }
+      },
+      "block_order": [
+        "paragraph_GtTRQm",
+        "heading_Mft3F7",
+        "paragraph_wMYA9H",
+        "button_kENmAe"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify:\/\/shop_images\/9.17_UBC-1_Collection_Mobile_BLANK.jpg",
+        "image": "shopify:\/\/shop_images\/9.17_UBC-1_Collection_Desktop_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify:\/\/collections\/bestsellers",
+        "banner_classes": "container px-0 xs:px-6  ld-offer ld-one-tier",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:left-1\/3"
+      }
+    },
     "image_banner_GjnLnG": {
       "type": "image-banner",
       "blocks": {
@@ -335,102 +387,6 @@
         "arrow_nav_classes": "top-1\/2 -translate-y-1\/2",
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1\/2 -translate-x-1\/2"
-      }
-    },
-    "image_banner_GjnLnB": {
-      "type": "image-banner",
-      "blocks": {
-        "paragraph_GtTRQm": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Labor Day Offer",
-            "paragraph_classes": "border-2 border-white rounded-full uppercase text-white px-3 py-0.5 font-bold mb-2 tracking-wider lg:text-xl xl:text-2xl lg:px-5 lg:py-1"
-          }
-        },
-        "heading_Mft3F7": {
-          "type": "heading",
-          "settings": {
-            "heading": "Free Gift",
-            "heading_classes": "font-bold uppercase text-white tracking-wide mb-1 text-6xl lg:text-8xl xl:text-9xl lg:tracking-normal"
-          }
-        },
-        "paragraph_wMYA9H": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "<b>Full-Size Ocean Cleanser<\/b><br>\n<span>With Purchase of $125+<\/span>",
-            "paragraph_classes": "text-white leading-tight text-xl lg:text-3xl xl:text-4xl"
-          }
-        },
-        "button_kENmAe": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_aria_label": "Shop all OSEA Products",
-            "button_link": "shopify:\/\/collections\/shop",
-            "target_blank": false,
-            "button_classes": "sm:button-lg mt-auto sm:mt-4 mb-2 button-neon"
-          }
-        }
-      },
-      "block_order": [
-        "paragraph_GtTRQm",
-        "heading_Mft3F7",
-        "paragraph_wMYA9H",
-        "button_kENmAe"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify:\/\/shop_images\/LD2024_HP_Banner_Mobile_BLANK.jpg",
-        "image": "shopify:\/\/shop_images\/LD2024_HP_Banner_-_1_Tier_-_DESKTOP_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify:\/\/collections\/shop",
-        "banner_classes": "container px-0 xs:px-6  ld-offer ld-one-tier",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:left-1\/3"
-      }
-    },
-    "image_banner_wTWLhy": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_hRLYhL": {
-          "type": "heading",
-          "settings": {
-            "heading": "Your Endless <br>Summer Glow",
-            "heading_classes": "text-5xl font-serif md:text-6xl xl:text-7xl tracking-tight w-full"
-          }
-        },
-        "paragraph_9LbzqA": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Dive into dewy, luminous skin essentials",
-            "paragraph_classes": "font-bold text-2xl hidden sm:block"
-          }
-        },
-        "button_BbyYWW": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_aria_label": "",
-            "button_link": "shopify:\/\/collections\/seasonal-favorites",
-            "target_blank": false,
-            "button_classes": "sm:button-lg sm:mt-4 mb-0 border-seaweed-700 button-primary mt-1"
-          }
-        }
-      },
-      "block_order": [
-        "heading_hRLYhL",
-        "paragraph_9LbzqA",
-        "button_BbyYWW"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify:\/\/shop_images\/7.25_Summer_Skincare_Mobile_BLANK.jpg",
-        "image": "shopify:\/\/shop_images\/7.25_Summer_Skincare_Desktop_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify:\/\/collections\/seasonal-favorites",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-0 sm:right-1\/3"
       }
     },
     "multicolumn_UTFqMp": {
@@ -2146,10 +2102,9 @@
     }
   },
   "order": [
+    "image_banner_GjnLnB",
     "image_banner_GjnLnG",
     "multicolumn_cDzVaD",
-    "image_banner_GjnLnB",
-    "image_banner_wTWLhy",
     "multicolumn_UTFqMp",
     "165703204544efb73d",
     "8968f5e1-c259-4782-a431-48a3e04544db",
