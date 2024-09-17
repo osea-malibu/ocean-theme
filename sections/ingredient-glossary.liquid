@@ -1,6 +1,6 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
   <div class="{{ section.settings.container_classes }}">
-    {{ shop.metaobjects }}
+    <script>{{ shop.metaobjects | json }}</script>
   </div>
 </div>
 
