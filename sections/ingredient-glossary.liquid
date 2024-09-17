@@ -1,6 +1,10 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
   <div class="{{ section.settings.container_classes }}">
     <script>console.log({{ shop.metaobjects.ingredient_glossary | json }})</script>
+    {% for ingredient in shop.metaobjects.ingredient_glossary.values %}
+      <p><b>{{ ingredient.name.value }}</b></p>
+      <p>{{ ingredient.definition.value }}</p>
+    {% endfor %}
   </div>
 </div>
 
