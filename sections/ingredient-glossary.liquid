@@ -1,6 +1,22 @@
+<div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
+  <div class="{{ section.settings.container_classes }}">
+  </div>
+</div>
+
 {% schema %}
   {
     "name": "Section name",
-    "settings": []
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "wrapper_classes",
+        "label": "Wrapper classes"
+      },
+      {
+        "type": "textarea",
+        "id": "container_classes",
+        "label": "Container classes"
+      }
+    ]
   }
 {% endschema %}
