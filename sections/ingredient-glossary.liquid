@@ -6,6 +6,7 @@
       <!-- Iterate over the paginated items -->
       {% for item in shop.metaobjects.ingredient_glossary.values %}
         <p><b>{{ item.name }}</b></p>
+        {%- if item.common_name -%}<em>{{ item.common_name }}</em>{%- endif -%}
         <p>{{ item.description }}</p>
       {% endfor %}
     
