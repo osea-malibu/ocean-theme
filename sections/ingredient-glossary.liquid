@@ -5,7 +5,8 @@
     {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
       <!-- Iterate over the paginated items -->
       {% for item in shop.metaobjects.ingredient_glossary.values %}
-        <p>{{ item.name }}</p>
+        <p><b>{{ item.name }}</b></p>
+        <p>{{ item.description }}</p>
       {% endfor %}
     
       <!-- Display pagination links -->
