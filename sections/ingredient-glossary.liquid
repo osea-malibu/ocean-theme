@@ -1,18 +1,37 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
   <div class="{{ section.settings.container_classes }}">
-    {% assign total_items = 307 %}
-    {% assign items_per_page = 50 %}
-    {% assign total_pages = total_items | divided_by: items_per_page %}
-    
-    {% for page in (0..total_pages) %}
-      {% assign offset_value = page | times: items_per_page %}
-      {% assign paginated_items = shop.metaobjects.ingredient_glossary.values | slice: offset_value, items_per_page %}
-      
-      {% for item in paginated_items %}
-        <p><b>{{ item.name.value }}</b></p>
-        <p>{{ item.definition.value }}</p>
-      {% endfor %}
+    {% for ingredient in shop.metaobjects.ingredient_glossary.values %}
+      <p><b>{{ ingredient.name.value }}</b></p>
+      <p>{{ ingredient.definition.value }}</p>
     {% endfor %}
+    
+    {% assign items_per_page = 50 %}
+
+    {% paginate metaobject.items by items_per_page %}
+      <!-- Iterate over the paginated items -->
+      {% for item in shop.metaobjects.ingredient_glossary.values %}
+        <p>{{ item.name }}</p>
+      {% endfor %}
+    
+      <!-- Display pagination links -->
+      <div class="pagination">
+        {% if paginate.previous %}
+          <a href="{{ paginate.previous.url }}">Previous</a>
+        {% endif %}
+    
+        {% for part in paginate.parts %}
+          {% if part.is_link %}
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          {% else %}
+            <span>{{ part.title }}</span>
+          {% endif %}
+        {% endfor %}
+    
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}">Next</a>
+        {% endif %}
+      </div>
+    {% endpaginate %}
   </div>
 </div>
 
