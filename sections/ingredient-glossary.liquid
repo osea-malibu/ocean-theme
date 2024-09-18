@@ -1,5 +1,10 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
   <div class="{{ section.settings.container_classes }}">
+    <script>console.log({{ shop.metaobjects.ingredient_glossary | json }})</script>
+    {% for ingredient in shop.metaobjects.ingredient_glossary.values %}
+      <p><b>{{ ingredient.name.value }}</b></p>
+      <p>{{ ingredient.definition.value }}</p>
+    {% endfor %}
     {% assign total_items = 307 %}
     {% assign items_per_page = 50 %}
     {% assign total_pages = total_items | divided_by: items_per_page %}
@@ -9,8 +14,8 @@
       {% assign paginated_items = shop.metaobjects.ingredient_glossary.values | slice: offset_value, items_per_page %}
       
       {% for item in paginated_items %}
-        <p><b>{{ ingredient.name.value }}</b></p>
-        <p>{{ ingredient.definition.value }}</p>
+        <p><b>{{ item.name.value }}</b></p>
+        <p>{{ item.definition.value }}</p>
       {% endfor %}
     {% endfor %}
   </div>
