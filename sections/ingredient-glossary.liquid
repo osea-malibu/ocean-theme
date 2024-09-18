@@ -7,7 +7,7 @@
     
     {% assign items_per_page = 50 %}
 
-    {% paginate metaobject.items by items_per_page %}
+    {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
       <!-- Iterate over the paginated items -->
       {% for item in shop.metaobjects.ingredient_glossary.values %}
         <p>{{ item.name }}</p>
