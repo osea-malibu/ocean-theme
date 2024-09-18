@@ -1,10 +1,5 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
-  <div class="{{ section.settings.container_classes }}">
-    {% for ingredient in shop.metaobjects.ingredient_glossary.values %}
-      <p><b>{{ ingredient.name.value }}</b></p>
-      <p>{{ ingredient.definition.value }}</p>
-    {% endfor %}
-    
+  <div class="{{ section.settings.container_classes }}">    
     {% assign items_per_page = 50 %}
 
     {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
