@@ -1,9 +1,27 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
   <div class="{{ section.settings.container_classes }}">    
     {% assign items_per_page = 50 %}
+    {% assign all_categories = shop.metaobjects.ingredient_glossary.values | map: 'category' | uniq %}
 
     <div class="grid grid-cols-1 sm:grid-cols-3">
-      <div class="sm:col-span-1"></div>
+      <div class="sm:col-span-1">
+        <div class="mb-4">
+          <p><strong>Filter by category:</strong></p>
+          <form id="category-filter-form">
+            <ul>
+              <li><label><input type="checkbox" value="" checked> All</label></li>
+              {% for category in all_categories %}
+                <li>
+                  <label>
+                    <input type="checkbox" name="category" value="{{ category }}">
+                    {{ category }}
+                  </label>
+                </li>
+              {% endfor %}
+            </ul>
+          </form>
+        </div>
+      </div>
       <div class="sm:col-span-2">
         {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
           <!-- Iterate over the paginated items -->
