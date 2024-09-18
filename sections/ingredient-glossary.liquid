@@ -2,35 +2,40 @@
   <div class="{{ section.settings.container_classes }}">    
     {% assign items_per_page = 50 %}
 
-    {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
-      <!-- Iterate over the paginated items -->
-      {% for item in shop.metaobjects.ingredient_glossary.values %}
-        <div class="mb-4">
-          <p><b>{{ item.name }}</b></p>
-          {%- if item.common_name -%}<em>{{ item.common_name }}</em>{%- endif -%}
-          <p>{{ item.definition }}</p>
-        </div>
-      {% endfor %}
-    
-      <!-- Display pagination links -->
-      <div class="pagination">
-        {% if paginate.previous %}
-          <a href="{{ paginate.previous.url }}">Previous</a>
-        {% endif %}
-    
-        {% for part in paginate.parts %}
-          {% if part.is_link %}
-            <a href="{{ part.url }}">{{ part.title }}</a>
-          {% else %}
-            <span>{{ part.title }}</span>
-          {% endif %}
-        {% endfor %}
-    
-        {% if paginate.next %}
-          <a href="{{ paginate.next.url }}">Next</a>
-        {% endif %}
+    <div class="grid grid-cols-1 sm:grid-cols-3">
+      <div class="sm:col-span-1"></div>
+      <div class="sm:col-span-2">
+        {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
+          <!-- Iterate over the paginated items -->
+          {% for item in shop.metaobjects.ingredient_glossary.values %}
+            <div class="mb-4">
+              <p><b>{{ item.name }}</b></p>
+              {%- if item.common_name -%}<em>{{ item.common_name }}</em>{%- endif -%}
+              <p>{{ item.definition }}</p>
+            </div>
+          {% endfor %}
+        
+          <!-- Display pagination links -->
+          <div class="pagination">
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}">Previous</a>
+            {% endif %}
+        
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}">{{ part.title }}</a>
+              {% else %}
+                <span>{{ part.title }}</span>
+              {% endif %}
+            {% endfor %}
+        
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}">Next</a>
+            {% endif %}
+          </div>
+        {% endpaginate %}
       </div>
-    {% endpaginate %}
+    </div>
   </div>
 </div>
 
