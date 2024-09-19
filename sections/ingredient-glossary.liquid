@@ -3,7 +3,6 @@
     {%- liquid
       assign items_per_page = 50
       assign all_categories = '' | split: ''
-      assign selected_categories = request.query.category | split: ','
     
       for ingredient in shop.metaobjects.ingredient_glossary.values
         assign all_categories = all_categories | concat: ingredient.category.value
@@ -32,17 +31,7 @@
         </div>
       </div>
       <div class="sm:col-span-2 lg:col-span-3">
-        {% assign filtered_ingredients = shop.metaobjects.ingredient_glossary.values %}
-        <script>
-          console.log("selected_categories", {{ selected_categories }});
-          console.log("request.query", {{ request.path }});
-        </script>
-        {%- if selected_categories != nil -%}
-          <!-- Filter the ingredients based on selected categories -->
-          {% assign filtered_ingredients = shop.metaobjects.ingredient_glossary.values | where: "category.value", selected_categories %}
-        {%- endif -%}
-        
-        {% paginate filtered_ingredients by items_per_page %}
+        {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
           <!-- Iterate over the paginated items -->
           {% for item in shop.metaobjects.ingredient_glossary.values %}
             <div class="mb-4">
