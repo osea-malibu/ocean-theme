@@ -377,7 +377,7 @@ class IngredientGlossary extends HTMLElement {
   getAllIngredients() {
     const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
     const shopifyStoreDomain = 'osea-malibu.myshopify.com';
-
+    
     // Define the GraphQL query (adjust 'first: 50' based on what Shopify allows)
     const query = `
       query($first: Int!, $after: String) {
@@ -398,51 +398,24 @@ class IngredientGlossary extends HTMLElement {
         }
       }
     `;
-    
-    // Function to fetch all metaobjects by recursively fetching more data if needed
-    async function fetchAllMetaObjects() {
-      let allMetaObjects = [];
-      let hasNextPage = true;
-      let cursor = null;
-    
-      while (hasNextPage) {
-        const response = await fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-          },
-          body: JSON.stringify({
-            query: query,
-            variables: {
-              first: 50, // Fetch 50 items at a time
-              after: cursor,
-            },
-          }),
-        });
-    
-        const data = await response.json();
-    
-        // Add the current batch of metaobjects to the array
-        allMetaObjects = allMetaObjects.concat(data.data.metaobjects.edges.map(edge => edge.node));
-    
-        // Check if there are more pages to fetch
-        hasNextPage = data.data.metaobjects.pageInfo.hasNextPage;
-    
-        // Update the cursor for the next batch (if there are more pages)
-        if (hasNextPage) {
-          cursor = data.data.metaobjects.edges[data.data.metaobjects.edges.length - 1].cursor;
-        }
-      }
-    
-      return allMetaObjects;
-    }
-    
-    // Example usage: Fetch all metaobjects and log them
-    fetchAllMetaObjects().then(allMetaObjects => {
-      console.log('All MetaObjects:', allMetaObjects);
-    });
-  }
+
+    const response = await fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
+    },
+    body: JSON.stringify({
+      query: query,
+      variables: {
+        first: 50,
+        after: cursor,
+      },
+    }),
+  });
+  
+  const data = await response.json();
+  console.log('GraphQL Response:', data);
 }
 customElements.define("ingredient-glossary", IngredientGlossary);
 
