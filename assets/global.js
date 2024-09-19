@@ -468,7 +468,6 @@ class IngredientGlossary extends HTMLElement {
     const form = document.getElementById('category-filter-form');
     
     form.addEventListener('change', (event) => {
-      const checkboxes = form.querySelectorAll('input[name="category"]:checked');
       
       if (event.target.value === 'all'){
         if (event.target.checked) {
@@ -479,6 +478,7 @@ class IngredientGlossary extends HTMLElement {
           checkboxes.forEach((checkbox) => checkbox.checked = false);
         }
       } else {
+        const selectedCheckboxes = form.querySelectorAll('input[name="category"]:checked');
         this.selectedCategories = Array.from(checkboxes).map(checkbox => checkbox.value);
         console.log("this.selectedCategories", this.selectedCategories);
         this.currentPage = 1; // Reset to the first page
