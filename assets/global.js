@@ -449,12 +449,14 @@ class IngredientGlossary extends HTMLElement {
     }
     
     // Call the async function when the document is ready
-    try {
-      const allMetaObjects = await fetchAllMetaObjects();
-      console.log('All MetaObjects:', allMetaObjects); // Log the entire metaobjects array to the console
-    } catch (error) {
-      console.error('Error fetching metaobjects:', error); // Log any errors to the console
-    }
+    document.addEventListener('DOMContentLoaded', async function () {
+      try {
+        const allMetaObjects = await fetchAllMetaObjects();
+        console.log('All MetaObjects:', allMetaObjects); // Log the entire metaobjects array to the console
+      } catch (error) {
+        console.error('Error fetching metaobjects:', error); // Log any errors to the console
+      }
+    });
 
   }
 }
