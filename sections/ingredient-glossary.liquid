@@ -33,7 +33,10 @@
       </div>
       <div class="sm:col-span-2 lg:col-span-3">
         {% assign filtered_ingredients = shop.metaobjects.ingredient_glossary.values %}
-        <script>console.log("selected_categories", {{ selected_categories }})</script>
+        <script>
+          console.log("selected_categories", {{ selected_categories }});
+          console.log("request.query", {{ request.query }});
+        </script>
         {%- if selected_categories != nil -%}
           <!-- Filter the ingredients based on selected categories -->
           {% assign filtered_ingredients = shop.metaobjects.ingredient_glossary.values | where: "category.value", selected_categories %}
