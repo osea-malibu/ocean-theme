@@ -2,10 +2,11 @@
   <div class="{{ section.settings.container_classes }}">
 
     {% assign all_categories = 'All, ' | split: ', ' %}
-    <script>console.log("all_categories", {{ all_categories | json }})</script>
+    <script>console.log("all_categories", {{ all_categories }})</script>
     
     <!-- Iterate over all metaobjects to collect categories -->
     {% for item in shop.metaobjects.ingredient_glossary.values %}
+      {% assign ingredient_categories =  %}
       {% assign all_categories = all_categories | concat: item.category %}
       <script>console.log("item.category", {{ item.category }})</script>
       <script>console.log("all_categories 2", {{ all_categories | json }})</script>
