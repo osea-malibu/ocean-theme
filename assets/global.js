@@ -375,47 +375,91 @@ class IngredientGlossary extends HTMLElement {
   }
 
   getAllIngredients() {
-    const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
-    const shopifyStoreDomain = 'osea-malibu.myshopify.com';
+    // Async function to fetch all metaobjects
+    async function fetchAllMetaObjects() {
+      const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
+      const shopifyStoreDomain = 'osea-malibu.myshopify.com';
     
-    // Define the GraphQL query (adjust 'first: 50' based on what Shopify allows)
-    const query = `
-      query($first: Int!, $after: String) {
-        metaobjects(first: $first, after: $after, type: "ingredient_glossary") {
-          edges {
-            node {
-              id
-              name
-              category
-              common_name
-              definition
+      const query = `
+        query($first: Int!, $after: String) {
+          metaobjects(first: $first, after: $after, type: "ingredient_glossary") {
+            edges {
+              node {
+                id
+                name
+                category
+                common_name
+                definition
+              }
+              cursor
             }
-            cursor
-          }
-          pageInfo {
-            hasNextPage
+            pageInfo {
+              hasNextPage
+            }
           }
         }
+      `;
+    
+      let allMetaObjects = [];
+      let hasNextPage = true;
+      let cursor = null;
+    
+      // Loop to fetch all pages of metaobjects
+      while (hasNextPage) {
+        const response = await fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
+          },
+          body: JSON.stringify({
+            query: query,
+            variables: {
+              first: 50, // Fetch 50 items at a time
+              after: cursor,
+            },
+          }),
+        });
+    
+        const data = await response.json();
+        console.log('GraphQL Response:', data);  // Log the full response to the console
+    
+        // Check for GraphQL errors
+        if (data.errors) {
+          console.error('GraphQL Error:', data.errors);
+          return;
+        }
+    
+        // Ensure metaobjects field exists
+        if (data.data && data.data.metaobjects) {
+          const metaobjects = data.data.metaobjects.edges.map(edge => edge.node);
+          allMetaObjects = allMetaObjects.concat(metaobjects); // Collect all items
+          hasNextPage = data.data.metaobjects.pageInfo.hasNextPage; // Check if there's more to fetch
+    
+          // Update cursor for the next batch
+          if (hasNextPage) {
+            cursor = data.data.metaobjects.edges[data.data.metaobjects.edges.length - 1].cursor;
+          }
+        } else {
+          console.error('No metaobjects found in the response');
+          hasNextPage = false;  // Stop if no data is found
+        }
       }
-    `;
+    
+      return allMetaObjects; // Return all fetched metaobjects
+    }
+    
+    // Call the async function when the document is ready
+    document.addEventListener('DOMContentLoaded', async function () {
+      try {
+        const allMetaObjects = await fetchAllMetaObjects();
+        console.log('All MetaObjects:', allMetaObjects); // Log the entire metaobjects array to the console
+      } catch (error) {
+        console.error('Error fetching metaobjects:', error); // Log any errors to the console
+      }
+    });
 
-    const response = await fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-    },
-    body: JSON.stringify({
-      query: query,
-      variables: {
-        first: 50,
-        after: cursor,
-      },
-    }),
-  });
-  
-  const data = await response.json();
-  console.log('GraphQL Response:', data);
+  }
 }
 customElements.define("ingredient-glossary", IngredientGlossary);
 
