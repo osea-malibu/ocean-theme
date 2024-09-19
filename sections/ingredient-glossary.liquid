@@ -7,8 +7,6 @@
       for ingredient in shop.metaobjects.ingredient_glossary.values
         assign all_categories = all_categories | concat: ingredient.category
       endfor
-    
-      assign all_categories = all_categories | uniq
     -%}
     <script>console.log("all_categories", {{ all_categories }})</script>
 
