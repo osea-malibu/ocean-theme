@@ -7,7 +7,7 @@
     <!-- Iterate over all metaobjects to collect categories -->
     {% for item in shop.metaobjects.ingredient_glossary.values %}
       {% assign all_categories = all_categories | concat: item.category %}
-      <script>console.log("item.category", {{item.category}})</script>
+      <script>console.log("item.category", {{ item.category }})</script>
     {% endfor %}
     
     <!-- Split the string of categories into an array and make them unique -->
