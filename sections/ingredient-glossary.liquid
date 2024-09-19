@@ -10,7 +10,7 @@
         endfor
       endfor
     
-      assign all_categories = all_categories | split: ',' | uniq 
+      assign all_categories = all_categories | uniq
     -%}
     <script>console.log("all_categories", {{ all_categories }})</script>
 
