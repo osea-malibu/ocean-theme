@@ -7,6 +7,8 @@
       for ingredient in shop.metaobjects.ingredient_glossary.values
         assign all_categories = all_categories | concat: ingredient.category.value
       endfor
+
+      assign all_categories = all_categories | uniq
     -%}
 
     <div class="grid grid-cols-1 sm:grid-cols-3">
