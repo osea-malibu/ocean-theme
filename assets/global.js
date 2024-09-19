@@ -468,14 +468,11 @@ class IngredientGlossary extends HTMLElement {
     const form = document.getElementById('category-filter-form');
     
     form.addEventListener('change', (event) => {
-      
       if (event.target.value === 'all'){
         const categoryCheckboxes = form.querySelectorAll('input[name="category"]');
         if (event.target.checked) {
-          console.log("checked");
           categoryCheckboxes.forEach((checkbox) => checkbox.checked = true);
         } else {
-          console.log("not checked");
           categoryCheckboxes.forEach((checkbox) => checkbox.checked = false);
         }
       } else {
