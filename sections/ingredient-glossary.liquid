@@ -4,10 +4,8 @@
       assign items_per_page = 50
       assign all_categories = '' | split: ''
     
-      for item in shop.metaobjects.ingredient_glossary.values
-        for category in item.category
-          assign all_categories = all_categories | concat: category
-        endfor
+      for ingredient in shop.metaobjects.ingredient_glossary.values
+        assign all_categories = all_categories | concat: ingredient.category
       endfor
     
       assign all_categories = all_categories | uniq
