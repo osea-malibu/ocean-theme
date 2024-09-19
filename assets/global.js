@@ -493,7 +493,7 @@ class IngredientGlossary extends HTMLElement {
 
   // Filter and paginate the metaobjects
   filterItems() {
-    if (this.selectedCategories.length === 0 || this.selectedCategories.includes('')) {
+    if (this.selectedCategories.length === 0 || form.querySelector('input[value="all"]').checked) {
       return this.metaObjects; // No category selected, return all items
     }
 
