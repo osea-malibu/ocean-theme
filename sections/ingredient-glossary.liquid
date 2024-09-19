@@ -4,7 +4,9 @@
     
     <!-- Iterate over all metaobjects to collect categories -->
     {% for item in shop.metaobjects.ingredient_glossary.values %}
+      <script>console.log("item.category", {{ item.category }})</script>
       {% for category in item.category %}
+        <script>console.log("category", {{ category }})</script>
         {% assign all_categories = all_categories | append: category | append: ',' %}
       {% endfor %}
     {% endfor %}
