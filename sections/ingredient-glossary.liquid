@@ -33,7 +33,7 @@
       <div class="sm:col-span-2 lg:col-span-3">
         {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
           <!-- Iterate over the paginated items -->
-          {% for item in shop.metaobjects.ingredient_glossary.values %}
+          {% for item in paginate.items %}
             <div class="mb-4">
               <p><b>{{ item.name }}</b></p>
               {%- if item.common_name -%}<em>{{ item.common_name }}</em>{%- endif -%}
