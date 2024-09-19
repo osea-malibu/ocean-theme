@@ -374,7 +374,7 @@ class IngredientGlossary extends HTMLElement {
     // Call the async function when the document is ready
     document.addEventListener('DOMContentLoaded', async function () {
       try {
-        const allMetaObjects = await fetchAllMetaObjects();
+        const allMetaObjects = await this.fetchAllMetaObjects();
         console.log('All MetaObjects:', allMetaObjects); // Log the entire metaobjects array to the console
       } catch (error) {
         console.error('Error fetching metaobjects:', error); // Log any errors to the console
@@ -383,7 +383,7 @@ class IngredientGlossary extends HTMLElement {
   }
   
   // Async function to fetch all metaobjects
-  async fetchAllMetaObjects() {
+  async function fetchAllMetaObjects() {
     const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
     const shopifyStoreDomain = 'osea-malibu.myshopify.com';
   
