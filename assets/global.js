@@ -371,7 +371,7 @@ class IngredientGlossary extends HTMLElement {
   constructor() {
     super();
 
-    this.getAllIngredients();
+    console.log(this.getAllIngredients());
   }
 
   getAllIngredients() {
@@ -452,7 +452,7 @@ class IngredientGlossary extends HTMLElement {
     document.addEventListener('DOMContentLoaded', async function () {
       try {
         const allMetaObjects = await fetchAllMetaObjects();
-        console.log('All MetaObjects:', allMetaObjects); // Log the entire metaobjects array to the console
+        return allMetaObjects;
       } catch (error) {
         console.error('Error fetching metaobjects:', error); // Log any errors to the console
       }
