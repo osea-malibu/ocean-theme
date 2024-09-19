@@ -477,7 +477,7 @@ class IngredientGlossary extends HTMLElement {
         }
       } else {
         const selectedCheckboxes = form.querySelectorAll('input[name="category"]:checked');
-        this.selectedCategories = Array.from(checkboxes).map(checkbox => checkbox.value);
+        this.selectedCategories = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
         console.log("this.selectedCategories", this.selectedCategories);
         this.currentPage = 1; // Reset to the first page
         this.renderPage(); // Re-render the list with the filtered items
