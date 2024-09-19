@@ -383,7 +383,7 @@ class IngredientGlossary extends HTMLElement {
   }
   
   // Async function to fetch all metaobjects
-  async function fetchAllMetaObjects() {
+  async fetchAllMetaObjects() {
     const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
     const shopifyStoreDomain = 'osea-malibu.myshopify.com';
   
