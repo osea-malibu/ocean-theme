@@ -473,10 +473,10 @@ class IngredientGlossary extends HTMLElement {
       if (event.target.value === 'all'){
         if (event.target.checked) {
           console.log("checked");
-          checkboxes.forEach(i => i.checked = true);
+          checkboxes.forEach((checkbox) => checkbox.checked = true);
         } else {
           console.log("not checked");
-          checkboxes.forEach(i => i.checked = false);
+          checkboxes.forEach((checkbox) => checkbox.checked = false);
         }
       } else {
         this.selectedCategories = Array.from(checkboxes).map(checkbox => checkbox.value);
