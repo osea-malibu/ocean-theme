@@ -377,6 +377,27 @@ class IngredientGlossary extends HTMLElement {
   getAllIngredients() {
     const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
     const shopifyStoreDomain = 'osea-malibu.myshopify.com';
+
+    // Define the GraphQL query
+    const query = `
+      {
+        metaobjects(first: 50, type: "ingredient_glossary") {
+          edges {
+            node {
+              id
+              name
+              category
+              common_name
+              definition
+            }
+            cursor
+          }
+          pageInfo {
+            hasNextPage
+          }
+        }
+      }
+    `;
     
     fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
       method: 'POST',
