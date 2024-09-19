@@ -21,7 +21,7 @@
               {% for category in all_categories %}
                 <li>
                   <label>
-                    <input type="checkbox" name="category" value="{{ category }}">
+                    <input type="checkbox" name="category" value="{{ category | join: ', ' }}">
                     {{ category }}
                   </label>
                 </li>
