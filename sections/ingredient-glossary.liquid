@@ -1,24 +1,17 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
-  <div class="{{ section.settings.container_classes }}">    
-    {%- liquid
-      assign items_per_page = 50
-      assign all_categories = ' ' | split: ' '
-    
-      for ingredient in shop.metaobjects.ingredient_glossary.values
-        assign all_categories = all_categories | concat: ingredient.category
-      endfor
-    -%}
-    <script>console.log("all_categories", {{ all_categories }})</script>
+  <div class="{{ section.settings.container_classes }}">
 
-    {% assign all_categories = '' %}
+    {% assign all_categories = '' | split: '' %}
+    <script>console.log("all_categories", {{ all_categories }})</script>
     
     <!-- Iterate over all metaobjects to collect categories -->
     {% for item in shop.metaobjects.ingredient_glossary.values %}
       {% assign all_categories = all_categories | concat: item.category %}
+      <script>console.log("item.category", {{item.category}})</script>
     {% endfor %}
     
     <!-- Split the string of categories into an array and make them unique -->
-    {% assign all_categories = all_categories | split: ',' | uniq %}
+    {% assign all_categories = all_categories %}
 
     <div class="grid grid-cols-1 sm:grid-cols-3">
       <div class="sm:col-span-1">
