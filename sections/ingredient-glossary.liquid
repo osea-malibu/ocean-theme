@@ -10,6 +10,7 @@
     
       assign all_categories = all_categories | split: ',' | uniq 
     -%}
+    <script>console.log("all_categories", {{ shop.metaobjects.ingredient_glossary.values | map: 'category' }})</script>
     <script>console.log("all_categories", {{ all_categories }})</script>
 
     <div class="grid grid-cols-1 sm:grid-cols-3">
