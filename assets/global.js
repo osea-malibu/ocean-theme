@@ -468,11 +468,15 @@ class IngredientGlossary extends HTMLElement {
     const form = document.getElementById('category-filter-form');
     
     form.addEventListener('change', (event) => {
-      const checkboxes = form.querySelectorAll('input[name="category"]:checked');
-      this.selectedCategories = Array.from(checkboxes).map(checkbox => checkbox.value);
-      console.log("this.selectedCategories", this.selectedCategories);
-      this.currentPage = 1; // Reset to the first page
-      this.renderPage(); // Re-render the list with the filtered items
+      if (event.target.value === 'all'){
+        console.log("handle all");
+      } else {
+        const checkboxes = form.querySelectorAll('input[name="category"]:checked');
+        this.selectedCategories = Array.from(checkboxes).map(checkbox => checkbox.value);
+        console.log("this.selectedCategories", this.selectedCategories);
+        this.currentPage = 1; // Reset to the first page
+        this.renderPage(); // Re-render the list with the filtered items
+      }
     });
   }
 
