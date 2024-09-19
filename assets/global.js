@@ -486,6 +486,7 @@ class IngredientGlossary extends HTMLElement {
         if (this.selectedCategories.length > 0) {
           allCheckbox.checked = false;
         } else if (this.selectedCategories.length === categoryCheckboxes.length) {
+          console.log("check the box");
           allCheckbox.checked = true;
         }
         this.currentPage = 1; // Reset to the first page
