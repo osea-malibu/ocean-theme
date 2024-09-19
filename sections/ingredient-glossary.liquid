@@ -35,7 +35,7 @@
         {% assign filtered_ingredients = shop.metaobjects.ingredient_glossary.values %}
         <script>
           console.log("selected_categories", {{ selected_categories }});
-          console.log("request.query", {{ request }});
+          console.log("request.query", {{ request | json }});
         </script>
         {%- if selected_categories != nil -%}
           <!-- Filter the ingredients based on selected categories -->
