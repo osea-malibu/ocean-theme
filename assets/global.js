@@ -481,6 +481,8 @@ class IngredientGlossary extends HTMLElement {
         const selectedCheckboxes = form.querySelectorAll('input[name="category"]:checked');
         this.selectedCategories = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
         console.log("this.selectedCategories", this.selectedCategories);
+        console.log("this.selectedCategories.length", this.selectedCategories.length);
+        console.log("categoryCheckboxes.length", categoryCheckboxes.length);
         if (this.selectedCategories.length > 0) {
           allCheckbox.checked = false;
         } else if (this.selectedCategories.length === categoryCheckboxes.length) {
