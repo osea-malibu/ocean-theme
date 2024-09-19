@@ -482,6 +482,7 @@ class IngredientGlossary extends HTMLElement {
     }
 
     // Filter the metaobjects based on the selected categories
+    console.log("this.metaObjects", this.metaObjects)
     return this.metaObjects.filter(item => {
       const categoryField = item.fields.find(field => field.key === 'category');
       console.log("categoryField", categoryField.value)
