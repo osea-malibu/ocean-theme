@@ -1,7 +1,7 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
   <div class="{{ section.settings.container_classes }}">
 
-    {% assign all_categories = ',' | split: ',' %}
+    {% assign all_categories = '' | split: '' %}
     <script>console.log("all_categories", {{ all_categories }})</script>
     
     <!-- Iterate over all metaobjects to collect categories -->
