@@ -422,7 +422,6 @@ class IngredientGlossary extends HTMLElement {
         });
     
         const data = await response.json();
-        console.log('GraphQL Response:', data);  // Log the full response to the console
     
         // Check for GraphQL errors
         if (data.errors) {
