@@ -488,7 +488,6 @@ class IngredientGlossary extends HTMLElement {
       const categoryField = item.fields.find(field => field.key === 'category');
       if (categoryField) {
         const categoryArray = JSON.parse(categoryField.value);
-        console.log("categoryArray", categoryArray);
         return categoryArray.some(category => this.selectedCategories.includes(category));
       } else {
         return false;
