@@ -1,7 +1,17 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
   <div class="{{ section.settings.container_classes }}">    
-    {% assign items_per_page = 50 %}
-    {% assign all_categories = shop.metaobjects.ingredient_glossary.values | map: 'category' | uniq %}
+    {%- liquid
+      assign items_per_page = 50
+      assign all_categories = ''
+    
+      for item in shop.metaobjects.ingredient_glossary.values
+        for category in item.category
+          assign all_categories = all_categories | append: category | append: ','
+        endfor
+      endfor
+    
+      assign all_categories = all_categories | split: ',' | uniq 
+    -%}
 
     <div class="grid grid-cols-1 sm:grid-cols-3">
       <div class="sm:col-span-1">
