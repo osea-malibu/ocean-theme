@@ -494,7 +494,7 @@ class IngredientGlossary extends HTMLElement {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const paginatedItems = filteredItems.slice(startIndex, startIndex + this.itemsPerPage);
 
-    const ingredientContainer = this.querySelector('.sm\\:col-span-2');
+    const ingredientContainer = this.querySelector('.ingredient-list');
     ingredientContainer.innerHTML = ''; // Clear the previous content
 
     // Add the paginated items to the container
