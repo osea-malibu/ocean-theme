@@ -374,6 +374,7 @@ class IngredientGlossary extends HTMLElement {
     this.currentPage = 1;
     this.itemsPerPage = 50;
     this.metaObjects = [];
+    this.filterForm = document.getElementById('category-filter-form');
 
     this.initializeCategoryFilter();
     this.getAllIngredients();
@@ -464,11 +465,9 @@ class IngredientGlossary extends HTMLElement {
   }
 
   // Initialize the category filter
-  initializeCategoryFilter() {
-    const form = document.getElementById('category-filter-form');
-    
-    form.addEventListener('change', (event) => {
-      const categoryCheckboxes = form.querySelectorAll('input[name="category"]');
+  initializeCategoryFilter() {    
+    this.filterForm.addEventListener('change', (event) => {
+      const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
       
       if (event.target.value === 'all'){
         if (event.target.checked) {
@@ -477,8 +476,8 @@ class IngredientGlossary extends HTMLElement {
           categoryCheckboxes.forEach((checkbox) => checkbox.checked = false);
         }
       } else {
-        const allCheckbox = form.querySelector('input[value="all"]');
-        const selectedCheckboxes = form.querySelectorAll('input[name="category"]:checked');
+        const allCheckbox = this.filterForm.querySelector('input[value="all"]');
+        const selectedCheckboxes = this.filterForm.querySelectorAll('input[name="category"]:checked');
         this.selectedCategories = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
         if (this.selectedCategories.length === categoryCheckboxes.length) {
           allCheckbox.checked = true;
@@ -493,7 +492,7 @@ class IngredientGlossary extends HTMLElement {
 
   // Filter and paginate the metaobjects
   filterItems() {
-    if (this.selectedCategories.length === 0 || document.getElementById('category-filter-form').querySelector('input[value="all"]').checked) {
+    if (this.selectedCategories.length === 0 || this.filterForm.querySelector('input[value="all"]').checked) {
       return this.metaObjects; // No category selected, return all items
     }
 
