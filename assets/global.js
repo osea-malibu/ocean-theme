@@ -483,12 +483,12 @@ class IngredientGlossary extends HTMLElement {
         console.log("this.selectedCategories", this.selectedCategories);
         console.log("this.selectedCategories.length", this.selectedCategories.length);
         console.log("categoryCheckboxes.length", categoryCheckboxes.length);
-        if (this.selectedCategories.length > 0) {
-          allCheckbox.checked = false;
-        } else if (this.selectedCategories.length === categoryCheckboxes.length) {
+        if (this.selectedCategories.length === categoryCheckboxes.length) {
           console.log("check the box");
           allCheckbox.checked = true;
-        }
+        } else if (this.selectedCategories.length > 0) {
+          allCheckbox.checked = false;
+        } else {}
         this.currentPage = 1; // Reset to the first page
         this.renderPage(); // Re-render the list with the filtered items
       }
