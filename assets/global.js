@@ -378,10 +378,10 @@ class IngredientGlossary extends HTMLElement {
     const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
     const shopifyStoreDomain = 'osea-malibu.myshopify.com';
 
-    // Define the GraphQL query
+    // Define the GraphQL query (adjust 'first: 50' based on what Shopify allows)
     const query = `
-      {
-        metaobjects(first: 50, type: "ingredient_glossary") {
+      query($first: Int!, $after: String) {
+        metaobjects(first: $first, after: $after, type: "ingredient_glossary") {
           edges {
             node {
               id
@@ -399,26 +399,49 @@ class IngredientGlossary extends HTMLElement {
       }
     `;
     
-    fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': storefrontAccessToken
-      },
-      body: JSON.stringify({ query })
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Fetched Metaobjects:', data);
-        displayMetaObjects(data.data.metaobjects.edges);
-        if (data.data.metaobjects.pageInfo.hasNextPage) {
-          // Handle pagination to fetch more data (if needed)
-          fetchMoreMetaObjects(data.data.metaobjects.edges[data.data.metaobjects.edges.length - 1].cursor);
+    // Function to fetch all metaobjects by recursively fetching more data if needed
+    async function fetchAllMetaObjects() {
+      let allMetaObjects = [];
+      let hasNextPage = true;
+      let cursor = null;
+    
+      while (hasNextPage) {
+        const response = await fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
+          },
+          body: JSON.stringify({
+            query: query,
+            variables: {
+              first: 50, // Fetch 50 items at a time
+              after: cursor,
+            },
+          }),
+        });
+    
+        const data = await response.json();
+    
+        // Add the current batch of metaobjects to the array
+        allMetaObjects = allMetaObjects.concat(data.data.metaobjects.edges.map(edge => edge.node));
+    
+        // Check if there are more pages to fetch
+        hasNextPage = data.data.metaobjects.pageInfo.hasNextPage;
+    
+        // Update the cursor for the next batch (if there are more pages)
+        if (hasNextPage) {
+          cursor = data.data.metaobjects.edges[data.data.metaobjects.edges.length - 1].cursor;
         }
-      })
-      .catch(error => {
-        console.error('Error fetching metaobjects:', error);
-      });
+      }
+    
+      return allMetaObjects;
+    }
+    
+    // Example usage: Fetch all metaobjects and log them
+    fetchAllMetaObjects().then(allMetaObjects => {
+      console.log('All MetaObjects:', allMetaObjects);
+    });
   }
 }
 customElements.define("ingredient-glossary", IngredientGlossary);
