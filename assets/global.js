@@ -386,10 +386,10 @@ class IngredientGlossary extends HTMLElement {
             edges {
               node {
                 id
-                name
-                category
-                common_name
-                definition
+                fields {
+                  key
+                  value
+                }
               }
               cursor
             }
