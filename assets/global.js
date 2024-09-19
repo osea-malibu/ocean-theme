@@ -370,7 +370,12 @@ Shopify.CountryProvinceSelector.prototype = {
 class IngredientGlossary extends HTMLElement {
   constructor() {
     super();
+    this.selectedCategories = [];
+    this.currentPage = 1;
+    this.itemsPerPage = 50;
+    this.metaObjects = [];
 
+    this.initializeCategoryFilter();
     this.getAllIngredients();
   }
 
@@ -451,9 +456,113 @@ class IngredientGlossary extends HTMLElement {
   async getAllIngredients() {
     try {
       const allMetaObjects = await this.fetchAllMetaObjects();
-      console.log('All MetaObjects:', allMetaObjects); // Log the entire metaobjects array to the console
+      this.metaObjects = allMetaObjects; // Store all metaobjects for filtering
+      this.renderPage(); // Render the first page of items
     } catch (error) {
       console.error('Error fetching metaobjects:', error); // Log any errors to the console
+    }
+  }
+
+  // Initialize the category filter
+  initializeCategoryFilter() {
+    const form = document.getElementById('category-filter-form');
+    
+    form.addEventListener('change', (event) => {
+      const checkboxes = form.querySelectorAll('input[name="category"]:checked');
+      this.selectedCategories = Array.from(checkboxes).map(checkbox => checkbox.value);
+      this.currentPage = 1; // Reset to the first page
+      this.renderPage(); // Re-render the list with the filtered items
+    });
+  }
+
+  // Filter and paginate the metaobjects
+  filterItems() {
+    if (this.selectedCategories.length === 0 || this.selectedCategories.includes('')) {
+      return this.metaObjects; // No category selected, return all items
+    }
+
+    // Filter the metaobjects based on the selected categories
+    return this.metaObjects.filter(item => {
+      const categoryField = item.fields.find(field => field.key === 'category');
+      return categoryField && this.selectedCategories.includes(categoryField.value);
+    });
+  }
+
+  // Render a specific page of items
+  renderPage() {
+    const filteredItems = this.filterItems();
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const paginatedItems = filteredItems.slice(startIndex, startIndex + this.itemsPerPage);
+
+    const ingredientContainer = this.querySelector('.sm\\:col-span-2');
+    ingredientContainer.innerHTML = ''; // Clear the previous content
+
+    // Add the paginated items to the container
+    paginatedItems.forEach(item => {
+      const nameField = item.fields.find(field => field.key === 'name');
+      const commonNameField = item.fields.find(field => field.key === 'common_name');
+      const definitionField = item.fields.find(field => field.key === 'definition');
+
+      const itemElement = document.createElement('div');
+      itemElement.classList.add('mb-4');
+      itemElement.innerHTML = `
+        <p><b>${nameField ? nameField.value : 'Unnamed'}</b></p>
+        ${commonNameField ? `<em>${commonNameField.value}</em>` : ''}
+        <p>${definitionField ? definitionField.value : ''}</p>
+      `;
+
+      ingredientContainer.appendChild(itemElement);
+    });
+
+    this.renderPagination(filteredItems.length); // Update pagination controls
+  }
+
+  // Render pagination controls
+  renderPagination(totalItems) {
+    const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+    const paginationContainer = this.querySelector('.pagination');
+    paginationContainer.innerHTML = ''; // Clear previous pagination
+
+    // Previous page link
+    if (this.currentPage > 1) {
+      const prevLink = document.createElement('a');
+      prevLink.href = '#';
+      prevLink.textContent = 'Previous';
+      prevLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.currentPage--;
+        this.renderPage();
+      });
+      paginationContainer.appendChild(prevLink);
+    }
+
+    // Pagination numbers
+    for (let i = 1; i <= totalPages; i++) {
+      const pageLink = document.createElement('a');
+      pageLink.href = '#';
+      pageLink.textContent = i;
+      if (i === this.currentPage) {
+        pageLink.classList.add('active');
+      }
+      pageLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.currentPage = i;
+        this.renderPage();
+      });
+      paginationContainer.appendChild(pageLink);
+    }
+
+    // Next page link
+    if (this.currentPage < totalPages) {
+      const nextLink = document.createElement('a');
+      nextLink.href = '#';
+      nextLink.textContent = 'Next';
+      nextLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.currentPage++;
+        this.renderPage();
+      });
+      paginationContainer.appendChild(nextLink);
     }
   }
 }
