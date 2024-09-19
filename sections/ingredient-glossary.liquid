@@ -5,7 +5,7 @@
       assign all_categories = ''
     
       for ingredient in shop.metaobjects.ingredient_glossary.values
-        assign all_categories = all_categories | append: ingredient.category | append: ','
+        assign all_categories = all_categories | append: ingredient.category
       endfor
     
       assign all_categories = all_categories | split: ',' | uniq 
