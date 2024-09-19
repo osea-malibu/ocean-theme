@@ -367,6 +367,41 @@ Shopify.CountryProvinceSelector.prototype = {
   },
 };
 
+class IngredientGlossary extends HTMLElement {
+  constructor() {
+    super();
+
+    this.getAllIngredients();
+  }
+
+  getAllIngredients() {
+    const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
+    const shopifyStoreDomain = 'osea-malibu.myshopify.com';
+    
+    fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': storefrontAccessToken
+      },
+      body: JSON.stringify({ query })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Fetched Metaobjects:', data);
+        displayMetaObjects(data.data.metaobjects.edges);
+        if (data.data.metaobjects.pageInfo.hasNextPage) {
+          // Handle pagination to fetch more data (if needed)
+          fetchMoreMetaObjects(data.data.metaobjects.edges[data.data.metaobjects.edges.length - 1].cursor);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching metaobjects:', error);
+      });
+  }
+}
+customElements.define("ingredient-glossary", IngredientGlossary);
+
 class ShippingCalculator extends HTMLElement {
   constructor() {
     super();
