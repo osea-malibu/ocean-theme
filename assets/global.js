@@ -480,18 +480,14 @@ class IngredientGlossary extends HTMLElement {
         const allCheckbox = form.querySelector('input[value="all"]');
         const selectedCheckboxes = form.querySelectorAll('input[name="category"]:checked');
         this.selectedCategories = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
-        console.log("this.selectedCategories", this.selectedCategories);
-        console.log("this.selectedCategories.length", this.selectedCategories.length);
-        console.log("categoryCheckboxes.length", categoryCheckboxes.length);
         if (this.selectedCategories.length === categoryCheckboxes.length) {
-          console.log("check the box");
           allCheckbox.checked = true;
         } else if (this.selectedCategories.length > 0) {
           allCheckbox.checked = false;
-        } else {}
-        this.currentPage = 1; // Reset to the first page
-        this.renderPage(); // Re-render the list with the filtered items
+        }
       }
+      this.currentPage = 1; // Reset to the first page
+      this.renderPage(); // Re-render the list with the filtered items
     });
   }
 
