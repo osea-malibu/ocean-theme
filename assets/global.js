@@ -485,8 +485,9 @@ class IngredientGlossary extends HTMLElement {
     console.log("this.metaObjects", this.metaObjects)
     return this.metaObjects.filter(item => {
       const categoryField = item.fields.find(field => field.key === 'category');
-      categoryField && console.log("categoryField", typeof categoryField.value);
-      return categoryField && categoryField.value.some(category => this.selectedCategories.includes(category));
+      const categoryArray = categoryField.value;
+      categoryField && console.log("categoryField", categoryField.value);
+      return categoryField && categoryArray.some(category => this.selectedCategories.includes(category));
     });
   }
 
