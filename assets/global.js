@@ -496,7 +496,7 @@ class IngredientGlossary extends HTMLElement {
   // Initialize the category filter
   initializeSorts() {    
     this.sortForm.addEventListener('change', (event) => {
-      this.sortByValue = event.taget.value;
+      this.sortByValue = event.target.value;
       this.currentPage = 1; // Reset to the first page
       this.renderPage(); // Re-render the list with the filtered items
     });
