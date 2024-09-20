@@ -374,7 +374,8 @@ class IngredientGlossary extends HTMLElement {
     this.currentPage = 1;
     this.itemsPerPage = 10;
     this.metaObjects = [];
-    this.filterForm = document.getElementById('category-filter-form');
+    this.filterForm = document.getElementById('filter-form');
+    this.sortForm = document.getElementById('sort-form');
 
     this.initializeCategoryFilter();
     this.getAllIngredients();
@@ -466,6 +467,32 @@ class IngredientGlossary extends HTMLElement {
 
   // Initialize the category filter
   initializeCategoryFilter() {    
+    this.filterForm.addEventListener('change', (event) => {
+      const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
+      
+      if (event.target.value === 'all'){
+        if (event.target.checked) {
+          categoryCheckboxes.forEach((checkbox) => checkbox.checked = true);
+        } else {
+          categoryCheckboxes.forEach((checkbox) => checkbox.checked = false);
+        }
+      } else {
+        const allCheckbox = this.filterForm.querySelector('input[value="all"]');
+        const selectedCheckboxes = this.filterForm.querySelectorAll('input[name="category"]:checked');
+        this.selectedCategories = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
+        if (this.selectedCategories.length === categoryCheckboxes.length) {
+          allCheckbox.checked = true;
+        } else if (this.selectedCategories.length > 0) {
+          allCheckbox.checked = false;
+        }
+      }
+      this.currentPage = 1; // Reset to the first page
+      this.renderPage(); // Re-render the list with the filtered items
+    });
+  }
+
+  // Initialize the category filter
+  initializeSortBy() {    
     this.filterForm.addEventListener('change', (event) => {
       const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
       
