@@ -92,6 +92,7 @@
               {% endif %}
           
               {% for part in paginate.parts %}
+                <script>console.log('part', part)</script>
                 {% if part.is_link %}
                   <a href="{{ part.url }}" class="w-4">{{ part.title }}</a>
                 {% else %}
