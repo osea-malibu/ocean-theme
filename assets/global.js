@@ -380,6 +380,7 @@ class IngredientGlossary extends HTMLElement {
 
     this.initializeFilters();
     this.initializeSorts();
+    this.initializeListCount();
     this.getAllIngredients();
   }
 
