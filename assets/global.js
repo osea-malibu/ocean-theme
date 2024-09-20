@@ -370,7 +370,7 @@ Shopify.CountryProvinceSelector.prototype = {
 class IngredientGlossary extends HTMLElement {
   constructor() {
     super();
-    /* this.selectedCategories = [];
+    this.selectedCategories = [];
     this.sortByValue = 'az';
     this.currentPage = 1;
     this.itemsPerPage = 10;
@@ -388,7 +388,7 @@ class IngredientGlossary extends HTMLElement {
     this.initializeListCount();
     
     // Fetch ingredients and render page
-    this.getAllIngredients(); */
+    this.getAllIngredients();
   }
 
   // Initialize the state from URL parameters
