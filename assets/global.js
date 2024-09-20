@@ -523,7 +523,6 @@ class IngredientGlossary extends HTMLElement {
   // Render a specific page of items
   renderPage() {
     const filteredItems = this.filterItems();
-    console.log("filteredItems", filteredItems);
     const sortedAzItems = filteredItems.sort((a, b) => a.fields.find((i) => i.key === 'name').value.localeCompare(b.fields.find((i) => i.key === 'name').value));
     const filteredSortedItems = this.sortByValue === 'az' ? sortedAzItems : sortedAzItems.reverse();
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -570,6 +569,7 @@ class IngredientGlossary extends HTMLElement {
     // Previous page link
     if (this.currentPage > 1) {
       const prevLink = document.createElement('a');
+      prevLink.classList.add('button', 'button-xs');
       prevLink.href = '#';
       prevLink.textContent = 'Previous';
       prevLink.addEventListener('click', (e) => {
@@ -599,6 +599,7 @@ class IngredientGlossary extends HTMLElement {
     // Next page link
     if (this.currentPage < totalPages) {
       const nextLink = document.createElement('a');
+      prevLink.classList.add('button', 'button-xs');
       nextLink.href = '#';
       nextLink.textContent = 'Next';
       nextLink.addEventListener('click', (e) => {
