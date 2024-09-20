@@ -559,13 +559,15 @@ class IngredientGlossary extends HTMLElement {
 
     //this.renderPagination(filteredItems.length); // Update pagination controls
   }
-
+  
   // Render pagination controls
   renderPagination(totalItems) {
     const totalPages = Math.ceil(totalItems / this.itemsPerPage);
     const paginationContainer = this.querySelector('.pagination');
     paginationContainer.innerHTML = ''; // Clear previous pagination
-
+  
+    const maxVisiblePages = 2; // Number of pages to show before and after the current page
+  
     // Previous page link
     if (this.currentPage > 1) {
       const prevLink = document.createElement('a');
@@ -579,9 +581,34 @@ class IngredientGlossary extends HTMLElement {
       });
       paginationContainer.appendChild(prevLink);
     }
-
-    // Pagination numbers
-    for (let i = 1; i <= totalPages; i++) {
+  
+    // First page link
+    const firstPageLink = document.createElement('a');
+    firstPageLink.classList.add('button', 'button-xs', 'button-secondary', 'px-0.5', 'w-6', 'shrink-0');
+    firstPageLink.href = '#';
+    firstPageLink.textContent = 1;
+    if (this.currentPage === 1) {
+      firstPageLink.classList.add('active');
+    }
+    firstPageLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.currentPage = 1;
+      this.renderPage();
+    });
+    paginationContainer.appendChild(firstPageLink);
+  
+    // Ellipsis after first page if needed
+    if (this.currentPage > maxVisiblePages + 2) {
+      const ellipsis = document.createElement('span');
+      ellipsis.textContent = '...';
+      paginationContainer.appendChild(ellipsis);
+    }
+  
+    // Pages around the current page
+    const startPage = Math.max(2, this.currentPage - maxVisiblePages);
+    const endPage = Math.min(totalPages - 1, this.currentPage + maxVisiblePages);
+  
+    for (let i = startPage; i <= endPage; i++) {
       const pageLink = document.createElement('a');
       pageLink.classList.add('button', 'button-xs', 'button-secondary', 'px-0.5', 'w-6', 'shrink-0');
       pageLink.href = '#';
@@ -596,7 +623,31 @@ class IngredientGlossary extends HTMLElement {
       });
       paginationContainer.appendChild(pageLink);
     }
-
+  
+    // Ellipsis before last page if needed
+    if (this.currentPage < totalPages - maxVisiblePages - 1) {
+      const ellipsis = document.createElement('span');
+      ellipsis.textContent = '...';
+      paginationContainer.appendChild(ellipsis);
+    }
+  
+    // Last page link
+    if (totalPages > 1) {
+      const lastPageLink = document.createElement('a');
+      lastPageLink.classList.add('button', 'button-xs', 'button-secondary', 'px-0.5', 'w-6', 'shrink-0');
+      lastPageLink.href = '#';
+      lastPageLink.textContent = totalPages;
+      if (this.currentPage === totalPages) {
+        lastPageLink.classList.add('active');
+      }
+      lastPageLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.currentPage = totalPages;
+        this.renderPage();
+      });
+      paginationContainer.appendChild(lastPageLink);
+    }
+  
     // Next page link
     if (this.currentPage < totalPages) {
       const nextLink = document.createElement('a');
