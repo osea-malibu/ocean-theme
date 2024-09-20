@@ -98,7 +98,7 @@
               {% endfor %}
           
               {% if paginate.next %}
-                <a href="{{ paginate.next.url }}">Next</a>
+                <a href="{{ paginate.next.url }}">{% render 'icon-arrow' %}</a>
               {% endif %}
             </div>
             
