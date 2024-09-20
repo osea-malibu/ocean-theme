@@ -11,7 +11,7 @@
       assign all_categories = all_categories | uniq | sort
     -%}
 
-    <ingredient-glossary class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-10">
+    <ingredient-glossary class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-10 pb-8">
       <div class="sm:col-span-1">
         {%- assign form_header_class = 'block font-bold text-sm mb-1' -%}
         {%- assign checkbox_class = 'flex py-1 leading-none items-center gap-1' -%}
