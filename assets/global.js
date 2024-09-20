@@ -467,11 +467,7 @@ class IngredientGlossary extends HTMLElement {
     params.set('sort', this.sortByValue);
   
     // Add list count
-    if (this.itemsPerPage === this.metaObjects.length) {
-      params.set('listcount', 'all');
-    } else {
-      params.set('listcount', this.itemsPerPage);
-    }
+    params.set('listcount', this.itemsPerPage); // Always use the numerical value (e.g., 10, 50, 100)
   
     // Update the URL without reloading the page
     const newUrl = `${window.location.pathname}?${params.toString()}`;
