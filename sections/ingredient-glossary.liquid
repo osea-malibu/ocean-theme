@@ -77,7 +77,7 @@
                     class="hidden"
                     {% if list_count == '10' %} checked{% endif %}
                   >
-                  <label for="{{ list_count }}">{{ list_count }}</label>
+                  <label for="{{ list_count }}" class="{% if list_count == '10' %} font-bold{% endif %}">{{ list_count }}</label>
                 </div>
               {% endfor %}
             </fieldset>
