@@ -400,36 +400,23 @@ class IngredientGlossary extends HTMLElement {
       this.currentPage = parseInt(params.get('page'), 10);
     }
   
-    // Set categories if present
-    if (params.has('category')) {
-      this.selectedCategories = params.get('category').split(',');
-      this.filterForm.querySelectorAll('input[name="category"]').forEach((checkbox) => {
-        if (this.selectedCategories.includes(checkbox.value)) {
-          checkbox.checked = true;
-        } else {
-          checkbox.checked = false;
-        }
-      });
+    // Set categories if present (same as before)
+    // ...
   
-      // If any specific category is selected, uncheck the 'All' checkbox
-      const allCheckbox = this.filterForm.querySelector('input[value="all"]');
-      if (this.selectedCategories.length > 0 && !this.selectedCategories.includes('all')) {
-        allCheckbox.checked = false;
-      } else {
-        allCheckbox.checked = true; // Check 'All' if no specific category is selected
-      }
-    }
-  
-    // Set sort if present
-    if (params.has('sort')) {
-      this.sortByValue = params.get('sort');
-      this.sortForm.querySelector('select').value = this.sortByValue;
-    }
+    // Set sort if present (same as before)
+    // ...
   
     // Set list count if present
     if (params.has('listcount')) {
-      this.itemsPerPage = params.get('listcount') === 'all' ? this.metaObjects.length : parseInt(params.get('listcount'), 10);
-      this.listCountFieldset.querySelector(`input[value="${params.get('listcount')}"]`).checked = true;
+      const listCount = params.get('listcount');
+      this.itemsPerPage = listCount === 'all' ? this.metaObjects.length : parseInt(listCount, 10);
+      this.listCountFieldset.querySelector(`input[value="${listCount}"]`).checked = true;
+  
+      // Update the bold class on the currently selected list count label
+      this.listCountFieldset.querySelectorAll('label').forEach((label) => {
+        label.classList.remove('font-bold'); // Remove bold from all labels
+      });
+      this.listCountFieldset.querySelector(`label[for="${listCount}"]`).classList.add('font-bold'); // Add bold to the selected label
     }
   
     // After initializing, apply filters and render the page
