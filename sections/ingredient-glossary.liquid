@@ -1,7 +1,7 @@
 <div id="IngredientGlossary-{{ section.id }}" class="relative {{ section.settings.wrapper_classes }}">
   <div class="{{ section.settings.container_classes }}">    
     {%- liquid
-      assign items_per_page = 50
+      assign items_per_page = 10
       assign all_categories = '' | split: ''
     
       for ingredient in shop.metaobjects.ingredient_glossary.values
