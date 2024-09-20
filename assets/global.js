@@ -497,7 +497,6 @@ class IngredientGlossary extends HTMLElement {
     }
 
     // Filter the metaobjects based on the selected categories
-    console.log("this.metaObjects", this.metaObjects)
     return this.metaObjects.filter(item => {
       const categoryField = item.fields.find(field => field.key === 'category');
       if (categoryField) {
@@ -525,6 +524,7 @@ class IngredientGlossary extends HTMLElement {
       const commonNameField = item.fields.find(field => field.key === 'common_name');
       const definitionField = item.fields.find(field => field.key === 'definition');
       const categoryField = item.fields.find(field => field.key === 'category');
+      const categoryArray = JSON.parse(categoryField.value);
       console.log("categoryField", categoryField);
 
       const itemElement = document.createElement('div');
@@ -534,7 +534,7 @@ class IngredientGlossary extends HTMLElement {
         ${commonNameField ? `<em>${commonNameField.value}</em>` : ''}
         <p>${definitionField ? definitionField.value : ''}</p>
         <div class="flex flex-wrap gap-1">
-          ${categoryField ? categoryField.value.map((category) => `<div class="rounded-full px-4 py-0.5 bg-seafoam-200">${category}</div>`) : ''}
+          ${categoryField ? categoryArray.map((category) => `<div class="rounded-full px-4 py-0.5 bg-seafoam-200">${category}</div>`) : ''}
         </div>
       `;
 
