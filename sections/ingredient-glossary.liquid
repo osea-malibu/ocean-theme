@@ -14,7 +14,7 @@
     <ingredient-glossary class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
       <div class="sm:col-span-1">
         <div class="mb-4">
-          <h2 class="border-b border-seaweed-400 mb-2 pb-2 font-bold">Filter by category:</h2>
+          <h2 class="border-b border-seaweed-400 mb-2 pb-2 font-bold">Filter by category</h2>
           <form id="category-filter-form">
             <ul>
               <li><label><input type="checkbox" value="all" checked> All</label></li>
@@ -36,7 +36,7 @@
           <div class="ingredient-list">
             <!-- Iterate over the paginated items -->
             {% for item in shop.metaobjects.ingredient_glossary.values %}
-              <div class="mb-4">
+              <div class="border-b border-seaweed-300 p-4 mb-4">
                 <p><b>{{ item.name }}</b></p>
                 {%- if item.common_name -%}<em>{{ item.common_name }}</em>{%- endif -%}
                 <p>{{ item.definition }}</p>
