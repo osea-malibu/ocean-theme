@@ -86,7 +86,9 @@
             <!-- Display pagination links -->
             <div class="pagination flex items-center gap-2">
               {% if paginate.previous %}
-                <a href="{{ paginate.previous.url }}">Previous</a>
+                <a href="{{ paginate.previous.url }}" class="px-1">
+                  {%- render 'icon-chevron', classes: 'w-5 h-5 text-seaweed-700 rotate-180', stroke_width: 2 -%}
+                </a>
               {% endif %}
           
               {% for part in paginate.parts %}
@@ -98,7 +100,9 @@
               {% endfor %}
           
               {% if paginate.next %}
-                <a href="{{ paginate.next.url }}">{% render 'icon-chevron', classes: 'w-5 h-5 text-seaweed-700 rotate-180', stroke_width: 2 %}</a>
+                <a href="{{ paginate.next.url }}" class="px-1">
+                  {%- render 'icon-chevron', classes: 'w-5 h-5 text-seaweed-700 rotate-180', stroke_width: 2 -%}
+                </a>
               {% endif %}
             </div>
             
