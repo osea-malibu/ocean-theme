@@ -656,7 +656,7 @@ class IngredientGlossary extends HTMLElement {
   renderPage() {
     const filteredItems = this.filterItems();
     const findNameValue = (object) => object.fields.find((i) => i.key === 'name').value;
-    const sortedAzItems = filteredItems.sort((a, b) => findNameValue(a).localeCompare(findNameValue(b));
+    const sortedAzItems = filteredItems.sort((a, b) => findNameValue(a).localeCompare(findNameValue(b)));
     const filteredSortedItems = this.sortByValue === 'az' ? sortedAzItems : sortedAzItems.reverse();
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, filteredSortedItems.length);
