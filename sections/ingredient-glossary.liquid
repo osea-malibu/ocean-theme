@@ -43,7 +43,7 @@
                 <div class="flex flex-wrap gap-1 mt-2">
                   <script>console.log("ingredient.category", {{ ingredient.category }})</script>
                   {%- for category in ingredient.category.value -%}
-                    <div class="rounded-full px-2 py-0.5 bg-wave-200 text-xs">{{ category }}</div>
+                    <div class="rounded-full px-2 py-0.5 bg-wave-200 text-xs font-book">{{ category }}</div>
                   {%- endfor -%}
                 </div>
               </div>
