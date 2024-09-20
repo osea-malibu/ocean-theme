@@ -40,7 +40,7 @@
                 <p><b>{{ ingredient.name }}</b></p>
                 {%- if ingredient.common_name -%}<em>{{ ingredient.common_name }}</em>{%- endif -%}
                 <p>{{ ingredient.definition }}</p>
-                <div class="flex flex-wrap gap-1">
+                <div class="flex flex-wrap gap-1 mt-2">
                   <script>console.log("ingredient.category", {{ ingredient.category }})</script>
                   {%- for category in ingredient.category.value -%}
                     <div class="rounded-full px-2 py-0.5 bg-wave-200 text-xs">{{ category }}</div>
