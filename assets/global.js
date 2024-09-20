@@ -526,7 +526,7 @@ class IngredientGlossary extends HTMLElement {
       const definitionField = item.fields.find(field => field.key === 'definition');
 
       const itemElement = document.createElement('div');
-      itemElement.classList.add('mb-4');
+      itemElement.classList.add('border-b', 'border-seaweed-300', 'py-4', 'mb-4');
       itemElement.innerHTML = `
         <p><b>${nameField ? nameField.value : 'Unnamed'}</b></p>
         ${commonNameField ? `<em>${commonNameField.value}</em>` : ''}
