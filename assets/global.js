@@ -371,6 +371,7 @@ class IngredientGlossary extends HTMLElement {
   constructor() {
     super();
     this.selectedCategories = [];
+    this.sortByValue = 'az';
     this.currentPage = 1;
     this.itemsPerPage = 10;
     this.metaObjects = [];
@@ -494,8 +495,8 @@ class IngredientGlossary extends HTMLElement {
 
   // Initialize the category filter
   initializeSorts() {    
-    this.sortForm.addEventListener('change', (event) => {      
-      console.log('value', event.target.value);
+    this.sortForm.addEventListener('change', (event) => {
+      this.sortByValue = event.taget.value;
       this.currentPage = 1; // Reset to the first page
       this.renderPage(); // Re-render the list with the filtered items
     });
