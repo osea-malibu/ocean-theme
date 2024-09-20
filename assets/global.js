@@ -406,8 +406,18 @@ class IngredientGlossary extends HTMLElement {
       this.filterForm.querySelectorAll('input[name="category"]').forEach((checkbox) => {
         if (this.selectedCategories.includes(checkbox.value)) {
           checkbox.checked = true;
+        } else {
+          checkbox.checked = false;
         }
       });
+  
+      // If any specific category is selected, uncheck the 'All' checkbox
+      const allCheckbox = this.filterForm.querySelector('input[value="all"]');
+      if (this.selectedCategories.length > 0 && !this.selectedCategories.includes('all')) {
+        allCheckbox.checked = false;
+      } else {
+        allCheckbox.checked = true; // Check 'All' if no specific category is selected
+      }
     }
   
     // Set sort if present
@@ -604,8 +614,9 @@ class IngredientGlossary extends HTMLElement {
 
   // Filter and paginate the metaobjects
   filterItems() {
-    // If no specific categories are selected or 'All' is checked, return all metaObjects
-    if (this.selectedCategories.length === 0 || this.filterForm.querySelector('input[value="all"]').checked) {
+    // If the "All" checkbox is checked, or no specific categories are selected, return all items
+    const allCheckbox = this.filterForm.querySelector('input[value="all"]');
+    if (this.selectedCategories.length === 0 || allCheckbox.checked) {
       return this.metaObjects;
     }
   
@@ -613,12 +624,11 @@ class IngredientGlossary extends HTMLElement {
     return this.metaObjects.filter((item) => {
       const categoryField = item.fields.find((field) => field.key === 'category');
       if (categoryField) {
-        const categoryArray = JSON.parse(categoryField.value);
-        // Check if any category matches the selected ones
+        const categoryArray = JSON.parse(categoryField.value); // Assume this is a JSON array of categories
+        // Return true if any category in the ingredient matches a selected category
         return categoryArray.some((category) => this.selectedCategories.includes(category));
-      } else {
-        return false;
       }
+      return false;
     });
   }
 
