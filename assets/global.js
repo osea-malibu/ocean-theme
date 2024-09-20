@@ -601,14 +601,23 @@ class IngredientGlossary extends HTMLElement {
   initializeListCount() {
     this.listCountFieldset.addEventListener('change', (event) => {
       const selectedCount = event.target.value;
+  
+      // Update the itemsPerPage based on the selected count
       if (selectedCount === 'all') {
         this.itemsPerPage = this.metaObjects.length; // Show all items
       } else {
         this.itemsPerPage = parseInt(selectedCount, 10);
       }
+      
+      // Update the radio button labels to apply the 'font-bold' class to the selected one
+      this.listCountFieldset.querySelectorAll('label').forEach((label) => {
+        label.classList.remove('font-bold'); // Remove bold from all labels
+      });
+      this.listCountFieldset.querySelector(`label[for="${selectedCount}"]`).classList.add('font-bold'); // Add bold to the selected label
+  
       this.currentPage = 1; // Reset to the first page
       this.updateUrlParams(); // Update the URL
-      this.renderPage(); // Re-render the page with new item count
+      this.renderPage(); // Re-render the page with the new item count
     });
   }
 
