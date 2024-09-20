@@ -689,6 +689,7 @@ class IngredientGlossary extends HTMLElement {
     // Ellipsis after first page if needed
     if (this.currentPage > maxVisiblePages + 2) {
       const ellipsis = document.createElement('span');
+      ellipsis.classList.add('font-bold');
       ellipsis.textContent = '…';
       paginationContainer.appendChild(ellipsis);
     }
@@ -717,6 +718,7 @@ class IngredientGlossary extends HTMLElement {
     // Ellipsis before last page if needed
     if (this.currentPage < totalPages - maxVisiblePages - 1) {
       const ellipsis = document.createElement('span');
+      ellipsis.classList.add('font-bold');
       ellipsis.textContent = '…';
       paginationContainer.appendChild(ellipsis);
     }
