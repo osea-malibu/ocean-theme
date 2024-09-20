@@ -535,12 +535,12 @@ class IngredientGlossary extends HTMLElement {
   // Fetch and log all ingredients
   async getAllIngredients() {
     try {
-      // Fetch all the metaobjects
+      // Fetch all metaobjects
       const allMetaObjects = await this.fetchAllMetaObjects();
-      this.metaObjects = allMetaObjects; // Store the metaobjects for filtering and sorting
+      this.metaObjects = allMetaObjects; // Store metaobjects for filtering and sorting
   
-      // Ensure that filters from the URL are applied after fetching
-      this.initializeFromUrl(); // Apply filters, sort, and list count from the URL after fetching metaobjects
+      // After fetching, initialize filters from the URL
+      this.initializeFromUrl(); // Apply filters, sort, and pagination from the URL after fetching
     } catch (error) {
       console.error('Error fetching metaobjects:', error);
     }
