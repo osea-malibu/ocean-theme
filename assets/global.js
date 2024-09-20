@@ -593,9 +593,9 @@ class IngredientGlossary extends HTMLElement {
       if (selectedCount === 'all') {
         this.itemsPerPage = this.metaObjects.length; // Show all items
       } else {
-        this.itemsPerPage = parseInt(selectedCount, 10);
+        this.itemsPerPage = parseInt(selectedCount, 10); // Parse as a number for specific counts
       }
-      
+  
       // Update the radio button labels to apply the 'font-bold' class to the selected one
       this.listCountFieldset.querySelectorAll('label').forEach((label) => {
         label.classList.remove('font-bold'); // Remove bold from all labels
