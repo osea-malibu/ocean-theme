@@ -93,7 +93,7 @@
           
               {% for part in paginate.parts %}
                 {% if part.is_link %}
-                  <a href="{{ part.url }}">{{ part.title }}</a>
+                  <a href="{{ part.url }}" class="w-4">{{ part.title }}</a>
                 {% else %}
                   <span>{{ part.title }}</span>
                 {% endif %}
