@@ -32,7 +32,10 @@
       </div>
       <div class="sm:col-span-2 lg:col-span-3">
         {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
-          <h2 class="border-b border-seaweed-700 mb-2 pb-2 font-bold">Ingredients</h2>
+          <div class="border-b border-seaweed-700 mb-2 pb-2 flex justify-space">
+          <h2 class="font-bold">Ingredients</h2>
+          <em>{{ shop.metaobjects.ingredient_glossary.size }} results</em>
+          </div>
           <div class="ingredient-list">
             <!-- Iterate over the paginated items -->
             {% for ingredient in shop.metaobjects.ingredient_glossary.values %}
