@@ -429,13 +429,7 @@ class IngredientGlossary extends HTMLElement {
     // Set list count if present
     if (params.has('listcount')) {
       const listCount = params.get('listcount');
-      if (listCount === 'all') {
-        this.itemsPerPage = this.metaObjects.length; // Show all items
-      } else {
-        this.itemsPerPage = parseInt(listCount, 10); // Parse specific counts
-      }
-  
-      // Safely query and check if the element exists before setting the checked property
+      this.itemsPerPage = parseInt(listCount, 10); // Parse specific counts
       const listCountInput = this.listCountFieldset.querySelector(`input[value="${listCount}"]`);
       if (listCountInput) {
         listCountInput.checked = true; // Set the checked property if the input exists
