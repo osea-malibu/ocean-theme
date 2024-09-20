@@ -375,6 +375,8 @@ class IngredientGlossary extends HTMLElement {
     this.currentPage = 1;
     this.itemsPerPage = 10;
     this.metaObjects = [];
+    this.loading = true;
+    
     this.filterForm = document.getElementById('filter-form');
     this.sortForm = document.getElementById('sort-form');
     this.listCountFieldset = document.getElementById('list-count');
