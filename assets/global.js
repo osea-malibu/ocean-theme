@@ -557,7 +557,7 @@ class IngredientGlossary extends HTMLElement {
       ingredientContainer.appendChild(itemElement);
     });
 
-    //this.renderPagination(filteredItems.length); // Update pagination controls
+    this.renderPagination(filteredItems.length); // Update pagination controls
   }
   
   // Render pagination controls
@@ -571,7 +571,7 @@ class IngredientGlossary extends HTMLElement {
     // Previous page link
     if (this.currentPage > 1) {
       const prevLink = document.createElement('a');
-      prevLink.classList.add('button', 'button-xs', 'button-secondary');
+      prevLink.classList.add('px-2');
       prevLink.href = '#';
       prevLink.innerHTML = `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polyline points="15 18 9 12 15 6"></polyline>
