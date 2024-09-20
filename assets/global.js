@@ -584,7 +584,6 @@ class IngredientGlossary extends HTMLElement {
   
     // First page link
     const firstPageLink = document.createElement('a');
-    firstPageLink.classList.add('px-0.5');
     firstPageLink.href = '#';
     firstPageLink.textContent = 1;
     if (this.currentPage === 1) {
@@ -610,7 +609,6 @@ class IngredientGlossary extends HTMLElement {
   
     for (let i = startPage; i <= endPage; i++) {
       const pageLink = document.createElement('a');
-      pageLink.classList.add('px-0.5');
       pageLink.href = '#';
       pageLink.textContent = i;
       if (i === this.currentPage) {
@@ -634,7 +632,6 @@ class IngredientGlossary extends HTMLElement {
     // Last page link
     if (totalPages > 1) {
       const lastPageLink = document.createElement('a');
-      lastPageLink.classList.add('px-0.5');
       lastPageLink.href = '#';
       lastPageLink.textContent = totalPages;
       if (this.currentPage === totalPages) {
