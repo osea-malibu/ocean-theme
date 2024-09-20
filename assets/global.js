@@ -557,7 +557,7 @@ class IngredientGlossary extends HTMLElement {
       ingredientContainer.appendChild(itemElement);
     });
 
-    this.renderPagination(filteredItems.length); // Update pagination controls
+    //this.renderPagination(filteredItems.length); // Update pagination controls
   }
 
   // Render pagination controls
@@ -598,8 +598,6 @@ class IngredientGlossary extends HTMLElement {
     }
 
     // Next page link
-    console.log("this.currentPage", this.currentPage);
-    console.log("totalPages", totalPages);
     if (this.currentPage < totalPages) {
       const nextLink = document.createElement('a');
       nextLink.classList.add('button', 'button-xs', 'button-tertiary');
