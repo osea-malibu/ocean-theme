@@ -377,84 +377,73 @@ class IngredientGlossary extends HTMLElement {
     this.metaObjects = [];
     this.filterForm = document.getElementById('filter-form');
     this.sortForm = document.getElementById('sort-form');
+    this.listCountFieldset = document.getElementById('list-count');
 
+    // Initialize filters, sorts, and list count from URL if available
+    this.initializeFromUrl();
+
+    // Set up event listeners
     this.initializeFilters();
     this.initializeSorts();
     this.initializeListCount();
+    
+    // Fetch ingredients and render page
     this.getAllIngredients();
   }
 
-  // Async method to fetch all metaobjects
-  async fetchAllMetaObjects() {
-    const storefrontAccessToken = '2cca99031c2d35261e7d140b5a386156';
-    const shopifyStoreDomain = 'osea-malibu.myshopify.com';
-  
-    const query = `
-      query($first: Int!, $after: String) {
-        metaobjects(first: $first, after: $after, type: "ingredient_glossary") {
-          edges {
-            node {
-              id
-              fields {
-                key
-                value
-              }
-            }
-            cursor
-          }
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-    `;
-  
-    let allMetaObjects = [];
-    let hasNextPage = true;
-    let cursor = null;
-  
-    // Loop to fetch all pages of metaobjects
-    while (hasNextPage) {
-      const response = await fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-        },
-        body: JSON.stringify({
-          query: query,
-          variables: {
-            first: 50, // Fetch 50 items at a time
-            after: cursor,
-          },
-        }),
-      });
-  
-      const data = await response.json();
-  
-      // Check for GraphQL errors
-      if (data.errors) {
-        console.error('GraphQL Error:', data.errors);
-        return [];
-      }
-  
-      // Ensure metaobjects field exists
-      if (data.data && data.data.metaobjects) {
-        const metaobjects = data.data.metaobjects.edges.map(edge => edge.node);
-        allMetaObjects = allMetaObjects.concat(metaobjects); // Collect all items
-        hasNextPage = data.data.metaobjects.pageInfo.hasNextPage; // Check if there's more to fetch
-  
-        // Update cursor for the next batch
-        if (hasNextPage) {
-          cursor = data.data.metaobjects.edges[data.data.metaobjects.edges.length - 1].cursor;
-        }
-      } else {
-        console.error('No metaobjects found in the response');
-        hasNextPage = false;  // Stop if no data is found
-      }
+  // Initialize the state from URL parameters
+  initializeFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+
+    // Set page if present
+    if (params.has('page')) {
+      this.currentPage = parseInt(params.get('page'), 10);
     }
-  
-    return allMetaObjects; // Return all fetched metaobjects
+
+    // Set categories if present
+    if (params.has('category')) {
+      this.selectedCategories = params.get('category').split(',');
+      this.filterForm.querySelectorAll('input[name="category"]').forEach((checkbox) => {
+        if (this.selectedCategories.includes(checkbox.value)) {
+          checkbox.checked = true;
+        }
+      });
+    }
+
+    // Set sort if present
+    if (params.has('sort')) {
+      this.sortByValue = params.get('sort');
+      this.sortForm.querySelector('select').value = this.sortByValue;
+    }
+
+    // Set list count if present
+    if (params.has('listcount')) {
+      this.itemsPerPage = params.get('listcount') === 'all' ? this.metaObjects.length : parseInt(params.get('listcount'), 10);
+      this.listCountFieldset.querySelector(`input[value="${params.get('listcount')}"]`).checked = true;
+    }
+  }
+
+  // Update the URL with the current settings
+  updateUrlParams() {
+    const params = new URLSearchParams();
+
+    // Add page
+    params.set('page', this.currentPage);
+
+    // Add categories
+    if (this.selectedCategories.length > 0) {
+      params.set('category', this.selectedCategories.join(','));
+    }
+
+    // Add sort option
+    params.set('sort', this.sortByValue);
+
+    // Add list count
+    params.set('listcount', this.itemsPerPage === this.metaObjects.length ? 'all' : this.itemsPerPage);
+
+    // Update the URL without reloading the page
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.pushState(null, '', newUrl);
   }
 
   // Fetch and log all ingredients
@@ -469,11 +458,11 @@ class IngredientGlossary extends HTMLElement {
   }
 
   // Initialize the category filter
-  initializeFilters() {    
+  initializeFilters() {
     this.filterForm.addEventListener('change', (event) => {
       const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
       
-      if (event.target.value === 'all'){
+      if (event.target.value === 'all') {
         if (event.target.checked) {
           categoryCheckboxes.forEach((checkbox) => checkbox.checked = true);
         } else {
@@ -490,16 +479,33 @@ class IngredientGlossary extends HTMLElement {
         }
       }
       this.currentPage = 1; // Reset to the first page
+      this.updateUrlParams(); // Update the URL
       this.renderPage(); // Re-render the list with the filtered items
     });
   }
 
-  // Initialize the category filter
-  initializeSorts() {    
+  // Initialize the sort options
+  initializeSorts() {
     this.sortForm.addEventListener('change', (event) => {
       this.sortByValue = event.target.value;
       this.currentPage = 1; // Reset to the first page
+      this.updateUrlParams(); // Update the URL
       this.renderPage(); // Re-render the list with the filtered items
+    });
+  }
+
+  // Initialize the list count change
+  initializeListCount() {
+    this.listCountFieldset.addEventListener('change', (event) => {
+      const selectedCount = event.target.value;
+      if (selectedCount === 'all') {
+        this.itemsPerPage = this.metaObjects.length; // Show all items
+      } else {
+        this.itemsPerPage = parseInt(selectedCount, 10);
+      }
+      this.currentPage = 1; // Reset to the first page
+      this.updateUrlParams(); // Update the URL
+      this.renderPage(); // Re-render the page with new item count
     });
   }
 
@@ -529,13 +535,13 @@ class IngredientGlossary extends HTMLElement {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, filteredSortedItems.length);
     const paginatedItems = filteredSortedItems.slice(startIndex, endIndex);
-  
+    
     const resultsElement = this.querySelector('.results-count');
     resultsElement.innerHTML = `${filteredItems.length} results`;
-  
+
     const ingredientContainer = this.querySelector('.ingredient-list');
     ingredientContainer.innerHTML = ''; // Clear the previous content
-  
+
     // Add the paginated items to the container
     paginatedItems.forEach(item => {
       const nameField = item.fields.find(field => field.key === 'name');
@@ -544,9 +550,9 @@ class IngredientGlossary extends HTMLElement {
       const categoryField = item.fields.find(field => field.key === 'category');
       const categoryArray = categoryField ? JSON.parse(categoryField.value) : [];
       const tagClass = 'rounded-full px-2 py-0.5 bg-wave-200 text-xs';
-  
+
       const itemElement = document.createElement('div');
-      itemElement.classList.add('border-b', 'border-seaweed-300', 'flex', 'flex-col', 'justify-center', 'h-32');
+      itemElement.classList.add('border-b', 'border-seaweed-300', 'py-4', 'mb-4');
       itemElement.innerHTML = `
         <p><b>${nameField ? nameField.value : 'Unnamed'}</b></p>
         ${commonNameField ? `<em>${commonNameField.value}</em>` : ''}
@@ -555,25 +561,25 @@ class IngredientGlossary extends HTMLElement {
           ${categoryArray.map((i) => `<div class="${tagClass}">${i}</div>`).join('')}
         </div>
       `;
-  
+
       ingredientContainer.appendChild(itemElement);
     });
-  
+
     // Display the current count (e.g., "Showing 1 - 10 of 308")
     const currentCountElement = this.querySelector('.current-count');
     currentCountElement.textContent = `Showing ${startIndex + 1} - ${endIndex} of ${filteredItems.length}`;
-  
+
     this.renderPagination(filteredItems.length); // Update pagination controls
   }
-  
+
   // Render pagination controls
   renderPagination(totalItems) {
     const totalPages = Math.ceil(totalItems / this.itemsPerPage);
     const paginationContainer = this.querySelector('.pagination');
     paginationContainer.innerHTML = ''; // Clear previous pagination
-  
+
     const maxVisiblePages = 2; // Number of pages to show before and after the current page
-  
+
     // Previous page link
     if (this.currentPage > 1) {
       const prevLink = document.createElement('a');
@@ -585,11 +591,12 @@ class IngredientGlossary extends HTMLElement {
       prevLink.addEventListener('click', (e) => {
         e.preventDefault();
         this.currentPage--;
+        this.updateUrlParams(); // Update URL on pagination change
         this.renderPage();
       });
       paginationContainer.appendChild(prevLink);
     }
-  
+
     // First page link
     const firstPageLink = document.createElement('a');
     firstPageLink.href = '#';
@@ -600,21 +607,22 @@ class IngredientGlossary extends HTMLElement {
     firstPageLink.addEventListener('click', (e) => {
       e.preventDefault();
       this.currentPage = 1;
+      this.updateUrlParams(); // Update URL on pagination change
       this.renderPage();
     });
     paginationContainer.appendChild(firstPageLink);
-  
+
     // Ellipsis after first page if needed
     if (this.currentPage > maxVisiblePages + 2) {
       const ellipsis = document.createElement('span');
       ellipsis.textContent = '...';
       paginationContainer.appendChild(ellipsis);
     }
-  
+
     // Pages around the current page
     const startPage = Math.max(2, this.currentPage - maxVisiblePages);
     const endPage = Math.min(totalPages - 1, this.currentPage + maxVisiblePages);
-  
+
     for (let i = startPage; i <= endPage; i++) {
       const pageLink = document.createElement('a');
       pageLink.href = '#';
@@ -625,18 +633,19 @@ class IngredientGlossary extends HTMLElement {
       pageLink.addEventListener('click', (e) => {
         e.preventDefault();
         this.currentPage = i;
+        this.updateUrlParams(); // Update URL on pagination change
         this.renderPage();
       });
       paginationContainer.appendChild(pageLink);
     }
-  
+
     // Ellipsis before last page if needed
     if (this.currentPage < totalPages - maxVisiblePages - 1) {
       const ellipsis = document.createElement('span');
       ellipsis.textContent = '...';
       paginationContainer.appendChild(ellipsis);
     }
-  
+
     // Last page link
     if (totalPages > 1) {
       const lastPageLink = document.createElement('a');
@@ -648,11 +657,12 @@ class IngredientGlossary extends HTMLElement {
       lastPageLink.addEventListener('click', (e) => {
         e.preventDefault();
         this.currentPage = totalPages;
+        this.updateUrlParams(); // Update URL on pagination change
         this.renderPage();
       });
       paginationContainer.appendChild(lastPageLink);
     }
-  
+
     // Next page link
     if (this.currentPage < totalPages) {
       const nextLink = document.createElement('a');
@@ -664,25 +674,11 @@ class IngredientGlossary extends HTMLElement {
       nextLink.addEventListener('click', (e) => {
         e.preventDefault();
         this.currentPage++;
+        this.updateUrlParams(); // Update URL on pagination change
         this.renderPage();
       });
       paginationContainer.appendChild(nextLink);
     }
-  }
-  
-  // Initialize the list count radio
-  initializeListCount() {
-    const listCountFieldset = this.querySelector('#list-count');
-    listCountFieldset.addEventListener('change', (event) => {
-      const selectedCount = event.target.value;
-      if (selectedCount === 'all') {
-        this.itemsPerPage = this.metaObjects.length; // Show all items
-      } else {
-        this.itemsPerPage = parseInt(selectedCount, 10);
-      }
-      this.currentPage = 1; // Reset to the first page
-      this.renderPage(); // Re-render the page with new item count
-    });
   }
 }
 customElements.define("ingredient-glossary", IngredientGlossary);
