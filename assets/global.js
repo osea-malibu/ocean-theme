@@ -583,6 +583,7 @@ class IngredientGlossary extends HTMLElement {
     // Pagination numbers
     for (let i = 1; i <= totalPages; i++) {
       const pageLink = document.createElement('a');
+      prevLink.classList.add('button', 'button-xs', 'button-secondary');
       pageLink.href = '#';
       pageLink.textContent = i;
       if (i === this.currentPage) {
