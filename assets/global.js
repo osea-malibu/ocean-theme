@@ -674,6 +674,7 @@ class IngredientGlossary extends HTMLElement {
     const firstPageLink = document.createElement('a');
     firstPageLink.href = '#';
     firstPageLink.textContent = 1;
+    firstPageLink.classList.add('w-3.5');
     if (this.currentPage === 1) {
       firstPageLink.classList.add('font-bold'); // Bold current page
     }
@@ -698,6 +699,7 @@ class IngredientGlossary extends HTMLElement {
 
     for (let i = startPage; i <= endPage; i++) {
       const pageLink = document.createElement('a');
+      pageLink.classList.add('w-3.5');
       pageLink.href = '#';
       pageLink.textContent = i;
       if (i === this.currentPage) {
