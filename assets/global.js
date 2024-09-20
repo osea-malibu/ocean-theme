@@ -537,23 +537,37 @@ class IngredientGlossary extends HTMLElement {
   initializeFilters() {
     this.filterForm.addEventListener('change', (event) => {
       const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
-      
+      const allCheckbox = this.filterForm.querySelector('input[value="all"]');
+  
       if (event.target.value === 'all') {
         if (event.target.checked) {
-          categoryCheckboxes.forEach((checkbox) => checkbox.checked = true);
+          // If 'All' is selected, uncheck all specific category checkboxes
+          categoryCheckboxes.forEach((checkbox) => {
+            checkbox.checked = true;
+          });
         } else {
-          categoryCheckboxes.forEach((checkbox) => checkbox.checked = false);
+          // If 'All' is deselected, uncheck all categories
+          categoryCheckboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+          });
         }
+        this.selectedCategories = []; // Reset selected categories
       } else {
-        const allCheckbox = this.filterForm.querySelector('input[value="all"]');
+        // If a specific category is checked, uncheck the 'All' checkbox
         const selectedCheckboxes = this.filterForm.querySelectorAll('input[name="category"]:checked');
-        this.selectedCategories = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
-        if (this.selectedCategories.length === categoryCheckboxes.length) {
-          allCheckbox.checked = true;
-        } else if (this.selectedCategories.length > 0) {
+        this.selectedCategories = Array.from(selectedCheckboxes).map((checkbox) => checkbox.value);
+  
+        // Uncheck the 'All' checkbox if any specific category is selected
+        if (this.selectedCategories.length > 0 && this.selectedCategories.length < categoryCheckboxes.length) {
           allCheckbox.checked = false;
         }
+  
+        // Check 'All' checkbox if all categories are selected
+        if (this.selectedCategories.length === categoryCheckboxes.length) {
+          allCheckbox.checked = true;
+        }
       }
+  
       this.currentPage = 1; // Reset to the first page
       this.updateUrlParams(); // Update the URL
       this.renderPage(); // Re-render the list with the filtered items
