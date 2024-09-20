@@ -430,21 +430,25 @@ class IngredientGlossary extends HTMLElement {
   // Update the URL with the current settings
   updateUrlParams() {
     const params = new URLSearchParams();
-
+  
     // Add page
     params.set('page', this.currentPage);
-
+  
     // Add categories
     if (this.selectedCategories.length > 0) {
       params.set('category', this.selectedCategories.join(','));
     }
-
+  
     // Add sort option
     params.set('sort', this.sortByValue);
-
+  
     // Add list count
-    params.set('listcount', this.itemsPerPage === this.metaObjects.length ? 'all' : this.itemsPerPage);
-
+    if (this.itemsPerPage === this.metaObjects.length) {
+      params.set('listcount', 'all');
+    } else {
+      params.set('listcount', this.itemsPerPage);
+    }
+  
     // Update the URL without reloading the page
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     window.history.pushState(null, '', newUrl);
