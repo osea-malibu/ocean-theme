@@ -628,11 +628,7 @@ class IngredientGlossary extends HTMLElement {
       const selectedCount = event.target.value;
   
       // Update the itemsPerPage based on the selected count
-      if (selectedCount === 'all') {
-        this.itemsPerPage = this.metaObjects.length; // Show all items
-      } else {
-        this.itemsPerPage = parseInt(selectedCount, 10); // Parse as a number for specific counts
-      }
+      this.itemsPerPage = parseInt(selectedCount, 10); // Parse as a number for specific counts
   
       // Update the radio button labels to apply the 'font-bold' class to the selected one
       this.listCountFieldset.querySelectorAll('label').forEach((label) => {
