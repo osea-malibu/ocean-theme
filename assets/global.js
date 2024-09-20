@@ -557,7 +557,7 @@ class IngredientGlossary extends HTMLElement {
       ingredientContainer.appendChild(itemElement);
     });
 
-    //this.renderPagination(filteredItems.length); // Update pagination controls
+    this.renderPagination(filteredItems.length); // Update pagination controls
   }
   
   // Render pagination controls
