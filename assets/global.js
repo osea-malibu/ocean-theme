@@ -533,7 +533,7 @@ class IngredientGlossary extends HTMLElement {
         <p><b>${nameField ? nameField.value : 'Unnamed'}</b></p>
         ${commonNameField ? `<em>${commonNameField.value}</em>` : ''}
         <p>${definitionField ? definitionField.value : ''}</p>
-        <div class="flex flex-wrap gap-1">
+        <div class="flex flex-wrap gap-1 mt-2">
           ${categoryArray.map((i) => `<div class="${tagClass}">${i}</div>`).join('')}
         </div>
       `;
