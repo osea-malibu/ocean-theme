@@ -512,7 +512,7 @@ class IngredientGlossary extends HTMLElement {
   // Render a specific page of items
   renderPage() {
     const filteredItems = this.filterItems();
-    console.log("filteredItems", filteredItems)
+    console.log("filteredItems", filteredItems);
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const paginatedItems = filteredItems.slice(startIndex, startIndex + this.itemsPerPage);
 
@@ -524,6 +524,7 @@ class IngredientGlossary extends HTMLElement {
       const nameField = item.fields.find(field => field.key === 'name');
       const commonNameField = item.fields.find(field => field.key === 'common_name');
       const definitionField = item.fields.find(field => field.key === 'definition');
+      const categoryField = item.fields.find(field => field.key === 'category');
 
       const itemElement = document.createElement('div');
       itemElement.classList.add('border-b', 'border-seaweed-300', 'py-4', 'mb-4');
@@ -531,6 +532,9 @@ class IngredientGlossary extends HTMLElement {
         <p><b>${nameField ? nameField.value : 'Unnamed'}</b></p>
         ${commonNameField ? `<em>${commonNameField.value}</em>` : ''}
         <p>${definitionField ? definitionField.value : ''}</p>
+        <div class="flex flex-wrap gap-1">
+          ${categoryField.forEach((category) => `<div class="rounded-full px-4 py-0.5 bg-seafoam-200">${category}</div>`)}
+        </div>
       `;
 
       ingredientContainer.appendChild(itemElement);
