@@ -526,14 +526,15 @@ class IngredientGlossary extends HTMLElement {
     const sortedAzItems = filteredItems.sort((a, b) => a.fields.find((i) => i.key === 'name').value.localeCompare(b.fields.find((i) => i.key === 'name').value));
     const filteredSortedItems = this.sortByValue === 'az' ? sortedAzItems : sortedAzItems.reverse();
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const paginatedItems = filteredSortedItems.slice(startIndex, startIndex + this.itemsPerPage);
-    
+    const endIndex = Math.min(startIndex + this.itemsPerPage, filteredSortedItems.length);
+    const paginatedItems = filteredSortedItems.slice(startIndex, endIndex);
+  
     const resultsElement = this.querySelector('.results-count');
     resultsElement.innerHTML = `${filteredItems.length} results`;
-
+  
     const ingredientContainer = this.querySelector('.ingredient-list');
     ingredientContainer.innerHTML = ''; // Clear the previous content
-
+  
     // Add the paginated items to the container
     paginatedItems.forEach(item => {
       const nameField = item.fields.find(field => field.key === 'name');
@@ -542,7 +543,7 @@ class IngredientGlossary extends HTMLElement {
       const categoryField = item.fields.find(field => field.key === 'category');
       const categoryArray = categoryField ? JSON.parse(categoryField.value) : [];
       const tagClass = 'rounded-full px-2 py-0.5 bg-wave-200 text-xs';
-
+  
       const itemElement = document.createElement('div');
       itemElement.classList.add('border-b', 'border-seaweed-300', 'py-4', 'mb-4');
       itemElement.innerHTML = `
@@ -553,10 +554,14 @@ class IngredientGlossary extends HTMLElement {
           ${categoryArray.map((i) => `<div class="${tagClass}">${i}</div>`).join('')}
         </div>
       `;
-
+  
       ingredientContainer.appendChild(itemElement);
     });
-
+  
+    // Display the current count (e.g., "Showing 1 - 10 of 308")
+    const currentCountElement = this.querySelector('.current-count');
+    currentCountElement.textContent = `Showing ${startIndex + 1} - ${endIndex} of ${filteredItems.length}`;
+  
     this.renderPagination(filteredItems.length); // Update pagination controls
   }
   
@@ -589,7 +594,7 @@ class IngredientGlossary extends HTMLElement {
     firstPageLink.href = '#';
     firstPageLink.textContent = 1;
     if (this.currentPage === 1) {
-      firstPageLink.classList.add('active');
+      firstPageLink.classList.add('font-bold'); // Bold current page
     }
     firstPageLink.addEventListener('click', (e) => {
       e.preventDefault();
@@ -614,7 +619,7 @@ class IngredientGlossary extends HTMLElement {
       pageLink.href = '#';
       pageLink.textContent = i;
       if (i === this.currentPage) {
-        pageLink.classList.add('active');
+        pageLink.classList.add('font-bold'); // Bold current page
       }
       pageLink.addEventListener('click', (e) => {
         e.preventDefault();
@@ -637,7 +642,7 @@ class IngredientGlossary extends HTMLElement {
       lastPageLink.href = '#';
       lastPageLink.textContent = totalPages;
       if (this.currentPage === totalPages) {
-        lastPageLink.classList.add('active');
+        lastPageLink.classList.add('font-bold'); // Bold current page
       }
       lastPageLink.addEventListener('click', (e) => {
         e.preventDefault();
@@ -652,7 +657,7 @@ class IngredientGlossary extends HTMLElement {
       const nextLink = document.createElement('a');
       nextLink.classList.add('px-1');
       nextLink.href = '#';
-      prevLink.innerHTML = `<svg class="w-5 h-5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Next">
+      nextLink.innerHTML = `<svg class="w-5 h-5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Next">
         <polyline points="15 18 9 12 15 6"></polyline>
       </svg>`;
       nextLink.addEventListener('click', (e) => {
