@@ -597,6 +597,8 @@ class IngredientGlossary extends HTMLElement {
     }
 
     // Next page link
+    console.log("this.currentPage", this.currentPage);
+    console.log("totalPages", totalPages);
     if (this.currentPage < totalPages) {
       const nextLink = document.createElement('a');
       prevLink.classList.add('button', 'button-xs');
