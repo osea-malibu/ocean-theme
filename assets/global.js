@@ -663,6 +663,21 @@ class IngredientGlossary extends HTMLElement {
       paginationContainer.appendChild(nextLink);
     }
   }
+  
+  // Initialize the list count radio
+  initializeListCount() {
+    const listCountFieldset = this.querySelector('#list-count');
+    listCountFieldset.addEventListener('change', (event) => {
+      const selectedCount = event.target.value;
+      if (selectedCount === 'all') {
+        this.itemsPerPage = this.metaObjects.length; // Show all items
+      } else {
+        this.itemsPerPage = parseInt(selectedCount, 10);
+      }
+      this.currentPage = 1; // Reset to the first page
+      this.renderPage(); // Re-render the page with new item count
+    });
+  }
 }
 customElements.define("ingredient-glossary", IngredientGlossary);
 
