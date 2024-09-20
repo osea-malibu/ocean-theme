@@ -523,9 +523,10 @@ class IngredientGlossary extends HTMLElement {
   // Render a specific page of items
   renderPage() {
     const filteredItems = this.filterItems();
+    const sortedItems = this.sortByValue === 'az' ? filteredItems.sort() : filteredItems.sort().reverse();
     console.log("filteredItems", filteredItems);
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const paginatedItems = filteredItems.slice(startIndex, startIndex + this.itemsPerPage);
+    const paginatedItems = sortedItems.slice(startIndex, startIndex + this.itemsPerPage);
     
     const resultsElement = this.querySelector('.results-count');
     resultsElement.innerHTML = `${filteredItems.length} results`;
