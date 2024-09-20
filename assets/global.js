@@ -678,7 +678,7 @@ class IngredientGlossary extends HTMLElement {
       const tagClass = 'rounded-full px-2 py-0.5 bg-wave-200 text-xs';
 
       const itemElement = document.createElement('div');
-      itemElement.classList.add('border-b', 'border-seaweed-300', 'flex', 'flex-col', 'justify-center', 'h-32');
+      itemElement.classList.add('border-b', 'border-seaweed-300', 'flex', 'flex-col', 'justify-center', 'min-h-32');
       itemElement.innerHTML = `
         <p><b>${nameField ? nameField.value : 'Unnamed'}</b></p>
         ${commonNameField ? `<em>${commonNameField.value}</em>` : ''}
