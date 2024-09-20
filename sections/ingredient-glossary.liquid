@@ -69,7 +69,14 @@
               {% assign list_counts = '10,50,All' | split: ',' %}
               {% for list_count in list_counts %}
                 <div class="flex items-center gap-1">
-                  <input type="radio" name="list-count" id="{{ list_count }}" value="{{ list_count }}"{% if list_count == '10' %} checked{% endif %}>
+                  <input
+                    type="radio"
+                    name="list-count"
+                    id="{{ list_count }}"
+                    value="{{ list_count }}"
+                    class="hidden"
+                    {% if list_count == '10' %} checked{% endif %}
+                  >
                   <label for="{{ list_count }}">{{ list_count }}</label>
                 </div>
               {% endfor %}
