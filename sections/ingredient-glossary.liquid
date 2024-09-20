@@ -34,11 +34,7 @@
         {% paginate shop.metaobjects.ingredient_glossary.values by items_per_page %}
           <div class="border-b border-seaweed-700 mb-2 pb-2 flex justify-between">
           <h2 class="font-bold">Ingredients</h2>
-          {% assign total_entries = 0 %}
-          {% paginate shop.metaobjects.ingredient_glossary.values by 50 %}
-            {% assign total_entries = total_entries | plus: paginate.items.size %}
-          {% endpaginate %}
-          <em class="results-count">{{ total_entries }} results</em>
+          <em class="results-count"></em>
           </div>
           <div class="ingredient-list">
             <!-- Iterate over the paginated items -->
