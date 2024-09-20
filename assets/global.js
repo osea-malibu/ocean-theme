@@ -524,7 +524,7 @@ class IngredientGlossary extends HTMLElement {
       const commonNameField = item.fields.find(field => field.key === 'common_name');
       const definitionField = item.fields.find(field => field.key === 'definition');
       const categoryField = item.fields.find(field => field.key === 'category');
-      const categoryArray = JSON.parse(categoryField.value);
+      const categoryArray = categoryField ? JSON.parse(categoryField.value) : [];
       const tagClass = 'rounded-full px-4 py-0.5 bg-seafoam-200 text-sm'
 
       const itemElement = document.createElement('div');
