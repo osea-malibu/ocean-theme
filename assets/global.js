@@ -400,11 +400,31 @@ class IngredientGlossary extends HTMLElement {
       this.currentPage = parseInt(params.get('page'), 10);
     }
   
-    // Set categories if present (same as before)
-    // ...
+    // Set categories if present
+    if (params.has('category')) {
+      this.selectedCategories = params.get('category').split(',');
+      this.filterForm.querySelectorAll('input[name="category"]').forEach((checkbox) => {
+        if (this.selectedCategories.includes(checkbox.value)) {
+          checkbox.checked = true;
+        } else {
+          checkbox.checked = false;
+        }
+      });
   
-    // Set sort if present (same as before)
-    // ...
+      // Uncheck the 'All' checkbox if specific categories are selected
+      const allCheckbox = this.filterForm.querySelector('input[value="all"]');
+      if (this.selectedCategories.length > 0 && !this.selectedCategories.includes('all')) {
+        allCheckbox.checked = false;
+      } else {
+        allCheckbox.checked = true; // Check 'All' if no specific category is selected
+      }
+    }
+  
+    // Set sort if present
+    if (params.has('sort')) {
+      this.sortByValue = params.get('sort');
+      this.sortForm.querySelector('select').value = this.sortByValue;
+    }
   
     // Set list count if present
     if (params.has('listcount')) {
@@ -414,13 +434,23 @@ class IngredientGlossary extends HTMLElement {
       } else {
         this.itemsPerPage = parseInt(listCount, 10); // Parse specific counts
       }
-      this.listCountFieldset.querySelector(`input[value="${listCount}"]`).checked = true;
+  
+      // Safely query and check if the element exists before setting the checked property
+      const listCountInput = this.listCountFieldset.querySelector(`input[value="${listCount}"]`);
+      if (listCountInput) {
+        listCountInput.checked = true; // Set the checked property if the input exists
+      } else {
+        console.warn(`Input with value "${listCount}" not found.`);
+      }
   
       // Update the bold class on the currently selected list count label
       this.listCountFieldset.querySelectorAll('label').forEach((label) => {
         label.classList.remove('font-bold'); // Remove bold from all labels
       });
-      this.listCountFieldset.querySelector(`label[for="${listCount}"]`).classList.add('font-bold'); // Add bold to the selected label
+      const listCountLabel = this.listCountFieldset.querySelector(`label[for="${listCount}"]`);
+      if (listCountLabel) {
+        listCountLabel.classList.add('font-bold'); // Add bold to the selected label
+      }
     }
   
     // After initializing, apply filters and render the page
