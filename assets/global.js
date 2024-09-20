@@ -569,7 +569,7 @@ class IngredientGlossary extends HTMLElement {
     // Previous page link
     if (this.currentPage > 1) {
       const prevLink = document.createElement('a');
-      prevLink.classList.add('button', 'button-xs');
+      prevLink.classList.add('button', 'button-xs', 'button-tertiary');
       prevLink.href = '#';
       prevLink.textContent = 'Previous';
       prevLink.addEventListener('click', (e) => {
@@ -601,7 +601,7 @@ class IngredientGlossary extends HTMLElement {
     console.log("totalPages", totalPages);
     if (this.currentPage < totalPages) {
       const nextLink = document.createElement('a');
-      nextLink.classList.add('button', 'button-xs');
+      nextLink.classList.add('button', 'button-xs', 'button-tertiary');
       nextLink.href = '#';
       nextLink.textContent = 'Next';
       nextLink.addEventListener('click', (e) => {
