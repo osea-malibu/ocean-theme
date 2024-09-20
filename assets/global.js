@@ -699,7 +699,7 @@ class IngredientGlossary extends HTMLElement {
 
     for (let i = startPage; i <= endPage; i++) {
       const pageLink = document.createElement('a');
-      pageLink.classList.add('block', 'w-3.5');
+      pageLink.classList.add('w-4');
       pageLink.href = '#';
       pageLink.textContent = i;
       if (i === this.currentPage) {
