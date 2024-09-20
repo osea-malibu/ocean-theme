@@ -525,7 +525,7 @@ class IngredientGlossary extends HTMLElement {
       const definitionField = item.fields.find(field => field.key === 'definition');
       const categoryField = item.fields.find(field => field.key === 'category');
       const categoryArray = JSON.parse(categoryField.value);
-      console.log("categoryField", categoryField);
+      const tagClass = 'rounded-full px-4 py-0.5 bg-seafoam-200 text-sm'
 
       const itemElement = document.createElement('div');
       itemElement.classList.add('border-b', 'border-seaweed-300', 'py-4', 'mb-4');
@@ -534,7 +534,7 @@ class IngredientGlossary extends HTMLElement {
         ${commonNameField ? `<em>${commonNameField.value}</em>` : ''}
         <p>${definitionField ? definitionField.value : ''}</p>
         <div class="flex flex-wrap gap-1">
-          ${categoryField ? categoryArray.map((category) => `<div class="rounded-full px-4 py-0.5 bg-seafoam-200">${category}</div>`) : ''}
+          ${categoryField ? categoryArray.map((i) => `<div class="${tagClass}">${i}</div>`) : ''}
         </div>
       `;
 
