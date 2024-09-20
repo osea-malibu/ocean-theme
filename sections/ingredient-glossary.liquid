@@ -98,7 +98,7 @@
               {% endfor %}
           
               {% if paginate.next %}
-                <a href="{{ paginate.next.url }}">{% render 'icon-chevron', classes: 'w-6 h-6 text-seaweed-700' %}</a>
+                <a href="{{ paginate.next.url }}">{% render 'icon-chevron', classes: 'w-6 h-6 text-seaweed-700 rotate-180', stroke_width: 2 %}</a>
               {% endif %}
             </div>
             
