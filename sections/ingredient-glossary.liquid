@@ -42,8 +42,8 @@
                 <p>{{ ingredient.definition }}</p>
                 <div class="flex flex-wrap gap-1">
                   <script>console.log("ingredient.category", {{ ingredient.category }})</script>
-                  {%- for category in ingredient.category -%}
-                    <div class="rounded-full px-2 py-0.5 bg-wave-200 text-xs">{{ category.value }}</div>
+                  {%- for category in ingredient.category.value -%}
+                    <div class="rounded-full px-2 py-0.5 bg-wave-200 text-xs">{{ category }}</div>
                   {%- endfor -%}
                 </div>
               </div>
