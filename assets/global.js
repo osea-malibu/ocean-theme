@@ -525,7 +525,7 @@ class IngredientGlossary extends HTMLElement {
       const definitionField = item.fields.find(field => field.key === 'definition');
       const categoryField = item.fields.find(field => field.key === 'category');
       const categoryArray = categoryField ? JSON.parse(categoryField.value) : [];
-      const tagClass = 'rounded-full px-4 py-0.5 bg-seafoam-200 text-sm'
+      const tagClass = 'rounded-full px-2 py-0.5 bg-seafoam-200 text-xs'
 
       const itemElement = document.createElement('div');
       itemElement.classList.add('border-b', 'border-seaweed-300', 'py-4', 'mb-4');
