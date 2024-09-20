@@ -466,7 +466,7 @@ class IngredientGlossary extends HTMLElement {
   }
 
   // Initialize the category filter
-  initializeCategoryFilter() {    
+  initializeFilters() {    
     this.filterForm.addEventListener('change', (event) => {
       const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
       
@@ -492,7 +492,7 @@ class IngredientGlossary extends HTMLElement {
   }
 
   // Initialize the category filter
-  initializeSortBy() {    
+  initializeSorts() {    
     this.filterForm.addEventListener('change', (event) => {
       const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
       
