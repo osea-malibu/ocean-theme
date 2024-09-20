@@ -571,7 +571,7 @@ class IngredientGlossary extends HTMLElement {
     // Previous page link
     if (this.currentPage > 1) {
       const prevLink = document.createElement('a');
-      prevLink.classList.add('button', 'button-xs', 'button-tertiary');
+      prevLink.classList.add('button', 'button-xs', 'button-secondary');
       prevLink.href = '#';
       prevLink.textContent = 'Previous';
       prevLink.addEventListener('click', (e) => {
@@ -584,7 +584,7 @@ class IngredientGlossary extends HTMLElement {
   
     // First page link
     const firstPageLink = document.createElement('a');
-    firstPageLink.classList.add('button', 'button-xs', 'button-secondary', 'px-0.5', 'w-6', 'shrink-0');
+    firstPageLink.classList.add('px-0.5');
     firstPageLink.href = '#';
     firstPageLink.textContent = 1;
     if (this.currentPage === 1) {
@@ -610,7 +610,7 @@ class IngredientGlossary extends HTMLElement {
   
     for (let i = startPage; i <= endPage; i++) {
       const pageLink = document.createElement('a');
-      pageLink.classList.add('button', 'button-xs', 'button-secondary', 'px-0.5', 'w-6', 'shrink-0');
+      pageLink.classList.add('px-0.5');
       pageLink.href = '#';
       pageLink.textContent = i;
       if (i === this.currentPage) {
@@ -634,7 +634,7 @@ class IngredientGlossary extends HTMLElement {
     // Last page link
     if (totalPages > 1) {
       const lastPageLink = document.createElement('a');
-      lastPageLink.classList.add('button', 'button-xs', 'button-secondary', 'px-0.5', 'w-6', 'shrink-0');
+      lastPageLink.classList.add('px-0.5');
       lastPageLink.href = '#';
       lastPageLink.textContent = totalPages;
       if (this.currentPage === totalPages) {
@@ -651,7 +651,7 @@ class IngredientGlossary extends HTMLElement {
     // Next page link
     if (this.currentPage < totalPages) {
       const nextLink = document.createElement('a');
-      nextLink.classList.add('button', 'button-xs', 'button-tertiary');
+      nextLink.classList.add('button', 'button-xs', 'button-secondary');
       nextLink.href = '#';
       nextLink.textContent = 'Next';
       nextLink.addEventListener('click', (e) => {
