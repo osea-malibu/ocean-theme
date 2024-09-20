@@ -525,11 +525,14 @@ class IngredientGlossary extends HTMLElement {
   // Fetch and log all ingredients
   async getAllIngredients() {
     try {
+      // Fetch all the metaobjects
       const allMetaObjects = await this.fetchAllMetaObjects();
-      this.metaObjects = allMetaObjects; // Store all metaobjects for filtering
-      this.renderPage(); // Render the first page of items
+      this.metaObjects = allMetaObjects; // Store the metaobjects for filtering and sorting
+  
+      // Ensure that filters from the URL are applied after fetching
+      this.initializeFromUrl(); // Apply filters, sort, and list count from the URL after fetching metaobjects
     } catch (error) {
-      console.error('Error fetching metaobjects:', error); // Log any errors to the console
+      console.error('Error fetching metaobjects:', error);
     }
   }
 
@@ -601,16 +604,18 @@ class IngredientGlossary extends HTMLElement {
 
   // Filter and paginate the metaobjects
   filterItems() {
+    // If no specific categories are selected or 'All' is checked, return all metaObjects
     if (this.selectedCategories.length === 0 || this.filterForm.querySelector('input[value="all"]').checked) {
-      return this.metaObjects; // No category selected, return all items
+      return this.metaObjects;
     }
-
+  
     // Filter the metaobjects based on the selected categories
-    return this.metaObjects.filter(item => {
-      const categoryField = item.fields.find(field => field.key === 'category');
+    return this.metaObjects.filter((item) => {
+      const categoryField = item.fields.find((field) => field.key === 'category');
       if (categoryField) {
         const categoryArray = JSON.parse(categoryField.value);
-        return categoryArray.some(category => this.selectedCategories.includes(category));
+        // Check if any category matches the selected ones
+        return categoryArray.some((category) => this.selectedCategories.includes(category));
       } else {
         return false;
       }
