@@ -372,7 +372,7 @@ class IngredientGlossary extends HTMLElement {
     super();
     this.selectedCategories = [];
     this.currentPage = 1;
-    this.itemsPerPage = 50;
+    this.itemsPerPage = 10;
     this.metaObjects = [];
     this.filterForm = document.getElementById('category-filter-form');
 
