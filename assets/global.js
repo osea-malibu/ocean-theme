@@ -394,12 +394,12 @@ class IngredientGlossary extends HTMLElement {
   // Initialize the state from URL parameters
   initializeFromUrl() {
     const params = new URLSearchParams(window.location.search);
-
+  
     // Set page if present
     if (params.has('page')) {
       this.currentPage = parseInt(params.get('page'), 10);
     }
-
+  
     // Set categories if present
     if (params.has('category')) {
       this.selectedCategories = params.get('category').split(',');
@@ -409,18 +409,21 @@ class IngredientGlossary extends HTMLElement {
         }
       });
     }
-
+  
     // Set sort if present
     if (params.has('sort')) {
       this.sortByValue = params.get('sort');
       this.sortForm.querySelector('select').value = this.sortByValue;
     }
-
+  
     // Set list count if present
     if (params.has('listcount')) {
       this.itemsPerPage = params.get('listcount') === 'all' ? this.metaObjects.length : parseInt(params.get('listcount'), 10);
       this.listCountFieldset.querySelector(`input[value="${params.get('listcount')}"]`).checked = true;
     }
+  
+    // After initializing, apply filters and render the page
+    this.renderPage(); // Ensure that the page is rendered with the applied filters
   }
 
   // Update the URL with the current settings
