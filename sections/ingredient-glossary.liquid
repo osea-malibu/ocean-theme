@@ -99,28 +99,28 @@
             <!-- Display pagination links -->
             <div class="pagination flex items-center gap-2 text-center">
               {% if paginate.previous %}
-                <a href="{{ paginate.previous.url }}" class="px-1">
+                <a href="{{ paginate.previous.url }}" class="px-1" tabindex="0">
                   {%- render 'icon-chevron', classes: 'w-5 h-5 text-seaweed-700 rotate-180', stroke_width: 2 -%}
                 </a>
               {% endif %}
           
               {% for part in paginate.parts %}
                 {% if part.is_link %}
-                  <a href="{{ part.url }}" class="w-4">{{ part.title }}</a>
+                  <a href="{{ part.url }}" class="w-4" tabindex="0">{{ part.title }}</a>
                 {% else %}
                   <span class="w-4 font-bold">{{ part.title }}</span>
                 {% endif %}
               {% endfor %}
           
               {% if paginate.next %}
-                <a href="{{ paginate.next.url }}" class="px-1">
+                <a href="{{ paginate.next.url }}" class="px-1" tabindex="0">
                   {%- render 'icon-chevron', classes: 'w-5 h-5 text-seaweed-700 rotate-180', stroke_width: 2 -%}
                 </a>
               {% endif %}
             </div>
             
             <!-- Display current count -->
-            <div class="current-count w-44 text-right relative">
+            <div class="current-count w-44 text-right relative" aria-live="polite">
               <div class="absolute inset-0 skeleton bg-wave-400 rounded-md"></div>
             </div>
           </div>
