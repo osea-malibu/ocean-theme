@@ -1423,12 +1423,12 @@
         ".-top-12 {top: -3rem;}",
         ".uao-featured-card > ul {max-width: 820px;}",
         "@media (min-width: 472px) {.xs\\:overflow-visible {overflow: visible; }}",
-        "@media (min-width: 640px) {.sm\\:left-12 {left: 3rem; } .sm\\:right-16 {right: 4rem; }}"
+        "@media (min-width: 640px) {.sm\\:left-12 {left: 3rem; } .sm\\:right-16 {right: 4rem; } .sm\\:pt-12 {padding-top: 3rem; }}"
       ],
       "settings": {
         "section_heading": "",
         "section_classes": "uao-featured-card container bg-uao-light overflow-hidden xs:overflow-visible",
-        "container_classes": "mx-auto flex items-center relative pt-16 pb-16",
+        "container_classes": "mx-auto flex items-center relative pt-16 pb-16 sm:pt-12 sm:pb-12",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
