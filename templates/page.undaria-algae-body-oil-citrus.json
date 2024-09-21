@@ -56,11 +56,11 @@
         "09fe8a89-6cff-47ed-bfee-5441d698b34d": {
           "type": "column",
           "settings": {
-            "column_classes": "bg-white rounded-3xl shadow-lg shadow-shell-800\/25 sm:shadow-none relative mx-auto px-4 pt-4 pb-5 border-2 max-w-xs",
+            "column_classes": "bg-white rounded-3xl shadow-lg shadow-shell-800\/25 sm:shadow-none relative mx-auto px-4 pt-4 pb-5 border-3 max-w-xs",
             "image": "shopify:\/\/shop_images\/UAO_citrus-main.jpg",
             "is_bg_image": false,
             "image_link": "",
-            "image_classes": "w-80 mx-auto max-w-xs mb-4 border-2 rounded-t-xl",
+            "image_classes": "w-full mx-auto max-w-xs mb-4 border-2 rounded-t-xl",
             "image_wrapper_classes": "",
             "image_link_classes": "",
             "image_static_size": "",
@@ -102,7 +102,8 @@
       "custom_css": [
         ".rounded-t-xl {border-top-left-radius: 0.75rem; border-top-right-radius: 0.75rem;}",
         ".rounded-2xl {border-radius: 1rem;}",
-        ".rounded-3xl {border-radius: 1.5rem;}"
+        ".rounded-3xl {border-radius: 1.5rem;}",
+        ".border-3 {border-width: 3px;}"
       ],
       "settings": {
         "section_heading": "",
