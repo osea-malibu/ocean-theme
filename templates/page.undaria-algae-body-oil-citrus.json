@@ -776,7 +776,7 @@
         "column_xLb8XW": {
           "type": "column",
           "settings": {
-            "column_classes": "w-44 -rotate-24 mt-4",
+            "column_classes": "relative z-0 w-44 -rotate-24 mt-4",
             "image": "shopify:\/\/shop_images\/UAO_textures-1.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -817,7 +817,7 @@
         "column_UQBxnp": {
           "type": "column",
           "settings": {
-            "column_classes": "w-44 -rotate-12 mt-1 -ml-32",
+            "column_classes": "relative z-0 w-44 -rotate-12 mt-1 -ml-32",
             "image": "shopify:\/\/shop_images\/UAO_textures-2.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -858,7 +858,7 @@
         "column_d686k9": {
           "type": "column",
           "settings": {
-            "column_classes": "w-44 relative -ml-32",
+            "column_classes": "relative z-0 w-44 -ml-32 hover-z-10",
             "image": "shopify:\/\/shop_images\/UAO_textures-3.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -899,7 +899,7 @@
         "column_bp777k": {
           "type": "column",
           "settings": {
-            "column_classes": "w-44 rotate-12 mt-1 -ml-32",
+            "column_classes": "relative z-0 w-44 rotate-12 mt-1 -ml-32",
             "image": "shopify:\/\/shop_images\/UAO_textures-4.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -940,7 +940,7 @@
         "column_nehxFg": {
           "type": "column",
           "settings": {
-            "column_classes": "w-44 rotate-24 mt-4 -ml-32",
+            "column_classes": "relative z-0 w-44 rotate-24 mt-4 -ml-32",
             "image": "shopify:\/\/shop_images\/UAO_textures-5.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -1029,7 +1029,8 @@
       ],
       "custom_css": [
         ".bottom-10 {bottom: 2.5rem;}",
-        ".left-16 {left: 4rem;}"
+        ".left-16 {left: 4rem;}",
+        ".hover-z-10:hover {z-index: 10;}"
       ],
       "settings": {
         "section_heading": "",
