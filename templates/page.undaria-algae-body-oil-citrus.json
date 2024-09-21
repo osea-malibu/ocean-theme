@@ -1421,11 +1421,12 @@
       "custom_css": [
         ".bg-seaweed-400\\\/20 {background-color: rgba(160, 190, 183, 0.2);}",
         ".-top-12 {top: -3rem;}",
-        ".uao-featured-card > ul {max-width: 820px;}"
+        ".uao-featured-card > ul {max-width: 820px;}",
+        "@media (min-width: 414px) {.\\2xs\\:overflow-visible {overflow: visible; }}"
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "uao-featured-card container px-0 bg-uao-light overflow-hidden",
+        "section_classes": "uao-featured-card container bg-uao-light overflow-hidden 2xs:overflow-visible",
         "container_classes": "mx-auto flex items-center relative pt-16 pb-16",
         "is_slider": false,
         "slider_indicator_count": 3,
