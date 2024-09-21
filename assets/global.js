@@ -659,12 +659,12 @@ class IngredientGlossary extends HTMLElement {
     const ingredientContainer = this.querySelector('.ingredient-list');
     const skeletonList = this.querySelector('.skeleton-list');
     if (this.loading) {
-      skeletonList.style.display = 'block';  // Show skeleton when loading
-      ingredientContainer.style.display = 'none';  // Hide ingredients list
+      skeletonList.classList.remove('hidden');  // Show skeleton when loading
+      ingredientContainer.classList.add('hidden');  // Hide ingredients list
       return;
     } else {
-      skeletonList.style.display = 'none';  // Hide skeleton when loaded
-      ingredientContainer.style.display = 'block';  // Show ingredients list
+      skeletonList.classList.add('hidden');  // Hide skeleton when loaded
+      ingredientContainer.classList.remove('hidden');  // Show ingredients list
     }
     
     const filteredItems = this.filterItems();
