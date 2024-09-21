@@ -595,7 +595,6 @@ class IngredientGlossary extends HTMLElement {
   
         // Uncheck the 'All' checkbox if any specific category is selected
         if (this.selectedCategories.length > 0 && this.selectedCategories.length < categoryCheckboxes.length) {
-          console.log("selectedCategories", this.selectedCategories)
           allCheckbox.checked = false;
           categoryDropdownText.innerText = `${this.selectedCategories.join(', ')}`;
         }
