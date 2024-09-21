@@ -36,7 +36,7 @@
                 {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px shrink-0', stroke_width: 2 %}
               </summary>
               {% capture categories_html %}
-                <fieldset>
+                <fieldset class="absolute sm:relative z-20 min-w-40 bg-white rounded border border-seaweed-400 px-3 py-2 shadow-md">
                   <legend class="sr-only">Category</legend>
                   <ul role="list">
                     <li><label class="{{ checkbox_class }}"><input type="checkbox" value="all" checked> All</label></li>
@@ -52,12 +52,6 @@
                 </fieldset>
               {% endcapture %}
               <div class="hidden sm:block">{{ categories_html }}</div>
-              
-              <details class="sm:hidden js-filter group">
-                <div class="absolute z-20 min-w-40 bg-white rounded border border-seaweed-400 px-3 py-2 shadow-md">
-                  {{ categories_html }}
-                </div>
-              </details>
             </form>
           </div>
         </section>
