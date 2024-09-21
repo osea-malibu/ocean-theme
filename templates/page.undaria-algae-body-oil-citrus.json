@@ -1182,11 +1182,12 @@
         "column_E6e6ct"
       ],
       "custom_css": [
-        ".-left-3 {left: -0.75rem;}"
+        ".-left-3 {left: -0.75rem;}",
+        "@media (min-width: 768px) {.uao-clinicals > ul {margin-top: -400px; }}"
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "bg-uao-light container pt-12 pb-12",
+        "section_classes": "uao-clinicals bg-uao-light container pt-12 pb-12",
         "container_classes": "md:w-1\/2 ml-auto flex flex-col items-center",
         "is_slider": false,
         "slider_indicator_count": 3,
