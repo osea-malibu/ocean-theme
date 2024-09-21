@@ -678,7 +678,6 @@ class IngredientGlossary extends HTMLElement {
     const resultsElement = this.querySelector('.results-count');
     resultsElement.innerHTML = `${filteredItems.length} results`;
 
-    const ingredientContainer = this.querySelector('.ingredient-list');
     ingredientContainer.innerHTML = ''; // Clear the previous content
 
     // Add the paginated items to the container
