@@ -16,7 +16,7 @@
         {%- assign form_header_class = 'block font-bold text-sm mb-1' -%}
         {%- assign checkbox_class = 'flex py-1 leading-none items-center gap-1' -%}
         <section class="mb-4" aria-labelledby="filter-sort-title">
-          <h2 class="border-b border-seaweed-700 mb-2 lg:pb-2 font-bold" id="filter-sort-title">Filter and sort</h2>
+          <h2 class="border-b border-seaweed-700 lg:mb-2 pb-2 font-bold" id="filter-sort-title">Filter and sort</h2>
           <div class="flex flex-row-reverse gap-4 sm:flex-col justify-end">
             <form id="sort-form" class="py-4">
               <h3 class="{{ form_header_class }}">Sort by</h3>
@@ -27,7 +27,7 @@
             </form>
             <form id="filter-form" class="py-4">
             <h3 class="{{ form_header_class }}">Category</h3>
-            <details class="sm:hidden js-filter group">
+            <details class="js-filter group">
               <summary
                 class="w-40 flex justify-between items-center gap-1 input input-sm tracking-normal whitespace-nowrap pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
                 aria-label="Category"
