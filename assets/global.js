@@ -415,10 +415,13 @@ class IngredientGlossary extends HTMLElement {
   
       // Uncheck the 'All' checkbox if specific categories are selected
       const allCheckbox = this.filterForm.querySelector('input[value="all"]');
+      const categoryDropdownText = this.querySelector('.category-dropdown-text');
       if (this.selectedCategories.length > 0 && !this.selectedCategories.includes('all')) {
         allCheckbox.checked = false;
+        categoryDropdownText.innerText = `${this.selectedCategories.join(', ')}`;
       } else {
         allCheckbox.checked = true; // Check 'All' if no specific category is selected
+        categoryDropdownText.innerText = 'All';
       }
     }
   
