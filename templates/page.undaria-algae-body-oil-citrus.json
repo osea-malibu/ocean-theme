@@ -1031,7 +1031,8 @@
         ".left-16 {left: 4rem;}",
         ".hover\\:z-10:hover {z-index: 10;}",
         ".hover\\:rotate-0:hover {transform: rotate(0);}",
-        ".shadow-custom {box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);}"
+        ".shadow-custom {box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);}",
+        ".peer:checked ~ .peer-checked:rotate-0 {transform: rotate(0);}"
       ],
       "settings": {
         "section_heading": "",
