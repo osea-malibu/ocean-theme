@@ -574,6 +574,7 @@ class IngredientGlossary extends HTMLElement {
           // If 'All' is selected, uncheck all specific category checkboxes
           categoryCheckboxes.forEach((checkbox) => {
             checkbox.checked = true;
+            categoryDropdownText.innerText = 'All';
           });
         } else {
           // If 'All' is deselected, uncheck all categories
@@ -591,12 +592,13 @@ class IngredientGlossary extends HTMLElement {
         // Uncheck the 'All' checkbox if any specific category is selected
         if (this.selectedCategories.length > 0 && this.selectedCategories.length < categoryCheckboxes.length) {
           allCheckbox.checked = false;
-          categoryDropdownText.innerText = `${this.selectedCategories.join(', ')}`
+          categoryDropdownText.innerText = `${this.selectedCategories.join(', ')}`;
         }
   
         // Check 'All' checkbox if all categories are selected
         if (this.selectedCategories.length === categoryCheckboxes.length) {
           allCheckbox.checked = true;
+          categoryDropdownText.innerText = 'All';
         }
       }
   
