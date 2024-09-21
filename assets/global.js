@@ -655,8 +655,10 @@ class IngredientGlossary extends HTMLElement {
   }
 
   // Render a specific page of items
-  renderPage() {
+  renderPage() {    
     const ingredientContainer = this.querySelector('.ingredient-list');
+    ingredientContainer.querySelector('div:first-of-type').focus(); // Set focus to first list item
+    
     const skeletonList = this.querySelector('.skeleton-list');
     if (this.loading) {
       skeletonList.classList.remove('hidden');  // Show skeleton when loading
