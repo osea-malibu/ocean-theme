@@ -570,7 +570,7 @@ class IngredientGlossary extends HTMLElement {
   initializeFilters() {
     this.filterForm.addEventListener('change', (event) => {
       const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
-      const allCheckboxes = this.filterForm.querySelectorAll('input[value="all"]');
+      const allCheckbox = this.filterForm.querySelector('input[value="all"]');
       const categoryDropdownText = this.querySelector('.category-dropdown-text');
   
       if (event.target.value === 'all') {
@@ -596,13 +596,13 @@ class IngredientGlossary extends HTMLElement {
         // Uncheck the 'All' checkbox if any specific category is selected
         if (this.selectedCategories.length > 0 && this.selectedCategories.length < categoryCheckboxes.length) {
           console.log("selectedCategories", this.selectedCategories)
-          allCheckboxes.forEach((i) => i.checked = false);
+          allCheckboxes.checked = false;
           categoryDropdownText.innerText = `${this.selectedCategories.join(', ')}`;
         }
   
         // Check 'All' checkbox if all categories are selected
         if (this.selectedCategories.length === categoryCheckboxes.length) {
-          allCheckboxes.forEach((i) => i.checked = true);
+          allCheckbox.checked = true;
           categoryDropdownText.innerText = 'All';
         }
       }
