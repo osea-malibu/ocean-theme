@@ -29,6 +29,7 @@
     - remove_lazy_loading: {Boolean} Remove lazy loading from images, default: false (optional)
     - plp_card: {Boolean} Renders card in two column layout, makes image smaller default: false (optional)
     - title_text: {Boolean} Replaces product name with custom title (optional)
+    - short_description_text: {Boolean} Replaces short description with custom text (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -55,7 +56,11 @@
     </div>
 
     <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
-      {{- card_product.metafields.custom_fields.short_description | escape -}}
+      {%- if short_description_text != blank -%}
+        {{- short_description_text | escape -}}
+      {%- else -%}
+        {{- card_product.metafields.custom_fields.short_description | escape -}}
+      {%- endif -%}
     </p>
     
     {%- liquid
