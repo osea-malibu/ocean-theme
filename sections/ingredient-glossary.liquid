@@ -13,7 +13,7 @@
 
     <ingredient-glossary class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 md:gap-6 lg:gap-10 pb-12 sm:pb-8">
       <div class="sm:col-span-1">
-        {%- assign form_header_class = 'block font-bold text-sm' -%}
+        {%- assign form_header_class = 'block font-bold text-sm mb-1' -%}
         {%- assign checkbox_class = 'flex py-1 leading-none items-center gap-1' -%}
         <section class="sm:mb-4 relative" aria-labelledby="filter-sort-title">
           <h2 class="sr-only sm:!not-sr-only" id="filter-sort-title">
@@ -21,7 +21,7 @@
           </h2>
           <div class="flex flex-row-reverse gap-2 sm:flex-col justify-end absolute top-0 left-0 -mt-6 z-10 sm:relative sm:!mt-0 sm:pt-6">
             <form id="sort-form" class="sm:pt-2 lg:pt-4">
-              <h3 class="{{ form_header_class }} mb-1">Sort by</h3>
+              <h3 class="{{ form_header_class }}">Sort by</h3>
               <select class="input input-sm w-28 lg:w-40">
                 <option value="az">Name (A-Z)</option>
                 <option value="za">Name (Z-A)</option>
@@ -34,7 +34,7 @@
                 for="mobile-category-dropdown"
                 class="w-28 lg:w-40 flex justify-between items-center gap-1 input input-sm tracking-normal pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
               >
-                <span class="category-dropdown-text {{ form_header_class }} leading-4 overflow-hidden text-elipsis whitespace-nowrap">All</span>
+                <span class="category-dropdown-text block text-sm leading-4 overflow-hidden text-elipsis whitespace-nowrap">All</span>
                 {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px shrink-0', stroke_width: 2 %}
               </label>
               <fieldset class="absolute sm:relative z-20 min-w-40 bg-white rounded border border-seaweed-400 px-3 py-2 shadow-md">
