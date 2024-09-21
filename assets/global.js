@@ -580,6 +580,7 @@ class IngredientGlossary extends HTMLElement {
           // If 'All' is deselected, uncheck all categories
           categoryCheckboxes.forEach((checkbox) => {
             checkbox.checked = false;
+            categoryDropdownText.innerText = 'All';
           });
         }
         this.selectedCategories = []; // Reset selected categories
