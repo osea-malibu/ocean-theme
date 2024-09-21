@@ -29,6 +29,12 @@
             </form>
             <form id="filter-form" class="sm:pt-2 lg:pt-4">
               <h3 class="{{ form_header_class }}">Category</h3>
+              <summary
+                class="w-28 lg:w-40 flex justify-between items-center gap-1 input input-sm tracking-normal pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
+              >
+                <span class="category-dropdown-text {{ form_header_class }} leading-4 overflow-hidden text-elipsis whitespace-nowrap">All</span>
+                {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px shrink-0', stroke_width: 2 %}
+              </summary>
               {% capture categories_html %}
                 <fieldset>
                   <legend class="sr-only">Category</legend>
@@ -48,13 +54,6 @@
               <div class="hidden sm:block">{{ categories_html }}</div>
               
               <details class="sm:hidden js-filter group">
-                <summary
-                  class="w-28 lg:w-40 flex justify-between items-center gap-1 input input-sm tracking-normal pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
-                  aria-label="Category"
-                >
-                  <span class="category-dropdown-text leading-4 text-sm font-book overflow-hidden text-elipsis whitespace-nowrap">All</span>
-                  {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px shrink-0', stroke_width: 2 %}
-                </summary>
                 <div class="absolute z-20 min-w-40 bg-white rounded border border-seaweed-400 px-3 py-2 shadow-md">
                   {{ categories_html }}
                 </div>
