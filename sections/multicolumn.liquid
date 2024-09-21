@@ -401,7 +401,8 @@
                       default_to_mini: block.settings.default_to_mini,
                       default_to_jumbo: block.settings.default_to_jumbo,
                       variant_picker_type: block.settings.variant_picker_type,
-                      title_text: block.settings.title_text
+                      title_text: block.settings.title_text,
+                      short_description_text: block.settings.short_description_text
                     %}
                   {%- endif -%}
                   {% comment %} theme-check-enable LiquidTag {% endcomment %}
@@ -880,6 +881,11 @@
           "type": "textarea",
           "id": "name_classes",
           "label": "Product name classes"
+        },
+        {
+          "type": "text",
+          "id": "short_description_text",
+          "label": "Custom short description text"
         },
         {
           "type": "textarea",
