@@ -244,6 +244,8 @@
             {%- liquid
               if default_to_mini
                 assign default_id = card_product.variants[mini_index].id
+              elsif default_to_jumbo
+                 assign default_id = card_product.variants[0].id
               else 
                 assign default_id = card_product.selected_or_first_available_variant.id
               endif
