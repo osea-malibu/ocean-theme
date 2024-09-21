@@ -26,20 +26,6 @@
           </form>
           <form id="filter-form" class="py-4">
             <h3 class="{{ form_header_class }}">Category</h3>
-            {% capture category_list_html %}
-              <ul>
-                <li><label class="{{ checkbox_class }}"><input type="checkbox" value="all" checked> All</label></li>
-                {% for category in all_categories %}
-                  <li>
-                    <label class="{{ checkbox_class }}">
-                      <input type="checkbox" name="category" value="{{ category }}">
-                      {{ category }}
-                    </label>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endcapture %}
-
             <details class="sm:hidden js-filter group">
               <summary
                   class="w-40 flex justify-between items-center gap-1 input input-sm tracking-normal whitespace-nowrap pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
@@ -48,7 +34,22 @@
                   <span class="leading-4 text-sm font-book">All</span>
                   {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px', stroke_width: 2 %}
               </summary>
-              <div class="absolute z-20 min-w-40 bg-white rounded border border-seaweed-400 px-3 py-2">{{ category_list_html }}</div>
+              <div class="absolute z-20 min-w-40 bg-white rounded border border-seaweed-400 px-3 py-2">
+                <fieldset>
+                  <legend class="sr-only">Category</legend>
+                  <ul role="list">
+                    <li><label class="{{ checkbox_class }}"><input type="checkbox" value="all" checked> All</label></li>
+                    {% for category in all_categories %}
+                      <li>
+                        <label class="{{ checkbox_class }}">
+                          <input type="checkbox" name="category" value="{{ category }}">
+                          {{ category }}
+                        </label>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </fieldset>
+              </div>
             </details>
           </form>
         </section>
