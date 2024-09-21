@@ -79,18 +79,6 @@
             endfor
           endif
         endif
-        if default_to_jumbo
-          assign jumbo_index = 0
-          if card_product.options.size > 1 or card_product.options contains 'Amount:'
-            assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz, $25' | split: ', '
-            for variant in card_product.variants
-              assign normalized_variant_title = variant.title | replace: 'fl ', ''
-              if travel_sizes contains normalized_variant_title
-                assign mini_index = forloop.index0
-              endif
-            endfor
-          endif
-        endif
       -%}
       <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         {%- liquid
@@ -222,7 +210,9 @@
                           checked
                         {% elsif option.name == 'Size' and default_to_mini and forloop.last %}
                           checked
-                        {% elsif default_to_mini != true and option.selected_value == value %}
+                        {% elsif option.name == 'Size' and default_to_jumbo and forloop.first %}
+                          checked
+                        {% elsif default_to_mini != true and default_to_jumbo != true and option.selected_value == value %}
                           checked
                         {% endif %}
                       >
