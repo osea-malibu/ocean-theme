@@ -423,7 +423,7 @@
 
     {%- if hide_badge != true -%}
       {%- if custom_badge_html != blank -%}
-        <div class="{{ custom_badge_classes }}">
+        <div class="absolute top-1 right-1{% if custom_badge_classes != blank %} {{ custom_badge_classes }}{% endif %}">
           {{ custom_badge_html }}
         </div>
       {%- else -%}
