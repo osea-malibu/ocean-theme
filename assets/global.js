@@ -723,6 +723,7 @@ class IngredientGlossary extends HTMLElement {
       const prevLink = document.createElement('a');
       prevLink.classList.add('px-1');
       prevLink.href = '#';
+      prevLink.setAttribute('aria-label', 'Go to previous page');
       prevLink.innerHTML = `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Previous">
         <polyline points="15 18 9 12 15 6"></polyline>
       </svg>`;
@@ -740,6 +741,7 @@ class IngredientGlossary extends HTMLElement {
     firstPageLink.href = '#';
     firstPageLink.textContent = 1;
     firstPageLink.classList.add('w-4');
+    firstPageLink.setAttribute('aria-label', 'Go to first page');
     if (this.currentPage === 1) {
       firstPageLink.classList.add('font-bold'); // Bold current page
     }
@@ -768,6 +770,7 @@ class IngredientGlossary extends HTMLElement {
       pageLink.classList.add('w-4');
       pageLink.href = '#';
       pageLink.textContent = i;
+      pageLink.setAttribute('aria-label', `Go to page ${i}`);
       if (i === this.currentPage) {
         pageLink.classList.add('font-bold'); // Bold current page
       }
@@ -793,6 +796,7 @@ class IngredientGlossary extends HTMLElement {
       const lastPageLink = document.createElement('a');
       lastPageLink.href = '#';
       lastPageLink.textContent = totalPages;
+      lastPageLink.setAttribute('aria-label', `Go to page ${totalPages}`);
       if (this.currentPage === totalPages) {
         lastPageLink.classList.add('font-bold'); // Bold current page
       }
@@ -810,6 +814,7 @@ class IngredientGlossary extends HTMLElement {
       const nextLink = document.createElement('a');
       nextLink.classList.add('px-1');
       nextLink.href = '#';
+      nextLink.setAttribute('aria-label', 'Go to next page');
       nextLink.innerHTML = `<svg class="w-5 h-5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Next">
         <polyline points="15 18 9 12 15 6"></polyline>
       </svg>`;
