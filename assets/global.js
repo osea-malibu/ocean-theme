@@ -568,6 +568,7 @@ class IngredientGlossary extends HTMLElement {
     this.filterForm.addEventListener('change', (event) => {
       const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
       const allCheckboxes = this.filterForm.querySelectorAll('input[value="all"]');
+      const categoryDropdownText = this.querySelector('.category-dropdown-text');
   
       if (event.target.value === 'all') {
         if (event.target.checked) {
@@ -586,7 +587,6 @@ class IngredientGlossary extends HTMLElement {
         this.selectedCategories = []; // Reset selected categories
       } else {
         // If a specific category is checked, uncheck the 'All' checkbox
-        const categoryDropdownText = this.querySelector('.category-dropdown-text');
         const selectedCheckboxes = this.filterForm.querySelectorAll('input[name="category"]:checked');
         this.selectedCategories = Array.from(selectedCheckboxes).map((checkbox) => checkbox.value);
   
