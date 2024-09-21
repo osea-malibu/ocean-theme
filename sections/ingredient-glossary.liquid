@@ -29,7 +29,7 @@
             </form>
             <form id="filter-form" class="sm:pt-2 lg:pt-4 relative">
               <h3 class="{{ form_header_class }}">Category</h3>
-              <input type="checkbox" class="hidden" id="mobile-category-dropdown">
+              <input type="checkbox" class="hidden peer" id="mobile-category-dropdown">
               <label
                 for="mobile-category-dropdown"
                 class="w-28 lg:w-40 flex justify-between items-center gap-1 input input-sm tracking-normal pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
@@ -37,7 +37,7 @@
                 <span class="category-dropdown-text block text-sm leading-4 overflow-hidden text-elipsis whitespace-nowrap">All</span>
                 {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px shrink-0', stroke_width: 2 %}
               </label>
-              <fieldset class="absolute sm:relative z-20 min-w-40 bg-white rounded border border-seaweed-400 px-3 py-2 shadow-md">
+              <fieldset class="absolute sm:relative z-20 min-w-40 bg-white rounded border border-seaweed-400 px-3 py-2 shadow-md hidden peer-checked:block">
                 <legend class="sr-only">Category</legend>
                 <ul role="list">
                   <li><label class="{{ checkbox_class }}"><input type="checkbox" value="all" checked> All</label></li>
