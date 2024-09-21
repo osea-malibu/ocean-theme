@@ -17,14 +17,15 @@
         {%- assign checkbox_class = 'flex py-1 leading-none items-center gap-1' -%}
         <section class="mb-4" aria-labelledby="filter-sort-title">
           <h2 class="border-b border-seaweed-700 mb-2 pb-2 font-bold" id="filter-sort-title">Filter and sort</h2>
-          <form id="sort-form" class="py-4">
-            <h3 class="{{ form_header_class }}">Sort by</h3>
-            <select class="input input-sm w-40">
-              <option value="az">Name (A-Z)</option>
-              <option value="za">Name (Z-A)</option>
-            </select>
-          </form>
-          <form id="filter-form" class="py-4">
+          <div class="flex sm:flex-col">
+            <form id="sort-form" class="py-4">
+              <h3 class="{{ form_header_class }}">Sort by</h3>
+              <select class="input input-sm w-40">
+                <option value="az">Name (A-Z)</option>
+                <option value="za">Name (Z-A)</option>
+              </select>
+            </form>
+            <form id="filter-form" class="py-4">
             <h3 class="{{ form_header_class }}">Category</h3>
             <details class="sm:hidden js-filter group">
               <summary
@@ -52,6 +53,7 @@
               </div>
             </details>
           </form>
+          </div>
         </section>
       </div>
       <section class="sm:col-span-2 lg:col-span-3 relative" aria-labelledby="ingredient-glossary-title">
