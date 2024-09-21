@@ -151,6 +151,14 @@
   </div>
 </div>
 
+{% stylesheet %}
+  @media (min-width: 640px) {
+    .sm\:border-none {
+        border: none;
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
   {
     "name": "Ingredient glossary",
