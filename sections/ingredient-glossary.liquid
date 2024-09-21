@@ -122,7 +122,7 @@
             </fieldset>
             
             <!-- Display pagination links -->
-            <div class="pagination flex items-center gap-2 text-center absolute sm:relative -bottom-8">
+            <div class="pagination flex items-center gap-2 text-center w-full justify-center absolute sm:relative -bottom-8 sm:bottom-0">
               {% if paginate.previous %}
                 <a href="{{ paginate.previous.url }}" class="px-1" tabindex="0">
                   {%- render 'icon-chevron', classes: 'w-5 h-5 text-seaweed-700 rotate-180', stroke_width: 2 -%}
