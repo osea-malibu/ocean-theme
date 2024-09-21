@@ -122,7 +122,7 @@
             "show_variants": true,
             "variant_picker_type": "button",
             "variant_classes": "mt-2",
-            "variant_button_classes": "border-2",
+            "variant_button_classes": "border-2 variant-cartoon",
             "variant_button_nofl": false,
             "video_autoplay": false,
             "video_loop": false,
@@ -147,7 +147,9 @@
         ".border-3 {border-width: 3px;}",
         ".hero-fade {background: linear-gradient( 0deg, rgba(255, 248, 225, 1) 0%, rgba(255, 248, 225, 0) 100% );}",
         ".text-shadow-hard-neon-green {text-shadow: 0px 1px 0px #a7ed1e;}",
-        ".h-28 {height: 7rem;}"
+        ".h-28 {height: 7rem;}",
+        ".variant-cartoon {}",
+        ".peer:checked ~ .variant-cartoon {background-color: rgba(220, 245, 171, 0.5); border-color: #1d4d41;}"
       ],
       "settings": {
         "section_heading": "",
