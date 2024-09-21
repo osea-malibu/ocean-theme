@@ -1208,7 +1208,7 @@
         "column_rhzDzK": {
           "type": "column",
           "settings": {
-            "column_classes": "w-60",
+            "column_classes": "w-64 -mr-4",
             "image": "shopify:\/\/shop_images\/021424_OSEA_UndariaAlgaeBodyOil_UAO-1-61-EditV1_1.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -1290,7 +1290,7 @@
         "column_eC93wT": {
           "type": "column",
           "settings": {
-            "column_classes": "w-60",
+            "column_classes": "w-64 -ml-4",
             "image": "shopify:\/\/shop_images\/053123_OSEA_UltaUAO-27-EditV1_1.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -1420,12 +1420,13 @@
       ],
       "custom_css": [
         ".bg-seaweed-400\\\/20 {background-color: rgba(160, 190, 183, 0.2);}",
-        ".-top-12 {top: -3rem;}"
+        ".-top-12 {top: -3rem;}",
+        ".uao-featured-card > div {max-width: 820px;}"
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "relative container px-0 pt-16 pb-16 bg-uao-light overflow-hidden",
-        "container_classes": "max-w-screen-md mx-auto flex items-center",
+        "section_classes": "uao-featured-card relative container px-0 pt-16 pb-16 bg-uao-light overflow-hidden",
+        "container_classes": "mx-auto flex items-center",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
