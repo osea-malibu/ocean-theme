@@ -940,7 +940,7 @@
         "column_nehxFg": {
           "type": "column",
           "settings": {
-            "column_classes": "relative z-0 w-44 rotate-24 mt-4 -ml-32 hover:z-10 hover:rotate-0",
+            "column_classes": "relative z-0 w-44 rotate-24 mt-4 -ml-32 hover:z-10 hover:rotate-0 hover:-top-4 transition-all",
             "image": "shopify:\/\/shop_images\/UAO_textures-5.png",
             "is_bg_image": false,
             "image_link": "",
@@ -1032,6 +1032,8 @@
         ".left-16 {left: 4rem;}",
         ".hover\\:z-10:hover {z-index: 10;}",
         ".hover\\:rotate-0:hover {transform: rotate(0);}",
+        ".hover\\:-top-4:hover {top: -1rem;}",
+        ".hover\\:-left-16:hover {left: -4rem;}",
         ".shadow-custom {box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);}"
       ],
       "settings": {
