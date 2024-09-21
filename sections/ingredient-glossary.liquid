@@ -26,17 +26,23 @@
           </form>
           <form id="filter-form" class="py-4">
             <h3 class="{{ form_header_class }}">Category</h3>
-            <ul>
-              <li><label class="{{ checkbox_class }}"><input type="checkbox" value="all" checked> All</label></li>
-              {% for category in all_categories %}
-                <li>
-                  <label class="{{ checkbox_class }}">
-                    <input type="checkbox" name="category" value="{{ category }}">
-                    {{ category }}
-                  </label>
-                </li>
-              {% endfor %}
-            </ul>
+            {% capture category_list_html %}
+              <ul>
+                <li><label class="{{ checkbox_class }}"><input type="checkbox" value="all" checked> All</label></li>
+                {% for category in all_categories %}
+                  <li>
+                    <label class="{{ checkbox_class }}">
+                      <input type="checkbox" name="category" value="{{ category }}">
+                      {{ category }}
+                    </label>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endcapture %}
+            <fieldset class="hidden md:block">
+              <legend class="sr-only">Category</legend>
+              {{ category_list_html }}
+            </fieldset>
           </form>
         </section>
       </div>
