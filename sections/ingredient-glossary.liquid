@@ -18,14 +18,14 @@
         <section class="mb-4" aria-labelledby="filter-sort-title">
           <h2 class="border-b border-seaweed-700 lg:mb-2 pb-2 font-bold sr-only sm:not-sr-only" id="filter-sort-title">Filter and sort</h2>
           <div class="flex flex-row-reverse gap-4 sm:flex-col justify-end">
-            <form id="sort-form" class="py-4">
+            <form id="sort-form" class="sm:py-4">
               <h3 class="{{ form_header_class }}">Sort by</h3>
               <select class="input input-sm w-40">
                 <option value="az">Name (A-Z)</option>
                 <option value="za">Name (Z-A)</option>
               </select>
             </form>
-            <form id="filter-form" class="py-4">
+            <form id="filter-form" class="sm:py-4">
               <h3 class="{{ form_header_class }}">Category</h3>
               {% capture categories_html %}
                 <fieldset>
