@@ -1030,6 +1030,8 @@
       "custom_css": [
         ".bottom-10 {bottom: 2.5rem;}",
         ".left-16 {left: 4rem;}",
+        ".ml-4 {margin-left: 1rem;}",
+        "@media (min-width:640px) {.sm\\:ml-16 {margin-left: 4rem;}}",
         ".hover\\:z-10:hover {z-index: 10;}",
         ".hover\\:rotate-0:hover {transform: rotate(0);}",
         ".shadow-custom {box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);}"
@@ -1037,7 +1039,7 @@
       "settings": {
         "section_heading": "",
         "section_classes": "bg-uao-light container",
-        "container_classes": "ml-16 pb-12 relative",
+        "container_classes": "ml-4 sm:ml-16 pb-12 relative",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
