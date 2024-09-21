@@ -402,7 +402,9 @@
                       default_to_jumbo: block.settings.default_to_jumbo,
                       variant_picker_type: block.settings.variant_picker_type,
                       title_text: block.settings.title_text,
-                      short_description_text: block.settings.short_description_text
+                      short_description_text: block.settings.short_description_text,
+                      custom_badge_html: block.settings.custom_badge_html,
+                      custom_badge_classes: block.settings.custom_badge_classes
                     %}
                   {%- endif -%}
                   {% comment %} theme-check-enable LiquidTag {% endcomment %}
@@ -866,6 +868,16 @@
           "type": "textarea",
           "id": "image_element_classes",
           "label": "Image element classes"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_badge_html",
+          "label": "Custom badge html"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_badge_classes",
+          "label": "Custom badge classes"
         },
         {
           "type": "textarea",
