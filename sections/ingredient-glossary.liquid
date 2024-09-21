@@ -44,7 +44,7 @@
               {{ category_list_html }}
             </fieldset>
 
-            <details class="sm:hidden">
+            <details class="sm:hidden js-filter group">
               <summary
                   class="w-40 flex justify-between items-center gap-1 input input-sm tracking-normal whitespace-nowrap pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
                   aria-label="Category"
@@ -52,7 +52,7 @@
                   <span class="leading-4 text-sm font-book">All</span>
                   {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px', stroke_width: 2 %}
               </summary>
-              <div class="absolute z-20 pt-1 min-w-40 bg-white rounded-md">{{ category_list_html }}</div>
+              <div class="absolute z-20 pt-1 min-w-40 bg-white rounded-sm border border">{{ category_list_html }}</div>
             </details>
           </form>
         </section>
