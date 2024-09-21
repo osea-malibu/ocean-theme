@@ -30,6 +30,8 @@
     - plp_card: {Boolean} Renders card in two column layout, makes image smaller default: false (optional)
     - title_text: {Boolean} Replaces product name with custom title (optional)
     - short_description_text: {Boolean} Replaces short description with custom text (optional)
+    - custom_badge_html: {Boolean} Replaces badge with custom HTML (optional)
+    - custom_badge_classes: {Boolean} Tailwind classes for custom badge HTML (optional)
 
     Usage:
     {% render 'product-card', card_product: section.settings.product, section_id: section.id %}
@@ -419,8 +421,14 @@
       </h2>
     {%- endif -%}
 
-    {% if hide_badge != true %}
-      {% render 'product-badge', product: card_product, classes: badge_class, percent_discount: percent_discount %}
-    {% endif %}
+    {%- if hide_badge != true -%}
+      {%- if custom_badge_html != blank -%}
+        <div class="{{ custom_badge_classes }}">
+          {{ custom_badge_html }}
+        </div>
+      {%- else -%}
+        {% render 'product-badge', product: card_product, classes: badge_class, percent_discount: percent_discount %}
+      {%- endif -%}
+    {%- endif -%}
   </div>
 </div>
