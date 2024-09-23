@@ -627,11 +627,14 @@ class IngredientGlossary extends HTMLElement {
   // Initialize the search
   initializeSearch() {
     this.searchForm.addEventListener('submit', (event) => {
-      this.searchQuery = event.target.value;
-      console.log('this.searchQuery', this.searchQuery);
-      this.currentPage = 1; // Reset to the first page
-      this.updateUrlParams(); // Update the URL
-      this.renderPage(); // Re-render the list with the filtered items
+      event.preventDefault();  // Prevent the form from submitting and reloading the page
+      
+      const searchInput = this.searchForm.querySelector('input[type="text"]').value.trim().toLowerCase();
+      this.searchQuery = searchInput;  // Save the search query
+  
+      this.currentPage = 1;  // Reset to the first page when a new search is performed
+      this.updateUrlParams();  // Update the URL with the current state
+      this.renderPage();  // Re-render the list with the filtered items
     });
   }
 
@@ -657,22 +660,35 @@ class IngredientGlossary extends HTMLElement {
 
   // Filter and paginate the metaobjects
   filterItems() {
-    // If the "All" checkbox is checked, or no specific categories are selected, return all items
     const allCheckbox = this.filterForm.querySelector('input[value="all"]');
-    if (this.selectedCategories.length === 0 || allCheckbox.checked) {
-      return this.metaObjects;
+  
+    // Step 1: Filter by categories
+    let filteredItems = this.metaObjects;
+    if (this.selectedCategories.length > 0 && !allCheckbox.checked) {
+      filteredItems = filteredItems.filter((item) => {
+        const categoryField = item.fields.find((field) => field.key === 'category');
+        if (categoryField) {
+          const categoryArray = JSON.parse(categoryField.value);  // Assume this is a JSON array of categories
+          return categoryArray.some((category) => this.selectedCategories.includes(category));
+        }
+        return false;
+      });
     }
   
-    // Filter the metaobjects based on the selected categories
-    return this.metaObjects.filter((item) => {
-      const categoryField = item.fields.find((field) => field.key === 'category');
-      if (categoryField) {
-        const categoryArray = JSON.parse(categoryField.value); // Assume this is a JSON array of categories
-        // Return true if any category in the ingredient matches a selected category
-        return categoryArray.some((category) => this.selectedCategories.includes(category));
-      }
-      return false;
-    });
+    // Step 2: Filter by search query
+    if (this.searchQuery) {
+      filteredItems = filteredItems.filter((item) => {
+        const nameField = item.fields.find((field) => field.key === 'name');
+        const commonNameField = item.fields.find((field) => field.key === 'common_name');
+  
+        const nameMatch = nameField && nameField.value.toLowerCase().includes(this.searchQuery);
+        const commonNameMatch = commonNameField && commonNameField.value.toLowerCase().includes(this.searchQuery);
+  
+        return nameMatch || commonNameMatch;
+      });
+    }
+  
+    return filteredItems;  // Return the filtered items
   }
 
   // Render a specific page of items
