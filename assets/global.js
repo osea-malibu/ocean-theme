@@ -379,6 +379,7 @@ class IngredientGlossary extends HTMLElement {
     
     this.filterForm = document.getElementById('filter-form');
     this.sortForm = document.getElementById('sort-form');
+    this.searchForm = document.getElementById('search-form');
     this.listCountFieldset = document.getElementById('list-count');
 
     // Initialize filters, sorts, and list count from URL if available
