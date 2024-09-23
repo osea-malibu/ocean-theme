@@ -387,6 +387,7 @@ class IngredientGlossary extends HTMLElement {
     // Set up event listeners
     this.initializeFilters();
     this.initializeSorts();
+    this.initializeSearch();
     this.initializeListCount();
     
     // Fetch ingredients and render page
@@ -616,6 +617,17 @@ class IngredientGlossary extends HTMLElement {
   initializeSorts() {
     this.sortForm.addEventListener('change', (event) => {
       this.sortByValue = event.target.value;
+      this.currentPage = 1; // Reset to the first page
+      this.updateUrlParams(); // Update the URL
+      this.renderPage(); // Re-render the list with the filtered items
+    });
+  }
+
+  // Initialize the search
+  initializeSearch() {
+    this.searchForm.addEventListener('submit', (event) => {
+      this.searchQuery = event.target.value;
+      console.log('this.searchQuery', this.searchQuery);
       this.currentPage = 1; // Reset to the first page
       this.updateUrlParams(); // Update the URL
       this.renderPage(); // Re-render the list with the filtered items
