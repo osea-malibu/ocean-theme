@@ -29,7 +29,11 @@
           assign remaining_amount_money = remaining_amount | money
           assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
           assign gwp_button_id = tier1_product.selected_or_first_available_variant.id
-          assign gwp_image_src = settings.gwp_tier1_product.featured_media | image_url: width: 128
+          if tier1_product.metafields.custom.product_image_transparent != blank
+            assign gwp_image_src = tier1_product.metafields.custom.product_image_transparent | image_url: width: 128
+          else
+            assign gwp_image_src = tier1_product.featured_media | image_url: width: 128
+          endif
 
           if cart_ids contains tier3_product.id
             assign hide_gwp = true
