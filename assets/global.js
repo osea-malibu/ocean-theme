@@ -476,6 +476,11 @@ class IngredientGlossary extends HTMLElement {
     // Add list count
     params.set('listcount', this.itemsPerPage); // Always use the numerical value (e.g., 10, 50, 100)
   
+    // Add search query
+    if (this.searchQuery) {
+      params.set('search', this.searchQuery);  // Add search query if present
+    }
+  
     // Update the URL without reloading the page
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     window.history.pushState(null, '', newUrl);
