@@ -44,7 +44,11 @@
               assign remaining_amount_money = remaining_amount | money
               assign countdown_text = settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - '
               assign gwp_button_id = tier3_product.selected_or_first_available_variant.id
-              assign gwp_image_src = settings.gwp_tier3_product.featured_media | image_url: width: 128
+              if tier3_product.metafields.custom.product_image_transparent != blank
+                assign gwp_image_src = tier3_product.metafields.custom.product_image_transparent | image_url: width: 128
+              else
+                assign gwp_image_src = tier3_product.featured_media | image_url: width: 128
+              endif
             else 
               assign hide_gwp = true
             endif
@@ -55,7 +59,11 @@
               assign remaining_amount_money = remaining_amount | money
               assign countdown_text = settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - '
               assign gwp_button_id = tier2_product.selected_or_first_available_variant.id
-              assign gwp_image_src = settings.gwp_tier2_product.featured_media | image_url: width: 128
+              if tier2_product.metafields.custom.product_image_transparent != blank
+                assign gwp_image_src = tier2_product.metafields.custom.product_image_transparent | image_url: width: 128
+              else
+                assign gwp_image_src = tier2_product.featured_media | image_url: width: 128
+              endif
             else
               assign hide_gwp = true
             endif
