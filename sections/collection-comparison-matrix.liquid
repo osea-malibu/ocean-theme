@@ -34,58 +34,44 @@
                 {% comment %} theme-check-enable RemoteAsset {% endcomment %}
               </a>
               <a href="{{ matrix_product.url }}" class="block text-sm leading-5 whitespace-nowrap overflow-ellipsis overflow-hidden h-5{% if matrix_product_count > 3 %} max-w-48{% endif %}">{{ matrix_product.title }}</a>
-              {% comment %} <product-form class="product-form plp-matrix-form relative" data-cart-type="{{ settings.cart_type }}">
-                {%- form 'product', matrix_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                  <input type="hidden" name="id" value="{{ matrix_product.selected_or_first_available_variant.id }}" disabled>
-                  <input type="hidden" name="properties[_is_subscription]" value="false">
-                  <div class="product-form__buttons relative" id="AddToCart">
-                    <button
-                      type="submit"
-                      name="add"
-                      class="product-form__submit relative button button-neon button-xs disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
-                      {% if matrix_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                    >
-                        <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
-                          {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-                        </span>
-                        <span class="label">
-                          {%- if matrix_product.selected_or_first_available_variant.available -%}
-                            {{ 'products.product.add_to_cart' | t }}
-                          {%- else -%}
-                            {{ 'products.product.sold_out' | t }}
-                          {%- endif -%}
-                        </span>
-                    </button>
+              {% comment %}
+                <product-form class="product-form plp-matrix-form relative" data-cart-type="{{ settings.cart_type }}">
+                  {%- form 'product', matrix_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                    <input type="hidden" name="id" value="{{ matrix_product.selected_or_first_available_variant.id }}" disabled>
+                    <input type="hidden" name="properties[_is_subscription]" value="false">
+                    <div class="product-form__buttons relative" id="AddToCart">
+                      <button
+                        type="submit"
+                        name="add"
+                        class="product-form__submit relative button button-neon button-xs disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
+                        {% if matrix_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                      >
+                          <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
+                            {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+                          </span>
+                          <span class="label">
+                            {%- if matrix_product.selected_or_first_available_variant.available -%}
+                              {{ 'products.product.add_to_cart' | t }}
+                            {%- else -%}
+                              {{ 'products.product.sold_out' | t }}
+                            {%- endif -%}
+                          </span>
+                      </button>
+                    </div>
+                  {%- endform -%}
+                  <div class="product-form__error-message-wrapper absolute left-0 mt-1 text-sm" role="alert" hidden>
+                    <mark class="bg-white text-coral-800">
+                      {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
+                      <span class="product-form__error-message leading-4 align-bottom"></span>
+                    </mark>
                   </div>
-                {%- endform -%}
-                <div class="product-form__error-message-wrapper absolute left-0 mt-1 text-sm" role="alert" hidden>
-                  <mark class="bg-white text-coral-800">
-                    {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
-                    <span class="product-form__error-message leading-4 align-bottom"></span>
-                  </mark>
-                </div>
-              </product-form> {% endcomment %}
+                </product-form>
+              {% endcomment %}
             </th>
           {%- endfor -%}
         </tr>
       </thead>
       <tbody>
-        {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Benefits' -%}
-          <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Benefits</th>
-          </tr>
-          <tr class="border-b border-seaweed-300">
-            {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
-              <td class="text-left px-2 align-top text-sm pb-2">
-                <ul class="icon-list bullet !pl-5">
-                  {%- for benefit in matrix_product.metafields.custom.benefits.value -%}
-                    <li>{{ benefit }}</li>
-                  {%- endfor -%}
-                </ul>
-              </td>
-            {%- endfor -%}
-          </tr>
-        {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Skin Type' -%}
           <tr>
             <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Skin Type</th>
@@ -138,6 +124,22 @@
                 {%- elsif matrix_product.metafields.custom.scent_profile != blank -%}
                   {{ matrix_product.metafields.custom.scent_profile.value }}
                 {%- endif -%}
+              </td>
+            {%- endfor -%}
+          </tr>
+        {%- endif -%}
+        {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Benefits' -%}
+          <tr>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Benefits</th>
+          </tr>
+          <tr class="border-b border-seaweed-300">
+            {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
+              <td class="text-left px-2 align-top text-sm pb-2">
+                <ul class="icon-list bullet !pl-5">
+                  {%- for benefit in matrix_product.metafields.custom.benefits.value -%}
+                    <li>{{ benefit }}</li>
+                  {%- endfor -%}
+                </ul>
               </td>
             {%- endfor -%}
           </tr>
