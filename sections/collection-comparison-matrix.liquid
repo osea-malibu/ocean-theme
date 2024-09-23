@@ -91,9 +91,7 @@
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
               <td class="text-left px-2 align-top text-sm pb-2">
-                {%- for skin_type in matrix_product.metafields.custom.skin_types_list.value -%}
-                  <span>{{ skin_type }}{% unless forloop.last %}, {% endunless %}</span>
-                {%- endfor -%}
+                <span>{{ matrix_product.metafields.custom.skin_types_list.value | join: ', ' }}</span>
               </td>
             {%- endfor -%}
           </tr>
