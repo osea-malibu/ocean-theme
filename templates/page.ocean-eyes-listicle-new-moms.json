@@ -178,7 +178,7 @@
         "product_P8DRXR": {
           "type": "product",
           "settings": {
-            "column_classes": "flex-1 child:max-w-2xs child:mx-auto child:border child:border-seaweed-400 child:p-2 child:rounded-lg",
+            "column_classes": "flex-1 bg-oey-light py-2 child:max-w-2xs child:mx-auto child:border-seaweed-400 child:p-2 child:rounded-lg child:bg-white child:shadow-md",
             "product": "ocean-eyes",
             "custom_product_image": "shopify://shop_images/AllureBOB_OSEA-OceanEyes_OFME-OEY-16-DTC-1_1_582775c6-c15d-4c85-8640-3a48691240a8.png",
             "image_classes": "",
@@ -208,7 +208,8 @@
         "product_P8DRXR"
       ],
       "custom_css": [
-        ".child\\:max-w-2xs > * {max-width: 18rem;}"
+        ".child\\:max-w-2xs > * {max-width: 18rem;}",
+        ".child\\:shadow-md > * {box-shadow: 0 4px 8px -1px rgba(224, 191, 195, 0.5), 0 2px 4px -2px rgba(224, 191, 195, 0.25);}"
       ],
       "settings": {
         "section_heading": "",
