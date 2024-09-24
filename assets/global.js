@@ -453,6 +453,13 @@ class IngredientGlossary extends HTMLElement {
         listCountLabel.classList.add('font-bold'); // Add bold to the selected label
       }
     }
+
+    // Set search query if present
+    if (params.has('search')) {
+      this.searchQuery = params.get('search').trim().toLowerCase();
+      const searchInput = this.searchForm.querySelector('input[type="text"]');
+      searchInput.value = this.searchQuery;  // Populate the search field with the search query
+    }
   
     // After initializing, apply filters and render the page
     this.renderPage(); // Ensure that the page is rendered with the applied filters
