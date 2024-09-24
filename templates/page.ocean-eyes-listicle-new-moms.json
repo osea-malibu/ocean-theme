@@ -175,10 +175,50 @@
             "prod_slider_classes": ""
           }
         },
+        "column_VbPHAB": {
+          "type": "column",
+          "settings": {
+            "column_classes": "col-span-2 sm:col-span-1",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
         "product_P8DRXR": {
           "type": "product",
           "settings": {
-            "column_classes": "col-span-2 sm:col-span-1 bg-oey-light py-2 child:max-w-2xs child:mx-auto child:border-seaweed-400 child:p-2 child:rounded-lg child:bg-white child:shadow-md",
+            "column_classes": "col-span-2 sm:col-span-1 sm:col-start-2 sm:row-start-1 bg-oey-light py-2 child:max-w-2xs child:mx-auto child:border-seaweed-400 child:p-2 child:rounded-lg child:bg-white child:shadow-md",
             "product": "ocean-eyes",
             "custom_product_image": "shopify://shop_images/AllureBOB_OSEA-OceanEyes_OFME-OEY-16-DTC-1_1_582775c6-c15d-4c85-8640-3a48691240a8.png",
             "image_classes": "",
@@ -205,11 +245,13 @@
       },
       "block_order": [
         "column_hN8qWz",
+        "column_VbPHAB",
         "product_P8DRXR"
       ],
       "custom_css": [
         ".child\\:max-w-2xs > * {max-width: 18rem;}",
-        ".child\\:shadow-md > * {box-shadow: 0 4px 8px -1px rgba(224, 191, 195, 0.5), 0 2px 4px -2px rgba(224, 191, 195, 0.25);}"
+        ".child\\:shadow-md > * {box-shadow: 0 4px 8px -1px rgba(224, 191, 195, 0.5), 0 2px 4px -2px rgba(224, 191, 195, 0.25);}",
+        "@media (min-width: 640px) {.sm\\:row-start-1 {grid-row-start: 1 }}"
       ],
       "settings": {
         "section_heading": "",
