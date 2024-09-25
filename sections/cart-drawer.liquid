@@ -597,7 +597,7 @@
           -%}
           <div class="cart-recommendations ymal-high-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
             <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
-            <ul class="grid grid-cols-3 gap-4">
+            <ul class="grid grid-cols-3 gap-2 sm:gap-4">
               {%- for high_handle in high_price_item_handles -%}
                 {%- assign high_product = all_products[high_handle] -%}
                 {%- assign high_product_collections_handles = high_product.collections | map: 'handle' -%}
