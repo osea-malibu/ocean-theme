@@ -589,7 +589,8 @@
           {% comment %} FOR A/B TESTING: YMAL - high- vs low-price items {% endcomment %}
           {%- liquid
             assign cart_ids = cart.items | map: 'product_id'
-            assign item_count = 0
+            assign high_item_count = 0
+            assign low_item_count = 0
 
             assign high_price_item_handles = 'undaria-body-collection, eye-care-duo, plumping-hydration-duo' | split: ', '
             assign low_price_item_handles = 'hyaluronic-lip-booster, osea-spa-headband, plant-based-dry-brush' | split: ', '
@@ -600,8 +601,8 @@
               {%- for low_handle in low_price_item_handles -%}
                 {%- assign low_product = all_products[low_handle] -%}
                 {%- assign low_product_collections_handles = low_product.collections | map: 'handle' -%}
-                {%- unless cart_ids contains low_product.id or item_count >= 3 or low_product_collections_handles contains 'exclude-from-site' or low_product_collections_handles contains 'exclude-from-recommendations' -%}
-                  {%- assign item_count = item_count | plus: 1 -%}
+                {%- unless cart_ids contains low_product.id or low_item_count >= 3 or low_product_collections_handles contains 'exclude-from-site' or low_product_collections_handles contains 'exclude-from-recommendations' -%}
+                  {%- assign low_item_count = low_item_count | plus: 1 -%}
                   {%- render 'product-card-mini',
                     card_product: low_product,
                     button_class: 'button-secondary'
@@ -616,8 +617,8 @@
               {%- for high_handle in high_price_item_handles -%}
                 {%- assign high_product = all_products[high_handle] -%}
                 {%- assign high_product_collections_handles = high_product.collections | map: 'handle' -%}
-                {%- unless cart_ids contains high_product.id or item_count >= 3 or high_product_collections_handles contains 'exclude-from-site' or high_product_collections_handles contains 'exclude-from-recommendations' -%}
-                  {%- assign item_count = item_count | plus: 1 -%}
+                {%- unless cart_ids contains high_product.id or high_item_count >= 3 or high_product_collections_handles contains 'exclude-from-site' or high_product_collections_handles contains 'exclude-from-recommendations' -%}
+                  {%- assign high_item_count = high_item_count | plus: 1 -%}
                   {%- render 'product-card-mini',
                     card_product: high_product,
                     button_class: 'button-secondary'
