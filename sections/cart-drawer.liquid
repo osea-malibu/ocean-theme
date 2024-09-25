@@ -595,7 +595,7 @@
             assign high_price_item_handles = 'undaria-body-collection, eye-care-duo, plumping-hydration-duo, ultra-hydrating-duo, body-glow-trio, mega-moisture-duo' | split: ', '
             assign low_price_item_handles = 'hyaluronic-lip-booster, osea-spa-headband, plant-based-dry-brush, gua-sha-sculptor, sea-minerals-mist, essential-corrective-complex' | split: ', '
           -%}
-          <div class="ymal-high-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
+          <div class="cart-recommendations ymal-high-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
             <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
             <ul class="grid grid-cols-3 gap-4">
               {%- for high_handle in high_price_item_handles -%}
@@ -611,7 +611,7 @@
               {%- endfor -%}
             </ul>
           </div>
-          <div class="ymal-low-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
+          <div class="cart-recommendations ymal-low-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
             <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
             <ul class="grid grid-cols-3 gap-4">
               {%- for low_handle in low_price_item_handles -%}
