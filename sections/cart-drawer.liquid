@@ -595,22 +595,6 @@
             assign high_price_item_handles = 'undaria-body-collection, eye-care-duo, plumping-hydration-duo' | split: ', '
             assign low_price_item_handles = 'hyaluronic-lip-booster, osea-spa-headband, plant-based-dry-brush' | split: ', '
           -%}
-          <div class="ymal-low-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
-            <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
-            <ul class="grid grid-cols-3 gap-4">
-              {%- for low_handle in low_price_item_handles -%}
-                {%- assign low_product = all_products[low_handle] -%}
-                {%- assign low_product_collections_handles = low_product.collections | map: 'handle' -%}
-                {%- unless cart_ids contains low_product.id or low_item_count >= 3 or low_product_collections_handles contains 'exclude-from-site' or low_product_collections_handles contains 'exclude-from-recommendations' -%}
-                  {%- assign low_item_count = low_item_count | plus: 1 -%}
-                  {%- render 'product-card-mini',
-                    card_product: low_product,
-                    button_class: 'button-secondary'
-                  -%}
-                {%- endunless -%}
-              {%- endfor -%}
-            </ul>
-          </div>
           <div class="ymal-high-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
             <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
             <ul class="grid grid-cols-3 gap-4">
@@ -621,6 +605,22 @@
                   {%- assign high_item_count = high_item_count | plus: 1 -%}
                   {%- render 'product-card-mini',
                     card_product: high_product,
+                    button_class: 'button-secondary'
+                  -%}
+                {%- endunless -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+          <div class="ymal-low-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
+            <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
+            <ul class="grid grid-cols-3 gap-4">
+              {%- for low_handle in low_price_item_handles -%}
+                {%- assign low_product = all_products[low_handle] -%}
+                {%- assign low_product_collections_handles = low_product.collections | map: 'handle' -%}
+                {%- unless cart_ids contains low_product.id or low_item_count >= 3 or low_product_collections_handles contains 'exclude-from-site' or low_product_collections_handles contains 'exclude-from-recommendations' -%}
+                  {%- assign low_item_count = low_item_count | plus: 1 -%}
+                  {%- render 'product-card-mini',
+                    card_product: low_product,
                     button_class: 'button-secondary'
                   -%}
                 {%- endunless -%}
