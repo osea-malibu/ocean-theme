@@ -599,8 +599,8 @@
             <ul class="grid grid-cols-3 gap-4">
               {%- for low_handle in low_price_item_handles -%}
                 {%- assign low_product = all_products[low_handle] -%}
-                {%- assign product_collections_handles = low_product.collections | map: 'handle' -%}
-                {%- unless cart_ids contains low_product.id or item_count >= 3 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
+                {%- assign low_product_collections_handles = low_product.collections | map: 'handle' -%}
+                {%- unless cart_ids contains low_product.id or item_count >= 3 or low_product_collections_handles contains 'exclude-from-site' or low_product_collections_handles contains 'exclude-from-recommendations' -%}
                   {%- assign item_count = item_count | plus: 1 -%}
                   {%- render 'product-card-mini',
                     card_product: low_product,
@@ -615,8 +615,8 @@
             <ul class="grid grid-cols-3 gap-4">
               {%- for high_handle in high_price_item_handles -%}
                 {%- assign high_product = all_products[high_handle] -%}
-                {%- assign product_collections_handles = high_product.collections | map: 'handle' -%}
-                {%- unless cart_ids contains high_product.id or item_count >= 3 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
+                {%- assign high_product_collections_handles = high_product.collections | map: 'handle' -%}
+                {%- unless cart_ids contains high_product.id or item_count >= 3 or high_product_collections_handles contains 'exclude-from-site' or high_product_collections_handles contains 'exclude-from-recommendations' -%}
                   {%- assign item_count = item_count | plus: 1 -%}
                   {%- render 'product-card-mini',
                     card_product: high_product,
