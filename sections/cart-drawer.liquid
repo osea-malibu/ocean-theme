@@ -613,7 +613,6 @@
           <div class="ymal-low-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
             <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
             <ul class="grid grid-cols-3 gap-4">
-              <script>console.log("low_price_item_handles", {{low_price_item_handles}});</script>
               {%- for low_handle in low_price_item_handles -%}
                 {%- assign low_product = all_products[low_handle] -%}
                 {%- assign product_collections_handles = low_product.collections | map: 'handle' -%}
