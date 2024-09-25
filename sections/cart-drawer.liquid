@@ -597,8 +597,8 @@
           <div class="ymal-high-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
             <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
             <ul class="grid grid-cols-3 gap-4">
-              {%- for handle in high_price_item_handles -%}
-                {%- assign ymal_product = all_products[handle] -%}
+              {%- for high_handle in high_price_item_handles -%}
+                {%- assign ymal_product = all_products[high_handle] -%}
                 {%- assign product_collections_handles = ymal_product.collections | map: 'handle' -%}
                 {%- unless cart_ids contains ymal_product.id or item_count >= 3 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
                   {%- assign item_count = item_count | plus: 1 -%}
@@ -613,8 +613,8 @@
           <div class="ymal-low-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
             <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
             <ul class="grid grid-cols-3 gap-4">
-              {%- for handle in low_price_item_handles -%}
-                {%- assign ymal_product = all_products[handle] -%}
+              {%- for low_handle in low_price_item_handles -%}
+                {%- assign ymal_product = all_products[low_handle] -%}
                 {%- assign product_collections_handles = ymal_product.collections | map: 'handle' -%}
                 {%- unless cart_ids contains ymal_product.id or item_count >= 3 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
                   {%- assign item_count = item_count | plus: 1 -%}
