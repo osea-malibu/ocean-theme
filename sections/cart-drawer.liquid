@@ -586,6 +586,47 @@
             <div id="CartDrawer-Recommendations"></div>
           </cart-recommendations>
 
+          {% comment %} FOR A/B TESTING: YMAL - high- vs low-price items {% endcomment %}
+          {%- liquid
+            assign cart_ids = cart.items | map: 'product_id'
+            assign item_count = 0
+
+            assign high_price_item_handles = 'undaria-body-collection, eye-care-duo, plumping-hydration-duo' | split: ', '
+            assign low_price_item_handles = 'hyaluronic-lip-booster, osea-spa-headband, plant-based-dry-brush' | split: ', '
+          -%}
+          <div class="ymal-high-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
+            <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
+            <ul class="grid grid-cols-3 gap-4">
+              {%- for handle in high_price_item_handles -%}
+                {%- assign ymal_product = all_products[handle] -%}
+                {%- assign product_collections_handles = ymal_product.collections | map: 'handle' -%}
+                {%- unless cart_ids contains ymal_product.id or item_count >= 3 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
+                  {%- assign item_count = item_count | plus: 1 -%}
+                  {%- render 'product-card-mini',
+                    card_product: ymal_product,
+                    button_class: 'button-secondary'
+                  -%}
+                {%- endunless -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+          <div class="ymal-low-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
+            <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
+            <ul class="grid grid-cols-3 gap-4">
+              {%- for handle in low_price_item_handles -%}
+                {%- assign ymal_product = all_products[handle] -%}
+                {%- assign product_collections_handles = ymal_product.collections | map: 'handle' -%}
+                {%- unless cart_ids contains ymal_product.id or item_count >= 3 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
+                  {%- assign item_count = item_count | plus: 1 -%}
+                  {%- render 'product-card-mini',
+                    card_product: ymal_product,
+                    button_class: 'button-secondary'
+                  -%}
+                {%- endunless -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+
           {% comment %} Free samples {% endcomment %}
           {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
           {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 and only_gc_in_cart == false -%}
