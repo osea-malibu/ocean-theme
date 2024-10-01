@@ -40,8 +40,8 @@
 
     <div class="lg:py-4">
       <h1 class="font-serif text-4xl tracking-tight mr-2 xl:text-5xl">
-        {%- if collection.metafields.custom.custom_name != blank -%}
-          {{- collection.metafields.custom.custom_name | escape -}}
+        {%- if collection.metafields.custom.custom_title != blank -%}
+          {{- collection.metafields.custom.custom_title | escape -}}
         {%- else -%}
           {{- collection.title | escape -}}
         {%- endif -%}
