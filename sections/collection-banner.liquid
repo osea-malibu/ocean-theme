@@ -1,6 +1,13 @@
-<div class="collection-hero py-4">
+{%- liquid
+  if collection.metafields.custom.banner_image_mobile != nil or collection.metafields.custom.banner_image_desktop != nil
+    assign custom_banner = true
+  else
+    assign custom_banner = false
+  endif
+-%}
+<div class="collection-hero {% if custom_banner %}pb-4{% else %}py-4{% endif %}">
   <div class="container px-0 xs:px-6">
-    {%- if collection.metafields.custom.banner_image_mobile != nil or collection.metafields.custom.banner_image_desktop != nil -%}
+    {%- if custom_banner -%}
       {%- liquid
         assign mobile_image_src = collection.metafields.custom.banner_image_mobile | image_url: width: 400
         assign mobile_image_src_2x = collection.metafields.custom.banner_image_mobile | image_url: width: 800
