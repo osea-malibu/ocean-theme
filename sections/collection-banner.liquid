@@ -32,7 +32,7 @@
           alt="{{ collection.metafields.custom.banner_image_mobile.alt }}"
           width="{{ collection.metafields.custom.banner_image_desktop.width }}"
           height="{{ collection.metafields.custom.banner_image_desktop.width | divided_by: collection.metafields.custom.banner_image_desktop.aspect_ratio | round }}"
-          class="block"
+          class="block mb-6"
         >
       </picture>
       {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
