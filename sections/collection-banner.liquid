@@ -1,5 +1,5 @@
 <div class="collection-hero py-4">
-  <div class="container">
+  <div class="container px-0 xs:px-6">
     {%- if collection.metafields.custom.banner_image_mobile != nil or collection.metafields.custom.banner_image_desktop != nil -%}
       {%- liquid
         assign mobile_image_src = collection.metafields.custom.banner_image_mobile | image_url: width: 400
@@ -37,7 +37,8 @@
       </picture>
       {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
     {%- endif -%}
-
+  </div>
+  <div class="container">
     <div class="lg:py-4">
       <h1 class="font-serif text-4xl tracking-tight mr-2 xl:text-5xl">
         {%- if collection.metafields.custom.custom_title != blank -%}
