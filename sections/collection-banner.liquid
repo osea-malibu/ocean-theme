@@ -40,7 +40,11 @@
 
     <div class="lg:py-4">
       <h1 class="font-serif text-4xl tracking-tight mr-2 xl:text-5xl">
-        {{- collection.title | escape -}}
+        {%- if collection.metafields.custom.custom_name != blank -%}
+          {{- collection.metafields.custom.custom_name | escape -}}
+        {%- else -%}
+          {{- collection.title | escape -}}
+        {%- endif -%}
       </h1>
 
       {%- if section.settings.show_collection_description -%}
