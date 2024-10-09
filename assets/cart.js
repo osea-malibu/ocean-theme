@@ -347,6 +347,30 @@ class ShippingCountdown extends HTMLElement {
 }
 customElements.define("shipping-countdown", ShippingCountdown);
 
+class RewardCountdown extends HTMLElement {
+  constructor() {
+    super();
+
+    this.totalEl = document.getElementById("CartDrawer-Total");
+    this.total = this.totalEl ? this.totalEl.dataset.total : 0;
+    this.shippingThreshold = this.dataset.shippingThreshold * 100;
+
+    this.percentComplete = (this.total / this.shippingThreshold) * 100;
+    if (this.percentComplete > 100) {
+      this.percentComplete = 100;
+    } else if (this.percentComplete < 0) {
+      this.percentComplete = 0;
+    }
+
+    this.progressBar = this.querySelector("progress");
+    console.log("this.progressBar", this.progressBar);
+    console.log("this.percentComplete", this.percentComplete);
+    this.progressBar.value = this.percentComplete;
+    this.progressBar.innerText = `${this.percentComplete}%`;
+  }
+}
+customElements.define("reward-countdown", RewardCountdown);
+
 class CartRecommendations extends HTMLElement {
   constructor() {
     super();

@@ -136,12 +136,12 @@
       {% comment %} Shipping countdown {% endcomment %}
       <shipping-countdown data-threshold="{{ settings.shipping_countdown_threshold }}" class="block px-6 pt-4 pb-2 text-center">
         {%- liquid
-          assign remaining_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price
+          assign remaining_shipping_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price
           assign cart_subscription_items = cart.items | map: 'properties' | where: '_is_subscription', 'true'
         -%}
         <h3 class="mb-1">
-          {%- if remaining_amount > 0 and cart_subscription_items.size != cart.items.size -%}
-            {%- assign formatted_remaining_amount = remaining_amount | money %}
+          {%- if remaining_shipping_amount > 0 and cart_subscription_items.size != cart.items.size -%}
+            {%- assign formatted_remaining_amount = remaining_shipping_amount | money %}
             {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
           {%- else -%}
             {{ settings.shipping_countdown_text_success }}
@@ -149,6 +149,46 @@
         </h3>
         <progress max="100" value="0" class="progress-bar block mx-auto max-w-md motion-safe:transition-all">0%</progress>
       </shipping-countdown>
+
+      {% comment %} A/B TEST: New header designs {% endcomment %}
+      <div class="cart-header hidden px-6 pt-4 pb-2">
+        {%- liquid
+          assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
+
+          if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto'
+            assign free_gifts_active = true
+          else
+            assign free_gifts_active = false
+          endif
+        -%}
+        <reward-countdown class="text-center relative" data-shipping-threshold="{{ settings.shipping_countdown_threshold }}">
+          <progress max="100" value="0" class="progress-bar-alt block mx-auto max-w-md motion-safe:transition-all mb-2 absolute inset-x-0 top-2">0%</progress>
+          <div class="relative flex max-w-md mx-auto {% if free_gifts_active %}justify-between{% else %}justify-end{% endif %}">
+            <div class="{{ reward_icon_classes }} {% if remaining_shipping_amount > 0 %}bg-seafoam-300{% else %}bg-seaweed-700 text-white{% endif %}">
+              {% render 'icon-truck', stroke_width: 2, classes: 'w-4 h-4' %}
+            </div>
+            {%- if free_gifts_active -%}
+              {%- if tier1_product != nil -%}
+                <div class="{{ reward_icon_classes }}"></div>
+              {%- endif -%}
+              {%- if tier2_product != nil -%}
+                <div class="{{ reward_icon_classes }}"></div>
+              {%- endif -%}
+              {%- if tier3_product != nil -%}
+                <div class="{{ reward_icon_classes }}"></div>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+          <h3>
+            {%- if remaining_amount > 0 and cart_subscription_items.size != cart.items.size -%}
+              {%- assign formatted_remaining_amount = remaining_amount | money %}
+              {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
+            {%- else -%}
+              {{ settings.shipping_countdown_text_success }}
+            {%- endif -%}
+          </h3>
+        </reward-countdown>
+      </div>
 
       {% comment %} Close button {% endcomment %}
       <button

@@ -339,6 +339,16 @@
     @apply bg-seaweed-700;
   }
 
+  .progress-bar-alt {
+    @apply appearance-none h-1.5 w-full rounded-full;
+  }
+  .progress-bar-alt::-webkit-progress-bar {
+    @apply bg-seafoam-300 rounded-full;
+  }
+  .progress-bar-alt::-webkit-progress-value {
+    @apply bg-seaweed-700 rounded-full;
+  }
+
   /* Modal dialog (popup modal) */
   modal-dialog {
     @apply fixed inset-0 bg-seaweed-700/50 z-50 p-6 invisible opacity-0 motion-safe:transition-[visibility_0s,opacity_200ms];
