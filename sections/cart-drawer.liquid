@@ -226,13 +226,21 @@
                   {%- if settings.gwp_tier3_product != blank and cart_total >= settings.gwp_tier3_threshold -%}
                     {{ settings.gwp_success_text }}
                   {%- elsif settings.gwp_tier2_product != blank and cart_total >= settings.gwp_tier2_threshold -%}
-                    {%- assign gwp_threshold = settings.gwp_tier3_threshold | times: 100 -%}
-                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
-                    {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - ' }}
-                  {%- elsif settings.gwp_tier1_product != blank and cart_total >= settings.gwp_tier1_threshold -%}
-                    {%- assign gwp_threshold = settings.gwp_tier2_threshold | times: 100 -%}
-                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
-                    {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - ' }}
+                    {%- if settings.gwp_tier3_product != blank -%}
+                      {%- assign gwp_threshold = settings.gwp_tier3_threshold | times: 100 -%}
+                      {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                      {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - ' }}
+                    {%- else -%}
+                        {{ settings.gwp_success_text }}
+                    {%- endif -%}
+                  {%- elsif settings.gwp_tier1_product != blank and cart_total >= settings.gwp_tier1_threshold -%}  
+                    {%- if settings.gwp_tier2_product != blank -%}
+                      {%- assign gwp_threshold = settings.gwp_tier2_threshold | times: 100 -%}
+                      {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                      {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - ' }}
+                    {%- else -%}
+                      {{ settings.gwp_success_text }}
+                    {%- endif -%}
                   {%- else -%}
                     {%- assign gwp_threshold = settings.gwp_tier1_threshold | times: 100 -%}
                     {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
