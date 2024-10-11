@@ -3,8 +3,29 @@
 
 <cart-drawer class="fixed z-[2147483002] top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer">
-    <div class="cart-scrim block fixed inset-0 bg-seaweed-800/50"></div>
-    <div class="cart-drawer bg-white fixed right-0 inset-y-0 w-[40rem] max-w-full overflow-hidden flex flex-col"
+    <div class="cart-scrim block fixed z-0 inset-0 bg-seaweed-800/50"></div>
+    <div class="cart-recommendations ymal-alt hidden absolute z-10 inset-y-0 w-32 bg-wave-100 p-4 rounded-l-lg overflow-y-auto">
+      {%- liquid
+        assign cart_ids = cart.items | map: 'product_id'
+        assign ymal_item_count = 0
+        assign ymal_item_handles = 'hyaluronic-lip-booster, undaria-algae-body-wash, atmosphere-protection-cream, ocean-cleanser, sea-minerals-mist, essential-corrective-complex' | split: ', '
+      -%}
+      <h3 class="sr-only font-medium text-sm">You may also like</h3>
+      <ul class="flex flex-col gap-4">
+        {%- for ymal_handle in ymal_item_handles -%}
+          {%- assign ymal_product = all_products[ymal_handle] -%}
+          {%- assign ymal_collections_handles = ymal_product.collections | map: 'handle' -%}
+          {%- unless cart_ids contains ymal_product.id or ymal_item_count >= 4 or ymal_collections_handles contains 'exclude-from-site' or low_product_collections_handles contains 'exclude-from-recommendations' -%}
+            {%- assign ymal_item_count = ymal_item_count | plus: 1 -%}
+            {%- render 'product-card-mini',
+              card_product: ymal_product,
+              button_class: 'button-secondary'
+            -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+    <div class="cart-drawer bg-white fixed z-20 right-0 inset-y-0 w-[40rem] max-w-full overflow-hidden flex flex-col"
       role="dialog"
       aria-modal="true"
       aria-label="{{ 'sections.cart.title' | t }}"
@@ -151,7 +172,7 @@
       </shipping-countdown>
 
       {% comment %} A/B TEST: New header designs {% endcomment %}
-      <div class="cart-header hidden px-6 pt-4 pb-2">
+      <div class="cart-header hidden px-4 2xs:px-6 py-2 border-b border-seaweed-300">
         {%- liquid
           assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
 
@@ -161,31 +182,119 @@
             assign free_gifts_active = false
           endif
         -%}
-        <reward-countdown class="text-center relative" data-shipping-threshold="{{ settings.shipping_countdown_threshold }}">
-          <progress max="100" value="0" class="progress-bar-alt block mx-auto max-w-md motion-safe:transition-all mb-2 absolute inset-x-0 top-2">0%</progress>
-          <div class="relative flex max-w-md mx-auto {% if free_gifts_active %}justify-between{% else %}justify-end{% endif %}">
+        <reward-countdown
+          class="text-center relative block max-w-md mx-auto"
+          data-shipping-threshold="{{ settings.shipping_countdown_threshold }}"
+          data-tier1-threshold="{{ settings.gwp_tier1_threshold }}"
+          data-tier2-threshold="{{ settings.gwp_tier2_threshold }}"
+          data-tier3-threshold="{{ settings.gwp_tier3_threshold }}"
+        >
+          <progress max="100" value="0" class="progress-bar-alt block motion-safe:transition-all absolute inset-x-0 top-2.5">0%</progress>
+          <div class="relative flex mb-2 pr-5 {% if free_gifts_active %}justify-between{% else %}justify-end{% endif %}">
+            {%- if free_gifts_active -%}
+              <div></div>
+            {%- endif -%}
             <div class="{{ reward_icon_classes }} {% if remaining_shipping_amount > 0 %}bg-seafoam-300{% else %}bg-seaweed-700 text-white{% endif %}">
               {% render 'icon-truck', stroke_width: 2, classes: 'w-4 h-4' %}
             </div>
             {%- if free_gifts_active -%}
-              {%- if tier1_product != nil -%}
-                <div class="{{ reward_icon_classes }}"></div>
+              {%- if settings.gwp_tier1_product != blank -%}
+                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier1_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+                  {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
+                </div>
               {%- endif -%}
-              {%- if tier2_product != nil -%}
-                <div class="{{ reward_icon_classes }}"></div>
+              {%- if settings.gwp_tier2_product != blank -%}
+                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier2_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+                  {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
+                </div>
               {%- endif -%}
-              {%- if tier3_product != nil -%}
-                <div class="{{ reward_icon_classes }}"></div>
+              {%- if settings.gwp_tier3_product != blank -%}
+                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier3_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+                  {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
+                </div>
               {%- endif -%}
             {%- endif -%}
           </div>
-          <h3>
-            {%- if remaining_amount > 0 and cart_subscription_items.size != cart.items.size -%}
-              {%- assign formatted_remaining_amount = remaining_amount | money %}
-              {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
-            {%- else -%}
-              {{ settings.shipping_countdown_text_success }}
-            {%- endif -%}
+          <h3 class="flex flex-wrap justify-center items-center">
+            {%- assign cart_total = cart.total_price | divided_by: 100.0 -%}
+            <span class="mr-3 text-sm sm:text-base leading-tight sm:leading-tight">
+              {%- if cart_total < settings.shipping_countdown_threshold -%}
+                {%- assign formatted_remaining_amount = remaining_shipping_amount | money_without_trailing_zeros %}
+                {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
+              {%- else -%}
+                {%- if free_gifts_active -%}
+                  {%- if settings.gwp_tier3_product != blank and cart_total >= settings.gwp_tier3_threshold -%}
+                    {{ settings.gwp_success_text }}
+                  {%- elsif settings.gwp_tier2_product != blank and cart_total >= settings.gwp_tier2_threshold -%}
+                    {%- assign gwp_threshold = settings.gwp_tier3_threshold | times: 100 -%}
+                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                    {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - ' }}
+                  {%- elsif settings.gwp_tier1_product != blank and cart_total >= settings.gwp_tier1_threshold -%}
+                    {%- assign gwp_threshold = settings.gwp_tier2_threshold | times: 100 -%}
+                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                    {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - ' }}
+                  {%- else -%}
+                    {%- assign gwp_threshold = settings.gwp_tier1_threshold | times: 100 -%}
+                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                    {{ settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - ' }}
+                  {%- endif -%}
+                {%- else -%}
+                  {{ settings.shipping_countdown_text_success }}
+                {%- endif -%}
+              {%- endif -%}
+            </span>
+            <label for="AllRewards" class="mr-0.5 link text-sm">Show all</label>
+            <input type="checkbox" id="AllRewards" class="peer hidden">
+            {% render 'icon-chevron', classes: 'w-4 h-4 -rotate-90 peer-checked:rotate-90 transition-transform', stroke_width: 2 %}
+            <div class="w-full peer-checked:max-h-80 max-h-0 transition-max-height overflow-hidden">
+              <ul class="max-w-md mx-auto text-sm text-left py-2 li:mb-1">
+                <li class="flex items-center gap-1 leading-tight">
+                  {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                  <span>30 day money back guarantee</span>
+                </li>
+                <li class="flex items-center gap-1 leading-tight{% if remaining_shipping_amount > 0 %} text-wave-600{% endif %}">
+                  {%- if remaining_shipping_amount > 0 -%}
+                    {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                  {%- else -%}
+                    {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                  {%- endif -%}
+                  <span>Free shipping on orders over {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                </li>
+                {%- if free_gifts_active -%}
+                  {%- if settings.gwp_tier1_product != blank -%}
+                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier1_product.id %} text-wave-600{% endunless %}">
+                      {%- if cart_ids contains tier1_product.id -%}
+                        {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                      {%- else -%}
+                        {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                      {%- endif -%}
+                      <span>Free {{ tier1_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier1_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                    </li>
+                  {%- endif -%}
+                  <script>console.log("settings.gwp_tier2_product", {{settings.gwp_tier2_product }})</script>
+                  {%- if settings.gwp_tier2_product != blank -%}
+                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier2_product.id %} text-wave-600{% endunless %}">
+                      {%- if cart_ids contains tier2_product.id -%}
+                        {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                      {%- else -%}
+                        {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                      {%- endif -%}
+                      <span>Free {{ tier2_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier2_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                    </li>
+                  {%- endif -%}
+                  {%- if settings.gwp_tier3_product != blank -%}
+                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier3_product.id %} text-wave-600{% endunless %}">
+                      {%- if cart_ids contains tier3_product.id -%}
+                        {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                      {%- else -%}
+                        {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                      {%- endif -%}
+                      <span>Free {{ tier3_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier3_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                    </li>
+                  {%- endif -%}
+                {%- endif -%}
+              </ul>
+            </div>
           </h3>
         </reward-countdown>
       </div>
@@ -543,7 +652,18 @@
                                       {%- if item.product.type == 'Sample' -%}
                                         <span class="flex bg-sand-300 rounded-sm px-1.5 py-0.5 text-xs font-book tracking-wide whitespace-nowrap text-seaweed-600">Sample</span>
                                       {%- elsif item.product.type == 'Free Gift' -%}
-                                        <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">Free Gift</span>
+                                        <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">
+                                          <span class="hidden cart-alt-tags">
+                                            {%- if item.product_id == tier2_product.id -%}
+                                              <span>2nd Free Gift</span>
+                                            {%- elsif item.product_id == tier3_product.id -%}
+                                              <span>3rd Free Gift</span>
+                                            {%- else -%}
+                                              <span>Free Gift</span>
+                                            {% endif %}
+                                          </span>
+                                          <span class="cart-original-tags">Free Gift</span>
+                                        </span>
                                       {%- else -%}
                                         <span class="flex">{{ item.original_line_price | money }}</span>
                                       {%- endif -%}

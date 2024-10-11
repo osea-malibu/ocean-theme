@@ -58,21 +58,29 @@ if (!customElements.get("product-form")) {
 
             if (window.gwpSettings.enabled) {
               if (window.gwpSettings.type === "auto") {
-                window.gwpSettings.tiers.forEach((tier) => {
+                let giftsToAdd = [];
+                const fetchPromises = window.gwpSettings.tiers.map((tier) => {
                   if (tier.product !== "") {
-                    fetch(window.Shopify.routes.root + "cart.js")
+                    return fetch(window.Shopify.routes.root + "cart.js")
                       .then((response) => response.json())
                       .then((data) => {
                         const cartIdArray = data.items.map((i) => i.id);
                         if (
-                          !cartIdArray.includes(tier.product) &&
+                          !cartIdArray.includes(parseInt(tier.variant)) &&
                           data.total_price >= tier.threshold
                         ) {
-                          this.cart.addFreeGift(tier.variant);
+                          giftsToAdd = [...giftsToAdd, tier.variant];
                         }
                       })
-                      .catch((e) => console.error(e));
+                      .catch((e) => {
+                        console.error(e);
+                      });
                   }
+                });
+
+                // Wait for all fetch promises to complete
+                Promise.all(fetchPromises).then(() => {
+                  this.cart.addFreeGift(giftsToAdd);
                 });
               } else if (
                 window.gwpSettings.type === "url" &&

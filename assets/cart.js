@@ -140,19 +140,21 @@ class CartItems extends HTMLElement {
         if (window.gwpSettings.enabled) {
           const cartIdArray = this.dataset.cartIds.slice(1, -1).split(",");
           const { tiers } = window.gwpSettings;
+          let giftsToAdd = [];
+          let giftsToRemove = [];
 
           tiers.forEach((tier) => {
-            if (tier.product != "") {
+            if (tier.product !== "") {
               if (cartIdArray.includes(tier.product) && parsedState.total_price < tier.threshold) {
                 const line = cartIdArray.findIndex((i) => i === tier.product) + 1;
-                this.removeGift(line);
+                giftsToRemove.push(line); // Collect gifts to remove
               }
               if (
                 window.gwpSettings.type === "auto" &&
                 !cartIdArray.includes(tier.product) &&
                 parsedState.total_price >= tier.threshold
               ) {
-                this.cart.addFreeGift(tier.variant);
+                giftsToAdd.push(tier.variant);
               }
               if (
                 window.gwpSettings.type === "url" &&
@@ -162,6 +164,22 @@ class CartItems extends HTMLElement {
               }
             }
           });
+
+          if (giftsToRemove.length > 0) {
+            // Sort giftsToRemove in descending order
+            giftsToRemove.sort((a, b) => b - a);
+
+            // Remove gifts sequentially with a delay between each
+            const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+            giftsToRemove.reduce((promise, line) => {
+              return promise.then(() => this.removeGift(line)).then(() => delay(400));
+            }, Promise.resolve());
+          }
+
+          if (giftsToAdd.length > 0) {
+            this.cart.addFreeGift(giftsToAdd);
+          }
         }
 
         this.updateCatchCalloutPrice(parsedState.total_price);
@@ -352,21 +370,57 @@ class RewardCountdown extends HTMLElement {
     super();
 
     this.totalEl = document.getElementById("CartDrawer-Total");
-    this.total = this.totalEl ? this.totalEl.dataset.total : 0;
-    this.shippingThreshold = this.dataset.shippingThreshold * 100;
+    this.total = this.totalEl ? parseFloat(this.totalEl.dataset.total) : 0;
 
-    this.percentComplete = (this.total / this.shippingThreshold) * 100;
-    if (this.percentComplete > 100) {
-      this.percentComplete = 100;
-    } else if (this.percentComplete < 0) {
-      this.percentComplete = 0;
-    }
+    // Get thresholds from data attributes and convert to numbers
+    this.shippingThreshold = parseFloat(this.dataset.shippingThreshold) * 100;
+    this.tier1Threshold = this.dataset.tier1Threshold
+      ? parseFloat(this.dataset.tier1Threshold) * 100
+      : null;
+    this.tier2Threshold = this.dataset.tier2Threshold
+      ? parseFloat(this.dataset.tier2Threshold) * 100
+      : null;
+    this.tier3Threshold = this.dataset.tier3Threshold
+      ? parseFloat(this.dataset.tier3Threshold) * 100
+      : null;
+
+    // Create an array of active thresholds
+    this.thresholds = [this.shippingThreshold];
+    if (this.tier1Threshold) this.thresholds.push(this.tier1Threshold);
+    if (this.tier2Threshold) this.thresholds.push(this.tier2Threshold);
+    if (this.tier3Threshold) this.thresholds.push(this.tier3Threshold);
 
     this.progressBar = this.querySelector("progress");
-    console.log("this.progressBar", this.progressBar);
-    console.log("this.percentComplete", this.percentComplete);
-    this.progressBar.value = this.percentComplete;
-    this.progressBar.innerText = `${this.percentComplete}%`;
+    this.updateProgress();
+  }
+
+  updateProgress() {
+    let progressPercent = 0;
+
+    for (let i = 0; i < this.thresholds.length; i++) {
+      const currentThreshold = this.thresholds[i];
+      const previousThreshold = i === 0 ? 0 : this.thresholds[i - 1];
+
+      if (this.total >= currentThreshold) {
+        // If the total is above the current threshold, set progress to the next level
+        progressPercent = ((i + 1) / this.thresholds.length) * 100;
+      } else if (this.total > previousThreshold && this.total < currentThreshold) {
+        // Calculate progress within the range
+        const range = currentThreshold - previousThreshold;
+        const withinRange = this.total - previousThreshold;
+        progressPercent =
+          (i / this.thresholds.length) * 100 +
+          (withinRange / range) * (100 / this.thresholds.length);
+        break;
+      }
+    }
+
+    // Cap the progress between 0 and 100
+    progressPercent = Math.min(100, Math.max(0, progressPercent));
+
+    // Update the progress bar
+    this.progressBar.value = progressPercent;
+    this.progressBar.innerText = `${Math.round(progressPercent)}%`;
   }
 }
 customElements.define("reward-countdown", RewardCountdown);

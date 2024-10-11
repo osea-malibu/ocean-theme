@@ -121,6 +121,13 @@
   cart-drawer.active .cart-drawer {
     @apply translate-x-0;
   }
+  /* A/B TEST: New cart layout */
+  cart-drawer .cart-recommendations {
+    @apply -right-32 opacity-0 motion-safe:transition-all motion-safe:duration-75;
+  }
+  cart-drawer.active .cart-recommendations {
+    @apply right-[32rem] opacity-100 delay-300;
+  }
 
   menu-drawer .menu-drawer,
   menu-drawer .menu-submenu {
@@ -340,7 +347,7 @@
   }
 
   .progress-bar-alt {
-    @apply appearance-none h-1.5 w-full rounded-full;
+    @apply appearance-none h-1.5 w-[calc(100%-20px)] rounded-full;
   }
   .progress-bar-alt::-webkit-progress-bar {
     @apply bg-seafoam-300 rounded-full;

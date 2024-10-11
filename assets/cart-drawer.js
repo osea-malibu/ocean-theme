@@ -52,9 +52,12 @@ class CartDrawer extends HTMLElement {
 
   open(triggeredBy) {
     if (triggeredBy) this.setActiveElement(triggeredBy);
+
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');
-    if (cartDrawerNote && !cartDrawerNote.hasAttribute("role"))
+    if (cartDrawerNote && !cartDrawerNote.hasAttribute("role")) {
       this.setSummaryAccessibility(cartDrawerNote);
+    }
+
     // here the animation doesn't seem to always get triggered. A timeout seem to help
     setTimeout(() => {
       this.classList.remove("invisible");
@@ -160,8 +163,9 @@ class CartDrawer extends HTMLElement {
     }
   }
 
-  addFreeGift(product) {
-    const body = JSON.stringify({ items: [{ id: product, quantity: 1 }] });
+  addFreeGift(productArray) {
+    const giftItemsArray = productArray.map((product) => ({ id: product, quantity: 1 }));
+    const body = JSON.stringify({ items: giftItemsArray });
     fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
       .then((response) => response.json())
       .then((response) => this.renderContents(response))
