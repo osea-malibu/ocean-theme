@@ -56,7 +56,7 @@
                     class="facets__summary flex sm:min-w-28 sm:mr-1 justify-between items-center gap-1 input input-sm tracking-normal whitespace-nowrap pr-1 xs:pr-1.5 cursor-pointer group-open:before:content-[''] group-open:before:fixed group-open:before:inset-0 group-open:before:z-10"
                     aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
                   >
-                    <span class="leading-4 text-sm font-book">{{ filter.label | escape }}</span>
+                    <span class="leading-4 text-sm font-book">{{ filter.label | replace: 'Subcategory', 'Category' | escape }}</span>
                     {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 -mb-px', stroke_width: 2 %}
                   </summary>
                   <div
