@@ -279,7 +279,6 @@
                       <span>Free {{ tier1_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier1_threshold | times: 100 | money_without_trailing_zeros }}</span>
                     </li>
                   {%- endif -%}
-                  <script>console.log("settings.gwp_tier2_product", {{settings.gwp_tier2_product }})</script>
                   {%- if settings.gwp_tier2_product != blank -%}
                     <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier2_product.id %} text-wave-600{% endunless %}">
                       {%- if cart_ids contains tier2_product.id -%}
