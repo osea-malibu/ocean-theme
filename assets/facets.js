@@ -275,7 +275,9 @@ class FacetFiltersForm extends HTMLElement {
   }
 
   onSubmitHandler(event) {
+    console.log("onSubmitHandler");
     event.preventDefault();
+
     const sortFilterForms = document.querySelectorAll("facet-filters-form form");
     if (event.srcElement.className == "mobile-facets__checkbox") {
       const searchParams = this.createSearchParams(event.target.closest("form"));
@@ -298,6 +300,11 @@ class FacetFiltersForm extends HTMLElement {
         }
       });
       this.onSubmitForm(forms.join("&"), event);
+    }
+
+    const featuredSection = document.getElementById("Featured");
+    if (featuredSection) {
+      featuredSection.removeAttribute("open");
     }
   }
 
