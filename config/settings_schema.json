@@ -8,6 +8,21 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "General",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Variables"
+      },
+      {
+        "type": "text",
+        "id": "travel_sizes",
+        "info": "Comma separated list of travel size labels. Only include 'oz', not 'fl oz' e.g: 1 oz, 1.7 oz",
+        "label": "Travel sized variant names"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.colors.name",
     "settings": [
       {
