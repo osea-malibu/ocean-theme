@@ -426,14 +426,24 @@
         "type": "text",
         "id": "shipping_countdown_text",
         "info": "Variables: remaining_amount",
-        "label": "Countdown message",
+        "label": "Free shipping countdown message",
         "default": "You are remaining_amount away from free shipping!"
       },
       {
         "type": "text",
         "id": "shipping_countdown_text_success",
-        "label": "Success message",
+        "label": "Free shipping success message",
         "default": "Congrats! You get free shipping."
+      },
+      {
+        "type": "header",
+        "content": "Cart Recommendations (YMAL)"
+      },
+      {
+        "type": "text",
+        "id": "cart_recommendations_travel_handles",
+        "label": "Use travel variant",
+        "info": "Comma separated list of product handles"
       }
     ]
   },
