@@ -9,6 +9,8 @@
     - hide_price: {Boolean} Removes price from button element. Default: false (optional)
     - section_id: {String} Unique id of section that card is in (required),
     - disable_links: {Boolean} remove link on image / title. Default: false (optional)
+    - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
+    - default_to_jumbo: {Boolean} Default variant selection to jumbo sized (optional)
 
     Usage:
     {% render 'product-card-mini', card_product: section.settings.product %}
@@ -24,9 +26,32 @@
 
     <div class="mt-auto">
       {%- assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id -%}
+      {%- liquid
+        if default_to_mini
+          assign mini_index = card_product.variants.size | minus: 1
+          if card_product.options.size > 1 or card_product.options contains 'Amount:'
+            assign travel_sizes = settings.travel_sizes | split: ', '
+            for variant in card_product.variants
+              assign normalized_variant_title = variant.title | replace: 'fl ', ''
+              if travel_sizes contains normalized_variant_title
+                assign mini_index = forloop.index0
+              endif
+            endfor
+          endif
+        endif
+      -%}
       <product-form data-cart-type="{{ settings.cart_type }}">
         {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-          <input type="hidden" name="id" class="mini-card-id-input" value="{{ card_product.selected_or_first_available_variant.id }}" {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+          {%- liquid
+            if default_to_mini
+              assign default_id = card_product.variants[mini_index].id
+            elsif default_to_jumbo
+              assign default_id = card_product.variants[0].id
+            else 
+              assign default_id = card_product.selected_or_first_available_variant.id
+            endif
+          -%}
+          <input type="hidden" name="id" class="mini-card-id-input" value="{{ default_id }}" {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
           <button
             type="submit"
             name="add"

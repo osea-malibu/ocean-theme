@@ -7,12 +7,26 @@
         assign item_count = 0
       -%}
       {%- for product in recommendations.products -%}
-        {%- assign product_collections_handles = product.collections | map: 'handle' -%}
+        {%- liquid
+          assign product_collections_handles = product.collections | map: 'handle'
+
+          assign travel_product_array = settings.cart_recommendations_travel_handles | split: ', '
+          assign jumbo_product_array = settings.cart_recommendations_jumbo_handles | split: ', '
+          assign is_travel_product = false
+          assign is_jumbo_product = false
+          if travel_product_array contains product.handle
+            assign is_travel_product = true
+          elsif jumbo_product_array contains product.handle
+            assign is_jumbo_product = true
+          endif
+        -%}
         {%- unless cart_ids contains product.id or item_count >= 3 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
           {%- assign item_count = item_count | plus: 1 -%}
           {%- render 'product-card-mini',
             card_product: product,
-            button_class: 'button-secondary'
+            button_class: 'button-secondary',
+            default_to_mini: is_travel_product,
+            default_to_jumbo: is_jumbo_product
           -%}
         {%- endunless -%}
       {%- endfor -%}
