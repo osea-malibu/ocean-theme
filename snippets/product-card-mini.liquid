@@ -94,12 +94,16 @@
       {%- endif -%}
         {%- liquid
           if custom_default_image != nil
+            assign log = 'custom_default_image'
             assign default_image = custom_default_image
           elsif default_to_mini and card_product.variants.size > 1 and card_product.title != 'Digital Gift Card'
+            assign log = 'default_to_mini'
             assign default_image = card_product.variants[mini_index].featured_media
           elsif card_product.metafields.custom.product_image_transparent != blank
+            assign log = 'product_image_transparent'
             assign default_image = card_product.metafields.custom.product_image_transparent
           else
+            assign log = 'featured_media'
             assign default_image = card_product.featured_media
           endif
 
@@ -107,6 +111,7 @@
           assign default_image_src_2x = default_image | image_url: width: 144
         -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        <script>console.log("log", {{ log }})</script>
         <img
           srcset="{% render 'imgix', src: default_image_src_2x %} 2x, {% render 'imgix', src: default_image_src %} 1x"
           src="{% render 'imgix', src: default_image_src_2x %}"
