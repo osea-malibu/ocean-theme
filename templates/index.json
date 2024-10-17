@@ -9,56 +9,6 @@
  */
 {
   "sections": {
-    "image_banner_GjnLnB": {
-      "type": "image-banner",
-      "blocks": {
-        "paragraph_GtTRQm": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "NEW!",
-            "paragraph_classes": "border-2 border-white rounded-full uppercase text-white px-3 py-0.5 font-bold mb-1 tracking-wider lg:text-xl xl:text-2xl lg:px-5 lg:py-1 ubc-tag hidden sm:block"
-          }
-        },
-        "heading_Mft3F7": {
-          "type": "heading",
-          "settings": {
-            "heading": "Undaria Body Collection",
-            "heading_classes": "font-serif text-white mb-1 text-5xl lg:text-6xl tracking-normal mt-5 sm:mt-2"
-          }
-        },
-        "paragraph_wMYA9H": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Four bestsellers at an incredible value",
-            "paragraph_classes": "text-white leading-tight text-xl lg:text-2xl xl:text-3xl hidden sm:block font-medium"
-          }
-        },
-        "button_kENmAe": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_aria_label": "Shop all OSEA Bestsellers",
-            "button_link": "shopify://collections/bestsellers",
-            "target_blank": false,
-            "button_classes": "sm:button-lg mt-auto sm:mt-4 mb-2 button-white border-seaweed-700"
-          }
-        }
-      },
-      "block_order": ["paragraph_GtTRQm", "heading_Mft3F7", "paragraph_wMYA9H", "button_kENmAe"],
-      "disabled": true,
-      "custom_css": [
-        ".ubc-tag {background-color: #fdffb2; border-color: #fdffb2; color: #ff8400;}"
-      ],
-      "settings": {
-        "image_mobile": "shopify://shop_images/9.17_UBC-1_Collection_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/9.17_UBC-1_Collection_Desktop_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://collections/bestsellers",
-        "banner_classes": "container px-0 xs:px-6  ld-offer ld-one-tier",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:right-1/2 sm:pl-8"
-      }
-    },
     "image_banner_GjnLnG": {
       "type": "image-banner",
       "blocks": {
@@ -129,6 +79,105 @@
         "text_block_classes": "absolute inset-0 sm:pl-24 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:left-1/3"
       }
     },
+    "image_banner_Ewyb78": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_hAEccK": {
+          "type": "heading",
+          "settings": {
+            "heading": "Clean Beauty<br>Since 1996",
+            "heading_classes": "mb-1 text-5xl lg:text-7xl  lg:tracking-normal\nfont-serif"
+          }
+        },
+        "paragraph_yT7yC8": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Dive into our bestselling<br>seaweed-powered skincare",
+            "paragraph_classes": "hidden sm:block font-book text-2xl"
+          }
+        },
+        "button_V7xBgG": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "shop our bestselling products",
+            "button_link": "shopify://collections/bestsellers",
+            "target_blank": false,
+            "button_classes": "button-primary mt-4"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hAEccK",
+        "paragraph_yT7yC8",
+        "button_V7xBgG"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify://shop_images/2.15_Bestsellers_HP_Banner_Mobile_BLANK_f42f2f7e-2c35-47c3-84b3-950506ff21d0.png",
+        "image": "shopify://shop_images/2.15_Best_Sellers_HP_Banner_Desktop_BLANK_2b155a90-97ad-4ea5-8e5e-4ce24f2cd6d4.jpg",
+        "is_lazy": false,
+        "image_link": "",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:left-1/2"
+      }
+    },
+    "image_banner_GjnLnB": {
+      "type": "image-banner",
+      "blocks": {
+        "paragraph_GtTRQm": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "NEW!",
+            "paragraph_classes": "border-2 border-white rounded-full uppercase text-white px-3 py-0.5 font-bold mb-1 tracking-wider lg:text-xl xl:text-2xl lg:px-5 lg:py-1 ubc-tag hidden sm:block"
+          }
+        },
+        "heading_Mft3F7": {
+          "type": "heading",
+          "settings": {
+            "heading": "Undaria Body Collection",
+            "heading_classes": "font-serif text-white mb-1 text-5xl lg:text-6xl tracking-normal mt-5 sm:mt-2"
+          }
+        },
+        "paragraph_wMYA9H": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Four bestsellers at an incredible value",
+            "paragraph_classes": "text-white leading-tight text-xl lg:text-2xl xl:text-3xl hidden sm:block font-medium"
+          }
+        },
+        "button_kENmAe": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop all OSEA Bestsellers",
+            "button_link": "shopify://collections/bestsellers",
+            "target_blank": false,
+            "button_classes": "sm:button-lg mt-auto sm:mt-4 mb-2 button-white border-seaweed-700"
+          }
+        }
+      },
+      "block_order": [
+        "paragraph_GtTRQm",
+        "heading_Mft3F7",
+        "paragraph_wMYA9H",
+        "button_kENmAe"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".ubc-tag {background-color: #fdffb2; border-color: #fdffb2; color: #ff8400;}"
+      ],
+      "settings": {
+        "image_mobile": "shopify://shop_images/9.17_UBC-1_Collection_Mobile_BLANK.jpg",
+        "image": "shopify://shop_images/9.17_UBC-1_Collection_Desktop_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/bestsellers",
+        "banner_classes": "container px-0 xs:px-6  ld-offer ld-one-tier",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:right-1/2 sm:pl-8"
+      }
+    },
     "165703204544efb73d": {
       "type": "rich-text",
       "blocks": {
@@ -150,7 +199,10 @@
           }
         }
       },
-      "block_order": ["165703204528fb3b00-0", "9d280c33-2d05-4ce7-b39f-76ae6d0d9d5e"],
+      "block_order": [
+        "165703204528fb3b00-0",
+        "9d280c33-2d05-4ce7-b39f-76ae6d0d9d5e"
+      ],
       "disabled": true,
       "settings": {
         "section_heading": "Hyaluronic Body Serum Clinical Statement",
@@ -178,7 +230,10 @@
           }
         }
       },
-      "block_order": ["heading_iR7hyP", "paragraph_DDcqWz"],
+      "block_order": [
+        "heading_iR7hyP",
+        "paragraph_DDcqWz"
+      ],
       "settings": {
         "section_heading": "Brand statement",
         "section_classes": "pt-10 pb-6 px-4 sm:px-6 md:px-0 max-w-xl mx-auto",
@@ -196,7 +251,9 @@
           }
         }
       },
-      "block_order": ["ef36c6b7-d88e-4497-b951-129a5bb04048"],
+      "block_order": [
+        "ef36c6b7-d88e-4497-b951-129a5bb04048"
+      ],
       "settings": {
         "products_to_show": 12,
         "wrapper_classes": "mb-8",
@@ -249,7 +306,9 @@
           }
         }
       },
-      "block_order": ["column_ktUkfq"],
+      "block_order": [
+        "column_ktUkfq"
+      ],
       "disabled": true,
       "settings": {
         "section_heading": "",
@@ -392,7 +451,11 @@
           }
         }
       },
-      "block_order": ["column_MjG4TD", "column_fNWJGe", "column_WKTzCn"],
+      "block_order": [
+        "column_MjG4TD",
+        "column_fNWJGe",
+        "column_WKTzCn"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "container mb-12 relative overflow-hidden sm:overflow-visible pt-12",
@@ -749,7 +812,9 @@
           }
         }
       },
-      "block_order": ["1657672123ec38d471-0"],
+      "block_order": [
+        "1657672123ec38d471-0"
+      ],
       "settings": {
         "section_heading": "Take the OSEA Skin Quiz",
         "section_classes": "container mb-8 block",
@@ -1188,7 +1253,9 @@
           }
         }
       },
-      "block_order": ["4b5af2ba-4a8b-4522-b0d4-c399f507638c"],
+      "block_order": [
+        "4b5af2ba-4a8b-4522-b0d4-c399f507638c"
+      ],
       "settings": {
         "section_heading": "Take the OSEA Skin Quiz",
         "section_classes": "container mb-8",
@@ -1645,8 +1712,9 @@
     }
   },
   "order": [
-    "image_banner_GjnLnB",
     "image_banner_GjnLnG",
+    "image_banner_Ewyb78",
+    "image_banner_GjnLnB",
     "165703204544efb73d",
     "rich_text_abBMrD",
     "16570286821ae9514b",
