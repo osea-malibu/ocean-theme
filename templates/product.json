@@ -65,7 +65,8 @@
           "settings": {
             "upsell_classes": "upsells col-span-12 mt-6",
             "upsell_enable_sets": true,
-            "upsell_enable_partner": true
+            "upsell_enable_partner": true,
+            "upsell_enable_routine": false
           }
         },
         "ab50b385-6599-4b94-8014-2dd6ab1517d4": {
@@ -99,6 +100,15 @@
             "info_tab_wrapper_classes": "col-span-12 mt-4",
             "info_tab_label_classes": "font-bold uppercase text-xs tracking-widest",
             "info_tab_content_classes": "",
+            "enable_info_tab_description": true,
+            "info_tab_description_label": "Description",
+            "enable_info_tab_howto": true,
+            "info_tab_howto_label": "How To Use",
+            "enable_info_tab_sustainability": true,
+            "info_tab_sustainability_label": "Recycling",
+            "enable_info_tab_articles": true,
+            "info_tab_articles_label": "Learn",
+            "enable_info_tab_custom": true,
             "info_tab_custom_tab_label": "Ingredients",
             "info_tab_custom_tab_content": "{{ product.metafields.custom_fields.ingredients.value }}",
             "info_tab_custom_tab_handles": "osea-for-parachute-hydrating-hand-cream, osea-for-parachute-purifying-hand-soap"
@@ -161,8 +171,12 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
-      "custom_css": [],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
+      "custom_css": [
+
+      ],
       "settings": {
         "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
         "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
@@ -172,7 +186,9 @@
     },
     "faqs": {
       "type": "product-faqs",
-      "custom_css": [],
+      "custom_css": [
+
+      ],
       "settings": {
         "header": "FAQs"
       }
@@ -198,5 +214,13 @@
       }
     }
   },
-  "order": ["main", "video", "clinicals", "ingredients", "faqs", "reviews", "recommendations"]
+  "order": [
+    "main",
+    "video",
+    "clinicals",
+    "ingredients",
+    "faqs",
+    "reviews",
+    "recommendations"
+  ]
 }
