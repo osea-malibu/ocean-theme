@@ -1,0 +1,24 @@
+{% comment %} START Add to Recently Viewed Snippet {% endcomment %}
+<script type="text/javascript">
+  // Function to track recently viewed products
+  function addRecentlyViewedProduct(productId) {
+    let recentlyViewed = JSON.parse(localStorage.getItem('osea.recentlyViewed')) || [];
+  
+    // Check if the product is already in the list
+    if (!recentlyViewed.includes(productId)) {
+      // Add the new product to the front of the list
+      recentlyViewed.unshift(productId);
+  
+      // Limit the number of tracked products (e.g., max 5 products)
+      if (recentlyViewed.length > 6) {
+        recentlyViewed.pop();
+      }
+  
+      // Save the updated list to localStorage
+      localStorage.setItem('osea.recentlyViewed', JSON.stringify(recentlyViewed));
+    }
+  }
+  // Call the function to add the product to recently viewed
+  addRecentlyViewedProduct({{ product.id }});
+</script>
+{% comment %} END Recently Viewed Snippet {% endcomment %}
