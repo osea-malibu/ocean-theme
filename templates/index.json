@@ -79,6 +79,50 @@
         "text_block_classes": "absolute inset-0 sm:pl-24 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:left-1/3"
       }
     },
+    "image_banner_DcpCkz": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_HiRVMX": {
+          "type": "heading",
+          "settings": {
+            "heading": "Escape to Calm",
+            "heading_classes": "mb-1 text-5xl lg:text-7xl  lg:tracking-normal\nfont-serif"
+          }
+        },
+        "paragraph_wiYy7f": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Relax &amp; unwind with <br class=\"sm:hidden\">our Vagus Nerve essentials",
+            "paragraph_classes": "font-book sm:text-2xl text-xl mb-2"
+          }
+        },
+        "button_zdQ9bh": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop vagus nerve products",
+            "button_link": "shopify://collections/vagus-nerve",
+            "target_blank": false,
+            "button_classes": "button-primary sm:mt-2 mt-auto"
+          }
+        }
+      },
+      "block_order": [
+        "heading_HiRVMX",
+        "paragraph_wiYy7f",
+        "button_zdQ9bh"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify://shop_images/10.18_Vagus_Nerve_Collection_Mobile_BLANK.jpg",
+        "image": "shopify://shop_images/10.18_Vagus_Nerve_Collection_Desktop_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/vagus-nerve",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:pr-0 sm:pl-24 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:right-1/2"
+      }
+    },
     "image_banner_Ewyb78": {
       "type": "image-banner",
       "blocks": {
@@ -117,7 +161,7 @@
         "image_mobile": "shopify://shop_images/2.15_Bestsellers_HP_Banner_Mobile_BLANK_f42f2f7e-2c35-47c3-84b3-950506ff21d0.png",
         "image": "shopify://shop_images/2.15_Best_Sellers_HP_Banner_Desktop_BLANK_2b155a90-97ad-4ea5-8e5e-4ce24f2cd6d4.jpg",
         "is_lazy": false,
-        "image_link": "",
+        "image_link": "shopify://collections/bestsellers",
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center justify-start sm:justify-center py-4 lg:pt-6 sm:left-1/2"
@@ -1713,6 +1757,7 @@
   },
   "order": [
     "image_banner_GjnLnG",
+    "image_banner_DcpCkz",
     "image_banner_Ewyb78",
     "image_banner_GjnLnB",
     "165703204544efb73d",
