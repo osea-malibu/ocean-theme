@@ -206,7 +206,29 @@
         "card_classes": "",
         "show_secondary_image": false
       }
+    },
+    "recently-viewed": {
+      "type": "product-recently-viewed",
+      "disabled": true,
+      "settings": {
+        "section_classes": "bg-wave-100",
+        "container_classes": "container mx-auto px-6 py-8",
+        "heading": "You may also like",
+        "heading_classes": "",
+        "wrapper_classes": "grid grid-cols-5 gap-4",
+        "card_classes": "",
+        "show_secondary_image": false
+      }
     }
   },
-  "order": ["main", "video", "clinicals", "ingredients", "faqs", "reviews", "recommendations"]
+  "order": [
+    "main",
+    "video",
+    "clinicals",
+    "ingredients",
+    "faqs",
+    "reviews",
+    "recommendations",
+    "recently-viewed"
+  ]
 }

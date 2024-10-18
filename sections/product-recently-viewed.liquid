@@ -1,0 +1,103 @@
+<product-recommendations class="product-recommendations block {{ section.settings.section_classes }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=5">
+  <div class="{{ section.settings.container_classes }}">
+    {% if recommendations.performed and recommendations.products_count > 0 %}
+      <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
+      <ul class="{{ section.settings.wrapper_classes }}" role="list">
+        {% for recommendation in recommendations.products %}
+          <li class="{{ section.settings.card_classes }}">
+            {% render 'product-card',
+              card_product: recommendation,
+              section_id: section.id,
+              show_secondary_image_on_hover: section.settings.show_secondary_image
+            %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</product-recommendations>
+
+{% javascript %}
+  class ProductRecommendations extends HTMLElement {
+    constructor() {
+      super();
+
+      const handleIntersection = (entries, observer) => {
+        if (!entries[0].isIntersecting) return;
+        observer.unobserve(this);
+
+        fetch(this.dataset.url)
+          .then(response => response.text())
+          .then(text => {
+            const html = document.createElement('div');
+            html.innerHTML = text;
+            const recommendations = html.querySelector('product-recommendations');
+            if (recommendations && recommendations.innerHTML.trim().length) {
+              this.innerHTML = recommendations.innerHTML;
+            }
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      }
+
+      new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 200px 0px'}).observe(this);
+    }
+  }
+
+  customElements.define('product-recommendations', ProductRecommendations);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.product-recommendations.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.product-recommendations.settings.paragraph__1.content"
+    },
+    {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Section classes"
+    },
+    {
+      "type": "textarea",
+      "id": "container_classes",
+      "label": "Container classes"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "You may also like",
+      "label": "t:sections.product-recommendations.settings.heading.label"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_classes",
+      "label": "Heading classes"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.product-recommendations.settings.header__2.content"
+    },
+    {
+      "type": "textarea",
+      "id": "wrapper_classes",
+      "label": "Product cards wrapper classes"
+    },
+    {
+      "type": "textarea",
+      "id": "card_classes",
+      "label": "Product card classes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "t:sections.product-recommendations.settings.show_secondary_image.label"
+    }
+  ]
+}
+{% endschema %}
