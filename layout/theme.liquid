@@ -22,9 +22,6 @@
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
-
-    <!-- Google Consent Mode V2 Consentmo -->
-    {% render 'gcm-integration-script' %}
     
     {% liquid
       render 'meta-tags'
