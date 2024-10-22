@@ -45,6 +45,10 @@
 
             {% comment %} Filters {% endcomment %}
             {%- for filter in results.filters -%}
+              <script>
+                console.log("collection.metafields.custom.filter_visibility.value", {{ collection.metafields.custom.filter_visibility.value }});
+                console.log("filter.label", {{ filter.label }});
+              </script>
               {%- if collection.metafields.custom.filter_visibility.value contains filter.label  -%}
                 {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
                 <details
