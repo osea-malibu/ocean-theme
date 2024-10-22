@@ -29,8 +29,10 @@
                                    <a href="${product.url}">
                                      <img src="${product.featured_image}" alt="${product.title}">
                                      <p class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1">${product.title}</p>
-                                     <p>${product.price / 100} ${Shopify.currency.active}</p>
-                                     <a href="" class="button button-primary">View product</a>
+                                     <a href="" class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 justify-between h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4">
+                                       <span>View product</span>
+                                       <span>${product.price / 100} ${Shopify.currency.active}</span>
+                                     </a>
                                    </a>
                                  </li>`;
               document.querySelector('.product-recently-viewed ul').innerHTML += productHtml;
