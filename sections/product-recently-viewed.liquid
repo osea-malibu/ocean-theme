@@ -1,24 +1,13 @@
-<product-recommendations class="product-recommendations block {{ section.settings.section_classes }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=5">
+<product-recently-viewed class="product-recently-viewed hidden {{ section.settings.section_classes }}">
   <div class="{{ section.settings.container_classes }}">
-    {% if recommendations.performed and recommendations.products_count > 0 %}
       <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
       <ul class="{{ section.settings.wrapper_classes }}" role="list">
-        {% for recommendation in recommendations.products %}
-          <li class="{{ section.settings.card_classes }}">
-            {% render 'product-card',
-              card_product: recommendation,
-              section_id: section.id,
-              show_secondary_image_on_hover: section.settings.show_secondary_image
-            %}
-          </li>
-        {% endfor %}
       </ul>
-    {% endif %}
   </div>
-</product-recommendations>
+</product-recently-viewed>
 
 {% javascript %}
-  class ProductRecommendations extends HTMLElement {
+  class ProductRecentlyViewed extends HTMLElement {
     constructor() {
       super();
 
@@ -45,12 +34,12 @@
     }
   }
 
-  customElements.define('product-recommendations', ProductRecommendations);
+  customElements.define('product-recently-viewed', ProductRecentlyViewed);
 {% endjavascript %}
 
 {% schema %}
 {
-  "name": "t:sections.product-recommendations.name",
+  "name": "Recently Viewed",
   "tag": "section",
   "settings": [
     {
@@ -86,17 +75,6 @@
       "type": "textarea",
       "id": "wrapper_classes",
       "label": "Product cards wrapper classes"
-    },
-    {
-      "type": "textarea",
-      "id": "card_classes",
-      "label": "Product card classes"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "t:sections.product-recommendations.settings.show_secondary_image.label"
     }
   ]
 }
