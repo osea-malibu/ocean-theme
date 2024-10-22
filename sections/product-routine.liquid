@@ -4,7 +4,7 @@
     <ul class="{{ section.settings.wrapper_classes }}" role="list">
       {% for product in product.metafields.custom.upsell_complete_routine.value %}
         <li class="{{ section.settings.card_classes }}">
-          <b class="bg-neon-green px-1 py-0.5 rounded uppercase absolute z-10 top-1 left-1">Step {{ forloop.index }}</b>
+          <b class="bg-neon-green px-1 py-0.5 rounded-t uppercase w-full block text-center">Step {{ forloop.index }}</b>
           {% render 'product-card',
             card_product: product,
             section_id: section.id,
