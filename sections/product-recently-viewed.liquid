@@ -30,6 +30,7 @@
                                      <img src="${product.featured_image}" alt="${product.title}">
                                      <p class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1">${product.title}</p>
                                      <p>${product.price / 100} ${Shopify.currency.active}</p>
+                                     <a href="" class="button button-primary">View product</a>
                                    </a>
                                  </li>`;
               document.querySelector('.product-recently-viewed ul').innerHTML += productHtml;
