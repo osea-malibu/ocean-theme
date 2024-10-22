@@ -184,6 +184,16 @@
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
+    "routine": {
+      "type": "product-routine",
+      "settings": {
+        "section_classes": "hidden",
+        "container_classes": "container mx-auto px-6 py-8",
+        "heading": "Recently viewed products",
+        "heading_classes": "font-bold mb-2",
+        "wrapper_classes": "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
+      }
+    },
     "faqs": {
       "type": "product-faqs",
       "custom_css": [
@@ -228,6 +238,7 @@
     "video",
     "clinicals",
     "ingredients",
+    "routine",
     "faqs",
     "reviews",
     "recently-viewed",
