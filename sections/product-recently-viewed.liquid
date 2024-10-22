@@ -16,7 +16,6 @@
 
     displayRecentlyViewedProducts() {
       let recentlyViewed = JSON.parse(localStorage.getItem('osea.recentlyViewed')) || [];
-      console.log("recentlyViewed", recentlyViewed);
       
       if (recentlyViewed.length > 0) {
         recentlyViewed.forEach(function (productId) {
