@@ -4,7 +4,7 @@
     <ul class="{{ section.settings.wrapper_classes }}" role="list">
       {% for routine_product in product.metafields.custom.upsell_complete_routine.value %}
         <li class="{{ section.settings.card_classes }}">
-          {%  assign product_color = product.metafields.custom.product_color_light %}
+          {%-  assign product_color = product.metafields.custom.product_color_light -%}
           <b class="{% if product_color != blank %}{{ product_color }}{% else %}bg-wave-200{% endif %} px-1 py-0.5 rounded-t uppercase w-full block text-center">Step {{ forloop.index }}</b>
           {% render 'product-card',
             card_product: routine_product,
