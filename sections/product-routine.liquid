@@ -2,7 +2,7 @@
   <div class="{{ section.settings.container_classes }}">
     <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
     <ul class="{{ section.settings.wrapper_classes }}" role="list">
-      {% for product in product.metafields.custom.upsell_complete_routine %}
+      {% for product in product.metafields.custom.upsell_complete_routine.value %}
         <li class="{{ section.settings.card_classes }}">
           {% render 'product-card',
             card_product: product,
