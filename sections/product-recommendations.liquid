@@ -6,6 +6,7 @@
       <ul class="{{ section.settings.wrapper_classes }}" role="list">
         {% for recommendation in recommendations.products %}
           {%- assign product_collections_handles = product.collections | map: 'handle' -%}
+          <script>console.log("product_collections_handles", {{ product_collections_handles }})</script>
           {%- unless item_count >= 6 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
             <li class="{{ section.settings.card_classes }}">
               {% render 'product-card',
