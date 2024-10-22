@@ -1,6 +1,50 @@
+<div class="product-routine hidden {{ section.settings.section_classes }}">
+  <div class="{{ section.settings.container_classes }}">
+    <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
+    <ul class="{{ section.settings.wrapper_classes }}" role="list">
+    </ul>
+  </div>
+</div>
+
 {% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
+{
+  "name": "Complete Your Routine",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Powered by the 'Complete Your Routine' product metafield."
+    },
+    {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Section classes"
+    },
+    {
+      "type": "textarea",
+      "id": "container_classes",
+      "label": "Container classes"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "You may also like",
+      "label": "t:sections.product-recommendations.settings.heading.label"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_classes",
+      "label": "Heading classes"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.product-recommendations.settings.header__2.content"
+    },
+    {
+      "type": "textarea",
+      "id": "wrapper_classes",
+      "label": "Product cards wrapper classes"
+    }
+  ]
+}
 {% endschema %}
