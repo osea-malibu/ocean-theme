@@ -200,6 +200,16 @@
         "wrapper_classes": ""
       }
     },
+    "recently-viewed": {
+      "type": "product-recently-viewed",
+      "settings": {
+        "section_classes": "hidden",
+        "container_classes": "container mx-auto px-6 py-8",
+        "heading": "Recently viewed products",
+        "heading_classes": "font-bold mb-2",
+        "wrapper_classes": "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
+      }
+    },
     "recommendations": {
       "type": "product-recommendations",
       "settings": {
@@ -211,16 +221,6 @@
         "card_classes": "",
         "show_secondary_image": false
       }
-    },
-    "recently-viewed": {
-      "type": "product-recently-viewed",
-      "settings": {
-        "section_classes": "hidden",
-        "container_classes": "container mx-auto px-6 py-8",
-        "heading": "Recently viewed products",
-        "heading_classes": "font-bold mb-2",
-        "wrapper_classes": "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
-      }
     }
   },
   "order": [
@@ -230,7 +230,7 @@
     "ingredients",
     "faqs",
     "reviews",
-    "recommendations",
-    "recently-viewed"
+    "recently-viewed",
+    "recommendations"
   ]
 }
