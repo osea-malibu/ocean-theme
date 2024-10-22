@@ -24,6 +24,7 @@
           fetch(`/products/${productId}.js`)
             .then(response => response.json())
             .then(product => {
+              console.log("product", product)
               // Add product details to a section on the page
               let productHtml = `<li>
                                    <a href="${product.url}">
