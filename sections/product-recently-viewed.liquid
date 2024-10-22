@@ -1,8 +1,8 @@
 <product-recently-viewed class="product-recently-viewed hidden {{ section.settings.section_classes }}">
   <div class="{{ section.settings.container_classes }}">
-      <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
-      <ul class="{{ section.settings.wrapper_classes }}" role="list">
-      </ul>
+    <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
+    <ul class="{{ section.settings.wrapper_classes }}" role="list">
+    </ul>
   </div>
 </product-recently-viewed>
 
@@ -11,26 +11,30 @@
     constructor() {
       super();
 
-      const handleIntersection = (entries, observer) => {
-        if (!entries[0].isIntersecting) return;
-        observer.unobserve(this);
+      
+    }
 
-        fetch(this.dataset.url)
-          .then(response => response.text())
-          .then(text => {
-            const html = document.createElement('div');
-            html.innerHTML = text;
-            const recommendations = html.querySelector('product-recommendations');
-            if (recommendations && recommendations.innerHTML.trim().length) {
-              this.innerHTML = recommendations.innerHTML;
-            }
-          })
-          .catch(e => {
-            console.error(e);
-          });
+    displayRecentlyViewedProducts() {
+      let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+      
+      if (recentlyViewed.length > 0) {
+        recentlyViewed.forEach(function (productId) {
+          // Fetch product details via AJAX or Liquid and display
+          fetch(`/products/${productId}.js`)
+            .then(response => response.json())
+            .then(product => {
+              // Add product details to a section on the page
+              let productHtml = `<li>
+                                   <a href="${product.url}">
+                                     <img src="${product.featured_image}" alt="${product.title}">
+                                     <p>${product.title}</p>
+                                     <p>${product.price / 100} ${Shopify.currency.active}</p>
+                                   </a>
+                                 </li>`;
+              document.querySelector('.product-recently-viewed ul').innerHTML += productHtml;
+            });
+        });
       }
-
-      new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 200px 0px'}).observe(this);
     }
   }
 
