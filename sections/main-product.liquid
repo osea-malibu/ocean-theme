@@ -24,6 +24,7 @@
                       assign main_image_src_2x = media | image_url: width: 800, height: 1000, crop: 'center'
                     -%}
                     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                    <script>console.log("product", {{product}});</script>
                     <img
                       {% if product.selected_or_first_available_variant.featured_media != null and forloop.first %}id="Product-VariantImage"{% endif %}
                       srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
