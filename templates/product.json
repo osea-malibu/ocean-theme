@@ -202,9 +202,8 @@
     },
     "recommendations": {
       "type": "product-recommendations",
-      "disabled": true,
       "settings": {
-        "section_classes": "bg-wave-100",
+        "section_classes": "bg-wave-100 hidden",
         "container_classes": "container mx-auto px-6 py-8",
         "heading": "You may also like",
         "heading_classes": "",
@@ -216,7 +215,7 @@
     "recently-viewed": {
       "type": "product-recently-viewed",
       "settings": {
-        "section_classes": "",
+        "section_classes": "hidden",
         "container_classes": "container mx-auto px-6 py-8",
         "heading": "Recently viewed products",
         "heading_classes": "font-bold mb-2",
