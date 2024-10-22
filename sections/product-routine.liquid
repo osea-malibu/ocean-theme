@@ -4,6 +4,7 @@
     <ul class="{{ section.settings.wrapper_classes }}" role="list">
       {% for product in product.metafields.custom.upsell_complete_routine.value %}
         <li class="{{ section.settings.card_classes }}">
+          <span class="bg-neon-green px-1 py-0.5 rounded">Step {{ forloop.index }}</span>
           {% render 'product-card',
             card_product: product,
             section_id: section.id,
