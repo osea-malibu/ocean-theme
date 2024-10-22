@@ -29,7 +29,8 @@
               let productHtml = `<li>
                                    <a href="${product.url}">
                                      <img src="${product.featured_image}" alt="${product.title}">
-                                     <p>${product.title}</p>
+                                     <p class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1">${product.title}</p>
+                                     <p class="text-sm !leading-[1.1]">${product.metafields.custom_fields.short_description}</p>
                                      <p>${product.price / 100} ${Shopify.currency.active}</p>
                                    </a>
                                  </li>`;
