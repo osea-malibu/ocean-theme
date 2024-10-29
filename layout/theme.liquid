@@ -195,21 +195,9 @@
       render 'bazaarvoice'
       render 'audiohook'
       render 'data-layer'
+      render 'postscript-popup'
+      render 'axon-script'
     -%}
-    
-    <script>
-      var klaviyo = klaviyo || [];
-      window.addEventListener("postscriptPopup", function(ev) {
-        setTimeout(function() {
-          if (ev.detail.type == 'formSubmit') {
-            const {popupName} = ev.detail;
-            klaviyo.push(['identify', {
-              'PostscriptPopup': popupName,
-            }]);
-          }
-        }, 1000);
-      });
-    </script>
 
     {% render 'content_for_footer' %}
   </body>
