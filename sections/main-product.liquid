@@ -338,6 +338,7 @@
                       class="no-js-hidden block"
                       data-section="{{ section.id }}"
                       data-url="{{ product.url }}"
+                      data-is-main-pdp="true"
                     >
                       {%- for option in product.options_with_values -%}
                         <fieldset class="js group">
@@ -472,7 +473,7 @@
                           <span class="text-xs 2xs:tracking-wide md:tracking-normal lg:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
                             {% comment %} <b class="font-medium">FREE US shipping</b>, skip or cancel anytime. {% endcomment %}
                             <span>On your first 3 orders for a limited time only. Ends 10/31/24.</span>
-                            <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
+                          <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
                               <button class="product-popup-modal__button underline cursor-pointer md:tracking-tight lg:tracking-wide" type="button" aria-haspopup="dialog">Learn more</button>
                             </modal-opener>
                           </span>

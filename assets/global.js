@@ -1533,7 +1533,9 @@ class VariantSelects extends HTMLElement {
   updateMedia() {
     if (!this.currentVariant) return;
     if (!this.currentVariant.featured_media) return;
-    if (window.location.pathname.includes("/products/")) {
+
+    const isMainPdp = this.dataset.isMainPdp === "true";
+    if (isMainPdp) {
       // change first image in product page image gallery
       const variantImageEl = document.querySelector("#Product-VariantImage");
       const newImageSrc = this.currentVariant.featured_image.src;
