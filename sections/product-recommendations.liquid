@@ -1,4 +1,4 @@
-<product-recommendations class="product-recommendations block {{ section.settings.section_classes }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=5">
+<product-recommendations class="product-recommendations {{ section.settings.section_classes }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
   <div class="{{ section.settings.container_classes }}">
     {% if recommendations.performed and recommendations.products_count > 0 %}
       <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
@@ -9,7 +9,7 @@
               card_product: recommendation,
               section_id: section.id,
               show_secondary_image_on_hover: section.settings.show_secondary_image
-              button_class: 'px-2'
+              button_class: section.settings.button_classes
             %}
           </li>
         {% endfor %}
@@ -92,6 +92,11 @@
       "type": "textarea",
       "id": "card_classes",
       "label": "Product card classes"
+    },
+    {
+      "type": "textarea",
+      "id": "button_classes",
+      "label": "Button classes"
     },
     {
       "type": "checkbox",
