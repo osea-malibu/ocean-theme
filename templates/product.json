@@ -63,7 +63,7 @@
         "f8ca449b-3a83-411f-ac44-40e011b825f3": {
           "type": "upsells",
           "settings": {
-            "upsell_classes": "upsells col-span-12 mt-6",
+            "upsell_classes": "upsells col-span-12 mt-2",
             "upsell_enable_sets": true,
             "upsell_enable_partner": true,
             "upsell_enable_routine": false
@@ -218,7 +218,8 @@
         "container_classes": "container lg:max-w-screen-lg mx-auto px-6 py-8",
         "heading": "Recently viewed products",
         "heading_classes": "font-bold mb-2",
-        "wrapper_classes": "grid grid-cols-2 sm:grid-cols-4 gap-4"
+        "wrapper_classes": "grid grid-cols-2 sm:grid-cols-4 gap-4",
+        "limit": 4
       }
     },
     "recommendations": {
@@ -231,7 +232,8 @@
         "wrapper_classes": "grid grid-cols-2 sm:grid-cols-4 gap-4",
         "card_classes": "",
         "button_classes": "h-10 sm:h-auto flex-col lg:flex-row py-1 lg:py-2 button-sm lg:button-md leading-none lg:leading-normal lg:px-3",
-        "show_secondary_image": false
+        "show_secondary_image": false,
+        "limit": 4
       }
     }
   },
