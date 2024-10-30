@@ -1,9 +1,9 @@
 <product-recommendations class="product-recommendations {{ section.settings.section_classes }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
   <div class="{{ section.settings.container_classes }}">
-    {% if recommendations.performed and recommendations.products_count > 0 limit: section.settings.limit %}
+    {% if recommendations.performed and recommendations.products_count > 0 %}
       <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
       <ul class="{{ section.settings.wrapper_classes }}" role="list">
-        {% for recommendation in recommendations.products %}
+        {% for recommendation in recommendations.products limit: section.settings.limit %}
           <li class="{{ section.settings.card_classes }}">
             {% render 'product-card',
               card_product: recommendation,
