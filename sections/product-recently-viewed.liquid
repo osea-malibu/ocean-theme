@@ -1,4 +1,7 @@
-<product-recently-viewed class="product-recently-viewed {{ section.settings.section_classes }}">
+<product-recently-viewed
+  class="product-recently-viewed {{ section.settings.section_classes }}"
+  data-limit="{{ section.settings.limit }}"
+>
   <div class="{{ section.settings.container_classes }}">
     <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
     <ul class="{{ section.settings.wrapper_classes }}" role="list">
@@ -10,15 +13,19 @@
   class ProductRecentlyViewed extends HTMLElement {
     constructor() {
       super();
-
       this.displayRecentlyViewedProducts();
     }
 
     displayRecentlyViewedProducts() {
+      // Retrieve the limit from the data attribute and parse it as an integer
+      const limit = parseInt(this.dataset.limit, 10);
       let recentlyViewed = JSON.parse(localStorage.getItem('osea.recentlyViewed')) || [];
-      
+
+      // Trim the array to the specified limit
+      recentlyViewed = recentlyViewed.slice(0, limit);
+
       if (recentlyViewed.length > 0) {
-        recentlyViewed.forEach(function (productId) {
+        recentlyViewed.forEach((productId) => {
           // Fetch product details via AJAX or Liquid and display
           fetch(`/products/${productId}.js`)
             .then(response => response.json())
@@ -26,19 +33,20 @@
               // Add product details to a section on the page
               let productHtml = `<li>
                                   <a href="${product.url}">
-                                    <img src="${product.featured_image}" alt="${product.title}">
+                                    <img src="${product.featured_image}" alt="${product.title}" class="block mb-2">
                                     <p class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1">${product.title}</p>
-                                    <a href="${product.url}" class="link">
-                                      <span>View product</span>
-                                    </a>
                                   </a>
-                                 </li>`;
+                                  <a href="${product.url}" class="link">
+                                    <span>View product</span>
+                                  </a>
+                                </li>`;
               document.querySelector('.product-recently-viewed ul').innerHTML += productHtml;
             });
         });
       }
     }
   }
+
   customElements.define('product-recently-viewed', ProductRecentlyViewed);
 {% endjavascript %}
 
@@ -80,6 +88,13 @@
       "type": "textarea",
       "id": "wrapper_classes",
       "label": "Product cards wrapper classes"
+    },
+    {
+      "type": "number",
+      "id": "limit",
+      "label": "Product cards limit",
+      "default": 4,
+      "info": "The maximum number of product cards to display, up to 12."
     }
   ]
 }

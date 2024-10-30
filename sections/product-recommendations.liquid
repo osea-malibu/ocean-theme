@@ -1,6 +1,6 @@
 <product-recommendations class="product-recommendations {{ section.settings.section_classes }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
   <div class="{{ section.settings.container_classes }}">
-    {% if recommendations.performed and recommendations.products_count > 0 %}
+    {% if recommendations.performed and recommendations.products_count > 0 limit: section.settings.limit %}
       <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
       <ul class="{{ section.settings.wrapper_classes }}" role="list">
         {% for recommendation in recommendations.products %}
@@ -96,13 +96,20 @@
     {
       "type": "textarea",
       "id": "button_classes",
-      "label": "Button classes"
+      "label": "Product card button classes"
     },
     {
       "type": "checkbox",
       "id": "show_secondary_image",
       "default": false,
       "label": "t:sections.product-recommendations.settings.show_secondary_image.label"
+    },
+    {
+      "type": "number",
+      "id": "limit",
+      "label": "Product cards limit",
+      "default": 4,
+      "info": "The maximum number of product cards to display, up to 12."
     }
   ]
 }
