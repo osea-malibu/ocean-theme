@@ -626,9 +626,8 @@
                       {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
                     </div>
                   {%- endif -%}
-                  {% comment %} {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%} {% endcomment %}
-                  {%- if product.metafields.custom.upsell_complete_routine != nil -%}
-                    <div class="upsell-routine mt-4 hidden">
+                  {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
+                    <div class="upsell-routine mt-4">
                       <h2 class="font-medium tracking-wide mb-1">Complete Your Routine</h2>
                       {%- for step in product.metafields.custom.upsell_complete_routine.value -%}
                         {%- render 'product-upsell', product: step, button_style: 'link', step_number: forloop.index -%}
