@@ -12,7 +12,8 @@
     "main": {
       "type": "main-page",
       "disabled": true,
-      "settings": {}
+      "settings": {
+      }
     },
     "b16ece37-6cf1-4a1c-86f5-f3d323b933ce": {
       "type": "multicolumn",
@@ -25,14 +26,14 @@
             "image_desktop": "shopify://shop_images/subscribe.jpg",
             "is_bg_image": false,
             "image_link": "",
-            "image_classes": "w-full sm:h-90 object-cover object-right h-96",
+            "image_classes": "w-full sm:h-80 object-cover object-right h-96",
             "image_wrapper_classes": "",
             "image_link_classes": "",
             "image_static_size": "",
-            "text_classes": "absolute top-2 inset-x-0 text-center sm:right-auto sm:max-w-xs w-full lg:left-12 xl:left-24 sm:top-10",
+            "text_classes": "absolute top-6 inset-x-0 text-center sm:right-auto sm:max-w-md w-full lg:left-12 xl:left-24 sm:top-10",
             "remove_text_wrapper": false,
-            "heading": "<span class=\"badge rounded-full px-2 text-lg mb-1\">Limited Time Offer</span><br>\nSubscribe &amp; Save 15%<br>On Your First 3 Orders",
-            "heading_classes": "text-3xl font-book",
+            "heading": "<!--<span class=\"badge rounded-full px-2 text-lg mb-1\">Limited Time Offer</span><br>-->\nSubscribe &amp; Save 10%",
+            "heading_classes": "text-3xl sm:text-4xl font-book",
             "paragraph": "<ul class=\"icon-list check li:mb-2 tracking-wide\">\n<li>10% off recurring orders</li>\n<li class=\"tracking-normal\">Free shipping on recurring orders</li>\n<li>Early access to new products</li>\n<li class=\"tracking-normal -mr-1\">Exclusive access to deluxe samples</li>\n<li>Skip, edit or cancel anytime</li>\n</ul>",
             "paragraph_classes": "text-left pl-6 mt-6 hidden sm:block",
             "button_label": "View products",
@@ -264,7 +265,10 @@
           }
         }
       },
-      "block_order": ["column_ah3LyK", "column_6YgDVB"],
+      "block_order": [
+        "column_ah3LyK",
+        "column_6YgDVB"
+      ],
       "disabled": true,
       "settings": {
         "section_heading": "Subscription Products",
@@ -291,7 +295,9 @@
           }
         }
       },
-      "block_order": ["fd3358b5-af51-4c2d-ac3a-8662c1e660f6"],
+      "block_order": [
+        "fd3358b5-af51-4c2d-ac3a-8662c1e660f6"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "",
@@ -394,7 +400,9 @@
           }
         }
       },
-      "block_order": ["template--15703204069559__f19ce9c5-2ae2-4809-af85-af307bf6f35a-column-1"],
+      "block_order": [
+        "template--15703204069559__f19ce9c5-2ae2-4809-af85-af307bf6f35a-column-1"
+      ],
       "disabled": true,
       "settings": {
         "section_heading": "Gift a Subscription",
@@ -603,7 +611,10 @@
           }
         }
       },
-      "block_order": ["column_EW9Fg7"],
+      "block_order": [
+        "column_EW9Fg7"
+      ],
+      "disabled": true,
       "settings": {
         "section_heading": "Subscribe and save 15%",
         "section_classes": "container lg:max-w-screen-lg mb-12 mt-6",
