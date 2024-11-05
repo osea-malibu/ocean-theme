@@ -102,7 +102,7 @@
           data-has-tier3-product="{% if settings.gwp_tier3_product != blank %}true{% else %}false{% endif %}"
         >
           <progress max="100" value="0" class="progress-bar-alt block motion-safe:transition-all absolute inset-x-0 top-2.5">0%</progress>
-          <div class="relative flex mb-2 pr-5 {% if free_gifts_active %}justify-between{% else %}justify-end{% endif %}">
+          <div class="relative flex pr-5 {% if free_gifts_active %}mb-2 justify-between{% else %}justify-end{% endif %}">
             {%- if free_gifts_active -%}
               <div></div>
             {%- endif -%}
