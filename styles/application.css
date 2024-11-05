@@ -125,7 +125,7 @@
   cart-drawer .desktop-cart-recommendations {
     @apply -right-32 opacity-0 motion-safe:transition-all motion-safe:duration-300;
   }
-  cart-drawer.active .desktop-cart-recommendations {
+  cart-drawer.active:not(.is-empty) .desktop-cart-recommendations {
     @apply right-[32rem] opacity-100 motion-safe:delay-200;
   }
 
