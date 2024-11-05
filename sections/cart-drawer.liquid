@@ -3,29 +3,31 @@
 
 <cart-drawer class="fixed z-[2147483002] top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer">
+    {% comment %} Scrim - Page overlay {% endcomment %}
     <div class="cart-scrim block fixed z-0 inset-0 bg-seaweed-800/50"></div>
-    <div class="cart-recommendations ymal-alt hidden absolute z-10 inset-y-0 w-32 bg-wave-100 p-4 rounded-l-lg overflow-y-auto">
-      {%- liquid
-        assign cart_ids = cart.items | map: 'product_id'
-        assign ymal_item_count = 0
-        assign ymal_item_handles = 'hyaluronic-lip-booster, undaria-algae-body-wash, atmosphere-protection-cream, ocean-cleanser, sea-minerals-mist, essential-corrective-complex' | split: ', '
-      -%}
-      <h3 class="sr-only font-medium text-sm">You may also like</h3>
-      <ul class="flex flex-col gap-4">
-        {%- for ymal_handle in ymal_item_handles -%}
-          {%- assign ymal_product = all_products[ymal_handle] -%}
-          {%- assign ymal_collections_handles = ymal_product.collections | map: 'handle' -%}
-          {%- unless cart_ids contains ymal_product.id or ymal_item_count >= 4 or ymal_collections_handles contains 'exclude-from-site' or low_product_collections_handles contains 'exclude-from-recommendations' -%}
-            {%- assign ymal_item_count = ymal_item_count | plus: 1 -%}
-            {%- render 'product-card-mini',
-              card_product: ymal_product,
-              button_class: 'button-secondary'
-            -%}
-          {%- endunless -%}
-        {%- endfor -%}
-      </ul>
-    </div>
-    <div class="cart-drawer bg-white fixed z-20 right-0 inset-y-0 w-[40rem] max-w-full overflow-hidden flex flex-col"
+
+    {% comment %} Product recommendations (desktop) {% endcomment %}
+    {%- liquid
+      assign filtered_items = null | sort
+      for item in cart.items
+        assign item_collections_handles = item.product.collections | map: 'handle'
+        unless item_collections_handles contains 'exclude-from-site' or item_collections_handles contains 'exclude-from-recommendations'
+          assign item_array = item | sort
+          assign filtered_items = filtered_items | concat: item_array
+        endunless
+      endfor 
+    -%}
+    <cart-recommendations
+      data-ids="{{ filtered_items | map: 'product_id' | escape }}"
+      class="desktop-cart-recommendations hidden sm:block absolute z-10 inset-y-0 w-32 bg-wave-100 p-4 rounded-l-lg overflow-y-auto"
+    >
+      <h3 class="sr-only">You may also like</h3>
+      <div class="cart-recommendations ul:flex ul:flex-col ul:gap-4">
+      </div>
+    </cart-recommendations>
+
+    {% comment %} Drawer {% endcomment %}
+    <div class="cart-drawer bg-white fixed z-20 right-0 inset-y-0 w-[32rem] max-w-full overflow-hidden flex flex-col"
       role="dialog"
       aria-modal="true"
       aria-label="{{ 'sections.cart.title' | t }}"
@@ -37,149 +39,56 @@
         assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1, hyaluronic-sea-serum, advanced-repair-eye-cream, anti-aging-sea-serum, seaglow-resurfacing-scrub' | split: ', '
       -%}
       <h2 class="sr-only">{{ 'sections.cart.title' | t }}: {{ cart.items.size }} items</h2>
-      {% comment %} Gift with purchase {% endcomment %}
-      {%- if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto' -%}
-        {%- liquid
-          assign tier1_product = all_products[settings.gwp_tier1_product]
-          assign tier2_product = all_products[settings.gwp_tier2_product]
-          assign tier3_product = all_products[settings.gwp_tier3_product]
-
-          assign hide_gwp = false
-          assign gwp_threshold = settings.gwp_tier1_threshold | times: 100
-          assign remaining_amount = gwp_threshold | minus: cart.total_price
-          assign remaining_amount_money = remaining_amount | money
-          assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
-          assign gwp_button_id = tier1_product.selected_or_first_available_variant.id
-          if tier1_product.metafields.custom.product_image_transparent != blank
-            assign gwp_image_src = tier1_product.metafields.custom.product_image_transparent | image_url: width: 128
-          else
-            assign gwp_image_src = tier1_product.featured_media | image_url: width: 128
-          endif
-
-          if cart_ids contains tier3_product.id
-            assign hide_gwp = true
-          elsif cart_ids contains tier2_product.id
-            if settings.gwp_tier3_product != nil
-              assign gwp_threshold = settings.gwp_tier3_threshold | times: 100
-              assign remaining_amount = gwp_threshold | minus: cart.total_price
-              assign remaining_amount_money = remaining_amount | money
-              assign countdown_text = settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - '
-              assign gwp_button_id = tier3_product.selected_or_first_available_variant.id
-              if tier3_product.metafields.custom.product_image_transparent != blank
-                assign gwp_image_src = tier3_product.metafields.custom.product_image_transparent | image_url: width: 128
-              else
-                assign gwp_image_src = tier3_product.featured_media | image_url: width: 128
-              endif
-            else 
-              assign hide_gwp = true
-            endif
-          elsif cart_ids contains tier1_product.id
-            if settings.gwp_tier2_product != nil
-              assign gwp_threshold = settings.gwp_tier2_threshold | times: 100
-              assign remaining_amount = gwp_threshold | minus: cart.total_price
-              assign remaining_amount_money = remaining_amount | money
-              assign countdown_text = settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - '
-              assign gwp_button_id = tier2_product.selected_or_first_available_variant.id
-              if tier2_product.metafields.custom.product_image_transparent != blank
-                assign gwp_image_src = tier2_product.metafields.custom.product_image_transparent | image_url: width: 128
-              else
-                assign gwp_image_src = tier2_product.featured_media | image_url: width: 128
-              endif
-            else
-              assign hide_gwp = true
-            endif
-          endif
-        -%}
-
-        {%- unless settings.gwp_tier1_product == nil or hide_gwp -%}
-          <gift-with-purchase-banner class="block bg-neon-green/25">
-            <figure class="flex items-center max-w-md pl-6 pr-8 xs:pr-6 mx-auto gap-4">
-              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-              <img src="{% render 'imgix', src: gwp_image_src %}" alt="Image of your free gift" loading="lazy" width="64" height="82">
-              {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-              <figcaption>
-                {% if cart_ids contains tier1_product.id %}
-                  <span class="badge bg-neon-green rounded-full text-xs uppercase tracking-wider px-3 py-px mb-0.5 -ml-0.5">Bonus Offer!</span>
-                {% endif %}
-                <h3 class="leading-tight">{% if remaining_amount > 0 %}{{ countdown_text }}{% else %}{{ settings.gwp_success_text }}{% endif %}</h3>
-                {%- liquid
-                  assign show_gwp_atc = false
-                  if settings.gwp_type == 'banner'
-                    assign show_gwp_atc = true
-                  elsif settings.gwp_type == 'auto'
-                    unless cart_ids contains gwp_button_id
-                      assign show_gwp_atc = true
-                    endunless
-                  endif
-                -%}
-                {%- if remaining_amount <= 0 and show_gwp_atc -%}
-                  <button class="button button-xs button-secondary mt-1" id="GwpButton" data-id="{{ gwp_button_id }}">Add to cart</button>
-                {%- endif -%}
-              </figcaption>
-            </figure>
-          </gift-with-purchase-banner>
-        {%- endunless -%}
-      {%- endif -%}
-
       {% comment %} First time customer GWP {% endcomment %}
       {% if settings.enable_firstime_gwp -%}
         {%- unless customer and customer.orders_count > 0 -%}
           <div class="bg-neon-green/25 px-4 2xs:px-6">
             <figure class="flex items-center max-w-md py-1 pl-6 pr-8 xs:pr-6 mx-auto gap-4">
-            {%- liquid
-              if settings.gwp_firsttime_product.metafields.custom.product_image_transparent != blank
-                assign firsttime_gwp_image_src = settings.gwp_firsttime_product.metafields.custom.product_image_transparent | image_url: width: 60
-                assign firsttime_gwp_image_src_2x = settings.gwp_firsttime_product.metafields.custom.product_image_transparent | image_url: width: 120
-              else
-                assign firsttime_gwp_image_src = settings.gwp_firsttime_product.featured_media | image_url: width: 60
-                assign firsttime_gwp_image_src_2x = settings.gwp_firsttime_product.featured_media | image_url: width: 120
-              endif
-            -%}
-            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-            <img
-              srcset="{% render 'imgix', src: firsttime_gwp_image_src_2x %} 2x, {% render 'imgix', src: firsttime_gwp_image_src %} 1x"
-              src="{% render 'imgix', src: firsttime_gwp_image_src_2x %}"
-              loading="lazy"
-              width="50"
-              height="{{ 50 | divided_by: settings.gwp_firsttime_product.featured_media.aspect_ratio | ceil }}"
-              alt="{{ settings.gwp_firsttime_product.featured_media.alt }}"
-            >
-            {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-            <figcaption>
-              <h3 class="leading-tight font-medium text-sm">{{ settings.gwp_firsttime_product.title | remove: 'Free Gift - ' }}</h3>
-              <p class="text-sm leading-tight">Free gift with every first order</p>
-            </figcaption>
+              {%- liquid
+                if settings.gwp_firsttime_product.metafields.custom.product_image_transparent != blank
+                  assign firsttime_gwp_image_src = settings.gwp_firsttime_product.metafields.custom.product_image_transparent | image_url: width: 60
+                  assign firsttime_gwp_image_src_2x = settings.gwp_firsttime_product.metafields.custom.product_image_transparent | image_url: width: 120
+                else
+                  assign firsttime_gwp_image_src = settings.gwp_firsttime_product.featured_media | image_url: width: 60
+                  assign firsttime_gwp_image_src_2x = settings.gwp_firsttime_product.featured_media | image_url: width: 120
+                endif
+              -%}
+              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+              <img
+                srcset="{% render 'imgix', src: firsttime_gwp_image_src_2x %} 2x, {% render 'imgix', src: firsttime_gwp_image_src %} 1x"
+                src="{% render 'imgix', src: firsttime_gwp_image_src_2x %}"
+                loading="lazy"
+                width="50"
+                height="{{ 50 | divided_by: settings.gwp_firsttime_product.featured_media.aspect_ratio | ceil }}"
+                alt="{{ settings.gwp_firsttime_product.featured_media.alt }}"
+              >
+              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+              <figcaption>
+                <h3 class="leading-tight font-medium text-sm">{{ settings.gwp_firsttime_product.title | remove: 'Free Gift - ' }}</h3>
+                <p class="text-sm leading-tight">Free gift with every first order</p>
+              </figcaption>
             </figure>
           </div>
         {%- endunless -%}
       {%- endif -%}
 
-      {% comment %} Shipping countdown {% endcomment %}
-      <shipping-countdown data-threshold="{{ settings.shipping_countdown_threshold }}" class="block px-6 pt-4 pb-2 text-center">
+      {% comment %} Reward countdown - Free shipping + GWP {% endcomment %}
+      <div class="cart-header px-4 2xs:px-6 py-2 border-b border-seaweed-300">
         {%- liquid
           assign remaining_shipping_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price
           assign cart_subscription_items = cart.items | map: 'properties' | where: '_is_subscription', 'true'
-        -%}
-        <h3 class="mb-1">
-          {%- if remaining_shipping_amount > 0 and cart_subscription_items.size != cart.items.size -%}
-            {%- assign formatted_remaining_amount = remaining_shipping_amount | money %}
-            {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
-          {%- else -%}
-            {{ settings.shipping_countdown_text_success }}
-          {%- endif -%}
-        </h3>
-        <progress max="100" value="0" class="progress-bar block mx-auto max-w-md motion-safe:transition-all">0%</progress>
-      </shipping-countdown>
-
-      {% comment %} A/B TEST: New header designs {% endcomment %}
-      <div class="cart-header hidden px-4 2xs:px-6 py-2 border-b border-seaweed-300">
-        {%- liquid
           assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
 
           if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto'
             assign free_gifts_active = true
           else
             assign free_gifts_active = false
+          endif
+
+          if free_gifts_active
+            assign tier_one_product = all_products[settings.gwp_tier1_product]
+            assign tier_two_product = all_products[settings.gwp_tier2_product]
+            assign tier_three_product = all_products[settings.gwp_tier3_product]
           endif
         -%}
         <reward-countdown
@@ -188,6 +97,9 @@
           data-tier1-threshold="{{ settings.gwp_tier1_threshold }}"
           data-tier2-threshold="{{ settings.gwp_tier2_threshold }}"
           data-tier3-threshold="{{ settings.gwp_tier3_threshold }}"
+          data-has-tier1-product="{% if settings.gwp_tier1_product != blank %}true{% else %}false{% endif %}"
+          data-has-tier2-product="{% if settings.gwp_tier2_product != blank %}true{% else %}false{% endif %}"
+          data-has-tier3-product="{% if settings.gwp_tier3_product != blank %}true{% else %}false{% endif %}"
         >
           <progress max="100" value="0" class="progress-bar-alt block motion-safe:transition-all absolute inset-x-0 top-2.5">0%</progress>
           <div class="relative flex mb-2 pr-5 {% if free_gifts_active %}justify-between{% else %}justify-end{% endif %}">
@@ -199,17 +111,17 @@
             </div>
             {%- if free_gifts_active -%}
               {%- if settings.gwp_tier1_product != blank -%}
-                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier1_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier_one_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
                   {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
                 </div>
               {%- endif -%}
               {%- if settings.gwp_tier2_product != blank -%}
-                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier2_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier_two_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
                   {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
                 </div>
               {%- endif -%}
               {%- if settings.gwp_tier3_product != blank -%}
-                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier3_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+                <div class="{{ reward_icon_classes }} {% if cart_ids contains tier_three_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
                   {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
                 </div>
               {%- endif -%}
@@ -218,7 +130,7 @@
           <h3 class="flex flex-wrap justify-center items-center">
             {%- assign cart_total = cart.total_price | divided_by: 100.0 -%}
             <span class="mr-3 text-sm sm:text-base leading-tight sm:leading-tight">
-              {%- if cart_total < settings.shipping_countdown_threshold -%}
+              {%- if cart_total < settings.shipping_countdown_threshold and cart_subscription_items.size != cart.items.size -%}
                 {%- assign formatted_remaining_amount = remaining_shipping_amount | money_without_trailing_zeros %}
                 {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
               {%- else -%}
@@ -229,7 +141,7 @@
                     {%- if settings.gwp_tier3_product != blank -%}
                       {%- assign gwp_threshold = settings.gwp_tier3_threshold | times: 100 -%}
                       {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
-                      {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - ' }}
+                      {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_three_product.title | replace: 'Free Gift - ' }}
                     {%- else -%}
                         {{ settings.gwp_success_text }}
                     {%- endif -%}
@@ -237,14 +149,14 @@
                     {%- if settings.gwp_tier2_product != blank -%}
                       {%- assign gwp_threshold = settings.gwp_tier2_threshold | times: 100 -%}
                       {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
-                      {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - ' }}
+                      {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_two_product.title | replace: 'Free Gift - ' }}
                     {%- else -%}
                       {{ settings.gwp_success_text }}
                     {%- endif -%}
                   {%- else -%}
                     {%- assign gwp_threshold = settings.gwp_tier1_threshold | times: 100 -%}
                     {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
-                    {{ settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - ' }}
+                    {{ settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_one_product.title | replace: 'Free Gift - ' }}
                   {%- endif -%}
                 {%- else -%}
                   {{ settings.shipping_countdown_text_success }}
@@ -270,33 +182,33 @@
                 </li>
                 {%- if free_gifts_active -%}
                   {%- if settings.gwp_tier1_product != blank -%}
-                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier1_product.id %} text-wave-600{% endunless %}">
-                      {%- if cart_ids contains tier1_product.id -%}
+                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier_one_product.id %} text-wave-600{% endunless %}">
+                      {%- if cart_ids contains tier_one_product.id -%}
                         {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
                       {%- else -%}
                         {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
                       {%- endif -%}
-                      <span>Free {{ tier1_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier1_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                      <span>Free {{ tier_one_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier1_threshold | times: 100 | money_without_trailing_zeros }}</span>
                     </li>
                   {%- endif -%}
                   {%- if settings.gwp_tier2_product != blank -%}
-                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier2_product.id %} text-wave-600{% endunless %}">
-                      {%- if cart_ids contains tier2_product.id -%}
+                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier_two_product.id %} text-wave-600{% endunless %}">
+                      {%- if cart_ids contains tier_two_product.id -%}
                         {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
                       {%- else -%}
                         {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
                       {%- endif -%}
-                      <span>Free {{ tier2_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier2_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                      <span>Free {{ tier_two_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier2_threshold | times: 100 | money_without_trailing_zeros }}</span>
                     </li>
                   {%- endif -%}
                   {%- if settings.gwp_tier3_product != blank -%}
-                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier3_product.id %} text-wave-600{% endunless %}">
-                      {%- if cart_ids contains tier3_product.id -%}
+                    <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier_three_product.id %} text-wave-600{% endunless %}">
+                      {%- if cart_ids contains tier_three_product.id -%}
                         {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
                       {%- else -%}
                         {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
                       {%- endif -%}
-                      <span>Free {{ tier3_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier3_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                      <span>Free {{ tier_three_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier3_threshold | times: 100 | money_without_trailing_zeros }}</span>
                     </li>
                   {%- endif -%}
                 {%- endif -%}
@@ -309,12 +221,12 @@
 
       {% comment %} Close button {% endcomment %}
       <button
-        class="cart-close absolute top-0.5 right-0 p-1 sm:p-4"
+        class="cart-close absolute top-0 right-0 p-1 sm:p-2"
         type="button"
         onclick="this.closest('cart-drawer').close()"
         aria-label="{{ 'accessibility.close' | t }}"
       >
-        {% render 'icon-close', classes: 'w-8 h-8', stroke_width: 1.5, aria_hidden: true %}
+        {% render 'icon-close', classes: 'w-6 h-6', stroke_width: 2, aria_hidden: true %}
       </button>
 
       {%- if cart == empty -%}
@@ -661,16 +573,13 @@
                                         <span class="flex bg-sand-300 rounded-sm px-1.5 py-0.5 text-xs font-book tracking-wide whitespace-nowrap text-seaweed-600">Sample</span>
                                       {%- elsif item.product.type == 'Free Gift' -%}
                                         <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">
-                                          <span class="hidden cart-alt-tags">
-                                            {%- if item.product_id == tier2_product.id -%}
-                                              <span>2nd Free Gift</span>
-                                            {%- elsif item.product_id == tier3_product.id -%}
-                                              <span>3rd Free Gift</span>
-                                            {%- else -%}
-                                              <span>Free Gift</span>
-                                            {% endif %}
-                                          </span>
-                                          <span class="cart-original-tags">Free Gift</span>
+                                          {%- if item.product_id == tier_two_product.id -%}
+                                            <span>2nd Free Gift</span>
+                                          {%- elsif item.product_id == tier_three_product.id -%}
+                                            <span>3rd Free Gift</span>
+                                          {%- else -%}
+                                            <span>Free Gift</span>
+                                          {% endif %}
                                         </span>
                                       {%- else -%}
                                         <span class="flex">{{ item.original_line_price | money }}</span>
@@ -739,62 +648,17 @@
             </printed-gift-note>
           {%- endif -%}
 
-          {% comment %} Product recommendations {% endcomment %}
-          {%- liquid
-            assign filtered_items = null | sort
-            for item in cart.items
-              assign item_collections_handles = item.product.collections | map: 'handle'
-              unless item_collections_handles contains 'exclude-from-site' or item_collections_handles contains 'exclude-from-recommendations'
-                assign item_array = item | sort
-                assign filtered_items = filtered_items | concat: item_array
-              endunless
-            endfor 
-          -%}
-          <cart-recommendations data-ids="{{ filtered_items | map: 'product_id' | escape }}">
-            <div id="CartDrawer-Recommendations"></div>
+          {% comment %} Product recommendations (mobile) {% endcomment %}
+          <cart-recommendations
+            data-ids="{{ filtered_items | map: 'product_id' | escape }}"
+            class="sm:hidden"
+          >
+            <div class="block max-w-md mx-auto bg-wave-100 py-4 pl-4 rounded-sm mb-6">
+              <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
+              <div class="cart-recommendations overflow-x-auto ul:flex ul:gap-2 li:w-24 li:shrink-0">
+              </div>
+            </div>
           </cart-recommendations>
-
-          {% comment %} FOR A/B TESTING: YMAL - high- vs low-price items {% endcomment %}
-          {%- liquid
-            assign cart_ids = cart.items | map: 'product_id'
-            assign high_item_count = 0
-            assign low_item_count = 0
-
-            assign high_price_item_handles = 'undaria-body-collection, eye-care-duo, plumping-hydration-duo, ultra-hydrating-duo, body-glow-trio, mega-moisture-duo' | split: ', '
-            assign low_price_item_handles = 'hyaluronic-lip-booster, osea-spa-headband, plant-based-dry-brush, gua-sha-sculptor, sea-minerals-mist, essential-corrective-complex' | split: ', '
-          -%}
-          <div class="cart-recommendations ymal-high-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
-            <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
-            <ul class="grid grid-cols-3 gap-2 sm:gap-4">
-              {%- for high_handle in high_price_item_handles -%}
-                {%- assign high_product = all_products[high_handle] -%}
-                {%- assign high_product_collections_handles = high_product.collections | map: 'handle' -%}
-                {%- unless cart_ids contains high_product.id or high_item_count >= 3 or high_product_collections_handles contains 'exclude-from-site' or high_product_collections_handles contains 'exclude-from-recommendations' -%}
-                  {%- assign high_item_count = high_item_count | plus: 1 -%}
-                  {%- render 'product-card-mini',
-                    card_product: high_product,
-                    button_class: 'button-secondary px-1'
-                  -%}
-                {%- endunless -%}
-              {%- endfor -%}
-            </ul>
-          </div>
-          <div class="cart-recommendations ymal-low-price hidden max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
-            <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
-            <ul class="grid grid-cols-3 gap-4">
-              {%- for low_handle in low_price_item_handles -%}
-                {%- assign low_product = all_products[low_handle] -%}
-                {%- assign low_product_collections_handles = low_product.collections | map: 'handle' -%}
-                {%- unless cart_ids contains low_product.id or low_item_count >= 3 or low_product_collections_handles contains 'exclude-from-site' or low_product_collections_handles contains 'exclude-from-recommendations' -%}
-                  {%- assign low_item_count = low_item_count | plus: 1 -%}
-                  {%- render 'product-card-mini',
-                    card_product: low_product,
-                    button_class: 'button-secondary'
-                  -%}
-                {%- endunless -%}
-              {%- endfor -%}
-            </ul>
-          </div>
 
           {% comment %} Free samples {% endcomment %}
           {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}

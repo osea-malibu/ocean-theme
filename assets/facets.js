@@ -275,7 +275,6 @@ class FacetFiltersForm extends HTMLElement {
   }
 
   onSubmitHandler(event) {
-    console.log("onSubmitHandler");
     event.preventDefault();
 
     const sortFilterForms = document.querySelectorAll("facet-filters-form form");

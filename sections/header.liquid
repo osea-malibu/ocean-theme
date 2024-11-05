@@ -55,16 +55,16 @@
                         {% comment %} L1 - Link with sub menu {% endcomment %}
                         {%- elsif link.links != blank -%}
                           <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
-                            {%- assign l1_id = "Link-" | append: link.title | replace: " ", "" -%}
+                            {%- assign level_one_id = "Link-" | append: link.title | replace: " ", "" -%}
                             <summary
                               class="flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}"
-                              aria-controls="{{ l1_id }}"
+                              aria-controls="{{ level_one_id }}"
                             >
                               <span class="mr-3">{{ link.title | replace:'Bold: ', '' | escape }}</span>
                               {% render 'icon-arrow', variant: 'short', aria_hidden: true, classes: 'h-5 w-5', stroke_width: '1.75' %}
                             </summary>
                             {% comment %} L2 Drawer {% endcomment %}
-                            <div id="{{ l1_id }}" class="menu-submenu translate-x-full invisible absolute inset-0 overflow-y-auto bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
+                            <div id="{{ level_one_id }}" class="menu-submenu translate-x-full invisible absolute inset-0 overflow-y-auto bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
                               <div class="pb-10">
                                 {% comment %} Back button {% endcomment %}
                                 <button class="submenu-close flex items-center px-8 pt-4 pb-2 w-full text-xs leading-6 font-bold uppercase tracking-widest" aria-expanded="true">

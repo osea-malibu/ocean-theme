@@ -106,7 +106,6 @@ class CartItems extends HTMLElement {
 
     if (name === "subscribe") {
       if (target.checked) {
-        console.log("target.dataset.default", target.dataset.default);
         selling_plan = target.dataset.default;
         properties = { _is_subscription: "true" };
       } else {
@@ -343,28 +342,6 @@ class CartItems extends HTMLElement {
 }
 customElements.define("cart-items", CartItems);
 
-class ShippingCountdown extends HTMLElement {
-  constructor() {
-    super();
-
-    this.totalEl = document.getElementById("CartDrawer-Total");
-    this.total = this.totalEl ? this.totalEl.dataset.total : 0;
-    this.threshold = this.dataset.threshold * 100;
-
-    this.percentComplete = (this.total / this.threshold) * 100;
-    if (this.percentComplete > 100) {
-      this.percentComplete = 100;
-    } else if (this.percentComplete < 0) {
-      this.percentComplete = 0;
-    }
-
-    this.progressBar = this.querySelector("progress");
-    this.progressBar.value = this.percentComplete;
-    this.progressBar.innerText = `${this.percentComplete}%`;
-  }
-}
-customElements.define("shipping-countdown", ShippingCountdown);
-
 class RewardCountdown extends HTMLElement {
   constructor() {
     super();
@@ -374,24 +351,26 @@ class RewardCountdown extends HTMLElement {
 
     // Get thresholds from data attributes and convert to numbers
     this.shippingThreshold = parseFloat(this.dataset.shippingThreshold) * 100;
-    this.tier1Threshold = this.dataset.tier1Threshold
-      ? parseFloat(this.dataset.tier1Threshold) * 100
-      : null;
-    this.tier2Threshold = this.dataset.tier2Threshold
-      ? parseFloat(this.dataset.tier2Threshold) * 100
-      : null;
-    this.tier3Threshold = this.dataset.tier3Threshold
-      ? parseFloat(this.dataset.tier3Threshold) * 100
-      : null;
+    this.tier1Threshold = this.getThreshold(this.dataset.tier1Threshold);
+    this.tier2Threshold = this.getThreshold(this.dataset.tier2Threshold);
+    this.tier3Threshold = this.getThreshold(this.dataset.tier3Threshold);
+
+    this.hasTier1Product = this.dataset.tier1Product === "true";
+    this.hasTier2Product = this.dataset.tier2Product === "true";
+    this.hasTier3Product = this.dataset.tier3Product === "true";
 
     // Create an array of active thresholds
     this.thresholds = [this.shippingThreshold];
-    if (this.tier1Threshold) this.thresholds.push(this.tier1Threshold);
-    if (this.tier2Threshold) this.thresholds.push(this.tier2Threshold);
-    if (this.tier3Threshold) this.thresholds.push(this.tier3Threshold);
+    if (this.tier1Threshold && this.hasTier1Product) this.thresholds.push(this.tier1Threshold);
+    if (this.tier2Threshold && this.hasTier2Product) this.thresholds.push(this.tier2Threshold);
+    if (this.tier3Threshold && this.hasTier3Product) this.thresholds.push(this.tier3Threshold);
 
     this.progressBar = this.querySelector("progress");
     this.updateProgress();
+  }
+
+  getThreshold(string) {
+    return string ? parseFloat(string) * 100 : null;
   }
 
   updateProgress() {
@@ -430,7 +409,7 @@ class CartRecommendations extends HTMLElement {
     super();
 
     this.filteredIdArray = JSON.parse(this.dataset.ids);
-    this.destination = this.querySelector("#CartDrawer-Recommendations");
+    this.destination = this.querySelector(".cart-recommendations");
 
     if (this.filteredIdArray.length > 0) {
       this.getRecommendations(this.filteredIdArray[0]);
@@ -447,33 +426,6 @@ class CartRecommendations extends HTMLElement {
   }
 }
 customElements.define("cart-recommendations", CartRecommendations);
-
-class GiftWithPurchaseBanner extends HTMLElement {
-  constructor() {
-    super();
-
-    this.cart =
-      document.querySelector("cart-notification") || document.querySelector("cart-drawer");
-    this.button = this.querySelector("button");
-    this.button?.addEventListener("click", this.onButtonClick.bind(this));
-  }
-
-  onButtonClick() {
-    const body = JSON.stringify({
-      items: [
-        {
-          id: this.button.dataset.id,
-          quantity: 1,
-        },
-      ],
-    });
-    fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
-      .then((response) => response.json())
-      .then((response) => this.cart.renderContents(response))
-      .catch((error) => console.error(error));
-  }
-}
-customElements.define("gift-with-purchase-banner", GiftWithPurchaseBanner);
 
 class SaveWithSets extends HTMLElement {
   constructor() {

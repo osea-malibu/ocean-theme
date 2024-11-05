@@ -13,9 +13,6 @@ class CartDrawer extends HTMLElement {
 
   attachEventListeners() {
     document.addEventListener("loopByobAddToCartSuccessEvent", (e) => {
-      console.log("Add to cart on byob ");
-
-      // console.log(window.Shopify.routes.root)
       fetch("https://oseamalibu.com/cart.js")
         .then((response) => response.json())
         .then((response) => {
@@ -26,11 +23,9 @@ class CartDrawer extends HTMLElement {
             window.location = window.routes.cart_url;
             return;
           }
-          // console.log("start render contents");
           this.renderContents(response);
         })
         .catch((e) => console.error(e));
-      // this.open(e);
     });
   }
 
@@ -89,7 +84,6 @@ class CartDrawer extends HTMLElement {
     document.body.classList.remove("overflow-hidden");
 
     const elements = document.querySelectorAll(".cart-items #bud");
-    console.log(elements);
     // Iterate over each selected element and remove it from the DOM
     elements.forEach((element) => element.remove());
   }

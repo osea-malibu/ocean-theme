@@ -316,6 +316,7 @@ module.exports = {
       addVariant("label", "& label");
       addVariant("img", "& img");
       addVariant("li", "& li");
+      addVariant("ul", "& ul");
       addVariant("td", "& > td");
       addVariant("tr", "& > tr");
       addVariant("th", "& > th");

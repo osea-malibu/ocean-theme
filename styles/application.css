@@ -121,12 +121,12 @@
   cart-drawer.active .cart-drawer {
     @apply translate-x-0;
   }
-  /* A/B TEST: New cart layout */
-  cart-drawer .cart-recommendations {
-    @apply -right-32 opacity-0 motion-safe:transition-all motion-safe:duration-75;
+
+  cart-drawer .desktop-cart-recommendations {
+    @apply -right-32 opacity-0 motion-safe:transition-all motion-safe:duration-300;
   }
-  cart-drawer.active .cart-recommendations {
-    @apply right-[32rem] opacity-100 delay-300;
+  cart-drawer.active .desktop-cart-recommendations {
+    @apply right-[32rem] opacity-100 motion-safe:delay-200;
   }
 
   menu-drawer .menu-drawer,

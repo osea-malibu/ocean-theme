@@ -1,37 +1,34 @@
 {%- if recommendations.performed and recommendations.products_count > 0 -%}
-  <div class="cart-recommendations block max-w-md mx-auto bg-wave-100 p-4 rounded-sm mb-6">
-    <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
-    <ul class="grid grid-cols-3 gap-4">
+  <ul>
+    {%- liquid
+      assign cart_ids = cart.items | map: 'product_id'
+      assign item_count = 0
+    -%}
+    {%- for product in recommendations.products -%}
       {%- liquid
-        assign cart_ids = cart.items | map: 'product_id'
-        assign item_count = 0
-      -%}
-      {%- for product in recommendations.products -%}
-        {%- liquid
-          assign product_collections_handles = product.collections | map: 'handle'
+        assign product_collections_handles = product.collections | map: 'handle'
 
-          assign travel_product_array = settings.cart_recommendations_travel_handles | split: ', '
-          assign jumbo_product_array = settings.cart_recommendations_jumbo_handles | split: ', '
-          assign is_travel_product = false
-          assign is_jumbo_product = false
-          if travel_product_array contains product.handle
-            assign is_travel_product = true
-          elsif jumbo_product_array contains product.handle
-            assign is_jumbo_product = true
-          endif
+        assign travel_product_array = settings.cart_recommendations_travel_handles | split: ', '
+        assign jumbo_product_array = settings.cart_recommendations_jumbo_handles | split: ', '
+        assign is_travel_product = false
+        assign is_jumbo_product = false
+        if travel_product_array contains product.handle
+          assign is_travel_product = true
+        elsif jumbo_product_array contains product.handle
+          assign is_jumbo_product = true
+        endif
+      -%}
+      {%- unless cart_ids contains product.id or item_count >= 6 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
+        {%- assign item_count = item_count | plus: 1 -%}
+        {%- render 'product-card-mini',
+          card_product: product,
+          button_class: 'button-secondary',
+          default_to_mini: is_travel_product,
+          default_to_jumbo: is_jumbo_product
         -%}
-        {%- unless cart_ids contains product.id or item_count >= 3 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
-          {%- assign item_count = item_count | plus: 1 -%}
-          {%- render 'product-card-mini',
-            card_product: product,
-            button_class: 'button-secondary',
-            default_to_mini: is_travel_product,
-            default_to_jumbo: is_jumbo_product
-          -%}
-        {%- endunless -%}
-      {%- endfor -%}
-    </ul>
-  </div>
+      {%- endunless -%}
+    {%- endfor -%}
+  </ul>
 {%- endif -%}
 
 {% schema %}
