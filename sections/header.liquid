@@ -120,9 +120,62 @@
                                           <ul id="childlink-{{ childlink.title | escape }}" tabindex="-1" class="mb-6 pl-7">
                                             {%- for grandchildlink in childlink.links -%}
                                               <li>
-                                                <a href="{{ grandchildlink.url }}" class="block relative -mt-1 {{ menu_link_styles }}{% if grandchildlink.current %} text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
-                                                  {{ grandchildlink.title | escape }}
-                                                </a>
+                                                <div class="flex items-center gap-2 {{ menu_link_styles }}">
+                                                  {%- liquid
+                                                    assign grandchild_image_object = nil
+                                                    assign grandchild_image_src = nil
+                                                    assign grandchild_image_src_2x = nil
+
+                                                    if grandchildlink.type == 'collection_link'
+                                                      assign grandchild_collection = collections[grandchildlink.object.handle]
+                                                      if grandchild_collection.metafields.custom.menu_image != blank
+                                                        assign grandchild_image_object = grandchild_collection.metafields.custom.menu_image
+                                                      elsif grandchild_collection.products.first != blank 
+                                                        if grandchild_collection.products.first.metafields.custom.product_image_transparent != blank
+                                                          assign grandchild_image_object = grandchild_collection.products.first.metafields.custom.product_image_transparent
+                                                        elsif grandchild_collection.products.first.featured_image != blank
+                                                          assign grandchild_image_object = grandchild_collection.products.first.featured_image
+                                                        endif
+                                                      endif
+                                                    elsif grandchildlink.type == 'page_link'
+                                                      assign grandchild_page = pages[grandchildlink.object.handle]
+                                                      if grandchild_page.metafields.custom.menu_image != blank
+                                                        assign grandchild_image_object = grandchild_page.metafields.custom.menu_image
+                                                      endif
+                                                    elsif grandchildlink.type == 'product_link'
+                                                      assign grandchild_product = all_products[grandchildlink.object.handle]
+                                                      if grandchild_product.metafields.custom.product_image_transparent != blank
+                                                        assign grandchild_image_object = grandchild_product.metafields.custom.product_image_transparent
+                                                      elsif grandchild_product.featured_image != blank
+                                                        assign grandchild_image_object = grandchild_product.featured_image
+                                                      endif
+                                                    endif
+                                                    
+                                                    if grandchildlink.title == 'Studio Gift Card'
+                                                      assign grandchild_image_src = 'https://cdn.shopify.com/s/files/1/1368/9993/files/studiogiftcard-1.png?width=40&height=40&crop=center'
+                                                      assign grandchild_image_src_2x = 'https://cdn.shopify.com/s/files/1/1368/9993/files/studiogiftcard-1.png?width=80&height=80&crop=center'
+                                                    else
+                                                      assign grandchild_image_src = grandchild_image_object | image_url: width: 40, height: 40, crop: 'center'
+                                                      assign grandchild_image_src_2x = grandchild_image_object | image_url: width: 80, height: 80, crop: 'center'
+                                                    endif
+
+                                                  -%}
+                                                  {%- if grandchild_image_src != nil -%}
+                                                    {% comment %} theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
+                                                    <img
+                                                      srcset="{% render 'imgix', src: grandchild_image_src %} 1x, {% render 'imgix', src: grandchild_image_src_2x %} 2x"
+                                                      src="{% render 'imgix', src: grandchild_image_src %}"
+                                                      alt="{{ grandchildlink.title | escape }}"
+                                                      width="40"
+                                                      height="40"
+                                                      class="hamburger-menu-image hidden w-8 h-8 object-cover"
+                                                    >
+                                                    {% comment %} theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
+                                                  {%- endif -%}
+                                                  <a href="{{ grandchildlink.url }}" class="{% if grandchildlink.current %}text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                                    {{- grandchildlink.title | escape -}}
+                                                  </a>
+                                                </div>
                                               </li>
                                             {%- endfor -%}
                                           </ul>
