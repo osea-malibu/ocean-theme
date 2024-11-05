@@ -120,7 +120,7 @@
                                           <ul id="childlink-{{ childlink.title | escape }}" tabindex="-1" class="mb-6 pl-7">
                                             {%- for grandchildlink in childlink.links -%}
                                               <li>
-                                                <div class="flex items-center gap-2 {{ menu_link_styles }}">
+                                                <a href="{{ grandchildlink.url }}" class="hamburger-grandchild flex items-center gap-2 {{ menu_link_styles }}{% if grandchildlink.current %} text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
                                                   {%- liquid
                                                     assign grandchild_image_object = nil
                                                     assign grandchild_image_src = nil
@@ -172,10 +172,8 @@
                                                     >
                                                     {% comment %} theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
                                                   {%- endif -%}
-                                                  <a href="{{ grandchildlink.url }}" class="{% if grandchildlink.current %}text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
-                                                    {{- grandchildlink.title | escape -}}
-                                                  </a>
-                                                </div>
+                                                  <span>{{ grandchildlink.title | escape }}</span>
+                                                </a>
                                               </li>
                                             {%- endfor -%}
                                           </ul>
