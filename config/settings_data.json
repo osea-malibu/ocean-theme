@@ -43,7 +43,7 @@
     "enable_annoucement_bar_message": false,
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
     "gwp_tier1_product": "",
-    "gwp_tier1_threshold": 75,
+    "gwp_tier1_threshold": 0,
     "gwp_tier1_text": "You're remaining_amount away from a gift_product!",
     "gwp_tier2_product": "",
     "gwp_tier2_threshold": 0,
@@ -164,15 +164,19 @@
       },
       "cart-drawer": {
         "type": "cart-drawer",
-        "settings": {}
+        "settings": {
+        }
       }
     },
-    "content_for_index": [],
+    "content_for_index": [
+
+    ],
     "blocks": {
       "6251270934270006384": {
         "type": "shopify://apps/stape-server-gtm/blocks/gtm/7e13c847-7971-409d-8fe0-29ec14d5f048",
         "disabled": false,
-        "settings": {}
+        "settings": {
+        }
       },
       "733389323033596483": {
         "type": "shopify://apps/okendo/blocks/theme-settings/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
@@ -184,12 +188,14 @@
       "12509190167029697241": {
         "type": "shopify://apps/blotout-edgetag/blocks/app-embed/ae22d985-ba57-41f5-94c5-18d3dd98ea3c",
         "disabled": false,
-        "settings": {}
+        "settings": {
+        }
       },
       "2153490007123654574": {
         "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
         "disabled": true,
-        "settings": {}
+        "settings": {
+        }
       }
     }
   },
@@ -210,11 +216,15 @@
           "blocks": {
             "announcement-bar-0": {
               "type": "announcement",
-              "settings": {}
+              "settings": {
+              }
             }
           },
-          "block_order": ["announcement-bar-0"],
-          "settings": {}
+          "block_order": [
+            "announcement-bar-0"
+          ],
+          "settings": {
+          }
         }
       }
     }
