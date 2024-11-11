@@ -178,7 +178,11 @@
                   {%- else -%}
                     {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
                   {%- endif -%}
-                  <span>Free shipping on orders over {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                  {%- if settings.shipping_countdown_threshold == 0 -%}
+                    <span>Free shipping on all US orders</span>
+                  {%- else -%}
+                    <span>Free shipping on orders over {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
                 </li>
                 {%- if free_gifts_active -%}
                   {%- if settings.gwp_tier1_product != blank -%}
