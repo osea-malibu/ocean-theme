@@ -11,6 +11,7 @@
     - bundle: {Boolean} Displays bundle price with strikeout on compare at price (optional)
     - default_to_mini: {Boolean} Default variant selection to smallest size (optional)
     - default_to_jumbo: {Boolean} Default variant selection to largest size (optional)
+    - hide_slashed_price: {Boolean} Hides slashed price (optional)
 
     Usage:
     {% render 'price', product: product %}
@@ -63,7 +64,9 @@
     {%- if compare_at_price > price -%}
       {%- unless product.price_varies == false and product.compare_at_price_varies %}
         <span class="sr-only">{{ 'products.product.price.regular_price' | t }}: </span>
-        <s class="text-wave-700 mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
+        {%- unless hide_slashed_price -%}
+          <s class="text-wave-700 mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
+        {%- endunless -%}
       {%- endunless -%}
       <span class="sr-only">{{ 'products.product.price.sale_price' | t }}: </span>
       <span>{{ money_price }}</span>
