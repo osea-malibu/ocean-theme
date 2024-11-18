@@ -205,6 +205,12 @@ module.exports = {
       ucbp: {
         light: "#F7F0E2",
       },
+      bfcm: {
+        blue: "#8BD5FF",
+        green: "#CFFF50",
+        orange: "#FFBA49",
+      },
+      "light-black": "#1F1E1F",
       "neon-green": "#DCF5AB",
       "dream-navy": "#1D284D",
     },
