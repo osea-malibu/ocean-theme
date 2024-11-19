@@ -355,15 +355,15 @@ class RewardCountdown extends HTMLElement {
     this.tier2Threshold = this.getThreshold(this.dataset.tier2Threshold);
     this.tier3Threshold = this.getThreshold(this.dataset.tier3Threshold);
 
-    this.hasTier1Product = this.dataset.tier1Product === "true";
-    this.hasTier2Product = this.dataset.tier2Product === "true";
-    this.hasTier3Product = this.dataset.tier3Product === "true";
+    const hasTier1Product = this.dataset.hasTier1Product === "true";
+    const hasTier2Product = this.dataset.hasTier2Product === "true";
+    const hasTier3Product = this.dataset.hasTier3Product === "true";
 
     // Create an array of active thresholds
     this.thresholds = [this.shippingThreshold];
-    if (this.tier1Threshold && this.hasTier1Product) this.thresholds.push(this.tier1Threshold);
-    if (this.tier2Threshold && this.hasTier2Product) this.thresholds.push(this.tier2Threshold);
-    if (this.tier3Threshold && this.hasTier3Product) this.thresholds.push(this.tier3Threshold);
+    if (this.tier1Threshold && hasTier1Product) this.thresholds.push(this.tier1Threshold);
+    if (this.tier2Threshold && hasTier2Product) this.thresholds.push(this.tier2Threshold);
+    if (this.tier3Threshold && hasTier3Product) this.thresholds.push(this.tier3Threshold);
 
     this.progressBar = this.querySelector("progress");
     this.updateProgress();
