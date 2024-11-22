@@ -82,6 +82,14 @@
       }
     </script>
     {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
+
+    {% comment %} Start PostPilot SiteMatch {% endcomment %}
+    <script type='text/javascript'>
+      var script = document.createElement('script');
+      script.src = 'https://xp2023-pix.s3.amazonaws.com/px_FshFG.js';
+      document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
+    {% comment %} End PostPilot SiteMatch {% endcomment %}
   </head>
 
   <body class="antialiased {% if template.name == 'product' %}pdp{% endif %}">
