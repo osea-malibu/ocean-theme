@@ -163,9 +163,9 @@
                 {%- endif -%}
               {%- endif -%}
             </span>
-            <label for="AllRewards" class="mr-0.5 link text-sm">Show all</label>
             <input type="checkbox" id="AllRewards" class="peer hidden">
-            {% render 'icon-chevron', classes: 'w-4 h-4 -rotate-90 peer-checked:rotate-90 transition-transform', stroke_width: 2 %}
+            <label for="AllRewards" class="mr-0.5 link text-sm">Show all</label>
+            <label for="AllRewards" class="-rotate-90 peer-checked:rotate-90 transition-transform">{% render 'icon-chevron', classes: 'w-4 h-4', stroke_width: 2 %}</label>
             <div class="w-full peer-checked:max-h-80 max-h-0 transition-max-height overflow-hidden">
               <ul class="max-w-md mx-auto text-sm text-left pt-4 pb-2 li:mb-1">
                 <li class="flex items-center gap-1 leading-tight">
