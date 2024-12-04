@@ -312,7 +312,6 @@
         "template--15903931465911__a08c6538-283c-4d50-86e2-9c2d6e20f621-heading-1",
         "template--15903931465911__a08c6538-283c-4d50-86e2-9c2d6e20f621-paragraph-1"
       ],
-      "disabled": true,
       "settings": {
         "section_heading": "Limited Edition Sets Title",
         "section_classes": "container lg:max-w-screen-lg mb-4",
@@ -400,18 +399,44 @@
             "is_pdp_link": false,
             "pdp_link_label": "View product"
           }
+        },
+        "product_gTU9UG": {
+          "type": "product",
+          "settings": {
+            "column_classes": "",
+            "product": "golden-glow-body-set",
+            "image_classes": "",
+            "image_element_classes": "",
+            "custom_badge_html": "",
+            "custom_badge_classes": "",
+            "button_classes": "",
+            "title_text": "",
+            "name_classes": "",
+            "short_description_text": "",
+            "description_classes": "",
+            "variant_picker_type": "button",
+            "hide_badge": false,
+            "show_reviews": false,
+            "show_benefits": false,
+            "default_to_mini": false,
+            "default_to_jumbo": false,
+            "subscription": false,
+            "percent_discount": false,
+            "is_pdp_link": false,
+            "pdp_link_label": "View product"
+          }
         }
       },
       "block_order": [
         "45f84a3e-ab46-42b1-902f-465adc6c2bd3",
         "01849bb4-065d-41f7-b0e6-e331889d4d4e",
-        "9b5d3cb3-477c-4ba7-aac6-add7d5e06780"
+        "9b5d3cb3-477c-4ba7-aac6-add7d5e06780",
+        "product_gTU9UG"
       ],
-      "disabled": true,
       "settings": {
         "section_heading": "Limited Edition Sets Products",
-        "section_classes": "container lg:max-w-screen-lg mb-12",
-        "container_classes": "relative",
+        "section_classes": "container lg:max-w-screen-lg mb-24",
+        "container_classes": "grid grid-cols-2 gap-x-2 gap-y-6 xs:gap-x-4 md:grid-cols-3",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
