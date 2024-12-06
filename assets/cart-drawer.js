@@ -16,7 +16,6 @@ class CartDrawer extends HTMLElement {
       fetch("https://oseamalibu.com/cart.js")
         .then((response) => response.json())
         .then((response) => {
-          console.log("response", response);
           if (response.status) {
             console.log("error", response.status);
           } else if (!response) {
@@ -26,6 +25,21 @@ class CartDrawer extends HTMLElement {
           this.renderContents(response);
         })
         .catch((e) => console.error(e));
+    });
+
+    document.body.addEventListener("blotout-wallet-cart-restored", async () => {
+      try {
+        const response = await fetch("/cart.js");
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Could not fetch cart contents - ${response.status}: ${errorText}`);
+        }
+
+        const contents = await response.json();
+        this.renderContents(contents);
+      } catch (err) {
+        console.error("Error fetching cart data:", err);
+      }
     });
   }
 
