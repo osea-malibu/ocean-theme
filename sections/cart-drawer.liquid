@@ -322,7 +322,6 @@
                           <th id="CartDrawer-ColumnTotal" role="columnheader" scope="col">Total</th>
                         </tr>
                       </thead>
-
                       <tbody role="rowgroup" class="LOOP_osea-malibu_bundles_drawer block w-full">
                         {%- for item in cart.items -%}
                           {% comment %}
@@ -607,6 +606,59 @@
                             </td>
                           </tr>
                         {%- endfor -%}
+
+                        {% assign flat_properties_array = "" %}
+                        {% assign cart_properties = cart.items | map: 'properties' %}
+
+                        {% for inner_array in cart_properties %}
+                          {% for value in inner_array %}
+                            {% assign trimmed_value = value | replace: '"', '' | replace: '[', '' | replace: ']', '' %}
+                            {% assign flat_properties_array = flat_properties_array | append: trimmed_value | append: "," %}
+                          {% endfor %}
+                        {% endfor %}
+
+                        {% assign flat_properties_array = flat_properties_array | split: "," | uniq %}
+                        {% if flat_properties_array contains '_bundleId' %}
+                          <tr
+                            id="CartDrawer-Item-fake"
+                            class="cart-item align-top my-6 grid grid-cols-7 grid-rows-auto [grid-template-areas:'image_name_name_name_name_name_price''image_size_size_sub_sub_sub_sub''image_quant_quant_sub_sub_sub_sub'] td:border-collapse td:border-spacing-0 td:border-0"
+                            role="row"
+                          >
+                            <td class="cart-item__media p-0 [grid-area:image]" role="cell" headers="CartDrawer-ColumnImage">
+                              <div class="flex h-full items-center">
+                                <img class="cart-item__image max-w-full"
+                                  src="https://cdn.shopify.com/s/files/1/1368/9993/files/veganbagpng.jpg"
+                                  alt="Vegan leather bag"
+                                  loading="lazy"
+                                  width="60"
+                                  height="77"
+                                >
+                              </div>
+                            </td>
+                            <td class="cart-item__name p-0 [grid-area:name]" role="cell" headers="CartDrawer-ColumnName">
+                              <div class="flex items-center h-full">
+                                <p class="block leading-none 2xs:w-full w-60">Vegan Leather Bag</p>
+                              </div>
+                            </td>
+                            <td class="cart-item__size p-0 [grid-area:size] h-0" role="cell" headers="CartDrawer-ColumnSize">
+                            </td>
+                            <td class="cart-item__quantity p-0 [grid-area:quant]" role="cell" headers="CartDrawer-ColumnQuantity">
+                              <div id="CartDrawer-LineItemError-fake" class="absolute text-coral-800 text-sm hidden" role="alert">
+                                <small class="cart-item__error-text"></small>
+                                {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4', aria_hidden: true, stroke_width: 2 %}
+                              </div>
+                            </td>
+                            <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
+                            </td>
+                            <td class="cart-item__totals p-0 [grid-area:price]" role="cell" headers="CartDrawer-ColumnTotal">
+                              <div class="flex items-center justify-end h-full">
+                                <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity">
+                                  <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">Free Gift</span>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        {% endif %}
                       </tbody>
                     </table>
                   </div>
