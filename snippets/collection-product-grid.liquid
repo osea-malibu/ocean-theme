@@ -48,7 +48,10 @@
               assign is_first_grid = true
             endif
 
-            if is_subcollection
+            if settings.enable_global_plp_tile and settings.global_plp_tile_image != blank
+              assign promo_tile_image = settings.global_plp_tile_image
+              assign promo_tile_url = settings.global_plp_tile_url
+            elsif is_subcollection
               assign promo_tile_image = parent_collection.metafields.custom.promo_tile_image
               assign promo_tile_video_portrait = parent_collection.metafields.custom.promo_tile_video_portrait
               assign promo_tile_video_landscape = parent_collection.metafields.custom.promo_tile_video_landscape
@@ -60,7 +63,7 @@
               assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
             endif
 
-            if promo_tile_image != blank or promo_tile_video_portrait != blank
+            if settings.enable_global_plp_tile or promo_tile_image != blank or promo_tile_video_portrait != blank
               assign has_promo_content = true
             else
               assign has_promo_content = false
