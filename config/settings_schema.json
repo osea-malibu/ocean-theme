@@ -633,7 +633,7 @@
     ]
   },
   {
-    "name": "ImgIX Settings",
+    "name": "ImgIX settings",
     "settings": [
       {
         "type": "checkbox",
@@ -660,6 +660,21 @@
         "label": "imgix Parameters",
         "default": "&auto=format,compress",
         "info": "e.g: &auto=format,compress"
+      }
+    ]
+  },
+  {
+    "name": "Global promotion settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_global_plp_tile",
+        "label": "Enable Global PLP Tile"
+      },
+      {
+        "type": "image_picker",
+        "id": "global_plp_tile",
+        "label": "Global PLP Tile Image"
       }
     ]
   }

@@ -28,6 +28,7 @@ class CartDrawer extends HTMLElement {
     });
 
     document.body.addEventListener("blotout-wallet-cart-restored", async () => {
+      console.log("blotout-wallet-cart-restored");
       try {
         const response = await fetch("/cart.js");
         if (!response.ok) {
