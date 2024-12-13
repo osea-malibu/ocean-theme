@@ -251,7 +251,7 @@ function fetchConfig(type = "json") {
 /* Manual Redirects */
 if (
   [
-    "https://oseamalibu.com/a/loop_subscriptions/bundle/f32e72b2b9174c49afc9418fdc687742",
+    "/a/loop_subscriptions/bundle/f32e72b2b9174c49afc9418fdc687742",
     "/a/loop_subscriptions/bundle/eee9c289024140ab984c3fb75988e223",
   ].includes(window.location.pathname)
 ) {
