@@ -361,9 +361,11 @@ class RewardCountdown extends HTMLElement {
 
     // Create an array of active thresholds
     this.thresholds = [this.shippingThreshold];
-    if (this.tier1Threshold && hasTier1Product) this.thresholds.push(this.tier1Threshold);
-    if (this.tier2Threshold && hasTier2Product) this.thresholds.push(this.tier2Threshold);
-    if (this.tier3Threshold && hasTier3Product) this.thresholds.push(this.tier3Threshold);
+    if (this.dataset.isGwpActive === "true") {
+      if (this.tier1Threshold && hasTier1Product) this.thresholds.push(this.tier1Threshold);
+      if (this.tier2Threshold && hasTier2Product) this.thresholds.push(this.tier2Threshold);
+      if (this.tier3Threshold && hasTier3Product) this.thresholds.push(this.tier3Threshold);
+    }
 
     this.progressBar = this.querySelector("progress");
     this.updateProgress();
