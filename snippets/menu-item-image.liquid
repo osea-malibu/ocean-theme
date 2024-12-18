@@ -1,3 +1,4 @@
+{%- if settings.enable_menu_item_images -%}
 {%- liquid
   assign image_object = nil
   assign image_src = nil
@@ -45,7 +46,8 @@
     alt="{{ link.title | escape }}"
     width="40"
     height="40"
-    class="hamburger-menu-image hidden w-8 h-8 object-cover"
+    class="hamburger-menu-image w-8 h-8 object-cover"
   >
   {% comment %} theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
+{%- endif -%}
 {%- endif -%}
