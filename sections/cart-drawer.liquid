@@ -94,6 +94,7 @@
         <reward-countdown
           class="text-center relative block max-w-md mx-auto"
           data-shipping-threshold="{{ settings.shipping_countdown_threshold }}"
+          data-subscriptions-in-cart="{{ cart_subscription_items }}"
           data-is-gwp-active="{{ settings.enable_gwp }}"
           data-tier1-threshold="{{ settings.gwp_tier1_threshold }}"
           data-tier2-threshold="{{ settings.gwp_tier2_threshold }}"
@@ -107,7 +108,7 @@
             {%- if free_gifts_active -%}
               <div></div>
             {%- endif -%}
-            <div class="{{ reward_icon_classes }} {% if remaining_shipping_amount > 0 %}bg-seafoam-300{% else %}bg-seaweed-700 text-white{% endif %}">
+            <div class="{{ reward_icon_classes }} {% if remaining_shipping_amount > 0 and cart_subscription_items.size == 0 %}bg-seafoam-300{% else %}bg-seaweed-700 text-white{% endif %}">
               {% render 'icon-truck', stroke_width: 2, classes: 'w-4 h-4' %}
             </div>
             {%- if free_gifts_active -%}

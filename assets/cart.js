@@ -350,10 +350,14 @@ class RewardCountdown extends HTMLElement {
     this.total = this.totalEl ? parseFloat(this.totalEl.dataset.total) : 0;
 
     // Get thresholds from data attributes and convert to numbers
-    this.shippingThreshold = parseFloat(this.dataset.shippingThreshold) * 100;
-    this.tier1Threshold = this.getThreshold(this.dataset.tier1Threshold);
-    this.tier2Threshold = this.getThreshold(this.dataset.tier2Threshold);
-    this.tier3Threshold = this.getThreshold(this.dataset.tier3Threshold);
+    if (this.dataset.subscriptionsInCart.length > 0) {
+      this.shippingThreshold = 0;
+    } else {
+      this.shippingThreshold = this.stringToInt(this.dataset.shippingThreshold);
+    }
+    this.tier1Threshold = this.stringToInt(this.dataset.tier1Threshold);
+    this.tier2Threshold = this.stringToInt(this.dataset.tier2Threshold);
+    this.tier3Threshold = this.stringToInt(this.dataset.tier3Threshold);
 
     const hasTier1Product = this.dataset.hasTier1Product === "true";
     const hasTier2Product = this.dataset.hasTier2Product === "true";
@@ -371,7 +375,7 @@ class RewardCountdown extends HTMLElement {
     this.updateProgress();
   }
 
-  getThreshold(string) {
+  stringToInt(string) {
     return string ? parseFloat(string) * 100 : null;
   }
 
