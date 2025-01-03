@@ -1,0 +1,22 @@
+{% assign signup_way_to_earn = shop.metafields.rivo.loy.points_program.ways_to_earn
+  | where: 'trigger', 'customer_member_enabled'
+  | first
+%}
+{% assign default_points = signup_way_to_earn.points_amount | times: 1 %}
+{% assign points_balance = customer.metafields.custom.rivo.value.points_balance | default: default_points %}
+{% if customer %}
+  <a href="/pages/loyalty-program" class="rivo-nav-points bg-seafoam-200 inline-flex rounded-sm px-1 py-0.5 text-xs leading-none text-center font-medium min-width-full max-w-12">
+    {% assign adjusted_balance = points_balance | times: 100 %}
+    {% assign formatted_balance = adjusted_balance | money_without_currency %}
+    {% assign formatted_balance = formatted_balance | replace: ',00', '' | replace: '.00', '' %}
+    {{ formatted_balance }} Points
+  </a>
+{% else %}
+  <!-- Handle case when customer is not available -->
+{% endif %}
+<style>
+  @media (max-width: 767px) {
+      #rivo-nav-points a {
+    }
+  }
+</style>
