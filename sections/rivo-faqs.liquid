@@ -1,0 +1,488 @@
+<!-- Accordion/Collapsible FAQs Block -->
+<div class="shopify-section">
+  <div class="container">
+    <div class="rivo-content-wrapper">
+      <div class="rivo-lp-content">
+        <img class="rivo-faqs-icon" src="{{ section.settings.faq_icon | img_url: 'master' }}" loading="lazy" alt="FAQs">
+        <div class="rivo-lp-section-subheading">{{ section.settings.section_title_subheading }}</div>
+        <h2 class="rivo-lp-section-title"> {{ section.settings.section_title }}
+        </h2>
+        <div class="rivo-faq-section">
+          {% for block in section.blocks %}
+            <div class="rivo-faq-item">
+              <div class="rivo-faq-question">
+                <span>{{ block.settings.question }}</span>
+                <div class="rivo-faq-icon">&nbsp;</div>
+              </div>
+              <div class="rivo-faq-answer">{{ block.settings.answer }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Shopify Schema -->
+{% schema %}
+{
+  "name": "RIVO Accordion FAQs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title_subheading",
+      "label": "Section Title Subheading",
+      "default": "FAQs"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Got Questions?"
+    },
+    {
+      "type": "image_picker",
+      "id": "faq_icon",
+      "label": "FAQ Icon Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rivo_faq_loy_1",
+      "name": "RIVO FAQ LOY 1",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I join the loyalty program?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Simply sign up to create your account and start earning rewards!"
+        }
+      ]
+    },
+    {
+      "type": "rivo_faq_loy_2",
+      "name": "RIVO FAQ LOY 2",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How can I earn points?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Earn points by signing up, making purchases, and more! Check out the Ways to Earn section for details."
+        }
+      ]
+    },
+    {
+      "type": "rivo_faq_loy_3",
+      "name": "RIVO FAQ LOY 3",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I redeem my points?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Log in, visit your dashboard, and select the Ways to Redeem section to redeem your points for rewards."
+        }
+      ]
+    },
+    {
+      "type": "rivo_faq_loy_4",
+      "name": "RIVO FAQ LOY 4",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Where can I see my points balance?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "First, log in to your account! Your points balance will be highlighted in a box on the top of the page. You can also navigate to your dedicated rewards page to view your points balance."
+        }
+      ]
+    },
+    {
+      "type": "rivo_faq_loy_5",
+      "name": "RIVO FAQ LOY 5",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Do my points expire?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Points will expire after one year if there isn't any account activity."
+        }
+      ]
+    },
+        {
+      "type": "rivo_faq_loy_6",
+      "name": "RIVO FAQ LOY 6",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Do my rewards expire?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Rewards will not expire after the rewards are activated in the account."
+        }
+      ]
+    },
+    {
+      "type": "rivo_faq_loy_7",
+      "name": "RIVO FAQ LOY 7",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What happens to my points if I return a purchase?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "If you return a purchase, the points you earned for that purchase will be deducted from your account."
+        }
+      ]
+    },
+    {
+      "type": "rivo_faq_loy_8",
+      "name": "RIVO FAQ LOY 8",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "When do I get my birthday gift?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "On your birthday! The only instance in which birthday points will be delayed is if your birthday is within 30 days from the day you entered it. This is for fraud protection, and you will still get your points after approximately 30 days."
+        }
+      ]
+    },
+        {
+      "type": "rivo_faq_loy_9",
+      "name": "RIVO FAQ LOY 9",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "I forgot to use my points at Checkout, can I apply them retroactively?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "No, unfortunately points cannot be redeemed after a purchase has already been mad."
+        }
+      ]
+    },
+    {
+      "type": "rivo_faq_ref_1",
+      "name": "RIVO FAQ REF 1",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does the Refer a Friend program work?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "When you refer a friend, they will receive a link to purchase with a special discount that will automatically apply to their first order, and you’ll receive a reward too!"
+        }
+      ]
+    },
+            {
+      "type": "rivo_faq_ref_2",
+      "name": "RIVO FAQ REF 2",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I refer a friend?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Enter your email address and share your unique referral link with friends and family. They can use the link to make their first purchase, and their discount will automatically be applied at checkout."
+        }
+      ]
+    },
+            {
+      "type": "rivo_faq_ref_3",
+      "name": "RIVO FAQ REF 3",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I track the number of referrals I’ve made?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Enter your name and email above, then click My Stats. From there, you can send yourself an email which will contain your stats."
+        }
+      ]
+    },
+              {
+      "type": "rivo_faq_ref_4",
+      "name": "RIVO FAQ REF 4",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Is there a limit to how many people I can refer?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "No, there is no limit to the number of people you can refer. You can refer as many friends as you like, and you'll get a reward for each successful referral!"
+        }
+      ]
+    },
+              {
+      "type": "rivo_faq_ref_5",
+      "name": "RIVO FAQ REF 5",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does my friend get the discount?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "When your friend uses your unique referral link, the discount will automatically be applied to their first order at checkout."
+        }
+      ]
+    },
+              {
+      "type": "rivo_faq_ref_6",
+      "name": "RIVO FAQ REF 6",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Can I refer friends who are already customers?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "The referral friend reward is only valid for new customers."
+        }
+      ]
+    },
+                  {
+      "type": "rivo_faq_ref_7",
+      "name": "RIVO FAQ REF 7",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How will I know if my friend has made a purchase?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "You'll receive an email notification once your friend completes their first order using your referral link."
+        }
+      ]
+    },
+                  {
+      "type": "rivo_faq_ref_8",
+      "name": "RIVO FAQ REF 8",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What happens if my friend cancels their order?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "If your friend's order is canceled prior to fulfillment, the referral discount won't be valid, and you won't receive the reward."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIVO Accordion FAQs",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Add CSS for Accordion functionality -->
+<style>
+
+  h2.rivo-lp-section-title {
+    margin: 0;
+  }
+  
+  .rivo-faq-section {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 10px;
+  }
+
+  .rivo-faq-item {
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-bottom: 1.5px solid #A0BEB7;
+  }
+
+  .rivo-faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .rivo-faq-answer {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 10px; /* Only set padding on the sides */
+    font-size: 16px;
+    text-align: left;
+    transition: height 0.4s ease, opacity 0.4s ease; /* Remove padding from the transition */
+  }
+
+  .rivo-faq-icon {
+    --hitbox: 30px;
+    background: #fff;
+    border-radius: 50%;
+    width: var(--hitbox);
+    height: var(--hitbox);
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .rivo-faq-item.open .rivo-faq-answer {
+    padding-bottom: 20px; /* Add consistent bottom padding when open */
+    opacity: 1;
+  }
+
+  .rivo-faq-icon:before,
+  .rivo-faq-icon:after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #6E958A;
+    transition: all 0.3s ease;
+  }
+
+  .rivo-faq-icon:after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .rivo-faq-item.open .rivo-faq-answer {
+    display: block;
+  }
+
+  .rivo-faq-item.open .rivo-faq-icon:before {
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+
+  .rivo-faq-item.open .rivo-faq-icon:after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  
+.rivo-faqs-icon {
+  margin-bottom: 15px;
+  margin-top: 30px;
+  max-height: 80px;
+}
+</style>
+
+<!-- JavaScript for Accordion functionality -->
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+    var faqItems = document.querySelectorAll('.rivo-faq-item');
+
+    faqItems.forEach(function(item) {
+      item.querySelector('.rivo-faq-question').addEventListener('click', function() {
+        var currentlyActive = document.querySelector('.rivo-faq-item.open');
+
+        // Close the currently active item if it's not the one clicked
+        if (currentlyActive && currentlyActive !== item) {
+          currentlyActive.querySelector('.rivo-faq-answer').style.height = '0';
+          currentlyActive.classList.remove('open');
+        }
+
+        // Toggle the clicked FAQ
+        if (item.classList.contains('open')) {
+          item.querySelector('.rivo-faq-answer').style.height = '0';
+          item.classList.remove('open');
+        } else {
+          item.classList.add('open');
+          var answer = item.querySelector('.rivo-faq-answer');
+          answer.style.height = answer.scrollHeight + 'px'; // Set height dynamically based on content
+        }
+      });
+    });
+  });
+</script>
