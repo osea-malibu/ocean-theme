@@ -11,11 +11,268 @@
   "sections": {
     "rivo-loyalty-landing-page": {
       "type": "rivo-loyalty-landing-page",
+      "custom_css": [],
       "settings": {
+        "primary_color": "#1d4d41",
+        "secondary_color": "#edf2eb",
+        "page_background_color": "linear-gradient(270deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 100%)",
+        "rivo_icon_color": "#1d4d41",
+        "title_font_style": "inherit",
+        "title_font_family": "\"Canela\", serif",
+        "subtitle_font_family": "\"Circular\", sans-serif",
+        "section_title_font_color": "#1d4d41",
+        "section_subtitle_font_color": "#1d4d41",
+        "page_max_width": 1200,
+        "section_title_font_size": 36,
+        "section_title_font_weight": 400,
+        "section_subtitle_font_size": 20,
+        "section_subtitle_font_weight": 400,
+        "section_padding": 40,
+        "card_background_color": "#edf2eb",
+        "card_font_color": "#1d4d41",
+        "card_title_font_size": 20,
+        "card_title_font_weight": 600,
+        "card_subtitle_font_size": 16,
+        "card_subtitle_font_weight": 400,
+        "card_icon_size": 64,
+        "card_container_max_width": 960,
+        "card_order": "stacked",
+        "corner_type": "rounded",
+        "modal_background_color": "#ffffff",
+        "modal_font_color": "#1d4d41",
+        "modal_icon_color": "#1d4d41",
+        "modal_icon_position_top": 15,
+        "modal_icon_position_right": 15,
+        "modal_login_title_font_size": 30,
+        "modal_title_font_size": 30,
+        "modal_subtitle_font_size": 20,
+        "modal_body_font_size": 20,
+        "modal_icon_size": 76,
+        "vip_desktop_progress_bar_width": 50,
+        "vip_table_tier_td_border_top": "none",
+        "custom_css": "/* --- ALL SECTIONS --- */\n\n.rivo-lp-section-title {\n    line-height: 1.5;\n    margin-top: 20px;\n}\n\n.rivo-lp-section-title-before,\n.rivo-hero-title-before {\n    font-size: 16px;\n    color: #1D4D41;\n    letter-spacing: 5px;\n}\n\n.rivo-lp-section-subtitle {\n    padding-top: 5px;\n    padding-bottom: 10px;\n}\n\n.rivo-content-wrapper {\n    padding-left: 15px;\n    padding-right: 15px;\n    margin-bottom: 40px;\n}\n\n.rivo-card-title {\n    text-transform: capitalize;\n}\n\n.rivo-card-description {\n    padding-top: 0;\n}\n\n.rivo-arrow-icon {\n    display: none;\n}\n\n.rivo-modal__title {\n    font-family: \"Canela\", serif !important;\n}\n\n.rivo-modal-button {\n    font-size: 16px !important;\n}\n\n/* --- HERO --- */\n\n.rivo-hero-buttons a {\n    min-width: 150px;\n}\n\n.rivo-hero-banner-wrapper {\n    max-width: 1500px;\n}\n\n.rivo-hero-title {\n    font-weight: 400;\n    line-height: 1.1;\n}\n\n/* --- HOW IT WORKS --- */\n#rivo-how-it-works .rivo-lp-section-title {\n    margin-top: 50px !important;\n    margin-bottom: 20px;\n}\n\n.rivo-how-it-works-step-title {\n    font-family: \"Canela\", serif !important;\n    font-weight: 400;\n}\n\n.rivo-how-it-works-step-subtitle {\n    line-height: 1.2;\n}\n\n.rivo-how-it-works-step-image img {\n    margin: 0 auto;\n}\n\n/* --- WAYS TO EARN --- */\n#rivo-ways-to-earn .rivo-card-title {\n    margin-bottom: 3px;\n    line-height: 1.2;\n    font-family: \"Canela\", serif !important;\n    font-weight: 600;\n}\n\n#rivo-ways-to-earn .rivo-card-description {\n    line-height: 1.2;\n    padding-right: 20px;\n    padding-left: 20px;\n}\n\n#rivo-ways-to-earn .rivo-arrow-icon {\n    display: none;\n}\n\n#rivo-ways-to-earn .rivo-card {\n   min-height: 150px;\n   border:  1px solid #A0BEB7;\n}\n\n#rivo-ways-to-earn .rivo-card:hover {\nbackground-color: #f5f9f1;\n   border: 1px solid #f5f9f1;\n}\n\n/* --- WAYS TO REDEEM (AND ACTIVITY) --- */\n\n#rivo-ways-to-redeem .rivo-card-icon,\n#rivo-lp-my-rewards .rivo-card-icon {}\n\n#rivo-ways-to-redeem .rivo-card-description,\n#rivo-lp-my-rewards .rivo-card-description {\n    font-size: 18px;\n}\n\n#rivo-ways-to-redeem .rivo-card-title,\n#rivo-lp-my-rewards .rivo-card-title {\n    font-family: \"Canela\", serif;\n    font-weight: 600;\n}\n\n#rivo-ways-to-redeem .rivo-arrow-icon,\n#rivo-lp-my-rewards .rivo-arrow-icon {\n    display: none;\n}\n\n#rivo-ways-to-redeem .rivo-card,\n#rivo-lp-my-rewards .rivo-card {\n    background-color: #fff;\n}\n\n#rivo-ways-to-redeem .rivo-card:hover,\n#rivo-lp-my-rewards .rivo-card:hover {\n    background-color: #fffdef;\n}\n\n/* --- VIP TIERS PROGRESS BAR --- */\n\n.rivo-vip-tier-progress-container {\n    width: 50%;\n}\n\n@media (max-width: 768px) {\n    .rivo-vip-tier-progress-container {\n        width: 95%;\n    }\n\n    /* --- LOGGED IN PROGRESS BAR --- */\n    .rivo-vip-tier-columns .rivo-vip-tier-progress-description {\n        display: block !important;\n        padding-left: 0px !important;\n    }\n}\n\n.rivo-account-progress-container {\n    background: #f5f9f1;\n}\n\n.rivo-account-progress-bar {\n    background-color: #1d4d41;\n}\n\n.rivo-progress-current-tier-label,\n.rivo-progress-next-tier-label {\n    font-weight: 600;\n    font-size: 14px;\n}\n\n.rivo-vip-tier-progress-container.rivo-vip-tier-columns {\n    justify-content: center;\n}\n\n/* --- ACTIVITY --- */\n\n.rivo-completed {\n    display: none;\n}\n\n#rivo-lp-explainer .rivo-lp-section-subtitle {\n    color: #1d4d41;\n}\n\n.rivo-points-expiry {\n    padding: 10px;\n    background: #f5f9f1;\n    width: fit-content;\n    margin: 0 auto;\n    border-radius: 0.75rem;\n    font-size: 14px;\n}\n\n#rivo-lp-my-rewards .rivo-lp-content {\n    padding: 0px;\n    margin: 0;\n    background-color: #fff;\n    border-radius: 0px;\n    border: 1px solid #A0BEB7;\n    max-width: 100% !important;\n}\n\n#rivo-lp-my-rewards.rivo-content-wrapper {\n padding-left: 0px !important;\n padding-right: 0px !important;\n}\n\ninput.rivo-coupon-code {\n    font-size: 16px !important;\n    border-radius: 5px;\n}\n\n#points-logs-activity th,\n#points-logs-activity td {\n    font-size: 14px;\n}\n\n#points-logs-activity th {\n    color: #fff;\n    background-color: #1d4d41 !important;\n}\n\n/* Logged in - Activity Table - Odd rows (1st, 3rd, etc) */\n#points-logs-activity tr:nth-child(odd) {\n    background-color: #f5f9f1 !important;\n}\n\n/* Logged in - Activity Table - Even rows (2nd, 4th, etc) */\n#points-logs-activity tr:nth-child(even) {\n  background-color: transparent;\n}\n\n/* --- VIP TIERS --- */\ntable.rivo-vip-tier-table {}\n\n/* Table Header */\nth.rivo-vip-tier-table-thead-first-cell,\nth.rivo-vip-tier-table-thead-tier-cell {}\n\nspan.rivo-th-tier-threshold {\n    font-weight: 600;\n    line-height: 1.1;\n    min-height: 40px;\n}\n\n/* First column */\ntd.rivo-vip-tier-table-row-perk-name {\n    text-align: left;\n    font-weight: 600;\n}\n\nspan.rivo-th-tier-name {}\n\nth.rivo-vip-tier-table-thead-tier-cell {}\n\ntr.rivo-vip-tier-table-tbody-row td.rivo-tier-column-1 {\n    border: 1px solid #A0BEB7;\n}\n\ntr.rivo-vip-tier-table-tbody-row td.rivo-tier-column-2 {\n    border: 1px solid #A0BEB7;\n}\n\ntr.rivo-vip-tier-table-tbody-row td.rivo-tier-column-3 {\n    border: 1px solid #A0BEB7;\n}\n\ntr.rivo-vip-tier-table-tbody-row td.rivo-tier-column-4 {\n    border: 1px solid #A0BEB7;\n}\n\n/* — VIP Tiers Table Scroll — */\n\n@media (max-width: 768px) {\n    .rivo-how-it-works-step-image img {\n        height: 125px;\n        margin: 0 auto;\n    }\n\n    .rivo-vip-tier-container {\n        width: 100%;\n        overflow: auto;\n    }\n\n    table.rivo-vip-tier-table td,\n    table.rivo-vip-tier-table th {\n        width: 120px;\n        height: 50px;\n    }\n\n    .rivo-vip-tier-table-thead-first-cell {\n        background: #fff;\n    }\n\n    .rivo-vip-tier-table-thead-first-cell,\n    td.rivo-vip-tier-table-row-perk-name {\n        position: sticky;\n        left: 0;\n    }\n}\n\n/* --- SCROLL BAR --- */\n\n/* Styles for WebKit-based browsers (Chrome, Safari, newer versions of Edge) */\n.rivo-lp-cards-container::-webkit-scrollbar,\n.rivo-vip-tier-container::-webkit-scrollbar {\n    width: 10px;\n    height: 8px;\n}\n\n.rivo-lp-cards-container::-webkit-scrollbar-track,\n.rivo-vip-tier-container::-webkit-scrollbar-track {\n    background: #f2f2f2;\n    border-radius: 10px;\n}\n\n.rivo-lp-cards-container::-webkit-scrollbar-thumb,\n.rivo-vip-tier-container::-webkit-scrollbar-thumb {\n    background: #1d4d41;\n    border-radius: 10px;\n}\n\n.rivo-lp-cards-container::-webkit-scrollbar-thumb:hover,\n.rivo-vip-tier-container::-webkit-scrollbar-thumb:hover {\n    background: #0b2e25;\n}\n\n/* --- REFERRAL --- */\niframe.rivo-referral {\n    margin: 0 auto;\n    border-radius: 0px;\n}\n\n#rivo-lp-referral-campaign.rivo-content-wrapper {\n padding-left: 0px !important;\n padding-right: 0px !important;\n}\n\n/* —-- MOBILE Media queries —-- */\n\n@media screen and (max-width: 769px) {\n\n    /* —-- ALL SECTIONS —-- */\n    .rivo-lp-section-title {\n        line-height: 1.4;\n        font-size: 28px;\n    }\n\n    .rivo-lp-section-subtitle {\n        line-height: 1.2;\n        font-size: 16px;\n    }\n\n    .rivo-lp-cards-container {\n        width: 100% !important;\n    }\n\n    #rivo-lp-header .rivo-lp-content {\n        padding-left: 0;\n        padding-right: 0;\n    }\n\n    /* —-- HERO BANNER —-- */\n    .rivo-hero-banner-text {\n        padding-top: 40px;\n        padding-bottom: 40px;\n    }\n\n    /* --- WAYS TO REDEEM (AND ACTIVITY) --- */\n    #rivo-ways-to-redeem .rivo-card-title,\n    #rivo-lp-my-rewards .rivo-card-title {\n        line-height: 1.2 !important;\n        font-size: 18px !important;\n    }\n\n    #rivo-ways-to-redeem .rivo-card-description,\n    #rivo-lp-my-rewards .rivo-card-description {\n        font-size: 16px !important;\n    }\n\n    #rivo-ways-to-redeem .rivo-lp-cards-container {\n        flex-wrap: wrap;\n    }\n\n}\n\n@media (max-width: 749px) {\n\n    /* —-- ALL SECTIONS —-- */\n    .rivo-content-wrapper {\n        padding-left: 10px;\n        padding-right: 10px;\n    }\n\n    .rivo-mobile-banner-overlay .rivo-lp-content {\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n    }\n\n    /* --- VIP TIERS --- */\n    .rivo-vip-tier-table-row-perk-name {\n        font-size: 12px !important;\n    }\n\n    .rivo-vip-tier-table-tbody-row {\n        height: 60px !important;\n    }\n\n    /* --- WAYS TO EARN --- */\n    #rivo-ways-to-earn .rivo-card-title {\n        font-size: 18px;\n    }\n\n    #rivo-ways-to-earn .rivo-card-description {\n        font-size: 16px;\n        line-height: 1.2;\n    }\n}\n\n/* --- DESKTOP Media queries ---*/\n@media (min-width: 770px) {\n\n    /* —-- HERO BANNER —-- */\n    .rivo-hero-banner-wrapper {\n        padding: 5rem;\n    }\n\n    .rivo-hero-banner-text {\n        display: flex;\n        flex-direction: column;\n        height: 100%;\n    }\n\n    .rivo-hero-description {\n        margin-top: 2px;\n        margin-bottom: 6px;\n    }\n\n    /* --- WAYS TO REDEEM --- */\n    #rivo-ways-to-redeem .rivo-lp-cards-container {\n        flex-wrap: nowrap;\n        max-width: 1200px;\n    }\n\n    .rivo-lp-cards-container {\n        padding-left: 40px;\n        padding-right: 40px;\n    }\n\n    #rivo-lp-header {\n        display: flex;\n    }\n}"
+      }
+    },
+    "173142367878555311": {
+      "type": "apps",
+      "blocks": {
+        "rivo_loyalty_rewards_referrals_lp_referral_campaign_MEyexR": {
+          "type": "shopify://apps/rivo-loyalty-rewards-referrals/blocks/lp-referral-campaign/580e9665-b2cd-4dbc-b6ba-6445ac9e6871",
+          "settings": {
+            "background_color": "linear-gradient(127deg, rgba(255, 255, 255, 1) 11%, rgba(255, 255, 255, 1) 81%)",
+            "referral_campaign_id": "37687"
+          }
+        }
+      },
+      "block_order": ["rivo_loyalty_rewards_referrals_lp_referral_campaign_MEyexR"],
+      "custom_css": [],
+      "settings": {}
+    },
+    "rivo_faqs_9JFbHy": {
+      "type": "rivo-faqs",
+      "blocks": {
+        "rivo_faq_ref_1_EkQdCP": {
+          "type": "rivo_faq_ref_1",
+          "settings": {
+            "question": "How does the Refer a Friend program work?",
+            "answer": "When you refer a friend, they will receive a link to purchase with a special discount that will automatically apply to their first order, and you’ll receive a reward too!"
+          }
+        },
+        "rivo_faq_ref_2_ETcP33": {
+          "type": "rivo_faq_ref_2",
+          "settings": {
+            "question": "How do I refer a friend?",
+            "answer": "Enter your email address and share your unique referral link with friends and family. They can use the link to make their first purchase, and their discount will automatically be applied at checkout."
+          }
+        },
+        "rivo_faq_ref_3_LYCciU": {
+          "type": "rivo_faq_ref_3",
+          "settings": {
+            "question": "How do I track the number of referrals I’ve made?",
+            "answer": "Enter your name and email above, then click My Stats. From there, you can send yourself an email which will contain your stats."
+          }
+        },
+        "rivo_faq_ref_4_RcRMgq": {
+          "type": "rivo_faq_ref_4",
+          "settings": {
+            "question": "Is there a limit to how many people I can refer?",
+            "answer": "No, there is no limit to the number of people you can refer. You can refer as many friends as you like, and you'll get a reward for each successful referral!"
+          }
+        },
+        "rivo_faq_ref_5_Cn4eiU": {
+          "type": "rivo_faq_ref_5",
+          "settings": {
+            "question": "How does my friend get the discount?",
+            "answer": "When your friend uses your unique referral link, the discount will automatically be applied to their first order at checkout."
+          }
+        },
+        "rivo_faq_ref_6_Q4TAkE": {
+          "type": "rivo_faq_ref_6",
+          "settings": {
+            "question": "Can I refer friends who are already customers?",
+            "answer": "The referral friend reward is only valid for new customers."
+          }
+        },
+        "rivo_faq_ref_7_w3bpFY": {
+          "type": "rivo_faq_ref_7",
+          "settings": {
+            "question": "How will I know if my friend has made a purchase?",
+            "answer": "You'll receive an email notification once your friend completes their first order using your referral link."
+          }
+        },
+        "rivo_faq_ref_8_CezzEp": {
+          "type": "rivo_faq_ref_8",
+          "settings": {
+            "question": "What happens if my friend cancels their order?",
+            "answer": "If your friend's order is canceled prior to fulfillment, the referral discount won't be valid, and you won't receive the reward."
+          }
+        }
+      },
+      "block_order": [
+        "rivo_faq_ref_1_EkQdCP",
+        "rivo_faq_ref_2_ETcP33",
+        "rivo_faq_ref_3_LYCciU",
+        "rivo_faq_ref_4_RcRMgq",
+        "rivo_faq_ref_5_Cn4eiU",
+        "rivo_faq_ref_6_Q4TAkE",
+        "rivo_faq_ref_7_w3bpFY",
+        "rivo_faq_ref_8_CezzEp"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".rivo-lp-content {background-color: #fff;}",
+        ".rivo-content-wrapper {padding-top: 0px; background-color: #fff;}"
+      ],
+      "settings": {
+        "section_title_subheading": "",
+        "section_title": "Got Questions?",
+        "faq_icon": "shopify://shop_images/FAQs.svg"
+      }
+    },
+    "rich_text_d3ppbk": {
+      "type": "rich-text",
+      "blocks": {
+        "paragraph_T4EG6w": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph_text": "<a class=\"anchor\" id=\"faq\"></a>",
+            "paragraph_classes": ""
+          }
+        },
+        "heading_aXemwY": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "FAQs",
+            "heading_classes": "font-serif text-3xl lg:text-4xl tracking-tight mb-1",
+            "subheading_text": "",
+            "subheading_classes": ""
+          }
+        }
+      },
+      "block_order": ["paragraph_T4EG6w", "heading_aXemwY"],
+      "settings": {
+        "section_heading": "",
+        "section_classes": "container mb-4",
+        "container_classes": "text-center"
+      }
+    },
+    "accordion_GPhtPJ": {
+      "type": "accordion",
+      "blocks": {
+        "item_MEApx6": {
+          "type": "item",
+          "settings": {
+            "summary": "How does the Refer a Friend program work?",
+            "summary_classes": "py-3",
+            "content": "When you refer a friend, they will receive a link to purchase with a special discount that will automatically apply to their first order, and you’ll receive a reward too!",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_fMyneT": {
+          "type": "item",
+          "settings": {
+            "summary": "How do I refer a friend?",
+            "summary_classes": "py-3",
+            "content": "Enter your email address and share your unique referral link with friends and family. They can use the link to make their first purchase, and their discount will automatically be applied at checkout.",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_egVdyx": {
+          "type": "item",
+          "settings": {
+            "summary": "How do I track the number of referrals I’ve made?",
+            "summary_classes": "py-3",
+            "content": "Enter your name and email above, then click My Stats. From there, you can send yourself an email which will contain your stats.",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_yYeJDw": {
+          "type": "item",
+          "settings": {
+            "summary": "Is there a limit to how many people I can refer?",
+            "summary_classes": "py-3",
+            "content": "No, there is no limit to the number of people you can refer. You can refer as many friends as you like, and you'll get a reward for each successful referral!",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_aR4HHp": {
+          "type": "item",
+          "settings": {
+            "summary": "How does my friend get the discount?",
+            "summary_classes": "py-3",
+            "content": "When your friend uses your unique referral link, the discount will automatically be applied to their first order at checkout.",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_Hx8V9t": {
+          "type": "item",
+          "settings": {
+            "summary": "Can I refer friends who are already customers?",
+            "summary_classes": "py-3",
+            "content": "The referral friend reward is only valid for new customers.",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_cKWPDR": {
+          "type": "item",
+          "settings": {
+            "summary": "How will I know if my friend has made a purchase?",
+            "summary_classes": "py-3",
+            "content": "You'll receive an email notification once your friend completes their first order using your referral link.",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_pERqMH": {
+          "type": "item",
+          "settings": {
+            "summary": "What happens if my friend cancels their order?",
+            "summary_classes": "py-3",
+            "content": "If your friend's order is canceled prior to fulfillment, the referral discount won't be valid, and you won't receive the reward.",
+            "content_classes": "pb-6"
+          }
+        }
+      },
+      "block_order": [
+        "item_MEApx6",
+        "item_fMyneT",
+        "item_egVdyx",
+        "item_yYeJDw",
+        "item_aR4HHp",
+        "item_Hx8V9t",
+        "item_cKWPDR",
+        "item_pERqMH"
+      ],
+      "settings": {
+        "section_classes": "container lg:max-w-screen-lg mb-12",
+        "container_classes": "border-y border-seaweed-400"
       }
     }
   },
   "order": [
-    "rivo-loyalty-landing-page"
+    "rivo-loyalty-landing-page",
+    "173142367878555311",
+    "rivo_faqs_9JFbHy",
+    "rich_text_d3ppbk",
+    "accordion_GPhtPJ"
   ]
 }
