@@ -481,7 +481,7 @@
     ]
   },
   {
-    "name": "Gift with purchase",
+    "name": "Gift with purchase (GWP)",
     "settings": [
       {
         "type": "header",
@@ -491,6 +491,11 @@
         "type": "checkbox",
         "id": "enable_gwp",
         "label": "Enable gift with purchase"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_loyalty_gwp",
+        "label": "Loyalty-only gift with purchase"
       },
       {
         "type": "select",
