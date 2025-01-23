@@ -30,7 +30,7 @@
     "cart_type": "drawer",
     "cart_samples_collection": "samples-1",
     "show_cart_note": false,
-    "enable_printed_gift_note": true,
+    "enable_printed_gift_note": false,
     "enable_sets_upsell": true,
     "enable_loyalty_tote": true,
     "cart_empty_state_links": "cart-empty-state",
@@ -230,7 +230,9 @@
               "settings": {}
             }
           },
-          "block_order": ["announcement-bar-0"],
+          "block_order": [
+            "announcement-bar-0"
+          ],
           "settings": {}
         }
       }
