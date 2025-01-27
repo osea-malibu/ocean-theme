@@ -9,16 +9,31 @@
  */
 {
   "sections": {
+    "page_banner_FtGkLn": {
+      "type": "page-banner",
+      "blocks": {
+        "heading_Pizr8i": {
+          "type": "heading",
+          "settings": {
+            "heading": "Skincare Quiz",
+            "heading_classes": "sr-only"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Pizr8i"
+      ],
+      "settings": {
+        "is_text_only": false,
+        "is_lazy": false,
+        "section_classes": "relative container px-0 xs:px-6",
+        "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
+        "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
+      }
+    },
     "16633470744a7a7383": {
       "type": "multicolumn",
       "blocks": {
-        "code_QmxjdP": {
-          "type": "code",
-          "settings": {
-            "column_classes": "sr-only",
-            "code": "<h1>SkincareQuiz</h1>"
-          }
-        },
         "487a1302-f24e-4ef6-bd42-d292ef38c7c4": {
           "type": "code",
           "settings": {
@@ -28,7 +43,6 @@
         }
       },
       "block_order": [
-        "code_QmxjdP",
         "487a1302-f24e-4ef6-bd42-d292ef38c7c4"
       ],
       "settings": {
@@ -47,6 +61,7 @@
     }
   },
   "order": [
+    "page_banner_FtGkLn",
     "16633470744a7a7383"
   ]
 }
