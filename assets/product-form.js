@@ -56,7 +56,10 @@ if (!customElements.get("product-form")) {
             this.error = false;
             this.cart.renderContents(response);
 
-            if (window.gwpSettings.enabled) {
+            const isLoggedIn = window.customerLoggedIn;
+            const { enabled, loyaltyOnly } = window.gwpSettings;
+
+            if (enabled && (!loyaltyOnly || (loyaltyOnly && isLoggedIn))) {
               if (window.gwpSettings.type === "auto") {
                 let giftsToAdd = [];
                 const fetchPromises = window.gwpSettings.tiers.map((tier) => {

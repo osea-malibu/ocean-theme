@@ -17,6 +17,9 @@ class CartItems extends HTMLElement {
   constructor() {
     super();
 
+    this.cart =
+      document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+
     this.lineItemStatusElement =
       document.getElementById("shopping-cart-line-item-status") ||
       document.getElementById("CartDrawer-LineItemStatus");
@@ -31,6 +34,19 @@ class CartItems extends HTMLElement {
     }, 300);
 
     this.addEventListener("change", this.debouncedOnChange.bind(this));
+
+    // Add event listener for customer login and run handleGiftWithPurchase
+    document.addEventListener("rivo-accounts:shopify:login", this.onCustomerLogin.bind(this));
+
+    // Add check for cart page and run handleGiftWithPurchase
+    if (window.location.pathname === "/cart") {
+      fetch(window.Shopify.routes.root + "cart.js")
+        .then((response) => response.json())
+        .then((cartState) => {
+          console.log("running handleGiftWithPurchase");
+          this.handleGiftWithPurchase(cartState);
+        });
+    }
   }
 
   onChange(event) {
@@ -78,6 +94,69 @@ class CartItems extends HTMLElement {
         selector: ".shopify-section",
       },
     ];
+  }
+
+  handleGiftWithPurchase(parsedState) {
+    // Get logged in status from Shopify customer object
+    const isLoggedIn = window.customerLoggedIn;
+
+    // Check if we should run GWP logic based on settings
+    const { enabled, loyaltyOnly } = window.gwpSettings;
+    if (enabled && (!loyaltyOnly || (loyaltyOnly && isLoggedIn))) {
+      const cartIdArray = this.dataset.cartIds.slice(1, -1).split(",");
+      const { tiers } = window.gwpSettings;
+      let giftsToAdd = [];
+      let giftsToRemove = [];
+
+      tiers.forEach((tier) => {
+        if (tier.product !== "") {
+          if (cartIdArray.includes(tier.product) && parsedState.total_price < tier.threshold) {
+            const line = cartIdArray.findIndex((i) => i === tier.product) + 1;
+            giftsToRemove.push(line); // Collect gifts to remove
+          }
+          if (
+            window.gwpSettings.type === "auto" &&
+            !cartIdArray.includes(tier.product) &&
+            parsedState.total_price >= tier.threshold
+          ) {
+            giftsToAdd.push(tier.variant);
+          }
+          if (
+            window.gwpSettings.type === "url" &&
+            localStorage.getItem("osea.gwpUrlVariantId") === tier.variant
+          ) {
+            document.querySelector("gift-with-purchase-url").checkGiftQualifiers();
+          }
+        }
+      });
+
+      if (giftsToRemove.length > 0) {
+        // Sort giftsToRemove in descending order
+        giftsToRemove.sort((a, b) => b - a);
+
+        // Remove gifts sequentially with a delay between each
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+        giftsToRemove.reduce((promise, line) => {
+          return promise.then(() => this.removeGift(line)).then(() => delay(400));
+        }, Promise.resolve());
+      }
+
+      if (giftsToAdd.length > 0) {
+        this.cart.addFreeGift(giftsToAdd);
+      }
+    }
+  }
+
+  onCustomerLogin() {
+    // Set window object to logged in status
+    window.customerLoggedIn = true;
+
+    fetch(window.Shopify.routes.root + "cart.js")
+      .then((response) => response.json())
+      .then((cartState) => {
+        this.handleGiftWithPurchase(cartState);
+      });
   }
 
   updateCartItem(line, value, name, target) {
@@ -128,58 +207,13 @@ class CartItems extends HTMLElement {
       .then((response) => response.text())
       .then((state) => {
         const parsedState = JSON.parse(state);
-        this.cart =
-          document.querySelector("cart-notification") || document.querySelector("cart-drawer");
 
         // if the only items in the cart are samples
         if (parsedState?.items?.filter((i) => i.product_type !== "Sample").length === 0) {
           this.cart.clearCart();
         }
 
-        if (window.gwpSettings.enabled) {
-          const cartIdArray = this.dataset.cartIds.slice(1, -1).split(",");
-          const { tiers } = window.gwpSettings;
-          let giftsToAdd = [];
-          let giftsToRemove = [];
-
-          tiers.forEach((tier) => {
-            if (tier.product !== "") {
-              if (cartIdArray.includes(tier.product) && parsedState.total_price < tier.threshold) {
-                const line = cartIdArray.findIndex((i) => i === tier.product) + 1;
-                giftsToRemove.push(line); // Collect gifts to remove
-              }
-              if (
-                window.gwpSettings.type === "auto" &&
-                !cartIdArray.includes(tier.product) &&
-                parsedState.total_price >= tier.threshold
-              ) {
-                giftsToAdd.push(tier.variant);
-              }
-              if (
-                window.gwpSettings.type === "url" &&
-                localStorage.getItem("osea.gwpUrlVariantId") === tier.variant
-              ) {
-                document.querySelector("gift-with-purchase-url").checkGiftQualifiers();
-              }
-            }
-          });
-
-          if (giftsToRemove.length > 0) {
-            // Sort giftsToRemove in descending order
-            giftsToRemove.sort((a, b) => b - a);
-
-            // Remove gifts sequentially with a delay between each
-            const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-            giftsToRemove.reduce((promise, line) => {
-              return promise.then(() => this.removeGift(line)).then(() => delay(400));
-            }, Promise.resolve());
-          }
-
-          if (giftsToAdd.length > 0) {
-            this.cart.addFreeGift(giftsToAdd);
-          }
-        }
+        this.handleGiftWithPurchase(parsedState);
 
         this.updateCatchCalloutPrice(parsedState.total_price);
 
@@ -362,10 +396,15 @@ class RewardCountdown extends HTMLElement {
     const hasTier1Product = this.dataset.hasTier1Product === "true";
     const hasTier2Product = this.dataset.hasTier2Product === "true";
     const hasTier3Product = this.dataset.hasTier3Product === "true";
+    const isGwpActive = this.dataset.isGwpActive === "true";
+    const isLoyaltyOnly = this.dataset.isLoyaltyOnly === "true";
 
     // Create an array of active thresholds
     this.thresholds = [this.shippingThreshold];
-    if (this.dataset.isGwpActive === "true") {
+    if (
+      (isGwpActive && !isLoyaltyOnly) ||
+      (isGwpActive && isLoyaltyOnly && window.customerLoggedIn)
+    ) {
       if (this.tier1Threshold && hasTier1Product) this.thresholds.push(this.tier1Threshold);
       if (this.tier2Threshold && hasTier2Product) this.thresholds.push(this.tier2Threshold);
       if (this.tier3Threshold && hasTier3Product) this.thresholds.push(this.tier3Threshold);

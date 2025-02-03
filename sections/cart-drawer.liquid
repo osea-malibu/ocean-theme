@@ -80,7 +80,13 @@
           assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
 
           if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto'
-            assign free_gifts_active = true
+            if settings.is_loyalty_gwp and customer
+              assign free_gifts_active = true 
+            elsif settings.is_loyalty_gwp == false
+              assign free_gifts_active = true
+            else 
+              assign free_gifts_active = false
+            endif
           else
             assign free_gifts_active = false
           endif
@@ -96,6 +102,7 @@
           data-shipping-threshold="{{ settings.shipping_countdown_threshold }}"
           data-subscriptions-in-cart="{{ cart_subscription_items }}"
           data-is-gwp-active="{{ settings.enable_gwp }}"
+          data-is-loyalty-only="{{ settings.is_loyalty_gwp }}"
           data-tier1-threshold="{{ settings.gwp_tier1_threshold }}"
           data-tier2-threshold="{{ settings.gwp_tier2_threshold }}"
           data-tier3-threshold="{{ settings.gwp_tier3_threshold }}"
