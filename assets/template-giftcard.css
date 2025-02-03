@@ -210,6 +210,10 @@ h2,
   opacity: 0.85;
 }
 
+.gift-card__price > p:first-child {
+  margin-bottom: 0;
+}
+
 @media only screen and (min-width: 750px) {
   .gift-card__price {
     font-size: 2.4rem;
