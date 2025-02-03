@@ -27,12 +27,6 @@
 
     {{ content_for_header }}
 
-    {%- liquid
-      assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
-      assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
-      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
-    %}
-
     {% style %}
       @font-face {
         font-family: 'Canela';
@@ -100,7 +94,7 @@
 
   <body class="gradient">
     <header class="gift-card__title">
-      <span class="h2">{{ shop.name }}</span>
+      <span class="h2 sr-only">{{ shop.name }}</span>
       <h1 class="gift-card__heading">{{ 'gift_cards.issued.subtext' | t }}</h1>
       <div class="gift-card__price">
         <p>
