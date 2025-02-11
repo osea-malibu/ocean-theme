@@ -10,6 +10,7 @@
     - variant_picker_classes: {String} Tailwind styling classes (optional)
     - card_class: {String} Tailwind styling classes (optional)
     - button_class: {String} Tailwind styling classes (optional)
+    - product_form_class: {String} Tailwind styling classes (optional)
     - image_class: {String} Tailwind styling classes (optional)
     - image_element_class: {String} Tailwind styling classes (optional)
     - badge_class: {String} Tailwind styling classes (optional)
@@ -248,7 +249,7 @@
             </variant-radios>
           {%- endif -%}
         {%- endif -%}
-        <product-form data-cart-type="{{ settings.cart_type }}" class="relative">
+        <product-form data-cart-type="{{ settings.cart_type }}" class="relative{% if product_form_class != blank %} {{ product_form_class }}{% endif %}">
           <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
             {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
             <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
