@@ -650,15 +650,20 @@
                                       {%- if item.product.type == 'Sample' -%}
                                         <span class="flex bg-sand-300 rounded-sm px-1.5 py-0.5 text-xs font-book tracking-wide whitespace-nowrap text-seaweed-600">Sample</span>
                                       {%- elsif item.product.type == 'Free Gift' -%}
-                                        <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">
-                                          {%- if item.product_id == tier_two_product.id -%}
-                                            <span>2nd Free Gift</span>
-                                          {%- elsif item.product_id == tier_three_product.id -%}
-                                            <span>3rd Free Gift</span>
-                                          {%- else -%}
-                                            <span>Free Gift</span>
-                                          {% endif %}
-                                        </span>
+                                        <div class="flex flex-col items-end">
+                                          <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">
+                                            {%- if item.product_id == tier_two_product.id -%}
+                                              <span>2nd Free Gift</span>
+                                            {%- elsif item.product_id == tier_three_product.id -%}
+                                              <span>3rd Free Gift</span>
+                                            {%- else -%}
+                                              <span>Free Gift</span>
+                                            {% endif %}
+                                          </span>
+                                          {%- if item.variant.compare_at_price != nil -%}
+                                            <span class="whitespace-nowrap text-sm font-book">{{ item.variant.compare_at_price | money_without_trailing_zeros }} value</span>
+                                          {%- endif -%}
+                                        </div>
                                       {%- else -%}
                                         <span class="flex">{{ item.original_line_price | money }}</span>
                                       {%- endif -%}
