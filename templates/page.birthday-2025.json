@@ -14,44 +14,6 @@
       "disabled": true,
       "settings": {}
     },
-    "image_banner_FzEEFi": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_aCFLeL": {
-          "type": "heading",
-          "settings": {
-            "heading": "",
-            "heading_classes": ""
-          }
-        },
-        "paragraph_PPzATx": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "",
-            "paragraph_classes": ""
-          }
-        },
-        "button_TP9HdC": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_aria_label": "",
-            "button_link": "",
-            "target_blank": false,
-            "button_classes": "button-primary"
-          }
-        }
-      },
-      "block_order": ["heading_aCFLeL", "paragraph_PPzATx", "button_TP9HdC"],
-      "disabled": true,
-      "settings": {
-        "is_lazy": false,
-        "image_link": "",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "max-w-md top-1/3"
-      }
-    },
     "page_banner_R6ADN3": {
       "type": "page-banner",
       "blocks": {
@@ -63,7 +25,9 @@
           }
         }
       },
-      "block_order": ["heading_kCQgAe"],
+      "block_order": [
+        "heading_kCQgAe"
+      ],
       "settings": {
         "is_text_only": false,
         "is_lazy": false,
@@ -128,11 +92,15 @@
           }
         }
       },
-      "block_order": ["countdown_qRaNgy", "column_EQc7Ht"],
+      "block_order": [
+        "countdown_qRaNgy",
+        "column_EQc7Ht"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "container bg-seaweed-700 pt-6 pb-4",
         "container_classes": "flex flex-col items-center gap-4",
+        "row_bg_image": "shopify://shop_images/BDAY2025_Landing_Page_-_Hero_Desktop_LAYOUT.jpg",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -146,6 +114,46 @@
     "multicolumn_HjWEDQ": {
       "type": "multicolumn",
       "blocks": {
+        "column_7E7Bkg": {
+          "type": "column",
+          "settings": {
+            "column_classes": "w-full",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "",
+            "remove_text_wrapper": false,
+            "heading": "<span class=\"tracking-tight\">29<sup class=\"text-3xl lg:text-4xl lg:-top-6\">th</sup></span> Birthday Event",
+            "heading_classes": "text-white uppercase font-bold text-5xl lg:text-7xl lg:mb-2 text-center",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
         "column_4KEKpd": {
           "type": "column",
           "settings": {
@@ -270,12 +278,19 @@
           }
         }
       },
-      "block_order": ["column_4KEKpd", "column_aw4EYF", "column_jgYP7H"],
-      "custom_css": [".text-neon-green {color: #dcf5ab;}"],
+      "block_order": [
+        "column_7E7Bkg",
+        "column_4KEKpd",
+        "column_aw4EYF",
+        "column_jgYP7H"
+      ],
+      "custom_css": [
+        ".text-neon-green {color: #dcf5ab;}"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "container bg-seaweed-700 pb-6",
-        "container_classes": "flex flex-col items-center lg:flex-row gap-4 lg:gap-4 lg:justify-center",
+        "container_classes": "flex flex-col items-center lg:flex-row gap-4 lg:gap-4 lg:justify-center flex-wrap",
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -301,7 +316,9 @@
           }
         }
       },
-      "block_order": ["button_r9GwNE"],
+      "block_order": [
+        "button_r9GwNE"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "container bg-seaweed-700 pb-6 mb-12",
@@ -346,7 +363,12 @@
           }
         }
       },
-      "block_order": ["paragraph_YPemMk", "heading_yHreGx", "paragraph_9jFfKE", "button_Xr6Vcn"],
+      "block_order": [
+        "paragraph_YPemMk",
+        "heading_yHreGx",
+        "paragraph_9jFfKE",
+        "button_Xr6Vcn"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "container lg:max-w-screen-lg bg-seafoam-100 py-6 mb-12",
@@ -384,7 +406,11 @@
           }
         }
       },
-      "block_order": ["heading_xbLzhJ", "paragraph_X9fyxj", "button_tPbw7h"],
+      "block_order": [
+        "heading_xbLzhJ",
+        "paragraph_X9fyxj",
+        "button_tPbw7h"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "container lg:max-w-screen-lg bg-neon-green py-6",
@@ -518,7 +544,11 @@
           }
         }
       },
-      "block_order": ["column_LK4wV9", "column_qUgE9T", "column_Df6dnk"],
+      "block_order": [
+        "column_LK4wV9",
+        "column_qUgE9T",
+        "column_Df6dnk"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "container lg:max-w-screen-lg bg-neon-green pb-6 mb-12",
@@ -553,7 +583,10 @@
           }
         }
       },
-      "block_order": ["heading_gBDmw3", "paragraph_RVRwdN"],
+      "block_order": [
+        "heading_gBDmw3",
+        "paragraph_RVRwdN"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "bg-neon-green/30 pt-10",
@@ -638,7 +671,9 @@
         "event_Yb6AHF",
         "event_T3WjNx"
       ],
-      "custom_css": ["h2 {display: ;}"],
+      "custom_css": [
+        "h2 {display: ;}"
+      ],
       "settings": {
         "title": "",
         "section_classes": "bg-neon-green/30 py-10",
@@ -660,7 +695,9 @@
           }
         }
       },
-      "block_order": ["button_kXU3TX"],
+      "block_order": [
+        "button_kXU3TX"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "bg-neon-green/30 pb-12",
@@ -670,7 +707,6 @@
   },
   "order": [
     "main",
-    "image_banner_FzEEFi",
     "page_banner_R6ADN3",
     "multicolumn_cCW7AQ",
     "multicolumn_HjWEDQ",
