@@ -121,7 +121,7 @@
                       {%- if block.settings.button_label != "" or block.settings.is_atc_button -%}
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
                           <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-                          <div>
+                          <div{% if block.settings.product_form_classes != blank %} class="{{ block.settings.product_form_classes }}"{% endif %}>
                             {%- liquid
                               assign product_form_id = 'product-form-' | append: block.settings.atc_button_product.id | append: '-' | append: block.id
                               assign subscription_group = nil
@@ -260,7 +260,7 @@
                               {%- endif -%}
                             {%- endif -%}
 
-                            <product-form data-cart-type="{{ settings.cart_type }}"{% if block.settings.product_form_classes != blank %} class="{{ block.settings.product_form_classes }}"{% endif %}>
+                            <product-form data-cart-type="{{ settings.cart_type }}">
                               <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
                                 {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
                                 <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
