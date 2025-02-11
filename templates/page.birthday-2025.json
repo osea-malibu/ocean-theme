@@ -114,6 +114,18 @@
     "multicolumn_HjWEDQ": {
       "type": "multicolumn",
       "blocks": {
+        "countdown_cenz6b": {
+          "type": "countdown",
+          "settings": {
+            "column_classes": "container",
+            "text_classes": "max-w-sm mx-auto text-seaweed-700 grid grid-cols-4 gap-1 child:rounded-xl child:bg-white",
+            "countdown_date": "02/18/2025",
+            "countdown_time": "00:00",
+            "count_classes": "text-5xl leading-10 pt-2",
+            "label_classes": "tracking-wide font-medium pb-2",
+            "short_labels": false
+          }
+        },
         "column_7E7Bkg": {
           "type": "column",
           "settings": {
@@ -279,6 +291,7 @@
         }
       },
       "block_order": [
+        "countdown_cenz6b",
         "column_7E7Bkg",
         "column_4KEKpd",
         "column_aw4EYF",
@@ -289,7 +302,7 @@
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "container bg-seaweed-700 pb-6",
+        "section_classes": "container bg-seaweed-700 py-6",
         "container_classes": "flex flex-col items-center lg:flex-row gap-4 lg:gap-4 lg:justify-center flex-wrap",
         "is_slider": false,
         "slider_indicator_count": 3,
