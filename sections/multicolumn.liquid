@@ -260,7 +260,7 @@
                               {%- endif -%}
                             {%- endif -%}
 
-                            <product-form data-cart-type="{{ settings.cart_type }}">
+                            <product-form data-cart-type="{{ settings.cart_type }}"{% if block.settings.product_form_classes != blank %} class="{{ block.settings.product_form_classes }}"{% endif %}>
                               <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
                                 {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
                                 <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
