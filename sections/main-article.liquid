@@ -38,9 +38,9 @@
         {%- when 'title'-%}
           {%- assign bg_color = article.tags.first | replace: 'How-To', 'bg-wave-200' | replace: 'Ingredients', 'bg-sand-300' | replace: 'Inside-Osea', 'bg-seaweed-200' | replace: 'Products', 'bg-shell-200' | replace: 'Profiles', 'bg-coral-100' | replace: 'Wellness', 'bg-seafoam-200' -%}
           <header class="{{ bg_color }} {{ block.settings.header_classes }}" {{ block.shopify_attributes }}>
-            <span class="{{ block.settings.tag_classes }}">
+            <strong class="{{ block.settings.tag_classes }}">
               {{ article.tags | join: ', ' }}
-            </span>
+            </strong>
             <h1 class="{{ block.settings.title_classes }}" itemprop="headline">{{ article.title | escape }}</h1>
             <span class="{{ block.settings.date_classes }}" itemprop="dateCreated pubdate datePublished">{{ article.published_at | time_tag: format: 'date' }}</span>
             <span class="{{ block.settings.author_classes }}" itemprop="author" itemscope itemtype="http://schema.org/Person">
