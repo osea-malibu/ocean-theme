@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
@@ -13,7 +22,8 @@
         "products_per_page": 20,
         "enable_filtering": false,
         "enable_sorting": false,
-        "enable_anchors": false,
+        "filter_type_mobile": "inline",
+        "filter_type_desktop": "inline",
         "show_reviews": false
       }
     },
@@ -64,5 +74,10 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "comparison-matrix", "quiz"]
+  "order": [
+    "banner",
+    "product-grid",
+    "comparison-matrix",
+    "quiz"
+  ]
 }
