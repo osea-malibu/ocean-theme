@@ -67,9 +67,9 @@
                       {% case filter.type %}
                         {% when 'boolean', 'list' %}
                           <div class="facets__header flex justify-between items-center p-2 border-b border-seaweed-400">
-                            <span class="font-medium whitespace-nowrap">
+                            <strong class="font-medium whitespace-nowrap">
                               {{- 'products.facets.filters_selected' | t: count: filter.active_values.size -}}
-                            </span>
+                            </strong>
                             <facet-remove>
                               <a href="{{ filter.url_to_remove }}" class="link">
                                 {{ 'products.facets.reset' | t }}
@@ -135,9 +135,9 @@
                         {% when 'price_range' %}
                           <div class="flex justify-between items-center p-2 border-b border-seaweed-400">
                             {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
-                            <span class="font-medium leading-tight">
+                            <strong class="font-medium leading-tight">
                               {{- 'products.facets.max_price' | t: price: max_price_amount -}}
-                            </span>
+                            </strong>
                             <facet-remove>
                               <a href="{{ filter.url_to_remove }}" class="link">
                                 {{ 'products.facets.reset' | t }}
