@@ -72,22 +72,22 @@
               {%- if product.metafields.custom.how_to_use != blank -%}
                 <table>
                   <tr class="align-top td:pb-2">
-                    <th scope="row"><b class="mr-1">How:</b></th>
+                    <th scope="row" class="text-left"><b class="mr-1">How:</b></th>
                     <td>{{ how_to_use.value.how }}</td>
                   </tr>
                   <tr class="align-top td:pb-2">
-                    <th scope="row"><b class="mr-1">When:</b></th>
+                    <th scope="row" class="text-left"><b class="mr-1">When:</b></th>
                     <td>{{ how_to_use.value.when }}</td>
                   </tr>
                   {%- if how_to_use.value.pro_tip != nil -%}
                     <tr class="align-top{% if how_to_use.value.warnings.size > 0 %} td:pb-2{% endif %}">
-                      <th scope="row"><b class="mr-1 whitespace-nowrap">Pro tip:</b></th>
+                      <th scope="row" class="text-left"><b class="mr-1 whitespace-nowrap">Pro tip:</b></th>
                       <td>{{ how_to_use.value.pro_tip }}</td>
                     </tr>
                   {%- endif -%}
                   {%- if how_to_use.value.warnings.size > 0 -%}
                     <tr class="align-top">
-                      <th scope="row"><b class="sr-only">Warnings:</b></th>
+                      <th scope="row" class="text-left"><b class="sr-only">Warnings:</b></th>
                       <td>
                         <ul class="text-sm">
                           {%- for warning in how_to_use.value.warnings -%}
