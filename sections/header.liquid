@@ -346,8 +346,8 @@
       <a href="{{ routes.cart_url }}" class="header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-2 -mr-1" id="cart-icon-bubble">
         <span class="sr-only">Cart</span>
         <div class="w-7 h-7 bg-seafoam-300 rounded-full flex justify-center items-center">
-          <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
-          <span class="hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          <span class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
+          <span class="sr-only">items</span>
         </div>
       </a>
     </div>
