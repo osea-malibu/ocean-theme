@@ -1,5 +1,4 @@
 {%- paginate blog.articles by 11 -%}
-
   <div class="blog mb-6">
     <h1 class="sr-only">{{ blog.title | escape }}</h1>
 
@@ -7,7 +6,12 @@
     <div class="{% if category_color != blank %}{{ category_color }}{% else %}bg-seafoam-200{% endif %} mb-8">
       {%- liquid
         if section.settings.main_featured_article == blank
-          assign main_featured_article = blog.articles.first
+          for article in blog.articles
+            unless article.metafields.custom.hide_from_blog
+              assign main_featured_article = article
+              break
+            endunless
+          endfor
         else
           assign main_featured_article = section.settings.main_featured_article
         endif
@@ -139,22 +143,24 @@
       -%}
       {%- for article in blog.articles -%}
         {%- unless current_tags == nil and section.settings.main_featured_article == blank and forloop.first or brand_article_handles contains article.handle -%}
-          <li class="article order-{{ forloop.index }}">
-            {% assign image_classes = 'mb-1 rounded-md ' | append: article.metafields.custom.tile_image_class %}
-            {%- render 'article-card',
-              article: article,
-              show_image: true,
-              card_classes: 'flex flex-col whitespace-normal w-full',
-              image_classes: image_classes,
-              image_aspect: 'pt-[100%]',
-              title_classes: 'tracking-wide mb-1.5 mt-1 leading-tight text-xl',
-              tag_classes: 'inline-block text-xs scale-90 uppercase tracking-widest font-bold origin-left mt-2',
-              date_classes: 'sr-only',
-              author_classes: 'sr-only',
-              excerpt_classes: 'sr-only',
-              link_classes: 'link font-bold uppercase tracking-widest text-xs'
-            -%}
-          </li>
+          {%- unless article.metafields.custom.hide_from_blog -%}
+            <li class="article order-{{ forloop.index }}">
+              {% assign image_classes = 'mb-1 rounded-md ' | append: article.metafields.custom.tile_image_class %}
+              {%- render 'article-card',
+                article: article,
+                show_image: true,
+                card_classes: 'flex flex-col whitespace-normal w-full',
+                image_classes: image_classes,
+                image_aspect: 'pt-[100%]',
+                title_classes: 'tracking-wide mb-1.5 mt-1 leading-tight text-xl',
+                tag_classes: 'inline-block text-xs scale-90 uppercase tracking-widest font-bold origin-left mt-2',
+                date_classes: 'sr-only',
+                author_classes: 'sr-only',
+                excerpt_classes: 'sr-only',
+                link_classes: 'link font-bold uppercase tracking-widest text-xs'
+              -%}
+            </li>
+          {%- endunless -%}
         {%- endunless -%}
         {%- if forloop.index == 3 and current_page == 1 -%}
           {%- if brand_articles.size > 0 -%}
