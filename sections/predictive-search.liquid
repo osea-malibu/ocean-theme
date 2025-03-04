@@ -1,31 +1,39 @@
 {%- if predictive_search.performed -%}
   {%- liquid
-    assign excludedPages = settings.predictive_search_exclude_page | split: ", "
-    assign pageList = null | sort
+    assign excluded_pages = settings.predictive_search_exclude_page | split: ", "
+    assign page_list = null | sort
     for page in predictive_search.resources.pages
-      unless excludedPages contains page.handle
-        assign pageItem = page | sort
-        assign pageList = pageList | concat: pageItem
+      unless excluded_pages contains page.handle
+        assign page_item = page | sort
+        assign page_list = page_list | concat: page_item
       endunless
     endfor
 
-    assign productList = null | sort
+    assign product_list = null | sort
     for product in predictive_search.resources.products
       unless product.metafields.settings.hide_from_search
-        assign productItem = product | sort
-        assign productList = productList | concat: productItem
+        assign product_item = product | sort
+        assign product_list = product_list | concat: product_item
       endunless
     endfor
 
-    assign collectionList = null | sort
+    assign collection_list = null | sort
     for collection in predictive_search.resources.collections
       unless collection.metafields.custom.hide_from_search
-        assign collectionItem = collection | sort
-        assign collectionList = collectionList | concat: collectionItem
+        assign collection_item = collection | sort
+        assign collection_list = collection_list | concat: collection_item
       endunless
     endfor
 
-    assign allResults = pageList | concat: productList | concat: predictive_search.resources.articles | concat: collectionList
+    assign article_list = null | sort
+    for article in predictive_search.resources.articles
+      unless article.metafields.custom.hide_from_search
+        assign article_item = article | sort
+        assign article_list = article_list | concat: article_item
+      endunless
+    endfor
+
+    assign all_results = page_list | concat: product_list | concat: article_list | concat: collection_list
     
     assign article_title = article.title | truncate: 55
     assign article_description = article.excerpt | truncate: 75
@@ -36,17 +44,17 @@
   -%}
 
   <div id="predictive-search-results" class="px-6 container mx-auto">
-    {%- if allResults.size > 0 -%}
+    {%- if all_results.size > 0 -%}
       <div class="flex flex-col mb-6 sm:flex-row-reverse">
           {% comment %} Result tiles column {% endcomment %}
           <div class="block w-full">
-            {%- if productList.size > 0 -%}
+            {%- if product_list.size > 0 -%}
               <h2 id="predictive-search-products" class="{{ header_styles }}">
                 <span class="block mr-3">{{ predictive_search.resources.products.size }} product results</span>
                 {% render 'icon-spinner', classes: 'loading-spinner h-5 w-5' %}
               </h2>
               <ul id="predictive-search-results-list" class="{{ grid_styles }}" role="listbox" aria-labelledby="predictive-search-products">
-                {%- for product in productList -%}
+                {%- for product in product_list -%}
                   {% comment %} Product result list item {% endcomment %}
                   <li id="predictive-search-product-{{ forloop.index }}" role="option" aria-selected="false" class="w-full">
                     {%- liquid 
@@ -98,12 +106,12 @@
           </div>
           {% comment %} Result links column {% endcomment %}
           <div class="block sm:mr-4 md:min-w-[220px] lg:min-w-[240px]">
-            {%- if collectionList.size > 0 -%}
+            {%- if collection_list.size > 0 -%}
               <h2 id="predictive-search-collections" class="{{ header_styles }}">
                 Collections
               </h2>
               <ul class="mb-6" role="listbox" aria-labelledby="predictive-search-collections">
-                {%- for collection in collectionList -%}
+                {%- for collection in collection_list -%}
                   <li id="predictive-search-page-{{ forloop.index }}" role="option" aria-selected="false">
                     <a href="{{ collection.url }}" class="{{ link_styles }}" tabindex="-1">
                       {{ collection.title | highlight: predictive_search.terms }}
@@ -112,12 +120,12 @@
                 {%- endfor -%}
               </ul>
             {%- endif -%}
-            {%- if pageList.size > 0 -%}
+            {%- if page_list.size > 0 -%}
               <h2 id="predictive-search-pages" class="{{ header_styles }}">
                 Pages
               </h2>
               <ul role="listbox" aria-labelledby="predictive-search-pages">
-                {%- for page in pageList -%}
+                {%- for page in page_list -%}
                   <li id="predictive-search-page-{{ forloop.index }}" role="option" aria-selected="false">
                     <a href="{{ page.url }}" class="{{ link_styles }}" tabindex="-1">
                       {{ page.title | highlight: predictive_search.terms }}
