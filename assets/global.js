@@ -1213,6 +1213,9 @@ class MenuDrawer extends HTMLElement {
     this.querySelectorAll(".submenu-close").forEach((button) =>
       button.addEventListener("click", this.onCloseSubmenu.bind(this))
     );
+    this.querySelectorAll('a, summary').forEach((navLink) =>
+      navLink.addEventListener("click", console.log("clicked nav link", navLink));
+    );
 
     const closeButton = this.querySelector(".menu-close");
     closeButton && closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
