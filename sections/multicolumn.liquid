@@ -1,4 +1,3 @@
-{% if section.settings.logged_in_only and customer %}
 {% if section.settings.section_heading != blank %}<h2 class="sr-only">{{ section.settings.section_heading }}</h2>{% endif %}
 <div
   {% if section.settings.section_classes != blank %}class="{{ section.settings.section_classes }}"{% endif %}
@@ -501,7 +500,6 @@
     {% comment %} theme-check-enable UnclosedHTMLElement {% endcomment %}
   {%- endif -%}
 </div>
-{% endif %}
 
 {% schema %}
 {
