@@ -80,13 +80,13 @@
                 {%- endfor -%}
               </ul>
             {%- endif -%}
-            {%- if predictive_search.resources.articles.size > 0 -%}
+            {%- if article_list.size > 0 -%}
               <h2 id="predictive-search-articles" class="{{ header_styles }}">
                 <span class="block mr-3">{{ predictive_search.resources.articles.size }} journal results</span>
                 {% render 'icon-spinner', classes: 'loading-spinner h-5 w-5' %}
               </h2>
               <ul id="predictive-search-results-list" class="{{ grid_styles }}" role="listbox" aria-labelledby="predictive-search-articles">
-                {%- for article in predictive_search.resources.articles -%}
+                {%- for article in article_list -%}
                   {% comment %} Article result list item {% endcomment %}
                   <li id="predictive-search-article-{{ forloop.index }}" class="w-full" role="option" aria-selected="false">
                     {%- liquid
