@@ -356,7 +356,7 @@
 
 {% comment %} Navbar menu {% endcomment %}
 {%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
-  <nav class="hidden md:block overflow-x-auto sm:overflow-x-hidden scrollbar-hide bg-white -mt-1">
+  <nav class="navbar hidden md:block overflow-x-auto sm:overflow-x-hidden scrollbar-hide bg-white -mt-1">
     <ul class="flex md:justify-center">
       {%- for link in section.settings.navbar_menu.links -%}
         <li class="first:pl-1{% if link.links != blank %} group{% endif %}">
