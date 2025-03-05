@@ -14,34 +14,40 @@
       "blocks": {
         "paragraph_GtTRQm": {
           "type": "paragraph",
-          "disabled": true,
           "settings": {
-            "paragraph": "NEW!",
-            "paragraph_classes": "border-2 border-white rounded-full uppercase text-white px-3 py-0.5 font-bold mb-1 tracking-wider lg:text-xl xl:text-2xl lg:px-5 lg:py-1 ubc-tag hidden sm:block"
+            "paragraph": "Say Goodnight to Wrinkles",
+            "paragraph_classes": "text-3xl sm:text-2xl md:text-3xl max-w-md font-serif italic mt-2 mb-4 hidden sm:block"
           }
         },
         "heading_Mft3F7": {
           "type": "heading",
           "settings": {
-            "heading": "Indulge in Self-Care",
-            "heading_classes": "font-serif text-5xl sm:text-4xl lg:text-6xl xl:text-6xl tracking-normal mt-0 sm:mt-4 text-white sm:max-w-xl max-w-2xs leading-tight sm:text-seaweed-700"
+            "heading": "Dream <br class=\"sm:hidden\">Night Serum",
+            "heading_classes": "mb-1 text-5xl sm:text-4xl md:text-5xl xl:text-6xl tracking-tighter max-w-xl xl:mb-2  font-book"
           }
         },
         "paragraph_wMYA9H": {
           "type": "paragraph",
           "settings": {
-            "paragraph": "Show your skin some love with nourishing essentials",
-            "paragraph_classes": "leading-tight text-lg lg:text-xl xl:text-2xl hidden md:block font-medium max-w-xl mt-2 mb-2"
+            "paragraph": "Say Goodnight to Wrinkles",
+            "paragraph_classes": "text-3xl max-w-md font-serif italic mt-2 sm:hidden"
+          }
+        },
+        "paragraph_CkhYGw": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "with Bio-Retinol",
+            "paragraph_classes": "hidden sm:block text-4xl sm:text-3xl md:text-4xl font-book tracking-tight mb-4"
           }
         },
         "button_jLhP4r": {
           "type": "button",
           "settings": {
             "button_label": "Shop now",
-            "button_aria_label": "Shop now: All products",
-            "button_link": "shopify://collections/shop",
+            "button_aria_label": "Shop now: Dream Night Serum",
+            "button_link": "shopify://products/dream-night-serum",
             "target_blank": false,
-            "button_classes": "sm:button-lg mb-2 sm:mb-0 button-white mt-auto sm:mt-4 sm:button-primary"
+            "button_classes": "lg:button-lg mt-2 xl:mt-6 button-primary !bg-dream-navy !border-dream-navy"
           }
         }
       },
@@ -49,6 +55,7 @@
         "paragraph_GtTRQm",
         "heading_Mft3F7",
         "paragraph_wMYA9H",
+        "paragraph_CkhYGw",
         "button_jLhP4r"
       ],
       "disabled": true,
@@ -56,13 +63,13 @@
         ".ubc-tag {background-color: #fdffb2; border-color: #fdffb2; color: #ff8400;}"
       ],
       "settings": {
-        "image_mobile": "shopify://shop_images/2-3-25_HP_Banner_-_Self_Care_V_-_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/2-3-25_HP_Banner_-_Self_Care_V1_-_Desktop_BLANK.jpg",
+        "image_mobile": "shopify://shop_images/DNS_-_HP_Banner_Mobile_-_v1_BLANK.jpg",
+        "image": "shopify://shop_images/DNS_-_HP_Banner_Desktop_-_v1_BLANK.jpg",
         "is_lazy": false,
         "image_link": "shopify://collections/shop",
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:pr-0 sm:pl-0 text-center flex flex-col items-center justify-start sm:justify-end py-4 lg:mb-12"
+        "text_block_classes": "absolute inset-0 sm:pl-6 sm:pr-0 text-center flex flex-col items-center justify-end sm:justify-center pt-4 pb-5 lg:pt-0 sm:right-1/2 sm:pr-0 lg:pt-10 lg:pl-0 lg:pb-0 text-dream-navy"
       }
     },
     "image_banner_Ewyb78": {
@@ -298,6 +305,7 @@
         "section_heading": "",
         "section_classes": "container mb-12",
         "container_classes": "",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -492,6 +500,7 @@
         "section_heading": "",
         "section_classes": "container mb-12 relative overflow-hidden sm:overflow-visible pt-12",
         "container_classes": "",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -692,6 +701,7 @@
         "section_heading": "Undaria Algae Body Wash Results",
         "section_classes": "container px-0 2xs:px-6 mb-12 relative",
         "container_classes": "bg-uabw-light px-4 md:px-6 py-6 text-center grid lg:grid-cols-2 lg:grid-rows-3 xl:grid-cols-5",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -755,6 +765,7 @@
         "section_heading": "Join Our Waves of Wellness Challenge!",
         "section_classes": "container mb-8 block",
         "container_classes": "items-center bg-wave-200 bg-cover bg-center relative overflow-hidden",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -860,6 +871,7 @@
         "section_heading": "OSEA Family Story",
         "section_classes": "container mb-8",
         "container_classes": "flex-col md:flex-row gap-4",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -922,6 +934,7 @@
         "section_heading": "Take the OSEA Skin Quiz",
         "section_classes": "container mb-8 block",
         "container_classes": "items-center bg-sand-200 bg-cover bg-center relative overflow-hidden",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -1026,6 +1039,7 @@
         "section_heading": "Browse subscription products",
         "section_classes": "container mb-2",
         "container_classes": "flex justify-between items-center gap-6",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -1305,6 +1319,7 @@
         "section_heading": "Subscribe & Save product slider",
         "section_classes": "subscription-slider container pr-0 2xs:pr-6 mb-12",
         "container_classes": "",
+        "logged_in_only": false,
         "is_slider": true,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -1367,6 +1382,7 @@
         "section_heading": "Take the OSEA Skin Quiz",
         "section_classes": "container mb-8",
         "container_classes": "items-center bg-shell-200 bg-cover bg-center relative overflow-hidden",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
@@ -1817,6 +1833,7 @@
         "section_heading": "Customer Reviews",
         "section_classes": "container mb-12",
         "container_classes": "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 sm:gap-2",
+        "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
         "slider_breakpoint_limit": "none",
