@@ -10,6 +10,7 @@
             <video
               {% if forloop.first %}
                 autoplay
+                muted
               {% endif %}
               poster="{{ video.preview_image.src | image_url }}"
               controls
