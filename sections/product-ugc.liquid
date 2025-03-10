@@ -23,7 +23,7 @@
                 loading="lazy"
                 width="100%"
               >
-                {% for source in video.sources.value %}
+                {% for source in video.sources %}
                   <source src="{{ source.url }}" type="{{ source.mime_type }}">
                 {% endfor %}
                 <source src="video1.mp4" type="video/mp4">
