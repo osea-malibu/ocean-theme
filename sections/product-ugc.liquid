@@ -1,8 +1,8 @@
 {%- if product.metafields.custom.ugc_videos != blank -%}
 <div class="product-ugc-videos mb-12 {{ section.settings.section_classes }}">
   <div class="container lg:max-w-screen-lg">
-    <h3 class="relative text-3xl md:text-4xl tracking-tight font-serif leading-none mb-1">{{ section.settings.header }}</h3>
-    <p class="relative text-sm leading-tight tracking-wide mb-5">{{ section.settings.subheader }}</p>
+    {% if section.settings.header != blank %}<h3 class="relative text-3xl md:text-4xl tracking-tight font-serif leading-none mb-1">{{ section.settings.header }}</h3>{% endif %}
+    {% if section.settings.subheader != blank %}<p class="relative text-sm leading-tight tracking-wide mb-5">{{ section.settings.subheader }}</p>{% endif %}
     <horizontal-scroll-box class="relative">
       <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
         {%- for video in product.metafields.custom.ugc_videos.value -%}
