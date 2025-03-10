@@ -7,6 +7,7 @@
       <horizontal-scroll-box class="relative">
         <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
           {%- for video in product.metafields.custom.ugc_videos.value -%}
+            <script>console.log("video object", {{ video | json }})</script>
             <div class="w-72 shrink-0">
               <video
                 {% if forloop.first %}
