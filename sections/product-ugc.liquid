@@ -12,12 +12,10 @@
               <video
                 {% if forloop.first %}
                   autoplay
-                  muted
-                  loop
                 {% else %}
-                  controls
                   poster="{{ video.preview_image.src | image_url }}"
                 {% endif %}
+                controls
                 playsinline
                 preload="none"
                 loading="lazy"
