@@ -1,45 +1,42 @@
 {%- if product.metafields.custom.ugc_videos != blank -%}
 <div class="product-ugc-videos mb-12 {{ section.settings.section_classes }}">
   <div class="container lg:max-w-screen-lg">
-    <div class="py-4 pl-4 sm:py-6 sm:pl-6">
-      <h3 class="relative text-3xl md:text-4xl tracking-tight font-serif">{{ section.settings.header }}</h3>
-      <p class="relative text-sm leading-tight tracking-wide mb-5">{{ section.settings.subheader }}</p>
-      <horizontal-scroll-box class="relative">
-        <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
-          {%- for video in product.metafields.custom.ugc_videos.value -%}
-            <script>console.log("video object", {{ video | json }})</script>
-            <div class="w-72 shrink-0">
-              <video
-                {% if forloop.first %}
-                  autoplay
-                {% else %}
-                  poster="{{ video.preview_image.src | image_url }}"
-                {% endif %}
-                controls
-                playsinline
-                preload="none"
-                loading="lazy"
-                width="100%"
-              >
-                {% for source in video.sources %}
-                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
-                {% endfor %}
-                <source src="video1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          {%- endfor -%}
-        </div>
-        <nav>
-          <button class="next nav-hide absolute top-1/2 -right-3 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Next">
-            {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
-          </button>
-          <button class="prev nav-hide absolute top-1/2 -left-7 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Previous">
-            {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6 rotate-180', stroke_width: 1.5 %}
-          </button>
-        </nav>
-      </horizontal-scroll-box>
-    </div>
+    <h3 class="relative text-3xl md:text-4xl tracking-tight font-serif">{{ section.settings.header }}</h3>
+    <p class="relative text-sm leading-tight tracking-wide mb-5">{{ section.settings.subheader }}</p>
+    <horizontal-scroll-box class="relative">
+      <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
+        {%- for video in product.metafields.custom.ugc_videos.value -%}
+          <div class="w-72 shrink-0">
+            <video
+              {% if forloop.first %}
+                autoplay
+              {% endif %}
+              poster="{{ video.preview_image.src | image_url }}"
+              controls
+              playsinline
+              preload="none"
+              loading="lazy"
+              width="100%"
+              class="rounded-lg"
+            >
+              {% for source in video.sources %}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+              {% endfor %}
+              <source src="video1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        {%- endfor -%}
+      </div>
+      <nav>
+        <button class="next nav-hide absolute top-1/2 -right-3 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Next">
+          {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
+        </button>
+        <button class="prev nav-hide absolute top-1/2 -left-7 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Previous">
+          {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6 rotate-180', stroke_width: 1.5 %}
+        </button>
+      </nav>
+    </horizontal-scroll-box>
   </div>
 </div>
 {%- endif -%}
