@@ -9,7 +9,11 @@
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when 'heading' -%}
-          <h2 class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.heading_text }}</h2>
+          {%- if block.settings.heading_text contains '<h' -%}
+            <div class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.heading_text }}</div>
+          {%- else -%}
+            <h2 class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.heading_text }}</h2>
+          {%- endif -%}
           {% if block.settings.subheading_text != blank %}<h3 class="{{ block.settings.subheading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.subheading_text }}</h3>{% endif %}
         {%- when 'paragraph' -%}
           <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>{{ block.settings.paragraph_text }}</div>
