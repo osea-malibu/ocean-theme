@@ -18,9 +18,9 @@
   <img
     srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
     src="{{ promo_tile_image | image_url: width: 600 }}"
-    alt="{{ promo_tile_image.value.alt }}"
-    width="{{ promo_tile_image.value.width }}"
-    height="{{ promo_tile_image.value.width | divided_by: promo_tile_image.value.aspect_ratio | round }}"
+    alt="{{ promo_tile_image.alt }}"
+    width="{{ promo_tile_image.width }}"
+    height="{{ promo_tile_image.width | divided_by: promo_tile_image.aspect_ratio | round }}"
     class="absolute inset-0 object-cover object-center h-full w-full"
   >
   {%- if promo_tile_url != blank -%}
