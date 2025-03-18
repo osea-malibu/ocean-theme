@@ -136,9 +136,9 @@
           
               {% for part in paginate.parts %}
                 {% if part.is_link %}
-                  <a href="{{ part.url }}" class="w-4" tabindex="0" aria-label="Go to page {{ part.title }}">{{ part.title }}</a>
+                  <a href="{{ part.url }}" class="w-4 link" tabindex="0" aria-label="Go to page {{ part.title }}">{{ part.title }}</a>
                 {% else %}
-                  <span class="w-4 font-bold">{{ part.title }}</span>
+                  <b class="w-4">{{ part.title }}</b>
                 {% endif %}
               {% endfor %}
           
