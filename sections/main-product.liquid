@@ -180,9 +180,11 @@
               </div>
             {%- when 'rating' -%}
               <div class="{{ block.settings.rating_classes }} flex gap-2 items-center">
-                <a href="#reviews">
-                  {% render 'product-rating', product: product %}
-                </a>
+                {%- unless excluded_from_site -%}
+                  <a href="#reviews">
+                    {% render 'product-rating', product: product %}
+                  </a>
+                {%- endunless -%}
                 {%- if product.metafields.custom.faq != nil -%}
                   <a href="#ProductFaqs" class="link text-xs">Product FAQs</a>
                 {%- endif -%}
