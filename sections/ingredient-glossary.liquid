@@ -22,8 +22,9 @@
           <div class="absolute top-0 left-0 -mt-7 z-10 sm:relative sm:!mt-0 sm:pt-6 grid grid-cols-2 gap-2 w-66 sm:w-full">
             <form id="search-form" class="sm:pt-2 lg:pt-4 col-span-2">
               <h3 class="{{ form_header_class }}">Search</h3>
+              <label for="searchbyname" class="sr-only">Search by ingredient name</label>
               <div class="flex items-center gap-1 w-full">
-                <input value="" placeholder="Search by ingredient name" type="text" class="input input-sm grow-1 lg:grow-0 sm:min-w-36 lg:w-40">
+                <input id="searchbyname" value="" placeholder="Search by ingredient name" type="text" class="input input-sm grow-1 lg:grow-0 sm:min-w-36 lg:w-40">
                 <button type="submit" class="button button-tertiary px-2 py-1">
                   {% render 'icon-search', classes: "w-4 h-4", stroke_width: 2.5, aria_hidden: true %}
                 </button>
