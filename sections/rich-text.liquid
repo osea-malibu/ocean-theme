@@ -14,7 +14,13 @@
           {%- else -%}
             <h2 class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.heading_text }}</h2>
           {%- endif -%}
-          {% if block.settings.subheading_text != blank %}<h3 class="{{ block.settings.subheading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.subheading_text }}</h3>{% endif %}
+          {%- if block.settings.subheading_text != blank -%}
+            {%- if block.settings.subheading_text contains '<h' -%}
+              <div class="{{ block.settings.subheading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.subheading_text }}</div>
+            {%- else -%}
+              <h3 class="{{ block.settings.subheading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.subheading_text }}</h3>
+            {%- endif -%}
+          {%- endif -%}
         {%- when 'paragraph' -%}
           <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>{{ block.settings.paragraph_text }}</div>
         {%- when 'button' -%}
