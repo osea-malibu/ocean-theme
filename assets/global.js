@@ -875,7 +875,7 @@ class IngredientGlossary extends HTMLElement {
     // Last page link
     if (totalPages > 1) {
       const lastPageLink = document.createElement("a");
-      pageLink.classList.add("link");
+      lastPageLink.classList.add("link");
       lastPageLink.href = "#";
       lastPageLink.textContent = totalPages;
       lastPageLink.setAttribute("aria-label", `Go to page ${totalPages}`);
