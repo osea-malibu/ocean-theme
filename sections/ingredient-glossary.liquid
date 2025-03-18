@@ -21,8 +21,7 @@
           </h2>
           <div class="absolute top-0 left-0 -mt-7 z-10 sm:relative sm:!mt-0 sm:pt-6 grid grid-cols-2 gap-2 w-66 sm:w-full">
             <form id="search-form" class="sm:pt-2 lg:pt-4 col-span-2">
-              <h3 class="{{ form_header_class }}">Search</h3>
-              <label for="searchbyname" class="sr-only">Search by ingredient name</label>
+              <label for="searchbyname" class="{{ form_header_class }}">Search</label>
               <div class="flex items-center gap-1 w-full">
                 <input id="searchbyname" value="" placeholder="Search by ingredient name" type="text" class="input input-sm grow-1 lg:grow-0 sm:min-w-36 lg:w-40">
                 <button type="submit" class="button button-tertiary px-2 py-1">
@@ -31,8 +30,8 @@
               </div>
             </form>
             <form id="sort-form" class="sm:pt-2 lg:pt-4 col-start-2 row-start-2 sm:col-span-2">
-              <h3 class="{{ form_header_class }}">Sort by</h3>
-              <select class="input input-sm w-full lg:w-40">
+              <label for="sortby" class="{{ form_header_class }}">Sort by</label>
+              <select id="sortby" class="input input-sm w-full lg:w-40">
                 <option value="az">Name (A-Z)</option>
                 <option value="za">Name (Z-A)</option>
               </select>
