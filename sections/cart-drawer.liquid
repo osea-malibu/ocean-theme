@@ -174,7 +174,10 @@
             </span>
             <input type="checkbox" id="AllRewards" class="peer hidden">
             <label for="AllRewards" class="mr-0.5 link text-sm">Show all</label>
-            <label for="AllRewards" class="-rotate-90 peer-checked:rotate-90 transition-transform">{% render 'icon-chevron', classes: 'w-4 h-4', stroke_width: 2 %}</label>
+            <label for="AllRewards" class="-rotate-90 peer-checked:rotate-90 transition-transform">
+              {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4', stroke_width: 2 %}
+              <span class="sr-only">Expand and collapse arrow</span>
+            </label>
             <div class="w-full peer-checked:max-h-80 max-h-0 transition-max-height overflow-hidden">
               <ul class="max-w-md mx-auto text-sm text-left pt-4 pb-2 li:mb-1">
                 <li class="flex items-center gap-1 leading-tight">
@@ -406,14 +409,14 @@
                             If you need to make change, please contact the Loop support team
                             LOOP BUNDLE CODE STARTS
                           {% endcomment %}
-                            {% assign isBundleItem = false %}
+                            {% assign is_bundle_item = false %}
                             {%- for property in item.properties -%}
                               {% if property.first == '_bundleId' %}
-                                {% assign isBundleItem = true %}
+                                {% assign is_bundle_item = true %}
                                 {% break %}
                               {% endif %}
                             {%- endfor -%}
-                            {% if isBundleItem == true %}
+                            {% if is_bundle_item == true %}
                               {% continue %}
                             {% endif %}
                           {% comment %}
