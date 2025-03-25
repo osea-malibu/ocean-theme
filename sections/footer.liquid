@@ -13,7 +13,7 @@
         </li>
         <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased hidden sm:block">
           {%- render 'icon-value', icon: 'climate-neutral', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span><span class="tracking-tight whitespace-nowrap">Climate Neutral Certified</span> <br />+ Ocean Positive</span>
+          <span><span class="tracking-tight whitespace-nowrap">Ocean + Climate <br /></span>Responsible</span>
         </li>
         <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
           {%- render 'icon-value', icon: 'california-made', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
@@ -117,7 +117,7 @@
             </div>
             
             <div class="flex items-center justify-between gap-5 px-4 max-w-sm mx-auto lg:mb-4 lg:px-0">
-              {% render 'logo-climate-neutral', variant: 'vertical', classes: 'shrink-0' %}
+              {% comment %} {% render 'logo-climate-neutral', variant: 'vertical', classes: 'shrink-0' %} {% endcomment %}
               {% render 'logo-ocean-positive', variant: 'vertical', classes: 'shrink-0' %}
               {% render 'logo-leaping-bunny', classes: 'shrink-0' %}
               {% render 'logo-peta', classes: 'shrink-0' %}
