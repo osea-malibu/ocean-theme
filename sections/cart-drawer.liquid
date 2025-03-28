@@ -232,8 +232,8 @@
               <cite class="block text-xs/tight text-left px-4 pb-4">*Return items within 30 days of your ship date for a refund or OSEA gift card. Visit our <a class="link" href="https://returns.oseamalibu.com">Returns Center</a> & <a class="link" href="/pages/customer-care">FAQ</a> for more details!</cite>
             </div>
             {%- unless customer or cart == empty -%}
-              <div class="flex gap-1 justify-center items-center border border-wave-300 rounded-lg bg-wave-200 text-sm p-1 w-full max-w-xs mt-2">
-                {% render 'icon-sparkle', classes: 'w-6 h-6 text-seaweed-500 -ml-4' %}
+              <div class="flex gap-1 justify-center items-center border border-sand-400 rounded-lg bg-sand-200 text-sm p-1 w-full max-w-xs mt-2">
+                {% render 'icon-sparkle', classes: 'w-6 h-6 text-sand-600 -ml-4' %}
                 <div>
                   <p>Earn {{ cart.total_price | divided_by: 100 | floor }} points with this order</p>
                   <p><a href="#rivo" class="link">Sign in</a> or <a href="#rivo" class="link">Join Sea Rewards</a></p>
