@@ -1,0 +1,12 @@
+<div class="cart-empty h-full overflow-hidden flex flex-col items-center justify-center max-w-sm mx-auto px-1">
+  <h2 class="text-lg tracking-wide font-medium mb-3 -mt-4 relative">{{ 'sections.cart.empty' | t }}</h2>
+  <div class="grid grid-cols-2 gap-2">
+    {%- for link in settings.cart_empty_state_links.links -%}
+      {%- assign image_src = link.title | downcase | replace: ' ', '_' | replace: '_&', '' | prepend: 'https://cdn.shopify.com/s/files/1/1368/9993/files/empty_state-' | append: '.jpg' -%}
+      <a href="{{ link.url }}" class="block relative"> 
+        <img src="{{ image_src }}" aria-hidden="true" width="200" height="200" class="rounded">
+        <strong class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-neon-green rounded-full px-2 whitespace-nowrap font-medium">{{ link.title }}</strong>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>

@@ -231,7 +231,7 @@
               </ul>
               <cite class="block text-xs/tight text-left px-4 pb-4">*Return items within 30 days of your ship date for a refund or OSEA gift card. Visit our <a class="link" href="https://returns.oseamalibu.com">Returns Center</a> & <a class="link" href="/pages/customer-care">FAQ</a> for more details!</cite>
             </div>
-            {%- unless customer -%}
+            {%- unless customer or cart == empty -%}
               <div class="flex gap-1 justify-center items-center border border-wave-300 rounded-lg bg-wave-200 text-sm p-1 w-full max-w-xs mt-2">
                 {% render 'icon-sparkle', classes: 'w-6 h-6 text-seaweed-500 -ml-4' %}
                 <div>
@@ -255,12 +255,7 @@
       </button>
 
       {%- if cart == empty -%}
-        <div class="cart-empty h-full overflow-hidden flex flex-col items-center justify-center w-60 mx-auto px-1">
-          <h2 class="text-lg tracking-wide font-book mb-4">{{ 'sections.cart.empty' | t }}</h2>
-          {%- for link in settings.cart_empty_state_links.links -%}
-            <a href="{{ link.url }}" class="button button-secondary mb-4 w-full">{{ link.title }}</a>
-          {%- endfor -%}
-        </div>
+        {% render 'cart-empty-state' %}
       {%- else -%}
         {%- liquid
           for item in cart.items
