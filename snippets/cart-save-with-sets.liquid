@@ -1,0 +1,130 @@
+{%- liquid
+  for item in cart.items
+    unless item.properties._bundleName == 'Build Your Own Bundle'
+      assign hide_upsell = false
+      assign normalized_variant_title = item.variant.title | replace: 'fl ', ''
+      if small_products contains item.product.handle and normalized_variant_title == '0.34 oz'
+        assign hide_upsell = true
+      elsif travel_sizes contains normalized_variant_title
+        assign hide_upsell = true
+      endif
+
+      if item.product.metafields.my_fields.save_with_sets != nil and item.selling_plan_allocation == nil and hide_upsell == false
+        unless item.variant.title contains 'Fragrance free'
+          assign item_with_set = item
+          assign item_with_set_line = forloop.index
+        endunless
+      endif
+    endunless
+  endfor
+
+  assign first_set = item_with_set.product.metafields.my_fields.save_with_sets.value | first
+  for tag in first_set.tags
+    if tag contains 'badge::save'
+      assign set_save_amount = tag | replace: 'badge::save', ''
+    endif
+  endfor
+
+  assign flat_properties_array = ""
+  assign cart_properties = cart.items | map: 'properties'
+  
+  for inner_array in cart_properties
+    for value in inner_array
+      assign trimmed_value = value | replace: '"', '' | replace: '[', '' | replace: ']', ''
+      assign flat_properties_array = flat_properties_array | append: trimmed_value | append: ","
+    endfor
+  endfor
+  
+  assign flat_properties_array = flat_properties_array | split: "," | uniq
+  if flat_properties_array contains '_bundleId'
+    assign cart_contains_bundle = true
+  else
+    assign cart_contains_bundle = false
+  endif
+
+  assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, Scented / 1 oz' | split: ', '
+  assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1, hyaluronic-sea-serum, advanced-repair-eye-cream, anti-aging-sea-serum, seaglow-resurfacing-scrub' | split: ', '
+
+  assign has_ordered_tote = false
+  for order in customer.orders
+    for line_item in order.line_items
+      if line_item.product_id == 7907383804087
+        assign has_ordered_tote = true
+      endif
+    endfor
+  endfor
+-%}
+
+{% if settings.enable_loyalty_tote and customer and has_ordered_tote == false %}
+  {% unless cart_ids contains 7907383804087 %}
+    <div class="relative rounded-lg bg-wave-200 mx-auto w-full max-w-md px-4 py-1 flex gap-4 items-center mt-2">
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+      <img
+        srcset="https://cdn.shopify.com/s/files/1/1368/9993/files/OSEACottonTote.png?width=120 2x, https://cdn.shopify.com/s/files/1/1368/9993/files/OSEACottonTote.png?width=60 1x"
+        src="https://cdn.shopify.com/s/files/1/1368/9993/files/OSEACottonTote.png?width=120"
+        loading="lazy"
+        width="60"
+        height="{{ 60 | divided_by: first_set.featured_media.aspect_ratio | ceil }}"
+        alt="{{ first_set.featured_media.alt }}"
+      >
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+      <div>
+        <h3 class="leading-tight font-medium text-sm">Congrats! You've Earned a FREE Tote Bag</h3>
+        <p class="text-sm leading-tight">Claim your Sea Rewards gift now!</p>
+        {% assign tote_product = all_products['osea-tote-bag'] %}
+        <product-form data-cart-type="{{ settings.cart_type }}">
+          {%- form 'product', tote_product, id: 'cart-tote-bag-form', class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" class="tote-bag-id-input" value="{{ tote_product.selected_or_first_available_variant.id }}">
+            <button
+              type="submit"
+              name="add"
+              class="button button-xs button-secondary flex mt-1 justify-center"
+              {% if tote_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+            >
+              <span class="sr-only">{{ tote_product.title }} - </span>
+              {%- if tote_product.selected_or_first_available_variant.available -%}
+                <span>Add to bag</span>
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+          {%- endform -%}
+        </product-form>
+      </div>
+    </div>
+  {% endunless %}
+{% else %}
+  {%- unless cart_contains_bundle or settings.enable_sets_upsell == false or item_with_set == nil or first_set == nil or first_set.selected_or_first_available_variant.available == false or cart_ids contains first_set.id -%}
+    <save-with-sets
+      data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
+      data-item-to-remove="{{ item_with_set_line }}"
+    >
+      <div class="relative rounded-lg bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
+        {%- liquid
+          if first_set.metafields.custom.product_image_transparent != blank
+            assign sws_image_src = first_set.metafields.custom.product_image_transparent | image_url: width: 60
+            assign sws_image_src_2x = first_set.metafields.custom.product_image_transparent | image_url: width: 120
+          else
+            assign sws_image_src = first_set.featured_media | image_url: width: 60
+            assign sws_image_src_2x = first_set.featured_media | image_url: width: 120
+          endif
+        -%}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        <img
+          srcset="{% render 'imgix', src: sws_image_src_2x %} 2x, {% render 'imgix', src: sws_image_src %} 1x"
+          src="{% render 'imgix', src: sws_image_src_2x %}"
+          loading="lazy"
+          width="60"
+          height="{{ 60 | divided_by: first_set.featured_media.aspect_ratio | ceil }}"
+          alt="{{ first_set.featured_media.alt }}"
+        >
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        <div>
+          <h3 class="leading-tight font-medium text-sm">Save{{ set_save_amount }} with {{ first_set.title }}</h3>
+          <p class="text-sm leading-tight">An item in your cart comes in a set!</p>
+          <button class="button button-xs button-secondary">Upgrade to set</button>
+        </div>
+      </div>
+    </save-with-sets>
+  {%- endunless -%}
+{% endif %}

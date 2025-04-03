@@ -1,0 +1,31 @@
+{% if settings.enable_firstime_gwp -%}
+  {%- unless customer and customer.orders_count > 0 -%}
+    <div class="bg-neon-green/25 px-4 2xs:px-6">
+      <figure class="flex items-center max-w-md py-1 pl-6 pr-8 xs:pr-6 mx-auto gap-4">
+        {%- liquid
+          if settings.gwp_firsttime_product.metafields.custom.product_image_transparent != blank
+            assign firsttime_gwp_image_src = settings.gwp_firsttime_product.metafields.custom.product_image_transparent | image_url: width: 60
+            assign firsttime_gwp_image_src_2x = settings.gwp_firsttime_product.metafields.custom.product_image_transparent | image_url: width: 120
+          else
+            assign firsttime_gwp_image_src = settings.gwp_firsttime_product.featured_media | image_url: width: 60
+            assign firsttime_gwp_image_src_2x = settings.gwp_firsttime_product.featured_media | image_url: width: 120
+          endif
+        -%}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        <img
+          srcset="{% render 'imgix', src: firsttime_gwp_image_src_2x %} 2x, {% render 'imgix', src: firsttime_gwp_image_src %} 1x"
+          src="{% render 'imgix', src: firsttime_gwp_image_src_2x %}"
+          loading="lazy"
+          width="50"
+          height="{{ 50 | divided_by: settings.gwp_firsttime_product.featured_media.aspect_ratio | ceil }}"
+          alt="{{ settings.gwp_firsttime_product.featured_media.alt }}"
+        >
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        <figcaption>
+          <h3 class="leading-tight font-medium text-sm">{{ settings.gwp_firsttime_product.title | remove: 'Free Gift - ' }}</h3>
+          <p class="text-sm leading-tight">Free gift with every first order</p>
+        </figcaption>
+      </figure>
+    </div>
+  {%- endunless -%}
+{%- endif -%}

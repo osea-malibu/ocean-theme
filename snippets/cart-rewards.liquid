@@ -1,0 +1,170 @@
+<div class="cart-header px-4 2xs:px-6 py-2 border-b border-seaweed-300">
+  {%- liquid
+    assign remaining_shipping_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price
+    assign cart_subscription_items = cart.items | map: 'properties' | where: '_is_subscription', 'true'
+    assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
+
+    if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto'
+      if settings.is_loyalty_gwp and customer
+        assign free_gifts_active = true 
+      elsif settings.is_loyalty_gwp == false
+        assign free_gifts_active = true
+      else 
+        assign free_gifts_active = false
+      endif
+    else
+      assign free_gifts_active = false
+    endif
+
+    if free_gifts_active
+      assign tier_one_product = all_products[settings.gwp_tier1_product]
+      assign tier_two_product = all_products[settings.gwp_tier2_product]
+      assign tier_three_product = all_products[settings.gwp_tier3_product]
+    endif
+  -%}
+  <reward-countdown
+    class="text-center relative block max-w-md mx-auto"
+    data-shipping-threshold="{{ settings.shipping_countdown_threshold }}"
+    data-subscriptions-in-cart="{{ cart_subscription_items }}"
+    data-is-gwp-active="{{ settings.enable_gwp }}"
+    data-is-loyalty-only="{{ settings.is_loyalty_gwp }}"
+    data-tier1-threshold="{{ settings.gwp_tier1_threshold }}"
+    data-tier2-threshold="{{ settings.gwp_tier2_threshold }}"
+    data-tier3-threshold="{{ settings.gwp_tier3_threshold }}"
+    data-has-tier1-product="{% if settings.gwp_tier1_product != blank %}true{% else %}false{% endif %}"
+    data-has-tier2-product="{% if settings.gwp_tier2_product != blank %}true{% else %}false{% endif %}"
+    data-has-tier3-product="{% if settings.gwp_tier3_product != blank %}true{% else %}false{% endif %}"
+  >
+    <progress max="100" value="0" class="progress-bar-alt block motion-safe:transition-all absolute inset-x-0 top-2.5">0%</progress>
+    <div class="relative flex pr-5 {% if free_gifts_active %}mb-2 justify-between{% else %}justify-end{% endif %}">
+      {%- if free_gifts_active -%}
+        <div></div>
+      {%- endif -%}
+      <div class="{{ reward_icon_classes }} {% if remaining_shipping_amount > 0 and cart_subscription_items.size == 0 %}bg-seafoam-300{% else %}bg-seaweed-700 text-white{% endif %}">
+        {% render 'icon-truck', stroke_width: 2, classes: 'w-4 h-4' %}
+      </div>
+      {%- if free_gifts_active -%}
+        {%- if settings.gwp_tier1_product != blank -%}
+          <div class="{{ reward_icon_classes }} {% if cart_ids contains tier_one_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+            {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
+          </div>
+        {%- endif -%}
+        {%- if settings.gwp_tier2_product != blank -%}
+          <div class="{{ reward_icon_classes }} {% if cart_ids contains tier_two_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+            {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
+          </div>
+        {%- endif -%}
+        {%- if settings.gwp_tier3_product != blank -%}
+          <div class="{{ reward_icon_classes }} {% if cart_ids contains tier_three_product.id %}bg-seaweed-700 text-white{% else %}bg-seafoam-300{% endif %}">
+            {% render 'icon-gift', stroke_width: 2, classes: 'w-4 h-4' %}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+    <h3 class="flex flex-wrap justify-center items-center">
+      {%- assign cart_total = cart.total_price | divided_by: 100.0 -%}
+      <span class="mr-3 text-sm sm:text-base leading-tight sm:leading-tight">
+        {%- if cart_total < settings.shipping_countdown_threshold -%}
+          {%- assign formatted_remaining_amount = remaining_shipping_amount | money_without_trailing_zeros %}
+          {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
+        {%- else -%}
+          {%- if free_gifts_active -%}
+            {%- if settings.gwp_tier3_product != blank and cart_total >= settings.gwp_tier3_threshold -%}
+              {{ settings.gwp_success_text }}
+            {%- elsif settings.gwp_tier2_product != blank and cart_total >= settings.gwp_tier2_threshold -%}
+              {%- if settings.gwp_tier3_product != blank -%}
+                {%- assign gwp_threshold = settings.gwp_tier3_threshold | times: 100 -%}
+                {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_three_product.title | replace: 'Free Gift - ' }}
+              {%- else -%}
+                  {{ settings.gwp_success_text }}
+              {%- endif -%}
+            {%- elsif settings.gwp_tier1_product != blank and cart_total >= settings.gwp_tier1_threshold -%}  
+              {%- if settings.gwp_tier2_product != blank -%}
+                {%- assign gwp_threshold = settings.gwp_tier2_threshold | times: 100 -%}
+                {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_two_product.title | replace: 'Free Gift - ' }}
+              {%- else -%}
+                {{ settings.gwp_success_text }}
+              {%- endif -%}
+            {%- else -%}
+              {%- assign gwp_threshold = settings.gwp_tier1_threshold | times: 100 -%}
+              {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+              {{ settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_one_product.title | replace: 'Free Gift - ' }}
+            {%- endif -%}
+          {%- else -%}
+            {{ settings.shipping_countdown_text_success }}
+          {%- endif -%}
+        {%- endif -%}
+      </span>
+      <input type="checkbox" id="AllRewards" class="peer hidden">
+      <label for="AllRewards" class="mr-0.5 link text-sm">Show all</label>
+      <label for="AllRewards" class="-rotate-90 peer-checked:rotate-90 transition-transform">
+        {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4', stroke_width: 2 %}
+        <span class="sr-only">Expand and collapse arrow</span>
+      </label>
+      <div class="w-full peer-checked:max-h-80 max-h-0 transition-max-height overflow-hidden">
+        <ul class="max-w-md mx-auto text-sm text-left pt-4 pb-2 li:mb-1">
+          <li class="flex items-center gap-1 leading-tight">
+            {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+            <span>30 day money back guarantee*</span>
+          </li>
+          <li class="flex items-center gap-1 leading-tight{% if remaining_shipping_amount > 0 %} text-wave-600{% endif %}">
+            {%- if remaining_shipping_amount > 0 -%}
+              {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+            {%- else -%}
+              {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+            {%- endif -%}
+            {%- if settings.shipping_countdown_threshold == 0 -%}
+              <span>Free shipping on all US orders</span>
+            {%- else -%}
+              <span>Free shipping on orders over {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}</span>
+            {%- endif -%}
+          </li>
+          {%- if free_gifts_active -%}
+            {%- if settings.gwp_tier1_product != blank -%}
+              <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier_one_product.id %} text-wave-600{% endunless %}">
+                {%- if cart_ids contains tier_one_product.id -%}
+                  {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                {%- else -%}
+                  {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                {%- endif -%}
+                <span>Free {{ tier_one_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier1_threshold | times: 100 | money_without_trailing_zeros }}</span>
+              </li>
+            {%- endif -%}
+            {%- if settings.gwp_tier2_product != blank -%}
+              <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier_two_product.id %} text-wave-600{% endunless %}">
+                {%- if cart_ids contains tier_two_product.id -%}
+                  {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                {%- else -%}
+                  {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                {%- endif -%}
+                <span>Free {{ tier_two_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier2_threshold | times: 100 | money_without_trailing_zeros }}</span>
+              </li>
+            {%- endif -%}
+            {%- if settings.gwp_tier3_product != blank -%}
+              <li class="flex items-center gap-1 leading-tight{% unless cart_ids contains tier_three_product.id %} text-wave-600{% endunless %}">
+                {%- if cart_ids contains tier_three_product.id -%}
+                  {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                {%- else -%}
+                  {% render 'icon-close', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
+                {%- endif -%}
+                <span>Free {{ tier_three_product.title | replace: 'Free Gift - ' }} with orders over {{ settings.gwp_tier3_threshold | times: 100 | money_without_trailing_zeros }}</span>
+              </li>
+            {%- endif -%}
+          {%- endif -%}
+        </ul>
+        <cite class="block text-xs/tight text-left px-4 pb-4">*Return items within 30 days of your ship date for a refund or OSEA gift card. Visit our <a class="link" href="https://returns.oseamalibu.com">Returns Center</a> & <a class="link" href="/pages/customer-care">FAQ</a> for more details!</cite>
+      </div>
+      {%- unless customer or cart == empty -%}
+        <div class="flex gap-1 justify-center items-center border border-sand-400 rounded-lg bg-sand-200 text-sm p-1 w-full max-w-xs mt-2">
+          {% render 'icon-sparkle', classes: 'w-6 h-6 text-sand-600 -ml-4' %}
+          <div>
+            <p>Earn {{ cart.total_price | divided_by: 100 | floor }} points with this order</p>
+            <p><a href="#rivo" class="link">Sign in</a> or <a href="#rivo" class="link">Join Sea Rewards</a></p>
+          </div>
+        </div>
+      {%- endunless -%}
+    </h3>
+  </reward-countdown>
+</div>
