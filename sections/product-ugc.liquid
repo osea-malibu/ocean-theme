@@ -16,11 +16,13 @@
               width="100%"
               class="rounded-lg"
             >
+              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               {% for source in video.sources %}
                 <source src="{{ source.url }}" type="{{ source.mime_type }}">
               {% endfor %}
               <source src="video1.mp4" type="video/mp4">
               Your browser does not support the video tag.
+              {% comment %} theme-check-enable RemoteAsset {% endcomment %}
             </video>
           </div>
         {%- endfor -%}

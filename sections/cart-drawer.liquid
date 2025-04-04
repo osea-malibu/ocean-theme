@@ -1,4 +1,3 @@
-{% comment %} theme-check-disable TemplateLength {% endcomment %}
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 
 <cart-drawer class="fixed z-[2147483002] top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
@@ -573,10 +572,4 @@
     });
   });
 }
-</script>
-{% comment %} theme-check-enable TemplateLength {% endcomment %}
-<script defer="defer">
-  //window.Loop = {};
-  //window.Loop.bundleCartAllItems = {{ cart.items | json }};
-  //initLoopBundle("LOOP_osea-malibu_bundles_drawer");
 </script>

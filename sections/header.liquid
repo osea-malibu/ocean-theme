@@ -14,7 +14,7 @@
     <div class="flex-1 flex items-center justify-start">
       {% comment %} Hamburger menu {% endcomment %}
       {%- if section.settings.hamburger_menu != blank -%}
-        {%- assign menu_link_styles = 'px-8 py-2 tracking-wide cursor-pointer' -%}
+        {%- assign menu_link_styles = 'px-8 py-2 font-book tracking-wide cursor-pointer' -%}
         {%- assign menu_link_badge_styles = 'popular-badge inline-block rounded-md bg-seaweed-700 text-white text-xs font-bold px-1 py-px ml-1 relative -top-px' -%}
         <menu-drawer id="HamburgerMenu" class="mr-1 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="group">
@@ -37,114 +37,45 @@
                         {% comment %} Convert link with title 'Divider' into divider {% endcomment %}
                         {%- if link.title == 'Divider' -%}
                           <hr class="ml-8 my-4 w-8 border-seaweed-500" />
-                        {% comment %} Convert link with title 'Accordion' into accordion {% endcomment %}
-                        {%- elsif link.title contains 'Accordion' -%}
-                          <details>
-                            <summary class="flex items-center justify-start {{ menu_link_styles }}">
-                              <span class="mr-2">{{ link.title | replace: 'Accordion - ', '' }}</span>
-                              <div class="w-6 h-6 flex items-center justify-center">
-                                {% render 'icon-plus', aria_hidden: true, classes: 'absolute icon-expand h-5 w-5 motion-safe:transition-transform', stroke_width: '2' %}
-                                {% render 'icon-minus', aria_hidden: true, classes: 'absolute icon-collapse h-5 w-5 motion-safe:transition-transform', stroke_width: '2' %}
+                        {%- elsif link.title == 'Customer Service Block' -%}
+                        {% comment %} Customer service menu {% endcomment %}
+                          <div class="px-8">
+                            <div class="border-seaweed-500 border px-4 py-2 mb-24 max-w-md">
+                              <h4 class="text-center text-lg font-medium mb-2">Customer Support</h4>
+                              <p class="text-center">Monday - Friday 8am - 5pm PT</p>
+                              <a class="block mb-2 text-center tracking-wide" href="tel:+13103610547">Call Us: <b class="font-medium">(310) 361-0547</b></a>
+                              <div class="flex items-center justify-center flex-row gap-2">
+                                <a class="button button-secondary button-sm button-icon button-icon-left w-full" href="/pages/contact-osea">
+                                  {% render 'icon-email', classes: 'w-6 h-6', aria_hidden: true %}
+                                  <span>Email</span>
+                                </a>
+                                <button onclick="GorgiasChat.open()" class="button button-secondary button-sm button-icon button-icon-left w-full">
+                                  {% render 'icon-chat', classes: 'w-6 h-6', aria_hidden: true %}
+                                  <span>Chat</span>
+                                </button>
                               </div>
+                            </div>
+                          </div>
+                        {% comment %} L1 - Link with sub menu {% endcomment %}
+                        {%- elsif link.links != blank -%}
+                          <details class="group-child">
+                            <summary class="flex items-center justify-start text-lg {{ menu_link_styles }}">
+                              <span class="mr-2">{{ link.title | replace: 'Accordion - ', '' }}</span>
+                              <svg aria-hidden="true" focusable="false" class="w-4 h-4 flex items-center justify-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19" class="motion-safe:transition-transform group-child-open:rotate-90 origin-center"/>
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                              </svg>
                             </summary>
                             <ul class="px-8 pb-2">
                               {%- for childlink in link.links -%}
-                                <li><a class="py-2 px-2 block tracking-wide" href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+                                <li><a class="py-2 px-2 block tracking-wide font-book" href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
                               {%- endfor -%}
                             </ul>
                           </details>
-                        {% comment %} L1 - Link with sub menu {% endcomment %}
-                        {%- elsif link.links != blank -%}
-                          <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
-                            {%- assign level_one_id = "Link-" | append: link.title | replace: " ", "" -%}
-                            <summary
-                              class="flex items-center {{ menu_link_styles }}{% if link.child_active %} text-seaweed-800{% endif %}"
-                              aria-controls="{{ level_one_id }}"
-                            >
-                              <span class="mr-3">{{ link.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | escape }}</span>
-                              {% render 'icon-arrow', variant: 'short', aria_hidden: true, classes: 'h-5 w-5', stroke_width: '1.75' %}
-                            </summary>
-                            {% comment %} L2 Drawer {% endcomment %}
-                            <div id="{{ level_one_id }}" class="menu-submenu translate-x-full invisible absolute inset-0 overflow-y-auto bg-sand-200 z-10 {% if link.levels > 1 %}h-auto{% else %}h-full{% endif %}" tabindex="-1">
-                              <div class="pb-10">
-                                {% comment %} Back button {% endcomment %}
-                                <button class="submenu-close flex items-center px-8 pt-4 pb-2 w-full text-xs leading-6 font-bold uppercase tracking-widest" aria-expanded="true">
-                                  {% render 'icon-arrow', variant: 'long', aria_hidden: true, classes: 'h-5 w-5 rotate-180 mr-2', stroke_width: '1.75' %}
-                                  Back
-                                </button>
-                                <ul tabindex="-1">
-                                  {%- for childlink in link.links -%}
-                                    <li>
-                                      {% comment %} Convert childlinklink with title 'PromoBlock' into promo block {% endcomment %}
-                                      {%- if childlink.title == 'PromoBlock' -%}
-                                        <figure class="shrink-0 tracking-wide px-8 mt-6">
-                                          {%- if section.settings.promo_image != nil -%}
-                                            {%- if section.settings.promo_link != nil -%}<a href="{{ section.settings.promo_link.url }}">{%- endif -%}
-                                              <img
-                                                srcset="{{ section.settings.promo_image | image_url: width: 250 }} 1x, {{ section.settings.promo_image | image_url: width: 500 }} 2x"
-                                                src="{{ section.settings.promo_image | image_url: width: 250 }}"
-                                                width="250"
-                                                height="{{ 250 | divided_by: section.settings.promo_image.aspect_ratio | round }}"
-                                                alt="{{ section.settings.promo_heading }}"
-                                                loading="lazy"
-                                                class="mb-2"
-                                              >
-                                            {%- if section.settings.promo_link != nil -%}</a>{%- endif -%}
-                                          {%- endif -%}
-                                          <figcaption>
-                                            {%- if section.settings.promo_heading != blank -%}
-                                              <h3 class="text-xl font-medium">{{ section.settings.promo_heading }}</h3>
-                                            {%- endif -%}
-                                            {%- if section.settings.promo_paragraph != blank -%}
-                                              {{ section.settings.promo_paragraph }}
-                                            {%- endif -%}
-                                            {%- if section.settings.promo_link != nil -%}
-                                              <a href="{{ section.settings.promo_link.url }}" class="button button-secondary button-sm mt-2">{{ section.settings.promo_button }}</a>
-                                            {%- endif -%}
-                                          </figcaption>
-                                        </figure>
-                                      {% comment %} L2 - Link without sub menu {% endcomment %}
-                                      {%- elsif childlink.links == blank -%}
-                                        <a href="{{ childlink.url }}" class="block {{ menu_link_styles }}{% if childlink.current %} text-seaweed-800{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
-                                          {{ childlink.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | escape }}
-                                        </a>
-                                      {% comment %} L2 - Link with sub menu {% endcomment %}
-                                      {%- else -%}
-                                        <details class="group-child" open>
-                                          <summary class="flex items-center px-8 mt-3 mb-2">
-                                            {% render 'icon-caret', classes: 'w-4 h-4 mr-3 scale-90 -rotate-90 group-child-open:rotate-0 motion-safe:transition-transform' %}
-                                            <span class="tracking-wide cursor-pointer font-bold">
-                                              {{ childlink.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | escape }}
-                                            </span>
-                                          </summary>
-                                          {% comment %} L3 menu {% endcomment %}
-                                          <ul id="childlink-{{ childlink.title | escape }}" tabindex="-1" class="mb-6 pl-7">
-                                            {%- for grandchildlink in childlink.links -%}
-                                              <li>
-                                                <a href="{{ grandchildlink.url }}" class="hamburger-grandchild flex items-center gap-2 {{ menu_link_styles }}{% if grandchildlink.current %} text-seaweed-800{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
-                                                  {% render 'menu-item-image', link: grandchildlink %}
-                                                  <span>{{ grandchildlink.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | escape }}</span>
-                                                  {%- if grandchildlink.title contains 'Popular:' -%}
-                                                    <span class="{{ menu_link_badge_styles }}">Popular</span>
-                                                  {%- elsif grandchildlink.title contains 'EndsTonight:' -%}
-                                                    <span class="{{ menu_link_badge_styles }}">Ends tonight</span>
-                                                  {%- endif -%}
-                                                </a>
-                                              </li>
-                                            {%- endfor -%}
-                                          </ul>
-                                        </details>
-                                      {%- endif -%}
-                                    </li>
-                                  {%- endfor -%}
-                                </ul>
-                              </div>
-                            </div>
-                          </details>
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
-                          <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
-                            {{ link.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | escape }}
+                          <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %} {% if link.title contains 'Secondary:' %}text-seaweed-600 text-base{% else %}text-lg{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+                            {{ link.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'Secondary: ' | escape }}
                             {%- if link.title contains 'Popular:' -%}
                               <span class="{{ menu_link_badge_styles }}">Popular</span>
                             {%- elsif link.title contains 'EndsTonight:' -%}
@@ -156,25 +87,6 @@
                     {%- endfor -%}
                   </ul>
                 </nav>
-                {% comment %} Customer service menu {% endcomment %}
-                <div class="px-8">
-                  <div class="border-seaweed-500 border p-4 mb-24 max-w-md">
-                    <h4 class="text-center font-serif text-2xl tracking-tight mb-3">Customer Support</h4>
-                    <p class="text-center">Monday - Friday 8am - 5pm PT</p>
-                    <p class="text-center mb-3"><em>Except for major holidays</em></p>
-                    <a class="block mb-2 text-center tracking-wide" href="tel:+13103610547">Call Us: <b class="font-medium">(310) 361-0547</b></a>
-                    <div class="flex items-center justify-center flex-col sm:flex-row">
-                      <a class="button button-secondary button-sm button-icon button-icon-left w-full mr-0 mb-2 sm:mb-0 sm:mr-4" href="/pages/contact-osea">
-                        {% render 'icon-email', classes: 'w-6 h-6', aria_hidden: true %}
-                        <span>Email</span>
-                      </a>
-                      <button onclick="GorgiasChat.open()" class="button button-secondary button-sm button-icon button-icon-left w-full">
-                        {% render 'icon-chat', classes: 'w-6 h-6', aria_hidden: true %}
-                        <span>Chat</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </details>
