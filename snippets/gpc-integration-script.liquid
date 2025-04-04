@@ -1,0 +1,29 @@
+<script>
+  window.addEventListener("load", (event) => {
+    window.Shopify.loadFeatures([
+      {
+          name:   'consent-tracking-api',
+          version: '0.1',
+      },
+  
+      ], function(error) {
+      if (error) {
+        throw error;
+      }
+
+      let gdprCache = localStorage.getItem("gdprCache") !== null ? JSON.parse(localStorage.getItem("gdprCache")) : {};
+      let isInSaleOfDataRegion = typeof gdprCache.userIsInSaleOfDataRegion !== 'undefined' && gdprCache.userIsInSaleOfDataRegion !== null ? gdprCache.userIsInSaleOfDataRegion === 'true' || gdprCache.userIsInSaleOfDataRegion === true : false;
+      let isGPCEnabledInBrowser = typeof window.navigator.globalPrivacyControl !== 'undefined' ? window.navigator.globalPrivacyControl === true || window.navigator.globalPrivacyControl === 1 : false;
+      if(isInSaleOfDataRegion && isGPCEnabledInBrowser) {
+        let currentConsent = window.Shopify.customerPrivacy.currentVisitorConsent();
+        if(currentConsent['sale_of_data'] === '') {
+          let newCustomerPrivacyConsent = {'sale_of_data': false};
+          window.Shopify.customerPrivacy.setTrackingConsent(
+              newCustomerPrivacyConsent,
+              () => {console.log('sale_of_data: false');}
+          );
+        }
+      }
+    });
+  });
+</script>
