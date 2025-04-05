@@ -36,7 +36,7 @@
                       <li id="NavHamburger{{  link.title | replace: 'Popular: ', '' | replace: '&', '' | replace: '%', '' | replace: ' ', '' }}">
                         {% comment %} Convert link with title 'Divider' into divider {% endcomment %}
                         {%- if link.title == 'Divider' -%}
-                          <hr class="ml-8 my-4 w-8 border-seaweed-500" />
+                          <hr class="ml-6 sm:ml-8 my-4 w-12 border-seaweed-500" />
                         {%- elsif link.title == 'Customer Service Block' -%}
                         {% comment %} Customer service menu {% endcomment %}
                           <div class="px-4 xs:px-6 sm:px-8">
