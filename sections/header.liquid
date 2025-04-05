@@ -16,7 +16,7 @@
       {%- if section.settings.hamburger_menu != blank -%}
         {%- assign menu_link_styles = 'px-6 sm:px-8 py-2 font-book tracking-wide cursor-pointer' -%}
         {%- assign menu_link_badge_styles = 'popular-badge inline-block rounded-md bg-seaweed-700 text-white text-xs font-bold px-1 py-px ml-1 relative -top-px' -%}
-        <menu-drawer id="HamburgerMenu" class="mr-1 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
+        <menu-drawer id="HamburgerMenu" class="2xs:mr-1 block{% unless section.settings.enable_navbar %} lg:hidden{% endunless %}">
           <details id="Details-menu-drawer-container" class="group">
             {% comment %} Hamburger icon {% endcomment %}
             <summary class="header__icon--menu cursor-pointer w-10 h-10 -ml-2 hover:text-seaweed-500" aria-label="{{ 'sections.header.menu' | t }}">
@@ -255,7 +255,7 @@
       {%- endif -%}
 
       {% comment %} Cart menu {% endcomment %}
-      <a href="{{ routes.cart_url }}" class="header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-2 -mr-1" id="cart-icon-bubble">
+      <a href="{{ routes.cart_url }}" class="header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center 2xs:ml-1 md:ml-2 -mr-1" id="cart-icon-bubble">
         <span class="sr-only">Cart</span>
         <div class="w-7 h-7 bg-seafoam-300 rounded-full flex justify-center items-center">
           <span class="leading-8 font-book text-lg">{{ cart.item_count }}</span>

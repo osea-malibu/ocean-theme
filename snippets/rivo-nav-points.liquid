@@ -9,7 +9,7 @@
     {% assign adjusted_balance = points_balance | times: 100 %}
     {% assign formatted_balance = adjusted_balance | money_without_currency %}
     {% assign formatted_balance = formatted_balance | replace: ',' , '' | replace: '.00', '' %}
-    {{ formatted_balance }} Points
+    {{ formatted_balance }} <span class="tracking-tight 2xs:tracking-normal">Points</span>
   </a>
 {% else %}
   <!-- Handle case when customer is not available -->
