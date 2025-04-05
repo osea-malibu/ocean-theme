@@ -30,7 +30,7 @@
             {% comment %} L1 Drawer {% endcomment %}
             <div class="menu-drawer fixed invisible z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 -translate-x-full bg-seafoam-200 top-[72px] md:top-24 overyflow-y-auto" tabindex="-1">
               <div class="relative flex flex-col h-full">
-                <nav class="py-6">
+                <nav class="pt-2 pb-6 sm:pt-6">
                   <ul>
                     {%- for link in section.settings.hamburger_menu.links -%}
                       <li id="NavHamburger{{  link.title | replace: 'Popular: ', '' | replace: '&', '' | replace: '%', '' | replace: ' ', '' }}">
