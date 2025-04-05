@@ -61,7 +61,10 @@
                           <details class="group-child"{% if link.title == 'Body' or link.title == 'Face' %} open{% endif %}>
                             <summary class="flex items-center justify-start text-lg {{ menu_link_styles }}">
                               <a href="{{ link.url }}" class="mr-2 z-10 relative">{{ link.title }}</a>
-                              {% render 'icon-plus', classes: 'w-4 h-4 flex items-center justify-center ml-auto motion-safe:transition-transform group-child-open:rotate-90 origin-center', aria_hidden: true, stroke_width: 2 %}
+                              <svg aria-hidden="true" focusable="false" class="w-4 h-4 flex items-center justify-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19" class="motion-safe:transition-transform group-child-open:rotate-90 origin-center"/>
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                              </svg>
                             </summary>
                             <ul class="px-8 pb-2">
                               {%- for childlink in link.links -%}
@@ -71,7 +74,7 @@
                           </details>
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
-                          <a href="{{ link.url }}" class="block {{ menu_link_styles }}{% if link.current %} text-seaweed-800{% endif %} {% if link.title contains 'Secondary:' %}text-seaweed-600 text-base{% else %}text-lg{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+                          <a href="{{ link.url }}" class="block {{ menu_link_styles }} {% if link.title contains 'Secondary:' %}text-seaweed-600 text-base{% else %}text-lg{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
                             {{ link.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'Secondary: ' | escape }}
                             {%- if link.title contains 'Popular:' -%}
                               <span class="{{ menu_link_badge_styles }}">Popular</span>
