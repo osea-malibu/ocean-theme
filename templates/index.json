@@ -55,11 +55,25 @@
     "image_banner_GjnLnB": {
       "type": "image-banner",
       "blocks": {
+        "heading_cHxiQ7": {
+          "type": "heading",
+          "settings": {
+            "heading": "Free Gift",
+            "heading_classes": "font-bold uppercase sm:hidden text-6xl"
+          }
+        },
         "heading_Mft3F7": {
           "type": "heading",
           "settings": {
             "heading": "Spring Into<br> Your Best Skin",
-            "heading_classes": "text-5xl font-serif sm:text-white lg:text-6xl  xl:text-7xl"
+            "heading_classes": "text-5xl font-serif sm:text-white lg:text-6xl  xl:text-7xl hidden sm:block"
+          }
+        },
+        "paragraph_86zghx": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Hyaluronic Sea Serum Mini<br>With Purchase of $75+",
+            "paragraph_classes": "sm:hidden font-bold text-xl"
           }
         },
         "paragraph_wMYA9H": {
@@ -69,6 +83,16 @@
             "paragraph_classes": "text-white hidden lg:block font-book mt-4 mb-4 lg:text-xl sm:text-md"
           }
         },
+        "button_N96G6C": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop now: all our bestselling products",
+            "button_link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "button-primary mt-auto sm:hidden"
+          }
+        },
         "button_jLhP4r": {
           "type": "button",
           "settings": {
@@ -76,13 +100,16 @@
             "button_aria_label": "Shop now: all our bestselling products",
             "button_link": "shopify://collections/shop",
             "target_blank": false,
-            "button_classes": "button-white mt-2"
+            "button_classes": "button-white mt-2 hidden sm:block"
           }
         }
       },
       "block_order": [
+        "heading_cHxiQ7",
         "heading_Mft3F7",
+        "paragraph_86zghx",
         "paragraph_wMYA9H",
+        "button_N96G6C",
         "button_jLhP4r"
       ],
       "disabled": true,
