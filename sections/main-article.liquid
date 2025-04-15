@@ -50,11 +50,11 @@
 
         {%- when 'content'-%}
           {%- if article.metafields.custom.shop_the_story.value != blank -%}
-            <a href="#shop-the-story" class="block md:hidden button button-secondary text-center mt-4">
+            <a href="#shop-the-story" class="block md:hidden button button-tertiary button-sm text-center mt-4 w-52 mx-auto no-underline mb-6">
               {{ 'Shop the Story' }}
             </a>
           {%- endif -%}
-          
+
           <div class="{{ block.settings.content_classes }}">
             <div class="rte mb-8" itemprop="articleBody" {{ block.shopify_attributes }}>
               {%- liquid
