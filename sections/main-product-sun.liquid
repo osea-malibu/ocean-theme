@@ -2,12 +2,12 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <section id="main-product">
-  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-10 lg:max-w-screen-lg">
+  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-10">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {%- if product.media.size > 1 -%}
-      <div class="md:flex-1 relative md:sticky md:top-[120px] overflow-hidden">
+      <div class="md:w-3/5 relative md:sticky md:top-[120px] overflow-hidden">
         <glide-slider
           class="glide type-carousel gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 mb-6 overflow-hidden max-w-full lg:flex lg:flex-row-reverse lg:gap-2"
           id="Product-Slider"
@@ -16,7 +16,8 @@
           {% render 'product-badge', product: product, classes: 'z-10 left-1 !right-auto md:!left-auto md:!right-1' %}
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides min-h-full">
-              {%- for media in product.media limit: section.settings.gallery_limit -%}
+              {%- assign slider_images = product.metafields.custom.pdp_main_image.value | concat: product.media -%}
+              {%- for media in slider_images limit: section.settings.gallery_limit -%}
                 <li class="glide__slide" data-media-id="{{ section.id }}-{{ media.id }}">
                   {%- if media.media_type == 'image' -%}
                     {%- liquid
@@ -31,7 +32,7 @@
                       loading="lazy"
                       alt="{{ media.alt | escape }}"
                       width="{{ media.width }}"
-                      height="{{ media.width | divided_by: 0.8 | round }}"
+                      height="{{ media.width }}"
                       class="min-h-full object-cover"
                     >
                     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
@@ -76,8 +77,8 @@
               {%- endfor -%}
             </ul>
           </div>
-          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:gap-1 lg:flex-col lg:shrink-0 lg:h-[520px] lg:overflow-y-auto" data-glide-el="controls[nav]">
-            {%- for media in product.media limit: section.settings.gallery_limit -%}
+          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:gap-1 lg:flex-col lg:shrink-0 lg:h-[810px] lg:overflow-y-auto" data-glide-el="controls[nav]">
+            {%- for media in slider_images limit: section.settings.gallery_limit -%}
               <button class="glide__bullet relative p-2 md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
                 <span class="sr-only">Go to slide {{ forloop.index }}</span>
                 {%- if media.media_type == 'image' -%}
@@ -88,8 +89,8 @@
                   </div>
                 {%- endif -%}
                 {%- liquid
-                  assign thumb_image_src = media | image_url: width: 48
-                  assign thumb_image_src_2x = media | image_url: width: 96
+                  assign thumb_image_src = media | image_url: width: 192
+                  assign thumb_image_src_2x = media | image_url: width: 252
                 -%}
                 {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                 <img
@@ -99,7 +100,7 @@
                   alt="{{ media.alt | escape }}"
                   width="{{ media.width }}"
                   height="{{ media.width | divided_by: media.aspect_ratio | round }}"
-                  class="hidden md:block w-14 h-20 object-cover"
+                  class="hidden md:block w-24 h-32 object-cover"
                 >
                 {% comment %} theme-check-enable RemoteAsset {% endcomment %}
               </button>
@@ -108,7 +109,7 @@
         </glide-slider>
       </div>
     {%- else -%}
-      <div class="bg-wave-100 mb-6 md:flex-1 relative md:sticky md:top-[148px] max-w-full">
+      <div class="bg-wave-100 mb-6 md:w-2/5 relative md:sticky md:top-[148px] max-w-full">
         {%- liquid
           assign main_image_src = product.media[0] | image_url: width: 300, height: 375, crop: 'center'
           assign main_image_src_2x = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
@@ -604,29 +605,39 @@
               {%- endunless -%}
             {%- when 'upsells' -%}
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
-                <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
-                  {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
-                    <div class="upsell-sets mt-4">
-                      <h2 class="font-medium tracking-wide mb-1">Save with Sets</h2>
-                      {%- for set in product.metafields.my_fields.save_with_sets.value -%}
-                        {%- render 'product-upsell', product: set -%}
-                      {%- endfor -%}
+                <div class="{{ block.settings.upsell_classes }}">
+                  <tab-controller id="pdp-upsell-tabs" class="block bg-wave-200 mt-3">
+                    <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex button-group">
+                      {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
+                        <li role="tab" aria-controls="footer-tab-sets" tabindex="0" aria-selected="true" class="button button-xs button-secondary px-3 sm:px-4 bg-wave-200">
+                          {{- 'Save with Sets' -}}
+                        </li>
+                      {%- endif -%}
+                      {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
+                        <li role="tab" aria-controls="footer-tab-pairs" tabindex="0" aria-selected="false" class="button button-xs button-secondary px-3 sm:px-4">
+                          {{- 'Pairs Well With' -}}
+                        </li>
+                      {%- endif -%}
+                    </ul>
+                    <div class="relative mt-1.5">
+                      <div id="footer-tab-sets" role="tabpanel" aria-expanded="true">
+                        {%- for set in product.metafields.my_fields.save_with_sets.value -%}
+                          {%- render 'product-upsell', product: set -%}
+                        {%- endfor -%}
+                      </div>
+                      <div id="footer-tab-pairs" role="tabpanel" aria-expanded="false">
+                        {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
+                      </div>
                     </div>
-                  {%- endif -%}
-                  {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
-                    <div class="upsell-partner mt-4">
-                      <h2 class="font-medium tracking-wide mb-1">Pairs Well With</h2>
-                      {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
-                    </div>
-                  {%- endif -%}
-                  {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
-                    <div class="upsell-routine mt-4">
-                      <h2 class="font-medium tracking-wide mb-1">Complete Your Routine</h2>
-                      {%- for step in product.metafields.custom.upsell_complete_routine.value -%}
-                        {%- render 'product-upsell', product: step, button_style: 'link', step_number: forloop.index -%}
-                      {%- endfor -%}
-                    </div>
-                  {% endif %}
+                  </tab-controller>
+                </div>
+              {%- endif -%}
+              {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
+                <div class="upsell-routine mt-4">
+                  <h2 class="font-medium tracking-wide mb-1">Complete Your Routine</h2>
+                  {%- for step in product.metafields.custom.upsell_complete_routine.value -%}
+                    {%- render 'product-upsell', product: step, button_style: 'link', step_number: forloop.index -%}
+                  {%- endfor -%}
                 </div>
               {%- endif -%}
             {%- when 'set_includes' -%}

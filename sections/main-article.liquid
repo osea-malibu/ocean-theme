@@ -49,6 +49,12 @@
           </header>
 
         {%- when 'content'-%}
+          {%- if article.metafields.custom.shop_the_story.value != blank -%}
+            <a href="#shop-the-story" class="block md:hidden button button-secondary text-center mt-4">
+              {{ 'Shop the Story' }}
+            </a>
+          {%- endif -%}
+          
           <div class="{{ block.settings.content_classes }}">
             <div class="rte mb-8" itemprop="articleBody" {{ block.shopify_attributes }}>
               {%- liquid
@@ -112,7 +118,7 @@
                 </div>
 
                 {%- if article.metafields.custom.shop_the_story.value != blank -%}
-                  <div class="bg-sand-200 px-6 py-6">
+                  <div id="shop-the-story" class="bg-sand-200 px-6 py-6">
                     <h3 class="font-serif text-3xl tracking-tight text-center mb-2">Shop the Story</h3>
                     <ul class="grid grid-cols-2 gap-6">
                       {%- for product in article.metafields.custom.shop_the_story.value -%}
