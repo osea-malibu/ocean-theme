@@ -1,0 +1,819 @@
+{
+  "article": [
+    {
+      "key": "shop_the_story",
+      "namespace": "custom",
+      "name": "Shop the story",
+      "description": "Adds product tiles to the right rail of the article",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "tile_image_class",
+      "namespace": "custom",
+      "name": "Tile image class",
+      "description": "Classes to give the image in the list tile. Used for cropping images individually (ex: bg-right)",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "hide_from_search",
+      "namespace": "custom",
+      "name": "Hide from search",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "hide_from_blog",
+      "namespace": "custom",
+      "name": "Hide from blog",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
+  "blog": [],
+  "brand": [],
+  "collection": [
+    {
+      "key": "featured_products",
+      "namespace": "my_fields",
+      "name": "Featured products",
+      "description": "Products will appear at top of collection page",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "subcollections",
+      "namespace": "my_fields",
+      "name": "Subcollections",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "default_to_mini",
+      "namespace": "my_fields",
+      "name": "Default to mini",
+      "description": "Default the tile display to smallest variant size",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "seo_description",
+      "namespace": "custom",
+      "name": "SEO Description",
+      "description": "Displays at the bottom of collection page. Long SEO description of collection content.",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "promo_tile_url",
+      "namespace": "custom_fields",
+      "name": "Promo tile: URL",
+      "description": "",
+      "type": {
+        "name": "url",
+        "category": "URL"
+      }
+    },
+    {
+      "key": "promo_tile_image",
+      "namespace": "custom",
+      "name": "Promo tile: Image",
+      "description": "Appears as first tile in collection",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "hide_from_search",
+      "namespace": "custom",
+      "name": "Hide from search",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "promo_tile_video_portrait",
+      "namespace": "custom",
+      "name": "Promo tile: Video (vertical)",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "promo_tile_video_landscape",
+      "namespace": "custom",
+      "name": "Promo tile: Video (horizontal)",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "default_to_subscription",
+      "namespace": "custom",
+      "name": "Default to subscription",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "comparison_matrix_products",
+      "namespace": "custom",
+      "name": "Comparison matrix products",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "comparison_matrix_dimensions",
+      "namespace": "custom",
+      "name": "Comparison matrix dimensions",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "banner_image_mobile",
+      "namespace": "custom",
+      "name": "Banner image: mobile",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "banner_image_desktop",
+      "namespace": "custom",
+      "name": "Banner image: desktop",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "custom_title",
+      "namespace": "custom",
+      "name": "Custom title",
+      "description": "overrides the name of the collection displayed on the page",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "filter_visibility",
+      "namespace": "custom",
+      "name": "Filter visibility",
+      "description": "List of filters to include",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "menu_image",
+      "namespace": "custom",
+      "name": "Menu image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
+  "company": [],
+  "company_location": [],
+  "location": [],
+  "market": [],
+  "order": [],
+  "page": [
+    {
+      "key": "faqs",
+      "namespace": "custom",
+      "name": "FAQs",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "menu_image",
+      "namespace": "custom",
+      "name": "Menu image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
+  "product": [
+    {
+      "key": "rating",
+      "namespace": "reviews",
+      "name": "Product rating",
+      "description": "Average rating from customers",
+      "type": {
+        "name": "rating",
+        "category": "RATING"
+      }
+    },
+    {
+      "key": "rating_count",
+      "namespace": "reviews",
+      "name": "Product rating count",
+      "description": "Total number of ratings from customers",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "hide_from_search",
+      "namespace": "settings",
+      "name": "Hide from search",
+      "description": "Hide this product from site search results",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "size",
+      "namespace": "my_fields",
+      "name": "Size",
+      "description": "Product size (format: X oz / X ml)",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "reformulation_date",
+      "namespace": "my_fields",
+      "name": "Reformulation date",
+      "description": "The date this product's formula changed",
+      "type": {
+        "name": "date",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "reformulation_details",
+      "namespace": "my_fields",
+      "name": "Reformulation details",
+      "description": "Details about reformulation, what was changed and why.",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "is_jar",
+      "namespace": "my_fields",
+      "name": "Is jar",
+      "description": "Crops main product image, for products in jar packaging",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "white_image_bg",
+      "namespace": "my_fields",
+      "name": "Product Image: White bg (jpg)",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "pair_with_product",
+      "namespace": "my_fields",
+      "name": "Upsell: Pair with product",
+      "description": "Adds a small upsell for an associated product to the PDP",
+      "type": {
+        "name": "product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "save_with_sets",
+      "namespace": "my_fields",
+      "name": "Upsell: Save with sets",
+      "description": "A list of product sets that will appear on the PDP",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "pdp_video",
+      "namespace": "my_fields",
+      "name": "PDP Video",
+      "description": "Urls of all video sources to be included (prefer .mp4 & .webm). Include jpg for poster image.",
+      "type": {
+        "name": "list.url",
+        "category": "URL"
+      }
+    },
+    {
+      "key": "short_description",
+      "namespace": "custom_fields",
+      "name": "Short description",
+      "description": "Short text description, appears on product card",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "subscription_interval",
+      "namespace": "custom",
+      "name": "Subscription interval",
+      "description": "Default shipping interval for subscription products, in months. Enter value between 1-4.",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "benefits",
+      "namespace": "custom",
+      "name": "Benefits",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "key_ingredients_image",
+      "namespace": "custom",
+      "name": "Key ingredients: Image (mobile)",
+      "description": "TODO: Include size / cropping guidance",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "key_ingredients_text",
+      "namespace": "custom",
+      "name": "Key ingredients: Text",
+      "description": "Format: HTML",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "key_ingredients_image_desktop",
+      "namespace": "custom",
+      "name": "Key ingredients: Image (desktop)",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "set_value",
+      "namespace": "custom",
+      "name": "Set value",
+      "description": "Total value of set products (do not use on individual products)",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "redirect_url",
+      "namespace": "custom",
+      "name": "Redirect URL",
+      "description": "",
+      "type": {
+        "name": "url",
+        "category": "URL"
+      }
+    },
+    {
+      "key": "bundle_handle",
+      "namespace": "custom",
+      "name": "Bundle handle",
+      "description": "Join the handles of each product included in the bundle (kebab case).",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "how_it_works",
+      "namespace": "custom_fields",
+      "name": "How to use",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "description",
+      "namespace": "custom_fields",
+      "name": "Description",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "ingredients",
+      "namespace": "custom_fields",
+      "name": "Ingredients",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "skin_types",
+      "namespace": "custom_fields",
+      "name": "Skin Types",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "clinical_consumer_results",
+      "namespace": "custom_fields",
+      "name": "Clinical consumer results",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_profile",
+      "namespace": "custom",
+      "name": "Scent profile",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "set_contains",
+      "namespace": "custom",
+      "name": "Set contains",
+      "description": "List of products included in set",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "parent_product",
+      "namespace": "custom",
+      "name": "Parent product",
+      "description": "If this product is a sample or mini, what is it's full-sized product",
+      "type": {
+        "name": "product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "key_ingredients_list",
+      "namespace": "custom",
+      "name": "Key Ingredients: List",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "scent_profile_short",
+      "namespace": "custom",
+      "name": "Scent Profile: Short",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "clinical_results",
+      "namespace": "custom",
+      "name": "Clinical results",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "product_color_light",
+      "namespace": "custom",
+      "name": "Product Color (light)",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "how_to_use",
+      "namespace": "custom",
+      "name": "How to Use",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "skin_types_list",
+      "namespace": "custom",
+      "name": "Skin Types: List",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "product_image_transparent",
+      "namespace": "custom",
+      "name": "Product Image: Transparent bg (png)",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "msrp",
+      "namespace": "custom",
+      "name": "Subscription MSRP",
+      "description": "",
+      "type": {
+        "name": "money",
+        "category": "MONEY"
+      }
+    },
+    {
+      "key": "launch_year",
+      "namespace": "custom",
+      "name": "Launch year",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "faq",
+      "namespace": "custom",
+      "name": "FAQ",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "recycling",
+      "namespace": "custom",
+      "name": "Recycling",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "text",
+      "namespace": "badge",
+      "name": "Badge text",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "classes",
+      "namespace": "badge",
+      "name": "Badge classes",
+      "description": "Tailwind classes for product tile badge",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "type",
+      "namespace": "badge",
+      "name": "Badge type",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "queries",
+      "namespace": "shopify--discovery--product_search_boost",
+      "name": "Search product boosts",
+      "description": "List of search queries for which a product gets higher rank in search results",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "related_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products",
+      "description": "List of related products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "related_products_display",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products settings",
+      "description": "Determines how related products are displayed along with algorithmic product recommendations",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "complementary_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Complementary products",
+      "description": "List of complementary products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "finish",
+      "namespace": "custom",
+      "name": "Finish",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "related_articles",
+      "namespace": "custom",
+      "name": "Related articles",
+      "description": "List of related blog posts featuring this product",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "category",
+      "namespace": "custom",
+      "name": "Category",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "upsell_complete_routine",
+      "namespace": "custom",
+      "name": "Upsell: Complete Your Routine",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "key_benefits",
+      "namespace": "custom",
+      "name": "Key benefits",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "what_it_is",
+      "namespace": "custom",
+      "name": "What it is",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "subcategory",
+      "namespace": "custom",
+      "name": "Subcategory",
+      "description": "Category for products in another category, ie: \"moisturizers\" in \"body care\". Used for PLP filtering",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "set_type",
+      "namespace": "custom",
+      "name": "Set type",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "target_area",
+      "namespace": "custom",
+      "name": "Target area",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "ugc_videos",
+      "namespace": "custom",
+      "name": "UGC: Videos",
+      "description": "",
+      "type": {
+        "name": "list.file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "pdp_main_image",
+      "namespace": "custom",
+      "name": "PDP Main Image",
+      "description": "",
+      "type": {
+        "name": "list.file_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
+  "variant": [],
+  "shop": []
+}
