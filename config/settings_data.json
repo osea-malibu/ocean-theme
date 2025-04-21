@@ -43,7 +43,7 @@
     "enable_gwp": true,
     "is_loyalty_gwp": false,
     "gwp_type": "auto",
-    "enable_annoucement_bar_message": true,
+    "enable_annoucement_bar_message": false,
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
     "gwp_tier1_product": "free-gift-mini-hyaluronic-sea-serum",
     "gwp_tier1_threshold": 75,
@@ -235,7 +235,9 @@
               "settings": {}
             }
           },
-          "block_order": ["announcement-bar-0"],
+          "block_order": [
+            "announcement-bar-0"
+          ],
           "settings": {}
         }
       }
