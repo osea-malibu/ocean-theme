@@ -573,14 +573,16 @@
                         {%- endunless -%}
                       </div>
                       {%- assign product_collection_handles = product.collections | map: 'handle' -%}
-                      {%- if product.metafields.custom.limited_availability_badge or product.selected_or_first_available_variant.inventory_quantity <= settings.low_stock_threshold -%}
-                        <div class="text-coral-800 font-bold tracking-wide my-1 text-center">Limited stock available!</div>
-                      {%- elsif product_collection_handles contains 'skincare-sets-1' -%}
-                        <div id="PayInstallments" class="mb-10 sm:mb-8 transition-opacity">
-                          <div class="absolute inset-x-0 leading-tight py-2 text-sm">
-                            {{ form | payment_terms }}
+                      {%- if product.selected_or_first_available_variant.available -%}
+                        {%- if product.metafields.custom.limited_availability_badge or product.selected_or_first_available_variant.inventory_quantity <= settings.low_stock_threshold -%}
+                          <div class="text-coral-800 font-bold tracking-wide my-1 text-center">Limited stock available!</div>
+                        {%- elsif product_collection_handles contains 'skincare-sets-1' -%}
+                          <div id="PayInstallments" class="mb-10 sm:mb-8 transition-opacity">
+                            <div class="absolute inset-x-0 leading-tight py-2 text-sm">
+                              {{ form | payment_terms }}
+                            </div>
                           </div>
-                        </div>
+                        {%- endif -%}
                       {%- endif -%}
                     {%- endform -%}
                     <div class="product-form__error-message-wrapper absolute left-0 mt-1 text-coral-800 text-sm" role="alert" hidden>
