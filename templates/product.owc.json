@@ -15,7 +15,7 @@
         "title": {
           "type": "title",
           "settings": {
-            "title_classes": "title text-2xl tracking-wide col-span-12"
+            "title_classes": "title text-2xl tracking-wide col-span-12 text-owc-blue2"
           }
         },
         "price": {
@@ -28,13 +28,13 @@
         "6a44c417-fd63-4240-a103-3540393f4f89": {
           "type": "rating",
           "settings": {
-            "rating_classes": "rating col-span-12 md:col-span h-full"
+            "rating_classes": "rating col-span-12 md:col-span h-full text-owc-blue2"
           }
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "variant_classes": "variants col-span-12 mt-4",
+            "variant_classes": "variants col-span-12 mt-4 text-owc-blue2",
             "hide_label": false
           }
         },
@@ -74,24 +74,24 @@
           "settings": {
             "benefits_classes": "benefits col-span-4 mt-6",
             "benefits_hide_icons": true,
-            "benefits_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "benefits_content_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book"
+            "benefits_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
+            "benefits_content_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book text-owc-blue2"
           }
         },
         "9b65c02a-2972-449a-b590-d40d4a256d04": {
           "type": "skin_types",
           "settings": {
             "skin_types_classes": "skin-types col-span-4 mt-6",
-            "skin_types_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "skin_types_content_classes": "text-sm font-book li:mb-2"
+            "skin_types_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
+            "skin_types_content_classes": "text-sm font-book li:mb-2 text-owc-blue2"
           }
         },
         "d08cdbd7-b608-45ad-bfec-e65bb7339509": {
           "type": "scent_profile",
           "settings": {
             "scent_profile_classes": "scent-profile col-span-4 mt-6",
-            "scent_profile_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "scent_profile_content_classes": "text-sm font-book leading-tight"
+            "scent_profile_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
+            "scent_profile_content_classes": "text-sm font-book leading-tight text-owc-blue2"
           }
         },
         "2431ba77-22b9-43d0-a67d-f9858b6d8b58": {
@@ -179,7 +179,9 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
       "custom_css": [],
       "settings": {
         "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
