@@ -191,30 +191,6 @@
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
-    "product_ingredients_images_94Xbm6": {
-      "type": "product-ingredients-images",
-      "blocks": {
-        "key_ingredient_dBBbXd": {
-          "type": "key_ingredient",
-          "repeater": "{{ product.metafields.custom.key_ingredients_list.value }}",
-          "settings": {
-            "ingredient_name": "{{ block.repeater.name.value }}",
-            "ingredient_scientific_name": "{{ block.repeater.scientific_name.value }}",
-            "ingredient_description": "{{ block.repeater.description.value }}",
-            "ingredient_citation": "{{ block.repeater.citation.value }}",
-            "ingredient_image": "{{ block.repeater.image.value }}"
-          }
-        }
-      },
-      "block_order": [
-        "key_ingredient_dBBbXd"
-      ],
-      "name": "Ingredients with Images",
-      "settings": {
-        "header": "<b class=\"font-medium\">Cleanse</b> <em class=\"font-serif\">With Benefits</em>",
-        "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
-      }
-    },
     "rich_text_btfngN": {
       "type": "rich-text",
       "blocks": {
@@ -432,6 +408,30 @@
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     },
+    "product_ingredients_images_94Xbm6": {
+      "type": "product-ingredients-images",
+      "blocks": {
+        "key_ingredient_dBBbXd": {
+          "type": "key_ingredient",
+          "repeater": "{{ product.metafields.custom.key_ingredients_list.value }}",
+          "settings": {
+            "ingredient_name": "{{ block.repeater.name.value }}",
+            "ingredient_scientific_name": "{{ block.repeater.scientific_name.value }}",
+            "ingredient_description": "{{ block.repeater.description.value }}",
+            "ingredient_citation": "{{ block.repeater.citation.value }}",
+            "ingredient_image": "{{ block.repeater.image.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "key_ingredient_dBBbXd"
+      ],
+      "name": "Ingredients with Images",
+      "settings": {
+        "header": "<b class=\"font-medium\">Cleanse</b> <em class=\"font-serif\">With Benefits</em>",
+        "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
+      }
+    },
     "routine": {
       "type": "product-routine",
       "settings": {
@@ -489,9 +489,9 @@
     "video",
     "clinicals",
     "ingredients",
-    "product_ingredients_images_94Xbm6",
     "rich_text_btfngN",
     "multicolumn_cRwjUa",
+    "product_ingredients_images_94Xbm6",
     "routine",
     "faqs",
     "reviews",
