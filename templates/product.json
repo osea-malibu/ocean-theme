@@ -98,7 +98,7 @@
           "type": "info_tabs",
           "settings": {
             "info_tab_wrapper_classes": "col-span-12 mt-4",
-            "info_tab_label_classes": "font-bold uppercase text-xs tracking-widest",
+            "info_tab_label_classes": "font-bold uppercase text-xs",
             "info_tab_content_classes": "",
             "enable_info_tab_description": true,
             "info_tab_description_label": "Description",
@@ -179,7 +179,9 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
       "custom_css": [],
       "settings": {
         "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
