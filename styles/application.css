@@ -756,4 +756,10 @@
   tr#bud .cart-item__price-wrapper:not(:last-of-type) {
     @apply text-wave-600;
   }
+
+  /* Postscript email signup persistent widget position */
+  #ps__widget_container #ps__widget {
+    inset: auto -61px 25vh auto !important;
+    transform: rotate(270deg);
+  }
 }
