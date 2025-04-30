@@ -61,7 +61,7 @@
       id="tab-{{ forloop.index }}-{{ block.id }}"
       role="tabpanel"
       aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-      class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
+      class="relative bg-white border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
     >
       {%- case tab -%}
         {%- when block.settings.info_tab_description_label -%}
