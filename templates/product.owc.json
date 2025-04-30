@@ -190,6 +190,30 @@
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
+    "product_ingredients_images_94Xbm6": {
+      "type": "product-ingredients-images",
+      "blocks": {
+        "key_ingredient_dBBbXd": {
+          "type": "key_ingredient",
+          "repeater": "{{ product.metafields.custom.key_ingredients_list.value }}",
+          "settings": {
+            "ingredient_name": "{{ block.repeater.name.value }}",
+            "ingredient_scientific_name": "{{ block.repeater.scientific_name.value }}",
+            "ingredient_description": "{{ block.repeater.description.value }}",
+            "ingredient_citation": "{{ block.repeater.citation.value }}",
+            "ingredient_image": "{{ block.repeater.image.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "key_ingredient_dBBbXd"
+      ],
+      "name": "Ingredients with Images",
+      "settings": {
+        "header": "Ingredients",
+        "full_ingredients": ""
+      }
+    },
     "rich_text_btfngN": {
       "type": "rich-text",
       "blocks": {
@@ -464,6 +488,7 @@
     "video",
     "clinicals",
     "ingredients",
+    "product_ingredients_images_94Xbm6",
     "rich_text_btfngN",
     "multicolumn_cRwjUa",
     "routine",
