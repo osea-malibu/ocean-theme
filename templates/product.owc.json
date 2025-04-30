@@ -190,6 +190,29 @@
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
+    "rich_text_btfngN": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_maNiHT": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "<h3>How To Use</h3>",
+            "heading_classes": "text-center font-serif text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4",
+            "subheading_text": "",
+            "subheading_classes": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_maNiHT"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_heading": "",
+        "section_classes": "",
+        "container_classes": "container"
+      }
+    },
     "routine": {
       "type": "product-routine",
       "settings": {
@@ -247,6 +270,7 @@
     "video",
     "clinicals",
     "ingredients",
+    "rich_text_btfngN",
     "routine",
     "faqs",
     "reviews",
