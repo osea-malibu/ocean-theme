@@ -1,0 +1,125 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="product-ingredients container mb-12 flex w-full lg:max-w-screen-lg relative overflow-hidden">
+    {%- if section.settings.image_mobile -%}
+      <picture class="absolute inset-x-4 inset-y-0 2xs:inset-x-6">
+        <source
+          srcset="{{ section.settings.image_mobile | image_url: width: 720 }} 1x, {{ section.settings.image_mobile | image_url: width: 1440 }} 2x"
+          media="(min-width: 768px)"
+        >
+        <source
+          srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 1x, {{ section.settings.image_mobile | image_url: width: 800 }} 2x"
+          media="(min-width: 0px)"
+        >
+        <img 
+          srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 1x, {{ section.settings.image_mobile | image_url: width: 800 }} 2x"
+          src="{{ section.settings.image_mobile | image_url: width: 800 }}"
+          alt=""
+          aria-hidden="true"
+          height="{{ section.settings.image_mobile.height }}"
+          width="{{ section.settings.image_mobile.width }}"
+          class="block object-cover h-full w-full object-left-top"
+          loading="lazy"
+        >
+      </picture>
+    {%- endif -%}
+    <div class="relative w-full bg-white/90{% if section.settings.image_mobile %} p-4 m-4 sm:p-6 sm:m-6{% endif %}">
+      <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
+      <div class="mb-4">
+        {%- for block in section.blocks -%}
+          <div class="relative overflow-hidden{% unless forloop.last %} border-b border-seaweed-400{% endunless %}">
+            <input type="checkbox" name="panel" id="panel-{{ forloop.index }}" class="hidden peer">
+            <label for="panel-{{ forloop.index }}" class="relative block py-2 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-4 after:w-4 before:h-0.5 after:h-0.5 before:rounded-full after:rounded-full before:bg-seaweed-500 after:bg-seaweed-500 before:scale-75 after:scale-75 before:my-0.5 after:my-0.5 before:top-4 after:top-4 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform after:motion-safe:duration-200">
+              <b class="font-medium">{{ block.settings.ingredient_name | split: ' [' | first }}</b>
+              {%- if block.settings.ingredient_scientific_name != blank -%}
+                {{ ' ' }}<em class="text-sm text-seaweed-600">({{ block.settings.ingredient_scientific_name }})</em>
+              {%- endif -%}
+            </label>
+            <div class="max-h-0 {% if block.settings.ingredient_description contains '<img' %}peer-checked:max-h-96{% else%}peer-checked:max-h-24{% endif %} motion-safe:transition-max-height motion-safe:duration-500">
+              <div class="pb-5 leading-tight">
+                {%- if block.settings.ingredient_description != blank -%}
+                  <p>{{ block.settings.ingredient_description }}</p>
+                {%- endif -%}
+                {%- if block.settings.ingredient_citation != blank -%}
+                  <cite>{{ block.settings.ingredient_citation }}</cite>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <modal-opener class="no-js-hidden" data-modal="#IngredientsPopup">
+        <button class="underline cursor-pointer" type="button" aria-haspopup="dialog">Full ingredients list</button>
+      </modal-opener>
+    </div>
+    <modal-dialog id="IngredientsPopup">
+      <div role="dialog" aria-label="Full ingredients list" aria-modal="true" class="!pr-4" tabindex="-1">
+        <button id="ModalClose-IngredientsPopup" type="button" aria-label="{{ 'accessibility.close' | t }}">
+          {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
+        </button>
+        <div class="w-full max-h-96 overflow-auto pr-4">
+          <h2 class="font-serif text-3xl tracking-tight mb-2">Ingredients</h2>
+          {{ section.settings.full_ingredients }}
+        </div>
+      </div>
+    </modal-dialog>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Ingredients with Images",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section is powered by the product metafields labeled 'Key ingredients'."
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "Ingredients"
+    },
+    {
+      "type": "text",
+      "id": "full_ingredients",
+      "label": "Ingredients",
+      "info": "Connect data source 'Ingredients'"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "key_ingredient",
+      "name": "Key Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "ingredient_name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_scientific_name",
+          "label": "Scientific name"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_citation",
+          "label": "Citation"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredient_image",
+          "label": "Image",
+          "info": "Size: 800w x 800h"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
