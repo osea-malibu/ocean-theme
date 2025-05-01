@@ -20,12 +20,14 @@
                 if product.metafields.custom.pdp_main_image != blank
                   assign slider_images = product.metafields.custom.pdp_main_image.value | concat: product.media
                   assign variant_image_index = 1
+                  assign gallery_limit = section.settings.gallery_limit | plus: 1
                 else
                   assign slider_images = product.media
                   assign variant_image_index = 0
+                  assign gallery_limit = section.settings.gallery_limit
                 endif 
               -%}
-              {%- for media in slider_images limit: section.settings.gallery_limit -%}
+              {%- for media in slider_images limit: gallery_limit -%}
                 <li class="glide__slide" data-media-id="{{ section.id }}-{{ media.id }}">
                   {%- if media.media_type == 'image' -%}
                     {%- liquid
@@ -620,14 +622,14 @@
                     <div class="upsell-sets mt-4">
                       <h2 class="font-medium tracking-wide mb-1 text-owc-blue">Save with Sets</h2>
                       {%- for set in product.metafields.my_fields.save_with_sets.value -%}
-                        {%- render 'product-upsell', product: set, classes: 'border-owc-blue2 text-owc-blue', button_classes: 'bg-owc-blue3 border-owc-blue3 text-owc-blue' -%}
+                        {%- render 'product-upsell', product: set, classes: 'border-owc-blue2 text-owc-blue', button_classes: 'bg-owc-blue3 text-owc-blue' -%}
                       {%- endfor -%}
                     </div>
                   {%- endif -%}
                   {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
                     <div class="upsell-partner mt-4">
                       <h2 class="font-medium tracking-wide mb-1 text-owc-blue">Pairs Well With</h2>
-                      {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value, classes: 'border-owc-blue2 text-owc-blue', button_classes: 'bg-owc-blue3 border-owc-blue3 text-owc-blue' -%}
+                      {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value, classes: 'text-owc-blue', button_classes: 'bg-owc-blue3 border-owc-blue3 text-owc-blue' -%}
                     </div>
                   {%- endif -%}
                   {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
@@ -763,58 +765,6 @@
     ]
   }
 </script>
-
-{% stylesheet %}
-  .pdp #MainContent {
-    background: rgba(245, 255, 137, 0.2);
-    background: linear-gradient(135deg,rgba(245, 255, 137, 0.05) 0%, rgba(245, 255, 137, 0.75) 100%);
-  }
-  .pdp #oke-star-filled > path {
-    fill: #0A30DF;
-  }
-  .pdp #MainContent h2,
-  .pdp #MainContent h3 {
-    color: #1C39BB;
-  }
-  .pdp tab-controller [role="tabpanel"],
-  .pdp tab-controller [role="tab"] {
-    border-color: #0A30DF;
-  }
-  .pdp tab-controller [role="tab"] {
-    background: rgba(245, 255, 137, 0.5);
-  }
-  .product-ingredients img {
-    border: 1px solid #0A30DF;
-    border-radius: 1.25rem;
-  }
-  .product-ingredients > div {
-    border-radius: 0.75rem;
-    background-color: #FFFFFF;
-  }
-  .product-ingredients b,
-  .product-ingredients p,
-  .product-ingredients button {
-    color: #1C39BB;
-  }
-  .product-ingredients .border-seaweed-400 {
-    border-color: rgba(10, 48, 223, 0.25);
-  }
-  .product-ingredients label:before,
-  .product-ingredients label:after {
-    background-color: #0A30DF;
-  }
-  product-sticky-atc.border-seaweed-300 {
-    border-color: rgba(10, 48, 223, 0.25);
-  }
-  product-sticky-atc h3 {
-    font-weight: 700;
-  }
-  @media (min-width: 1280px) {
-    .product-ingredients {
-      max-width: 1280px;
-    }
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
