@@ -844,16 +844,25 @@
   .pdp-ocean-wave-cleanser div.okeReviews .oke-is-large .oke-w-reviews-list-item {
     @apply bg-white rounded-lg overflow-hidden border border-owc-blue2 mb-4 p-0;
   }
-  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-review-side,
-  .pdp-ocean-wave-cleanser div.okeReviews .oke-w-review-side {
-    @apply border-r border-owc-blue2 border-t-0 border-b-0 border-l-0;
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-review-side {
+    @apply border-r-0 lg:border-r border-owc-blue2 border-t-0 md:border-b-0 border-l-0;
   }
   .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-is-large .oke-w-review-main {
     @apply py-6 pr-6;
   }
-  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-reviews-main--nav-divider,
-  .pdp-ocean-wave-cleanser div.okeReviews .oke-w-reviews-main--nav-divider {
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-reviews-main--nav-divider {
     @apply border-none;
+  }
+  @media (max-width: 1024px) {
+    .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-review {
+      @apply bg-white border border-owc-blue2 rounded-lg overflow-hidden;
+    }
+    .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-review-main {
+      @apply px-4 pb-4;
+    }
+  }
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-is-medium .oke-w-review-main {
+    @apply md:py-4 pr-4;
   }
 
   /* Postscript email signup persistent widget position */
