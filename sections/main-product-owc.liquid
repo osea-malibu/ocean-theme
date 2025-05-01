@@ -87,26 +87,22 @@
               {%- endfor -%}
             </ul>
           </div>
-          <div class="glide__arrows" data-glide-el="controls">
+          {% comment %} <div class="glide__arrows" data-glide-el="controls">
             <button
-              class="glide__arrow glide__arrow--left left-0 top-1/2 p-4"
+              class="glide__arrow glide__arrow--left right-12 left-auto -bottom-4 p-4"
               aria-label="Go to previous"
               data-glide-dir="<"
             >
-              <div class="bg-white/75 rounded-full">
-                {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-6 w-6 text-owc-blue2 block relative right-px' %}
-              </div>
+              {% render 'icon-arrow', variant: 'long', aria_hidden: true, stroke_width: 2, classes: 'h-6 w-6 text-owc-blue2 block relative right-px rotate-180' %}
             </button>
             <button
-              class="glide__arrow glide__arrow--right right-0 top-1/2 p-4"
+              class="glide__arrow glide__arrow--right right-0 -bottom-4 p-4"
               aria-label="Go to next"
               data-glide-dir=">"
             >
-              <div class="bg-white/75 rounded-full">
-                {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-6 w-6 text-owc-blue2 block relative left-px rotate-180' %}
-              </div>
+              {% render 'icon-arrow', variant: 'long', aria_hidden: true, stroke_width: 2, classes: 'h-6 w-6 text-owc-blue2 block relative left-px' %}
             </button>
-          </div>
+          </div> {% endcomment %}
           <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[846px] lg:overflow-y-auto" data-glide-el="controls[nav]">
             {%- for media in slider_images limit: section.settings.gallery_limit -%}
               <button class="glide__bullet relative {% if media.media_type == 'image' %}p-2{% else %}py-2 px-3{% endif %} md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
