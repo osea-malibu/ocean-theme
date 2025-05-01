@@ -500,11 +500,6 @@
         "label": "Enable gift with purchase"
       },
       {
-        "type": "checkbox",
-        "id": "is_loyalty_gwp",
-        "label": "Loyalty-only gift with purchase"
-      },
-      {
         "type": "select",
         "id": "gwp_type",
         "options": [
@@ -527,10 +522,26 @@
       },
       {
         "type": "checkbox",
+        "id": "is_loyalty_gwp",
+        "label": "Enable loyalty-only"
+      },
+      {
+        "type": "checkbox",
         "id": "enable_annoucement_bar_message",
         "info": "Use with Automatic add type.",
         "default": true,
         "label": "Enable annoucement bar countdown"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_product_qualifier_gwp",
+        "label": "Enable product qualifier"
+      },
+      {
+        "type": "product",
+        "id": "gwp_product_qualifier",
+        "label": "Product qualifier",
+        "info": "Product that must be in cart to qualify for GWP"
       },
       {
         "type": "textarea",
