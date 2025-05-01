@@ -791,6 +791,13 @@
   .pdp-ocean-wave-cleanser product-sticky-atc h3 {
     @apply font-bold;
   }
+  .pdp-ocean-wave-cleanser .product-video deferred-media {
+    @apply rounded-lg border border-owc-blue2 overflow-hidden;
+  }
+  .pdp-ocean-wave-cleanser .product-faqs .container,
+  .pdp-ocean-wave-cleanser .product-video .container {
+    @apply xl:max-w-screen-xl;
+  }
   .pdp-ocean-wave-cleanser .product-faqs .container {
     @apply xl:max-w-screen-xl;
   }
