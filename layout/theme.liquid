@@ -165,8 +165,10 @@
 
       window.gwpSettings = {
         enabled: {{ settings.enable_gwp }},
-        loyaltyOnly: {{ settings.is_loyalty_gwp }},
         type: '{{ settings.gwp_type }}',
+        loyaltyOnly: {{ settings.is_loyalty_gwp }},
+        productQualifierEnabled: {{ settings.enable_product_qualifier_gwp }},
+        productQualifierId: '{{ settings.gwp_product_qualifier.id }}',
         tiers: [
           {
             id: "tier3",
