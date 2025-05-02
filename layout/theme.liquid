@@ -95,7 +95,7 @@
     {% comment %} End PostPilot SiteMatch {% endcomment %}
   </head>
 
-  <body class="antialiased{% if template.name == 'product' %} pdp{% endif %}{% if customer %} logged-in{% endif %}">
+  <body class="antialiased{% if template.name == 'product' %} pdp pdp-{{ product.handle }}{% endif %}{% if customer %} logged-in{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
@@ -165,8 +165,10 @@
 
       window.gwpSettings = {
         enabled: {{ settings.enable_gwp }},
-        loyaltyOnly: {{ settings.is_loyalty_gwp }},
         type: '{{ settings.gwp_type }}',
+        loyaltyOnly: {{ settings.is_loyalty_gwp }},
+        productQualifierEnabled: {{ settings.enable_product_qualifier_gwp }},
+        productQualifierId: '{{ settings.gwp_product_qualifier.id }}',
         tiers: [
           {
             id: "tier3",

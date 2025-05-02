@@ -48,7 +48,10 @@ if (!customElements.get("product-form")) {
           .then((response) => {
             if (response.status) {
               this.handleErrorMessage(response.description);
-            } else if (!this.cart) {
+              return;
+            }
+
+            if (!this.cart) {
               window.location = window.routes.cart_url;
               return;
             }
@@ -56,42 +59,20 @@ if (!customElements.get("product-form")) {
             this.error = false;
             this.cart.renderContents(response);
 
-            const isLoggedIn = window.customerLoggedIn;
-            const { enabled, loyaltyOnly } = window.gwpSettings;
-
-            if (enabled && (!loyaltyOnly || (loyaltyOnly && isLoggedIn))) {
-              if (window.gwpSettings.type === "auto") {
-                let giftsToAdd = [];
-                const fetchPromises = window.gwpSettings.tiers.map((tier) => {
-                  if (tier.product !== "") {
-                    return fetch(window.Shopify.routes.root + "cart.js")
-                      .then((response) => response.json())
-                      .then((data) => {
-                        const cartIdArray = data.items.map((i) => i.id);
-                        if (
-                          !cartIdArray.includes(parseInt(tier.variant)) &&
-                          data.total_price >= tier.threshold
-                        ) {
-                          giftsToAdd = [...giftsToAdd, tier.variant];
-                        }
-                      })
-                      .catch((e) => {
-                        console.error(e);
-                      });
-                  }
-                });
-
-                // Wait for all fetch promises to complete
-                Promise.all(fetchPromises).then(() => {
-                  this.cart.addFreeGift(giftsToAdd);
-                });
-              } else if (
-                window.gwpSettings.type === "url" &&
-                localStorage.getItem("osea.gwpUrlVariantId") === window.gwpSettings.tiers[2].variant
-              ) {
-                document.querySelector("gift-with-purchase-url").checkGiftQualifiers();
-              }
-            }
+            // Fetch cart state and delegate GWP logic to cart.js
+            fetch(window.Shopify.routes.root + "cart.js")
+              .then((res) => res.json())
+              .then((fullCartState) => {
+                const cartComponent =
+                  document.querySelector("cart-drawer-items") ||
+                  document.querySelector("cart-items");
+                if (cartComponent && typeof cartComponent.handleGiftWithPurchase === "function") {
+                  cartComponent.handleGiftWithPurchase(fullCartState);
+                } else {
+                  console.warn("cart-items or handleGiftWithPurchase not available");
+                }
+              })
+              .catch((e) => console.error("Error fetching full cart for GWP:", e));
           })
           .catch((e) => console.error(e))
           .finally(() => {

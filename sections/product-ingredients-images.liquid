@@ -1,0 +1,127 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="container relative mb-12 flex w-full">
+    <div class="content relative w-full bg-white border border-owc-blue2 rounded-lg p-6 sm:p-8">
+      <h3 class="text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4 lg:mb-6 text-center">{{ section.settings.header }}</h3>
+      <div class="mb-4 max-w-lg lg:max-w-4xl mx-auto lg:flex lg:items-start lg:gap-8 lg:justify-around">
+        {%- for block in section.blocks -%}
+          {%- assign index_modulo = forloop.index0 | modulo: 2 -%}
+          <div class="flex items-center gap-3 md:gap-6 mb-4 w-full {% if index_modulo == 1 %}flex-row-reverse{% else %}flex-row{% endif %} lg:flex-col-reverse lg:w-52">
+            <div class="relative w-full lg:text-center{% if index_modulo == 1 %} text-right{% endif %}">
+              <p class="relative block mb-2 text-lg md:text-xl lg:text-2xl after:content-[''] after:block after:w-full after:h-px after:bg-owc-blue2 before:content-[''] before:block before:bg-owc-blue2 before:w-[5px] before:h-[5px] before:rounded-full before:absolute before:top-[26px] {% if index_modulo == 1 %}before:left-0{% else %}before:right-0{% endif %} lg:before:hidden lg:after:hidden">
+                <b class="font-medium">{{ block.settings.ingredient_name | split: ' [' | first }}</b>
+                {%- if block.settings.ingredient_scientific_name != blank -%}
+                  {{ ' ' }}<em class="text-sm text-seaweed-600">({{ block.settings.ingredient_scientific_name }})</em>
+                {%- endif -%}
+              </p>
+              <div class="leading-tight">
+                {%- if block.settings.ingredient_description != blank -%}
+                  <p class="md:text-lg md:leading-tight">{{ block.settings.ingredient_description }}</p>
+                {%- endif -%}
+                {%- if block.settings.ingredient_citation != blank -%}
+                  <cite>{{ block.settings.ingredient_citation }}</cite>
+                {%- endif -%}
+              </div>
+            </div>
+            {%- if block.settings.ingredient_image -%}
+              <img 
+                srcset="{{ block.settings.ingredient_image | image_url: width: 400 }} 1x, {{ block.settings.ingredient_image | image_url: width: 800 }} 2x"
+                src="{{ block.settings.ingredient_image | image_url: width: 800 }}"
+                alt=""
+                aria-hidden="true"
+                height="{{ block.settings.ingredient_image.height }}"
+                width="{{ block.settings.ingredient_image.width }}"
+                class="block rounded-full w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 shrink-0"
+                loading="lazy"
+              >
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <modal-opener class="no-js-hidden block text-center" data-modal="#IngredientsPopup">
+        <button class="button bg-owc-blue2 border-owc-blue2 text-white" type="button" aria-haspopup="dialog">Full ingredients list</button>
+      </modal-opener>
+    </div>
+    <modal-dialog id="IngredientsPopup">
+      <div role="dialog" aria-label="Full ingredients list" aria-modal="true" class="!pr-4" tabindex="-1">
+        <button id="ModalClose-IngredientsPopup" type="button" aria-label="{{ 'accessibility.close' | t }}">
+          {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
+        </button>
+        <div class="w-full max-h-96 overflow-auto pr-4">
+          <h2 class="font-serif text-3xl tracking-tight mb-2">Ingredients</h2>
+          {{ section.settings.full_ingredients }}
+          <cite class="text-sm text-owc-blue mt-4 leading-tight block">From time to time, ingredients may be updated. Please check the product packaging for the latest ingredient list.</cite>
+        </div>
+      </div>
+    </modal-dialog>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Ingredients with Images",
+  "tag": "section",
+  "class": "product-ingredients-images",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section is powered by the product metafields labeled 'Key ingredients'."
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "Ingredients"
+    },
+    {
+      "type": "text",
+      "id": "full_ingredients",
+      "label": "Ingredients",
+      "info": "Connect data source 'Ingredients'"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "key_ingredient",
+      "name": "Key Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "ingredient_name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_scientific_name",
+          "label": "Scientific name"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_citation",
+          "label": "Citation"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredient_image",
+          "label": "Image",
+          "info": "Size: 800w x 800h"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients with Images",
+      "blocks": [
+        {
+          "type": "key_ingredient"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

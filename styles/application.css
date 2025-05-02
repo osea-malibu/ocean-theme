@@ -414,7 +414,7 @@
     @apply overflow-hidden;
   }
   .glide__slides {
-    @apply relative w-full list-none overflow-hidden pt-0 pr-0 pb-1 pl-1 whitespace-nowrap flex flex-nowrap backface-hidden will-change-transform touch-pan-y;
+    @apply relative w-full list-none overflow-hidden p-0 whitespace-nowrap flex flex-nowrap backface-hidden will-change-transform touch-pan-y;
     transform-style: preserve-3d;
   }
   .glide__slides--dragging {
@@ -757,9 +757,114 @@
     @apply text-wave-600;
   }
 
-  /* Postscript email signup persistent widget position */
-  /* #ps__widget_container #ps__widget {
-    inset: auto -61px 25vh auto !important;
-    transform: rotate(270deg);
-  } */
+  /* OWC Takeover */
+  .pdp-ocean-wave-cleanser #MainContent {
+    background: rgba(245, 255, 137, 0.1);
+    background: linear-gradient(
+      135deg,
+      rgba(245, 255, 137, 0.05) 0%,
+      rgba(245, 255, 137, 0.75) 100%
+    );
+  }
+  .pdp-ocean-wave-cleanser #oke-star-filled > path {
+    @apply fill-owc-blue2;
+  }
+  .pdp-ocean-wave-cleanser #MainContent h2,
+  .pdp-ocean-wave-cleanser #MainContent h3 {
+    @apply text-owc-blue;
+  }
+  .pdp-ocean-wave-cleanser tab-controller [role="tabpanel"],
+  .pdp-ocean-wave-cleanser tab-controller [role="tab"] {
+    @apply border-owc-blue2;
+  }
+  .pdp-ocean-wave-cleanser tab-controller [role="tab"] {
+    @apply bg-owc-yellow/50;
+  }
+  .pdp-ocean-wave-cleanser .product-ingredients-images em,
+  .pdp-ocean-wave-cleanser .product-ingredients-images b,
+  .pdp-ocean-wave-cleanser .product-ingredients-images p {
+    @apply text-owc-blue2;
+  }
+  .pdp-ocean-wave-cleanser product-sticky-atc.border-seaweed-300 {
+    @apply border-owc-blue2/25;
+  }
+  .pdp-ocean-wave-cleanser product-sticky-atc h3 {
+    @apply font-bold;
+  }
+  .pdp-ocean-wave-cleanser .product-video deferred-media {
+    @apply rounded-lg border border-owc-blue2 overflow-hidden;
+  }
+  .pdp-ocean-wave-cleanser .product-faqs .container,
+  .pdp-ocean-wave-cleanser .product-video .container {
+    @apply xl:max-w-screen-xl;
+  }
+  .pdp-ocean-wave-cleanser .product-faqs .container {
+    @apply xl:max-w-screen-xl;
+  }
+  .pdp-ocean-wave-cleanser .product-faqs .bg-owc-blue3 {
+    @apply rounded-lg border border-owc-blue2 sm:p-8;
+  }
+  .pdp-ocean-wave-cleanser .product-faqs b,
+  .pdp-ocean-wave-cleanser .product-faqs p {
+    @apply text-owc-blue;
+  }
+  .pdp-ocean-wave-cleanser .product-faqs .border-seaweed-400 {
+    @apply border-owc-blue2/50;
+  }
+  .pdp-ocean-wave-cleanser .product-faqs label:before,
+  .pdp-ocean-wave-cleanser .product-faqs label:after {
+    @apply bg-owc-blue2;
+  }
+  .pdp-ocean-wave-cleanser .upsell-partner > div {
+    @apply border-owc-blue2;
+  }
+  .pdp-ocean-wave-cleanser .oke-w-breakdownModule-distribution-bar-fill,
+  .pdp-ocean-wave-cleanser
+    .okeReviews[data-oke-container]
+    .oke-w-reviewerRecommendation--yes:before {
+    @apply !bg-owc-blue2;
+  }
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container].oke-w,
+  .pdp-ocean-wave-cleanser .okeReviews .oke-w-ratingAverageModule-count,
+  .pdp-ocean-wave-cleanser .okeReviews .oke-w-recommendsModule-text,
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-reviews-count,
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-reviewer-verified,
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-reviewer-verified-icon:before,
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-reviewContent-date,
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-helpful,
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-helpful-vote-button,
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-helpful-vote-button:before {
+    @apply !text-owc-blue;
+  }
+  .pdp-ocean-wave-cleanser .okeReviews .oke-w-reviews-head button,
+  .pdp-ocean-wave-cleanser .okeReviews .oke-w-reviews-head a {
+    @apply bg-owc-blue2 border-owc-blue2;
+  }
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item,
+  .pdp-ocean-wave-cleanser div.okeReviews .oke-is-large .oke-w-reviews-list-item {
+    @apply bg-white rounded-lg overflow-hidden border border-owc-blue2 mb-4 p-0;
+  }
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-review-side {
+    @apply border-r-0 lg:border-r border-owc-blue2 border-t-0 md:border-b-0 border-l-0;
+  }
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-is-large .oke-w-review-main {
+    @apply py-6 pr-6;
+  }
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-reviews-main--nav-divider {
+    @apply border-none;
+  }
+  @media (max-width: 1024px) {
+    .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-review {
+      @apply bg-white border border-owc-blue2 rounded-lg overflow-hidden;
+    }
+    .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-review-main {
+      @apply px-4 pb-4;
+    }
+  }
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-is-medium .oke-w-review-main {
+    @apply md:py-4 pr-4;
+  }
+  .pdp-ocean-wave-cleanser .okeReviews[data-oke-container] .oke-w-reviews-list-item {
+    @apply border-none;
+  }
 }

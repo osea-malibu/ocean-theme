@@ -50,7 +50,7 @@
         aria-controls="tab-{{ forloop.index }}-{{ block.id }}"
         tabindex="0"
         aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-        class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 py-1 cursor-pointer whitespace-nowrap{% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }} {% if tabs.size > 3 %}px-1 xs:px-2 md:px-1 lg:px-3 tracking-wider xs:tracking-widest md:tracking-wider lg:tracking-widest{% else %}tracking-widest px-2 2xs:px-3{% endif %}"
+        class="relative rounded-t border-x border-t border-seaweed-300 bg-wave-100 py-1 cursor-pointer whitespace-nowrap{% unless forloop.last %} mr-1{% endunless %}{% if forloop.first %} z-10 !bg-white{% endif %} {{ block.settings.info_tab_label_classes }} {% if tabs.size > 3 %}px-1 xs:px-2 md:px-1 lg:px-2 tracking-wider xs:tracking-widest md:tracking-wider xl:tracking-widest{% else %}tracking-widest px-2 2xs:px-3{% endif %}"
       >
         {{ tab }}
       </li>
@@ -61,7 +61,7 @@
       id="tab-{{ forloop.index }}-{{ block.id }}"
       role="tabpanel"
       aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-      class="relative border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
+      class="relative bg-white border border-seaweed-300 rounded-r rounded-bl p-4 z-0 -mt-px {{ block.settings.info_tab_content_classes }}"
     >
       {%- case tab -%}
         {%- when block.settings.info_tab_description_label -%}

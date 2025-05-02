@@ -97,54 +97,72 @@ class CartItems extends HTMLElement {
   }
 
   handleGiftWithPurchase(parsedState) {
-    // Get logged in status from Shopify customer object
     const isLoggedIn = window.customerLoggedIn;
+    const { enabled } = window.gwpSettings;
+    if (!enabled) return;
 
-    // Check if we should run GWP logic based on settings
-    const { enabled, loyaltyOnly } = window.gwpSettings;
-    if (enabled && (!loyaltyOnly || (loyaltyOnly && isLoggedIn))) {
-      const cartIdArray = this.dataset.cartIds.slice(1, -1).split(",");
-      const { tiers } = window.gwpSettings;
-      let giftsToAdd = [];
-      let giftsToRemove = [];
+    const { loyaltyOnly, productQualifierEnabled, productQualifierId, tiers, type } =
+      window.gwpSettings;
 
-      tiers.forEach((tier) => {
-        if (tier.product !== "") {
-          if (cartIdArray.includes(tier.product) && parsedState.total_price < tier.threshold) {
-            const line = cartIdArray.findIndex((i) => i === tier.product) + 1;
-            giftsToRemove.push(line); // Collect gifts to remove
-          }
-          if (
-            window.gwpSettings.type === "auto" &&
-            !cartIdArray.includes(tier.product) &&
-            parsedState.total_price >= tier.threshold
-          ) {
-            giftsToAdd.push(tier.variant);
-          }
-          if (
-            window.gwpSettings.type === "url" &&
-            localStorage.getItem("osea.gwpUrlVariantId") === tier.variant
-          ) {
-            document.querySelector("gift-with-purchase-url").checkGiftQualifiers();
-          }
+    // Use cart state to get current product IDs
+    const cartIdArray = parsedState.items.map((item) => item.product_id);
+
+    // Loyalty check (early return only if GWP is restricted and user is not logged in)
+    if (loyaltyOnly && !isLoggedIn) return;
+
+    // Don’t exit if qualifier is missing — just track it
+    const qualifierMissing =
+      productQualifierEnabled && !cartIdArray.includes(parseInt(productQualifierId));
+
+    let giftsToAdd = [];
+    let giftsToRemove = [];
+
+    tiers.forEach((tier) => {
+      if (!tier.product) return;
+
+      const tierProductInt = parseInt(tier.product);
+
+      // REMOVE logic: if gift is in cart AND (below threshold OR qualifier missing)
+      const shouldRemoveGift =
+        cartIdArray.includes(tierProductInt) &&
+        (parsedState.total_price < tier.threshold || qualifierMissing);
+
+      if (shouldRemoveGift) {
+        const line = cartIdArray.findIndex((i) => i === tierProductInt) + 1;
+        giftsToRemove.push(line);
+      }
+
+      // ADD logic: only run if qualifier is NOT missing
+      if (!qualifierMissing) {
+        if (
+          type === "auto" &&
+          !cartIdArray.includes(tierProductInt) &&
+          parsedState.total_price >= tier.threshold
+        ) {
+          giftsToAdd.push(tier.variant);
         }
-      });
 
-      if (giftsToRemove.length > 0) {
-        // Sort giftsToRemove in descending order
-        giftsToRemove.sort((a, b) => b - a);
-
-        // Remove gifts sequentially with a delay between each
-        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-        giftsToRemove.reduce((promise, line) => {
-          return promise.then(() => this.removeGift(line)).then(() => delay(400));
-        }, Promise.resolve());
+        // URL-type logic (still gated by qualifier)
+        if (type === "url" && localStorage.getItem("osea.gwpUrlVariantId") === tier.variant) {
+          document.querySelector("gift-with-purchase-url")?.checkGiftQualifiers();
+        }
       }
+    });
 
-      if (giftsToAdd.length > 0) {
-        this.cart.addFreeGift(giftsToAdd);
-      }
+    // Remove gifts if needed
+    if (giftsToRemove.length > 0) {
+      giftsToRemove.sort((a, b) => b - a);
+
+      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      giftsToRemove.reduce((promise, line) => {
+        return promise.then(() => this.removeGift(line)).then(() => delay(400));
+      }, Promise.resolve());
+    }
+
+    // Add gifts if qualified
+    if (giftsToAdd.length > 0) {
+      this.cart.addFreeGift(giftsToAdd);
     }
   }
 
@@ -160,6 +178,7 @@ class CartItems extends HTMLElement {
   }
 
   updateCartItem(line, value, name, target) {
+    /* Handle subscription quantity limit */
     const lineItemSubscription = document.getElementById(`CartSubscribeCheckbox-${line}`);
     if (lineItemSubscription && lineItemSubscription.checked && name === "updates[]" && value > 4) {
       const quantityElement =

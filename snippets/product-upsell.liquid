@@ -6,6 +6,7 @@
     - classes: {String} Tailwind styling classes (optional)
     - hide_price: {Boolean} Removes price from button element. Default: false (optional)
     - button_style: {'button' or 'link'} Type of add to bag button (optional)
+    - button_classes: {String} Tailwind styling classes for button (optional)
     - step_number: {String} Adds a badge for step number (routine). Default: false (optional)
 
     Usage:
@@ -31,7 +32,7 @@
         <button
           type="submit"
           name="add"
-          class="{% if button_style == 'link' %}link font-bold uppercase text-xs tracking-widest flex gap-1 items-center{% else %}button button-sm button-tertiary w-full flex gap-3 mt-1 {% if hide_price %}justify-center{% else %}justify-between{% endif %}{% endif %}"
+          class="{% if button_style == 'link' %}link font-bold uppercase text-xs tracking-widest flex gap-1 items-center{% else %}button button-sm w-full flex gap-3 mt-1 {% if button_classes != blank %}{{ button_classes }}{% else %}button-tertiary{% endif %} {% if hide_price %}justify-center{% else %}justify-between{% endif %}{% endif %}"
           {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
         >
           {%- if product.selected_or_first_available_variant.available -%}

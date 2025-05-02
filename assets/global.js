@@ -1556,6 +1556,13 @@ class VariantSelects extends HTMLElement {
         variantImageEl.srcset = `${newImageSrc}&width=294 1x, ${newImageSrc}&width=588 2x`;
         variantImageEl.src = newImageSrc;
       }
+      // change thumbanil image in product page gallery thumb navigator
+      const thumbImageEl = document.querySelector("#Product-ThumbImage");
+      const newThumbImageSrc = this.currentVariant.featured_image.src;
+      if (thumbImageEl) {
+        thumbImageEl.srcset = `${newThumbImageSrc}&width=192 1x, ${newThumbImageSrc}&width=252 2x`;
+        thumbImageEl.src = newThumbImageSrc;
+      }
     } else {
       // change image in product card
       const imageElement = document.getElementById(
@@ -1806,7 +1813,9 @@ class SubscriptionRadios extends HTMLElement {
 
   setActiveState() {
     this.purchaseOptionInputs?.forEach((input) => {
-      input.closest(".purchase-option").classList.toggle("bg-wave-200", input.checked);
+      input
+        .closest(".purchase-option")
+        .classList.toggle(this.dataset.selectedColor || "bg-wave-200", input.checked);
       input.closest(".purchase-option").classList.toggle("bg-white", !input.checked);
     });
   }

@@ -15,7 +15,7 @@
         "title": {
           "type": "title",
           "settings": {
-            "title_classes": "title text-2xl tracking-wide col-span-12"
+            "title_classes": "title text-2xl tracking-wide col-span-12 text-owc-blue font-medium"
           }
         },
         "price": {
@@ -28,13 +28,13 @@
         "6a44c417-fd63-4240-a103-3540393f4f89": {
           "type": "rating",
           "settings": {
-            "rating_classes": "rating col-span-12 md:col-span h-full"
+            "rating_classes": "rating col-span-12 md:col-span h-full text-owc-blue2"
           }
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "variant_classes": "variants col-span-12 mt-4",
+            "variant_classes": "variants col-span-12 mt-4 text-owc-blue2",
             "hide_label": false
           }
         },
@@ -74,32 +74,32 @@
           "settings": {
             "benefits_classes": "benefits col-span-4 mt-6",
             "benefits_hide_icons": true,
-            "benefits_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "benefits_content_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book"
+            "benefits_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
+            "benefits_content_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book text-owc-blue2"
           }
         },
         "9b65c02a-2972-449a-b590-d40d4a256d04": {
           "type": "skin_types",
           "settings": {
             "skin_types_classes": "skin-types col-span-4 mt-6",
-            "skin_types_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "skin_types_content_classes": "text-sm font-book li:mb-2"
+            "skin_types_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
+            "skin_types_content_classes": "text-sm font-book li:mb-2 text-owc-blue2"
           }
         },
         "d08cdbd7-b608-45ad-bfec-e65bb7339509": {
           "type": "scent_profile",
           "settings": {
             "scent_profile_classes": "scent-profile col-span-4 mt-6",
-            "scent_profile_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
-            "scent_profile_content_classes": "text-sm font-book leading-tight"
+            "scent_profile_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
+            "scent_profile_content_classes": "text-sm font-book leading-tight text-owc-blue2"
           }
         },
         "2431ba77-22b9-43d0-a67d-f9858b6d8b58": {
           "type": "info_tabs",
           "settings": {
             "info_tab_wrapper_classes": "col-span-12 mt-4",
-            "info_tab_label_classes": "font-bold uppercase text-xs tracking-widest",
-            "info_tab_content_classes": "",
+            "info_tab_label_classes": "font-bold uppercase text-xs text-owc-blue2",
+            "info_tab_content_classes": "text-owc-blue2",
             "enable_info_tab_description": true,
             "info_tab_description_label": "Description",
             "enable_info_tab_howto": true,
@@ -180,11 +180,244 @@
         }
       },
       "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
         "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
         "header": "Formulated With",
+        "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
+      }
+    },
+    "rich_text_btfngN": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_maNiHT": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "<h3>How To Use It</h3>",
+            "heading_classes": "text-center font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight font-serif mb-3 md:mb-4",
+            "subheading_text": "",
+            "subheading_classes": ""
+          }
+        }
+      },
+      "block_order": ["heading_maNiHT"],
+      "name": "Rich text",
+      "settings": {
+        "section_heading": "",
+        "section_classes": "",
+        "container_classes": "container"
+      }
+    },
+    "multicolumn_cRwjUa": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_rn7aRQ": {
+          "type": "column",
+          "settings": {
+            "column_classes": "relative bg-white border border-owc-blue2 rounded-lg overflow-hidden",
+            "image": "shopify://shop_images/owc-htu-1.jpg",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "relative z-0",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "absolute top-0 left-0 z-10 p-2 lg:p-3 xl:p-4 text-owc-blue2",
+            "remove_text_wrapper": false,
+            "heading": "1 - <b>Shake</b>",
+            "heading_classes": "text-lg leading-none font-book lg:text-xl lg:leading-none xl:text-2xl xl:leading-none",
+            "paragraph": "to activate",
+            "paragraph_classes": "leading-none lg:text-lg lg:leading-none xl:text-xl xl:leading-none",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
+        "column_U6xecN": {
+          "type": "column",
+          "settings": {
+            "column_classes": "relative bg-white border border-owc-blue2 rounded-lg overflow-hidden",
+            "image": "shopify://shop_images/owc-htu-2.jpg",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "relative z-0",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "absolute top-0 left-0 z-10 p-2 lg:p-3 xl:p-4 text-owc-blue2",
+            "remove_text_wrapper": false,
+            "heading": "2 - <b>Massage</b>",
+            "heading_classes": "text-lg leading-none font-book lg:text-xl lg:leading-none xl:text-2xl xl:leading-none",
+            "paragraph": "into dry skin",
+            "paragraph_classes": "leading-none lg:text-lg lg:leading-none xl:text-xl xl:leading-none",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
+        "column_tKxjH8": {
+          "type": "column",
+          "settings": {
+            "column_classes": "relative bg-white border border-owc-blue2 rounded-lg overflow-hidden",
+            "image": "shopify://shop_images/owc-htu-3.jpg",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "relative z-0",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "absolute top-0 left-0 z-10 p-2 lg:p-3 xl:p-4 text-owc-blue2",
+            "remove_text_wrapper": false,
+            "heading": "3 - <b>Dissolve</b>",
+            "heading_classes": "text-lg leading-none font-book lg:text-xl lg:leading-none xl:text-2xl xl:leading-none",
+            "paragraph": "makeup &amp; impurities",
+            "paragraph_classes": "leading-none lg:text-lg lg:leading-none xl:text-xl xl:leading-none",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
+        "column_Ri7rrD": {
+          "type": "column",
+          "settings": {
+            "column_classes": "relative bg-white border border-owc-blue2 rounded-lg overflow-hidden",
+            "image": "shopify://shop_images/owc-htu-4.jpg",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "relative z-0",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "absolute top-0 left-0 z-10 p-2 lg:p-3 xl:p-4 text-owc-blue2",
+            "remove_text_wrapper": false,
+            "heading": "4 - <b>Rinse</b>",
+            "heading_classes": "text-lg leading-none font-book lg:text-xl lg:leading-none xl:text-2xl xl:leading-none",
+            "paragraph": "with warm water",
+            "paragraph_classes": "leading-none lg:text-lg lg:leading-none xl:text-xl xl:leading-none",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        }
+      },
+      "block_order": ["column_rn7aRQ", "column_U6xecN", "column_tKxjH8", "column_Ri7rrD"],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "section_heading": "",
+        "section_classes": "container mb-12",
+        "container_classes": "grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4",
+        "logged_in_only": false,
+        "is_slider": false,
+        "slider_indicator_count": 3,
+        "slider_breakpoint_limit": "none",
+        "slider_classes": "",
+        "show_arrow_nav": true,
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "show_dot_nav": false,
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+      }
+    },
+    "product_ingredients_images_94Xbm6": {
+      "type": "product-ingredients-images",
+      "blocks": {
+        "key_ingredient_dBBbXd": {
+          "type": "key_ingredient",
+          "repeater": "{{ product.metafields.custom.key_ingredients_list.value }}",
+          "settings": {
+            "ingredient_name": "{{ block.repeater.name.value }}",
+            "ingredient_scientific_name": "{{ block.repeater.scientific_name.value }}",
+            "ingredient_description": "{{ block.repeater.description.value }}",
+            "ingredient_citation": "{{ block.repeater.citation.value }}",
+            "ingredient_image": "{{ block.repeater.image.value }}"
+          }
+        }
+      },
+      "block_order": ["key_ingredient_dBBbXd"],
+      "name": "Ingredients with Images",
+      "settings": {
+        "header": "<b class=\"font-medium\">Cleanse</b> <em class=\"font-serif\">With Benefits</em>",
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
@@ -245,6 +478,9 @@
     "video",
     "clinicals",
     "ingredients",
+    "rich_text_btfngN",
+    "multicolumn_cRwjUa",
+    "product_ingredients_images_94Xbm6",
     "routine",
     "faqs",
     "reviews",

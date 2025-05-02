@@ -3,17 +3,34 @@
     assign remaining_shipping_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price
     assign cart_subscription_items = cart.items | map: 'properties' | where: '_is_subscription', 'true'
     assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
+    assign cart_product_ids = cart.items | map: 'product_id' | join: ', '
+
+    assign qualifier_enabled = settings.enable_product_qualifier_gwp
+    assign qualifier_id = settings.gwp_product_qualifier.id | append: ''
+    if qualifier_enabled and cart_product_ids contains qualifier_id
+      assign qualifier_in_cart = true
+    else
+      assign qualifier_in_cart = false
+    endif
+
+    assign loyalty_only = settings.is_loyalty_gwp
 
     if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto'
-      if settings.is_loyalty_gwp and customer
+      if loyalty_only and customer
         assign free_gifts_active = true 
-      elsif settings.is_loyalty_gwp == false
+      elsif loyalty_only == false
         assign free_gifts_active = true
-      else 
+      else
         assign free_gifts_active = false
       endif
     else
       assign free_gifts_active = false
+    endif
+
+    if qualifier_enabled and free_gifts_active
+      unless qualifier_in_cart
+        assign free_gifts_active = false
+      endunless
     endif
 
     if free_gifts_active
@@ -28,6 +45,8 @@
     data-subscriptions-in-cart="{{ cart_subscription_items }}"
     data-is-gwp-active="{{ settings.enable_gwp }}"
     data-is-loyalty-only="{{ settings.is_loyalty_gwp }}"
+    data-product-qualifier-enabled="{{ settings.enable_product_qualifier }}"
+    data-product-qualifier-id="{{ settings.product_qualifier.id }}"
     data-tier1-threshold="{{ settings.gwp_tier1_threshold }}"
     data-tier2-threshold="{{ settings.gwp_tier2_threshold }}"
     data-tier3-threshold="{{ settings.gwp_tier3_threshold }}"

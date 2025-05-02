@@ -213,6 +213,7 @@ module.exports = {
       owc: {
         blue: "#1C39BB",
         blue2: "#0A30DF",
+        blue3: "#E9F3FC",
         yellow: "#F2FF63",
       },
       "light-black": "#1F1E1F",

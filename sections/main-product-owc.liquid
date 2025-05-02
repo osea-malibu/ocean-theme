@@ -2,22 +2,32 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <section id="main-product">
-  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-10">
+  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 lg:gap-4 xl:gap-10 md:py-6 md:items-start">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {%- if product.media.size > 1 -%}
-      <div class="md:w-3/5 relative md:sticky md:top-[120px] overflow-hidden">
+      <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden">
         <glide-slider
-          class="glide type-carousel gap-4 sm:peek.after-120 md:peek.after-120 sm:perView-1 md:perView-2 perView-1 mb-6 overflow-hidden max-w-full lg:flex lg:flex-row-reverse lg:gap-2"
+          class="glide type-carousel gap-0 sm:perView-1 md:perView-2 perView-1 mb-6 overflow-hidden max-w-full lg:flex lg:flex-row-reverse lg:gap-2"
           id="Product-Slider"
           data-breakpoint-limit="none"
         >
-          {% render 'product-badge', product: product, classes: 'z-10 left-1 !right-auto md:!left-auto md:!right-1' %}
+          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/owc-new-badge.png" width="100" height="100" class="absolute z-10 right-4 top-2 md:top-4 xl:w-28 xl:h-28" alt="NEW!">
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides min-h-full">
-              {%- assign slider_images = product.metafields.custom.pdp_main_image.value | concat: product.media -%}
-              {%- for media in slider_images limit: section.settings.gallery_limit -%}
+              {%- liquid
+                if product.metafields.custom.pdp_main_image != blank
+                  assign slider_images = product.metafields.custom.pdp_main_image.value | concat: product.media
+                  assign variant_image_index = 1
+                  assign gallery_limit = section.settings.gallery_limit | plus: 1
+                else
+                  assign slider_images = product.media
+                  assign variant_image_index = 0
+                  assign gallery_limit = section.settings.gallery_limit
+                endif 
+              -%}
+              {%- for media in slider_images limit: gallery_limit -%}
                 <li class="glide__slide" data-media-id="{{ section.id }}-{{ media.id }}">
                   {%- if media.media_type == 'image' -%}
                     {%- liquid
@@ -26,7 +36,7 @@
                     -%}
                     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                     <img
-                      {% if product.selected_or_first_available_variant.featured_media != null and forloop.first %}id="Product-VariantImage"{% endif %}
+                      {% if product.selected_or_first_available_variant.featured_media != null and forloop.index0 == variant_image_index %}id="Product-VariantImage"{% endif %}
                       srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
                       src="{% render 'imgix', src: main_image_src_2x %}"
                       loading="lazy"
@@ -77,14 +87,30 @@
               {%- endfor -%}
             </ul>
           </div>
-          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:gap-1 lg:flex-col lg:shrink-0 lg:h-[810px] lg:overflow-y-auto" data-glide-el="controls[nav]">
+          {% comment %} <div class="glide__arrows" data-glide-el="controls">
+            <button
+              class="glide__arrow glide__arrow--left right-12 left-auto -bottom-4 p-4"
+              aria-label="Go to previous"
+              data-glide-dir="<"
+            >
+              {% render 'icon-arrow', variant: 'long', aria_hidden: true, stroke_width: 2, classes: 'h-6 w-6 text-owc-blue2 block relative right-px rotate-180' %}
+            </button>
+            <button
+              class="glide__arrow glide__arrow--right right-0 -bottom-4 p-4"
+              aria-label="Go to next"
+              data-glide-dir=">"
+            >
+              {% render 'icon-arrow', variant: 'long', aria_hidden: true, stroke_width: 2, classes: 'h-6 w-6 text-owc-blue2 block relative left-px' %}
+            </button>
+          </div> {% endcomment %}
+          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[846px] lg:overflow-y-auto" data-glide-el="controls[nav]">
             {%- for media in slider_images limit: section.settings.gallery_limit -%}
-              <button class="glide__bullet relative p-2 md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
+              <button class="glide__bullet relative {% if media.media_type == 'image' %}p-2{% else %}py-2 px-3{% endif %} md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
                 <span class="sr-only">Go to slide {{ forloop.index }}</span>
                 {%- if media.media_type == 'image' -%}
-                  <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
+                  <span class="block w-2 h-2 bg-owc-yellow rounded-full md:hidden"></span>
                 {%- elsif media.media_type == 'video' -%}
-                  <div class="absolute z-10 w-5 h-5 md:w-8 md:h-8 rounded-full bg-transparent md:bg-white/50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <div class="absolute z-10 w-5 h-5 md:w-8 md:h-8 rounded-full text-owc-yellow bg-transparent md:bg-white/50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     {%- render 'icon-play', classes: 'absolute inset-0 scale-75 md:text-white md:ml-0.5' -%}
                   </div>
                 {%- endif -%}
@@ -94,13 +120,14 @@
                 -%}
                 {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                 <img
+                  {% if product.selected_or_first_available_variant.featured_media != null and forloop.index0 == variant_image_index %}id="Product-ThumbImage"{% endif %}
                   srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
                   src="{% render 'imgix', src: thumb_image_src_2x %}"
                   loading="lazy"
                   alt="{{ media.alt | escape }}"
                   width="{{ media.width }}"
                   height="{{ media.width | divided_by: media.aspect_ratio | round }}"
-                  class="hidden md:block w-24 h-32 object-cover"
+                  class="hidden md:block w-24 md:h-20 lg:h-32 object-cover"
                 >
                 {% comment %} theme-check-enable RemoteAsset {% endcomment %}
               </button>
@@ -109,7 +136,7 @@
         </glide-slider>
       </div>
     {%- else -%}
-      <div class="bg-wave-100 mb-6 md:w-2/5 relative md:sticky md:top-[148px] max-w-full">
+      <div class="bg-wave-100 mb-6 md:w-1/2 lg:w-2/5 relative md:sticky md:top-[148px] max-w-full">
         {%- liquid
           assign main_image_src = product.media[0] | image_url: width: 300, height: 375, crop: 'center'
           assign main_image_src_2x = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
@@ -179,7 +206,7 @@
                   </a>
                 {%- endunless -%}
                 {%- if product.metafields.custom.faq != nil -%}
-                  <a href="#ProductFaqs" class="link text-xs">Product FAQs</a>
+                  <a href="#ProductFaqs" class="link text-xs mt-1">Product FAQs</a>
                 {%- endif -%}
               </div>
               {%- if product.metafields.custom.set_value -%}
@@ -233,7 +260,7 @@
                 <div class="{{ block.settings.skin_types_classes }}{% if product.metafields.custom.scent_profile == blank and product.metafields.custom.scent_profile_short == blank %} -mr-4{% endif %}">
                   <h2 class="{{ block.settings.skin_types_label_classes }}">Skin types</h2>
                   {%- if product.metafields.custom.skin_types_list != blank -%}
-                    <ul class="icon-list bullet !pl-5{% if product.options contains 'Scent' %} scent-scented{% if product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endif %}{% endif %} {{ block.settings.skin_types_content_classes }}">
+                    <ul class="{% if product.metafields.custom.skin_types_list.value.size > 1 %}icon-list bullet !pl-5{% endif %}{% if product.options contains 'Scent' %} scent-scented{% if product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endif %}{% endif %} {{ block.settings.skin_types_content_classes }}">
                       {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
                         {%- if skin_type == 'Not for sensitive' -%}
                           <li class="flex items-start before:!hidden">
@@ -323,7 +350,7 @@
                     {%- for option in product.options_with_values -%}
                       <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
                       {%- for value in option.values -%}
-                        <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
+                        <div class="button button-xs button-secondary rounded-full lowercase bg-white mr-2 mb-2">
                           {{ value }}
                         </div>
                       {%- endfor -%}
@@ -351,7 +378,7 @@
                                   {% if option.selected_value == value %}checked{% endif %}
                                 >
                                 <label
-                                  class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 peer-checked:border-seaweed-700 mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
+                                  class="button button-xs bg-white border-owc-blue2 rounded-full peer-checked:bg-owc-blue3 peer-checked:border-owc-blue peer-checked:outline peer-checked:outline-owc-yellow outline-offset-2 mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
                                   for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                                 >
                                   {{ value }}
@@ -431,12 +458,13 @@
                 <subscription-radios
                   class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }} {% if product.selected_or_first_available_variant.selling_plan_allocations.size == 0 or non_subscription_allocation %}max-h-0{% else %}max-h-52{% endif %}"
                   data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
-                  data-subscription-group-id = "{{ subscription_group.id }}"
+                  data-subscription-group-id="{{ subscription_group.id }}"
+                  data-selected-color="bg-owc-blue3"
                 >
-                  <fieldset class="border border-seaweed-400 rounded-lg overflow-hidden mt-2">
+                  <fieldset class="border border-owc-blue2 rounded-lg overflow-hidden mt-2">
                     <legend class="sr-only">Purchase options</legend>
                     {%- for option in purchase_options -%}
-                      <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-wave-200 border-b border-seaweed-400{% else %}bg-white{% endif %}">
+                      <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-owc-blue3 border-b border-owc-blue2{% else %}bg-white{% endif %}">
                         <input type="radio"
                           name="purchase_option"
                           id="purchase_option-{{ option }}"
@@ -444,28 +472,28 @@
                           value="{{ option }}"
                           {% if option == 'onetime' %}checked{% endif %}
                         />
-                        <span class="absolute pointer-events-none left-2 2xs:left-3 top-3 cursor-pointer w-5 h-5 border-2 border-seaweed-700 bg-white rounded-full flex justify-center items-center peer-checked:border-seaweed-500 peer-checked:child:scale-100 motion-safe:transition-colors">
-                          <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-seaweed-700 rounded-full scale-0 motion-safe:transition-transform"></span>
+                        <span class="absolute pointer-events-none left-2 2xs:left-3 top-3 cursor-pointer w-5 h-5 border-2 border-owc-blue2 bg-white rounded-full flex justify-center items-center peer-checked:border-owc-blue peer-checked:child:scale-100 motion-safe:transition-colors">
+                          <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-owc-blue2 rounded-full scale-0 motion-safe:transition-transform"></span>
                         </span>
                         <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
                           <span class="flex justify-between">
-                            <strong class="block leading-5 font-bold tracking-wide xs:tracking-widest md:tracking-wide lg:tracking-widest uppercase text-sm">
+                            <strong class="block leading-5 font-bold tracking-wide xs:tracking-widest md:tracking-wide lg:tracking-widest uppercase text-sm text-owc-blue">
                               {%- if option == 'onetime' -%}
                                 <span>One-time purchase</span>
                               {%- else -%}
                                 <span>Subscribe & save 10%</span>
-                                <span class="popular-badge hidden normal-case bg-neon-green text-seaweed-700 rounded font-bold tracking-normal text-xs px-1 h-4">Popular</span>
+                                <span class="popular-badge normal-case bg-owc-yellow text-owc-blue rounded font-bold tracking-normal text-xs px-1 h-4">Popular</span>
                               {%- endif -%}
                             </strong>
                             {%- if option == 'onetime' -%}
-                              {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium' %}
+                              {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium text-owc-blue', slashed_price_color: 'text-owc-blue/50' %}
                             {%- else -%}
-                              {% render 'price', product: product, subscription: true, price_class: 'text-sm font-medium' %}
+                              {% render 'price', product: product, subscription: true, price_class: 'text-sm font-medium text-owc-blue', slashed_price_color: 'text-owc-blue/50' %}
                             {%- endif -%}
                           </span>
                         </label>
                         {%- if option == 'autodeliver' -%}
-                          <span class="text-xs 2xs:tracking-wide md:tracking-normal lg:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3">
+                          <span class="text-xs 2xs:tracking-wide md:tracking-normal lg:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3 text-owc-blue">
                             <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
                             <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
                               <button class="product-popup-modal__button underline cursor-pointer md:tracking-tight lg:tracking-wide" type="button" aria-haspopup="dialog">Learn more</button>
@@ -473,7 +501,7 @@
                           </span>
                           <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
                             <fieldset class="selling-plan-options js flex mb-2 pb-3">
-                              <legend class="text-sm font-medium">Delivery every</legend>
+                              <legend class="text-sm font-medium text-owc-blue">Delivery every</legend>
                               {%- for allocation in product.selected_or_first_available_variant.selling_plan_allocations -%}
                                 {%- if allocation.selling_plan_group_id == subscription_group.id -%}
                                   {%- liquid
@@ -498,7 +526,7 @@
                                       form="{{ product_form_id }}"
                                     />
                                     <label
-                                      class="w-full button button-xs lowercase tracking-wide button-secondary px-1 peer-checked:border-seaweed-500 peer-checked:bg-wave-100 peer-checked:outline peer-checked:outline-neon-green"
+                                      class="w-full button button-xs lowercase tracking-wide border-owc-blue2 bg-white text-owc-blue px-1 peer-checked:bg-owc-yellow peer-checked:outline peer-checked:outline-owc-yellow outline-offset-1"
                                       for="{{ allocation.selling_plan.id }}"
                                     >
                                       {{- selling_plan.name | replace: "Delivery every", "" -}}
@@ -551,7 +579,7 @@
                         <button
                           type="submit"
                           name="add"
-                          class="product-form__submit relative button button-neon md:button-primary button-md w-full col-span-2 disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
+                          class="product-form__submit relative button button-md bg-owc-yellow text-owc-blue border-owc-yellow w-full col-span-2 disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
                           {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
                         >
                             <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
@@ -605,39 +633,29 @@
               {%- endunless -%}
             {%- when 'upsells' -%}
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
-                <div class="{{ block.settings.upsell_classes }}">
-                  <tab-controller id="pdp-upsell-tabs" class="block bg-wave-200 mt-3">
-                    <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex button-group">
-                      {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
-                        <li role="tab" aria-controls="footer-tab-sets" tabindex="0" aria-selected="true" class="button button-xs button-secondary px-3 sm:px-4 bg-wave-200">
-                          {{- 'Save with Sets' -}}
-                        </li>
-                      {%- endif -%}
-                      {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
-                        <li role="tab" aria-controls="footer-tab-pairs" tabindex="0" aria-selected="false" class="button button-xs button-secondary px-3 sm:px-4">
-                          {{- 'Pairs Well With' -}}
-                        </li>
-                      {%- endif -%}
-                    </ul>
-                    <div class="relative mt-1.5">
-                      <div id="footer-tab-sets" role="tabpanel" aria-expanded="true">
-                        {%- for set in product.metafields.my_fields.save_with_sets.value -%}
-                          {%- render 'product-upsell', product: set -%}
-                        {%- endfor -%}
-                      </div>
-                      <div id="footer-tab-pairs" role="tabpanel" aria-expanded="false">
-                        {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value -%}
-                      </div>
+                <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
+                  {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
+                    <div class="upsell-sets mt-4">
+                      <h2 class="font-medium tracking-wide mb-1 text-owc-blue">Save with Sets</h2>
+                      {%- for set in product.metafields.my_fields.save_with_sets.value -%}
+                        {%- render 'product-upsell', product: set, classes: 'border-owc-blue2 text-owc-blue', button_classes: 'bg-owc-blue3 text-owc-blue' -%}
+                      {%- endfor -%}
                     </div>
-                  </tab-controller>
-                </div>
-              {%- endif -%}
-              {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
-                <div class="upsell-routine mt-4">
-                  <h2 class="font-medium tracking-wide mb-1">Complete Your Routine</h2>
-                  {%- for step in product.metafields.custom.upsell_complete_routine.value -%}
-                    {%- render 'product-upsell', product: step, button_style: 'link', step_number: forloop.index -%}
-                  {%- endfor -%}
+                  {%- endif -%}
+                  {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
+                    <div class="upsell-partner mt-4">
+                      <h2 class="font-medium tracking-wide mb-1 text-owc-blue">Pairs Well With</h2>
+                      {%- render 'product-upsell', product: product.metafields.my_fields.pair_with_product.value, classes: 'text-owc-blue', button_classes: 'bg-owc-blue3 border-owc-blue3 text-owc-blue' -%}
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
+                    <div class="upsell-routine mt-4">
+                      <h2 class="font-medium tracking-wide mb-1">Complete Your Routine</h2>
+                      {%- for step in product.metafields.custom.upsell_complete_routine.value -%}
+                        {%- render 'product-upsell', product: step, button_style: 'link', step_number: forloop.index -%}
+                      {%- endfor -%}
+                    </div>
+                  {% endif %}
                 </div>
               {%- endif -%}
             {%- when 'set_includes' -%}
@@ -664,7 +682,7 @@
           <button
             type="submit"
             name="add"
-            class="product-form__submit button button-neon button-md w-full disabled:opacity-50"
+            class="product-form__submit button bg-owc-yellow text-owc-blue border-owc-yellow button-md w-full disabled:opacity-50"
             {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
             form="{{ product_form_id }}"
           >
@@ -691,17 +709,14 @@
       const ua = window.navigator.userAgent;
       const msie = ua.indexOf('MSIE ');
       const trident = ua.indexOf('Trident/');
-
       return (msie > 0 || trident > 0);
     }
-
     if (!isIE()) return;
     const hiddenInput = document.querySelector('#{{ product_form_id }} input[name="id"]');
     const noScriptInputWrapper = document.createElement('div');
     const variantSwitcher = document.querySelector('variant-radios[data-section="{{ section.id }}"]') || document.querySelector('variant-selects[data-section="{{ section.id }}"]');
     noScriptInputWrapper.innerHTML = document.querySelector('.product-form__noscript-wrapper-{{ section.id }}').textContent;
     variantSwitcher.outerHTML = noScriptInputWrapper.outerHTML;
-
     document.querySelector('#Variants-{{ section.id }}').addEventListener('change', function(event) {
       hiddenInput.value = event.currentTarget.value;
     });
