@@ -1,7 +1,7 @@
-<script src="{{ 'customer.js' | asset_url }}" defer></script>
+<script src="{{ 'customer.min.js' | asset_url }}" defer></script>
 
 {%- paginate customer.addresses by 6 -%}
-  <div class="customer addresses bg-seafoam-100 py-6 sm:py-12" data-customer-addresses>
+  <customer-addresses class="customer addresses bg-seafoam-100 py-6 sm:py-12">
     <div class="container">
       <div class="flex items-center gap-4 mb-8">
         <h1 class="font-serif text-4xl tracking-tight leading-tight">
@@ -250,11 +250,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </customer-addresses>
 {%- endpaginate -%}
-
-<script>
-  window.onload = () => {
-    typeof CustomerAddresses !== 'undefined' && new CustomerAddresses();
-  }
-</script>

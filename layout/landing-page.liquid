@@ -31,7 +31,7 @@
     %}
     
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
-    <script src="{{ 'global.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'main.min.js' | asset_url }}" defer></script>
 
     {% comment %} {{ content_for_header }} {% endcomment %}
     {% comment %}theme-check-disable ContentForHeaderModification,RemoteAsset{% endcomment %}
@@ -165,10 +165,6 @@
         ]
       }
     </script>
-    
-    {%- if template.name == 'index' or template.name == 'article' -%}
-      <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
 
     {%- if settings.enable_gwp and settings.gwp_type == 'url' -%}
       <gift-with-purchase-url

@@ -121,7 +121,6 @@
                       {%- endif -%}
                       {%- if block.settings.button_label != "" or block.settings.is_atc_button -%}
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
-                          <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
                           <div{% if block.settings.product_form_classes != blank %} class="{{ block.settings.product_form_classes }}"{% endif %}>
                             {%- liquid
                               assign product_form_id = 'product-form-' | append: block.settings.atc_button_product.id | append: '-' | append: block.id
@@ -338,7 +337,6 @@
                       poster="{% render 'imgix', src: video_poster_url %}"
                       class="lazy bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
                     >
-                      <source src="tiny.mp4" type="video/mp4" media="(max-width:480px)">
                       {%- for source in block.settings.video_mp4.sources -%}
                         <source data-src="{{ source.url }}" type="video/{{ source.format }}">
                       {%- endfor -%}

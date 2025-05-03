@@ -1,3 +1,5 @@
+import { debounce, fetchConfig, trapFocus } from "./utils.js";
+
 class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
@@ -13,12 +15,11 @@ class CartRemoveButton extends HTMLElement {
 }
 customElements.define("cart-remove-button", CartRemoveButton);
 
-class CartItems extends HTMLElement {
+export class CartItems extends HTMLElement {
   constructor() {
     super();
 
-    this.cart =
-      document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    this.cart = document.querySelector("cart-drawer");
 
     this.lineItemStatusElement =
       document.getElementById("shopping-cart-line-item-status") ||
@@ -495,8 +496,7 @@ class SaveWithSets extends HTMLElement {
   constructor() {
     super();
 
-    this.cart =
-      document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    this.cart = document.querySelector("cart-drawer");
     this.lineItemStatusElement =
       document.getElementById("shopping-cart-line-item-status") ||
       document.getElementById("CartDrawer-LineItemStatus");
@@ -675,21 +675,18 @@ class PrintedGiftNote extends HTMLElement {
 }
 customElements.define("printed-gift-note", PrintedGiftNote);
 
+class CartNote extends HTMLElement {
+  constructor() {
+    super();
+    this.addEventListener(
+      "change",
+      debounce((event) => {
+        const body = JSON.stringify({ note: event.target.value });
+        fetch(`${routes.cart_update_url}`, { ...fetchConfig(), ...{ body } });
+      }, 300)
+    );
+  }
+}
 if (!customElements.get("cart-note")) {
-  customElements.define(
-    "cart-note",
-    class CartNote extends HTMLElement {
-      constructor() {
-        super();
-
-        this.addEventListener(
-          "change",
-          debounce((event) => {
-            const body = JSON.stringify({ note: event.target.value });
-            fetch(`${routes.cart_update_url}`, { ...fetchConfig(), ...{ body } });
-          }, 300)
-        );
-      }
-    }
-  );
+  customElements.define("cart-note", CartNote);
 }

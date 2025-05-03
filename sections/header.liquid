@@ -1,14 +1,3 @@
-<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
-
-<noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
-
-<script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
-{%- if settings.cart_type == "drawer" -%}
-  <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
-{%- endif -%}
-
 <header class="header container relative">
   <div class="py-1 flex items-center justify-between">
     <div class="flex-1 flex items-center justify-start">
@@ -355,10 +344,6 @@
       {%- endfor -%}
     </ul>
   </nav>
-{%- endif -%}
-
-{%- if settings.cart_type == "notification" -%}
-  {%- render 'cart-notification' -%}
 {%- endif -%}
 
 <script type="application/ld+json">

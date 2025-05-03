@@ -1,3 +1,6 @@
+import { CartItems } from "./cart.js";
+import { onKeyUpEscape, fetchConfig, trapFocus, removeTrapFocus } from "./utils.js";
+
 class CartDrawer extends HTMLElement {
   constructor() {
     super();
@@ -118,7 +121,7 @@ class CartDrawer extends HTMLElement {
       );
     });
 
-    cartDrawerNote.parentElement.addEventListener("keyup", onKeyUpEscape);
+    cartDrawerNote.parentElement.addEventListener("keyup", (event) => onKeyUpEscape(event));
   }
 
   renderContents(parsedState) {
@@ -238,7 +241,6 @@ class CartDrawer extends HTMLElement {
     this.activeElement = element;
   }
 }
-
 customElements.define("cart-drawer", CartDrawer);
 
 class CartDrawerItems extends CartItems {
@@ -262,5 +264,4 @@ class CartDrawerItems extends CartItems {
     ];
   }
 }
-
 customElements.define("cart-drawer-items", CartDrawerItems);
