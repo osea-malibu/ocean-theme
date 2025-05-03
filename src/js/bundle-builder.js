@@ -1,13 +1,21 @@
+import { fetchConfig } from "./utils.js";
+
 class BundleBuilder extends HTMLElement {
   constructor() {
     super();
 
-    this.cart = document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    this.cart = document.querySelector("cart-drawer");
     this.panelProducts = this.querySelector("#ByobPanel .products");
 
-    this.querySelectorAll("modal-opener").forEach((i) => i.addEventListener("click", this.handleModalOpen.bind(this)));
-    this.querySelectorAll(".byob-add-to-bundle").forEach((i) => i.addEventListener("click", this.handleAddToBundle.bind(this)));
-    this.querySelectorAll(".byob-add-to-cart").forEach((i) => i.addEventListener("click", this.handleAddToCart.bind(this)));
+    this.querySelectorAll("modal-opener").forEach((i) =>
+      i.addEventListener("click", this.handleModalOpen.bind(this))
+    );
+    this.querySelectorAll(".byob-add-to-bundle").forEach((i) =>
+      i.addEventListener("click", this.handleAddToBundle.bind(this))
+    );
+    this.querySelectorAll(".byob-add-to-cart").forEach((i) =>
+      i.addEventListener("click", this.handleAddToCart.bind(this))
+    );
   }
 
   connectedCallback() {
@@ -64,11 +72,15 @@ class BundleBuilder extends HTMLElement {
     if (faceProduct && bodyProduct) {
       return '<p class="text-lg lg:hidden whitespace-nowrap"><b>2/2</b><span class="hidden xs:inline"> products</span> selected</p><p class="sr-only">Your bundle is complete!</p>';
     } else {
-      return `<p class="text-lg lg:text-2xl whitespace-nowrap"><b>${!faceProduct && !bodyProduct ? 0 : 1}/2</b> products selected</p>
-			<p class="hidden lg:block mt-3 leading-5 lg:max-w-sm lg:mx-auto${!faceProduct && !bodyProduct ? " mb-12" : ""}">
-				<span class="system-sans font-medium">←</span> Add ${faceProduct ? "" : "<b>one face</b>"}${!faceProduct && !bodyProduct ? " and " : " "}${
-        bodyProduct ? "" : "<b>one body</b>"
-      } product to complete your bundle
+      return `<p class="text-lg lg:text-2xl whitespace-nowrap"><b>${
+        !faceProduct && !bodyProduct ? 0 : 1
+      }/2</b> products selected</p>
+			<p class="hidden lg:block mt-3 leading-5 lg:max-w-sm lg:mx-auto${
+        !faceProduct && !bodyProduct ? " mb-12" : ""
+      }">
+				<span class="system-sans font-medium">←</span> Add ${faceProduct ? "" : "<b>one face</b>"}${
+        !faceProduct && !bodyProduct ? " and " : " "
+      }${bodyProduct ? "" : "<b>one body</b>"} product to complete your bundle
 			</p>`;
     }
   }
@@ -83,8 +95,12 @@ class BundleBuilder extends HTMLElement {
     const byobTotalCosts = this.querySelectorAll(".total-cost");
 
     if (faceProductId && bodyProductId) {
-      const facePrice = parseInt(this.querySelector(`[data-variant-id="${faceProductId}"]`).dataset.price);
-      const bodyPrice = parseInt(this.querySelector(`[data-variant-id="${bodyProductId}"]`).dataset.price);
+      const facePrice = parseInt(
+        this.querySelector(`[data-variant-id="${faceProductId}"]`).dataset.price
+      );
+      const bodyPrice = parseInt(
+        this.querySelector(`[data-variant-id="${bodyProductId}"]`).dataset.price
+      );
       const totalPrice = facePrice + bodyPrice;
 
       byobBarRemaining.innerHTML = this.getRemainingHtml(faceProductId, bodyProductId);
@@ -95,9 +111,14 @@ class BundleBuilder extends HTMLElement {
       byobBuyButtons.forEach((i) => i.removeAttribute("disabled"));
       byobTotalCosts.forEach((i) => (i.innerHTML = this.getPriceHtml(totalPrice, "text-wave-500")));
 
-      this.panelProducts.innerHTML = `${this.getPanelProductHtml(faceProductId, "Face")}${this.getPanelProductHtml(bodyProductId, "Body")}`;
+      this.panelProducts.innerHTML = `${this.getPanelProductHtml(
+        faceProductId,
+        "Face"
+      )}${this.getPanelProductHtml(bodyProductId, "Body")}`;
     } else if (faceProductId && !bodyProductId) {
-      const facePrice = parseInt(this.querySelector(`[data-variant-id="${faceProductId}"]`).dataset.price);
+      const facePrice = parseInt(
+        this.querySelector(`[data-variant-id="${faceProductId}"]`).dataset.price
+      );
 
       byobBarRemaining.innerHTML = this.getRemainingHtml(faceProductId, null);
       byobBarRemaining.classList.add("lg:block");
@@ -105,11 +126,15 @@ class BundleBuilder extends HTMLElement {
       byobBarTotalCost.classList.remove("hidden");
 
       byobBuyButtons.forEach((i) => i.setAttribute("disabled", true));
-      byobTotalCosts.forEach((i) => (i.innerHTML = this.getPriceHtml(facePrice, "text-seaweed-400")));
+      byobTotalCosts.forEach(
+        (i) => (i.innerHTML = this.getPriceHtml(facePrice, "text-seaweed-400"))
+      );
 
       this.panelProducts.innerHTML = this.getPanelProductHtml(faceProductId, "Face");
     } else if (!faceProductId && bodyProductId) {
-      const bodyPrice = parseInt(this.querySelector(`[data-variant-id="${bodyProductId}"]`).dataset.price);
+      const bodyPrice = parseInt(
+        this.querySelector(`[data-variant-id="${bodyProductId}"]`).dataset.price
+      );
 
       byobBarRemaining.innerHTML = this.getRemainingHtml(null, bodyProductId);
       byobBarRemaining.classList.add("lg:block");
@@ -117,7 +142,9 @@ class BundleBuilder extends HTMLElement {
       byobBarTotalCost.classList.remove("hidden");
 
       byobBuyButtons.forEach((i) => i.setAttribute("disabled", true));
-      byobTotalCosts.forEach((i) => (i.innerHTML = this.getPriceHtml(bodyPrice, "text-seaweed-400")));
+      byobTotalCosts.forEach(
+        (i) => (i.innerHTML = this.getPriceHtml(bodyPrice, "text-seaweed-400"))
+      );
 
       this.panelProducts.innerHTML = this.getPanelProductHtml(bodyProductId, "Body");
     } else {
@@ -135,7 +162,10 @@ class BundleBuilder extends HTMLElement {
 
   handleModalOpen(e) {
     e.preventDefault();
-    const addedProducts = [localStorage.getItem("osea.byobFaceProductId"), localStorage.getItem("osea.byobBodyProductId")];
+    const addedProducts = [
+      localStorage.getItem("osea.byobFaceProductId"),
+      localStorage.getItem("osea.byobBodyProductId"),
+    ];
     const bundleCard = e.currentTarget.closest(".bundle-card");
     const { productHandle, variantId } = bundleCard.dataset;
 
@@ -154,19 +184,27 @@ class BundleBuilder extends HTMLElement {
 					${images
             .filter((image) => {
               const { variant_ids } = image;
-              return variants.length === 1 || (variants.length > 1 && (variant_ids.length === 0 || variant_ids.includes(parsedId)));
+              return (
+                variants.length === 1 ||
+                (variants.length > 1 &&
+                  (variant_ids.length === 0 || variant_ids.includes(parsedId)))
+              );
             })
             .slice(0, 6)
             .map((image) => {
               return `
 									<img
-										srcset="${image.src}&width=328&auto=format,compress 1x, ${image.src}&width=656&auto=format,compress 2x"
+										srcset="${image.src}&width=328&auto=format,compress 1x, ${
+                image.src
+              }&width=656&auto=format,compress 2x"
 										src="${image.src}&width=656"
 										alt=""
 										loading="lazy"
 										width="${image.width}"
 										height="${image.height}"
-										class="block bg-wave-200 w-48 sm:w-full ${image.variant_ids.includes(parsedId) ? "order-1" : "order-2"}"
+										class="block bg-wave-200 w-48 sm:w-full ${
+                      image.variant_ids.includes(parsedId) ? "order-1" : "order-2"
+                    }"
 									>
 								`;
             })
@@ -228,7 +266,9 @@ class BundleBuilder extends HTMLElement {
       .then((response) => response.json())
       .then((response) => {
         const body = JSON.stringify({
-          items: [{ id: response.product.variants[0].id, quantity: 1, properties: { _bundle: bundleId } }],
+          items: [
+            { id: response.product.variants[0].id, quantity: 1, properties: { _bundle: bundleId } },
+          ],
         });
 
         fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })

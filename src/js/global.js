@@ -1,187 +1,19 @@
-function getFocusableElements(container) {
-  return Array.from(
-    container.querySelectorAll(
-      "summary, a[href], button:enabled, [tabindex]:not([tabindex^='-']), [draggable], area, input:not([type=hidden]):enabled, select:enabled, textarea:enabled, object, iframe"
-    )
-  );
-}
+import { debounce, pauseAllMedia, trapFocus, removeTrapFocus } from "./utils.js";
+import {
+  setupSummaryAriaAttributes,
+  setupFocusVisiblePolyfill,
+  setupHeaderBorderObserver,
+  setupLazyVideos,
+  setupManualRedirects,
+  setupShopifyCommon,
+} from "./setup.js";
 
-document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
-  summary.setAttribute("aria-expanded", "false");
-
-  if (summary.nextElementSibling.getAttribute("id")) {
-    summary.setAttribute("aria-controls", summary.nextElementSibling.id);
-  }
-
-  summary.addEventListener("click", (event) => {
-    event.currentTarget.setAttribute(
-      "aria-expanded",
-      !event.currentTarget.closest("details").hasAttribute("open")
-    );
-  });
-
-  if (summary.closest("header-drawer")) return;
-  summary.parentElement.addEventListener("keyup", onKeyUpEscape);
-});
-
-const trapFocusHandlers = {};
-
-function trapFocus(container, elementToFocus = container) {
-  var elements = getFocusableElements(container);
-  var first = elements[0];
-  var last = elements[elements.length - 1];
-
-  removeTrapFocus();
-
-  trapFocusHandlers.focusin = (event) => {
-    if (event.target !== container && event.target !== last && event.target !== first) return;
-
-    document.addEventListener("keydown", trapFocusHandlers.keydown);
-  };
-
-  trapFocusHandlers.focusout = function () {
-    document.removeEventListener("keydown", trapFocusHandlers.keydown);
-  };
-
-  trapFocusHandlers.keydown = function (event) {
-    if (event.code.toUpperCase() !== "TAB") return; // If not TAB key
-    // On the last focusable element and tab forward, focus the first element.
-    if (event.target === last && !event.shiftKey) {
-      event.preventDefault();
-      first.focus();
-    }
-
-    //  On the first focusable element and tab backward, focus the last element.
-    if ((event.target === container || event.target === first) && event.shiftKey) {
-      event.preventDefault();
-      last.focus();
-    }
-  };
-
-  document.addEventListener("focusout", trapFocusHandlers.focusout);
-  document.addEventListener("focusin", trapFocusHandlers.focusin);
-
-  elementToFocus.focus();
-}
-
-// querySelector to see if the browser supports :focus-visible and run code based on it.
-try {
-  document.querySelector(":focus-visible");
-} catch {
-  focusVisiblePolyfill();
-}
-
-function focusVisiblePolyfill() {
-  const navKeys = [
-    "ARROWUP",
-    "ARROWDOWN",
-    "ARROWLEFT",
-    "ARROWRIGHT",
-    "TAB",
-    "ENTER",
-    "SPACE",
-    "ESCAPE",
-    "HOME",
-    "END",
-    "PAGEUP",
-    "PAGEDOWN",
-  ];
-  let currentFocusedElement = null;
-  let mouseClick = null;
-
-  window.addEventListener("keydown", (event) => {
-    if (navKeys.includes(event.code.toUpperCase())) {
-      mouseClick = false;
-    }
-  });
-
-  window.addEventListener("mousedown", (event) => {
-    mouseClick = true;
-  });
-
-  window.addEventListener(
-    "focus",
-    () => {
-      if (currentFocusedElement) currentFocusedElement.classList.remove("focused");
-
-      if (mouseClick) return;
-
-      currentFocusedElement = document.activeElement;
-      currentFocusedElement.classList.add("focused");
-    },
-    true
-  );
-}
-
-function pauseAllMedia() {
-  document.querySelectorAll(".js-youtube").forEach((video) => {
-    video.contentWindow.postMessage(
-      '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
-      "*"
-    );
-  });
-  document.querySelectorAll(".js-vimeo").forEach((video) => {
-    video.contentWindow.postMessage('{"method":"pause"}', "*");
-  });
-  document.querySelectorAll("video").forEach((video) => video.pause());
-  document.querySelectorAll("product-model").forEach((model) => {
-    if (model.modelViewerUI) model.modelViewerUI.pause();
-  });
-}
-
-function removeTrapFocus(elementToFocus = null) {
-  document.removeEventListener("focusin", trapFocusHandlers.focusin);
-  document.removeEventListener("focusout", trapFocusHandlers.focusout);
-  document.removeEventListener("keydown", trapFocusHandlers.keydown);
-
-  if (elementToFocus) elementToFocus.focus();
-}
-
-function onKeyUpEscape(event) {
-  if (event.code.toUpperCase() !== "ESCAPE") return;
-
-  const openDetailsElement = event.target.closest("details[open]");
-  if (!openDetailsElement) return;
-
-  const summaryElement = openDetailsElement.querySelector("summary");
-  openDetailsElement.removeAttribute("open");
-  summaryElement.setAttribute("aria-expanded", false);
-  summaryElement.focus();
-}
-
-// add border to header on scroll
-let headerBorderObserver = new IntersectionObserver((entries) => {
-  const headerWrapper = document.querySelector("#HeaderContent");
-  if (entries[0].boundingClientRect.y < 0) {
-    headerWrapper.classList.add("border-seaweed-300");
-    headerWrapper.classList.remove("border-transparent");
-  } else {
-    headerWrapper.classList.remove("border-seaweed-300");
-    headerWrapper.classList.add("border-transparent");
-  }
-});
-headerBorderObserver.observe(document.querySelector("#HeaderScrollPixel"));
-
-const lazyVideos = [].slice.call(document.querySelectorAll("video.lazy"));
-let lazyVideoObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach((video) => {
-    if (video.isIntersecting) {
-      for (var source in video.target.children) {
-        var videoSource = video.target.children[source];
-        if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
-          videoSource.src = videoSource.dataset.src;
-        }
-      }
-
-      video.target.load();
-      video.target.classList.remove("lazy");
-      lazyVideoObserver.unobserve(video.target);
-    }
-  });
-});
-lazyVideos.forEach((lazyVideo) => {
-  lazyVideoObserver.observe(lazyVideo);
-});
+setupSummaryAriaAttributes();
+setupFocusVisiblePolyfill();
+setupHeaderBorderObserver();
+setupLazyVideos();
+setupManualRedirects();
+setupShopifyCommon();
 
 class QuantityInput extends HTMLElement {
   constructor() {
@@ -230,687 +62,181 @@ class QuantityInput extends HTMLElement {
 }
 customElements.define("quantity-input", QuantityInput);
 
-function debounce(fn, wait) {
-  let t;
-  return (...args) => {
-    clearTimeout(t);
-    t = setTimeout(() => fn.apply(this, args), wait);
-  };
-}
-
-function fetchConfig(type = "json") {
-  return {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: `application/${type}`,
-    },
-  };
-}
-
-/* Manual Redirects */
-if (
-  [
-    "/a/loop_subscriptions/bundle/f32e72b2b9174c49afc9418fdc687742",
-    "/a/loop_subscriptions/bundle/eee9c289024140ab984c3fb75988e223",
-  ].includes(window.location.pathname)
-) {
-  window.location.replace("https://oseamalibu.com/collections/skincare-sets-1");
-}
-if (window.location.pathname === "/pages/labor-day-2024") {
-  if (utmSource === "facebook_ad" && utmMedium === "display") {
-    window.location.replace("https://oseamalibu.com/collections/body-care");
-  }
-}
-
-/* Shopify Common JS */
-if (typeof window.Shopify == "undefined") {
-  window.Shopify = {};
-}
-
-Shopify.bind = function (fn, scope) {
-  return function () {
-    return fn.apply(scope, arguments);
-  };
-};
-
-Shopify.setSelectorByValue = function (selector, value) {
-  for (var i = 0, count = selector.options.length; i < count; i++) {
-    var option = selector.options[i];
-    if (value == option.value || value == option.innerHTML) {
-      selector.selectedIndex = i;
-      return i;
-    }
-  }
-};
-
-Shopify.addListener = function (target, eventName, callback) {
-  target.addEventListener
-    ? target.addEventListener(eventName, callback, false)
-    : target.attachEvent("on" + eventName, callback);
-};
-
-Shopify.postLink = function (path, options) {
-  options = options || {};
-  var method = options["method"] || "post";
-  var params = options["parameters"] || {};
-
-  var form = document.createElement("form");
-  form.setAttribute("method", method);
-  form.setAttribute("action", path);
-
-  for (var key in params) {
-    var hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type", "hidden");
-    hiddenField.setAttribute("name", key);
-    hiddenField.setAttribute("value", params[key]);
-    form.appendChild(hiddenField);
-  }
-  document.body.appendChild(form);
-  form.submit();
-  document.body.removeChild(form);
-};
-
-Shopify.CountryProvinceSelector = function (country_domid, province_domid, options) {
-  this.countryEl = document.getElementById(country_domid);
-  this.provinceEl = document.getElementById(province_domid);
-  this.provinceContainer = document.getElementById(options["hideElement"] || province_domid);
-
-  Shopify.addListener(this.countryEl, "change", Shopify.bind(this.countryHandler, this));
-
-  this.initCountry();
-  this.initProvince();
-};
-
-Shopify.CountryProvinceSelector.prototype = {
-  initCountry: function () {
-    var value = this.countryEl.getAttribute("data-default");
-    Shopify.setSelectorByValue(this.countryEl, value);
-    this.countryHandler();
-  },
-
-  initProvince: function () {
-    var value = this.provinceEl.getAttribute("data-default");
-    if (value && this.provinceEl.options.length > 0) {
-      Shopify.setSelectorByValue(this.provinceEl, value);
-    }
-  },
-
-  countryHandler: function (e) {
-    var opt = this.countryEl.options[this.countryEl.selectedIndex];
-    var raw = opt.getAttribute("data-provinces");
-    var provinces = JSON.parse(raw);
-
-    this.clearOptions(this.provinceEl);
-    if (provinces && provinces.length == 0) {
-      this.provinceContainer.style.display = "none";
-    } else {
-      for (var i = 0; i < provinces.length; i++) {
-        var opt = document.createElement("option");
-        opt.value = provinces[i][0];
-        opt.innerHTML = provinces[i][1];
-        this.provinceEl.appendChild(opt);
-      }
-
-      this.provinceContainer.style.display = "";
-    }
-  },
-
-  clearOptions: function (selector) {
-    while (selector.firstChild) {
-      selector.removeChild(selector.firstChild);
-    }
-  },
-
-  setOptions: function (selector, values) {
-    for (var i = 0, count = values.length; i < values.length; i++) {
-      var opt = document.createElement("option");
-      opt.value = values[i];
-      opt.innerHTML = values[i];
-      selector.appendChild(opt);
-    }
-  },
-};
-
-class IngredientGlossary extends HTMLElement {
+class IconMarquee extends HTMLElement {
   constructor() {
     super();
-    this.selectedCategories = [];
-    this.sortByValue = "az";
-    this.currentPage = 1;
-    this.itemsPerPage = 10;
-    this.metaObjects = [];
-    this.loading = true;
 
-    this.filterForm = document.getElementById("filter-form");
-    this.sortForm = document.getElementById("sort-form");
-    this.searchForm = document.getElementById("search-form");
-    this.listCountFieldset = document.getElementById("list-count");
-
-    // Initialize filters, sorts, and list count from URL if available
-    this.initializeFromUrl();
-
-    // Set up event listeners
-    this.initializeFilters();
-    this.initializeSorts();
-    this.initializeSearch();
-    this.initializeListCount();
-
-    // Fetch ingredients and render page
-    this.getAllIngredients();
+    // Config & state
+    this.items = [];
+    this.animationID = null;
+    this.speed = parseFloat(this.getAttribute("speed")) || 1;
+    this._reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this._positionMap = new Map();
+    this._observer = null;
+    this._isVisible = false;
+    this._boundRotate = this.rotate.bind(this);
+    this._onVisibilityChange = this.handleVisibilityChange.bind(this);
   }
 
-  // Initialize the state from URL parameters
-  initializeFromUrl() {
-    const params = new URLSearchParams(window.location.search);
+  // Lifecycle
+  connectedCallback() {
+    this._originalContent = this.innerHTML;
 
-    // Set page if present
-    if (params.has("page")) {
-      this.currentPage = parseInt(params.get("page"), 10);
-    }
+    if (this._reducedMotion) return;
 
-    // Set categories if present
-    if (params.has("category")) {
-      this.selectedCategories = params.get("category").split(",");
-      this.filterForm.querySelectorAll('input[name="category"]').forEach((checkbox) => {
-        if (this.selectedCategories.includes(checkbox.value)) {
-          checkbox.checked = true;
-        } else {
-          checkbox.checked = false;
-        }
-      });
+    this.setup();
+    this.observeVisibility();
 
-      // Uncheck the 'All' checkbox if specific categories are selected
-      const allCheckbox = this.filterForm.querySelector('input[value="all"]');
-      const categoryDropdownText = this.querySelector(".category-dropdown-text");
-      if (this.selectedCategories.length > 0 && !this.selectedCategories.includes("all")) {
-        allCheckbox.checked = false;
-        categoryDropdownText.innerText = `${this.selectedCategories.join(", ")}`;
-      } else {
-        allCheckbox.checked = true; // Check 'All' if no specific category is selected
-        categoryDropdownText.innerText = "All";
-      }
-    }
+    // Listen for page/tab visibility changes
+    document.addEventListener("visibilitychange", this._onVisibilityChange);
 
-    // Set sort if present
-    if (params.has("sort")) {
-      this.sortByValue = params.get("sort");
-      this.sortForm.querySelector("select").value = this.sortByValue;
-    }
-
-    // Set list count if present
-    if (params.has("listcount")) {
-      const listCount = params.get("listcount");
-      this.itemsPerPage = parseInt(listCount, 10); // Parse specific counts
-      const listCountInput = this.listCountFieldset.querySelector(`input[value="${listCount}"]`);
-      if (listCountInput) {
-        listCountInput.checked = true; // Set the checked property if the input exists
-      } else {
-        console.warn(`Input with value "${listCount}" not found.`);
-      }
-
-      // Update the bold class on the currently selected list count label
-      this.listCountFieldset.querySelectorAll("label").forEach((label) => {
-        label.classList.remove("font-bold"); // Remove bold from all labels
-      });
-      const listCountLabel = this.listCountFieldset.querySelector(`label[for="${listCount}"]`);
-      if (listCountLabel) {
-        listCountLabel.classList.add("font-bold"); // Add bold to the selected label
-      }
-    }
-
-    // Set search query if present
-    if (params.has("search")) {
-      this.searchQuery = params.get("search").trim().toLowerCase();
-      const searchInput = this.searchForm.querySelector('input[type="text"]');
-      searchInput.value = this.searchQuery; // Populate the search field with the search query
-    }
-
-    // After initializing, apply filters and render the page
-    this.renderPage(); // Ensure that the page is rendered with the applied filters
+    // Debounced resize
+    this._onResize = debounce(() => this.refresh(), 250);
+    window.addEventListener("resize", this._onResize);
   }
 
-  // Update the URL with the current settings
-  updateUrlParams() {
-    const params = new URLSearchParams();
+  disconnectedCallback() {
+    cancelAnimationFrame(this.animationID);
+    window.removeEventListener("resize", this._onResize);
+    document.removeEventListener("visibilitychange", this._onVisibilityChange);
+    if (this._observer) this._observer.disconnect();
+  }
 
-    // Add page
-    params.set("page", this.currentPage);
+  // Create & position clones
+  setup() {
+    const tempWrapper = document.createElement("div");
+    tempWrapper.className = "inline-block whitespace-nowrap";
+    tempWrapper.innerHTML = this._originalContent;
 
-    // Add categories
-    if (this.selectedCategories.length > 0) {
-      params.set("category", this.selectedCategories.join(","));
+    this.innerHTML = "";
+    this.appendChild(tempWrapper);
+
+    const { width, height } = tempWrapper.getBoundingClientRect();
+    this._itemWidth = width + 36;
+    const containerWidth = this.getBoundingClientRect().width;
+    const itemHTML = tempWrapper.innerHTML;
+
+    this.removeChild(tempWrapper);
+
+    this.style.position = "relative";
+    this.classList.add("whitespace-nowrap", "overflow-hidden");
+    this.items = [];
+    this._positionMap.clear();
+
+    const maxItems = Math.ceil(containerWidth / this._itemWidth) + 2;
+
+    for (let i = 0; i < maxItems; i++) {
+      const item = document.createElement("div");
+      item.innerHTML = itemHTML;
+      item.className = "absolute whitespace-nowrap will-change-transform";
+      item.setAttribute("aria-hidden", i > 0 ? "true" : "false");
+
+      const initialX = this._itemWidth * i;
+      this._positionMap.set(item, initialX);
+      item.style.transform = `translateX(${initialX}px)`;
+      item.style.width = `${this._itemWidth}px`;
+      item.style.height = `${height}px`;
+
+      this.appendChild(item);
+      this.items.push(item);
     }
 
-    // Add sort option
-    params.set("sort", this.sortByValue);
-
-    // Add list count
-    params.set("listcount", this.itemsPerPage); // Always use the numerical value (e.g., 10, 50, 100)
-
-    // Add search query
-    if (this.searchQuery) {
-      params.set("search", this.searchQuery); // Add search query if present
-    }
-
-    // Update the URL without reloading the page
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.pushState(null, "", newUrl);
+    this.addEventListener("mouseover", this.pause.bind(this));
+    this.addEventListener("mouseout", this.resume.bind(this));
   }
 
-  // Async method to fetch all metaobjects
-  async fetchAllMetaObjects() {
-    const storefrontAccessToken = "2cca99031c2d35261e7d140b5a386156";
-    const shopifyStoreDomain = "osea-malibu.myshopify.com";
-
-    const query = `
-      query($first: Int!, $after: String) {
-        metaobjects(first: $first, after: $after, type: "ingredient_glossary") {
-          edges {
-            node {
-              id
-              fields {
-                key
-                value
-              }
-            }
-            cursor
-          }
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-    `;
-
-    let allMetaObjects = [];
-    let hasNextPage = true;
-    let cursor = null;
-
-    // Loop to fetch all pages of metaobjects
-    while (hasNextPage) {
-      const response = await fetch(`https://${shopifyStoreDomain}/api/2023-10/graphql.json`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
-        },
-        body: JSON.stringify({
-          query: query,
-          variables: {
-            first: 50, // Fetch 50 items at a time
-            after: cursor,
-          },
-        }),
-      });
-
-      const data = await response.json();
-
-      // Check for GraphQL errors
-      if (data.errors) {
-        console.error("GraphQL Error:", data.errors);
-        return [];
-      }
-
-      // Ensure metaobjects field exists
-      if (data.data && data.data.metaobjects) {
-        const metaobjects = data.data.metaobjects.edges.map((edge) => edge.node);
-        allMetaObjects = allMetaObjects.concat(metaobjects); // Collect all items
-        hasNextPage = data.data.metaobjects.pageInfo.hasNextPage; // Check if there's more to fetch
-
-        // Update cursor for the next batch
-        if (hasNextPage) {
-          cursor = data.data.metaobjects.edges[data.data.metaobjects.edges.length - 1].cursor;
-        }
-      } else {
-        console.error("No metaobjects found in the response");
-        hasNextPage = false; // Stop if no data is found
-      }
-    }
-
-    return allMetaObjects; // Return all fetched metaobjects
-  }
-
-  // Fetch and log all ingredients
-  async getAllIngredients() {
-    try {
-      this.loading = true; // Show loading state
-      const allMetaObjects = await this.fetchAllMetaObjects();
-      this.metaObjects = allMetaObjects; // Store fetched ingredients
-      this.loading = false; // Hide loading state
-      this.renderPage(); // Render the page with the applied filters and sorting
-    } catch (error) {
-      console.error("Error fetching metaobjects:", error);
-      this.loading = false;
-    }
-  }
-
-  // Initialize the category filter
-  initializeFilters() {
-    this.filterForm.addEventListener("change", (event) => {
-      const categoryCheckboxes = this.filterForm.querySelectorAll('input[name="category"]');
-      const allCheckbox = this.filterForm.querySelector('input[value="all"]');
-      const categoryDropdownText = this.querySelector(".category-dropdown-text");
-
-      if (event.target.value === "all") {
-        if (event.target.checked) {
-          // If 'All' is selected, uncheck all specific category checkboxes
-          categoryCheckboxes.forEach((checkbox) => {
-            checkbox.checked = true;
-            categoryDropdownText.innerText = "All";
-          });
-        } else {
-          // If 'All' is deselected, uncheck all categories
-          categoryCheckboxes.forEach((checkbox) => {
-            checkbox.checked = false;
-            categoryDropdownText.innerText = "All";
-          });
-        }
-        this.selectedCategories = []; // Reset selected categories
-      } else {
-        // If a specific category is checked, uncheck the 'All' checkbox
-        const selectedCheckboxes = this.filterForm.querySelectorAll(
-          'input[name="category"]:checked'
-        );
-        this.selectedCategories = Array.from(selectedCheckboxes).map((checkbox) => checkbox.value);
-
-        // Uncheck the 'All' checkbox if any specific category is selected
-        if (
-          this.selectedCategories.length > 0 &&
-          this.selectedCategories.length < categoryCheckboxes.length
-        ) {
-          allCheckbox.checked = false;
-          categoryDropdownText.innerText = `${this.selectedCategories.join(", ")}`;
-        }
-
-        // Check 'All' checkbox if all categories are selected
-        if (this.selectedCategories.length === categoryCheckboxes.length) {
-          allCheckbox.checked = true;
-          categoryDropdownText.innerText = "All";
-        }
-      }
-
-      this.currentPage = 1; // Reset to the first page
-      this.updateUrlParams(); // Update the URL
-      this.renderPage(); // Re-render the list with the filtered items
-    });
-  }
-
-  // Initialize the sort options
-  initializeSorts() {
-    this.sortForm.addEventListener("change", (event) => {
-      this.sortByValue = event.target.value;
-      this.currentPage = 1; // Reset to the first page
-      this.updateUrlParams(); // Update the URL
-      this.renderPage(); // Re-render the list with the filtered items
-    });
-  }
-
-  // Initialize the search
-  initializeSearch() {
-    this.searchForm.addEventListener("submit", (event) => {
-      event.preventDefault(); // Prevent the form from submitting and reloading the page
-
-      const searchInput = this.searchForm
-        .querySelector('input[type="text"]')
-        .value.trim()
-        .toLowerCase();
-      this.searchQuery = searchInput; // Save the search query
-
-      this.currentPage = 1; // Reset to the first page when a new search is performed
-      this.updateUrlParams(); // Update the URL with the current state
-      this.renderPage(); // Re-render the list with the filtered items
-    });
-  }
-
-  // Initialize the list count change
-  initializeListCount() {
-    this.listCountFieldset.addEventListener("change", (event) => {
-      const selectedCount = event.target.value;
-
-      // Update the itemsPerPage based on the selected count
-      this.itemsPerPage = parseInt(selectedCount, 10); // Parse as a number for specific counts
-
-      // Update the radio button labels to apply the 'font-bold' class to the selected one
-      this.listCountFieldset.querySelectorAll("label").forEach((label) => {
-        label.classList.remove("font-bold"); // Remove bold from all labels
-      });
-      this.listCountFieldset
-        .querySelector(`label[for="${selectedCount}"]`)
-        .classList.add("font-bold"); // Add bold to the selected label
-
-      this.currentPage = 1; // Reset to the first page
-      this.updateUrlParams(); // Update the URL
-      this.renderPage(); // Re-render the page with the new item count
-    });
-  }
-
-  // Filter and paginate the metaobjects
-  filterItems() {
-    const allCheckbox = this.filterForm.querySelector('input[value="all"]');
-
-    // Step 1: Filter by categories
-    let filteredItems = this.metaObjects;
-    if (this.selectedCategories.length > 0 && !allCheckbox.checked) {
-      filteredItems = filteredItems.filter((item) => {
-        const categoryField = item.fields.find((field) => field.key === "category");
-        if (categoryField) {
-          const categoryArray = JSON.parse(categoryField.value); // Assume this is a JSON array of categories
-          return categoryArray.some((category) => this.selectedCategories.includes(category));
-        }
-        return false;
-      });
-    }
-
-    // Step 2: Filter by search query
-    if (this.searchQuery) {
-      filteredItems = filteredItems.filter((item) => {
-        const nameField = item.fields.find((field) => field.key === "name");
-        const commonNameField = item.fields.find((field) => field.key === "common_name");
-
-        const nameMatch = nameField && nameField.value.toLowerCase().includes(this.searchQuery);
-        const commonNameMatch =
-          commonNameField && commonNameField.value.toLowerCase().includes(this.searchQuery);
-
-        return nameMatch || commonNameMatch;
-      });
-    }
-
-    return filteredItems; // Return the filtered items
-  }
-
-  // Render a specific page of items
-  renderPage() {
-    const ingredientContainer = this.querySelector(".ingredient-list");
-    ingredientContainer.querySelector("div:first-of-type").focus(); // Set focus to first list item
-
-    const skeletonList = this.querySelector(".skeleton-list");
-    if (this.loading) {
-      skeletonList.classList.remove("hidden"); // Show skeleton when loading
-      ingredientContainer.classList.add("hidden"); // Hide ingredients list
-      return;
-    } else {
-      skeletonList.classList.add("hidden"); // Hide skeleton when loaded
-      ingredientContainer.classList.remove("hidden"); // Show ingredients list
-    }
-
-    const filteredItems = this.filterItems();
-    const findNameValue = (object) => object.fields.find((i) => i.key === "name").value;
-    const sortedAzItems = filteredItems.sort((a, b) =>
-      findNameValue(a).localeCompare(findNameValue(b))
+  // Detect when the element enters/exits the viewport
+  observeVisibility() {
+    this._observer = new IntersectionObserver(
+      ([entry]) => {
+        this._isVisible = entry.isIntersecting;
+        this._isVisible ? this.resume() : this.pause();
+      },
+      { root: null, threshold: 0 }
     );
-    const filteredSortedItems = this.sortByValue === "az" ? sortedAzItems : sortedAzItems.reverse();
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = Math.min(startIndex + this.itemsPerPage, filteredSortedItems.length);
-    const paginatedItems = filteredSortedItems.slice(startIndex, endIndex);
 
-    const resultsElement = this.querySelector(".results-count");
-    resultsElement.innerHTML = `${filteredItems.length} result${
-      filteredItems.length > 1 ? "s" : ""
-    }`;
-
-    ingredientContainer.innerHTML = ""; // Clear the previous content
-
-    // Add the paginated items to the container
-    paginatedItems.forEach((item) => {
-      const nameField = item.fields.find((field) => field.key === "name");
-      const commonNameField = item.fields.find((field) => field.key === "common_name");
-      const definitionField = item.fields.find((field) => field.key === "definition");
-      const categoryField = item.fields.find((field) => field.key === "category");
-      const categoryArray = categoryField ? JSON.parse(categoryField.value) : [];
-      const tagClass = "rounded-full px-2 py-0.5 bg-wave-200 text-xs";
-
-      const itemElement = document.createElement("div");
-      itemElement.classList.add(
-        "border-b",
-        "border-seaweed-300",
-        "flex",
-        "flex-col",
-        "justify-center",
-        "min-h-32",
-        "py-3"
-      );
-      itemElement.innerHTML = `
-        <h3><b>${nameField ? nameField.value : "Unnamed"}</b></h3>
-        ${commonNameField ? `<em>${commonNameField.value}</em>` : ""}
-        <p>${definitionField ? definitionField.value : ""}</p>
-        <div class="flex flex-wrap gap-1 mt-2">
-          ${categoryArray.map((i) => `<div class="${tagClass}">${i}</div>`).join("")}
-        </div>
-      `;
-
-      ingredientContainer.appendChild(itemElement);
-    });
-
-    // Display the current count (e.g., "Showing 1 - 10 of 308")
-    const currentCountElement = this.querySelector(".current-count");
-    currentCountElement.textContent = `Showing ${startIndex + 1} - ${endIndex} of ${
-      filteredItems.length
-    }`;
-
-    this.renderPagination(filteredItems.length); // Update pagination controls
+    this._observer.observe(this);
   }
 
-  // Render pagination controls
-  renderPagination(totalItems) {
-    const totalPages = Math.ceil(totalItems / this.itemsPerPage);
-    const paginationContainer = this.querySelector(".pagination");
-    paginationContainer.innerHTML = ""; // Clear previous pagination
+  // Core animation loop
+  rotate() {
+    if (!this._isVisible || document.hidden || !this.items.length) return;
 
-    const maxVisiblePages = 2; // Number of pages to show before and after the current page
+    this.items.forEach((item) => {
+      let x = this._positionMap.get(item);
+      x -= this.speed;
 
-    // Previous page link
-    if (this.currentPage > 1) {
-      const prevLink = document.createElement("a");
-      prevLink.classList.add("px-1");
-      prevLink.href = "#";
-      prevLink.setAttribute("aria-label", "Go to previous page");
-      prevLink.innerHTML = `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Previous">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>`;
-      prevLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.currentPage--;
-        this.updateUrlParams(); // Update URL on pagination change
-        this.renderPage();
-      });
-      paginationContainer.appendChild(prevLink);
-    }
+      if (x + this._itemWidth < 0) {
+        const maxX = Math.max(...Array.from(this._positionMap.values()));
+        x = maxX + this._itemWidth;
+      }
 
-    // First page link
-    const firstPageLink = document.createElement("a");
-    firstPageLink.href = "#";
-    firstPageLink.textContent = 1;
-    firstPageLink.classList.add("w-4", "link");
-    firstPageLink.setAttribute("aria-label", "Go to first page");
-    if (this.currentPage === 1) {
-      firstPageLink.classList.add("font-bold"); // Bold current page
-    }
-    firstPageLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      this.currentPage = 1;
-      this.updateUrlParams(); // Update URL on pagination change
-      this.renderPage();
+      this._positionMap.set(item, x);
+      item.style.transform = `translateX(${x}px)`;
     });
-    paginationContainer.appendChild(firstPageLink);
 
-    // Ellipsis after first page if needed
-    if (this.currentPage > maxVisiblePages + 2) {
-      const ellipsis = document.createElement("span");
-      ellipsis.classList.add("font-bold");
-      ellipsis.textContent = "…";
-      paginationContainer.appendChild(ellipsis);
+    this.animationID = requestAnimationFrame(this._boundRotate);
+  }
+
+  // Handle when the tab becomes hidden or visible
+  handleVisibilityChange() {
+    if (document.hidden) {
+      this.pause();
+    } else {
+      this.resume();
     }
+  }
 
-    // Pages around the current page
-    const startPage = Math.max(2, this.currentPage - maxVisiblePages);
-    const endPage = Math.min(totalPages - 1, this.currentPage + maxVisiblePages);
+  pause() {
+    cancelAnimationFrame(this.animationID);
+    this.animationID = null;
+  }
 
-    for (let i = startPage; i <= endPage; i++) {
-      const pageLink = document.createElement("a");
-      pageLink.classList.add("w-4", "link");
-      pageLink.href = "#";
-      pageLink.textContent = i;
-      pageLink.setAttribute("aria-label", `Go to page ${i}`);
-      if (i === this.currentPage) {
-        pageLink.classList.add("font-bold"); // Bold current page
-      }
-      pageLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.currentPage = i;
-        this.updateUrlParams(); // Update URL on pagination change
-        this.renderPage();
-      });
-      paginationContainer.appendChild(pageLink);
-    }
+  resume() {
+    if (!this._isVisible || document.hidden || this.animationID) return;
+    this.rotate();
+  }
 
-    // Ellipsis before last page if needed
-    if (this.currentPage < totalPages - maxVisiblePages - 1) {
-      const ellipsis = document.createElement("span");
-      ellipsis.classList.add("font-bold");
-      ellipsis.textContent = "…";
-      paginationContainer.appendChild(ellipsis);
-    }
-
-    // Last page link
-    if (totalPages > 1) {
-      const lastPageLink = document.createElement("a");
-      lastPageLink.classList.add("link");
-      lastPageLink.href = "#";
-      lastPageLink.textContent = totalPages;
-      lastPageLink.setAttribute("aria-label", `Go to page ${totalPages}`);
-      if (this.currentPage === totalPages) {
-        lastPageLink.classList.add("font-bold"); // Bold current page
-      }
-      lastPageLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.currentPage = totalPages;
-        this.updateUrlParams(); // Update URL on pagination change
-        this.renderPage();
-      });
-      paginationContainer.appendChild(lastPageLink);
-    }
-
-    // Next page link
-    if (this.currentPage < totalPages) {
-      const nextLink = document.createElement("a");
-      nextLink.classList.add("px-1");
-      nextLink.href = "#";
-      nextLink.setAttribute("aria-label", "Go to next page");
-      nextLink.innerHTML = `<svg class="w-5 h-5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Next">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>`;
-      nextLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.currentPage++;
-        this.updateUrlParams(); // Update URL on pagination change
-        this.renderPage();
-      });
-      paginationContainer.appendChild(nextLink);
-    }
+  // Redraw on resize
+  refresh() {
+    this.pause();
+    this.innerHTML = this._originalContent;
+    this.setup();
+    this.observeVisibility();
   }
 }
-customElements.define("ingredient-glossary", IngredientGlossary);
+customElements.define("icon-marquee", IconMarquee);
+
+class FooterAccordion extends HTMLElement {
+  constructor() {
+    super();
+    this.detailsElements = Array.from(this.querySelectorAll("details"));
+    this.mediaQuery = window.matchMedia("(min-width: 640px)"); // Tailwind 'sm'
+    this.handleResize = this.handleResize.bind(this);
+  }
+
+  connectedCallback() {
+    this.handleResize();
+    this.mediaQuery.addEventListener("change", this.handleResize);
+  }
+
+  disconnectedCallback() {
+    this.mediaQuery.removeEventListener("change", this.handleResize);
+  }
+
+  handleResize() {
+    const isDesktop = this.mediaQuery.matches;
+
+    this.detailsElements.forEach((details) => {
+      if (isDesktop) {
+        details.setAttribute("open", "");
+      } else {
+        details.removeAttribute("open");
+      }
+    });
+  }
+}
+customElements.define("footer-accordion", FooterAccordion);
 
 class ShippingCalculator extends HTMLElement {
   constructor() {
@@ -1416,14 +742,14 @@ class ModalDialog extends HTMLElement {
     this.setAttribute("open", "");
     if (popup) popup.loadContent();
     trapFocus(this, this.querySelector('[role="dialog"]'));
-    window.pauseAllMedia();
+    pauseAllMedia();
   }
 
   hide() {
     document.body.classList.remove("overflow-hidden");
     this.removeAttribute("open");
     removeTrapFocus(this.openedBy);
-    window.pauseAllMedia();
+    pauseAllMedia();
   }
 }
 customElements.define("modal-dialog", ModalDialog);
@@ -1452,7 +778,7 @@ class DeferredMedia extends HTMLElement {
   }
 
   loadContent() {
-    window.pauseAllMedia();
+    pauseAllMedia();
     if (!this.getAttribute("loaded")) {
       const content = document.createElement("div");
       content.appendChild(this.querySelector("template").content.firstElementChild.cloneNode(true));
@@ -2137,8 +1463,7 @@ class GiftWithPurchaseUrl extends HTMLElement {
   constructor() {
     super();
 
-    this.cart =
-      document.querySelector("cart-notification") || document.querySelector("cart-drawer");
+    this.cart = document.querySelector("cart-drawer");
     const { productId } = this.dataset;
 
     const params = new Proxy(new URLSearchParams(window.location.search), {

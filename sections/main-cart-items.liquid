@@ -1,6 +1,3 @@
-{%- unless settings.cart_type == 'drawer' -%}
-  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
-{%- endunless -%}
 {%- assign cart_ids = cart.items | map: 'product_id' -%}
 <cart-items data-cart-ids="{{ cart_ids | json }}" class="block container pt-12">
   <div class="flex justify-between items-center mb-6">
@@ -34,26 +31,26 @@
 
             <tbody class="LOOP_osea-malibu_bundles" >
               {%- for item in cart.items -%}
-{% comment %}
-    LOOP SUBSCRIPTIONS (https://apps.shopify.com/loop-subscriptions)
-    DO NOT modify this source code because
-    It is automatically generated from LOOP SUBSCRIPTIONS BUNDLE DESIGN
-    If you need to make change, please contact the Loop support team
-    LOOP BUNDLE CODE STARTS
-{% endcomment %}
-    {% assign isBundleItem = false %}
-    {%- for property in item.properties -%}
-        {% if property.first == '_bundleId' %}
-            {% assign isBundleItem = true %}
-            {% break %}
-        {% endif %}
-    {%- endfor -%}
-    {% if isBundleItem == true %}
-        {% continue %}
-    {% endif %}
-{% comment %}
-    LOOP BUNDLE CODE ENDS
-{% endcomment %}
+                {% comment %}
+                    LOOP SUBSCRIPTIONS (https://apps.shopify.com/loop-subscriptions)
+                    DO NOT modify this source code because
+                    It is automatically generated from LOOP SUBSCRIPTIONS BUNDLE DESIGN
+                    If you need to make change, please contact the Loop support team
+                    LOOP BUNDLE CODE STARTS
+                {% endcomment %}
+                    {% assign isBundleItem = false %}
+                    {%- for property in item.properties -%}
+                        {% if property.first == '_bundleId' %}
+                            {% assign isBundleItem = true %}
+                            {% break %}
+                        {% endif %}
+                    {%- endfor -%}
+                    {% if isBundleItem == true %}
+                        {% continue %}
+                    {% endif %}
+                {% comment %}
+                    LOOP BUNDLE CODE ENDS
+                {% endcomment %}
                 {%- liquid
                   assign item_collections_handles = item.product.collections | map: 'handle'
                   if item_collections_handles contains 'exclude-from-site'

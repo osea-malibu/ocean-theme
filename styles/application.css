@@ -12,6 +12,12 @@
     min-width: 100%;
   }
 
+  /* focus style for browsers that don't support focus-visibile */
+  .focused,
+  .no-js *:focus {
+    @apply outline-2 outline-offset-2 outline-neon-green;
+  }
+
   /* fix z-index issue in safari */
   video {
     -webkit-transform-style: preserve-3d;

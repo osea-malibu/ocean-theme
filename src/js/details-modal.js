@@ -1,10 +1,15 @@
+import { trapFocus, removeTrapFocus } from "./utils.js";
+
 class DetailsModal extends HTMLElement {
   constructor() {
     super();
     this.detailsContainer = this.querySelector("details");
     this.summaryToggle = this.querySelector("summary");
 
-    this.detailsContainer.addEventListener("keyup", (event) => event.code.toUpperCase() === "ESCAPE" && this.close());
+    this.detailsContainer.addEventListener(
+      "keyup",
+      (event) => event.code.toUpperCase() === "ESCAPE" && this.close()
+    );
     this.summaryToggle.addEventListener("click", this.onSummaryClick.bind(this));
     this.querySelector('button[type="button"]').addEventListener("click", this.close.bind(this));
   }
@@ -19,7 +24,8 @@ class DetailsModal extends HTMLElement {
   }
 
   onBodyClick(event) {
-    if (!this.contains(event.target) || event.target.classList.contains("modal-overlay")) this.close(false);
+    if (!this.contains(event.target) || event.target.classList.contains("modal-overlay"))
+      this.close(false);
   }
 
   open(event) {
@@ -28,7 +34,10 @@ class DetailsModal extends HTMLElement {
     document.body.addEventListener("click", this.onBodyClickEvent);
     document.body.classList.add("overflow-hidden");
 
-    trapFocus(this.detailsContainer.querySelector('[tabindex="-1"]'), this.detailsContainer.querySelector('input:not([type="hidden"])'));
+    trapFocus(
+      this.detailsContainer.querySelector('[tabindex="-1"]'),
+      this.detailsContainer.querySelector('input:not([type="hidden"])')
+    );
   }
 
   close(focusToggle = true) {
@@ -38,5 +47,4 @@ class DetailsModal extends HTMLElement {
     document.body.classList.remove("overflow-hidden");
   }
 }
-
 customElements.define("details-modal", DetailsModal);

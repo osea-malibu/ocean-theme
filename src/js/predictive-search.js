@@ -1,3 +1,5 @@
+import { debounce } from "./utils.js";
+
 class PredictiveSearch extends HTMLElement {
   constructor() {
     super();

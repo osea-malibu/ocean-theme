@@ -1,12 +1,14 @@
 {
   "name": "ocean-theme",
   "version": "1.0.0",
+  "type": "module",
   "description": "Custom theme based on Dawn",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tailwind": "npx tailwindcss -i styles/application.css -o assets/application.css --watch --minify",
-    "build": "npm run-script tailwind && shopify theme serve"
+    "build": "node esbuild.config.js",
+    "dev": "node esbuild.config.js --watch"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "@tailwindcss/typography": "^0.5.2"
   },
   "devDependencies": {
+    "esbuild": "^0.25.3",
     "tailwindcss": "^3.2.1"
   }
 }
