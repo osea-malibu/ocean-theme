@@ -292,8 +292,6 @@
                     assign price_class = 'tracking-wide set-price'
                   endif
                 -%}
-                <script>console.log("is_set", {{ is_set }})</script>
-                <script>console.log("show_range", {{ show_range }})</script>
                 {%- render 'price',
                   product: card_product,
                   price_id: price_id,
