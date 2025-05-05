@@ -32,7 +32,7 @@
                   {%- if media.media_type == 'image' -%}
                     {%- liquid
                       assign main_image_src = media | image_url: width: 400, height: 500, crop: 'center'
-                      assign main_image_src_2x = media | image_url: width: 800, height: 1000, crop: 'center'
+                      assign main_image_src_2x = media | image_url: width: 1280, height: 1600, crop: 'center'
                     -%}
                     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                     <img
