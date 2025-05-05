@@ -10,7 +10,7 @@
     {% render 'product-badge', product: product %}
 {% endcomment %}
 {%- liquid
-  assign set_products = collections['skincare-sets-1'].products | map: 'handle'
+  assign set_products = collections['skincare-sets'].products | map: 'handle'
   assign badge_text = ''
   assign badge_class = 'badge absolute top-1 right-1 mb-1 whitespace-nowrap overflow-hidden'
 

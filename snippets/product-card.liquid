@@ -280,7 +280,7 @@
                 <span class="label">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}&nbsp;</span>
                 {%- liquid
                   assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
-                  assign set_products = collections['skincare-sets-1'].products | map: 'handle'
+                  assign set_products = collections['skincare-sets'].products | map: 'handle'
                   assign is_set = false
                   assign show_range = true
                   assign price_class = 'tracking-wide'
@@ -292,6 +292,8 @@
                     assign price_class = 'tracking-wide set-price'
                   endif
                 -%}
+                <script>console.log("is_set", {{ is_set }})</script>
+                <script>console.log("show_range", {{ show_range }})</script>
                 {%- render 'price',
                   product: card_product,
                   price_id: price_id,

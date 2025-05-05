@@ -98,7 +98,7 @@ export function setupManualRedirects() {
   ];
 
   if (loopBundles.includes(pathname)) {
-    window.location.replace("https://oseamalibu.com/collections/skincare-sets-1");
+    window.location.replace("https://oseamalibu.com/collections/skincare-sets");
   }
 
   if (pathname === "/pages/labor-day-2024") {
