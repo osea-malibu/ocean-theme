@@ -18,6 +18,13 @@
             "title_classes": "title text-2xl tracking-wide col-span-12 text-owc-blue font-medium"
           }
         },
+        "text_njP7Aq": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.custom_fields.short_description.value }}",
+            "text_block_classes": "col-span-12 text-owc-blue mb-2"
+          }
+        },
         "price": {
           "type": "price",
           "disabled": true,
@@ -106,6 +113,8 @@
             "info_tab_howto_label": "How To Use",
             "enable_info_tab_sustainability": true,
             "info_tab_sustainability_label": "Recycling",
+            "enable_info_tab_care": true,
+            "info_tab_care_label": "Care",
             "enable_info_tab_articles": true,
             "info_tab_articles_label": "Learn",
             "enable_info_tab_custom": true,
@@ -123,6 +132,7 @@
       },
       "block_order": [
         "title",
+        "text_njP7Aq",
         "price",
         "6a44c417-fd63-4240-a103-3540393f4f89",
         "variant_picker",
@@ -179,7 +189,9 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
       "disabled": true,
       "custom_css": [],
       "settings": {
@@ -202,7 +214,9 @@
           }
         }
       },
-      "block_order": ["heading_maNiHT"],
+      "block_order": [
+        "heading_maNiHT"
+      ],
       "name": "Rich text",
       "settings": {
         "section_heading": "",
@@ -382,7 +396,12 @@
           }
         }
       },
-      "block_order": ["column_rn7aRQ", "column_U6xecN", "column_tKxjH8", "column_Ri7rrD"],
+      "block_order": [
+        "column_rn7aRQ",
+        "column_U6xecN",
+        "column_tKxjH8",
+        "column_Ri7rrD"
+      ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "section_heading": "",
@@ -414,7 +433,9 @@
           }
         }
       },
-      "block_order": ["key_ingredient_dBBbXd"],
+      "block_order": [
+        "key_ingredient_dBBbXd"
+      ],
       "name": "Ingredients with Images",
       "settings": {
         "header": "<b class=\"font-medium\">Cleanse</b> <em class=\"font-serif\">With Benefits</em>",
