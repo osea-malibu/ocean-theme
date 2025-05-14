@@ -807,7 +807,7 @@
   .pdp-ocean-wave-cleanser .product-faqs .container {
     @apply xl:max-w-screen-xl;
   }
-  .pdp-ocean-wave-cleanser .product-faqs .bg-owc-blue3 {
+  .pdp-ocean-wave-cleanser .product-faqs .container > div {
     @apply rounded-lg border border-owc-blue2 sm:p-8;
   }
   .pdp-ocean-wave-cleanser .product-faqs b,
@@ -825,7 +825,10 @@
     @apply border-owc-blue2;
   }
   .pdp-ocean-wave-cleanser .upsell-partner a {
-    @apply text-owc-blue2;
+    @apply text-owc-blue;
+  }
+  .pdp-ocean-wave-cleanser .upsell-partner button {
+    @apply text-owc-blue bg-owc-blue3;
   }
   .pdp-ocean-wave-cleanser .oke-w-breakdownModule-distribution-bar-fill,
   .pdp-ocean-wave-cleanser
