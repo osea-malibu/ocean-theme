@@ -16,7 +16,7 @@ module.exports = {
     },
     {
       pattern: /w-(1\/6|1\/5|1\/4|1\/3|1\/2)/,
-    } /*,
+    },
     {
       pattern:
         /(bg|text|from|to)-(wave|seafoam|seaweed|sand|shell|coral)-(100|200|300|400|500|600|700|800)/,
@@ -75,7 +75,7 @@ module.exports = {
     {
       pattern: /bg-(auto|contain|cover)/,
       variants: ["xs", "sm", "md", "lg", "xl"],
-    },*/,
+    },
   ],
   theme: {
     container: {
