@@ -804,6 +804,7 @@ class VariantSelects extends HTMLElement {
       this.updateOptions();
       this.updateMasterId();
       this.updateMedia();
+      this.handleKlaviyoBisTrigger();
     };
     document.addEventListener("DOMContentLoaded", executeMethods);
   }
@@ -1021,19 +1022,20 @@ class VariantSelects extends HTMLElement {
     if (!productForm) return;
     const addButton = productForm.querySelector('[name="add"]');
     const addButtonText = productForm.querySelector('[name="add"] > .label');
+    const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
 
     if (!addButton) return;
 
     if (disable) {
       addButton.setAttribute("disabled", "disabled");
       if (text) addButtonText.textContent = text;
-      document.querySelector(".klaviyo-bis-trigger").classList.add("block");
-      document.querySelector(".klaviyo-bis-trigger").classList.remove("hidden");
+      bisTrigger.classList.add("block");
+      bisTrigger.classList.remove("hidden");
     } else {
       addButton.removeAttribute("disabled");
       addButtonText.textContent = window.variantStrings.addToCart;
-      document.querySelector(".klaviyo-bis-trigger").classList.add("hidden");
-      document.querySelector(".klaviyo-bis-trigger").classList.remove("block");
+      bisTrigger.classList.add("hidden");
+      bisTrigger.classList.remove("block");
     }
 
     if (!modifyClass) return;
@@ -1047,6 +1049,13 @@ class VariantSelects extends HTMLElement {
     if (!addButton) return;
     addButtonText.textContent = window.variantStrings.unavailable;
     if (price) price.classList.add("invisible");
+  }
+
+  handleKlaviyoBisTrigger() {
+    const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
+    if (this.currentVariant.available && bisTrigger) {
+      bisTrigger.classList.add("hidden");
+    }
   }
 
   getVariantData() {
