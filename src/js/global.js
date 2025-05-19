@@ -1036,6 +1036,7 @@ class VariantSelects extends HTMLElement {
   }
 
   setUnavailable() {
+    console.log("setUnavailable");
     const button = document.getElementById(`product-form-${this.dataset.section}`);
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
