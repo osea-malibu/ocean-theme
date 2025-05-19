@@ -8,6 +8,7 @@ module.exports = {
     "./sections/*.liquid",
     "./snippets/*.liquid",
     "./assets/*.js",
+    "./src/js/*.js",
     "./config/settings_data.json",
   ],
   safelist: [
