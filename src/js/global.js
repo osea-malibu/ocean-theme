@@ -1031,28 +1031,22 @@ class VariantSelects extends HTMLElement {
       addButton.setAttribute("disabled", "disabled");
       if (text) addButtonText.textContent = text;
 
-      setTimeout(() => {
-        if (bisTrigger) {
-          oosButtons.classList.add("block");
-          oosButtons.classList.remove("hidden");
+      if (bisTrigger) {
+        oosButtons.classList.remove("mb-[50px]");
 
-          bisTrigger.classList.add("block");
-          bisTrigger.classList.remove("hidden");
-        }
-      }, 500);
+        bisTrigger.classList.add("block");
+        bisTrigger.classList.remove("hidden");
+      }
     } else {
       addButton.removeAttribute("disabled");
       if (text) addButtonText.textContent = window.variantStrings.addToCart;
 
-      setTimeout(() => {
-        if (bisTrigger) {
-          oosButtons.classList.add("hidden");
-          oosButtons.classList.remove("block");
+      if (bisTrigger) {
+        oosButtons.classList.remove("mb-[50px]");
 
-          bisTrigger.classList.add("hidden");
-          bisTrigger.classList.remove("block");
-        }
-      }, 500);
+        bisTrigger.classList.add("hidden");
+        bisTrigger.classList.remove("block");
+      }
     }
 
     if (!modifyClass) return;
