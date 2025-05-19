@@ -1029,13 +1029,17 @@ class VariantSelects extends HTMLElement {
     if (disable) {
       addButton.setAttribute("disabled", "disabled");
       if (text) addButtonText.textContent = text;
-      bisTrigger.classList.add("block");
-      bisTrigger.classList.remove("hidden");
+      if (bisTrigger) {
+        bisTrigger.classList.add("block");
+        bisTrigger.classList.remove("hidden");
+      }
     } else {
       addButton.removeAttribute("disabled");
       addButtonText.textContent = window.variantStrings.addToCart;
-      bisTrigger.classList.add("hidden");
-      bisTrigger.classList.remove("block");
+      if (bisTrigger) {
+        bisTrigger.classList.add("hidden");
+        bisTrigger.classList.remove("block");
+      }
     }
 
     if (!modifyClass) return;
