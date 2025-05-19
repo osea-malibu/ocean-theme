@@ -1027,16 +1027,19 @@ class VariantSelects extends HTMLElement {
     if (disable) {
       addButton.setAttribute("disabled", "disabled");
       if (text) addButtonText.textContent = text;
+      document.querySelector(".klaviyo-bis-trigger").classList.add("block");
+      document.querySelector(".klaviyo-bis-trigger").classList.remove("hidden");
     } else {
       addButton.removeAttribute("disabled");
       addButtonText.textContent = window.variantStrings.addToCart;
+      document.querySelector(".klaviyo-bis-trigger").classList.add("hidden");
+      document.querySelector(".klaviyo-bis-trigger").classList.remove("block");
     }
 
     if (!modifyClass) return;
   }
 
   setUnavailable() {
-    console.log("setUnavailable");
     const button = document.getElementById(`product-form-${this.dataset.section}`);
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
