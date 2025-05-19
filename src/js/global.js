@@ -1026,11 +1026,13 @@ class VariantSelects extends HTMLElement {
 
     if (!addButton) return;
 
+    console.log("if disable");
     if (disable) {
       addButton.setAttribute("disabled", "disabled");
       if (text) addButtonText.textContent = text;
 
       if (bisTrigger) {
+        console.log("bisTrigger add class");
         addButton.classList.add("mb-14");
         bisTrigger.classList.add("block");
         bisTrigger.classList.remove("hidden");
