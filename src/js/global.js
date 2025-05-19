@@ -1023,6 +1023,7 @@ class VariantSelects extends HTMLElement {
     const addButton = productForm.querySelector('[name="add"]');
     const addButtonText = productForm.querySelector('[name="add"] > .label');
     const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
+    const oosButtons = document.querySelector(".oos-buttons");
 
     if (!addButton) return;
 
@@ -1031,7 +1032,9 @@ class VariantSelects extends HTMLElement {
       if (text) addButtonText.textContent = text;
 
       if (bisTrigger) {
-        addButton.classList.add("mb-[50px]");
+        oosButtons.classList.add("block");
+        oosButtons.classList.remove("hidden");
+
         bisTrigger.classList.add("block");
         bisTrigger.classList.remove("hidden");
       }
@@ -1040,7 +1043,9 @@ class VariantSelects extends HTMLElement {
       if (text) addButtonText.textContent = window.variantStrings.addToCart;
 
       if (bisTrigger) {
-        addButton.classList.remove("mb-[50px]");
+        oosButtons.classList.add("hidden");
+        oosButtons.classList.remove("block");
+
         bisTrigger.classList.add("hidden");
         bisTrigger.classList.remove("block");
       }

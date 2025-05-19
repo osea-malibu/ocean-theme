@@ -565,7 +565,7 @@
                               {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
                             {%- endif -%}
                         </button>
-                        {%- unless product.selected_or_first_available_variant.available -%}
+                        <div class="oos-buttons col-span-2 flex gap-2 {% if product.selected_or_first_available_variant.available %}hidden{% else %}block{% endif %}">
                           {%- if product.handle == 'ocean-glow-body-trio' %}
                             <a class="button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11" target="_blank" href="https://www.ulta.com/p/ocean-glow-body-trio-pimprod2051657?sku=2638931">
                               <span class="text-white">Shop now on ULTA</span>
@@ -574,7 +574,7 @@
                             <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
                             <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
                           {%- endif -%}
-                        {%- endunless -%}
+                        </div>
                       </div>
                       {%- assign product_collection_handles = product.collections | map: 'handle' -%}
                       {%- if product.selected_or_first_available_variant.available -%}
