@@ -614,7 +614,10 @@
     @apply mr-0.5;
   }
   .oke-sr .oke-sr-count {
-    @apply h-4 items-center text-xs underline underline-offset-2 lowercase;
+    @apply h-4 items-center text-xs lowercase;
+  }
+  .pdp .oke-sr .oke-sr-count {
+    @apply underline underline-offset-2;
   }
   .compact .oke-sr .oke-sr-label-text,
   .hide-count .oke-sr .oke-count {
