@@ -41,7 +41,7 @@
                       alt="{{ media.alt | escape }}"
                       width="{{ media.width }}"
                       height="{{ media.width | divided_by: 0.8 | round }}"
-                      class="min-h-full object-cover"
+                      class="min-h-full object-cover md:rounded-md"
                     >
                     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                   {%- elsif media.media_type == 'video' -%}
@@ -54,6 +54,7 @@
                         <img
                           srcset="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }} 1x, {{ media.preview_image | image_url: width: 800, height: 1000, crop: 'center' }} 2x"
                           src="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}"
+                          class="md:rounded-md"
                           alt="Loading product video"
                           loading="lazy"
                           width="1280"
@@ -64,7 +65,7 @@
                         </span>
                       </button>
                       <template>
-                        <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}">
+                        <video class="h-full w-full object-cover md:rounded-md" playsinline autoplay muted loop controls poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}">
                           {%- for source in media.sources -%}
                             {%- comment -%} theme-check-disable RemoteAsset {%- endcomment -%}
                             <source src="{{ source.url }}" type="video/{{ source.format }}" />
@@ -85,7 +86,7 @@
               {%- endfor -%}
             </ul>
           </div>
-          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:gap-1 lg:flex-col lg:shrink-0 lg:h-[760px] lg:overflow-y-auto" data-glide-el="controls[nav]">
+          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[760px] lg:overflow-y-auto" data-glide-el="controls[nav]">
             {%- for media in product.media limit: section.settings.gallery_limit -%}
               <button class="glide__bullet relative p-2 md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
                 <span class="sr-only">Go to slide {{ forloop.index }}</span>
@@ -109,7 +110,7 @@
                   alt="{{ media.alt | escape }}"
                   width="{{ media.width }}"
                   height="{{ media.width | divided_by: media.aspect_ratio | round }}"
-                  class="hidden md:block w-24 md:h-20 lg:h-32 object-cover"
+                  class="hidden md:block w-24 lg:h-32 object-cover rounded"
                 >
                 {% comment %} theme-check-enable RemoteAsset {% endcomment %}
               </button>
