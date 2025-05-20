@@ -1,11 +1,11 @@
 {% comment %} theme-check-disable TemplateLength {% endcomment %}
 <section id="main-product">
-  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-4 xl:gap-10">
+  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {%- if product.media.size > 1 -%}
-      <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden">
+      <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden lg:pr-4 xl:pr-10">
         <glide-slider
           class="glide type-carousel gap-0 sm:perView-1 md:perView-2 perView-1 mb-6 overflow-hidden max-w-full lg:flex lg:flex-row-reverse lg:gap-2"
           id="Product-Slider"
@@ -85,7 +85,7 @@
               {%- endfor -%}
             </ul>
           </div>
-          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:gap-1 lg:flex-col lg:shrink-0 lg:h-[846px] lg:overflow-y-auto" data-glide-el="controls[nav]">
+          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-2 lg:gap-1 lg:flex-col lg:shrink-0 lg:h-[810px] lg:overflow-y-auto" data-glide-el="controls[nav]">
             {%- for media in product.media limit: section.settings.gallery_limit -%}
               <button class="glide__bullet relative p-2 md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
                 <span class="sr-only">Go to slide {{ forloop.index }}</span>
