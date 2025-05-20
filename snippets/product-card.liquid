@@ -329,6 +329,7 @@
         <div class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
       {%- else -%}
         <a
+          aria-label="{{ card_product.title | escape }}"
           href="{{ card_product.url | default: '#' }}"
           class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}"
           tabindex="-1"
@@ -389,7 +390,7 @@
           <img
             srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
             src="{% render 'imgix', src: default_image_src %}"
-            alt="{{ default_image.alt | escape }}"
+            alt="{% if remove_linking %}{{ default_image.alt | escape }}{% endif %}"
             width="{{ default_image.width }}"
             height="{{ default_image.height }}"
             id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
