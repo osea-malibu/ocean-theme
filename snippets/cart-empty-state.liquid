@@ -5,7 +5,7 @@
       {%- assign image_src = link.title | downcase | replace: ' ', '_' | replace: '_&', '' | prepend: 'https://cdn.shopify.com/s/files/1/1368/9993/files/empty_state-' | append: '.jpg' -%}
       <a href="{{ link.url }}" class="block relative">
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-        <img alt="{{ link.title }} lifestyle image" src="{{ image_src }}" aria-hidden="true" width="200" height="200" class="rounded">
+        <img alt="Model with product from the {{ link.title }} collection" src="{{ image_src }}" aria-hidden="true" width="200" height="200" class="rounded">
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         <strong class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-neon-green rounded-full px-2 whitespace-nowrap font-medium">{{ link.title }}</strong>
       </a>
