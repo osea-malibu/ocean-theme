@@ -126,7 +126,7 @@
                         autocapitalize="off"
                         spellcheck="false"
                       >
-                      <label class="hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
+                      <label class="sr-only" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
                       <input type="hidden" name="options[prefix]" value="last">
                       <button class="cursor-pointer w-10 h-10 flex items-center justify-center ml-2 md:ml-4 shrink-0" aria-label="{{ 'general.search.search' | t }}">
                         {% render 'icon-search', classes: 'h-6 w-6 hover:text-seaweed-500', aria-hidden: true, stroke_width: 2 %}
