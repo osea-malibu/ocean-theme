@@ -329,6 +329,7 @@
         <div class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
       {%- else -%}
         <a
+          aria-label="{{ card_product.title | escape }}"
           href="{{ card_product.url | default: '#' }}"
           class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}"
           tabindex="-1"
