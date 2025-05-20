@@ -565,6 +565,12 @@
   .icon-list.bullet li {
     @apply before:content-['\2022'] before:mr-3;
   }
+  .icon-list.dash {
+    @apply pl-5;
+  }
+  .icon-list.dash li {
+    @apply before:content-['\2013'] before:mr-1 before:-ml-5;
+  }
   .icon-list.sparkle li {
     @apply before:content-['\2728'] before:font-bold before:mr-2 before:scale-125;
   }
