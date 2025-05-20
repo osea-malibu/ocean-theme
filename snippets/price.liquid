@@ -46,16 +46,16 @@
     assign money_price = price | money_with_currency
   endif
 
-  assign slashed_price_color = slashed_price_color | default: 'text-wave-700'
+  assign slashed_price_color = slashed_price_color | default: 'text-seaweed-700'
 -%}
 
 <span class="price whitespace-nowrap flex flex-row{% if price_class %} {{ price_class }}{% endif %}"{% if price_id != blank %} id="{{ price_id }}"{% endif %}>
   {%- if subscription -%}
-    <s class="{{ slashed_price_color }} mr-1">{{ product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros }}</s>
+    <s class="{{ slashed_price_color }} font-medium mr-1">{{ product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros }}</s>
     <span class="sr-only">&nbsp;</span>
     <span>{{ product.selected_or_first_available_selling_plan_allocation.price | money }}</span>
   {%- elsif bundle -%}
-    <s class="{{ slashed_price_color }} mr-1">{{ money_price }}</s>
+    <s class="{{ slashed_price_color }} font-medium mr-1">{{ money_price }}</s>
     <span class="sr-only">&nbsp;</span>
     <span>{{ price | times: 0.8 | money }}</span>
   {%- elsif show_price_range and default_to_mini != true and default_to_jumbo != true -%}
@@ -64,7 +64,7 @@
     {%- if compare_at_price > price -%}
       {%- unless product.price_varies == false and product.compare_at_price_varies %}
         {%- unless hide_slashed_price -%}
-          <s class="{{ slashed_price_color }} mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
+          <s class="{{ slashed_price_color }}font-medium mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
           <span class="sr-only">&nbsp;</span>
         {%- endunless -%}
       {%- endunless -%}
