@@ -106,6 +106,8 @@
             "info_tab_howto_label": "How To Use",
             "enable_info_tab_sustainability": true,
             "info_tab_sustainability_label": "Recycling",
+            "enable_info_tab_care": true,
+            "info_tab_care_label": "Care",
             "enable_info_tab_articles": true,
             "info_tab_articles_label": "Learn",
             "enable_info_tab_custom": true,
@@ -154,7 +156,7 @@
       "type": "product-video",
       "settings": {
         "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
-        "wrapper_classes": "container mx-auto px-4 2xs:px-6 xl:max-w-screen-lg mb-12"
+        "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-12"
       }
     },
     "clinicals": {
