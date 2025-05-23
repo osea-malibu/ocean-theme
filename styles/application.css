@@ -440,17 +440,11 @@
     @apply select-none;
     -webkit-touch-callout: none;
   }
-  .glide__bullet {
-    @apply opacity-50;
-  }
-  .glide__bullet--active {
-    @apply opacity-100;
-  }
   .glide__bullet img {
     @apply border border-transparent motion-safe:transition-colors;
   }
   .glide__bullet--active img {
-    @apply opacity-100 border-seaweed-500;
+    @apply opacity-100 border-seaweed-700;
   }
   .glide.arrows-on-hover .glide__arrows {
     @apply invisible;
