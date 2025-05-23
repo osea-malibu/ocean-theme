@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  .icon-list.check li:before {
+    @apply content-['✓'] font-bold mr-2;
+  }
+  .icon-list.bullet li:before {
+    @apply content-['•'] mr-3;
+  }
+
   html,
   body {
     @apply bg-white text-seaweed-700;
@@ -552,15 +559,6 @@
   }
   .icon-list.bullet.\!pl-5 li {
     @apply before:mr-1;
-  }
-  .icon-list.check li {
-    @apply before:content-['\2713'] before:font-bold before:mr-2;
-  }
-  .icon-list.bullet li {
-    @apply before:content-['\2022'] before:mr-3;
-  }
-  .icon-list.sparkle li {
-    @apply before:content-['\2728'] before:font-bold before:mr-2 before:scale-125;
   }
   .icon-list.icon-list-sm {
     @apply pl-4;
