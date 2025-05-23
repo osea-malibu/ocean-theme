@@ -12,7 +12,7 @@
 {% endcomment %}
 
 {% if product != blank %} 
-   {% capture product_data_attribute %}data-oke-reviews-product-id="shopify-{{ product.id }}"{% endcapture %} 
+   {% capture product_data_attribute %}data-oke-reviews-product-id="shopify-{% if product.handle == 'undaria-algae-body-oil-v2' %}8092623623{% else %}{{ product.id }}{% endif %}"{% endcapture %} 
 {% endif %} 
 <div data-oke-star-rating {{ product_data_attribute }} class="{% if classes != blank %}{{ classes }}{% endif %}{% if compact %} compact{% endif %}{% if hide_count %} hide-count{% endif %}">
   {{- product.metafields.okendo.StarRatingSnippet -}}
