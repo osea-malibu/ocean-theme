@@ -20,7 +20,7 @@
           {%- endif -%}
         </div>
       {%- endif -%}
-      <div data-oke-widget data-oke-reviews-product-id="shopify-{{ product.id }}">{{ product.metafields.okendo.ReviewsWidgetSnippet }}</div>
+      <div data-oke-widget data-oke-reviews-product-id="shopify-{% if product.handle == 'undaria-algae-body-oil-v2' %}8092623623{% else %}{{ product.id }}{% endif %}">{{ product.metafields.okendo.ReviewsWidgetSnippet }}</div>
     </div>
   </div>
 {% endunless %}
