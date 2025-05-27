@@ -41,7 +41,7 @@
             <strong class="{{ block.settings.tag_classes }}">
               {{ article.tags | join: ', ' }}
             </strong>
-            <h1 class="{{ block.settings.title_classes }}" itemprop="headline">{{ article.title | escape }}</h1>
+            <h1 class="{{ block.settings.title_classes }}" itemprop="headline">{{ article.title | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' }}</h1>
             <span class="{{ block.settings.date_classes }}" itemprop="dateCreated pubdate datePublished">{{ article.published_at | time_tag: format: 'date' }}</span>
             <span class="{{ block.settings.author_classes }}" itemprop="author" itemscope itemtype="http://schema.org/Person">
               <span itemprop="name">{{ article.author }}</span>
