@@ -1,15 +1,6 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
-@utility container {
-  margin-inline: auto;
-  padding-inline: 1rem;
-
-  @media (min-width: var(--breakpoint-2xs)) {
-    padding-inline: 1.5rem;
-  }
-}
-
 @layer base {
   /* focus style for browsers that don't support focus-visibile */
   .focused,
@@ -333,6 +324,10 @@
   predictive-search [role="option"][aria-selected="true"] {
     @apply ring;
   }
+  /* Text highlight (used in search results) */
+  strong.highlight {
+    @apply font-regular bg-seafoam-300;
+  }
 
   /* Tab controller */
   tab-controller [role="tabpanel"] {
@@ -528,61 +523,142 @@
   }
 }
 
-@layer utilities {
-  /* Text highlight (used in search results) */
-  strong.highlight {
-    @apply font-regular bg-seafoam-300;
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @media (min-width: var(--breakpoint-2xs)) {
+    padding-inline: 1.5rem;
+  }
+}
+
+/* Icon lists */
+@utility icon-list {
+  padding-left: var(--spacing-7);
+
+  & li {
+    line-height: var(--leading-tight);
+
+    &:before {
+      display: inline-block;
+      margin-left: -var(--spacing-7);
+      width: var(--spacing-4);
+      text-align: center;
+    }
+  }
+  &.\!pl-5 li:before {
+    margin-left: -var(--spacing-5);
+  }
+  &.bullet.\!pl-5 li:before {
+    margin-right: var(--spacing-1);
+  }
+  &.icon-list-sm {
+    padding-left: var(--spacing-4);
+  }
+  &.icon-list-sm li:before {
+    font-size: 80%;
+    margin-left: -var(--spacing-4);
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+  }
+  &.check li:before {
+    content: "✓";
+    font-weight: var(--font-weight-bold);
+    margin-right: var(--spacing-2);
+  }
+  &.bullet li:before {
+    content: "•";
+    margin-right: var(--spacing-3);
+  }
+}
+
+/* Fancy scrollbar */
+@utility scrollbar {
+  padding-bottom: var(--spacing-2);
+
+  &::-webkit-scrollbar {
+    width: var(--spacing-1);
+    height: var(--spacing-1);
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-seafoam-200);
+    border-radius: var(--rounded-full);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-seafoam-400);
+    border-radius: var(--rounded-full);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-seafoam-500);
+  }
+}
+
+/* Hidden scrollbar */
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background-color: transparent;
+  }
+}
+
+/* Loop Bundles */
+@utility cart-item {
+  &[id^="CartBundleItem"] {
+    width: var(--spacing-full);
+    display: flex;
+    margin-block: var(--spacing-6);
   }
 
-  /* Icon lists */
-  .icon-list {
-    @apply pl-7;
-  }
-  .icon-list li {
-    @apply before:inline-block before:-ml-7 before:w-4 before:text-center leading-tight;
-  }
-  .icon-list.\!pl-5 li {
-    @apply before:-ml-5;
-  }
-  .icon-list.bullet.\!pl-5 li {
-    @apply before:mr-1;
-  }
-  .icon-list.icon-list-sm {
-    @apply pl-4;
-  }
-  .icon-list.icon-list-sm li {
-    @apply before:text-[80%] before:-ml-4 before:subpixel-antialiased;
-  }
-  .icon-list.check li:before {
-    @apply content-['✓'] font-bold mr-2;
-  }
-  .icon-list.bullet li:before {
-    @apply content-['•'] mr-3;
-  }
+  &[id^="CartBundleItem"] .product-option {
+    font-size: var(--text-xs);
+    flex-grow: 0;
+    max-width: 11rem;
 
-  /* fancy scrollbars */
-  .scrollbar {
-    @apply pb-2;
+    @media (min-width: var(--breakpoint-xs)) {
+      max-width: var(--spacing-full);
+    }
   }
-  .scrollbar::-webkit-scrollbar {
-    @apply w-1 h-1;
+  &[id^="CartBundleItem"] .product-option p span {
+    display: block;
+    height: var(--spacing-4);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
-  .scrollbar::-webkit-scrollbar-track {
-    @apply bg-seafoam-200 rounded-full;
+  &[id^="CartBundleItem"] .cart-item__media {
+    flex-shrink: 0;
   }
-  .scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-seafoam-400 rounded-full;
+  &[id^="CartBundleItem"] .cart-item__image {
+    width: 60px;
+    flex-shrink: 0;
   }
-  .scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-seafoam-500;
+  &[id^="CartBundleItem"] .cart-item__quantity {
+    display: none;
   }
-
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  &[id^="CartBundleItem"] .right {
+    margin-left: auto;
   }
-  .scrollbar-hide::-webkit-scrollbar {
-    @apply w-0 h-0 bg-transparent;
+  &[id^="CartBundleItem"] .right button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+  }
+  &[id^="CartBundleItem"] .cart-item__price-wrapper {
+    @apply !gap-1;
+  }
+  &[id^="CartBundleItem"] .cart-item__price-wrapper .price {
+    @apply !font-book first-of-type:text-seaweed-500;
+  }
+  &[id^="CartBundleItem"] .right > button p {
+    @apply !mt-0.5 text-sm;
+  }
+  &[id^="CartBundleItem"] .right > div svg {
+    stroke-width: 0.25px;
+    stroke: #1d4d41;
   }
 }
 
@@ -694,45 +770,6 @@
   }
   #ps__bis_container_root #ps-bis-widget__button.ps-bis-button {
     @apply button button-neon button-sm h-11 block whitespace-normal leading-tight w-full;
-  }
-
-  /* Loop Bundles */
-  [id^="CartBundleItem"] {
-    @apply w-full flex my-6;
-  }
-  [id^="CartBundleItem"] .product-option {
-    @apply text-xs grow-0 max-w-[11rem] xs:max-w-full;
-  }
-  [id^="CartBundleItem"] .product-option p span {
-    @apply block h-4 overflow-hidden whitespace-nowrap text-ellipsis;
-  }
-  [id^="CartBundleItem"] .cart-item__media {
-    @apply shrink-0;
-  }
-  [id^="CartBundleItem"] .cart-item__image {
-    @apply w-[60px] shrink-0;
-  }
-  [id^="CartBundleItem"] .cart-item__quantity {
-    @apply hidden;
-  }
-  [id^="CartBundleItem"] .right {
-    @apply ml-auto;
-  }
-  [id^="CartBundleItem"] .right button {
-    @apply items-center flex gap-1;
-  }
-  [id^="CartBundleItem"] .cart-item__price-wrapper {
-    @apply !gap-1;
-  }
-  [id^="CartBundleItem"] .cart-item__price-wrapper .price {
-    @apply !font-book first-of-type:text-seaweed-500;
-  }
-  [id^="CartBundleItem"] .right > button p {
-    @apply !mt-0.5 text-sm;
-  }
-  [id^="CartBundleItem"] .right > div svg {
-    stroke-width: 0.25px;
-    stroke: #1d4d41;
   }
 
   tr#bud {
