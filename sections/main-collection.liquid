@@ -1,5 +1,4 @@
 <div class="container mb-12">
-  <script>console.log("collection")</script>
   {%- paginate collection.products by section.settings.products_per_page -%}
     <script src="{{ 'facets.min.js' | asset_url }}" defer="defer"></script>
     {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
@@ -32,7 +31,7 @@
                   assign promo_tile_url = settings.global_plp_tile_url
                 else
                   assign promo_tile_image = collection.metafields.custom.promo_tile_image
-                  assign promo_tile_video = collection.metafields.custom.promo_tile_video_portrait
+                  assign promo_tile_video = collection.metafields.custom.promo_tile_video_portrait.value
                   assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
                 endif
               -%}
@@ -40,7 +39,7 @@
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
                   promo_tile_video_portrait: promo_tile_video,
-                  promo_tile_video_landscape: collection.metafields.custom.promo_tile_video_landscape,
+                  promo_tile_video_landscape: collection.metafields.custom.promo_tile_video_landscape.value,
                   promo_tile_url: promo_tile_url
                 -%}
               </li>
@@ -121,10 +120,10 @@
                 assign promo_tile_url = settings.global_plp_tile_url
               else
                 assign promo_tile_image = collection.metafields.custom.promo_tile_image
-                assign promo_tile_video = collection.metafields.custom.promo_tile_video_portrait
+                assign promo_tile_video = collection.metafields.custom.promo_tile_video_portrait.value
                 assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
               endif
-              assign promo_tile_video_landscape = collection.metafields.custom.promo_tile_video_landscape
+              assign promo_tile_video_landscape = collection.metafields.custom.promo_tile_video_landscape.value
   
               if settings.enable_global_plp_tile or promo_tile_image != blank or promo_tile_video != blank
                 assign has_promo_content = true
@@ -138,7 +137,6 @@
                 assign no_featured_products = false
               endif
             -%}
-            <script>console.log('settings.global_plp_tile_video', {{ settings.global_plp_tile_video | json }})</script>
             {%- if has_promo_content and no_featured_products -%}
               <li class="relative overflow-hidden">
                 {%- render 'collection-promo-tile',

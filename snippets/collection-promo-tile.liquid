@@ -33,16 +33,16 @@
 {%- if promo_tile_video_portrait != blank and promo_tile_video_landscape == blank -%}
   <div class="h-full relative promo-tile-video">
     <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
-      {%- for source in promo_tile_video_portrait.value.sources -%}
+      {%- for source in promo_tile_video_portrait.sources -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <source src="{{ source.url }}" type="video/{{ source.format }}" />
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       {%- endfor -%}
       <img
-        src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}"
+        src="{{ promo_tile_video_portrait.preview_image | image_url: width: 480 }}"
         alt=""
-        width="{{ promo_tile_video_portrait.value.preview_image.width }}"
-        height="{{ promo_tile_video_portrait.value.preview_image.width | divided_by: promo_tile_video_portrait.value.preview_image.aspect_ratio | round }}"
+        width="{{ promo_tile_video_portrait.preview_image.width }}"
+        height="{{ promo_tile_video_portrait.preview_image.width | divided_by: promo_tile_video_portrait.value.preview_image.aspect_ratio | round }}"
         loading=lazy
       >
     </video>
@@ -55,16 +55,16 @@
 {%- elsif promo_tile_video_portrait != blank and promo_tile_video_landscape != blank -%}
   <collection-video class="block h-full relative">
     <video class="vertical-video h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}">
-      {%- for source in promo_tile_video_portrait.value.sources -%}
+      {%- for source in promo_tile_video_portrait.sources -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <source src="{{ source.url }}" type="video/{{ source.format }}" />
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       {%- endfor -%}
       <img
-        src="{{ promo_tile_video_portrait.value.preview_image | image_url: width: 480 }}"
+        src="{{ promo_tile_video_portrait.preview_image | image_url: width: 480 }}"
         alt=""
-        width="{{ promo_tile_video_portrait.value.preview_image.width }}"
-        height="{{ promo_tile_video_portrait.value.preview_image.width | divided_by: promo_tile_video_portrait.value.preview_image.aspect_ratio | round }}"
+        width="{{ promo_tile_video_portrait.preview_image.width }}"
+        height="{{ promo_tile_video_portrait.preview_image.width | divided_by: promo_tile_video_portrait.value.preview_image.aspect_ratio | round }}"
         loading=lazy
       >
     </video>
@@ -79,10 +79,10 @@
           {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         {%- endfor -%}
         <img
-          src="{{ promo_tile_video_landscape.value.preview_image | image_url: width: 768 }}"
+          src="{{ promo_tile_video_landscape.preview_image | image_url: width: 768 }}"
           alt=""
-          width="{{ promo_tile_video_landscape.value.preview_image.width }}"
-          height="{{ promo_tile_video_landscape.value.preview_image.width | divided_by: promo_tile_video_landscape.value.preview_image.aspect_ratio | round }}"
+          width="{{ promo_tile_video_landscape.preview_image.width }}"
+          height="{{ promo_tile_video_landscape.preview_image.width | divided_by: promo_tile_video_landscape.value.preview_image.aspect_ratio | round }}"
           loading=lazy
         >
       </video>
