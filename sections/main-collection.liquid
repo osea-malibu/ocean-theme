@@ -1,4 +1,5 @@
 <div class="container mb-12">
+  <script>console.log("collection")</script>
   {%- paginate collection.products by section.settings.products_per_page -%}
     <script src="{{ 'facets.min.js' | asset_url }}" defer="defer"></script>
     {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
