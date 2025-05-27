@@ -35,6 +35,10 @@
                   assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
                 endif
               -%}
+              <script>
+                console.log("settings.global_plp_tile_video", {{ settings.global_plp_tile_video | json }});
+                console.log("promo_tile_video", {{ promo_tile_video | json }});
+              </script>
               <li class="relative">
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
