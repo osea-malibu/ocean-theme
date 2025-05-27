@@ -137,6 +137,7 @@
                 assign no_featured_products = false
               endif
             -%}
+            <script>console.log('settings.global_plp_tile_video', {{ settings.global_plp_tile_video | json }})</script>
             {%- if has_promo_content and no_featured_products -%}
               <li class="relative overflow-hidden">
                 {%- render 'collection-promo-tile',
