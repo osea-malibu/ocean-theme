@@ -95,7 +95,7 @@
     {% comment %} End PostPilot SiteMatch {% endcomment %}
   </head>
 
-  <body class="antialiased{% if template.name == 'product' %} pdp pdp-{{ product.handle }}{% endif %}{% if customer %} logged-in{% endif %}">
+  <body class="antialiased bg-white text-seaweed-700{% if template.name == 'product' %} pdp pdp-{{ product.handle }}{% endif %}{% if customer %} logged-in{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
@@ -129,7 +129,7 @@
       <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
     </ul>
 
-    <div id="HeaderScrollPixel"></div>
+    <div id="HeaderScrollPixel" class="absolute w-px h-px bg-transparent top-8"></div>
     
     <script>
       window.shopUrl = '{{ shop.url }}';
