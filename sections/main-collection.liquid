@@ -27,16 +27,18 @@
               {%- liquid 
                 if settings.enable_global_plp_tile and settings.global_plp_tile_image != blank
                   assign promo_tile_image = settings.global_plp_tile_image
+                  assign promo_tile_video = settings.global_plp_tile_video
                   assign promo_tile_url = settings.global_plp_tile_url
                 else
                   assign promo_tile_image = collection.metafields.custom.promo_tile_image
+                  assign promo_tile_video = collection.metafields.custom.promo_tile_video_portrait
                   assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
                 endif
               -%}
               <li class="relative">
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
-                  promo_tile_video_portrait: collection.metafields.custom.promo_tile_video_portrait,
+                  promo_tile_video_portrait: promo_tile_video,
                   promo_tile_video_landscape: collection.metafields.custom.promo_tile_video_landscape,
                   promo_tile_url: promo_tile_url
                 -%}
@@ -114,15 +116,16 @@
 
               if settings.enable_global_plp_tile and settings.global_plp_tile_image != blank
                 assign promo_tile_image = settings.global_plp_tile_image
+                assign promo_tile_video = settings.global_plp_tile_video
                 assign promo_tile_url = settings.global_plp_tile_url
               else
                 assign promo_tile_image = collection.metafields.custom.promo_tile_image
+                assign promo_tile_video = collection.metafields.custom.promo_tile_video_portrait
                 assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
               endif
-              assign promo_tile_video_portrait = collection.metafields.custom.promo_tile_video_portrait
               assign promo_tile_video_landscape = collection.metafields.custom.promo_tile_video_landscape
   
-              if settings.enable_global_plp_tile or promo_tile_image != blank or promo_tile_video_portrait != blank
+              if settings.enable_global_plp_tile or promo_tile_image != blank or promo_tile_video != blank
                 assign has_promo_content = true
               else
                 assign has_promo_content = false
@@ -138,7 +141,7 @@
               <li class="relative overflow-hidden">
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
-                  promo_tile_video_portrait: promo_tile_video_portrait,
+                  promo_tile_video_portrait: promo_tile_video,
                   promo_tile_video_landscape: promo_tile_video_landscape,
                   promo_tile_url: promo_tile_url
                 -%}
