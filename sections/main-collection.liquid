@@ -24,8 +24,8 @@
         {%- capture featured_products_grid -%}
           <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4">
             {%- if settings.enable_global_plp_tile or collection.metafields.custom.promo_tile_image != blank or collection.metafields.custom.promo_tile_video_portrait != blank -%}
-              {%- liquid 
-                if settings.enable_global_plp_tile and settings.global_plp_tile_image != blank
+              {%- liquid
+                if settings.enable_global_plp_tile and settings.global_plp_tile_image != blank or settings.global_plp_tile_video != blank
                   assign promo_tile_image = settings.global_plp_tile_image
                   assign promo_tile_video = settings.global_plp_tile_video
                   assign promo_tile_url = settings.global_plp_tile_url
@@ -35,10 +35,6 @@
                   assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
                 endif
               -%}
-              <script>
-                console.log("settings.global_plp_tile_video", {{ settings.global_plp_tile_video | json }});
-                console.log("promo_tile_video", {{ promo_tile_video | json }});
-              </script>
               <li class="relative">
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
@@ -118,7 +114,7 @@
                 assign remove_linking = false
               endif
 
-              if settings.enable_global_plp_tile and settings.global_plp_tile_image != blank
+              if settings.enable_global_plp_tile and settings.global_plp_tile_image != blank or settings.global_plp_tile_video != blank
                 assign promo_tile_image = settings.global_plp_tile_image
                 assign promo_tile_video = settings.global_plp_tile_video
                 assign promo_tile_url = settings.global_plp_tile_url
