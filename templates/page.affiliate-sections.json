@@ -211,7 +211,7 @@
             "remove_text_wrapper": false,
             "heading": "1<br>Join Our Team",
             "heading_classes": "text-4xl md:text-2xl tracking-tight mb-1 md:mb-4 font-serif leading-snug",
-            "paragraph": "Over 4,000 social media followers? Apply to our affiliate program via the link below. Signing up is free!",
+            "paragraph": "Over 4,000 social media followers*? Apply to our affiliate program via the link below. Signing up is free!",
             "paragraph_classes": "text-xl tracking-tight md:text-lg leading-tighter",
             "button_label": "",
             "button_aria_label": "",
@@ -386,6 +386,13 @@
     "166431681324c0d1f7": {
       "type": "rich-text",
       "blocks": {
+        "paragraph_GphCxX": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph_text": "*We invite you to still apply if you have less than 4k followers! All applications will be reviewed, but approval is not guaranteed.",
+            "paragraph_classes": "text-xs mb-8"
+          }
+        },
         "16643168132d6f7554-2": {
           "type": "button",
           "settings": {
@@ -399,6 +406,7 @@
         }
       },
       "block_order": [
+        "paragraph_GphCxX",
         "16643168132d6f7554-2"
       ],
       "settings": {
