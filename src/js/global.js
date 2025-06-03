@@ -1059,7 +1059,10 @@ class VariantSelects extends HTMLElement {
   }
 
   handleKlaviyoBisTrigger() {
-    console.log("handleKlaviyoBisTrigger", this.getVariantData());
+    console.log(
+      "handleKlaviyoBisTrigger",
+      this.getVariantData().map((variant) => variant.available)
+    );
     setTimeout(() => {
       const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
       console.log("bisTrigger", bisTrigger);
