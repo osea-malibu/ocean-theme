@@ -1059,8 +1059,8 @@ class VariantSelects extends HTMLElement {
   }
 
   handleKlaviyoBisTrigger() {
-    console.log("bisTrigger", bisTrigger);
     const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
+    console.log("bisTrigger", bisTrigger);
     if (this.currentVariant.available && bisTrigger) {
       bisTrigger.classList.add("hidden");
     }
