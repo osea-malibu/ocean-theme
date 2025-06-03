@@ -1059,10 +1059,38 @@ class VariantSelects extends HTMLElement {
   }
 
   handleKlaviyoBisTrigger() {
-    console.log(
-      "handleKlaviyoBisTrigger",
-      this.getVariantData().map((variant) => variant.available)
-    );
+    /* This function corrects behavior of Klaviyo BIS when non-default variant is OOS */
+    const variantData = this.getVariantData();
+    const availableVariants = variantData.map((variant) => variant.available);
+
+    const hasOutOfStockVariant = availableVariants.includes(false);
+    if (!hasOutOfStockVariant) return; // All variants in stock, no need to run function
+
+    /* limit the number of retries to prevent infinite loop */
+    const maxRetries = 20; // 20 retries at 200ms each = 4 seconds
+    let attempts = 0;
+
+    const checkForBisTrigger = () => {
+      const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
+
+      /* check if klaviyo BIS trigger is injected into the DOM */
+      if (bisTrigger) {
+        console.log("bisTrigger", bisTrigger);
+
+        /* if the default variant is in stock, hide the BIS trigger */
+        if (this.currentVariant.available) {
+          bisTrigger.classList.add("hidden");
+        }
+      } else if (attempts < maxRetries) {
+        attempts++;
+        setTimeout(checkForBisTrigger, 200); // retry in 200ms
+      } else {
+        console.warn("BIS trigger not found after max retries");
+      }
+    };
+
+    checkForBisTrigger();
+
     setTimeout(() => {
       const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
       console.log("bisTrigger", bisTrigger);
