@@ -1065,7 +1065,7 @@ class VariantSelects extends HTMLElement {
       if (this.currentVariant.available && bisTrigger) {
         bisTrigger.classList.add("hidden");
       }
-    }, 800);
+    }, 1000);
   }
 
   getVariantData() {
