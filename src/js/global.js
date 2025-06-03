@@ -1038,7 +1038,6 @@ class VariantSelects extends HTMLElement {
     } else {
       addButton.removeAttribute("disabled");
       if (text) addButtonText.textContent = window.variantStrings.addToCart;
-      console.log("bisTrigger", bisTrigger);
       if (bisTrigger) {
         addButton.classList.remove("mb-[50px]");
         bisTrigger.classList.add("hidden");
@@ -1060,6 +1059,7 @@ class VariantSelects extends HTMLElement {
   }
 
   handleKlaviyoBisTrigger() {
+    console.log("bisTrigger", bisTrigger);
     const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
     if (this.currentVariant.available && bisTrigger) {
       bisTrigger.classList.add("hidden");
