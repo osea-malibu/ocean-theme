@@ -694,6 +694,9 @@
   .pdp .klaviyo-bis-trigger.button {
     @apply button-neon h-11 absolute bottom-0 !w-[calc(50%-4px)] flex items-center;
   }
+  .pdp .klaviyo-bis-trigger.button.hidden {
+    display: none;
+  }
 
   /* Postscript - Back in Stock PDP button */
   #ps__bis_container_root {
