@@ -78,7 +78,7 @@ class BundleBuilder extends HTMLElement {
 			<p class="hidden lg:block mt-3 leading-5 lg:max-w-sm lg:mx-auto${
         !faceProduct && !bodyProduct ? " mb-12" : ""
       }">
-				<span class="system-sans font-medium">←</span> Add ${faceProduct ? "" : "<b>one face</b>"}${
+				<span class="font-system-sans font-medium">←</span> Add ${faceProduct ? "" : "<b>one face</b>"}${
         !faceProduct && !bodyProduct ? " and " : " "
       }${bodyProduct ? "" : "<b>one body</b>"} product to complete your bundle
 			</p>`;
