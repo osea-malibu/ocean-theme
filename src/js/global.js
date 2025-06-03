@@ -1038,7 +1038,7 @@ class VariantSelects extends HTMLElement {
     } else {
       addButton.removeAttribute("disabled");
       if (text) addButtonText.textContent = window.variantStrings.addToCart;
-
+      console.log("bisTrigger", bisTrigger);
       if (bisTrigger) {
         addButton.classList.remove("mb-[50px]");
         bisTrigger.classList.add("hidden");
