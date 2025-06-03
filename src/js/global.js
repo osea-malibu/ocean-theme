@@ -1059,11 +1059,13 @@ class VariantSelects extends HTMLElement {
   }
 
   handleKlaviyoBisTrigger() {
-    const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
-    console.log("bisTrigger", bisTrigger);
-    if (this.currentVariant.available && bisTrigger) {
-      bisTrigger.classList.add("hidden");
-    }
+    setTimeout(() => {
+      const bisTrigger = document.querySelector(".klaviyo-bis-trigger");
+      console.log("bisTrigger", bisTrigger);
+      if (this.currentVariant.available && bisTrigger) {
+        bisTrigger.classList.add("hidden");
+      }
+    }, 800);
   }
 
   getVariantData() {
