@@ -47,7 +47,7 @@
                           </div>
                         {% comment %} L1 - Link with sub menu {% endcomment %}
                         {%- elsif link.links != blank -%}
-                          <details class="group-child"{% if link.title == 'Body' or link.title == 'Face' %} open{% endif %}>
+                          <details class="group-child">
                             <summary class="flex items-center justify-start text-lg {{ menu_link_styles }}">
                               <a href="{{ link.url }}" class="mr-2 z-10 relative">{{ link.title }}</a>
                               <svg aria-hidden="true" focusable="false" class="w-4 h-4 flex items-center justify-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
