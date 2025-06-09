@@ -1,0 +1,54 @@
+{%- liquid
+  assign icon_wrapper_class = 'text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased'
+  assign icon_text_class_horizontal = 'whitespace-nowrap mt-1 lg:text-lg'
+
+  if brand_icon_orientation == 'vertical'
+    assign icon_class = 'w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible'
+    assign icon_wrapper_class = icon_wrapper_class | append: ' flex-1'
+  else
+    assign icon_class = 'w-6 h-6 lg:w-8 lg:h-8 block mr-2 overflow-visible'
+    assign icon_wrapper_class = icon_wrapper_class | append: ' flex items-center'
+  endif
+-%}
+<ul class="flex items-center gap-8">
+  <li class="{{ icon_wrapper_class }}">
+    {%- render 'icon-value', icon: 'clean-beauty', stroke_width: 2.5, aria_hidden: true, classes: icon_class -%}
+    {%- if brand_icon_orientation == 'vertical' -%}
+      <span><span class="whitespace-nowrap">Clean Beauty</span> <br />Since 1996</span>
+    {%- else -%}
+      <span class="{{ icon_text_class_horizontal }}">Clean Beauty Since 1996</span>
+    {%- endif -%}
+  </li>
+  <li class="{{ icon_wrapper_class }}">
+    {%- render 'icon-value', icon: 'vegan-cruelty-free', stroke_width: 2.5, aria_hidden: true, classes: icon_class -%}
+    {%- if brand_icon_orientation == 'vertical' -%}
+      <span>Vegan & <br /><span class="tracking-tight whitespace-nowrap">Cruelty-Free</span></span>
+    {%- else -%}
+      <span class="{{ icon_text_class_horizontal }}">Vegan & Cruelty-Free</span>
+    {%- endif -%}
+  </li>
+  <li class="{{ icon_wrapper_class }}">
+    {%- render 'icon-value', icon: 'climate-neutral', stroke_width: 2.5, aria_hidden: true, classes: icon_class -%}
+    {%- if brand_icon_orientation == 'vertical' -%}
+      <span><span class="tracking-tight whitespace-nowrap">Ocean + Climate <br /></span>Responsible</span>
+    {%- else -%}
+      <span class="{{ icon_text_class_horizontal }}">Ocean + Climate Responsible</span>
+    {%- endif -%}
+  </li>
+  <li class="{{ icon_wrapper_class }}">
+    {%- render 'icon-value', icon: 'california-made', stroke_width: 2.5, aria_hidden: true, classes: icon_class -%}
+    {%- if brand_icon_orientation == 'vertical' -%}
+      <span>Born in <br />California</span>
+    {%- else -%}
+      <span class="{{ icon_text_class_horizontal }}">Born in California</span>
+    {%- endif -%}
+  </li>
+  <li class="{{ icon_wrapper_class }}">
+    {%- render 'icon-value', icon: 'mother-daughter-founded', stroke_width: 2.5, aria_hidden: true, classes: icon_class -%}
+    {%- if brand_icon_orientation == 'vertical' -%}
+      <span>Mother & <br /><span class="tracking-tight whitespace-nowrap">Daughter Founded</span></span>
+    {%- else -%}
+      <span class="{{ icon_text_class_horizontal }}">Mother & Daughter Founded</span>
+    {%- endif -%}
+  </li>
+</ul>

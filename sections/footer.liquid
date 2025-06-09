@@ -1,132 +1,147 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
-<footer>
+<footer class="bg-seafoam-100">
+  <div class="bg-white relative z-10">
+    <div class="container flex flex-col sm:flex-row gap-12 py-12 bg-white">
+      <div class="flex-1">
+        <img
+          src="{{ section.settings.perks_image | image_url: width: 1200 }}"
+          alt="{{ section.settings.perks_image.alt | escape }}"
+          loading="lazy"
+          class="h-96 w-full object-cover"
+          width="{{ section.settings.perks_image.width }}"
+          height="{{ section.settings.perks_image.height }}"
+        >
+      </div>
+      <div class="flex-1 py-4">
+        {%- assign badge_class = 'text-xs uppercase font-bold rounded bg-neon-green leading-none px-2 py-1 mr-4' -%}
+        {%- capture subscribe_summary -%}
+          <div class="flex justify-between items-center"><span>Subscribe & Save</span><span class="{{ badge_class }}">Get 10% off</span></div>
+        {%- endcapture -%}
+        {%- capture subscribe_content -%}
+          <p>Enjoy 10% off, free shipping on recurring orders, early access to new products, and exclusive access to deluxe samples when you subscribe to your favorite products. Skip, edit or cancel anytime. <a class="link" href="/pages/subscribe">Learn more</a></p>
+        {%- endcapture -%}
+        {%- capture rewards_summary -%}
+          <div class="flex justify-between items-center"><span>Join the Sea Rewards Program</span><span class="{{ badge_class }}">Rewards</span></div>
+        {%- endcapture -%}
+        {%- capture rewards_content -%}
+          <p>Earn points every time you shop, share a review, celebrate your birthday, and more. Members get early access to promotions and product launches, exclusive access to deluxe samples, and special rewards just for being part of our community. <a class="link" href="/pages/sea-rewards">Learn more</a></p>
+        {%- endcapture -%}
+        {%- capture guarantee_summary -%}
+          <div class="flex justify-between items-center"><span>Results You Can Sea®</span><span class="{{ badge_class }}">30-Day Guarantee</span></div>
+        {%- endcapture -%}
+        {%- capture guarantee_content -%}
+          <p>Not in love with your new OSEA favorites? No worries—we’ve got you. If your product isn’t the perfect match, send it back within 30 days of your ship date for a full refund or an OSEA gift card. Shipping costs aren’t refundable. <a class="link" href="/pages/customer-care?tab=2">Learn more</a></p>
+        {%- endcapture -%}
+
+        <h2 class="font-serif text-3xl">{{ section.settings.perks_heading }}</h2>
+        <p class="mb-4">{{ section.settings.perks_description }}</p>
+
+        {% render 'accordion-item',
+          id: 'footer-subscription',
+          summary: subscribe_summary,
+          content: subscribe_content,
+          default_open: true,
+          summary_classes: 'py-4',
+          content_classes: 'pt-0 pb-4',
+          classes: 'border-b border-seaweed-300'
+        %}
+        {% render 'accordion-item',
+          id: 'footer-subscription',
+          summary: rewards_summary,
+          content: rewards_content,
+          summary_classes: 'py-4',
+          content_classes: 'pt-0 pb-4',
+          classes: 'border-b border-seaweed-300'
+        %}
+        {% render 'accordion-item',
+          id: 'footer-subscription',
+          summary: guarantee_summary,
+          content: guarantee_content,
+          summary_classes: 'py-4',
+          content_classes: 'pt-0 pb-4',
+          classes: 'border-b border-seaweed-300'
+        %}
+      </div>
+    </div>
+  </div>
+
   {%- unless section.settings.hide_brand_icons -%}
-    <div class="relative bg-seafoam-100 pt-6 pb-28 lg:pb-6">
-      <ul class="container px-2 flex justify-between sm:max-w-lg lg:max-w-4xl">
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
-          {%- render 'icon-value', icon: 'clean-beauty', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span><span class="whitespace-nowrap">Clean Beauty</span> <br />Since 1996</span>
-        </li>
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
-          {%- render 'icon-value', icon: 'vegan-cruelty-free', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span>Vegan & <br /><span class="tracking-tight whitespace-nowrap">Cruelty-Free</span></span>
-        </li>
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased hidden sm:block">
-          {%- render 'icon-value', icon: 'climate-neutral', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span><span class="tracking-tight whitespace-nowrap">Ocean + Climate <br /></span>Responsible</span>
-        </li>
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
-          {%- render 'icon-value', icon: 'california-made', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span>Born in <br />California</span>
-        </li>
-        <li class="flex-1 text-center text-sm lg:text-base font-serif leading-tight xs:leading-tight lg:leading-tight subpixel-antialiased">
-          {%- render 'icon-value', icon: 'mother-daughter-founded', stroke_width: 2.5, aria_hidden: true, classes: "w-8 h-8 lg:w-10 lg:h-10 block mx-auto mb-1 overflow-visible" -%}
-          <span>Mother & <br /><span class="tracking-tight whitespace-nowrap">Daughter Founded</span></span>
-        </li>
-      </ul>
+    <div class="relative z-10 bg-seafoam-100 overflow-hidden {% if section.settings.brand_icon_orientation == 'vertical' %}py-6{% else %}py-4 lg:py-6{% endif %}">
+      {% if section.settings.brand_icon_ticker %}<icon-marquee speed="0.5" class="marquee relative overflow-hidden w-full h-6 lg:h-8">{% endif %}
+        {% render 'footer-brand-icons', brand_icon_orientation: section.settings.brand_icon_orientation, brand_icon_ticker: section.settings.brand_icon_ticker %}
+      {% if section.settings.brand_icon_ticker %}</icon-marquee>{% endif %}
     </div>
   {%- endunless -%}
 
-  <div class="footer-main bg-seafoam-200 pt-40 lg:pt-20 pb-20">
+  <div class="footer-main relative z-10 bg-seafoam-200 pt-6 pb-12 lg:pt-12">
     {%- if section.blocks.size > 0 -%}
-      <div class="relative container sm:max-w-lg lg:max-w-6xl mx-auto pt-36 pb-8 lg:pt-0 px-6 flex justify-around">
-        {% comment %} Menus {% endcomment %}
-        {%- if section.blocks.size > 0 -%}
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'link_list' -%}
-              <div class="{{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
-                {%- if block.settings.heading != blank -%}
-                  <h2 class="font-serif text-2xl sm:text-3xl tracking-tight mb-2">{{- block.settings.heading | escape -}}</h2>
-                {%- endif -%}
-
-                {%- if block.settings.menu != blank and block.settings.heading != blank -%}
-                  <ul class="footer-block__details-content list-unstyled">
-                    {%- for link in block.settings.menu.links -%}
-                      <li>
-                        {%- if link.title == 'Your Privacy Choices' -%}
-                          <button onclick="showPreferences(this);" class="isense-reopen-widget-link block tracking-wide text-sm sm:text-base py-2" aria-haspopup="dialog">
-                            <span>Your Privacy Choices</span>
-                            <img aria-hidden="true" alt="Privacy options logo" class="inline-flex relative -top-0.5" src="https://cdn.shopify.com/s/files/1/1368/9993/files/privacyoptions.svg?v=1719329608" width="29" height="14">
-                          </button>
-                        {%- else -%}
-                          <a href="{{ link.url }}" class="block tracking-wide text-sm sm:text-base py-2{% if link.active %} underline underline-offset-2{% endif %}{% if link.title contains 'mobile::' %} sm:hidden{% endif %}">
-                            {{- link.title | replace: "mobile::", "" -}} 
-                          </a>
-                        {%- endif -%}
-                      </li>
-                    {%- endfor -%}
-                  </ul>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
+      <div class="relative container py-8 flex gap-8 sm:gap-12 lg:gap-16 xl:gap-24 flex-col lg:flex-row lg:mb-8">
         {%- if section.settings.newsletter_enable -%}
-          <div class="absolute -top-64 left-1/2 -translate-x-1/2 w-full max-w-lg lg:px-0 lg:w-1/3 lg:relative lg:-top-6 lg:left-0 lg:translate-x-0">
+          <div class="w-full lg:w-1/3">
             {% comment %} Newsletter form {% endcomment %}
-            <div class="bg-seafoam-300 px-4 md:px-6 py-6 flex flex-col justify-center mb-8 lg:mb-4">
+            <div class="flex flex-col justify-center lg:mb-6 sm:max-w-md mx-auto">
               {%- if section.settings.newsletter_heading != blank -%}
-                <h2 class="text-center font-serif text-4xl tracking-tight">{{ section.settings.newsletter_heading | escape }}</h2>
+                <h2 class="font-medium">{{ section.settings.newsletter_heading | escape }}</h2>
               {%- endif -%}
               {%- if section.settings.newsletter_paragraph != blank -%}
-                <p class="text-center text-md tracking-wide leading-tight mb-4">{{ section.settings.newsletter_paragraph }}</p>
+                <p class="tracking-wide leading-tight mb-2">{{ section.settings.newsletter_paragraph }}</p>
               {%- endif -%}
-              {%- assign newsletter_tabs = "Email,Text" | split: "," -%}
-              <tab-controller id="footer-newsletter-tabs">
-                <ul aria-controls="footer-newsletter-tabs" role="tablist" class="flex justify-center button-group">
-                  {%- for tab in newsletter_tabs -%}
-                    <li
-                      role="tab"
-                      aria-controls="footer-tab-{{ forloop.index }}"
-                      tabindex="0"
-                      aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      class="button button-xs button-secondary px-3 sm:px-4{% if forloop.first %} bg-wave-200{% endif %}"
-                    >
-                      {{ tab }}
-                    </li>
-                  {%- endfor -%}
-                </ul>
+              <div class="klaviyo-footer-form relative mt-1.5">
+                <div class="skeleton z-0 w-full h-10 border border-wave-400 bg-wave-300/50 rounded-md mb-3"></div>
+                <div class="skeleton z-0 w-full h-10 border border-wave-400 bg-wave-300/50 rounded-md mb-3"></div>
+                <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
+                <div class="klaviyo-form-SuVrbK absolute inset-x-0 top-0"></div>
 
-                <div class="relative mt-1.5">
-                  <div class="relative z-10 min-h-[40px]">
-                    {%- for tab in newsletter_tabs -%}
-                      <div id="footer-tab-{{ forloop.index }}" role="tabpanel" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
-                        {%- if tab == 'Email' -%}
-                          <div class="klaviyo-email-form relative">
-                            {% render 'icon-email',
-                              aria_hidden: true,
-                              classes: "h-6 w-6 text-seaweed-400 absolute top-2 left-3 z-10",
-                              stroke_width: 2
-                            %}
-                            <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
-                            <div class="klaviyo-form-T3gN5Z absolute inset-x-0 top-0"></div>
-                            <small class="block text-xs leading-none mt-1">*10% off is valid for new subscribers & on first purchase only. Offer not valid on gift cards, shipping, or tax. By entering your email address, you consent to receive marketing and promotional communications and confirm that you have read and acknowledged our <a class="underline" href="/pages/privacy-policy">Privacy Policy</a>.</small>
-                          </div>
-                        {%- else -%}
-                          <div class="klaviyo-phone-form relative">
-                            <div class="skeleton z-0 w-full h-10 bg-wave-400 rounded-md"></div>
-                            <div class="klaviyo-form-TA8JnT absolute inset-x-0 top-0"></div>
-                            <small class="block text-xs leading-none mt-1">*By providing your cell phone number and clicking “SUBSCRIBE” below, you are agreeing to receive recurring automated marketing text messages (e.g. cart reminders) at the phone number provided, which may be sent using an autodialer, from OSEA. The text messages may contain marketing content and will be sent in accordance with our <a class="underline" href="/pages/sms-terms-of-service">Text Messaging Terms and Conditions</a> and our <a class="underline" href="/pages/privacy-policy">Privacy Policy</a>. Consent is not a condition of purchase. Msg & data rates may apply. Msg frequency varies. Reply HELP for help and STOP to cancel.</small>
-                          </div>
-                        {%- endif -%}
-                      </div>
-                    {%- endfor -%}
+                <div class="mt-2">
+                  <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
+                  <div class="overflow-hidden max-h-10 peer-checked:max-h-screen transition-max-height leading-6">
+                    <small class="block text-xs leading-none mt-1">*10% off is valid for new subscribers and on first purchase only. Offer not valid on gift cards, shipping, or tax. By entering your email address and/or phone number, you consent to receive marketing and promotional communications from OSEA, including recurring automated text messages (e.g. cart reminders) which may be sent using an autodialer to the number provided. Message frequency varies. Msg & data rates may apply. Consent is not a condition of purchase. By subscribing, you confirm that you have read and acknowledged our Privacy Policy, Text Messaging Terms and Conditions, and Terms of Use. Reply HELP for help and STOP to cancel.</small>
                   </div>
+                  <label aria-hidden="true" for="collapsible" class="text-xs link mt-1 block peer-checked:hidden">Read more</label>
+                  <label aria-hidden="true" for="collapsible" class="text-xs link mt-1 hidden peer-checked:block">Read less</label>
                 </div>
-              </tab-controller>
-            </div>
-            
-            <div class="flex items-center justify-between gap-5 px-4 max-w-sm mx-auto lg:mb-4 lg:px-0">
-              {% comment %} {% render 'logo-climate-neutral', variant: 'vertical', classes: 'shrink-0' %} {% endcomment %}
-              {% render 'logo-ocean-positive', variant: 'vertical', classes: 'shrink-0' %}
-              {% render 'logo-leaping-bunny', classes: 'shrink-0' %}
-              {% render 'logo-peta', classes: 'shrink-0' %}
+              </div>
             </div>
             
             {% comment %} Customer service {% endcomment %}
-            <p class="text-center tracking-wide leading-none mb-2 hidden lg:block">Customer Support: <a href="mailto:support@oseamalibu.com" class="link">support@oseamalibu.com</a></p>
-            <p class="text-center tracking-tight hidden leading-none lg:block">Skincare Studio: <a href="mailto:skincarestudio@oseamalibu.com" class="link">skincarestudio@oseamalibu.com</a></p>
+            <p class="hidden lg:block mb-2 text-sm xl:text-base">Customer Support: <a href="mailto:support@oseamalibu.com" class="link">support@oseamalibu.com</a></p>
+            <p class="hidden lg:block text-sm xl:text-base">Skincare Studio: <a href="mailto:skincarestudio@oseamalibu.com" class="link">skincarestudio@oseamalibu.com</a></p>
           </div>
+        {%- endif -%}
+
+        {% comment %} Menus {% endcomment %}
+        {%- if section.blocks.size > 0 -%}
+          <footer-accordion class="flex flex-col sm:flex-row lg:w-2/3 mb-6">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'link_list' -%}
+                <details class="group border-b sm:border-none border-seaweed-400 {{ block.settings.menu_classes }}" {{ block.shopify_attributes }}>
+                  {%- if block.settings.heading != blank -%}
+                    <summary id="header-{{ forloop.index }}" class="flex justify-between items-center w-full py-4 lg:pt-0">
+                      <h2 class="uppercase text-sm font-bold tracking-widest">{{- block.settings.heading | escape -}}</h2>
+                      <span class="ml-2 sm:hidden">
+                        <svg aria-hidden="true" focusable="false" class="w-4 h-4 flex items-center justify-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="12" y1="5" x2="12" y2="19" class="motion-safe:transition-transform group-open:rotate-90 origin-center" />
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                      </span>
+                    </summary>
+                  {%- endif -%}
+
+                  {%- if block.settings.menu != blank -%}
+                    <ul class="footer-block__details-content list-unstyled mb-6">
+                      {%- for link in block.settings.menu.links -%}
+                        <li>
+                          <a href="{{ link.url }}" class="block tracking-wide text-sm sm:text-base py-2{% if link.active %} underline underline-offset-2{% endif %}{% if link.title contains 'mobile::' %} sm:hidden{% endif %}">
+                            {{- link.title | replace: "mobile::", "" -}} 
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </details>
+              {%- endif -%}
+            {%- endfor -%}
+          </footer-accordion>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -137,61 +152,46 @@
 
       {% comment %} Copyright {% endcomment %}
       <small class="block text-center tracking-wide leading-tight">Copyright &copy; {{ 'now' | date: "%Y" }} OSEA International. All rights reserved.</small>
+      
+      {% comment %} Legal links {% endcomment %}
+      {%- if section.settings.legal_links != blank -%}
+        <ul class="flex justify-center gap-4 text-sm mt-2">
+          {%- for link in section.settings.legal_links.links -%}
+            {%- if link.title == 'Your Privacy Choices' -%}
+              <li>
+                <button onclick="showPreferences(this);" class="isense-reopen-widget-link whitespace-nowrap inline-flex items-center gap-1" aria-haspopup="dialog">
+                  <span class="link">Your Privacy Choices</span>
+                  <img aria-hidden="true" src="https://cdn.shopify.com/s/files/1/1368/9993/files/privacyoptions.svg?v=1719329608" width="24" height="12">
+                </button>
+              </li>
+            {%- else -%}
+              <li><a class="link" href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  
+    <div id="footer-sentinel" class="h-px"></div>
+  </div>
+
+  <div class="footer-secret sticky z-0 bottom-0 translate-y-24 -mt-8 bg-seafoam-100">
+    <div class="container md:max-w-screen-md pb-16 flex gap-8 flex-col md:flex-row">
+      <img
+        src="{{ section.settings.secret_image | image_url: width: 1200 }}"
+        alt="{{ section.settings.secret_image.alt | escape }}"
+        loading="lazy"
+        class="w-60 md:w-72 object-cover mx-auto"
+        width="{{ section.settings.secret_image.width }}"
+        height="{{ section.settings.secret_image.height }}"
+      >
+      <div>
+        <h2 class="font-bold md:font-regular md:font-serif md:text-3xl mb-2 md:mb-4">{{ section.settings.secret_heading }}</h2>
+        <div class="p:mb-2 text-sm md:text-base">{{ section.settings.secret_description }}</div>
+      </div>
     </div>
   </div>
 </footer>
-
-{% javascript %}
-  class LocalizationForm extends HTMLElement {
-    constructor() {
-      super();
-      this.elements = {
-        input: this.querySelector('input[name="locale_code"], input[name="country_code"]'),
-        button: this.querySelector('button'),
-        panel: this.querySelector('ul'),
-      };
-      this.elements.button.addEventListener('click', this.openSelector.bind(this));
-      this.elements.button.addEventListener('focusout', this.closeSelector.bind(this));
-      this.addEventListener('keyup', this.onContainerKeyUp.bind(this));
-
-      this.querySelectorAll('a').forEach(item => item.addEventListener('click', this.onItemClick.bind(this)));
-    }
-
-    hidePanel() {
-      this.elements.button.setAttribute('aria-expanded', 'false');
-      this.elements.panel.setAttribute('hidden', true);
-    }
-
-    onContainerKeyUp(event) {
-      if (event.code.toUpperCase() !== 'ESCAPE') return;
-
-      this.hidePanel();
-      this.elements.button.focus();
-    }
-
-    onItemClick(event) {
-      event.preventDefault();
-      const form = this.querySelector('form');
-      this.elements.input.value = event.currentTarget.dataset.value;
-      if (form) form.submit();
-    }
-
-    openSelector() {
-      this.elements.button.focus();
-      this.elements.panel.toggleAttribute('hidden');
-      this.elements.button.setAttribute('aria-expanded', (this.elements.button.getAttribute('aria-expanded') === 'false').toString());
-    }
-
-    closeSelector(event) {
-      const shouldClose = event.relatedTarget && event.relatedTarget.nodeName === 'BUTTON';
-      if (event.relatedTarget === null || shouldClose) {
-        this.hidePanel();
-      }
-    }
-  }
-
-  customElements.define('localization-form', LocalizationForm);
-{% endjavascript %}
 
 {% schema %}
 {
@@ -225,14 +225,39 @@
   ],
   "settings": [
     {
+      "type": "link_list",
+      "id": "legal_links",
+      "label": "Legal links"
+    },
+    {
+      "type": "header",
+      "content": "Brand Icons"
+    },
+    {
       "type": "checkbox",
       "id": "hide_brand_icons",
       "label": "Hide brand icons"
     },
     {
-      "type": "link_list",
-      "id": "legal_links",
-      "label": "Legal links"
+      "type": "select",
+      "id": "brand_icon_orientation",
+      "label": "Brand icon orientation",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_icon_ticker",
+      "label": "Scrolling ticker"
     },
     {
       "type": "header",
@@ -256,6 +281,48 @@
       "id": "newsletter_paragraph",
       "default": "Get news and exclusive offers to your inbox",
       "label": "Newsletter subheader"
+    },
+    {
+      "type": "header",
+      "content": "Perks and Programs"
+    },
+    {
+      "type": "text",
+      "id": "perks_heading",
+      "default": "29 Years of Clean Beauty",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "perks_description",
+      "default": "Since day one, our family has put our values into every product we make and into everything we do.",
+      "label": "Description"
+    },
+    {
+      "type": "image_picker",
+      "id": "perks_image",
+      "label": "Image",
+    },
+    {
+      "type": "header",
+      "content": "Secret footer section"
+    },
+    {
+      "type": "text",
+      "id": "secret_heading",
+      "default": "29 Years of Clean Beauty",
+      "label": "Heading"
+    },
+    {
+      "type": "html",
+      "id": "secret_description",
+      "default": "Since day one, our family has put our values into every product we make and into everything we do.",
+      "label": "Description"
+    },
+    {
+      "type": "image_picker",
+      "id": "secret_image",
+      "label": "Image",
     }
   ],
   "default": {

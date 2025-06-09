@@ -2,7 +2,6 @@ import esbuild from "esbuild";
 
 const entryPoints = [
   "src/js/main.js",
-  "src/js/bundle-builder.js",
   "src/js/customer.js",
   "src/js/ingredient-glossary.js",
   "src/js/share.js",
