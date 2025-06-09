@@ -67,7 +67,7 @@
 
   {%- unless section.settings.hide_brand_icons -%}
     <div class="relative z-10 bg-seafoam-100 overflow-hidden {% if section.settings.brand_icon_orientation == 'vertical' %}py-6{% else %}py-4 lg:py-6{% endif %}">
-      {% if section.settings.brand_icon_ticker %}<icon-marquee speed="0.5" class="marquee relative overflow-hidden w-full h-6 lg:h-8">{% endif %}
+      {% if section.settings.brand_icon_ticker %}<icon-marquee speed="0.5" class="marquee relative overflow-hidden w-full flex flex-row h-6 lg:h-8">{% endif %}
         {% render 'footer-brand-icons', brand_icon_orientation: section.settings.brand_icon_orientation, brand_icon_ticker: section.settings.brand_icon_ticker %}
       {% if section.settings.brand_icon_ticker %}</icon-marquee>{% endif %}
     </div>
