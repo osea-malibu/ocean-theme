@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tailwind": "npx tailwindcss -i styles/application.css -o assets/application.css --watch --minify",
+    "tailwind": "npx tailwindcss -i src/styles/application.css -o assets/application.css --watch --minify",
     "build": "node esbuild.config.js",
     "dev": "node esbuild.config.js --watch"
   },

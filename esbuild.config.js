@@ -1,13 +1,12 @@
 import esbuild from "esbuild";
 
 const entryPoints = [
-  "src/js/main.js",
-  "src/js/customer.js",
-  "src/js/ingredient-glossary.js",
-  "src/js/share.js",
-  "src/js/facets.js",
-  "src/js/password-modal.js",
-  // Add other individual entry files here
+  "src/scripts/main.js",
+  "src/scripts/customer.js",
+  "src/scripts/ingredient-glossary.js",
+  "src/scripts/share.js",
+  "src/scripts/facets.js",
+  "src/scripts/password-modal.js",
 ];
 
 const sharedConfig = {
