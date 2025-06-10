@@ -638,6 +638,50 @@
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
+    },
+    "image_banner_HwrjXQ": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_rMVY7m": {
+          "type": "heading",
+          "settings": {
+            "heading": "Sea Rewards Members<br><span class=\"italic\">Get More</span>",
+            "heading_classes": "text-5xl font-serif text-neon-green text-center pt-4 sm:pt-0 sm:text-4xl lg:text-5xl"
+          }
+        },
+        "paragraph_MDedP4": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Join our loyalty program to earn points on every purchase. Save even more when you apply rewards on your upcoming subscription order with just one click.",
+            "paragraph_classes": "text-white text-lg font-book leading-tight m-4 pl-2 pr-2 max-w-lg sm:text-md lg:text-lg"
+          }
+        },
+        "button_J3XwBG": {
+          "type": "button",
+          "settings": {
+            "button_label": "Join Now",
+            "button_aria_label": "",
+            "button_link": "shopify://pages/sea-rewards",
+            "target_blank": false,
+            "button_classes": "button-primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_rMVY7m",
+        "paragraph_MDedP4",
+        "button_J3XwBG"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_mobile": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2_df475466-e025-41e8-86be-0e5b40f114c9.jpg",
+        "image": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://pages/sea-rewards",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:pl-10 sm:pr-0 text-center flex flex-col items-center justify-center pt-4 pb-5 lg:pt-0 sm:right-1/3 lg:pt-10   lg:pb-0"
+      }
     }
   },
   "order": [
@@ -651,6 +695,7 @@
     "f19ce9c5-2ae2-4809-af85-af307bf6f35a",
     "4cd20ef4-390a-4ce3-a394-43184b5cf979",
     "ff4a2be6-7914-4d87-bc3d-5e37e651c740",
-    "multicolumn_hd8hra"
+    "multicolumn_hd8hra",
+    "image_banner_HwrjXQ"
   ]
 }
