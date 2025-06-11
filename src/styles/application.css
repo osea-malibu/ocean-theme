@@ -447,6 +447,24 @@
     @apply select-none;
     -webkit-touch-callout: none;
   }
+  .glide__bullet {
+    @apply opacity-50 motion-safe:transition-opacity;
+  }
+  .glide__bullet--active {
+    @apply opacity-100;
+  }
+  .pdp .glide__bullet {
+    @apply opacity-100;
+  }
+  .pdp .glide__bullet-icon {
+    @apply opacity-50 motion-safe:transition-opacity;
+  }
+  .pdp .glide__bullet--active .glide__bullet-icon {
+    @apply opacity-100;
+  }
+  .pdp .glide__bullet-icon.bg-transparent {
+    @apply md:opacity-100;
+  }
   .glide__bullet img {
     @apply border border-transparent motion-safe:transition-colors;
   }

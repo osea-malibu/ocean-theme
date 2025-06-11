@@ -91,9 +91,9 @@
               <button class="glide__bullet relative p-2 md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
                 <span class="sr-only">Go to slide {{ forloop.index }}</span>
                 {%- if media.media_type == 'image' -%}
-                  <span class="block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
+                  <span class="glide__bullet-icon block w-2 h-2 bg-seaweed-700 rounded-full md:hidden"></span>
                 {%- elsif media.media_type == 'video' -%}
-                  <div class="absolute z-10 w-5 h-5 md:w-8 md:h-8 rounded-full bg-transparent md:bg-white/50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <div class="glide__bullet-icon absolute z-10 w-5 h-5 md:w-8 md:h-8 rounded-full bg-transparent md:bg-white/50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     {%- render 'icon-play', classes: 'absolute inset-0 scale-75 md:text-white md:ml-0.5' -%}
                   </div>
                 {%- endif -%}
