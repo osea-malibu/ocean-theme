@@ -1611,56 +1611,6 @@ class CollectionAnchors extends HTMLElement {
 }
 customElements.define("collection-anchors", CollectionAnchors);
 
-class CollectionVideo extends HTMLElement {
-  constructor() {
-    super();
-
-    this.verticalVideo = this.querySelector(".vertical-video");
-    this.horizontalVideo = this.querySelector(".horizontal-video");
-    this.closeButton = this.querySelector(".video-close");
-
-    this.closeButton.addEventListener("click", this.closeHorizontalVideo.bind(this));
-  }
-
-  connectedCallback() {
-    if (!localStorage.getItem("osea.hideCollectionVideo")) {
-      this.videoObserver = new IntersectionObserver((entries) => {
-        if (entries[0].intersectionRatio <= 0) {
-          this.showHorizontalVideo();
-        } else {
-          this.hideHorizontalVideo();
-        }
-      });
-
-      this.videoObserver.observe(this.verticalVideo);
-    }
-  }
-
-  disconnectedCallback() {
-    if (this.videoObserver) {
-      this.videoObserver.disconnect();
-    }
-  }
-
-  hideHorizontalVideo() {
-    this.horizontalVideo.classList.remove("opacity-100", "visible");
-    this.horizontalVideo.classList.add("opacity-0", "invisible");
-  }
-
-  showHorizontalVideo() {
-    this.horizontalVideo.classList.add("opacity-100", "visible");
-    this.horizontalVideo.classList.remove("opacity-0", "invisible");
-  }
-
-  closeHorizontalVideo(event) {
-    event.preventDefault();
-    this.hideHorizontalVideo();
-    this.videoObserver.disconnect();
-    localStorage.setItem("osea.hideCollectionVideo", true);
-  }
-}
-customElements.define("collection-video", CollectionVideo);
-
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {
   constructor(el) {

@@ -59,7 +59,6 @@
                 assign promo_tile_video = collection.metafields.custom.promo_tile_video_portrait.value
                 assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
               endif
-              assign promo_tile_video_landscape = collection.metafields.custom.promo_tile_video_landscape.value
   
               if settings.enable_global_plp_tile or promo_tile_image != blank or promo_tile_video != blank
                 assign has_promo_content = true
@@ -71,8 +70,7 @@
               <li class="relative overflow-hidden rounded">
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
-                  promo_tile_video_portrait: promo_tile_video,
-                  promo_tile_video_landscape: promo_tile_video_landscape,
+                  promo_tile_video: promo_tile_video,
                   promo_tile_url: promo_tile_url
                 -%}
               </li>
