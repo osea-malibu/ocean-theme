@@ -15,10 +15,6 @@
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
-    {%- unless settings.type_header_font.system? -%}
-      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-    {%- endunless -%}
-
     {%- assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros | strip_html -%}
 
     <title>{{ 'gift_cards.issued.title' | t: value: formatted_initial_value, shop: shop.name }}</title>
@@ -28,75 +24,17 @@
     {{ content_for_header }}
 
     {% style %}
-      @font-face {
-        font-family: 'Canela';
-        src: url('{{ "font-canela-light.woff2" | asset_url }}') format('woff2'),
-            url('{{ "font-canela-light.woff" | asset_url }}') format('woff');
-        font-weight: 300;
-        font-style: normal;
-        font-display: swap;
-      }
-
-      @font-face {
-        font-family: 'Circular';
-        src: url('{{ "font-circular-book-italic.woff2" | asset_url }}') format('woff2'),
-            url('{{ "font-circular-book-italic.woff" | asset_url }}') format('woff');
-        font-weight: 400;
-        font-style: italic;
-        font-display: swap;
-      }
-
-      @font-face {
-        font-family: 'Circular';
-        src: url('{{ "font-circular-bold-italic.woff2" | asset_url }}') format('woff2'),
-            url('{{ "font-circular-bold-italic.woff" | asset_url }}') format('woff');
-        font-weight: 700;
-        font-style: italic;
-        font-display: swap;
-      }
-
-      :root {
-        --font-body-family: "Circular", sans-serif;
-        --font-body-style: normal;
-        --font-body-weight: 400;
-
-        --font-heading-family: "Canela", serif;
-        --font-heading-style: normal;
-        --font-heading-weight: 300;
-
-        --font-body-scale: 1;
-        --font-heading-scale: 1;
-
-        --color-base-text: 29, 77, 65;
-        --color-base-background-1: 29, 77, 65;
-        --color-base-background-2: 255, 255, 255;
-        --color-base-solid-button-labels: 255, 255, 255;
-        --color-base-outline-button-labels: 29, 77, 65;
-        --color-base-accent-1: 220, 245, 171;
-        --color-base-accent-2: 220, 245, 171;
-
-        --gradient-base-background-1: {% if settings.gradient_background_1 != blank %}{{ settings.gradient_background_1 }}{% else %}{{ settings.colors_background_1 }}{% endif %};
-
-        --page-width: {{ settings.page_width | divided_by: 10 }}rem;
-      }
+      {% render 'font-face' %}
     {% endstyle %}
-    {% comment %} theme-check-disable AssetPreload {% endcomment %}
-    {%- unless settings.type_body_font.system? -%}
-      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
-    {%- endunless -%}
-    {%- unless settings.type_header_font.system? -%}
-      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
-    {%- endunless -%}
-    {% comment %} theme-check-enable AssetPreload {% endcomment %}
 
-    {{ 'template-giftcard.css' | asset_url | stylesheet_tag }}
+    {{ 'application.css' | asset_url | stylesheet_tag: preload: true }}
   </head>
 
-  <body class="gradient">
-    <header class="gift-card__title">
-      <span class="h2 sr-only">{{ shop.name }}</span>
-      <h1 class="gift-card__heading">{{ 'gift_cards.issued.subtext' | t }}</h1>
-      <div class="gift-card__price">
+  <body class="text-seaweed-600 pb-16">
+    <header class="container pt-16 pb-8 text-center">
+      <span class="sr-only">{{ shop.name }}</span>
+      <h1 class="mt-10 mb-4 text-2xl">{{ 'gift_cards.issued.subtext' | t }}</h1>
+      <div class="flex items-center justify-center text-4xl tracking-widest opacity-80">
         <p>
           {% if settings.currency_code_enabled %}
             {{ gift_card.initial_value | money_with_currency }}
@@ -105,7 +43,7 @@
           {% endif %}
         </p>
         {%- if gift_card.enabled == false or gift_card.expired -%}
-          <p class="gift-card__label badge badge--{{ settings.sold_out_badge_color_scheme }}">{{ 'gift_cards.issued.expired' | t }}</p>
+          <p class="text-lg tracking-wide inline badge">{{ 'gift_cards.issued.expired' | t }}</p>
         {%- endif -%}
       </div>
 
@@ -115,39 +53,39 @@
         {%- assign gift_card_balance = gift_card.balance | money -%}
       {% endif %}
       {%- if gift_card.balance != gift_card.initial_value -%}
-        <p class="gift-card__label caption-large">{{ 'gift_cards.issued.remaining_html' | t: balance: gift_card_balance }}</p>
+        <p class="opacity-80 text-lg tracking-wide inline">{{ 'gift_cards.issued.remaining_html' | t: balance: gift_card_balance }}</p>
       {%- endif -%}
     </header>
 
-    <main class="gift-card">
-      <div class="gift-card__image-wrapper">
-        <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/osea-gift-card.png?v=1738620935" alt="" class="gift-card__image" height="{{ 570 | divided_by: 1.5 }}" width="570" loading="lazy">
+    <main class="gift-card container pb-16">
+      <div class="flex justify-center items-center h-full mb-3 mx-auto sm:w-[40rem]">
+        <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/osea-gift-card.png?v=1738620935" alt="" class="max-w-full px-8 h-auto sm:p-0" height="{{ 570 | divided_by: 1.5 }}" width="570" loading="lazy">
       </div>
       <div class="gift-card__qr-code" data-identifier="{{ gift_card.qr_identifier }}"></div>
-      <div class="gift-card__information">
+      <div class="text-center mt-12">
         <input
           type="text"
-          class="gift-card__number"
+          class="gift-card__number bg-transparent border-none text-3xl text-center w-full mb-4"
           value="{{ gift_card.code | format_code }}"
           aria-label="{{ 'gift_cards.issued.gift_card_code' | t }}"
           readonly
         >
-        <div class="gift-card__copy-code">
+        <div class="gift-card__copy-code mb-10">
           <button class="link gift-card__copy-link">{{ 'gift_cards.issued.copy_code' | t }}</button>
-          <span class="gift-card__copy-success form__message" role="status"></span>
+          <span class="gift-card__copy-success form__message items-center flex text-lg leading-none mt-4 justify-center" role="status"></span>
           <template>
-            {%- render 'icon-success' -%}{{ 'gift_cards.issued.copy_code_success' | t }}
+            {%- render 'icon-success', classes: 'w-5 h-5 shrink-0 mr-2', aria_hidden: true, stroke_width: 2 -%}{{ 'gift_cards.issued.copy_code_success' | t }}
           </template>
         </div>
         {%- if gift_card.pass_url -%}
-          <a href="{{ gift_card.pass_url }}" class="gift_card__apple-wallet">
+          <a href="{{ gift_card.pass_url }}" class="gift_card__apple-wallet leading-none block mb-20">
             <img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}" loading="lazy">
           </a>
         {%- endif -%}
-        <div class="gift-card__buttons no-print">
+        <div class="flex flex-col max-w-sm mx-auto flex-wrap gap-1 print:hidden">
           <a
             href="{{ shop.url }}"
-            class="button"
+            class="button button-primary"
             target="_blank"
             rel="noopener"
             aria-describedby="a11y-new-window-message"
@@ -155,7 +93,7 @@
             {{ 'gift_cards.issued.shop_link' | t }}
           </a>
           <button
-            class="button button--secondary"
+            class="button button-secondary"
             onclick="window.print();"
           >
             {{ 'gift_cards.issued.print_gift_card' | t }}
