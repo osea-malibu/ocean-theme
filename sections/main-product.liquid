@@ -596,7 +596,7 @@
                           <div class="my-1 text-sm font-book">
                             <ul>
                             <li>+ 30 Day Money Back Guarantee</li>
-                            <li>+ Free Shipping on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+</li>
+                            <li>+ Free Shipping{% if settings.shipping_countdown_threshold > 0 %} on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+{% endif %}</li>
                             </ul>
                           </div>
                         {%- endif -%}
