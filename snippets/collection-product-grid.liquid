@@ -36,12 +36,6 @@
               assign remove_linking = false
             endif
 
-            if parent_collection.metafields.my_fields.featured_products != blank
-              assign no_featured_products = false
-            else
-              assign no_featured_products = true
-            endif
-
             if is_subcollection and is_first_subcollection == false
               assign is_first_grid = false
             else
@@ -69,7 +63,7 @@
               assign has_promo_content = false
             endif
           -%}
-          {%- if has_promo_content and no_featured_products and is_first_grid -%}
+          {%- if has_promo_content and is_first_grid -%}
             <li class="relative overflow-hidden">
               {%- render 'collection-promo-tile',
                 promo_tile_image: promo_tile_image,
