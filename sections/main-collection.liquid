@@ -109,7 +109,7 @@
       {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
         <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
       {%- endif -%}
-      <div class="a:link p:mb-4 h2:font-medium h2:mb-2{% if collection.metafields.custom.seo_description.value.size > 400 %} overflow-hidden max-h-[4.5rem] peer-checked:max-h-[1600px] transition-max-height leading-6{% endif %}">
+      <div class="a:link h2:font-medium h2:mb-2{% if collection.metafields.custom.seo_description.value.size > 400 %} overflow-hidden max-h-[4.5rem] peer-checked:max-h-[1600px] transition-max-height leading-6{% endif %}">
         {{ collection.metafields.custom.seo_description }}
       </div>
       {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
