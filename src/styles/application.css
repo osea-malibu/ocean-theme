@@ -690,8 +690,11 @@
   .klaviyo-footer-form form.klaviyo-form label {
     @apply sr-only;
   }
+  .klaviyo-footer-form form.klaviyo-form [data-testid="form-row"] {
+    @apply flex gap-1;
+  }
   .klaviyo-footer-form form.klaviyo-form button:not([role="combobox"]) {
-    @apply !font-sans;
+    @apply !font-sans button button-primary;
   }
   .klaviyo-footer-form button[aria-label="Search Countries"] {
     @apply !w-12;
