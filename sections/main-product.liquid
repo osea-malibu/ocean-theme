@@ -280,18 +280,7 @@
             {%- when 'info_tabs' -%}
               {% render 'product-info-tabs', product: product, block: block %}
             {%- when 'collapsible_tab' -%}
-              {%- if block.settings.content != blank -%}
-                <div class="{{ block.settings.tab_classes }}">
-                  {%- assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
-                  {%- render 'accordion-item',
-                    id: tab_id,
-                    summary: block.settings.heading,
-                    content: block.settings.content,
-                    default_open: block.settings.default_open
-                    content_classes: 'max-h-80 overflow-y-auto a:link b:font-bold p:mb-4'
-                  -%}
-                </div>
-              {%- endif -%}
+              {%  render 'product-collapsible-tab', product: product, block: block %}
             {%- when 'quantity_selector' -%}
               {%- unless excluded_from_site -%}
                 <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>

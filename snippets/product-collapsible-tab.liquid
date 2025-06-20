@@ -1,0 +1,155 @@
+{%- case block.settings.heading -%}
+  {%- when 'Benefits' -%}
+    {%- capture benefits_html -%}
+      {%- if product.metafields.custom.benefits != blank -%}
+        <ul class="li:mb-2 mb-2">
+          {%- if is_fragrance_free -%}
+            {%- if block.settings.benefits_hide_icons -%}
+              <li>Fragrance free</li>
+            {%- else -%}
+              <li class="w-24 flex flex-start">
+                <div class="flex flex-col items-center">
+                  {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+                  <span class="text-sm font-book leading-none">Fragrance free</span>
+                </div>
+              </li>
+            {%- endif -%}
+          {%- endif -%}
+          {%- liquid
+            assign benefit_limit = 4
+            if is_fragrance_free
+              assign benefit_limit = 3
+            endif
+          -%}
+          {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
+            {%- if block.settings.benefits_hide_icons -%}
+              <li>{{ benefit }}</li>
+            {%- else -%}
+              {%- assign benefit_icon = benefit | handle -%}
+              <li class="flex">
+                <div class="flex flex-row items-center">
+                  {%- render 'icon-benefit-mini', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+                  <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
+                    {{ benefit }}
+                  </span>
+                </div>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- elsif product.metafields.custom.key_benefits != blank -%}
+        <div>{{ product.metafields.custom.key_benefits }}</div>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if benefits_html != blank -%}
+      {%- assign content = benefits_html -%}
+    {%- endif -%}
+  {%- when 'How to use' -%}
+    {%- capture how_to_html -%} 
+      {%- if product.metafields.custom.how_to_use != blank -%}
+        {%- assign how_to_use = product.metafields.custom.how_to_use.value -%}
+        <table class="mb-4">
+          <tr class="align-top td:pb-2">
+            <th scope="row" class="text-left"><b class="mr-1">How:</b></th>
+            <td>{{ how_to_use.how }}</td>
+          </tr>
+          <tr class="align-top td:pb-2">
+            <th scope="row" class="text-left"><b class="mr-1">When:</b></th>
+            <td>{{ how_to_use.when }}</td>
+          </tr>
+          {%- if how_to_use.pro_tip != nil -%}
+            <tr class="align-top{% if how_to_use.warnings.size > 0 %} td:pb-2{% endif %}">
+              <th scope="row" class="text-left"><b class="mr-1 whitespace-nowrap">Pro tip:</b></th>
+              <td>{{ how_to_use.pro_tip }}</td>
+            </tr>
+          {%- endif -%}
+          {%- if how_to_use.warnings.size > 0 -%}
+            <tr class="align-top">
+              <th scope="row" class="text-left"><b class="sr-only">Warnings:</b></th>
+              <td>
+                <ul class="text-sm">
+                  {%- for warning in how_to_use.warnings -%}
+                    <li class="mb-2 last:mb-0"><em>{{ warning }}</em></li>
+                  {%- endfor -%}
+                </ul>
+              </td>
+            </tr>
+          {%- endif -%}
+        </table>
+      {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
+        <div class="p:mb-3">{{ product.metafields.custom_fields.how_it_works }}</div>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- assign content = how_to_html -%}
+  {%- when 'Recycling' -%}
+    {%- capture recycling_html -%}
+      <div class="recycling mb-4">
+        <table>
+          {%- if product.metafields.custom.recycling.value.packaging != nil -%}
+            <tr class="align-top">
+              <td><b class="mr-1 whitespace-nowrap">Packaging:</b></td>
+              <td>{{ product.metafields.custom.recycling.value.packaging }}</td>
+            </tr>
+          {%- endif -%}
+          {%- if product.metafields.custom.recycling.value.recycling != nil -%}
+            <tr class="align-top">
+              <td><b class="mr-1 whitespace-nowrap">Recycling:</b></td>
+              <td>{{ product.metafields.custom.recycling.value.recycling }}</td>
+            </tr>
+          {%- endif -%}
+        </table>
+        {%- if product.metafields.custom.recycling.value.disclaimer != nil -%}
+          <small class="block leading-tight mt-2">{{ product.metafields.custom.recycling.value.disclaimer }}</small>
+        {%- endif -%}
+      </div>
+    {%- endcapture -%}
+    {%- if product.metafields.custom.recycling != blank -%}
+      {%- assign content = recycling_html -%}
+    {%- endif -%}
+  {%- when 'Related blogs' -%}
+    {%- capture related_blogs_html -%}
+      <div class="articles flex flex-wrap gap-2">
+        {%- for article_handle in product.metafields.custom.related_articles.value -%}
+          {%- render 'article-card',
+            article: articles[article_handle],
+            unique_id: '-pdp_featured',
+            show_image: true,
+            card_classes: 'flex flex-row bg-wave-200 rounded-md w-full',
+            image_classes: 'rounded-l-md block h-full object-cover absolute inset-0',
+            title_classes: 'tracking-wide font-medium mb-0.5 text-sm/tight mb-1',
+            tag_classes: 'sr-only',
+            date_classes: 'sr-only',
+            author_classes: 'sr-only',
+            excerpt_classes: 'text-sm/tight',
+            link_classes: 'link font-bold uppercase tracking-widest text-xs',
+            text_wrapper_classes: 'w-2/3 p-2',
+            image_wrapper_classes: 'w-1/3 h-full relative',
+            exceprt_length: 10
+          -%}
+        {%- endfor -%}
+      </div>
+    {%- endcapture -%}
+    {%- if product.metafields.custom.related_articles.value.size > 0 -%}
+      {%- assign content = related_blogs_html -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- capture else_html -%}
+      <div class="mb-4">{{ block.settings.content }}</div>
+    {%- endcapture -%}
+    {%- if block.settings.content != blank -%}
+      {%- assign content = else_html -%}
+    {%- endif -%}
+{%- endcase -%}
+
+{%- if content != blank -%}
+  <div class="{{ block.settings.tab_classes }}">
+    {%- assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
+    {%- render 'accordion-item',
+      id: tab_id,
+      summary: block.settings.heading,
+      content: content,
+      default_open: block.settings.default_open
+      content_classes: 'max-h-80 overflow-y-auto a:link b:font-bold p:mb-4'
+    -%}
+  </div>
+{%- endif -%}
