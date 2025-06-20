@@ -33,6 +33,7 @@
         },
         "text_BqQDJk": {
           "type": "text",
+          "name": "Short description",
           "settings": {
             "text": "{{ product.metafields.custom.pdp_short_description.value }}",
             "text_block_classes": "col-span-12 mt-4 leading-tight text-sm xl:text-base"
@@ -78,6 +79,7 @@
         },
         "ab50b385-6599-4b94-8014-2dd6ab1517d4": {
           "type": "benefits",
+          "disabled": true,
           "settings": {
             "benefits_classes": "benefits col-span-4 mt-6",
             "benefits_hide_icons": true,
@@ -87,6 +89,7 @@
         },
         "9b65c02a-2972-449a-b590-d40d4a256d04": {
           "type": "skin_types",
+          "disabled": true,
           "settings": {
             "skin_types_classes": "skin-types col-span-4 mt-6",
             "skin_types_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
@@ -95,14 +98,67 @@
         },
         "d08cdbd7-b608-45ad-bfec-e65bb7339509": {
           "type": "scent_profile",
+          "disabled": true,
           "settings": {
             "scent_profile_classes": "scent-profile col-span-4 mt-6",
             "scent_profile_label_classes": "tracking-widest uppercase font-bold text-xs mb-2",
             "scent_profile_content_classes": "text-sm font-book leading-tight"
           }
         },
+        "collapsible_tab_JxagAC": {
+          "type": "collapsible_tab",
+          "name": "Benefits",
+          "settings": {
+            "heading": "Benefits",
+            "content": "{{ product.metafields.custom.key_benefits | metafield_text }}",
+            "tab_classes": "mt-6 col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_7MxGMU": {
+          "type": "collapsible_tab",
+          "name": "Scent profile",
+          "settings": {
+            "heading": "Scent profile",
+            "content": "{{ product.metafields.custom.scent_profile.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_MQbqTH": {
+          "type": "collapsible_tab",
+          "name": "How to use",
+          "settings": {
+            "heading": "How to use",
+            "content": "{{ product.metafields.custom_fields.how_it_works.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_QBCMfF": {
+          "type": "collapsible_tab",
+          "name": "Recycling",
+          "settings": {
+            "heading": "Recycling",
+            "content": "",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_h7h39z": {
+          "type": "collapsible_tab",
+          "name": "Blogs",
+          "disabled": true,
+          "settings": {
+            "heading": "Related blogs",
+            "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
+            "tab_classes": "col-span-12",
+            "default_open": false
+          }
+        },
         "2431ba77-22b9-43d0-a67d-f9858b6d8b58": {
           "type": "info_tabs",
+          "disabled": true,
           "settings": {
             "info_tab_wrapper_classes": "col-span-12 mt-4",
             "info_tab_label_classes": "font-bold uppercase text-xs",
@@ -143,6 +199,11 @@
         "ab50b385-6599-4b94-8014-2dd6ab1517d4",
         "9b65c02a-2972-449a-b590-d40d4a256d04",
         "d08cdbd7-b608-45ad-bfec-e65bb7339509",
+        "collapsible_tab_JxagAC",
+        "collapsible_tab_7MxGMU",
+        "collapsible_tab_MQbqTH",
+        "collapsible_tab_QBCMfF",
+        "collapsible_tab_h7h39z",
         "2431ba77-22b9-43d0-a67d-f9858b6d8b58",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
