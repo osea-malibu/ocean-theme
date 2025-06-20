@@ -121,6 +121,58 @@
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     },
+    "image_banner_PRMi3M": {
+      "type": "image-banner",
+      "blocks": {
+        "paragraph_zWi6TX": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Limited-Time Offer",
+            "paragraph_classes": "badge bg-neon-green rounded px-2 mb-4"
+          }
+        },
+        "heading_6g8Rbi": {
+          "type": "heading",
+          "settings": {
+            "heading": "Earn 500 Points",
+            "heading_classes": "text-5xl font-serif text-neon-green text-center pt-4 sm:pt-0 sm:text-4xl lg:text-5xl"
+          }
+        },
+        "paragraph_z4RizK": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Subscribe to any product and receive $5 (500 points) off your next order.  Log into your Sea Rewards account to redeem offer. Ends 6/30.",
+            "paragraph_classes": "text-white text-lg font-book leading-tight m-4 pl-2 pr-2 max-w-lg sm:text-md lg:text-lg"
+          }
+        },
+        "button_4ErjjR": {
+          "type": "button",
+          "settings": {
+            "button_label": "Redeem Offer",
+            "button_aria_label": "",
+            "button_link": "shopify://pages/sea-rewards",
+            "target_blank": false,
+            "button_classes": "button-primary"
+          }
+        }
+      },
+      "block_order": [
+        "paragraph_zWi6TX",
+        "heading_6g8Rbi",
+        "paragraph_z4RizK",
+        "button_4ErjjR"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_mobile": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2_df475466-e025-41e8-86be-0e5b40f114c9.jpg",
+        "image": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://pages/sea-rewards",
+        "banner_classes": "container px-0 xs:px-6 mb-4",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:pl-10 sm:pr-0 text-center flex flex-col items-center justify-center pt-4 pb-5 lg:pt-0 sm:right-1/3 lg:pt-10   lg:pb-0"
+      }
+    },
     "acf68431-9c40-4c22-8716-74c9cdde0135": {
       "type": "image-banner",
       "blocks": {
@@ -672,58 +724,6 @@
         "paragraph_MDedP4",
         "button_J3XwBG"
       ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image_mobile": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2_df475466-e025-41e8-86be-0e5b40f114c9.jpg",
-        "image": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://pages/sea-rewards",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:pl-10 sm:pr-0 text-center flex flex-col items-center justify-center pt-4 pb-5 lg:pt-0 sm:right-1/3 lg:pt-10   lg:pb-0"
-      }
-    },
-    "image_banner_PRMi3M": {
-      "type": "image-banner",
-      "blocks": {
-        "paragraph_zWi6TX": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Limited-Time Offer",
-            "paragraph_classes": "badge bg-neon-green rounded px-2 mb-4"
-          }
-        },
-        "heading_6g8Rbi": {
-          "type": "heading",
-          "settings": {
-            "heading": "Earn 500 Points",
-            "heading_classes": "text-5xl font-serif text-neon-green text-center pt-4 sm:pt-0 sm:text-4xl lg:text-5xl"
-          }
-        },
-        "paragraph_z4RizK": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Subscribe to any product and receive $5 (500 points) off your next order.  Log into your Sea Rewards account to redeem offer. Ends 6/30.",
-            "paragraph_classes": "text-white text-lg font-book leading-tight m-4 pl-2 pr-2 max-w-lg sm:text-md lg:text-lg"
-          }
-        },
-        "button_4ErjjR": {
-          "type": "button",
-          "settings": {
-            "button_label": "Redeem Offer",
-            "button_aria_label": "",
-            "button_link": "shopify://pages/sea-rewards",
-            "target_blank": false,
-            "button_classes": "button-primary"
-          }
-        }
-      },
-      "block_order": [
-        "paragraph_zWi6TX",
-        "heading_6g8Rbi",
-        "paragraph_z4RizK",
-        "button_4ErjjR"
-      ],
       "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
@@ -740,6 +740,7 @@
   "order": [
     "main",
     "b16ece37-6cf1-4a1c-86f5-f3d323b933ce",
+    "image_banner_PRMi3M",
     "acf68431-9c40-4c22-8716-74c9cdde0135",
     "multicolumn_DxzBxN",
     "719e8c16-bbce-46d8-b3f4-50a288cf359a",
@@ -749,7 +750,6 @@
     "4cd20ef4-390a-4ce3-a394-43184b5cf979",
     "ff4a2be6-7914-4d87-bc3d-5e37e651c740",
     "multicolumn_hd8hra",
-    "image_banner_HwrjXQ",
-    "image_banner_PRMi3M"
+    "image_banner_HwrjXQ"
   ]
 }
