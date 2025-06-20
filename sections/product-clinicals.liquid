@@ -82,9 +82,9 @@
           {%- for clinical_result in product.metafields.custom.clinical_results.value -%}
             <div class="{% unless forloop.last %}mb-4{% endunless %}">
               <h4 class="font-bold text-xs tracking-widest uppercase mb-1">{{ clinical_result.title }}</h4>
-              <ul class="icon-list">
+              <ul>
                 {%- for stat in clinical_result.stats -%}
-                  <li class="{% if product.metafields.custom.clinical_results.value.size > 1 %}mb-1{% else %}my-2{% endif %} before:content-['\2013'] before:mr-1">
+                  <li class="{% if product.metafields.custom.clinical_results.value.size > 1 %}mb-1{% else %}my-2{% endif %}">
                     {%- if stat.value != nil -%}
                       {%- if stat.value_type == 'text' -%}
                         <b class="font-bold text-lg leading-normal">{{ stat.value }}&nbsp;</b>
