@@ -108,7 +108,6 @@
         "collapsible_tab_JxagAC": {
           "type": "collapsible_tab",
           "name": "Benefits",
-          "disabled": true,
           "settings": {
             "heading": "Benefits",
             "content": "{{ product.metafields.custom.key_benefits | metafield_text }}",
@@ -119,7 +118,6 @@
         "collapsible_tab_7MxGMU": {
           "type": "collapsible_tab",
           "name": "Scent profile",
-          "disabled": true,
           "settings": {
             "heading": "Scent profile",
             "content": "{{ product.metafields.custom.scent_profile.value }}",
@@ -130,7 +128,6 @@
         "collapsible_tab_MQbqTH": {
           "type": "collapsible_tab",
           "name": "How to use",
-          "disabled": true,
           "settings": {
             "heading": "How to use",
             "content": "{{ product.metafields.custom_fields.how_it_works.value }}",
@@ -141,7 +138,6 @@
         "collapsible_tab_QBCMfF": {
           "type": "collapsible_tab",
           "name": "Recycling",
-          "disabled": true,
           "settings": {
             "heading": "Recycling",
             "content": "",
@@ -152,7 +148,6 @@
         "collapsible_tab_q8BQDB": {
           "type": "collapsible_tab",
           "name": "Care",
-          "disabled": true,
           "settings": {
             "heading": "Care",
             "content": "{{ product.metafields.custom.product_care.value }}",
@@ -163,7 +158,6 @@
         "collapsible_tab_h7h39z": {
           "type": "collapsible_tab",
           "name": "Blogs",
-          "disabled": true,
           "settings": {
             "heading": "Related blogs",
             "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
@@ -173,6 +167,7 @@
         },
         "2431ba77-22b9-43d0-a67d-f9858b6d8b58": {
           "type": "info_tabs",
+          "disabled": true,
           "settings": {
             "info_tab_wrapper_classes": "col-span-12 mt-4",
             "info_tab_label_classes": "font-bold uppercase text-xs",
