@@ -328,99 +328,101 @@
                 </div>
               {%- endunless -%}
             {%- when 'variant_picker' -%}
-              <div class="{{ block.settings.variant_classes }}">
-                {%- unless product.has_only_default_variant -%}
-                  {%- if product.variants.size == 1 -%}
-                    {%- for option in product.options_with_values -%}
-                      <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
-                      {%- for value in option.values -%}
-                        <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
-                          {{ value }}
-                        </div>
-                      {%- endfor -%}
-                    {%- endfor -%}
-                  {%- else -%}
-                    <variant-radios
-                      class="no-js-hidden block"
-                      data-section="{{ section.id }}"
-                      data-url="{{ product.url }}"
-                      data-is-main-pdp="true"
-                    >
+              {%- unless set_products contains product.handle -%}
+                <div class="{{ block.settings.variant_classes }}">
+                  {%- unless product.has_only_default_variant -%}
+                    {%- if product.variants.size == 1 -%}
                       {%- for option in product.options_with_values -%}
-                        <fieldset class="js group">
-                          <legend class="font-medium text-sm mb-1{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">Select {{ option.name | downcase }}:</legend>
-                          <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
-                            {%- for value in option.values -%}
-                              {%- liquid
-                                assign mini_variant = false
-                                assign jumbo_variant = false
-                                assign normalized_value = value | replace: 'fl ', ''
-
-                                if mini_size_array contains normalized_value
-                                  assign mini_variant = true
-                                elsif jumbo_size_array contains normalized_value
-                                  assign jumbo_variant = true
-                                endif
-                              -%}
-                              <div>
-                                {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
-                                <input type="radio"
-                                  id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                  class="peer hidden{% if mini_size_array contains normalized_option_value %} travel-input{% endif %}"
-                                  name="{{ option.name }}"
-                                  value="{{ value | escape }}"
-                                  form="{{ product_form_id }}"
-                                  {% if option.selected_value == value %}checked{% endif %}
-                                >
-                                <label
-                                  class="flex-col gap-0.5 px-4 {% if option.name == 'Size' %}py-1{% else %}py-2.5{% endif %} button button-xs button-secondary rounded-full peer-checked:bg-wave-200 peer-checked:border-seaweed-700 mr-2 mb-1 peer-disabled:opacity-50"
-                                  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                >
-                                  {%- if option.name == 'Size' -%}
-                                    {%- if mini_variant -%}
-                                      <b class="tracking-normal leading-none capitalize">Mini</b>
-                                    {%- elsif jumbo_variant -%}
-                                      <b class="tracking-normal leading-none capitalize">Jumbo</b>
-                                    {%- else -%}
-                                      <b class="tracking-normal leading-none capitalize">Standard</b>
-                                    {%- endif -%}
-                                  {%- endif -%}
-                                  <span class="leading-none {% if option.name == 'Scent' %}normal-case tracking-normal{% else %}lowercase tracking-wide{% endif %}">{{ value }}</span>
-                                </label>
-                              </div>
-                            {%- endfor -%}
+                        <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
+                        {%- for value in option.values -%}
+                          <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
+                            {{ value }}
                           </div>
-                        </fieldset>
-                      {%- endfor -%}
-                      <script type="application/json" class="variant-data">
-                        {{ product.variants | json }}
-                      </script>
-                    </variant-radios>
-                  {%- endif -%}
-                {%- endunless -%}
-
-                <noscript class="product-form__noscript-wrapper-{{ section.id }}">
-                  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
-                    <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
-                    <div class="select">
-                      <select name="id" id="Variants-{{ section.id }}" form="{{ product_form_id }}">
-                        {%- for variant in product.variants -%}
-                          <option
-                            {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-                            {% if variant.available == false %}disabled{% endif %}
-                            value="{{ variant.id }}"
-                          >
-                            {{ variant.title }}
-                            {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
-                            - {{ variant.price | money | strip_html }}
-                          </option>
                         {%- endfor -%}
-                      </select>
-                      {% render 'icon-caret', classes: 'w-4 h-4' %}
+                      {%- endfor -%}
+                    {%- else -%}
+                      <variant-radios
+                        class="no-js-hidden block"
+                        data-section="{{ section.id }}"
+                        data-url="{{ product.url }}"
+                        data-is-main-pdp="true"
+                      >
+                        {%- for option in product.options_with_values -%}
+                          <fieldset class="js group">
+                            <legend class="font-medium text-sm mb-1{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">Select {{ option.name | downcase }}:</legend>
+                            <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
+                              {%- for value in option.values -%}
+                                {%- liquid
+                                  assign mini_variant = false
+                                  assign jumbo_variant = false
+                                  assign normalized_value = value | replace: 'fl ', ''
+
+                                  if mini_size_array contains normalized_value
+                                    assign mini_variant = true
+                                  elsif jumbo_size_array contains normalized_value
+                                    assign jumbo_variant = true
+                                  endif
+                                -%}
+                                <div>
+                                  {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
+                                  <input type="radio"
+                                    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                    class="peer hidden{% if mini_size_array contains normalized_option_value %} travel-input{% endif %}"
+                                    name="{{ option.name }}"
+                                    value="{{ value | escape }}"
+                                    form="{{ product_form_id }}"
+                                    {% if option.selected_value == value %}checked{% endif %}
+                                  >
+                                  <label
+                                    class="flex-col gap-0.5 px-4 {% if option.name == 'Size' %}py-1{% else %}py-2.5{% endif %} button button-xs button-secondary rounded-full peer-checked:bg-wave-200 peer-checked:border-seaweed-700 mr-2 mb-1 peer-disabled:opacity-50"
+                                    for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                  >
+                                    {%- if option.name == 'Size' -%}
+                                      {%- if mini_variant -%}
+                                        <b class="tracking-normal leading-none capitalize">Mini</b>
+                                      {%- elsif jumbo_variant -%}
+                                        <b class="tracking-normal leading-none capitalize">Jumbo</b>
+                                      {%- else -%}
+                                        <b class="tracking-normal leading-none capitalize">Standard</b>
+                                      {%- endif -%}
+                                    {%- endif -%}
+                                    <span class="leading-none {% if option.name == 'Scent' %}normal-case tracking-normal{% else %}lowercase tracking-wide{% endif %}">{{ value }}</span>
+                                  </label>
+                                </div>
+                              {%- endfor -%}
+                            </div>
+                          </fieldset>
+                        {%- endfor -%}
+                        <script type="application/json" class="variant-data">
+                          {{ product.variants | json }}
+                        </script>
+                      </variant-radios>
+                    {%- endif -%}
+                  {%- endunless -%}
+
+                  <noscript class="product-form__noscript-wrapper-{{ section.id }}">
+                    <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+                      <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+                      <div class="select">
+                        <select name="id" id="Variants-{{ section.id }}" form="{{ product_form_id }}">
+                          {%- for variant in product.variants -%}
+                            <option
+                              {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                              {% if variant.available == false %}disabled{% endif %}
+                              value="{{ variant.id }}"
+                            >
+                              {{ variant.title }}
+                              {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                              - {{ variant.price | money | strip_html }}
+                            </option>
+                          {%- endfor -%}
+                        </select>
+                        {% render 'icon-caret', classes: 'w-4 h-4' %}
+                      </div>
                     </div>
-                  </div>
-                </noscript>
-              </div>
+                  </noscript>
+                </div>
+              {%- endunless -%}
               {% if product.type contains 'Gift Card' %}
                 <!-- ShopKeeper Gift Card -->
                 <gift-card-fields class="col-span-12">
@@ -646,9 +648,21 @@
               {%- endunless -%}
             {%- when 'upsells' -%}
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
-                <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
+                {%- liquid
+                  if product.metafields.my_fields.save_with_sets != nil and product.metafields.my_fields.pair_with_product != nil
+                    assign upsell_count = product.metafields.my_fields.save_with_sets.value.count | plus: product.metafields.my_fields.pair_with_product.value.count
+                  elsif product.metafields.my_fields.save_with_sets != nil
+                    assign upsell_count = product.metafields.my_fields.save_with_sets.value.count
+                  elsif product.metafields.my_fields.pair_with_product != nil
+                    assign upsell_count = product.metafields.my_fields.pair_with_product.value.count
+                  endif
+                -%}
+                {%- if upsell_count > 1 -%}
+                  <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
+                {%- endif -%}
+                <div class="{{ block.settings.upsell_classes }}{% if upsell_count > 1 %} max-h-[132px] overflow-hidden peer-checked:max-h-[1000px] motion-safe:transition-max-height{% endif %}" {{ block.shopify_attributes }}>
                   {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
-                    <div class="upsell-sets mt-4">
+                    <div class="upsell-sets mt-2">
                       <h2 class="font-medium tracking-wide mb-1">Save with Sets</h2>
                       {%- for set in product.metafields.my_fields.save_with_sets.value -%}
                         {%- render 'product-upsell', product: set -%}
@@ -672,6 +686,10 @@
                     </div>
                   {% endif %}
                 </div>
+                {%- if upsell_count > 1 -%}
+                  <label aria-hidden="true" for="collapsible" class="col-span-12 text-sm link mt-1 block peer-checked:hidden">View more {% render 'icon-arrow', variant: 'short', classes: 'rotate-90 w-4 h-4 inline-block ml-1' %}</label>
+                  <label aria-hidden="true" for="collapsible" class="col-span-12 text-sm link mt-1 hidden peer-checked:block">View less {% render 'icon-arrow', variant: 'short', classes: '-rotate-90 w-4 h-4 inline-block ml-1' %}</label>
+                {%- endif -%}
               {%- endif -%}
             {%- when 'set_includes' -%}
               {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
