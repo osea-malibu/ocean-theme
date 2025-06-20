@@ -143,7 +143,8 @@
         {%- liquid
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
-          assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+          assign mini_size_array = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+          assign jumbo_size_array = '9.6 oz, 9.2 oz' | split: ', '
           assign set_products = collections['skincare-sets'].products | map: 'handle'
           assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
 
@@ -347,24 +348,44 @@
                     >
                       {%- for option in product.options_with_values -%}
                         <fieldset class="js group">
+                          <legend class="font-medium text-sm mb-1{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">Select {{ option.name | downcase }}:</legend>
                           <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
-                            <legend class="font-medium tracking-wide text-sm mr-1.5{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">{{ option.name }}:</legend>
                             {%- for value in option.values -%}
+                              {%- liquid
+                                assign mini_variant = false
+                                assign jumbo_variant = false
+                                assign normalized_value = value | replace: 'fl ', ''
+
+                                if mini_size_array contains normalized_value
+                                  assign mini_variant = true
+                                elsif jumbo_size_array contains normalized_value
+                                  assign jumbo_variant = true
+                                endif
+                              -%}
                               <div>
                                 {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
                                 <input type="radio"
                                   id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                  class="peer hidden{% if travel_sizes contains normalized_option_value %} travel-input{% endif %}"
+                                  class="peer hidden{% if mini_size_array contains normalized_option_value %} travel-input{% endif %}"
                                   name="{{ option.name }}"
                                   value="{{ value | escape }}"
                                   form="{{ product_form_id }}"
                                   {% if option.selected_value == value %}checked{% endif %}
                                 >
                                 <label
-                                  class="button button-xs button-secondary rounded-full peer-checked:bg-wave-200 peer-checked:border-seaweed-700 mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
+                                  class="flex-col gap-0.5 px-4 {% if option.name == 'Size' %}py-1{% else %}py-2.5{% endif %} button button-xs button-secondary rounded-full peer-checked:bg-wave-200 peer-checked:border-seaweed-700 mr-2 mb-1 peer-disabled:opacity-50"
                                   for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                                 >
-                                  {{ value }}
+                                  {%- if option.name == 'Size' -%}
+                                    {%- if mini_variant -%}
+                                      <b class="tracking-normal leading-none capitalize">Mini</b>
+                                    {%- elsif jumbo_variant -%}
+                                      <b class="tracking-normal leading-none capitalize">Jumbo</b>
+                                    {%- else -%}
+                                      <b class="tracking-normal leading-none capitalize">Standard</b>
+                                    {%- endif -%}
+                                  {%- endif -%}
+                                  <span class="leading-none {% if option.name == 'Scent' %}normal-case tracking-normal{% else %}lowercase tracking-wide{% endif %}">{{ value }}</span>
                                 </label>
                               </div>
                             {%- endfor -%}
