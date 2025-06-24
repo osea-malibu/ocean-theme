@@ -7,15 +7,15 @@
         assign is_fragrance_free = true
       endif
     -%}
-    <script>console.log('is_fragrance_free', {{ is_fragrance_free }});</script>
     {%- capture benefits_html -%}
+      {%- assign benefit_tag_classes = 'flex items-center bg-sand-300 rounded px-1.5 py-1 text-seaweed-800 gap-1' -%}
       {%- if product.metafields.custom.benefits != blank -%}
-        <ul class="li:mb-2 mb-2">
+        <ul class="mb-2 flex gap-2 flex-wrap">
           {%- if block.settings.benefits_hide_icons -%}
-            <li class="scent-fragrance-free{% unless is_fragrance_free %} hidden{% endunless %}">Fragrance free</li>
+            <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">Fragrance free</li>
           {%- else -%}
-            <li class="flex items-center scent-fragrance-free{% unless is_fragrance_free %} hidden{% endunless %}">
-              {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+            <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">
+              {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-3.5 h-3.5 block mr-2', aria_hidden: true -%}
               <span class="text-sm font-book leading-none">Fragrance free</span>
             </li>
           {%- endif -%}
@@ -27,20 +27,25 @@
           -%}
           {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
             {%- if block.settings.benefits_hide_icons -%}
-              <li>{{ benefit }}</li>
+              <li class="{{ benefit_tag_classes }}">{{ benefit }}</li>
             {%- else -%}
               {%- assign benefit_icon = benefit | handle -%}
-              <li class="flex items-center">
-                {%- render 'icon-benefit-mini', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
+              <li class="{{ benefit_tag_classes }}">
+                {%- render 'icon-benefit-mini', icon: benefit_icon, stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
+                <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %} whitespace-nowrap">
                   {{- benefit -}}
                 </span>
               </li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
-      {%- elsif product.metafields.custom.key_benefits != blank -%}
-        <div>{{ product.metafields.custom.key_benefits }}</div>
+      {%- endif -%}
+      {%- if product.metafields.custom.key_benefits != blank -%}
+        <ul class="li:mb-1 mb-2 icon-list check">
+          {%- for benefit in product.metafields.custom.key_benefits.value -%}
+            <li>{{ benefit }}</li>
+          {%- endfor -%}
+        </ul>
       {%- endif -%}
     {%- endcapture -%}
     {%- if benefits_html != blank -%}
