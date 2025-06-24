@@ -146,12 +146,6 @@
           assign mini_size_array = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
           assign jumbo_size_array = '9.6 oz, 9.2 oz' | split: ', '
           assign set_products = collections['skincare-sets'].products | map: 'handle'
-          assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
-
-          assign is_fragrance_free = false
-          if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'
-            assign is_fragrance_free = true
-          endif
 
           assign product_collections_handles = product.collections | map: 'handle'
           if product_collections_handles contains 'exclude-from-site'
@@ -196,85 +190,6 @@
               {%- if product.metafields.custom.set_value -%}
                 <div class="col-span-12 relative -bottom-2">
                   <strong class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</strong>
-                </div>
-              {%- endif -%}
-            {%- when 'benefits' -%}
-              {%- if product.metafields.custom.benefits.value.size > 0 -%}
-                <div class="{{ block.settings.benefits_classes }}">
-                  <h2 class="{{ block.settings.benefits_label_classes }}">Benefits</h2>
-                  <ul class="{{ block.settings.benefits_content_classes }}">
-                    {%- if is_fragrance_free -%}
-                      {%- if block.settings.benefits_hide_icons -%}
-                        <li>Fragrance free</li>
-                      {%- else -%}
-                        <li class="w-24 flex flex-start">
-                          <div class="flex flex-col items-center">
-                            {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                            <span class="text-sm font-book leading-none">Fragrance free</span>
-                          </div>
-                        </li>
-                      {%- endif -%}
-                    {%- endif -%}
-                    {%- liquid
-                      assign benefit_limit = 4
-                      if is_fragrance_free
-                        assign benefit_limit = 3
-                      endif
-                    -%}
-                    {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
-                      {%- if block.settings.benefits_hide_icons -%}
-                        <li>{{ benefit }}</li>
-                      {%- else -%}
-                        {%- assign benefit_icon = benefit | handle -%}
-                        <li class="flex">
-                          <div class="flex flex-row items-center">
-                            {%- render 'icon-benefit-mini', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                            <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
-                              {{ benefit }}
-                            </span>
-                          </div>
-                        </li>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </ul>
-                </div>
-              {%- endif -%}
-            {%- when 'skin_types' -%}
-              {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
-                <div class="{{ block.settings.skin_types_classes }}{% if product.metafields.custom.scent_profile == blank and product.metafields.custom.scent_profile_short == blank %} -mr-4{% endif %}">
-                  <h2 class="{{ block.settings.skin_types_label_classes }}">Skin types</h2>
-                  {%- if product.metafields.custom.skin_types_list != blank -%}
-                    <ul class="icon-list bullet !pl-5{% if product.options contains 'Scent' %} scent-scented{% if product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endif %}{% endif %} {{ block.settings.skin_types_content_classes }}">
-                      {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
-                        {%- if skin_type == 'Not for sensitive' -%}
-                          <li class="flex items-start before:!hidden">
-                            {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5 shrink-0', stroke_width: 2 %}
-                            <span>{{ skin_type }}</span>
-                          </li>
-                        {%- else -%}
-                          <li>{{ skin_type }}</li>
-                        {%- endif -%}
-                      {%- endfor -%}
-                    </ul>
-                    {%- if product.options contains 'Scent' -%}
-                      <ul class="icon-list bullet !pl-5 scent-fragrance-free{% unless product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endunless %} {{ block.settings.skin_types_content_classes }}">
-                        <li>All Skin Types</li>
-                      </ul>
-                    {%- endif -%}
-                  {%- elsif product.metafields.custom_fields.skin_types != blank -%}
-                    <p class="{{ block.settings.skin_types_content_classes }}">{{ product.metafields.custom_fields.skin_types }}</p>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-            {%- when 'scent_profile' -%}
-              {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
-                <div class="{{ block.settings.scent_profile_classes }}">
-                  <h2 class="{{ block.settings.scent_profile_label_classes }}">Scent profile</h2>
-                  {%- if product.metafields.custom.scent_profile_short -%}
-                    <div class="{{ block.settings.scent_profile_content_classes }}">{{ product.metafields.custom.scent_profile_short }}</div>
-                  {%- else -%}
-                    <div class="{{ block.settings.scent_profile_content_classes }}">{{ product.metafields.custom.scent_profile }}</div>
-                  {%- endif -%}
                 </div>
               {%- endif -%}
             {%- when 'info_tabs' -%}
@@ -1095,77 +1010,6 @@
           "type": "textarea",
           "id": "rating_classes",
           "label": "Rating classes"
-        }
-      ]
-    },
-    {
-      "type": "benefits",
-      "name": "Benefits",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "benefits_classes",
-          "label": "Wrapper classes"
-        },
-        {
-          "type": "checkbox",
-          "id": "benefits_hide_icons",
-          "label": "Hide icons"
-        },
-        {
-          "type": "textarea",
-          "id": "benefits_label_classes",
-          "label": "Label classes"
-        },
-        {
-          "type": "textarea",
-          "id": "benefits_content_classes",
-          "label": "Content classes"
-        }
-      ]
-    },
-    {
-      "type": "skin_types",
-      "name": "Skin types",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "skin_types_classes",
-          "label": "Wrapper classes"
-        },
-        {
-          "type": "textarea",
-          "id": "skin_types_label_classes",
-          "label": "Label classes"
-        },
-        {
-          "type": "textarea",
-          "id": "skin_types_content_classes",
-          "label": "Content classes"
-        }
-      ]
-    },
-    {
-      "type": "scent_profile",
-      "name": "Scent profile",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "scent_profile_classes",
-          "label": "Wrapper classes"
-        },
-        {
-          "type": "textarea",
-          "id": "scent_profile_label_classes",
-          "label": "Label classes"
-        },
-        {
-          "type": "textarea",
-          "id": "scent_profile_content_classes",
-          "label": "Content classes"
         }
       ]
     },

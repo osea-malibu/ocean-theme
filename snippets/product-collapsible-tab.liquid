@@ -1,19 +1,23 @@
 {%- case block.settings.heading -%}
   {%- when 'Benefits' -%}
+    {%- liquid
+      assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
+      assign is_fragrance_free = false
+      if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'
+        assign is_fragrance_free = true
+      endif
+    -%}
+    <script>console.log('is_fragrance_free', {{ is_fragrance_free }});</script>
     {%- capture benefits_html -%}
       {%- if product.metafields.custom.benefits != blank -%}
         <ul class="li:mb-2 mb-2">
-          {%- if is_fragrance_free -%}
-            {%- if block.settings.benefits_hide_icons -%}
-              <li>Fragrance free</li>
-            {%- else -%}
-              <li class="w-24 flex flex-start">
-                <div class="flex flex-col items-center">
-                  {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                  <span class="text-sm font-book leading-none">Fragrance free</span>
-                </div>
-              </li>
-            {%- endif -%}
+          {%- if block.settings.benefits_hide_icons -%}
+            <li class="scent-fragrance-free{% unless is_fragrance_free %} hidden{% endunless %}">Fragrance free</li>
+          {%- else -%}
+            <li class="flex items-center scent-fragrance-free{% unless is_fragrance_free %} hidden{% endunless %}">
+              {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+              <span class="text-sm font-book leading-none">Fragrance free</span>
+            </li>
           {%- endif -%}
           {%- liquid
             assign benefit_limit = 4
@@ -26,13 +30,11 @@
               <li>{{ benefit }}</li>
             {%- else -%}
               {%- assign benefit_icon = benefit | handle -%}
-              <li class="flex">
-                <div class="flex flex-row items-center">
-                  {%- render 'icon-benefit-mini', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                  <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
-                    {{ benefit }}
-                  </span>
-                </div>
+              <li class="flex items-center">
+                {%- render 'icon-benefit-mini', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
+                <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
+                  {{- benefit -}}
+                </span>
               </li>
             {%- endif -%}
           {%- endfor -%}
