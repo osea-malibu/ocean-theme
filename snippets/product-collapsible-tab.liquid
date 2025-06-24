@@ -41,7 +41,7 @@
         </ul>
       {%- endif -%}
       {%- if product.metafields.custom.key_benefits != blank -%}
-        <ul class="li:mb-1 mb-2 icon-list check">
+        <ul class="li:mb-1 mb-2 icon-list bullet">
           {%- for benefit in product.metafields.custom.key_benefits.value -%}
             <li>{{ benefit }}</li>
           {%- endfor -%}
