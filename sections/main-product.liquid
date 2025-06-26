@@ -613,27 +613,50 @@
   </div>
   {%- if excluded_from_site == false and product.type != 'Gift Card' and product.type != 'Subscription Gift' -%}
     <product-sticky-atc class="fixed z-40 inset-x-0 bottom-0 py-2.5 bg-white invisible opacity-0 motion-safe:transition-visibility" style="box-shadow: 0 0 5px rgba(11, 46, 37, 0.15);">
-      <div class="flex gap-2 justify-between items-center pl-4 sm:pl-6 pr-20 md:pr-24 xl:max-w-screen-xl xl:mx-auto min-[1400px]:pr-6">
-        <h3 class="tracking-wide leading-none text-lg sr-only sm:!not-sr-only">{{- product.title | escape -}}</h3>
-        <div class="relative w-full sm:w-96">
-          <button
-            type="submit"
-            name="add"
-            class="product-form__submit button button-neon button-md w-full disabled:opacity-50"
-            {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-            form="{{ product_form_id }}"
-          >
-              <span class="loading-spinner relative -ml-6 hidden">
-                {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-              </span>
-              <span>
-                {%- if product.selected_or_first_available_variant.available -%}
-                  {{ 'products.product.add_to_cart' | t }}
-                {%- else -%}
-                  {{ 'products.product.sold_out' | t }}
-                {%- endif -%}
-              </span>
-          </button>
+      <div class="flex flex-row gap-2 px-4 sm:px-6 container">
+        {%- liquid
+          assign sticky_image_src = product.selected_or_first_available_variant.featured_media | image_url: width: 192
+          assign sticky_image_src_2x = product.selected_or_first_available_variant.featured_media | image_url: width: 252
+        -%}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        <img
+          srcset="{% render 'imgix', src: sticky_image_src %} 1x, {% render 'imgix', src: sticky_image_src_2x %} 2x"
+          src="{% render 'imgix', src: sticky_image_src_2x %}"
+          loading="lazy"
+          alt="{{ product.selected_or_first_available_variant.featured_media.alt | escape }}"
+          width="120"
+          height="150"
+          class="h-16 sm:h-12 w-auto object-cover"
+        >
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+        <div class="flex flex-col sm:flex-row gap-2 justify-between items-center w-full">
+          <div class="flex flex-col justify-between flex-1 min-w-0">
+            <h3 class="font-medium tracking-wide leading-none text-lg h-5 truncate">{{- product.title | escape -}}</h3>
+            <p class="text-sm font-book sr-only sm:!not-sr-only">
+              {{- product.metafields.custom_fields.short_description -}}
+            </p>
+          </div>
+          <div class="relative w-full sm:w-60 shrink-0">
+            <button
+              type="submit"
+              name="add"
+              class="product-form__submit button button-neon button-md w-full gap-3 disabled:opacity-50"
+              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+              form="{{ product_form_id }}"
+            >
+                <span class="loading-spinner relative -ml-6 hidden">
+                  {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+                </span>
+                <span>
+                  {%- if product.selected_or_first_available_variant.available -%}
+                    {{ 'products.product.add_to_cart' | t }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </span>
+                {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
+            </button>
+          </div>
         </div>
       </div>
     </product-sticky-atc>
