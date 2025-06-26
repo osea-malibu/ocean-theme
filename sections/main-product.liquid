@@ -574,7 +574,7 @@
                     </div>
                   {%- endif -%}
                   {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
-                    <div class="upsell-partner mt-4">
+                    <div class="upsell-partner {% if product.metafields.my_fields.save_with_sets != nil %}mt-4{% else %}mt-2{% endif %}">
                       <h2 class="font-medium tracking-wide mb-1">Pairs Well With</h2>
                       {%- for pair_with_product in product.metafields.my_fields.pair_with_product.value -%}
                         {%- render 'product-upsell', product: pair_with_product -%}
