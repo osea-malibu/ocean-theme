@@ -1613,61 +1613,27 @@ customElements.define("collection-anchors", CollectionAnchors);
 
 class PostscriptTeaser extends HTMLElement {
   connectedCallback() {
-    // elements
     this.button = this.querySelector("button");
-    this.closeX = this.button.querySelector("span");
+    this.popupId = this.dataset.popupId;
 
-    // rotate via Tailwind or inline style if you prefer
-    // this.button.classList.add('rotate-90');
+    //show teaser when postscript is ready
+    window.addEventListener("postscriptReady", () => {
+      console.log("postscript ready");
+      this.style.display = "block";
 
-    // events
-    this.button.addEventListener("click", this.openPopup.bind(this));
-    this.closeX.addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.hideTeaser(true);
-    });
-
-    // wait for Postscript SDK
-    window.addEventListener("postscriptReady", () => this.bindPopups());
-  }
-
-  /** wires up postscriptPopup listeners */
-  bindPopups() {
-    // already opted-in this session?
-    if (localStorage.getItem("osea.psTeaserClosed")) return;
-
-    window.addEventListener("postscriptPopup", (ev) => {
-      const { type } = ev.detail;
-
-      if (type === "close") this.showTeaser(); // user dismissed
-      if (type === "formSubmit") this.hideTeaser(true); // user opted-in
+      this.button.addEventListener("click", () => {
+        console.log("button clicked");
+        this.openPopup();
+      });
     });
   }
 
-  /** show teaser */
-  showTeaser() {
-    this.style.display = "block";
-  }
-
-  /** hide teaser; persist when permanently closed or submitted */
-  hideTeaser(persist = false) {
-    this.style.display = "none";
-    if (persist) localStorage.setItem("osea.psTeaserClosed", "1");
-  }
-
-  /** open popup when teaser clicked */
-  async openPopup() {
-    const idAttr = this.dataset.popupId;
-    const popupId = idAttr ? idAttr : null;
-
-    if (!popupId) return;
-
-    window.postscript.popups.open(popupId, {
+  openPopup() {
+    console.log("open popup", this.popupId);
+    window.postscript.popups.open(this.popupId, {
       activePopupBehavior: "ALWAYS_DISMISS",
       respectPopupStatus: false,
     });
-
-    this.hideTeaser(); // Hide teaser while popup is open
   }
 }
 customElements.define("postscript-teaser", PostscriptTeaser);
