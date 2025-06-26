@@ -105,7 +105,7 @@
           "settings": {
             "heading": "Benefits",
             "content": "{{ product.metafields.custom.key_benefits | metafield_text }}",
-            "tab_classes": "mt-6 col-span-12 border-b border-seaweed-300",
+            "tab_classes": "mt-6 col-span-12 border-b border-seaweed-300 text-owc-blue",
             "default_open": false
           }
         },
@@ -115,7 +115,7 @@
           "settings": {
             "heading": "Scent profile",
             "content": "{{ product.metafields.custom.scent_profile_short.value }}",
-            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "tab_classes": "col-span-12 border-b border-seaweed-300 text-owc-blue",
             "default_open": false
           }
         },
@@ -125,7 +125,7 @@
           "settings": {
             "heading": "How to use",
             "content": "{{ product.metafields.custom_fields.how_it_works.value }}",
-            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "tab_classes": "col-span-12 border-b border-seaweed-300 text-owc-blue",
             "default_open": false
           }
         },
@@ -145,7 +145,7 @@
           "settings": {
             "heading": "Recycling",
             "content": "",
-            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "tab_classes": "col-span-12 border-b border-seaweed-300 text-owc-blue",
             "default_open": false
           }
         },
@@ -155,7 +155,7 @@
           "settings": {
             "heading": "Related blogs",
             "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
-            "tab_classes": "col-span-12",
+            "tab_classes": "col-span-12 text-owc-blue",
             "default_open": false
           }
         },
