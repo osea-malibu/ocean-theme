@@ -1611,6 +1611,67 @@ class CollectionAnchors extends HTMLElement {
 }
 customElements.define("collection-anchors", CollectionAnchors);
 
+class PostscriptTeaser extends HTMLElement {
+  connectedCallback() {
+    // elements
+    this.button = this.querySelector("button");
+    this.closeX = this.button.querySelector("span");
+
+    // rotate via Tailwind or inline style if you prefer
+    // this.button.classList.add('rotate-90');
+
+    // events
+    this.button.addEventListener("click", this.openPopup.bind(this));
+    this.closeX.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.hideTeaser(true);
+    });
+
+    // wait for Postscript SDK
+    window.addEventListener("postscriptReady", () => this.bindPopups());
+  }
+
+  /** wires up postscriptPopup listeners */
+  bindPopups() {
+    // already opted-in this session?
+    if (localStorage.getItem("osea.psTeaserClosed")) return;
+
+    window.addEventListener("postscriptPopup", (ev) => {
+      const { type } = ev.detail;
+
+      if (type === "close") this.showTeaser(); // user dismissed
+      if (type === "formSubmit") this.hideTeaser(true); // user opted-in
+    });
+  }
+
+  /** show teaser */
+  showTeaser() {
+    this.style.display = "block";
+  }
+
+  /** hide teaser; persist when permanently closed or submitted */
+  hideTeaser(persist = false) {
+    this.style.display = "none";
+    if (persist) localStorage.setItem("osea.psTeaserClosed", "1");
+  }
+
+  /** open popup when teaser clicked */
+  async openPopup() {
+    const idAttr = this.dataset.popupId;
+    const popupId = idAttr ? idAttr : null;
+
+    if (!popupId) return;
+
+    window.postscript.popups.open(popupId, {
+      activePopupBehavior: "ALWAYS_DISMISS",
+      respectPopupStatus: false,
+    });
+
+    this.hideTeaser(); // Hide teaser while popup is open
+  }
+}
+customElements.define("postscript-teaser", PostscriptTeaser);
+
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {
   constructor(el) {
