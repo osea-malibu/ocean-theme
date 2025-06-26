@@ -1,69 +1,73 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 <footer class="bg-seafoam-100">
-  <div class="bg-white relative z-10">
-    <div class="container flex flex-col sm:flex-row gap-12 py-12 bg-white">
-      <div class="flex-1">
-        <img
-          src="{{ section.settings.perks_image | image_url: width: 1200 }}"
-          alt="{{ section.settings.perks_image.alt | escape }}"
-          loading="lazy"
-          class="h-96 w-full object-cover"
-          width="{{ section.settings.perks_image.width }}"
-          height="{{ section.settings.perks_image.height }}"
-        >
-      </div>
-      <div class="flex-1 py-4">
-        {%- assign badge_class = 'text-xs uppercase font-bold rounded bg-neon-green leading-none px-2 py-1 mr-4' -%}
-        {%- capture subscribe_summary -%}
-          <div class="flex justify-between items-center"><span>Subscribe & Save</span><span class="{{ badge_class }}">Get 10% off</span></div>
-        {%- endcapture -%}
-        {%- capture subscribe_content -%}
-          <p>Enjoy 10% off, free shipping on recurring orders, early access to new products, and exclusive access to deluxe samples when you subscribe to your favorite products. Skip, edit or cancel anytime. <a class="link" href="/pages/subscribe">Learn more</a></p>
-        {%- endcapture -%}
-        {%- capture rewards_summary -%}
-          <div class="flex justify-between items-center"><span>Join the Sea Rewards Program</span><span class="{{ badge_class }}">Rewards</span></div>
-        {%- endcapture -%}
-        {%- capture rewards_content -%}
-          <p>Earn points every time you shop, share a review, celebrate your birthday, and more. Members get early access to promotions and product launches, exclusive access to deluxe samples, and special rewards just for being part of our community. <a class="link" href="/pages/sea-rewards">Learn more</a></p>
-        {%- endcapture -%}
-        {%- capture guarantee_summary -%}
-          <div class="flex justify-between items-center"><span>Results You Can Sea®</span><span class="{{ badge_class }}">30-Day Guarantee</span></div>
-        {%- endcapture -%}
-        {%- capture guarantee_content -%}
-          <p>Not in love with your new OSEA favorites? No worries—we’ve got you. If your product isn’t the perfect match, send it back within 30 days of your ship date for a full refund or an OSEA gift card. Shipping costs aren’t refundable. <a class="link" href="/pages/customer-care?tab=2">Learn more</a></p>
-        {%- endcapture -%}
+  {%- assign perks_exclusions = section.settings.perks_exclusions | split: ',' -%}
+  <script>console.log("page handle",{{ page.handle }})</script>
+  {%- unless perks_exclusions contains page.handle -%}
+    <div class="bg-white relative z-10">
+      <div class="container flex flex-col sm:flex-row gap-12 py-12 bg-white">
+        <div class="flex-1">
+          <img
+            src="{{ section.settings.perks_image | image_url: width: 1200 }}"
+            alt="{{ section.settings.perks_image.alt | escape }}"
+            loading="lazy"
+            class="h-96 w-full object-cover"
+            width="{{ section.settings.perks_image.width }}"
+            height="{{ section.settings.perks_image.height }}"
+          >
+        </div>
+        <div class="flex-1 py-4">
+          {%- assign badge_class = 'text-xs uppercase font-bold rounded bg-neon-green leading-none px-2 py-1 mr-4' -%}
+          {%- capture subscribe_summary -%}
+            <div class="flex justify-between items-center"><span>Subscribe & Save</span><span class="{{ badge_class }}">Get 10% off</span></div>
+          {%- endcapture -%}
+          {%- capture subscribe_content -%}
+            <p>Enjoy 10% off, free shipping on recurring orders, early access to new products, and exclusive access to deluxe samples when you subscribe to your favorite products. Skip, edit or cancel anytime. <a class="link" href="/pages/subscribe">Learn more</a></p>
+          {%- endcapture -%}
+          {%- capture rewards_summary -%}
+            <div class="flex justify-between items-center"><span>Join the Sea Rewards Program</span><span class="{{ badge_class }}">Rewards</span></div>
+          {%- endcapture -%}
+          {%- capture rewards_content -%}
+            <p>Earn points every time you shop, share a review, celebrate your birthday, and more. Members get early access to promotions and product launches, exclusive access to deluxe samples, and special rewards just for being part of our community. <a class="link" href="/pages/sea-rewards">Learn more</a></p>
+          {%- endcapture -%}
+          {%- capture guarantee_summary -%}
+            <div class="flex justify-between items-center"><span>Results You Can Sea®</span><span class="{{ badge_class }}">30-Day Guarantee</span></div>
+          {%- endcapture -%}
+          {%- capture guarantee_content -%}
+            <p>Not in love with your new OSEA favorites? No worries—we’ve got you. If your product isn’t the perfect match, send it back within 30 days of your ship date for a full refund or an OSEA gift card. Shipping costs aren’t refundable. <a class="link" href="/pages/customer-care?tab=2">Learn more</a></p>
+          {%- endcapture -%}
 
-        <h2 class="font-serif text-3xl">{{ section.settings.perks_heading }}</h2>
-        <p class="mb-4">{{ section.settings.perks_description }}</p>
+          <h2 class="font-serif text-3xl">{{ section.settings.perks_heading }}</h2>
+          <p class="mb-4">{{ section.settings.perks_description }}</p>
 
-        {% render 'accordion-item',
-          id: 'footer-subscription',
-          summary: subscribe_summary,
-          content: subscribe_content,
-          default_open: true,
-          summary_classes: 'py-4',
-          content_classes: 'pt-0 pb-4',
-          classes: 'border-b border-seaweed-300'
-        %}
-        {% render 'accordion-item',
-          id: 'footer-subscription',
-          summary: rewards_summary,
-          content: rewards_content,
-          summary_classes: 'py-4',
-          content_classes: 'pt-0 pb-4',
-          classes: 'border-b border-seaweed-300'
-        %}
-        {% render 'accordion-item',
-          id: 'footer-subscription',
-          summary: guarantee_summary,
-          content: guarantee_content,
-          summary_classes: 'py-4',
-          content_classes: 'pt-0 pb-4',
-          classes: 'border-b border-seaweed-300'
-        %}
+          {% render 'accordion-item',
+            id: 'footer-subscription',
+            summary: subscribe_summary,
+            content: subscribe_content,
+            default_open: true,
+            summary_classes: 'py-4',
+            content_classes: 'pt-0 pb-4',
+            classes: 'border-b border-seaweed-300'
+          %}
+          {% render 'accordion-item',
+            id: 'footer-subscription',
+            summary: rewards_summary,
+            content: rewards_content,
+            summary_classes: 'py-4',
+            content_classes: 'pt-0 pb-4',
+            classes: 'border-b border-seaweed-300'
+          %}
+          {% render 'accordion-item',
+            id: 'footer-subscription',
+            summary: guarantee_summary,
+            content: guarantee_content,
+            summary_classes: 'py-4',
+            content_classes: 'pt-0 pb-4',
+            classes: 'border-b border-seaweed-300'
+          %}
+        </div>
       </div>
     </div>
-  </div>
+  {%- endunless -%}
 
   {%- unless section.settings.hide_brand_icons -%}
     <div class="relative z-10 bg-seafoam-100 overflow-hidden {% if section.settings.brand_icon_orientation == 'vertical' %}py-6{% else %}py-4 lg:py-6{% endif %}">
@@ -311,7 +315,7 @@
     },
     {
       "type": "textarea",
-      "id": "perks_exculsions",
+      "id": "perks_exclusions",
       "label": "Exclude on pages",
       "info": "Enter page handles separated by commas. Leave blank to show on all pages."
     },
