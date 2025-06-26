@@ -19,13 +19,7 @@
               <span class="text-sm font-book leading-none">Fragrance free</span>
             </li>
           {%- endif -%}
-          {%- liquid
-            assign benefit_limit = 4
-            if is_fragrance_free
-              assign benefit_limit = 3
-            endif
-          -%}
-          {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
+          {%- for benefit in product.metafields.custom.benefits.value -%}
             {%- if block.settings.benefits_hide_icons -%}
               <li class="{{ benefit_tag_classes }}">{{ benefit }}</li>
             {%- else -%}
