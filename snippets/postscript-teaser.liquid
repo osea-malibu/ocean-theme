@@ -1,1 +1,5 @@
-<button>Get 10% off</button>
+{%- if settings.enable_postscript_teaser -%}
+  <button class="{{ settings.postscript_teaser_styles }}">
+    {{- settings.postscript_teaser_text -}}
+  </button>
+{%- endif -%}
