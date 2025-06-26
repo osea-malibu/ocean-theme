@@ -502,7 +502,7 @@
                               {%- endif -%}
                             </span>
                             {%- if block.settings.atc_show_price -%}
-                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
+                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto', slashed_price_color: 'text-seaweed-800 md:text-white' -%}
                             {%- endif -%}
                         </button>
                         {%- unless product.selected_or_first_available_variant.available -%}
