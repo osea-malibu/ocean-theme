@@ -76,33 +76,9 @@
             "upsell_enable_routine": false
           }
         },
-        "ab50b385-6599-4b94-8014-2dd6ab1517d4": {
-          "type": "benefits",
-          "settings": {
-            "benefits_classes": "benefits col-span-4 mt-6",
-            "benefits_hide_icons": true,
-            "benefits_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
-            "benefits_content_classes": "icon-list check icon-list-sm li:mb-2 text-sm font-book text-owc-blue2"
-          }
-        },
-        "9b65c02a-2972-449a-b590-d40d4a256d04": {
-          "type": "skin_types",
-          "settings": {
-            "skin_types_classes": "skin-types col-span-4 mt-6",
-            "skin_types_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
-            "skin_types_content_classes": "text-sm font-book li:mb-2 text-owc-blue2"
-          }
-        },
-        "d08cdbd7-b608-45ad-bfec-e65bb7339509": {
-          "type": "scent_profile",
-          "settings": {
-            "scent_profile_classes": "scent-profile col-span-4 mt-6",
-            "scent_profile_label_classes": "tracking-widest uppercase font-bold text-xs mb-2 text-owc-blue2",
-            "scent_profile_content_classes": "text-sm font-book leading-tight text-owc-blue2"
-          }
-        },
         "2431ba77-22b9-43d0-a67d-f9858b6d8b58": {
           "type": "info_tabs",
+          "disabled": true,
           "settings": {
             "info_tab_wrapper_classes": "col-span-12 mt-4",
             "info_tab_label_classes": "font-bold uppercase text-xs text-owc-blue2",
@@ -123,6 +99,56 @@
             "info_tab_custom_tab_handles": "osea-for-parachute-hydrating-hand-cream, osea-for-parachute-purifying-hand-soap"
           }
         },
+        "collapsible_tab_EKrTCy": {
+          "type": "collapsible_tab",
+          "name": "Benefits",
+          "settings": {
+            "heading": "Benefits",
+            "content": "{{ product.metafields.custom.key_benefits | metafield_text }}",
+            "tab_classes": "mt-6 col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_kATiP3": {
+          "type": "collapsible_tab",
+          "name": "Scent profile",
+          "settings": {
+            "heading": "Scent profile",
+            "content": "{{ product.metafields.custom.scent_profile.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_W9FUni": {
+          "type": "collapsible_tab",
+          "name": "How to use",
+          "settings": {
+            "heading": "How to use",
+            "content": "{{ product.metafields.custom_fields.how_it_works.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_KUcTqh": {
+          "type": "collapsible_tab",
+          "name": "Recycling",
+          "settings": {
+            "heading": "Recycling",
+            "content": "",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_KjhxEF": {
+          "type": "collapsible_tab",
+          "name": "Blogs",
+          "settings": {
+            "heading": "Related blogs",
+            "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
+            "tab_classes": "col-span-12",
+            "default_open": false
+          }
+        },
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6": {
           "type": "set_includes",
           "settings": {
@@ -140,10 +166,12 @@
         "quantity_selector",
         "buy_buttons",
         "f8ca449b-3a83-411f-ac44-40e011b825f3",
-        "ab50b385-6599-4b94-8014-2dd6ab1517d4",
-        "9b65c02a-2972-449a-b590-d40d4a256d04",
-        "d08cdbd7-b608-45ad-bfec-e65bb7339509",
         "2431ba77-22b9-43d0-a67d-f9858b6d8b58",
+        "collapsible_tab_EKrTCy",
+        "collapsible_tab_kATiP3",
+        "collapsible_tab_W9FUni",
+        "collapsible_tab_KUcTqh",
+        "collapsible_tab_KjhxEF",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
       "settings": {
