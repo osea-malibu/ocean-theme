@@ -40,8 +40,8 @@
                       loading="lazy"
                       alt="{{ media.alt | escape }}"
                       width="{{ media.width }}"
-                      height="{{ media.width }}"
-                      class="min-h-full object-cover"
+                      height="{{ media.height }}"
+                      class="min-h-full object-cover md:rounded-md"
                     >
                     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                   {%- elsif media.media_type == 'video' -%}
@@ -58,13 +58,14 @@
                           loading="lazy"
                           width="1280"
                           height="1000"
+                          class="md:rounded-md"
                         >
                         <span class="deferred-media__poster-button bg-white/50 rounded-full flex items-center justify-center h-20 w-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 z-10 motion-safe:transition-transform hover:scale-110">
                           {%- render 'icon-play', classes: 'w-8 h-8 text-white -mr-1 ml-1' -%}
                         </span>
                       </button>
                       <template>
-                        <video class="h-full w-full object-cover" playsinline autoplay muted loop controls poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}">
+                        <video class="h-full w-full object-cover md:rounded-md" playsinline autoplay muted loop controls poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}">
                           {%- for source in media.sources -%}
                             {%- comment -%} theme-check-disable RemoteAsset {%- endcomment -%}
                             <source src="{{ source.url }}" type="video/{{ source.format }}" />
@@ -85,30 +86,14 @@
               {%- endfor -%}
             </ul>
           </div>
-          {% comment %} <div class="glide__arrows" data-glide-el="controls">
-            <button
-              class="glide__arrow glide__arrow--left right-12 left-auto -bottom-4 p-4"
-              aria-label="Go to previous"
-              data-glide-dir="<"
-            >
-              {% render 'icon-arrow', variant: 'long', aria_hidden: true, stroke_width: 2, classes: 'h-6 w-6 text-owc-blue2 block relative right-px rotate-180' %}
-            </button>
-            <button
-              class="glide__arrow glide__arrow--right right-0 -bottom-4 p-4"
-              aria-label="Go to next"
-              data-glide-dir=">"
-            >
-              {% render 'icon-arrow', variant: 'long', aria_hidden: true, stroke_width: 2, classes: 'h-6 w-6 text-owc-blue2 block relative left-px' %}
-            </button>
-          </div> {% endcomment %}
-          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[846px] lg:overflow-y-auto" data-glide-el="controls[nav]">
-            {%- for media in slider_images limit: section.settings.gallery_limit -%}
+          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[596px] xl:h-[760px] lg:overflow-y-auto" data-glide-el="controls[nav]">
+            {%- for media in slider_images limit: gallery_limit -%}
               <button class="glide__bullet relative {% if media.media_type == 'image' %}p-2{% else %}py-2 px-3{% endif %} md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
                 <span class="sr-only">Go to slide {{ forloop.index }}</span>
                 {%- if media.media_type == 'image' -%}
-                  <span class="block w-2 h-2 bg-owc-yellow rounded-full md:hidden"></span>
+                  <span class="glide__bullet-icon block w-2 h-2 bg-owc-yellow rounded-full md:hidden"></span>
                 {%- elsif media.media_type == 'video' -%}
-                  <div class="absolute z-10 w-5 h-5 md:w-8 md:h-8 rounded-full text-owc-yellow bg-transparent md:bg-white/50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <div class="glide__bullet-icon absolute z-10 w-5 h-5 md:w-8 md:h-8 rounded-full text-owc-yellow bg-transparent md:bg-white/50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     {%- render 'icon-play', classes: 'absolute inset-0 scale-75 md:text-white md:ml-0.5' -%}
                   </div>
                 {%- endif -%}
@@ -125,7 +110,7 @@
                   alt="{{ media.alt | escape }}"
                   width="{{ media.width }}"
                   height="{{ media.width | divided_by: media.aspect_ratio | round }}"
-                  class="hidden md:block w-24 md:h-20 lg:h-32 object-cover"
+                  class="hidden md:block w-24 md:h-20 lg:h-32 object-cover rounded"
                 >
                 {% comment %} theme-check-enable RemoteAsset {% endcomment %}
               </button>
@@ -158,14 +143,9 @@
         {%- liquid
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
-          assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+          assign mini_size_array = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+          assign jumbo_size_array = '9.6 oz, 9.2 oz' | split: ', '
           assign set_products = collections['skincare-sets'].products | map: 'handle'
-          assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
-
-          assign is_fragrance_free = false
-          if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'
-            assign is_fragrance_free = true
-          endif
 
           assign product_collections_handles = product.collections | map: 'handle'
           if product_collections_handles contains 'exclude-from-site'
@@ -212,100 +192,10 @@
                   <strong class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</strong>
                 </div>
               {%- endif -%}
-            {%- when 'benefits' -%}
-              {%- if product.metafields.custom.benefits.value.size > 0 -%}
-                <div class="{{ block.settings.benefits_classes }}">
-                  <h2 class="{{ block.settings.benefits_label_classes }}">Benefits</h2>
-                  <ul class="{{ block.settings.benefits_content_classes }}">
-                    {%- if is_fragrance_free -%}
-                      {%- if block.settings.benefits_hide_icons -%}
-                        <li>Fragrance free</li>
-                      {%- else -%}
-                        <li class="w-24 flex flex-start">
-                          <div class="flex flex-col items-center">
-                            {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                            <span class="text-sm font-book leading-none">Fragrance free</span>
-                          </div>
-                        </li>
-                      {%- endif -%}
-                    {%- endif -%}
-                    {%- liquid
-                      assign benefit_limit = 4
-                      if is_fragrance_free
-                        assign benefit_limit = 3
-                      endif
-                    -%}
-                    {%- for benefit in product.metafields.custom.benefits.value limit: benefit_limit -%}
-                      {%- if block.settings.benefits_hide_icons -%}
-                        <li>{{ benefit }}</li>
-                      {%- else -%}
-                        {%- assign benefit_icon = benefit | handle -%}
-                        <li class="flex">
-                          <div class="flex flex-row items-center">
-                            {%- render 'icon-benefit-mini', icon: benefit_icon, stroke_width: 10, classes: 'w-4 h-4 block mr-2', aria_hidden: true -%}
-                            <span class="text-sm font-book leading-none{% unless benefit.size > 12 %} tracking-wide{% endunless %}">
-                              {{ benefit }}
-                            </span>
-                          </div>
-                        </li>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </ul>
-                </div>
-              {%- endif -%}
-            {%- when 'skin_types' -%}
-              {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
-                <div class="{{ block.settings.skin_types_classes }}{% if product.metafields.custom.scent_profile == blank and product.metafields.custom.scent_profile_short == blank %} -mr-4{% endif %}">
-                  <h2 class="{{ block.settings.skin_types_label_classes }}">Skin types</h2>
-                  {%- if product.metafields.custom.skin_types_list != blank -%}
-                    <ul class="{% if product.metafields.custom.skin_types_list.value.size > 1 %}icon-list bullet !pl-5{% endif %}{% if product.options contains 'Scent' %} scent-scented{% if product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endif %}{% endif %} {{ block.settings.skin_types_content_classes }}">
-                      {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
-                        {%- if skin_type == 'Not for sensitive' -%}
-                          <li class="flex items-start before:!hidden">
-                            {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5 shrink-0', stroke_width: 2 %}
-                            <span>{{ skin_type }}</span>
-                          </li>
-                        {%- else -%}
-                          <li>{{ skin_type }}</li>
-                        {%- endif -%}
-                      {%- endfor -%}
-                    </ul>
-                    {%- if product.options contains 'Scent' -%}
-                      <ul class="icon-list bullet !pl-5 scent-fragrance-free{% unless product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endunless %} {{ block.settings.skin_types_content_classes }}">
-                        <li>All Skin Types</li>
-                      </ul>
-                    {%- endif -%}
-                  {%- elsif product.metafields.custom_fields.skin_types != blank -%}
-                    <p class="{{ block.settings.skin_types_content_classes }}">{{ product.metafields.custom_fields.skin_types }}</p>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-            {%- when 'scent_profile' -%}
-              {%- if product.metafields.custom.scent_profile != blank or product.metafields.custom.scent_profile_short != blank -%}
-                <div class="{{ block.settings.scent_profile_classes }}">
-                  <h2 class="{{ block.settings.scent_profile_label_classes }}">Scent profile</h2>
-                  {%- if product.metafields.custom.scent_profile_short -%}
-                    <div class="{{ block.settings.scent_profile_content_classes }}">{{ product.metafields.custom.scent_profile_short }}</div>
-                  {%- else -%}
-                    <div class="{{ block.settings.scent_profile_content_classes }}">{{ product.metafields.custom.scent_profile }}</div>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
             {%- when 'info_tabs' -%}
               {% render 'product-info-tabs', product: product, block: block %}
             {%- when 'collapsible_tab' -%}
-              {%- if block.settings.content != blank -%}
-                <div class="{{ block.settings.tab_classes }}">
-                  {%- assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
-                  {%- render 'accordion-item',
-                    id: tab_id,
-                    summary: block.settings.heading,
-                    content: block.settings.content,
-                    default_open: block.settings.default_open
-                    content_classes: 'max-h-80 overflow-y-auto a:link b:font-bold p:mb-4'
-                  -%}
-                </div>
-              {%- endif -%}
+              {% render 'product-collapsible-tab', product: product, block: block %}
             {%- when 'quantity_selector' -%}
               {%- unless excluded_from_site -%}
                 <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
@@ -342,100 +232,101 @@
                 </div>
               {%- endunless -%}
             {%- when 'variant_picker' -%}
-              <div class="{{ block.settings.variant_classes }}">
-                {%- unless product.has_only_default_variant -%}
-                  {%- if product.variants.size == 1 -%}
-                    {%- for option in product.options_with_values -%}
-                      <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
-                      {%- for value in option.values -%}
-                        <div class="button button-xs button-secondary rounded-full lowercase bg-white mr-2 mb-2">
-                          {{ value }}
-                        </div>
-                      {%- endfor -%}
-                    {%- endfor -%}
-                  {%- else -%}
-                    <variant-radios
-                      class="no-js-hidden block"
-                      data-section="{{ section.id }}"
-                      data-url="{{ product.url }}"
-                      data-is-main-pdp="true"
-                    >
+              {%- unless set_products contains product.handle -%}
+                <div class="{{ block.settings.variant_classes }}">
+                  {%- unless product.has_only_default_variant -%}
+                    {%- if product.variants.size == 1 -%}
                       {%- for option in product.options_with_values -%}
-                        <fieldset class="js group">
-                          <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
-                            <legend class="font-medium tracking-wide text-sm mr-1.5{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">{{ option.name }}:</legend>
-                            {%- for value in option.values -%}
-                              <div>
-                                {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
-                                <input type="radio"
-                                  id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                  class="peer hidden{% if travel_sizes contains normalized_option_value %} travel-input{% endif %}"
-                                  name="{{ option.name }}"
-                                  value="{{ value | escape }}"
-                                  form="{{ product_form_id }}"
-                                  {% if option.selected_value == value %}checked{% endif %}
-                                >
-                                <label
-                                  class="button button-xs bg-white border-owc-blue2 rounded-full peer-checked:bg-owc-blue3 peer-checked:border-owc-blue peer-checked:outline peer-checked:outline-owc-yellow outline-offset-2 mr-2 mb-1 peer-disabled:opacity-50 tracking-wide {% if option.name == 'Scent' %}normal-case{% else %}lowercase{% endif %}"
-                                  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                >
-                                  {{ value }}
-                                </label>
-                              </div>
-                            {%- endfor -%}
+                        <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
+                        {%- for value in option.values -%}
+                          <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
+                            {{ value }}
                           </div>
-                        </fieldset>
-                      {%- endfor -%}
-                      <script type="application/json" class="variant-data">
-                        {{ product.variants | json }}
-                      </script>
-                    </variant-radios>
-                  {%- endif -%}
-                {%- endunless -%}
-
-                <noscript class="product-form__noscript-wrapper-{{ section.id }}">
-                  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
-                    <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
-                    <div class="select">
-                      <select name="id" id="Variants-{{ section.id }}" form="{{ product_form_id }}">
-                        {%- for variant in product.variants -%}
-                          <option
-                            {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-                            {% if variant.available == false %}disabled{% endif %}
-                            value="{{ variant.id }}"
-                          >
-                            {{ variant.title }}
-                            {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
-                            - {{ variant.price | money | strip_html }}
-                          </option>
                         {%- endfor -%}
-                      </select>
-                      {% render 'icon-caret', classes: 'w-4 h-4' %}
+                      {%- endfor -%}
+                    {%- else -%}
+                      <variant-radios
+                        class="no-js-hidden block"
+                        data-section="{{ section.id }}"
+                        data-url="{{ product.url }}"
+                        data-is-main-pdp="true"
+                      >
+                        {%- for option in product.options_with_values -%}
+                          <fieldset class="js group">
+                            <legend class="font-medium text-sm mb-1{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">Select {{ option.name | downcase }}:</legend>
+                            <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
+                              {%- for value in option.values -%}
+                                {%- liquid
+                                  assign mini_variant = false
+                                  assign jumbo_variant = false
+                                  assign normalized_value = value | replace: 'fl ', ''
+
+                                  if mini_size_array contains normalized_value
+                                    assign mini_variant = true
+                                  elsif jumbo_size_array contains normalized_value
+                                    assign jumbo_variant = true
+                                  endif
+                                -%}
+                                <div>
+                                  {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
+                                  <input type="radio"
+                                    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                    class="peer hidden{% if mini_size_array contains normalized_option_value %} travel-input{% endif %}"
+                                    name="{{ option.name }}"
+                                    value="{{ value | escape }}"
+                                    form="{{ product_form_id }}"
+                                    {% if option.selected_value == value %}checked{% endif %}
+                                  >
+                                  <label
+                                    class="flex-col gap-0.5 px-4 {% if option.name == 'Size' %}py-1{% else %}py-2.5{% endif %} button button-xs border-owc-blue bg-white rounded-full peer-checked:bg-owc-blue3 peer-checked:outline peer-checked:outline-owc-yellow outline-offset-2 mr-2 mb-1 peer-disabled:opacity-50"
+                                    for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                  >
+                                    {%- if option.name == 'Size' -%}
+                                      {%- if mini_variant -%}
+                                        <b class="tracking-normal leading-none capitalize">Mini</b>
+                                      {%- elsif jumbo_variant -%}
+                                        <b class="tracking-normal leading-none capitalize">Jumbo</b>
+                                      {%- else -%}
+                                        <b class="tracking-normal leading-none capitalize">Standard</b>
+                                      {%- endif -%}
+                                    {%- endif -%}
+                                    <span class="leading-none {% if option.name == 'Scent' %}normal-case tracking-normal{% else %}lowercase tracking-wide{% endif %}">{{ value }}</span>
+                                  </label>
+                                </div>
+                              {%- endfor -%}
+                            </div>
+                          </fieldset>
+                        {%- endfor -%}
+                        <script type="application/json" class="variant-data">
+                          {{ product.variants | json }}
+                        </script>
+                      </variant-radios>
+                    {%- endif -%}
+                  {%- endunless -%}
+
+                  <noscript class="product-form__noscript-wrapper-{{ section.id }}">
+                    <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+                      <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+                      <div class="select">
+                        <select name="id" id="Variants-{{ section.id }}" form="{{ product_form_id }}">
+                          {%- for variant in product.variants -%}
+                            <option
+                              {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                              {% if variant.available == false %}disabled{% endif %}
+                              value="{{ variant.id }}"
+                            >
+                              {{ variant.title }}
+                              {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                              - {{ variant.price | money | strip_html }}
+                            </option>
+                          {%- endfor -%}
+                        </select>
+                        {% render 'icon-caret', classes: 'w-4 h-4' %}
+                      </div>
                     </div>
-                  </div>
-                </noscript>
-              </div>
-              {% if product.type contains 'Gift Card' %}
-                <!-- ShopKeeper Gift Card -->
-                <gift-card-fields class="col-span-12">
-                  <div id="skt-fields">
-                    <div>
-                      <label for="gc_to" class="text-sm font-medium">To Name:</label>
-                      <input id="gc_to" type="text" value="" class="input w-full mb-2" />
-                    </div>
-                    <div>
-                      <label for="gc_from" class="text-sm font-medium">From Name:</label>
-                      <input id="gc_from" type="text" value="" class="input w-full mb-2" />
-                    </div>
-                    <div class="mb-2">
-                      <label for="gc_msg" class="text-sm font-medium">Message:</label>
-                      <textarea id="gc_msg" class="input w-full block" maxlength="400"></textarea>
-                      <small class="text-right block">Max characters: 400</small>
-                    </div>
-                  </div>
-                </gift-card-fields>
-                <!-- End ShopKeeper -->
-              {% endif %}
+                  </noscript>
+                </div>
+              {%- endunless -%}
             {%- when 'subscription_picker' -%}
               {%- liquid
                 assign subscription_group = null
@@ -599,13 +490,17 @@
                           <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
                         {%- endunless -%}
                       </div>
-                      {%- assign product_collection_handles = product.collections | map: 'handle' -%}
-                      {%- if product_collection_handles contains 'skincare-sets' -%}
-                        <div id="PayInstallments" class="mb-10 sm:mb-8 transition-opacity">
-                          <div class="absolute inset-x-0 leading-tight py-2 text-sm">
-                            {{ form | payment_terms }}
+                      {%- if product.selected_or_first_available_variant.available -%}
+                        {%- if product.metafields.custom.limited_availability_badge or product.selected_or_first_available_variant.inventory_quantity <= settings.low_stock_threshold -%}
+                          <div class="text-coral-800 font-bold tracking-wide my-1 text-center">Limited stock available!</div>
+                        {%- else -%}
+                          <div class="my-1 text-sm font-book text-owc-blue">
+                            <ul>
+                            <li>+ 30 Day Money Back Guarantee</li>
+                            <li>+ Free Shipping{% if settings.shipping_countdown_threshold > 0 %} on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+{% endif %}</li>
+                            </ul>
                           </div>
-                        </div>
+                        {%- endif -%}
                       {%- endif -%}
                     {%- endform -%}
                     <div class="product-form__error-message-wrapper absolute left-0 mt-1 text-coral-800 text-sm" role="alert" hidden>
@@ -633,7 +528,7 @@
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
                 <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
                   {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
-                    <div class="upsell-sets mt-4">
+                    <div class="upsell-sets">
                       <h2 class="font-medium tracking-wide mb-1 text-owc-blue">Save with Sets</h2>
                       {%- for set in product.metafields.my_fields.save_with_sets.value -%}
                         {%- render 'product-upsell', product: set, classes: 'border-owc-blue2 text-owc-blue', button_classes: 'bg-owc-blue3 text-owc-blue' -%}

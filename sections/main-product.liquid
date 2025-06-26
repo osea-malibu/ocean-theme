@@ -195,7 +195,7 @@
             {%- when 'info_tabs' -%}
               {% render 'product-info-tabs', product: product, block: block %}
             {%- when 'collapsible_tab' -%}
-              {%  render 'product-collapsible-tab', product: product, block: block %}
+              {% render 'product-collapsible-tab', product: product, block: block %}
             {%- when 'quantity_selector' -%}
               {%- unless excluded_from_site -%}
                 <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
