@@ -721,9 +721,8 @@
 
   /* Gorgias chat widget */
   #chat-button[class*="gorgias-chat-key"] {
-    bottom: calc(var(--sticky-atc-bar-height + 8px, 0px)) !important;
+    bottom: var(--sticky-atc-bar-height) !important;
     transition: bottom 0.2s;
-    z-index: 519;
   }
 
   /* Loop Bundles */
