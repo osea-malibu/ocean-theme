@@ -88,6 +88,37 @@
       {%- endif -%}
     {%- endcapture -%}
     {%- assign content = how_to_html -%}
+  {%- when 'Skin types' -%}
+    {%- capture skin_types_html -%}
+      {%- if product.metafields.custom.skin_types_list != blank or product.metafields.custom_fields.skin_types != blank -%}
+        <div class="{% if product.metafields.custom.scent_profile == blank and product.metafields.custom.scent_profile_short == blank %} -mr-4{% endif %}">
+          {%- if product.metafields.custom.skin_types_list != blank -%}
+            <ul class="mb-4 {% if product.metafields.custom.skin_types_list.value.size > 1 %}icon-list bullet !pl-5{% endif %}{% if product.options contains 'Scent' %} scent-scented{% if product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endif %}{% endif %}">
+              {%- for skin_type in product.metafields.custom.skin_types_list.value -%}
+                {%- if skin_type == 'Not for sensitive' -%}
+                  <li class="flex items-start before:!hidden">
+                    {% render 'icon-close', classes: 'w-4 h-4 mr-1 -ml-5 shrink-0', stroke_width: 2 %}
+                    <span>{{ skin_type }}</span>
+                  </li>
+                {%- else -%}
+                  <li>{{ skin_type }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+            {%- if product.options contains 'Scent' -%}
+              <ul class="icon-list bullet !pl-5 scent-fragrance-free{% unless product.selected_or_first_available_variant.options contains 'Fragrance free' %} hidden{% endunless %} {{ block.settings.skin_types_content_classes }}">
+                <li>All Skin Types</li>
+              </ul>
+            {%- endif -%}
+          {%- elsif product.metafields.custom_fields.skin_types != blank -%}
+            <p class="mb-4">{{ product.metafields.custom_fields.skin_types }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if skin_types_html != blank -%}
+      {%- assign content = skin_types_html -%}
+    {%- endif -%}
   {%- when 'Recycling' -%}
     {%- capture recycling_html -%}
       <div class="recycling mb-4">
