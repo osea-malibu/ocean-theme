@@ -718,5 +718,26 @@
         "label": "Global PLP Tile: URL"
       }
     ]
+  },
+  {
+    "name": "Postscript teaser",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_postscript_teaser",
+        "label": "Enable Postscript Tease"
+      },
+      {
+        "type": "text",
+        "id": "postscript_teaser_text",
+        "label": "Button text"
+      },
+      {
+        "type": "textarea",
+        "id": "postscript_teaser_styles",
+        "label": "Styles",
+        "info": "Tailwind classes to apply to the teaser button."
+      }
+    ]
   }
 ]
