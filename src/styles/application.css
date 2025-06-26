@@ -719,6 +719,13 @@
     @apply button button-neon button-sm h-11 block whitespace-normal leading-tight w-full;
   }
 
+  /* Gorgias chat widget */
+  #chat-button[class*="gorgias-chat-key"] {
+    bottom: calc(var(--sticky-atc-bar-height + 8px, 0px)) !important;
+    transition: bottom 0.2s;
+    z-index: 519;
+  }
+
   /* Loop Bundles */
   [id^="CartBundleItem"] {
     @apply w-full flex my-6;

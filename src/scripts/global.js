@@ -1224,9 +1224,14 @@ class ProductStickyAtc extends HTMLElement {
 
   connectedCallback() {
     this.atcObserver = new IntersectionObserver((entries) => {
+      const root = document.documentElement;
+
       if (entries[0].intersectionRatio <= 0) {
+        const height = this.offsetHeight;
+        root.style.setProperty("--sticky-atc-height", `${height}px`);
         this.classList.remove("invisible", "opacity-0");
       } else {
+        root.style.setProperty("--sticky-atc-height", "0px");
         this.classList.add("invisible", "opacity-0");
       }
     });

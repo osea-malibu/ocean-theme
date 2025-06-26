@@ -612,7 +612,7 @@
     </div>
   </div>
   {%- if excluded_from_site == false and product.type != 'Gift Card' and product.type != 'Subscription Gift' -%}
-    <product-sticky-atc class="fixed z-40 inset-x-0 bottom-0 py-2.5 bg-white border-t border-seaweed-300 invisible opacity-0 transition-visibility">
+    <product-sticky-atc class="fixed z-40 inset-x-0 bottom-0 py-2.5 bg-white invisible opacity-0 motion-safe:transition-visibility" style="box-shadow: 0 0 5px rgba(11, 46, 37, 0.15);">
       <div class="flex gap-2 justify-between items-center pl-4 sm:pl-6 pr-20 md:pr-24 xl:max-w-screen-xl xl:mx-auto min-[1400px]:pr-6">
         <h3 class="tracking-wide leading-none text-lg sr-only sm:!not-sr-only">{{- product.title | escape -}}</h3>
         <div class="relative w-full sm:w-96">
