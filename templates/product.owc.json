@@ -145,16 +145,6 @@
           "settings": {
             "heading": "Recycling",
             "content": "",
-            "tab_classes": "col-span-12 border-b border-seaweed-300 text-owc-blue",
-            "default_open": false
-          }
-        },
-        "collapsible_tab_KjhxEF": {
-          "type": "collapsible_tab",
-          "name": "Blogs",
-          "settings": {
-            "heading": "Related blogs",
-            "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
             "tab_classes": "col-span-12 text-owc-blue",
             "default_open": false
           }
@@ -182,11 +172,10 @@
         "collapsible_tab_W9FUni",
         "collapsible_tab_D8nXb3",
         "collapsible_tab_KUcTqh",
-        "collapsible_tab_KjhxEF",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
       "custom_css": [
-        ".bg-sand-300 {background-color: #e9f3fc; color: #1C39BB;}"
+        ".bg-sand-300 {background-color: #e9f3fc; color: #1c39bb;}"
       ],
       "settings": {
         "product_info_classes": "grid grid-cols-12 mb-8 relative gap-x-2",
