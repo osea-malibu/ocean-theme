@@ -720,7 +720,8 @@
   }
 
   /* Gorgias chat widget */
-  #chat-button[class*="gorgias-chat-key"] {
+  #chat-button[class*="gorgias-chat-key"],
+  #chat-input[class*="gorgias-chat-key"] {
     bottom: var(--sticky-atc-height) !important;
     transition: bottom 0.2s;
   }
