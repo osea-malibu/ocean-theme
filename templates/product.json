@@ -117,16 +117,6 @@
             "default_open": false
           }
         },
-        "collapsible_tab_QBCMfF": {
-          "type": "collapsible_tab",
-          "name": "Recycling",
-          "settings": {
-            "heading": "Recycling",
-            "content": "",
-            "tab_classes": "col-span-12 border-b border-seaweed-300",
-            "default_open": false
-          }
-        },
         "collapsible_tab_q8BQDB": {
           "type": "collapsible_tab",
           "name": "Care",
@@ -137,37 +127,25 @@
             "default_open": false
           }
         },
+        "collapsible_tab_QBCMfF": {
+          "type": "collapsible_tab",
+          "name": "Recycling",
+          "settings": {
+            "heading": "Recycling",
+            "content": "",
+            "tab_classes": "col-span-12",
+            "default_open": false
+          }
+        },
         "collapsible_tab_h7h39z": {
           "type": "collapsible_tab",
           "name": "Blogs",
+          "disabled": true,
           "settings": {
             "heading": "Related blogs",
             "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
             "tab_classes": "col-span-12",
             "default_open": false
-          }
-        },
-        "2431ba77-22b9-43d0-a67d-f9858b6d8b58": {
-          "type": "info_tabs",
-          "disabled": true,
-          "settings": {
-            "info_tab_wrapper_classes": "col-span-12 mt-4",
-            "info_tab_label_classes": "font-bold uppercase text-xs",
-            "info_tab_content_classes": "",
-            "enable_info_tab_description": true,
-            "info_tab_description_label": "Description",
-            "enable_info_tab_howto": true,
-            "info_tab_howto_label": "How To Use",
-            "enable_info_tab_sustainability": true,
-            "info_tab_sustainability_label": "Recycling",
-            "enable_info_tab_care": true,
-            "info_tab_care_label": "Care",
-            "enable_info_tab_articles": true,
-            "info_tab_articles_label": "Learn",
-            "enable_info_tab_custom": true,
-            "info_tab_custom_tab_label": "Ingredients",
-            "info_tab_custom_tab_content": "{{ product.metafields.custom_fields.ingredients.value }}",
-            "info_tab_custom_tab_handles": "osea-for-parachute-hydrating-hand-cream, osea-for-parachute-purifying-hand-soap"
           }
         },
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6": {
@@ -191,10 +169,9 @@
         "collapsible_tab_7MxGMU",
         "collapsible_tab_MQbqTH",
         "collapsible_tab_xFbwdC",
-        "collapsible_tab_QBCMfF",
         "collapsible_tab_q8BQDB",
+        "collapsible_tab_QBCMfF",
         "collapsible_tab_h7h39z",
-        "2431ba77-22b9-43d0-a67d-f9858b6d8b58",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
       "settings": {
