@@ -176,9 +176,9 @@
       ],
       "custom_css": [
         ".bg-sand-300 {background-color: #e9f3fc; color: #1c39bb;}",
-        ".upsell-partner > div {border-color: #0A30DF;}",
-        ".upsell-partner a {color: #1C39BB;}",
-        ".upsell-partner button {color: #1C39BB; background-color: #E9F3FC;}"
+        ".upsell-partner > div {border-color: #0a30df;}",
+        ".upsell-partner a {color: #1c39bb;}",
+        ".upsell-partner button {color: #1c39bb; background-color: #e9f3fc;}"
       ],
       "settings": {
         "product_info_classes": "grid grid-cols-12 mb-8 relative gap-x-2",
@@ -473,9 +473,12 @@
       "block_order": [
         "key_ingredient_dBBbXd"
       ],
+      "custom_css": [
+        ".product-ingredients-images em,.product-ingredients-images b,.product-ingredients-images p {color: #0A30DF;}"
+      ],
       "name": "Ingredients with Images",
       "settings": {
-        "header": "<b class=\"font-medium\">Cleanse</b> <em class=\"font-serif\">With Benefits</em>",
+        "header": "Cleanse With Benefits",
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
