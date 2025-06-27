@@ -179,7 +179,7 @@
         ".upsell-partner > div {border-color: #0a30df;}",
         ".upsell-partner a {color: #1c39bb;}",
         ".upsell-partner button {color: #1c39bb; background-color: #e9f3fc;}",
-        ".accordion svg.text-seaweed-500 {color: #0A30DF;}"
+        ".accordion svg.text-seaweed-500 {color: #0a30df;}"
       ],
       "settings": {
         "product_info_classes": "grid grid-cols-12 mb-8 relative gap-x-2",
@@ -197,6 +197,9 @@
     },
     "video": {
       "type": "product-video",
+      "custom_css": [
+        ".pdp-ocean-wave-cleanser .product-video deferred-media {border-radius: 0.5rem; border: 1px solid #0A30DF; overflow: hidden;}"
+      ],
       "settings": {
         "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
         "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-12"
