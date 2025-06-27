@@ -195,7 +195,7 @@
             {%- when 'info_tabs' -%}
               {% render 'product-info-tabs', product: product, block: block %}
             {%- when 'collapsible_tab' -%}
-              {% render 'product-collapsible-tab', product: product, block: block %}
+              {% render 'product-collapsible-tab', product: product, block: block, mini_size_array: mini_size_array %}
             {%- when 'quantity_selector' -%}
               {%- unless excluded_from_site -%}
                 <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
@@ -250,6 +250,7 @@
                         data-section="{{ section.id }}"
                         data-url="{{ product.url }}"
                         data-is-main-pdp="true"
+                        data-mini-sizes="{{ mini_size_array | join: ',' }}"
                       >
                         {%- for option in product.options_with_values -%}
                           <fieldset class="js group">

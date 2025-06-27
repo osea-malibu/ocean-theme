@@ -1014,6 +1014,14 @@ class VariantSelects extends HTMLElement {
           });
         }
       }
+
+      const miniSizeArray = this.dataset.miniSizes.split(",");
+      const normalizedVariantTitle = this.currentVariant.title.replace("fl oz", "oz");
+      const isMiniSize = miniSizeArray.includes(normalizedVariantTitle);
+      const miniInfo = document.querySelectorAll(".size-mini");
+      miniInfo.forEach((i) => {
+        i.classList.toggle("hidden", !isMiniSize);
+      });
     }
   }
 

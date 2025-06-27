@@ -1,7 +1,6 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 <footer class="bg-seafoam-100">
   {%- assign perks_exclusions = section.settings.perks_exclusions | split: ',' -%}
-  <script>console.log("page handle",{{ page.handle }})</script>
   {%- unless perks_exclusions contains page.handle -%}
     <div class="bg-white relative z-10">
       <div class="container flex flex-col sm:flex-row gap-12 py-12 bg-white">
