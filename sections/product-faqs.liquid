@@ -1,25 +1,71 @@
-{%- if product.metafields.custom.faq != nil -%}
+{%- if product.metafields.custom.faq != nil or product.metafields.custom.related_articles != nil -%}
+  {%- liquid
+    assign is_split_view = false
+    if product.metafields.custom.faq != nil and product.metafields.custom.related_articles != nil
+      assign is_split_view = true
+    endif
+  -%}
   <div class="anchor" id="ProductFaqs"></div>
   <div class="mb-12 container">
-    <div class="{% if product.metafields.custom.product_color_light != blank %}{{ product.metafields.custom.product_color_light }}{% else %}bg-wave-200{% endif %} w-full p-4 sm:p-6">
-      <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
-      <div class="mb-4">
-        {%- for faq in product.metafields.custom.faq.value -%}
-          <div class="relative overflow-hidden{% unless forloop.last %} border-b border-seaweed-400{% endunless %}">
-            <input type="checkbox" name="panel" id="faq_panel-{{ forloop.index }}" class="hidden peer">
-            <label for="faq_panel-{{ forloop.index }}" class="relative block py-2 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-4 after:w-4 before:h-0.5 after:h-0.5 before:rounded-full after:rounded-full before:bg-seaweed-500 after:bg-seaweed-500 before:scale-75 after:scale-75 before:my-0.5 after:my-0.5 before:top-4 after:top-4 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform after:motion-safe:duration-200">
-              <b class="font-medium pr-5 block leading-tight">{{ faq.question }}</b>
-            </label>
-            <div class="max-h-0 peer-checked:max-h-80 motion-safe:transition-max-height motion-safe:duration-500">
-              <div class="pb-5 leading-tight">
-                {%- if faq.answer != blank -%}
-                  <p>{{ faq.answer }}</p>
-                {%- endif -%}
+    <div class="flex flex-col sm:flex-row gap-6 md:gap-4 lg:gap-8 xl:gap-12 p-4 sm:p-6 {% if product.metafields.custom.product_color_light != blank %}{{ product.metafields.custom.product_color_light }}{% else %}bg-wave-200{% endif %}">
+      {%- if product.metafields.custom.faq != nil -%}
+        <div class="w-full{% if is_split_view %} md:w-1/2{% endif %}">
+          <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
+          <div class="mb-4">
+            {%- for faq in product.metafields.custom.faq.value -%}
+              <div class="relative overflow-hidden{% unless forloop.last %} border-b border-seaweed-400{% endunless %}">
+                <input type="checkbox" name="panel" id="faq_panel-{{ forloop.index }}" class="hidden peer">
+                <label for="faq_panel-{{ forloop.index }}" class="relative block py-2 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-4 after:w-4 before:h-0.5 after:h-0.5 before:rounded-full after:rounded-full before:bg-seaweed-500 after:bg-seaweed-500 before:scale-75 after:scale-75 before:my-0.5 after:my-0.5 before:top-4 after:top-4 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform after:motion-safe:duration-200">
+                  <b class="font-medium pr-5 block leading-tight">{{ faq.question }}</b>
+                </label>
+                <div class="max-h-0 peer-checked:max-h-80 motion-safe:transition-max-height motion-safe:duration-500">
+                  <div class="pb-5 leading-tight">
+                    {%- if faq.answer != blank -%}
+                      <p>{{ faq.answer }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
               </div>
-            </div>
+            {%- endfor -%}
           </div>
-        {%- endfor -%}
-      </div>
+        </div>
+      {%- endif -%}
+      {%- if product.metafields.custom.related_articles != nil -%}
+        <div class="articles w-full{% if is_split_view %} md:w-1/2{% endif %}">
+          <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">Related blogs</h3>
+          {%- liquid
+            if is_split_view
+              assign list_wrapper_classes = 'flex flex-wrap gap-2 lg:gap-3'
+              assign text_wrapper_classes = 'w-2/3 min-h-[6rem]'
+              assign text_size = 'text-sm sm:text-xs lg:text-sm leading-tight sm:leading-none lg:leading-tight'
+            else
+              assign list_wrapper_classes = 'flex flex-wrap gap-4 sm:gap-2 lg:gap-4 xl:gap-6'
+              assign text_wrapper_classes = 'w-2/3 min-h-[7rem]'
+              assign text_size = 'text-sm lg:text-base leading-tight lg:leading-tight mb-1'
+            endif
+          -%}
+          <div class="{{ list_wrapper_classes }}">
+            {%- for article_handle in product.metafields.custom.related_articles.value -%}
+              {%- render 'article-card',
+                article: articles[article_handle],
+                unique_id: '-pdp_featured',
+                show_image: true,
+                card_classes: 'flex flex-row w-full gap-2 max-w-xl',
+                image_classes: 'rounded block h-full object-cover absolute inset-0',
+                title_classes: 'font-medium mb-1 {{ text_size }}',
+                tag_classes: 'sr-only',
+                date_classes: 'sr-only',
+                author_classes: 'sr-only',
+                excerpt_classes: text_size,
+                link_classes: 'link font-bold uppercase tracking-widest text-xs',
+                text_wrapper_classes: text_wrapper_classes,
+                image_wrapper_classes: 'w-1/3 h-full relative',
+                exceprt_length: 10
+              -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 {%- endif -%}
