@@ -65,19 +65,18 @@
     "image_banner_8K4YFQ": {
       "type": "image-banner",
       "blocks": {
-        "paragraph_kEbCDY": {
-          "type": "paragraph",
-          "disabled": true,
-          "settings": {
-            "paragraph": "Ends tonight!",
-            "paragraph_classes": "underline rounded-full uppercase  px-5 py-0.5 font-bold mb-1 tracking-wider lg:text-xl xl:text-2xl lg:px-5 lg:py-1 text-white"
-          }
-        },
         "heading_tcEJBG": {
           "type": "heading",
           "settings": {
             "heading": "Seaweed Is Our Superpower",
-            "heading_classes": "text-5xl sm:text-5xl  xl:text-7xl text-white font-serif sm:mt-2 sm:mb-2"
+            "heading_classes": "text-5xl sm:text-5xl  xl:text-7xl text-white font-serif sm:mt-2 sm:mb-2 hidden sm:block"
+          }
+        },
+        "heading_3AWP4G": {
+          "type": "heading",
+          "settings": {
+            "heading": "Free Gift",
+            "heading_classes": "text-6xl sm:text-5xl  xl:text-7xl text-dream-navy sm:mt-2 sm:mb-2 uppercase font-bold"
           }
         },
         "paragraph_qAnMC4": {
@@ -87,6 +86,13 @@
             "paragraph_classes": "text-white font-book mt-2 mb-2 lg:text-xl sm:text-md hidden sm:block"
           }
         },
+        "paragraph_MfgXcr": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Dream Night Mini Duo<br>With Purchase of $90+",
+            "paragraph_classes": "text-dream-navy font-bold mt-2 mb-2 sm:hidden text-xl"
+          }
+        },
         "button_e8tQ4e": {
           "type": "button",
           "settings": {
@@ -94,19 +100,31 @@
             "button_aria_label": "Shop now: Shop all OSEA products",
             "button_link": "shopify://collections/shop",
             "target_blank": false,
-            "button_classes": "sm:button-white mt-2 sm:mt-2 button-white"
+            "button_classes": "sm:button-white mt-2 sm:mt-2 button-white hidden sm:block"
+          }
+        },
+        "button_DhFfCJ": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "Shop now: Shop all OSEA products",
+            "button_link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "mt-auto sm:block button bg-dream-navy text-white mb-6"
           }
         }
       },
       "block_order": [
-        "paragraph_kEbCDY",
         "heading_tcEJBG",
+        "heading_3AWP4G",
         "paragraph_qAnMC4",
-        "button_e8tQ4e"
+        "paragraph_MfgXcr",
+        "button_e8tQ4e",
+        "button_DhFfCJ"
       ],
       "disabled": true,
       "settings": {
-        "image_mobile": "shopify://shop_images/07.02.25_HP_Banner_Seaweed_Favorites_-_Mobile_BLANK.jpg",
+        "image_mobile": "shopify://shop_images/JULY_2025_GWP_HP_Banner_Mobile_BLANK.jpg",
         "image": "shopify://shop_images/07.02.25_HP_Banner_Seaweed_Favorites_-_Desktop_BLANK.jpg",
         "is_lazy": false,
         "image_link": "shopify://collections/shop",
