@@ -196,6 +196,34 @@
               {% render 'product-info-tabs', product: product, block: block %}
             {%- when 'collapsible_tab' -%}
               {% render 'product-collapsible-tab', product: product, block: block, mini_size_array: mini_size_array %}
+            {%- when 'free_gift_info' -%}
+              {%- liquid
+                assign loyalty_only = settings.is_loyalty_gwp
+                if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto'
+                  if loyalty_only and customer
+                    assign free_gifts_active = true 
+                  elsif loyalty_only == false
+                    assign free_gifts_active = true
+                  else
+                    assign free_gifts_active = false
+                  endif
+                else
+                  assign free_gifts_active = false
+                endif
+              -%}
+              {%- if free_gifts_active -%}
+                <div class="{{ block.settings.free_gift_info_classes }}">
+                  {%- if settings.gwp_tier1_product != blank -%}
+                    {% render 'product-free-gift-info', product: settings.gwp_tier1_product, threshold: settings.gwp_tier1_threshold %}
+                  {%- endif -%}
+                  {%- if settings.gwp_tier2_product != blank -%}
+                    {% render 'product-free-gift-info', product: settings.gwp_tier2_product, threshold: settings.gwp_tier2_threshold %}
+                  {%- endif -%}
+                  {%- if settings.gwp_tier3_product != blank -%}
+                    {% render 'product-free-gift-info', product: settings.gwp_tier3_product, threshold: settings.gwp_tier3_threshold %}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
             {%- when 'quantity_selector' -%}
               {%- unless excluded_from_site -%}
                 <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
