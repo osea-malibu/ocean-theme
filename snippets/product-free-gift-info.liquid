@@ -1,8 +1,8 @@
-<div class="w-full bg-wave-200 rounded-lg px-2 py-1">
+<div class="w-full bg-wave-200 rounded-lg px-2 pb-1">
   <div class="flex items-center gap-2">
     {%- liquid
-      assign gift_image_src = product.featured_image | image_url: width: 192
-      assign gift_image_src_2x = product.featured_image | image_url: width: 252
+      assign gift_image_src = product.metafields.custom.product_image_transparent | image_url: width: 192
+      assign gift_image_src_2x = product.metafields.custom.product_image_transparent | image_url: width: 252
     -%}
     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
     <img
@@ -15,7 +15,7 @@
       class="w-12 object-cover rounded"
     >
     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-    <div class="flex flex-col">
+    <div class="flex flex-col pt-1">
       <p class="text-sm font-bold uppercase tracking-wider">Free Gift with orders {{ threshold | times: 100 | money_without_trailing_zeros }}+</p>
       <p class="text-sm leading-tight">Claim your free {{ product.title | replace: 'Free Gift - ', '' }} with orders over {{ threshold | times: 100 | money_without_trailing_zeros }}!</p>
     </div>
