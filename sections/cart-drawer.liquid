@@ -240,7 +240,6 @@
                                   assign non_subscription_allocation = true
                                 endif
                               -%}
-                              <script>console.log('current_variant.selling_plan_allocations', {{ current_variant.selling_plan_allocations | json }})</script>
                               {% if current_variant and current_variant.selling_plan_allocations.size > 0 and subscription_group %}
                                 {% unless non_subscription_allocation %}
                                   <div class="cart-subscibe flex flex-col items-end h-full">
