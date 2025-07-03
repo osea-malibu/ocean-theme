@@ -13,6 +13,16 @@
           assign filtered_items = filtered_items | concat: item_array
         endunless
       endfor 
+
+      assign cart_has_bundle_item = false
+      for item in cart.items
+        for property in item.properties
+          if property.first == '_bundleId'
+            assign cart_has_bundle_item = true
+            break
+          endif
+        endfor
+      endfor
     -%}
     <cart-recommendations
       data-ids="{{ filtered_items | map: 'product_id' | escape }}"
@@ -75,6 +85,50 @@
                         </tr>
                       </thead>
                       <tbody role="rowgroup" class="LOOP_osea-malibu_bundles_drawer block w-full">
+                        {%- if cart_has_bundle_item -%}
+                          <tr
+                            id="CartDrawer-Item-vlb-bundle"
+                            class="cart-item align-top my-6 grid grid-cols-7 grid-rows-auto [grid-template-areas:'image_name_name_name_name_name_price''image_size_size_sub_sub_sub_sub''image_quant_quant_sub_sub_sub_sub'] td:border-collapse td:border-spacing-0 td:border-0"
+                            role="row"
+                          >
+                            <td class="cart-item__media p-0 [grid-area:image]" role="cell" headers="CartDrawer-ColumnImage">
+                              <div class="flex h-full items-center">
+                                {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                                <img class="cart-item__image max-w-full"
+                                  src="https://cdn.shopify.com/s/files/1/1368/9993/files/VeganLeatherBag.jpg?v=1750863148"
+                                  alt="Vegan leather bag"
+                                  loading="lazy"
+                                  width="60"
+                                  height="76"
+                                >
+                                {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+                              </div>
+                            </td>
+                            <td class="cart-item__name p-0 [grid-area:name]" role="cell" headers="CartDrawer-ColumnName">
+                              <div class="flex items-center h-full">
+                                <a class="block leading-none 2xs:w-full w-60">Vegan Leather Bag</a>
+                              </div>
+                            </td>
+                            <td class="cart-item__size p-0 [grid-area:size] h-0" role="cell" headers="CartDrawer-ColumnSize">
+                            </td>
+                            <td class="cart-item__quantity p-0 [grid-area:quant]" role="cell" headers="CartDrawer-ColumnQuantity">
+                            </td>
+                            <td class="cart-item__subscribe p-0 [grid-area:sub]" role="cell" headers="CartDrawer-ColumnSubscribe">
+                            </td>
+                            <td class="cart-item__totals p-0 [grid-area:price]" role="cell" headers="CartDrawer-ColumnTotal">
+                              <div class="flex items-center justify-end h-full">
+                                <div class="loading-spinner hidden mr-2">{% render 'icon-spinner', classes: 'w-4 h-4 text-wave-800' %}</div>
+                                <div class="cart-item__price-wrapper h-full flex items-center justify-end motion-safe:transition-opacity">
+                                  <div class="flex flex-col items-end">
+                                    <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">
+                                      <span>Free Gift</span>
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        {%- endif -%}
                         {%- for item in cart.items -%}
                           {% comment %}
                             LOOP SUBSCRIPTIONS (https://apps.shopify.com/loop-subscriptions)
