@@ -1,4 +1,23 @@
-import { debounce, pauseAllMedia, trapFocus, removeTrapFocus } from "./utils.js";
+/**
+ * Global JavaScript for Ocean Theme
+ *
+ * This file contains all custom web components and utility classes used throughout
+ * the Ocean theme. It's organized into logical sections for better maintainability.
+ *
+ * @author Ocean Theme Team
+ * @version 1.0.0
+ */
+
+// =============================================================================
+// IMPORTS & INITIALIZATION
+// =============================================================================
+
+import {
+  debounce,
+  pauseAllMedia,
+  trapFocus,
+  removeTrapFocus,
+} from "./utils.js";
 import {
   setupSummaryAriaAttributes,
   setupFocusVisiblePolyfill,
@@ -8,6 +27,7 @@ import {
   setupShopifyCommon,
 } from "./setup.js";
 
+// Initialize global setup functions
 setupSummaryAriaAttributes();
 setupFocusVisiblePolyfill();
 setupHeaderBorderObserver();
@@ -15,6 +35,16 @@ setupLazyVideos();
 setupManualRedirects();
 setupShopifyCommon();
 
+// =============================================================================
+// FORM COMPONENTS
+// =============================================================================
+
+/**
+ * Quantity Input Component
+ *
+ * Handles quantity input functionality with increment/decrement buttons.
+ * Includes special logic for subscription products (max 4 items).
+ */
 class QuantityInput extends HTMLElement {
   constructor() {
     super();
@@ -27,13 +57,23 @@ class QuantityInput extends HTMLElement {
     );
   }
 
+  /**
+   * Handle input value changes
+   * @param {Event} event - The change event
+   */
   onInputChange(event) {
-    const autodeliverOptionEl = document.querySelector('input[value="autodeliver"]');
+    const autodeliverOptionEl = document.querySelector(
+      'input[value="autodeliver"]'
+    );
     const inputValueInteger = parseInt(event.currentTarget.value);
     const plusButtonEl = this.querySelector('button[name="plus"]');
 
+    // Special handling for subscription products (max 4 items)
     if (autodeliverOptionEl && autodeliverOptionEl.checked) {
-      this.productForm = document.querySelector("product-form.pdp-product-form");
+      this.productForm = document.querySelector(
+        "product-form.pdp-product-form"
+      );
+
       if (inputValueInteger > 4) {
         this.input.value = 4;
         this.productForm.handleErrorMessage(
@@ -52,25 +92,42 @@ class QuantityInput extends HTMLElement {
     }
   }
 
+  /**
+   * Handle button clicks (plus/minus)
+   * @param {Event} event - The click event
+   */
   onButtonClick(event) {
     event.preventDefault();
     const previousValue = this.input.value;
 
     event.target.name === "plus" ? this.input.stepUp() : this.input.stepDown();
-    if (previousValue !== this.input.value) this.input.dispatchEvent(this.changeEvent);
+    if (previousValue !== this.input.value)
+      this.input.dispatchEvent(this.changeEvent);
   }
 }
 customElements.define("quantity-input", QuantityInput);
 
+// =============================================================================
+// ANIMATION COMPONENTS
+// =============================================================================
+
+/**
+ * Icon Marquee Component
+ *
+ * Creates a horizontally scrolling marquee effect for icons/logos.
+ * Handles performance optimization, reduced motion preferences, and responsive behavior.
+ */
 class IconMarquee extends HTMLElement {
   constructor() {
     super();
 
-    // Config & state
+    // Configuration and state management
     this.items = [];
     this.animationID = null;
     this.speed = parseFloat(this.getAttribute("speed")) || 1;
-    this._reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this._reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     this._positionMap = new Map();
     this._observer = null;
     this._isVisible = false;
@@ -78,10 +135,13 @@ class IconMarquee extends HTMLElement {
     this._onVisibilityChange = this.handleVisibilityChange.bind(this);
   }
 
-  // Lifecycle
+  /**
+   * Initialize component when connected to DOM
+   */
   connectedCallback() {
     this._originalContent = this.innerHTML;
 
+    // Skip animation if user prefers reduced motion
     if (this._reducedMotion) return;
 
     this.setup();
@@ -90,11 +150,14 @@ class IconMarquee extends HTMLElement {
     // Listen for page/tab visibility changes
     document.addEventListener("visibilitychange", this._onVisibilityChange);
 
-    // Debounced resize
+    // Debounced resize handler
     this._onResize = debounce(() => this.refresh(), 250);
     window.addEventListener("resize", this._onResize);
   }
 
+  /**
+   * Cleanup when component is disconnected
+   */
   disconnectedCallback() {
     cancelAnimationFrame(this.animationID);
     window.removeEventListener("resize", this._onResize);
@@ -102,7 +165,9 @@ class IconMarquee extends HTMLElement {
     if (this._observer) this._observer.disconnect();
   }
 
-  // Create & position clones
+  /**
+   * Create and position marquee items
+   */
   setup() {
     const tempWrapper = document.createElement("div");
     tempWrapper.className = "inline-block whitespace-nowrap";
@@ -125,6 +190,7 @@ class IconMarquee extends HTMLElement {
 
     const maxItems = Math.ceil(containerWidth / this._itemWidth) + 2;
 
+    // Create marquee items
     for (let i = 0; i < maxItems; i++) {
       const item = document.createElement("div");
       item.innerHTML = itemHTML;
@@ -145,7 +211,9 @@ class IconMarquee extends HTMLElement {
     this.addEventListener("mouseout", this.resume.bind(this));
   }
 
-  // Detect when the element enters/exits the viewport
+  /**
+   * Observe element visibility for performance optimization
+   */
   observeVisibility() {
     this._observer = new IntersectionObserver(
       ([entry]) => {
@@ -158,7 +226,9 @@ class IconMarquee extends HTMLElement {
     this._observer.observe(this);
   }
 
-  // Core animation loop
+  /**
+   * Core animation loop
+   */
   rotate() {
     if (!this._isVisible || document.hidden || !this.items.length) return;
 
@@ -166,6 +236,7 @@ class IconMarquee extends HTMLElement {
       let x = this._positionMap.get(item);
       x -= this.speed;
 
+      // Reset position when item goes off-screen
       if (x + this._itemWidth < 0) {
         const maxX = Math.max(...Array.from(this._positionMap.values()));
         x = maxX + this._itemWidth;
@@ -178,7 +249,9 @@ class IconMarquee extends HTMLElement {
     this.animationID = requestAnimationFrame(this._boundRotate);
   }
 
-  // Handle when the tab becomes hidden or visible
+  /**
+   * Handle tab visibility changes
+   */
   handleVisibilityChange() {
     if (document.hidden) {
       this.pause();
@@ -187,17 +260,25 @@ class IconMarquee extends HTMLElement {
     }
   }
 
+  /**
+   * Pause animation
+   */
   pause() {
     cancelAnimationFrame(this.animationID);
     this.animationID = null;
   }
 
+  /**
+   * Resume animation
+   */
   resume() {
     if (!this._isVisible || document.hidden || this.animationID) return;
     this.rotate();
   }
 
-  // Redraw on resize
+  /**
+   * Refresh component on resize
+   */
   refresh() {
     this.pause();
     this.innerHTML = this._originalContent;
@@ -207,6 +288,16 @@ class IconMarquee extends HTMLElement {
 }
 customElements.define("icon-marquee", IconMarquee);
 
+// =============================================================================
+// LAYOUT COMPONENTS
+// =============================================================================
+
+/**
+ * Footer Accordion Component
+ *
+ * Manages footer accordion behavior based on screen size.
+ * Auto-expands on desktop, collapses on mobile.
+ */
 class FooterAccordion extends HTMLElement {
   constructor() {
     super();
@@ -224,6 +315,9 @@ class FooterAccordion extends HTMLElement {
     this.mediaQuery.removeEventListener("change", this.handleResize);
   }
 
+  /**
+   * Handle responsive behavior
+   */
   handleResize() {
     const isDesktop = this.mediaQuery.matches;
 
@@ -238,6 +332,16 @@ class FooterAccordion extends HTMLElement {
 }
 customElements.define("footer-accordion", FooterAccordion);
 
+// =============================================================================
+// UTILITY COMPONENTS
+// =============================================================================
+
+/**
+ * Shipping Calculator Component
+ *
+ * Calculates shipping transit times based on ZIP codes.
+ * Contains comprehensive US ZIP code to state mapping.
+ */
 class ShippingCalculator extends HTMLElement {
   constructor() {
     super();
@@ -249,6 +353,10 @@ class ShippingCalculator extends HTMLElement {
     this.zipForm.addEventListener("submit", (e) => this.onZipSubmit(e));
   }
 
+  /**
+   * Handle ZIP code form submission
+   * @param {Event} e - Form submit event
+   */
   onZipSubmit(e) {
     e.preventDefault();
 
@@ -260,6 +368,11 @@ class ShippingCalculator extends HTMLElement {
     this.output.classList.add(...transitionEnd.split(" "));
   }
 
+  /**
+   * Get state and transit time data for ZIP code
+   * @param {string} zipString - 5-digit ZIP code
+   * @returns {Object} State abbreviation and transit time
+   */
   getStateData(zipString) {
     /* Ensure param is a string to prevent unpredictable parsing results */
     if (typeof zipString !== "string") {
@@ -305,7 +418,10 @@ class ShippingCalculator extends HTMLElement {
       st = "CO";
       state = "Colorado";
       transitTime = "3-4 days";
-    } else if ((zipcode >= 6000 && zipcode <= 6389) || (zipcode >= 6391 && zipcode <= 6999)) {
+    } else if (
+      (zipcode >= 6000 && zipcode <= 6389) ||
+      (zipcode >= 6391 && zipcode <= 6999)
+    ) {
       st = "CT";
       state = "Connecticut";
       transitTime = "5-6 days";
@@ -317,7 +433,10 @@ class ShippingCalculator extends HTMLElement {
       st = "FL";
       state = "Florida";
       transitTime = "5-6 days";
-    } else if ((zipcode >= 30000 && zipcode <= 31999) || (zipcode >= 39800 && zipcode <= 39999)) {
+    } else if (
+      (zipcode >= 30000 && zipcode <= 31999) ||
+      (zipcode >= 39800 && zipcode <= 39999)
+    ) {
       st = "GA";
       state = "Georgia";
       transitTime = "4-5 days";
@@ -361,7 +480,11 @@ class ShippingCalculator extends HTMLElement {
       st = "MD";
       state = "Maryland";
       transitTime = "5-6 days";
-    } else if ((zipcode >= 1000 && zipcode <= 2799) || zipcode == 5501 || zipcode == 5544) {
+    } else if (
+      (zipcode >= 1000 && zipcode <= 2799) ||
+      zipcode == 5501 ||
+      zipcode == 5544
+    ) {
       st = "MA";
       state = "Massachusetts";
       transitTime = "5-6 days";
@@ -426,7 +549,10 @@ class ShippingCalculator extends HTMLElement {
       st = "OH";
       state = "Ohio";
       transitTime = "4-5 days";
-    } else if ((zipcode >= 73000 && zipcode <= 73199) || (zipcode >= 73400 && zipcode <= 74999)) {
+    } else if (
+      (zipcode >= 73000 && zipcode <= 73199) ||
+      (zipcode >= 73400 && zipcode <= 74999)
+    ) {
       st = "OK";
       state = "Oklahoma";
       transitTime = "3-4 days";
@@ -518,25 +644,48 @@ class ShippingCalculator extends HTMLElement {
 }
 customElements.define("shipping-calculator", ShippingCalculator);
 
+// =============================================================================
+// NAVIGATION COMPONENTS
+// =============================================================================
+
+/**
+ * Menu Drawer Component
+ *
+ * Handles mobile navigation menu functionality including:
+ * - Opening/closing menu drawer
+ * - Submenu navigation
+ * - Keyboard navigation and accessibility
+ * - Focus management
+ */
 class MenuDrawer extends HTMLElement {
   constructor() {
     super();
 
     this.mainDetailsToggle = this.querySelector("details");
 
+    // Fix for iOS viewport height issues
     if (navigator.platform === "iPhone")
-      document.documentElement.style.setProperty("--viewport-height", `${window.innerHeight}px`);
+      document.documentElement.style.setProperty(
+        "--viewport-height",
+        `${window.innerHeight}px`
+      );
 
     this.addEventListener("keyup", this.onKeyUp.bind(this));
     this.addEventListener("focusout", this.onFocusOut.bind(this));
     this.bindEvents();
   }
 
+  /**
+   * Bind all event listeners
+   */
   bindEvents() {
     this.querySelectorAll("summary").forEach((summary) =>
       summary.addEventListener("click", this.onSummaryClick.bind(this))
     );
-    this.querySelector(".menu-scrim").addEventListener("click", this.onSummaryClick.bind(this));
+    this.querySelector(".menu-scrim").addEventListener(
+      "click",
+      this.onSummaryClick.bind(this)
+    );
     this.querySelectorAll(".submenu-close").forEach((button) =>
       button.addEventListener("click", this.onCloseSubmenu.bind(this))
     );
@@ -545,9 +694,14 @@ class MenuDrawer extends HTMLElement {
     );
 
     const closeButton = this.querySelector(".menu-close");
-    closeButton && closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
+    closeButton &&
+      closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
   }
 
+  /**
+   * Handle keyboard navigation
+   * @param {KeyboardEvent} event - Key event
+   */
   onKeyUp(event) {
     if (event.code.toUpperCase() !== "ESCAPE") return;
 
@@ -555,10 +709,17 @@ class MenuDrawer extends HTMLElement {
     if (!openDetailsElement) return;
 
     openDetailsElement === this.mainDetailsToggle
-      ? this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector("summary"))
+      ? this.closeMenuDrawer(
+          event,
+          this.mainDetailsToggle.querySelector("summary")
+        )
       : this.closeSubmenu(openDetailsElement);
   }
 
+  /**
+   * Handle summary click events
+   * @param {Event} event - Click event
+   */
   onSummaryClick(event) {
     const summaryElement = event.currentTarget;
     const detailsElement = summaryElement.parentNode;
@@ -566,28 +727,47 @@ class MenuDrawer extends HTMLElement {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function addTrapFocus() {
-      trapFocus(summaryElement.nextElementSibling, detailsElement.querySelector("button"));
-      summaryElement.nextElementSibling.removeEventListener("transitionend", addTrapFocus);
+      trapFocus(
+        summaryElement.nextElementSibling,
+        detailsElement.querySelector("button")
+      );
+      summaryElement.nextElementSibling.removeEventListener(
+        "transitionend",
+        addTrapFocus
+      );
     }
 
     if (detailsElement === this.mainDetailsToggle) {
       if (isOpen) event.preventDefault();
-      isOpen ? this.closeMenuDrawer(event, summaryElement) : this.openMenuDrawer(summaryElement);
+      isOpen
+        ? this.closeMenuDrawer(event, summaryElement)
+        : this.openMenuDrawer(summaryElement);
     } else {
       setTimeout(() => {
         detailsElement.classList.add("menu-opening");
         summaryElement.setAttribute("aria-expanded", true);
         !reducedMotion || reducedMotion.matches
           ? addTrapFocus()
-          : summaryElement.nextElementSibling.addEventListener("transitionend", addTrapFocus);
+          : summaryElement.nextElementSibling.addEventListener(
+              "transitionend",
+              addTrapFocus
+            );
       }, 100);
     }
   }
 
+  /**
+   * Handle navigation link clicks
+   * @param {Event} event - Click event
+   */
   onNavLinkClick(event) {
     console.log("clicked nav link", event);
   }
 
+  /**
+   * Open the main menu drawer
+   * @param {HTMLElement} summaryElement - The summary element that was clicked
+   */
   openMenuDrawer(summaryElement) {
     setTimeout(() => {
       this.mainDetailsToggle.classList.add("menu-opening");
@@ -597,6 +777,11 @@ class MenuDrawer extends HTMLElement {
     document.body.classList.add("overflow-hidden");
   }
 
+  /**
+   * Close the main menu drawer
+   * @param {Event} event - The event that triggered the close
+   * @param {HTMLElement} elementToFocus - Element to focus after closing
+   */
   closeMenuDrawer(event, elementToFocus = false) {
     if (event !== undefined) {
       this.mainDetailsToggle.classList.remove("menu-opening");
@@ -610,6 +795,10 @@ class MenuDrawer extends HTMLElement {
     }
   }
 
+  /**
+   * Handle focus out events
+   * @param {FocusEvent} event - Focus event
+   */
   onFocusOut(event) {
     setTimeout(() => {
       if (
@@ -620,18 +809,32 @@ class MenuDrawer extends HTMLElement {
     });
   }
 
+  /**
+   * Handle submenu close button clicks
+   * @param {Event} event - Click event
+   */
   onCloseSubmenu(event) {
     const detailsElement = event.currentTarget.closest("details");
     this.closeSubmenu(detailsElement);
   }
 
+  /**
+   * Close a submenu
+   * @param {HTMLElement} detailsElement - The details element to close
+   */
   closeSubmenu(detailsElement) {
     detailsElement.classList.remove("menu-opening");
-    detailsElement.querySelector("summary").setAttribute("aria-expanded", false);
+    detailsElement
+      .querySelector("summary")
+      .setAttribute("aria-expanded", false);
     removeTrapFocus();
     this.closeAnimation(detailsElement);
   }
 
+  /**
+   * Animate the closing of menu elements
+   * @param {HTMLElement} detailsElement - The element to animate
+   */
   closeAnimation(detailsElement) {
     let animationStart;
 
@@ -658,6 +861,9 @@ class MenuDrawer extends HTMLElement {
     window.requestAnimationFrame(handleAnimation);
   }
 
+  /**
+   * Set menu top position based on header height
+   */
   setMenuTopValue() {
     const drawer = this.querySelector(".menu-drawer");
     const scrim = this.querySelector(".menu-scrim");
@@ -673,6 +879,12 @@ class MenuDrawer extends HTMLElement {
 }
 customElements.define("menu-drawer", MenuDrawer);
 
+/**
+ * Dismissable Announcement Component
+ *
+ * Manages dismissable announcement bar functionality.
+ * Stores dismissal state in session storage.
+ */
 class DismissableAnnoucement extends HTMLElement {
   constructor() {
     super();
@@ -685,7 +897,9 @@ class DismissableAnnoucement extends HTMLElement {
   }
 
   connectedCallback() {
-    let isDismissed = JSON.parse(sessionStorage.getItem("osea.announcementDismissed"));
+    let isDismissed = JSON.parse(
+      sessionStorage.getItem("osea.announcementDismissed")
+    );
     if (isDismissed) {
       this.useDefaultMessage();
     } else {
@@ -694,6 +908,9 @@ class DismissableAnnoucement extends HTMLElement {
     }
   }
 
+  /**
+   * Handle close button click
+   */
   onClose() {
     const drawer = document.querySelector("#HamburgerMenu .menu-drawer");
     const scrim = document.querySelector("#HamburgerMenu .menu-scrim");
@@ -705,6 +922,9 @@ class DismissableAnnoucement extends HTMLElement {
     sessionStorage.setItem("osea.announcementDismissed", true);
   }
 
+  /**
+   * Switch to default message display
+   */
   useDefaultMessage() {
     this.dismissableMessage.classList.add("hidden");
     this.closeButton.classList.add("hidden");
@@ -713,19 +933,40 @@ class DismissableAnnoucement extends HTMLElement {
 }
 customElements.define("dismissable-announcement", DismissableAnnoucement);
 
+// =============================================================================
+// MODAL COMPONENTS
+// =============================================================================
+
+/**
+ * Modal Dialog Component
+ *
+ * Handles modal dialog functionality including:
+ * - Opening/closing modals
+ * - Keyboard navigation (ESC to close)
+ * - Focus management
+ * - Click outside to close
+ */
 class ModalDialog extends HTMLElement {
   constructor() {
     super();
-    this.querySelector('[id^="ModalClose-"]').addEventListener("click", this.hide.bind(this));
+    this.querySelector('[id^="ModalClose-"]').addEventListener(
+      "click",
+      this.hide.bind(this)
+    );
     this.querySelectorAll(".close-modal").forEach((i) =>
       i.addEventListener("click", this.hide.bind(this))
     );
     this.addEventListener("keyup", (event) => {
       if (event.code.toUpperCase() === "ESCAPE") this.hide();
     });
+
+    // Handle click outside to close
     if (this.classList.contains("media-modal")) {
       this.addEventListener("pointerup", (event) => {
-        if (event.pointerType === "mouse" && !event.target.closest("deferred-media, product-model"))
+        if (
+          event.pointerType === "mouse" &&
+          !event.target.closest("deferred-media, product-model")
+        )
           this.hide();
       });
     } else {
@@ -735,6 +976,10 @@ class ModalDialog extends HTMLElement {
     }
   }
 
+  /**
+   * Show the modal
+   * @param {HTMLElement} opener - Element that opened the modal
+   */
   show(opener) {
     this.openedBy = opener;
     const popup = this.querySelector(".template-popup");
@@ -745,6 +990,9 @@ class ModalDialog extends HTMLElement {
     pauseAllMedia();
   }
 
+  /**
+   * Hide the modal
+   */
   hide() {
     document.body.classList.remove("overflow-hidden");
     this.removeAttribute("open");
@@ -754,11 +1002,17 @@ class ModalDialog extends HTMLElement {
 }
 customElements.define("modal-dialog", ModalDialog);
 
+/**
+ * Modal Opener Component
+ *
+ * Handles opening modals from trigger elements.
+ */
 class ModalOpener extends HTMLElement {
   constructor() {
     super();
 
-    const button = this.querySelector("button") || this.querySelector('[type="button"]');
+    const button =
+      this.querySelector("button") || this.querySelector('[type="button"]');
 
     if (!button) return;
     button.addEventListener("click", () => {
@@ -769,6 +1023,12 @@ class ModalOpener extends HTMLElement {
 }
 customElements.define("modal-opener", ModalOpener);
 
+/**
+ * Deferred Media Component
+ *
+ * Handles lazy loading of media content (videos, etc.).
+ * Only loads content when user clicks to play.
+ */
 class DeferredMedia extends HTMLElement {
   constructor() {
     super();
@@ -777,11 +1037,16 @@ class DeferredMedia extends HTMLElement {
     poster.addEventListener("click", this.loadContent.bind(this));
   }
 
+  /**
+   * Load the deferred media content
+   */
   loadContent() {
     pauseAllMedia();
     if (!this.getAttribute("loaded")) {
       const content = document.createElement("div");
-      content.appendChild(this.querySelector("template").content.firstElementChild.cloneNode(true));
+      content.appendChild(
+        this.querySelector("template").content.firstElementChild.cloneNode(true)
+      );
 
       this.setAttribute("loaded", true);
       this.appendChild(content).focus();
@@ -790,6 +1055,20 @@ class DeferredMedia extends HTMLElement {
 }
 customElements.define("deferred-media", DeferredMedia);
 
+// =============================================================================
+// PRODUCT COMPONENTS
+// =============================================================================
+
+/**
+ * Variant Selects Component
+ *
+ * Handles product variant selection functionality including:
+ * - Variant option updates
+ * - Media updates (images)
+ * - URL updates
+ * - Subscription handling
+ * - Add to cart button states
+ */
 class VariantSelects extends HTMLElement {
   constructor() {
     super();
@@ -809,6 +1088,9 @@ class VariantSelects extends HTMLElement {
     document.addEventListener("DOMContentLoaded", executeMethods);
   }
 
+  /**
+   * Handle variant change events
+   */
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
@@ -829,10 +1111,19 @@ class VariantSelects extends HTMLElement {
     }
   }
 
+  /**
+   * Update selected options from form inputs
+   */
   updateOptions() {
-    this.options = Array.from(this.querySelectorAll("select"), (select) => select.value);
+    this.options = Array.from(
+      this.querySelectorAll("select"),
+      (select) => select.value
+    );
   }
 
+  /**
+   * Update the current variant based on selected options
+   */
   updateMasterId() {
     this.currentVariant = this.getVariantData().find((variant) => {
       return !variant.options
@@ -843,6 +1134,9 @@ class VariantSelects extends HTMLElement {
     });
   }
 
+  /**
+   * Update subscription status based on variant
+   */
   updateIsSubscription() {
     const isSubscriptionInput = document.querySelector(
       'input[name="properties[_is_subscription]"]'
@@ -857,19 +1151,29 @@ class VariantSelects extends HTMLElement {
     }
   }
 
+  /**
+   * Reset purchase option to one-time purchase
+   */
   resetPurchaseOption() {
     // reset purchase option to one-time
     if (
       window.location.pathname.includes("/products/") &&
       document.querySelector("subscription-radios")
     ) {
-      document.querySelector(".purchase-option.onetime").classList.add("bg-wave-200");
+      document
+        .querySelector(".purchase-option.onetime")
+        .classList.add("bg-wave-200");
       document.querySelector('input[value="onetime"]').checked = true;
-      document.querySelector(".purchase-option.autodeliver").classList.remove("bg-wave-200");
+      document
+        .querySelector(".purchase-option.autodeliver")
+        .classList.remove("bg-wave-200");
       document.querySelector('input[value="autodeliver"]').checked = false;
     }
   }
 
+  /**
+   * Update product media (images) based on variant
+   */
   updateMedia() {
     if (!this.currentVariant) return;
     if (!this.currentVariant.featured_media) return;
@@ -904,11 +1208,21 @@ class VariantSelects extends HTMLElement {
     }
   }
 
+  /**
+   * Update URL with variant parameter
+   */
   updateURL() {
     if (!this.currentVariant || this.dataset.updateUrl === "false") return;
-    window.history.replaceState({}, "", `${this.dataset.url}?variant=${this.currentVariant.id}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${this.dataset.url}?variant=${this.currentVariant.id}`
+    );
   }
 
+  /**
+   * Update variant input in product forms
+   */
   updateVariantInput() {
     const productForms = document.querySelectorAll(
       `#product-form-${this.dataset.section}, #product-form-installment`
@@ -920,6 +1234,9 @@ class VariantSelects extends HTMLElement {
     });
   }
 
+  /**
+   * Remove error messages from product form
+   */
   removeErrorMessage() {
     const section = this.closest("section");
     if (!section) return;
@@ -928,12 +1245,18 @@ class VariantSelects extends HTMLElement {
     if (productForm) productForm.handleErrorMessage();
   }
 
+  /**
+   * Render updated product information via AJAX
+   */
   renderProductInfo() {
     const { id } = this.currentVariant;
     fetch(`${this.dataset.url}?variant=${id}`)
       .then((response) => response.text())
       .then((responseText) => {
-        const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
+        const responseHTML = new DOMParser().parseFromString(
+          responseText,
+          "text/html"
+        );
 
         const replaceContent = (selector, sourceSelector) => {
           const source = responseHTML.querySelector(sourceSelector || selector);
@@ -950,20 +1273,32 @@ class VariantSelects extends HTMLElement {
         );
         replaceContent(".subscription .selling-plan-options");
 
-        this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
+        this.toggleAddButton(
+          !this.currentVariant.available,
+          window.variantStrings.soldOut
+        );
       });
   }
 
+  /**
+   * Update option visibility based on variant selection
+   */
   updateOptionVisibility() {
-    if (this.currentVariant && window.location.pathname.includes("/products/")) {
+    if (
+      this.currentVariant &&
+      window.location.pathname.includes("/products/")
+    ) {
       const subscriptionRadios = document.querySelector("subscription-radios");
       if (subscriptionRadios) {
-        const allcoationGroupIds = this.currentVariant.selling_plan_allocations.map(
-          (i) => i.selling_plan_group_id
-        );
+        const allcoationGroupIds =
+          this.currentVariant.selling_plan_allocations.map(
+            (i) => i.selling_plan_group_id
+          );
         const hasSubscriptionOption =
           this.currentVariant.selling_plan_allocations.length > 0 &&
-          allcoationGroupIds.includes(subscriptionRadios.dataset.subscriptionGroupId);
+          allcoationGroupIds.includes(
+            subscriptionRadios.dataset.subscriptionGroupId
+          );
         if (hasSubscriptionOption) {
           subscriptionRadios.classList.add("max-h-52");
           subscriptionRadios.classList.remove("max-h-0");
@@ -974,12 +1309,16 @@ class VariantSelects extends HTMLElement {
       }
 
       const scentValues = ["Fragrance free", "Scented"];
-      const hasScentVariant = this.currentVariant.options.some((r) => scentValues.indexOf(r) >= 0);
+      const hasScentVariant = this.currentVariant.options.some(
+        (r) => scentValues.indexOf(r) >= 0
+      );
       if (hasScentVariant) {
         const scentRadios = document.getElementsByName("Scent");
         const sizeRadios = document.getElementsByName("Size");
         const originalScentInfo = document.querySelectorAll(".scent-scented");
-        const fragranceFreeScentInfo = document.querySelectorAll(".scent-fragrance-free");
+        const fragranceFreeScentInfo = document.querySelectorAll(
+          ".scent-fragrance-free"
+        );
 
         originalScentInfo.forEach((i) => {
           i.classList.toggle("hidden", scentRadios[1].checked);
@@ -1016,7 +1355,10 @@ class VariantSelects extends HTMLElement {
       }
 
       const miniSizeArray = this.dataset.miniSizes.split(",");
-      const normalizedVariantTitle = this.currentVariant.title.replace("fl oz", "oz");
+      const normalizedVariantTitle = this.currentVariant.title.replace(
+        "fl oz",
+        "oz"
+      );
       const isMiniSize = miniSizeArray.includes(normalizedVariantTitle);
       const miniInfo = document.querySelectorAll(".size-mini");
       miniInfo.forEach((i) => {
@@ -1025,8 +1367,16 @@ class VariantSelects extends HTMLElement {
     }
   }
 
+  /**
+   * Toggle add to cart button state
+   * @param {boolean} disable - Whether to disable the button
+   * @param {string} text - Button text to display
+   * @param {boolean} modifyClass - Whether to modify CSS classes
+   */
   toggleAddButton(disable = true, text, modifyClass = true) {
-    const productForm = document.getElementById(`product-form-${this.dataset.section}`);
+    const productForm = document.getElementById(
+      `product-form-${this.dataset.section}`
+    );
     if (!productForm) return;
     const addButton = productForm.querySelector('[name="add"]');
     const addButtonText = productForm.querySelector('[name="add"] > .label');
@@ -1056,8 +1406,13 @@ class VariantSelects extends HTMLElement {
     if (!modifyClass) return;
   }
 
+  /**
+   * Set product as unavailable
+   */
   setUnavailable() {
-    const button = document.getElementById(`product-form-${this.dataset.section}`);
+    const button = document.getElementById(
+      `product-form-${this.dataset.section}`
+    );
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
     const price = document.getElementById(`price-${this.dataset.section}`);
@@ -1066,6 +1421,9 @@ class VariantSelects extends HTMLElement {
     if (price) price.classList.add("invisible");
   }
 
+  /**
+   * Handle Klaviyo Back in Stock trigger behavior
+   */
   handleKlaviyoBisTrigger() {
     /* This function corrects behavior of Klaviyo BIS when non-default variant is OOS */
     const variantData = this.getVariantData();
@@ -1100,42 +1458,69 @@ class VariantSelects extends HTMLElement {
     checkForBisTrigger();
   }
 
+  /**
+   * Get variant data from JSON script tag
+   * @returns {Array} Array of variant data objects
+   */
   getVariantData() {
     this.variantData =
       this.variantData ||
-      JSON.parse(this.querySelector('[type="application/json"].variant-data').textContent);
+      JSON.parse(
+        this.querySelector('[type="application/json"].variant-data').textContent
+      );
     return this.variantData;
   }
 }
 customElements.define("variant-selects", VariantSelects);
 
+/**
+ * Variant Radios Component
+ *
+ * Extends VariantSelects to handle radio button variant selection.
+ */
 class VariantRadios extends VariantSelects {
   constructor() {
     super();
   }
 
+  /**
+   * Update selected options from radio button groups
+   */
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll("fieldset"));
     this.options = fieldsets.map((fieldset) => {
-      return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
+      return Array.from(fieldset.querySelectorAll("input")).find(
+        (radio) => radio.checked
+      ).value;
     });
   }
 }
 customElements.define("variant-radios", VariantRadios);
 
+/**
+ * Subscription Radios Component
+ *
+ * Handles subscription vs one-time purchase selection.
+ * Manages pricing updates and selling plan selection.
+ */
 class SubscriptionRadios extends HTMLElement {
   constructor() {
     super();
 
-    this.isSubscriptionInput = document.querySelector('input[name="properties[_is_subscription]"]');
-    this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
+    this.isSubscriptionInput = document.querySelector(
+      'input[name="properties[_is_subscription]"]'
+    );
+    this.purchaseOptionInputs = Array.from(
+      this.querySelectorAll('input[name="purchase_option"]')
+    );
 
     const urlParams = new URLSearchParams(window.location.search);
     const urlPurchaseType = urlParams.get("type");
 
     this.purchaseOptionInputs.forEach((input) => {
       const isSubscription =
-        urlPurchaseType === "subscription" || document.referrer.includes("/pages/subscribe");
+        urlPurchaseType === "subscription" ||
+        document.referrer.includes("/pages/subscribe");
       if (isSubscription && input.value === "autodeliver") {
         input.checked = true;
         this.setActiveState();
@@ -1153,6 +1538,10 @@ class SubscriptionRadios extends HTMLElement {
     });
   }
 
+  /**
+   * Handle purchase option change (subscription vs one-time)
+   * @param {Event} e - Change event
+   */
   onPurchaseOptionChange(e) {
     const { value, checked } = e.currentTarget;
 
@@ -1160,16 +1549,23 @@ class SubscriptionRadios extends HTMLElement {
       this.setActiveState();
       this.updateMainPrice(e.currentTarget);
 
-      const plusButtonEl = document.querySelector('.pdp-quantity button[name="plus"]');
+      const plusButtonEl = document.querySelector(
+        '.pdp-quantity button[name="plus"]'
+      );
 
       if (value === "onetime") {
         this.clearSellingPlanValues();
         this.isSubscriptionInput.value = false;
-        this.productForm = document.querySelector("product-form.pdp-product-form");
+        this.productForm = document.querySelector(
+          "product-form.pdp-product-form"
+        );
 
-        document.querySelector("#PayInstallments")?.classList.remove("opacity-0");
+        document
+          .querySelector("#PayInstallments")
+          ?.classList.remove("opacity-0");
 
-        if (plusButtonEl && plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
+        if (plusButtonEl && plusButtonEl.disabled)
+          plusButtonEl.removeAttribute("disabled");
         this.productForm.handleErrorMessage();
       } else if (value === "autodeliver") {
         this.setDefaultSellingPlan();
@@ -1192,39 +1588,65 @@ class SubscriptionRadios extends HTMLElement {
     }
   }
 
+  /**
+   * Set active state styling for selected option
+   */
   setActiveState() {
     this.purchaseOptionInputs?.forEach((input) => {
       input
         .closest(".purchase-option")
-        .classList.toggle(this.dataset.selectedColor || "bg-wave-200", input.checked);
-      input.closest(".purchase-option").classList.toggle("bg-white", !input.checked);
+        .classList.toggle(
+          this.dataset.selectedColor || "bg-wave-200",
+          input.checked
+        );
+      input
+        .closest(".purchase-option")
+        .classList.toggle("bg-white", !input.checked);
     });
   }
 
+  /**
+   * Update main price display
+   * @param {HTMLElement} currentTarget - The selected option element
+   */
   updateMainPrice(currentTarget) {
-    const currentPrice = currentTarget.closest(".purchase-option").querySelector(".price");
+    const currentPrice = currentTarget
+      .closest(".purchase-option")
+      .querySelector(".price");
     const mainPrice = document.querySelector(".main-price.price");
 
     mainPrice.innerHTML = currentPrice.innerHTML;
   }
 
+  /**
+   * Clear all selling plan selections
+   */
   clearSellingPlanValues() {
     Array.from(this.querySelectorAll('input[name="selling_plan"]'))?.forEach(
       (input) => (input.checked = false)
     );
   }
 
+  /**
+   * Set default selling plan based on recommended interval
+   */
   setDefaultSellingPlan() {
     const defaultSellingPlanInt = this.dataset.recommendedInterval || 2;
-    const defaultSellingPlanInput = Array.from(this.querySelectorAll('input[name="selling_plan"]'))[
-      defaultSellingPlanInt - 1
-    ];
+    const defaultSellingPlanInput = Array.from(
+      this.querySelectorAll('input[name="selling_plan"]')
+    )[defaultSellingPlanInt - 1];
 
     defaultSellingPlanInput.checked = true;
   }
 }
 customElements.define("subscription-radios", SubscriptionRadios);
 
+/**
+ * Product Sticky Add to Cart Component
+ *
+ * Manages sticky add to cart button visibility based on scroll position.
+ * Shows/hides based on intersection with main product form.
+ */
 class ProductStickyAtc extends HTMLElement {
   constructor() {
     super();
@@ -1244,7 +1666,9 @@ class ProductStickyAtc extends HTMLElement {
       }
     });
 
-    this.atcObserver.observe(document.querySelector(".product-form.pdp-product-form"));
+    this.atcObserver.observe(
+      document.querySelector(".product-form.pdp-product-form")
+    );
   }
 
   disconnectedCallback() {
@@ -1255,6 +1679,16 @@ class ProductStickyAtc extends HTMLElement {
 }
 customElements.define("product-sticky-atc", ProductStickyAtc);
 
+// =============================================================================
+// UI COMPONENTS
+// =============================================================================
+
+/**
+ * Tab Controller Component
+ *
+ * Handles tab functionality with keyboard navigation and accessibility.
+ * Supports URL parameters for deep linking to specific tabs.
+ */
 class TabController extends HTMLElement {
   constructor() {
     super();
@@ -1267,7 +1701,9 @@ class TabController extends HTMLElement {
     this.checkUrlParameters();
   }
 
-  // Private function to set event listeners
+  /**
+   * Add event listeners for keyboard navigation
+   */
   addEventListeners() {
     for (let tab of this.tabs) {
       tab.addEventListener("click", (e) => {
@@ -1286,7 +1722,9 @@ class TabController extends HTMLElement {
       switch (e.keyCode) {
         case 35: // end key
           e.preventDefault();
-          this.setActiveTab(this.tabs[this.tabs.length - 1].getAttribute("aria-controls"));
+          this.setActiveTab(
+            this.tabs[this.tabs.length - 1].getAttribute("aria-controls")
+          );
           break;
         case 36: // home key
           e.preventDefault();
@@ -1310,10 +1748,15 @@ class TabController extends HTMLElement {
     });
   }
 
-  // Public function to set the tab by id
-  // This can be called by the developer too.
+  /**
+   * Set the active tab by ID
+   * @param {string} id - Tab panel ID to activate
+   * @param {boolean} skipFocus - Whether to skip focus management
+   */
   setActiveTab(id, skipFocus = false) {
-    const activeTabClass = this.dataset.activeClass?.split(" ") || ["bg-wave-200"];
+    const activeTabClass = this.dataset.activeClass?.split(" ") || [
+      "bg-wave-200",
+    ];
     for (let tab of this.tabs) {
       if (tab.getAttribute("aria-controls") == id) {
         tab.setAttribute("aria-selected", "true");
@@ -1338,6 +1781,9 @@ class TabController extends HTMLElement {
     }
   }
 
+  /**
+   * Check URL parameters for deep linking
+   */
   checkUrlParameters() {
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
@@ -1362,6 +1808,12 @@ class TabController extends HTMLElement {
 }
 customElements.define("tab-controller", TabController);
 
+/**
+ * Horizontal Scroll Box Component
+ *
+ * Provides horizontal scrolling with navigation arrows.
+ * Shows/hides navigation based on scroll position.
+ */
 class HorizontalScrollBox extends HTMLElement {
   constructor() {
     super();
@@ -1373,23 +1825,41 @@ class HorizontalScrollBox extends HTMLElement {
     this.handleShowNav();
   }
 
+  /**
+   * Add event listeners for navigation
+   */
   addEventListeners() {
-    if (this.scrollBox.getBoundingClientRect().width < this.scrollBox.scrollWidth) {
-      this.navNext.addEventListener("click", () => this.scrollContainer("next"));
-      this.navPrev.addEventListener("click", () => this.scrollContainer("prev"));
+    if (
+      this.scrollBox.getBoundingClientRect().width < this.scrollBox.scrollWidth
+    ) {
+      this.navNext.addEventListener("click", () =>
+        this.scrollContainer("next")
+      );
+      this.navPrev.addEventListener("click", () =>
+        this.scrollContainer("prev")
+      );
 
       this.scrollBox.addEventListener("scroll", this.handleShowNav.bind(this));
     }
   }
 
+  /**
+   * Scroll container in specified direction
+   * @param {string} direction - 'next' or 'prev'
+   */
   scrollContainer(direction) {
     this.scrollBox.scrollTo({
       left:
-        direction === "next" ? this.scrollBox.scrollLeft + 120 : this.scrollBox.scrollLeft - 120,
+        direction === "next"
+          ? this.scrollBox.scrollLeft + 120
+          : this.scrollBox.scrollLeft - 120,
       behavior: "smooth",
     });
   }
 
+  /**
+   * Show/hide navigation arrows based on scroll position
+   */
   handleShowNav() {
     this.navNext.classList.toggle(
       "nav-hide",
@@ -1401,8 +1871,12 @@ class HorizontalScrollBox extends HTMLElement {
 }
 customElements.define("horizontal-scroll-box", HorizontalScrollBox);
 
-// TODO: replace all sliders with CSS-only solution
-// Glide.js: https://glidejs.com/docs/
+/**
+ * Glide Slider Component
+ *
+ * Wrapper for Glide.js slider library with responsive breakpoint support.
+ * Handles configuration parsing from CSS classes.
+ */
 class GlideSlider extends HTMLElement {
   constructor() {
     super();
@@ -1441,10 +1915,23 @@ class GlideSlider extends HTMLElement {
     }
   }
 
+  /**
+   * Get configuration path for current breakpoint
+   * @param {number} currentBreakpoint - Breakpoint width
+   * @returns {Object} Configuration object
+   */
   getPath(currentBreakpoint) {
-    return currentBreakpoint ? this.options.breakpoints[currentBreakpoint] : this.options;
+    return currentBreakpoint
+      ? this.options.breakpoints[currentBreakpoint]
+      : this.options;
   }
 
+  /**
+   * Add other peek configuration
+   * @param {string} currentPeek - Current peek direction
+   * @param {number} currentBreakpoint - Breakpoint width
+   * @returns {Object} Peek configuration
+   */
   addOtherPeek(currentPeek, currentBreakpoint) {
     const otherPeek = ["before", "after"].filter((i) => i !== currentPeek)[0];
     const path = this.getPath(currentBreakpoint);
@@ -1452,10 +1939,17 @@ class GlideSlider extends HTMLElement {
     return path?.peek?.[otherPeek] ? {} : { [otherPeek]: 0 };
   }
 
+  /**
+   * Parse configuration value
+   * @param {string} valueString - Value string to parse
+   * @returns {any} Parsed value
+   */
   parseValue(valueString) {
     let value;
     if (isNaN(valueString)) {
-      value = ["true", "false"].includes(valueString) ? valueString === "true" : valueString;
+      value = ["true", "false"].includes(valueString)
+        ? valueString === "true"
+        : valueString;
     } else {
       value = parseInt(valueString);
     }
@@ -1463,6 +1957,14 @@ class GlideSlider extends HTMLElement {
     return value;
   }
 
+  /**
+   * Build option object from class parts
+   * @param {string} level1 - First level key
+   * @param {string} level2 - Second level key
+   * @param {string} level3 - Third level value
+   * @param {number} currentBreakpoint - Breakpoint width
+   * @returns {Object} Option object
+   */
   buildOptionObject(level1, level2, level3, currentBreakpoint) {
     return {
       [level1]: level3
@@ -1470,12 +1972,17 @@ class GlideSlider extends HTMLElement {
             ...[this.getPath(currentBreakpoint)]?.[level1],
             [level2]: this.parseValue(level3),
             // fixes bug: property fails when only before/after is present
-            ...(level1 === "peek" && this.addOtherPeek(level2, currentBreakpoint)),
+            ...(level1 === "peek" &&
+              this.addOtherPeek(level2, currentBreakpoint)),
           }
         : this.parseValue(level2),
     };
   }
 
+  /**
+   * Parse options from CSS classes
+   * @param {Array} optionClasses - Array of option classes
+   */
   getOptions(optionClasses) {
     optionClasses.forEach((className) => {
       const splitClass = className.split(/[\:\.\-]/);
@@ -1490,22 +1997,42 @@ class GlideSlider extends HTMLElement {
 
         this.options.breakpoints[breakpointInt] = {
           ...this.options.breakpoints?.[breakpointInt],
-          ...this.buildOptionObject(splitClass[1], splitClass[2], splitClass[3], breakpointInt),
+          ...this.buildOptionObject(
+            splitClass[1],
+            splitClass[2],
+            splitClass[3],
+            breakpointInt
+          ),
         };
       } else {
         this.options = {
           ...this.options,
-          ...this.buildOptionObject(splitClass[0], splitClass[1], splitClass[2]),
+          ...this.buildOptionObject(
+            splitClass[0],
+            splitClass[1],
+            splitClass[2]
+          ),
         };
       }
     });
   }
 
+  /**
+   * Initialize the Glide slider
+   */
   initSlider() {
     const classes = Array.from(this.classList);
 
     if (classes.length > 0) {
-      const optionTypes = ["perView", "peek", "focusAt", "type", "bound", "gap", "autoplay"];
+      const optionTypes = [
+        "perView",
+        "peek",
+        "focusAt",
+        "type",
+        "bound",
+        "gap",
+        "autoplay",
+      ];
       const optionClasses = classes.filter((className) =>
         optionTypes.some((optionType) => className.includes(optionType))
       );
@@ -1519,6 +2046,12 @@ class GlideSlider extends HTMLElement {
 }
 customElements.define("glide-slider", GlideSlider);
 
+/**
+ * Gift With Purchase URL Component
+ *
+ * Handles gift with purchase functionality based on URL parameters.
+ * Checks cart value and adds gifts automatically.
+ */
 class GiftWithPurchaseUrl extends HTMLElement {
   constructor() {
     super();
@@ -1536,6 +2069,9 @@ class GiftWithPurchaseUrl extends HTMLElement {
     }
   }
 
+  /**
+   * Check if gift qualifies for automatic addition
+   */
   checkGiftQualifiers() {
     const { threshold, variantId } = this.dataset;
 
@@ -1562,17 +2098,28 @@ class GiftWithPurchaseUrl extends HTMLElement {
 }
 customElements.define("gift-with-purchase-url", GiftWithPurchaseUrl);
 
+/**
+ * Countdown Component
+ *
+ * Displays countdown timer with days, hours, minutes, and seconds.
+ * Updates every second.
+ */
 class CountdownComponent extends HTMLElement {
   constructor() {
     super();
     this.updateTimer();
   }
 
+  /**
+   * Update countdown timer every second
+   */
   updateTimer() {
     setInterval(() => {
       const dateArray = this.dataset.date.split("/");
       const sortedDateArray = [dateArray[2], dateArray[0], dateArray[1]];
-      const future = new Date(`${sortedDateArray.join("-")}T${this.dataset.time}:00-07:00`);
+      const future = new Date(
+        `${sortedDateArray.join("-")}T${this.dataset.time}:00-07:00`
+      );
       const now = new Date();
       const diff = future - now;
 
@@ -1590,19 +2137,35 @@ class CountdownComponent extends HTMLElement {
 }
 customElements.define("countdown-component", CountdownComponent);
 
+/**
+ * Gift Card Fields Component
+ *
+ * Syncs gift card form fields with product form.
+ */
 class GiftCardFields extends HTMLElement {
   constructor() {
     super();
     this.addEventListener("change", this.onInputChange);
   }
 
+  /**
+   * Handle input changes and sync with product form
+   * @param {Event} event - Change event
+   */
   onInputChange(event) {
-    document.querySelector(`product-form.pdp-product-form #sktc${event.target.id}`).value =
-      event.target.value;
+    document.querySelector(
+      `product-form.pdp-product-form #sktc${event.target.id}`
+    ).value = event.target.value;
   }
 }
 customElements.define("gift-card-fields", GiftCardFields);
 
+/**
+ * Collection Anchors Component
+ *
+ * Handles collection page anchor navigation.
+ * Opens/closes subcollections based on anchor clicks.
+ */
 class CollectionAnchors extends HTMLElement {
   constructor() {
     super();
@@ -1612,18 +2175,30 @@ class CollectionAnchors extends HTMLElement {
     );
   }
 
+  /**
+   * Handle anchor click events
+   * @param {HTMLElement} anchor - The clicked anchor element
+   */
   onAnchorClick(anchor) {
-    document.querySelectorAll("details.subcollection").forEach((subcollection) => {
-      if (subcollection.id === anchor.getAttribute("href").substring(1)) {
-        subcollection.setAttribute("open", "");
-      } else {
-        subcollection.removeAttribute("open");
-      }
-    });
+    document
+      .querySelectorAll("details.subcollection")
+      .forEach((subcollection) => {
+        if (subcollection.id === anchor.getAttribute("href").substring(1)) {
+          subcollection.setAttribute("open", "");
+        } else {
+          subcollection.removeAttribute("open");
+        }
+      });
   }
 }
 customElements.define("collection-anchors", CollectionAnchors);
 
+/**
+ * Postscript Teaser Component
+ *
+ * Handles Postscript popup teaser functionality.
+ * Shows teaser when Postscript is ready and opens popups on click.
+ */
 class PostscriptTeaser extends HTMLElement {
   connectedCallback() {
     this.button = this.querySelector("button");
@@ -1641,6 +2216,9 @@ class PostscriptTeaser extends HTMLElement {
     });
   }
 
+  /**
+   * Open Postscript popup
+   */
   openPopup() {
     console.log("open popup", this.popupId);
     window.postscript.popups.open(this.popupId, {
@@ -1651,7 +2229,18 @@ class PostscriptTeaser extends HTMLElement {
 }
 customElements.define("postscript-teaser", PostscriptTeaser);
 
-// TODO: consider removing - replace with css only solution, or move to only pages that use it
+// =============================================================================
+// LEGACY COMPONENTS
+// =============================================================================
+
+/**
+ * Accordion Component (Legacy)
+ *
+ * TODO: consider removing - replace with css only solution, or move to only pages that use it
+ *
+ * Handles accordion functionality with smooth animations.
+ * Uses Web Animations API for performance.
+ */
 class Accordion {
   constructor(el) {
     this.el = el;
@@ -1666,6 +2255,10 @@ class Accordion {
     this.summary.addEventListener("click", (e) => this.onClick(e));
   }
 
+  /**
+   * Handle accordion click events
+   * @param {Event} e - Click event
+   */
   onClick(e) {
     e.preventDefault();
     this.el.style.overflow = "hidden";
@@ -1676,6 +2269,9 @@ class Accordion {
     }
   }
 
+  /**
+   * Shrink accordion with animation
+   */
   shrink() {
     this.isCollapsing = true;
 
@@ -1700,16 +2296,24 @@ class Accordion {
     this.animation.oncancel = () => (this.isCollapsing = false);
   }
 
+  /**
+   * Open accordion
+   */
   open() {
     this.el.style.height = `${this.el.offsetHeight}px`;
     this.el.open = true;
     window.requestAnimationFrame(() => this.expand());
   }
 
+  /**
+   * Expand accordion with animation
+   */
   expand() {
     this.isExpanding = true;
     const startHeight = `${this.el.offsetHeight}px`;
-    const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight}px`;
+    const endHeight = `${
+      this.summary.offsetHeight + this.content.offsetHeight
+    }px`;
 
     if (this.animation) {
       this.animation.cancel();
@@ -1728,6 +2332,10 @@ class Accordion {
     this.animation.oncancel = () => (this.isExpanding = false);
   }
 
+  /**
+   * Handle animation completion
+   * @param {boolean} open - Whether accordion is open
+   */
   onAnimationFinish(open) {
     this.el.open = open;
     this.animation = null;
@@ -1736,6 +2344,8 @@ class Accordion {
     this.el.style.height = this.el.style.overflow = "";
   }
 }
+
+// Initialize legacy accordion components
 document.querySelectorAll("details.accordion").forEach((el) => {
   new Accordion(el);
 });
