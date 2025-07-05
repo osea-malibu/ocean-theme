@@ -1,0 +1,82 @@
+{%- comment -%}
+  Product Buy Buttons Snippet - OWC Version
+  Renders the add to cart button and related functionality for OWC product pages
+  
+  Parameters:
+  - product: The product object
+  - product_form_id: The form ID for the product
+  - block: The block object containing settings
+  - excluded_from_site: Boolean to exclude from site
+{%- endcomment -%}
+
+{%- unless excluded_from_site -%}
+  <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
+    <product-form class="product-form pdp-product-form" data-cart-type="{{ settings.cart_type }}">
+      {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+        <input type="hidden" name="properties[_is_subscription]" value="false">
+        {% if product.type contains 'Gift Card' %}
+          <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
+          <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
+          <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
+        {%- endif -%}
+        <div class="product-form__buttons relative grid grid-cols-2 gap-2" id="AddToCart">
+          <button
+            type="submit"
+            name="add"
+            class="product-form__submit relative button button-md bg-owc-yellow text-owc-blue border-owc-yellow w-full col-span-2 disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
+            {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+          >
+              <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
+                {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+              </span>
+              <span class="label">
+                {%- if product.selected_or_first_available_variant.available -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </span>
+              {%- if block.settings.atc_show_price -%}
+                {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
+              {%- endif -%}
+          </button>
+          {%- unless product.selected_or_first_available_variant.available -%}
+            <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
+            <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
+          {%- endunless -%}
+        </div>
+        {%- if product.selected_or_first_available_variant.available -%}
+          {%- if product.metafields.custom.limited_availability_badge or product.selected_or_first_available_variant.inventory_quantity <= settings.low_stock_threshold -%}
+            <div class="text-coral-800 font-bold tracking-wide my-1 text-center">Limited stock available!</div>
+          {%- else -%}
+            <div class="my-1 text-sm font-book text-owc-blue">
+              <ul>
+              <li>+ 30 Day Money Back Guarantee</li>
+              <li>+ Free Shipping{% if settings.shipping_countdown_threshold > 0 %} on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+{% endif %}</li>
+              </ul>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+      <div class="product-form__error-message-wrapper absolute left-0 mt-1 text-coral-800 text-sm" role="alert" hidden>
+        {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
+        <span class="product-form__error-message leading-4 align-bottom"></span>
+      </div>
+    </product-form>
+  </div>
+  <div class="shipping-calculator hidden col-span-12 mt-4">
+    <shipping-calculator class="flex items-end gap-2">
+      <form class="relative">
+        <label for="shippingzip" class="font-medium">Estimated shipping time:</label><br/>
+        <input class="input input-sm py-2 w-60" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
+        <input class="button button-tertiary button-sm absolute right-1 bottom-1 py-0.5 px-2" type="submit" value="Submit">
+      </form>
+      <div
+        id="transitTimeOutput"
+        data-transition-end="opacity-100 translate-x-0"
+        data-transition-start="-translate-x-4 opacity-0"
+        class="leading-8 mb-px -translate-x-4 opacity-0 transition-transform-opacity duration-300 inline-flex bg-seafoam-300 font-bold rounded-lg px-2 mt-2 pointer-events-none"></div>
+    </shipping-calculator>
+  </div>
+{%- endunless -%} 

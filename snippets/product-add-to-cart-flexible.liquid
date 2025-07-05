@@ -1,0 +1,56 @@
+{%- comment -%}
+  Flexible Product Add to Cart Snippet
+  Renders an add to cart button with subscription support and flexible product source
+  
+  Parameters:
+  - product: The product object
+  - product_form_id: The form ID for the product
+  - button_classes: Additional CSS classes for the button
+  - is_subscription: Boolean to show subscription text instead of add to cart
+  - show_price: Boolean to show price in button
+  - show_variants: Boolean to show price range for variants
+  - button_aria_label: Aria label for the button (optional)
+{%- endcomment -%}
+
+<product-form class="product-form relative" data-cart-type="{{ settings.cart_type }}">
+  <div class="product-form__error-message-wrapper absolute left-0 mt-1 text-sm" role="alert" hidden>
+    {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
+    <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
+  </div>
+
+  {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+    <input type="hidden" name="properties[_is_subscription]" value="false">
+    <button
+      id="{{ product_form_id }}-submit"
+      type="submit"
+      name="add"
+      aria-haspopup="dialog"
+      aria-labelledby="{{ product_form_id }}-submit title-{{ block.id }}-{{ product.id }}"
+      aria-live="polite"
+      class="button w-full transition flex mt-2 disabled:opacity-50 {% if product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_classes }}"
+      {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+      {% if button_aria_label != blank %}aria-label="{{ button_aria_label }}"{% endif %}
+    >
+      {%- if product.selected_or_first_available_variant.available -%}
+        {%- if is_subscription -%}
+          <span>Subscribe</span>
+        {%- else -%}
+          <span>{{ 'products.product.add_to_cart' | t }}</span>
+        {%- endif -%}
+        {%- if show_price -%}
+          <span id="price-{{ product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
+            {% render 'price',
+              product: product,
+              show_price_range: show_variants and product.has_only_default_variant == false,
+              use_variant: true,
+              subscription: is_subscription
+            %}
+          </span>
+        {%- endif -%}
+      {%- else -%}
+        {{ 'products.product.sold_out' | t }}
+      {%- endif -%}
+    </button>
+  {%- endform -%}
+</product-form> 
