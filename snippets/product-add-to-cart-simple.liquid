@@ -1,0 +1,59 @@
+{% comment %}
+  Simple add-to-cart button for collection comparison and simple use cases
+  Parameters:
+  - product: Product object
+  - show_quantity_selector: Boolean to show quantity selector (optional)
+{% endcomment %}
+
+{%- liquid
+  assign product_form_id = 'product-form-' | append: product.id | append: '-' | append: section.id
+-%}
+
+<div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+  <product-form data-cart-type="{{ settings.cart_type }}" class="relative">
+    <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
+      {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
+      <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
+    </div>
+
+    {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled />
+      <button
+        id="{{ product_form_id }}-submit"
+        type="submit"
+        name="add"
+        aria-haspopup="dialog"
+        aria-live="polite"
+        class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %}"
+        {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+      >
+        {%- if product.selected_or_first_available_variant.available -%}
+          <span class="label">{{ 'products.product.add_to_cart' | t }}&nbsp;</span>
+          {%- liquid
+            assign price_id = 'price-' | append: product.id | append: '-' | append: section.id
+          -%}
+          {%- render 'price',
+            product: product,
+            price_id: price_id,
+            price_class: 'tracking-wide',
+            show_price_range: true,
+            use_variant: true
+          -%}
+        {%- else -%}
+          <span class="label">{{ 'products.product.sold_out' | t }}</span>
+        {%- endif -%}
+      </button>
+      {%- if product.selected_or_first_available_variant.available == false -%}
+        <div class="absolute z-10 inset-x-0 bottom-0 h-10 sm:h-[42px]">
+          <div
+            class="klaviyo-product-container"
+            data-klaviyo-handle="{{ product.handle }}"
+            id="klaviyo-data-handle-{{ product.handle }}-{{ section.id }}"
+          >
+            <div class="klaviyo-button-container !inset-0 !w-full !opacity-100 !-ml-0"></div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+  </product-form>
+</div> 

@@ -1,0 +1,154 @@
+{% comment %}
+  Product buy buttons for main product pages
+  Parameters:
+  - product: Product object
+  - section: Section object for settings
+{% endcomment %}
+
+{%- liquid
+  assign product_form_id = 'product-form-' | append: product.id | append: '-' | append: section.id
+  assign subscription_group = nil
+  for group in product.selling_plan_groups
+    if group.name == 'Subscribe and Save'
+      assign subscription_group = group
+    endif
+  endfor
+-%}
+
+<div class="overflow-hidden px-1 pb-1 -mx-1 mt-auto -mb-1">
+  {%- if product.variants.size > 1 -%}
+    {%- assign dropdown_product_handles = 'gift-card' | split: ', ' -%}
+    {%- if section.settings.variant_picker_type == 'dropdown' or dropdown_product_handles contains product.handle -%}
+      <variant-selects
+        class="block mt-1 no-js-hidden"
+        data-section="{{ product.id }}-{{ section.id }}"
+        data-url="{{ product.url }}"
+        data-update-url="false"
+      >
+        {%- for option in product.options_with_values -%}
+          <div class="block relative">
+            <label class="block absolute top-0 left-3 z-10 text-xs font-medium leading-5 sm:top-px" for="Option-{{ product.id }}-{{ forloop.index0 }}-{{ section.id }}">
+              {{- option.name -}}
+            </label>
+            <select id="Option-{{ product.id }}-{{ forloop.index0 }}-{{ section.id }}"
+              class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {%- for value in option.values -%}
+                <option
+                  value="{{ value | escape }}"
+                  {% if option.selected_value == value %}selected="selected"{% endif %}
+                >
+                  {{ value }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endfor -%}
+
+        <script type="application/json" class="variant-data">
+          {{ product.variants | json }}
+        </script>
+      </variant-selects>
+    {%- else -%}
+      <variant-radios
+        class="block mt-1.5 no-js-hidden"
+        data-section="{{ product.id }}-{{ section.id }}"
+        data-url="{{ product.url }}"
+        data-update-url="false"
+      >
+        {%- for option in product.options_with_values -%}
+          <fieldset class="js flex{% if option.name == 'Scent' %} sr-only{% endif %}">
+            <legend class="sr-only">{{ option.name }}</legend>
+            {%- for value in option.values -%}
+              <div>
+                <input type="radio"
+                  id="{{ product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section.id }}"
+                  class="hidden peer"
+                  name="{{ option.name }}"
+                  value="{{ value | escape }}"
+                  form="{{ product_form_id }}"
+                  {% if option.name == 'Scent' and value == 'Scented' %}
+                    checked
+                  {% elsif option.selected_value == value %}
+                    checked
+                  {% endif %}
+                >
+                <label
+                  class="button button-xs block button-secondary rounded-full lowercase tracking-wide peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-1.5 2xs:px-2 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}"
+                  for="{{ product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section.id }}"
+                  tabindex="0"
+                >
+                  {{ value }}
+                </label>
+              </div>
+            {%- endfor -%}
+          </fieldset>
+        {%- endfor -%}
+
+        <script type="application/json" class="variant-data">
+          {{ product.variants | json }}
+        </script>
+      </variant-radios>
+    {%- endif -%}
+  {%- endif -%}
+
+  <product-form data-cart-type="{{ settings.cart_type }}" class="relative">
+    <div class="hidden items-center mb-1 product-form__error-message-wrapper" role="alert">
+      {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
+      <span class="text-sm tracking-wide product-form__error-message text-coral-800 font-book"></span>
+    </div>
+
+    {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled />
+      <button
+        id="{{ product_form_id }}-submit"
+        type="submit"
+        name="add"
+        aria-haspopup="dialog"
+        aria-live="polite"
+        class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %}"
+        {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+      >
+        {%- if product.selected_or_first_available_variant.available -%}
+          <span class="label">{{ 'products.product.add_to_cart' | t }}&nbsp;</span>
+          {%- liquid
+            assign price_id = 'price-' | append: product.id | append: '-' | append: section.id
+            assign set_products = collections['skincare-sets'].products | map: 'handle'
+            assign is_set = false
+            assign show_range = true
+            assign price_class = 'tracking-wide'
+            if set_products contains product.handle
+              assign is_set = true
+            endif
+            if is_set
+              assign show_range = false
+              assign price_class = 'tracking-wide set-price'
+            endif
+          -%}
+          {%- render 'price',
+            product: product,
+            price_id: price_id,
+            price_class: price_class,
+            show_price_range: show_range,
+            use_variant: true
+          -%}
+        {%- else -%}
+          <span class="label">{{ 'products.product.sold_out' | t }}</span>
+        {%- endif -%}
+      </button>
+      {%- if product.selected_or_first_available_variant.available == false -%}
+        <div class="absolute z-10 inset-x-0 bottom-0 h-10 sm:h-[42px]">
+          <div
+            class="klaviyo-product-container"
+            data-klaviyo-handle="{{ product.handle }}"
+            id="klaviyo-data-handle-{{ product.handle }}-{{ section.id }}"
+          >
+            <div class="klaviyo-button-container !inset-0 !w-full !opacity-100 !-ml-0"></div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+  </product-form>
+</div> 
