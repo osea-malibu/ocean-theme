@@ -260,45 +260,15 @@
                               {%- endif -%}
                             {%- endif -%}
 
-                            <product-form data-cart-type="{{ settings.cart_type }}">
-                              <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
-                                {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
-                                <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
-                              </div>
-
-                              {%- form 'product', block.settings.atc_button_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                                <input type="hidden" name="id" value="{{ block.settings.atc_button_product.selected_or_first_available_variant.id }}" disabled>
-                                <input type="hidden" name="properties[_is_subscription]" value="false">
-                                <button
-                                  id="{{ product_form_id }}-submit"
-                                  type="submit"
-                                  name="add"
-                                  aria-haspopup="dialog"
-                                  aria-labelledby="{{ product_form_id }}-submit title-{{ block.id }}-{{ block.settings.atc_button_product.id }}"
-                                  aria-live="polite"
-                                  class="button w-full transition flex mt-2 disabled:opacity-50 {% if block.settings.atc_button_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ block.settings.button_classes }}"
-                                  {% if block.settings.atc_button_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                                >
-                                  {%- if block.settings.atc_button_product.selected_or_first_available_variant.available -%}
-                                    {%- if block.settings.is_subscription -%}
-                                      <span>Subscribe</span>
-                                    {%- else -%}
-                                      <span>{{ 'products.product.add_to_cart' | t }}</span>
-                                    {%- endif -%}
-                                    <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
-                                      {% render 'price',
-                                        product: block.settings.atc_button_product,
-                                        show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
-                                        use_variant: true,
-                                        subscription: block.settings.is_subscription
-                                      %}
-                                    </span>
-                                  {%- else -%}
-                                    {{ 'products.product.sold_out' | t }}
-                                  {%- endif -%}
-                                </button>
-                              {%- endform -%}
-                            </product-form>
+                            {% render 'product-add-to-cart-flexible', 
+                              product: block.settings.atc_button_product, 
+                              product_form_id: product_form_id, 
+                              button_classes: block.settings.button_classes,
+                              is_subscription: block.settings.is_subscription,
+                              show_price: true,
+                              show_variants: block.settings.show_variants,
+                              button_aria_label: block.settings.button_aria_label
+                            %}
                           </div>
                         {%- else -%}
                           <a
