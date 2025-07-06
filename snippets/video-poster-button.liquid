@@ -1,0 +1,37 @@
+{% comment %}
+  Video Poster Button Snippet
+  
+  This snippet creates a clickable video poster with a play button overlay.
+  Used for deferred video loading in product galleries and media sections.
+  
+Accepts:
+  - section_id: The section ID for unique button identification
+  - media: The video media object containing preview_image
+  - classes: Additional CSS classes for the button (optional). Default is empty.    
+
+  
+  Usage:
+  {% render 'video-poster-button', 
+    section_id: section.id, 
+    media: media, 
+    classes: 'custom-class' %}
+{% endcomment %}
+
+<button
+  id="Deferred-Poster-Modal-{{ section.id }}"
+  class="absolute w-full h-full deferred-media__poster"
+  type="button"
+>
+  <img
+    srcset="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }} 1x, {{ media.preview_image | image_url: width: 800, height: 1000, crop: 'center' }} 2x"
+    src="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}"
+    class="md:rounded-md"
+    alt="Loading product video"
+    loading="lazy"
+    width="1280"
+    height="1000"
+  >
+  <span class="flex absolute top-1/2 left-1/2 z-10 justify-center items-center w-20 h-20 rounded-full scale-100 -translate-x-1/2 -translate-y-1/2 deferred-media__poster-button bg-white/50 motion-safe:transition-transform hover:scale-110">
+    {%- render 'icon-play', classes: 'w-8 h-8 text-white -mr-1 ml-1' -%}
+  </span>
+</button>

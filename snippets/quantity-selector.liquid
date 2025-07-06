@@ -1,0 +1,54 @@
+{% comment %}
+  Quantity Selector Snippet
+  
+  This snippet creates a quantity input component with plus/minus buttons.
+  Used for product quantity selection in product forms.
+  
+  Accepts:
+  - section_id: The section ID for unique input identification
+  - product_form_id: The form ID to associate the input with
+  - quantity_classes: CSS classes for the plus/minus buttons
+  - qty_classes: CSS classes for the wrapper div (optional)
+  - excluded_from_site: Boolean to hide the selector (optional)
+  
+  Usage:
+  {% render 'quantity-selector', 
+    section_id: section.id, 
+    product_form_id: product_form_id, 
+    quantity_classes: quantity_classes %}
+{% endcomment %}
+
+{%- unless excluded_from_site -%}
+    <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
+      <label class="sr-only" for="Quantity-{{ section.id }}">
+        {{ 'products.product.quantity.label' | t }}
+      </label>
+      <quantity-input class="inline-flex w-full rounded-md border quantity pdp-quantity border-seaweed-400">
+        <button
+          class="{{ quantity_classes }} rounded-l-md"
+          name="minus"  
+          type="button"
+        >
+          <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+          {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+        </button>
+        <input
+          class="px-0 py-1 w-8 h-10 text-xl text-center border-0 quantity__input grow"
+          type="number"
+          name="quantity"
+          id="Quantity-{{ section.id }}"
+          min="1"
+          value="1"
+          form="{{ product_form_id }}"
+        >
+        <button
+          class="{{ quantity_classes }} rounded-r-md"
+          name="plus"
+          type="button"
+        >
+          <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+          {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+        </button>
+      </quantity-input>
+    </div>
+  {%- endunless -%}
