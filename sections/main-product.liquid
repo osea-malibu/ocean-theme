@@ -86,9 +86,13 @@
                 </div>
               {%- endif -%}
             {%- when 'info_tabs' -%}
-              {% render 'product-info-tabs', product: product, block: block %}
+              {% comment %} product tabs snippet {% endcomment %}
+              {% render 'product-info-tabs', block: block, product: product %}
+
             {%- when 'collapsible_tab' -%}
-              {% render 'product-collapsible-tab', product: product, block: block, mini_size_array: mini_size_array %}
+              {% comment %} accordion item snippet {% endcomment %}
+              {% render 'product-collapsible-tab', block: block, product: product, mini_size_array: mini_size_array %}
+
             {%- when 'free_gift_info' -%}
               {%- liquid
                 assign loyalty_only = settings.is_loyalty_gwp
@@ -120,11 +124,11 @@
               
             {%- when 'quantity_selector' -%}
               {% comment %} quantity_selector snippet {% endcomment %}
-              {% render 'quantity-selector', section_id: section.id, quantity_classes: quantity_classes, product_form_id: product_form_id %}
+              {% render 'quantity-selector', block: block, section_id: section.id, quantity_classes: quantity_classes, product_form_id: product_form_id %}
 
             {%- when 'variant_picker' -%}
               {% comment %} variant_picker snippet {% endcomment %}
-              {% render 'variant-picker', block: block, section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
+              {% render 'variant-picker', block: block, section: section, product: product, jumbo_size_array: jumbo_size_array, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
               
               {% if product.type contains 'Gift Card' %}
                 <!-- ShopKeeper Gift Card -->
