@@ -167,7 +167,7 @@
               -%}
               
               {% comment %} subscription_picker snippet {% endcomment %}
-              {% render 'subscription_picker', section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
+              {% render 'subscription_picker', block: block, section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
 
             {%- when 'buy_buttons' -%}
               {%- unless excluded_from_site -%}
