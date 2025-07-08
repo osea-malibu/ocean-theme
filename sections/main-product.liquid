@@ -126,7 +126,7 @@
               {% render 'variant-picker', block: block, section: section, product: product, set_products: set_products, mini_size_array: mini_size_array, jumbo_size_array: jumbo_size_array, product_form_id: product_form_id %}
             {%- when 'subscription_picker' -%}
               {% comment %} subscription_picker snippet {% endcomment %}
-              {% render 'subscription_picker', block: block, section: section, product: product %}
+              {% render 'subscription_picker', block: block, section: section, product: product, product_form_id: product_form_id %}
             {%- when 'buy_buttons' -%}
               {%- unless excluded_from_site -%}
                 <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
