@@ -123,7 +123,7 @@
               {% render 'quantity-selector', block: block, section_id: section.id, quantity_classes: quantity_classes, product_form_id: product_form_id %}
             {%- when 'variant_picker' -%}
               {% comment %} variant_picker snippet {% endcomment %}
-              {% render 'variant-picker', block: block, section: section, product: product, set_products: set_products, mini_size_array: mini_size_array, jumbo_size_array: jumbo_size_array, product_form_id: product_form_id %}
+              {% render 'product-variant-picker', block: block, section: section, product: product, set_products: set_products, mini_size_array: mini_size_array, jumbo_size_array: jumbo_size_array, product_form_id: product_form_id %}
             {%- when 'subscription_picker' -%}
               {% comment %} subscription_picker snippet {% endcomment %}
               {% render 'subscription_picker', block: block, section: section, product: product, product_form_id: product_form_id %}
