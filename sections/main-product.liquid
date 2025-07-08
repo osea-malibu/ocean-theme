@@ -6,10 +6,8 @@
     </a>
     {%- if product.media.size > 1 -%}
       <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden lg:pr-4 xl:pr-10">
-        
-      {% comment %} New image-slider snippet {% endcomment %}
-      {% render 'image-slider', section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
-        
+        {% comment %} New image-slider snippet {% endcomment %}
+        {% render 'image-slider', section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
       </div>
     {%- else -%}
       <div class="bg-wave-100 mb-6 md:w-1/2 lg:w-2/5 relative md:sticky md:top-[148px] max-w-full">
@@ -88,11 +86,9 @@
             {%- when 'info_tabs' -%}
               {% comment %} product tabs snippet {% endcomment %}
               {% render 'product-info-tabs', block: block, product: product %}
-
             {%- when 'collapsible_tab' -%}
               {% comment %} accordion item snippet {% endcomment %}
               {% render 'product-collapsible-tab', block: block, product: product, mini_size_array: mini_size_array %}
-
             {%- when 'free_gift_info' -%}
               {%- liquid
                 assign loyalty_only = settings.is_loyalty_gwp
@@ -125,52 +121,12 @@
             {%- when 'quantity_selector' -%}
               {% comment %} quantity_selector snippet {% endcomment %}
               {% render 'quantity-selector', block: block, section_id: section.id, quantity_classes: quantity_classes, product_form_id: product_form_id %}
-
             {%- when 'variant_picker' -%}
               {% comment %} variant_picker snippet {% endcomment %}
-              {% render 'variant-picker', block: block, section: section, product: product, jumbo_size_array: jumbo_size_array, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
-              
-              {% if product.type contains 'Gift Card' %}
-                <!-- ShopKeeper Gift Card -->
-                <gift-card-fields class="col-span-12">
-                  <div id="skt-fields">
-                    <div>
-                      <label for="gc_to" class="text-sm font-medium">To Name:</label>
-                      <input id="gc_to" type="text" value="" class="mb-2 w-full input" />
-                    </div>
-                    <div>
-                      <label for="gc_from" class="text-sm font-medium">From Name:</label>
-                      <input id="gc_from" type="text" value="" class="mb-2 w-full input" />
-                    </div>
-                    <div class="mb-2">
-                      <label for="gc_msg" class="text-sm font-medium">Message:</label>
-                      <textarea id="gc_msg" class="block w-full input" maxlength="400"></textarea>
-                      <small class="block text-right">Max characters: 400</small>
-                    </div>
-                  </div>
-                </gift-card-fields>
-                <!-- End ShopKeeper -->
-              {% endif %}
-              
-            {%- when 'subscription_picker' -%} {%comment%} cannot start snipet with when {% endcomment %}
-              {%- liquid
-                assign subscription_group = null
-                for group in product.selling_plan_groups
-                  if group.name == 'Subscribe and Save'
-                    assign subscription_group = group
-                  endif
-                endfor
-
-                assign allocations = product.selected_or_first_available_variant.selling_plan_allocations
-                assign non_subscription_allocation = false
-                if allocations.size == 1 and allocations[0].selling_plan_group_id != subscription_group.id
-                  assign non_subscription_allocation = true
-                endif
-              -%}
-              
+              {% render 'variant-picker', block: block, section: section, product: product, jumbo_size_array: jumbo_size_array %}
+            {%- when 'subscription_picker' -%}
               {% comment %} subscription_picker snippet {% endcomment %}
-              {% render 'subscription_picker', block: block, section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
-
+              {% render 'subscription_picker', block: block, section: section, product: product %}
             {%- when 'buy_buttons' -%}
               {%- unless excluded_from_site -%}
                 <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
