@@ -288,56 +288,55 @@
                                   endif
                                 endfor
 
-                                assign allocations = current_variant.selling_plan_allocations
-                                assign non_subscription_allocation = false
-                                if allocations.size == 1 and allocations[0].selling_plan_group_id != subscription_group.id
-                                  assign non_subscription_allocation = true
-                                endif
+                                assign subscription_allocation = nil
+                                for allocation in current_variant.selling_plan_allocations
+                                  if allocation.selling_plan_group_id == subscription_group.id
+                                    assign subscription_allocation = allocation
+                                  endif
+                                endfor
                               -%}
-                              {%- if current_variant and current_variant.selling_plan_allocations.size > 0 and subscription_group -%}
-                                {%- unless non_subscription_allocation -%}
-                                  <div class="cart-subscibe flex flex-col items-end h-full">
-                                    {%- liquid
-                                      assign default_option = subscription_group.selling_plans[0].id
-                                      if item.product.metafields.custom.subscription_interval != blank
-                                        for plan in subscription_group.selling_plans
-                                          if plan.name contains item.product.metafields.custom.subscription_interval
-                                            assign default_option = plan.id
-                                          endif
-                                        endfor
-                                      endif
-                                    -%}
-                                    <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
-                                      <input
-                                        id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
-                                        type="checkbox"
-                                        class="w-4 h-4 box-content mr-1 input"
-                                        name="subscribe"
+                              {%- if current_variant and subscription_allocation and subscription_group -%}
+                                <div class="cart-subscibe flex flex-col items-end h-full">
+                                  {%- liquid
+                                    assign default_option = subscription_group.selling_plans[0].id
+                                    if item.product.metafields.custom.subscription_interval != blank
+                                      for plan in subscription_group.selling_plans
+                                        if plan.name contains item.product.metafields.custom.subscription_interval
+                                          assign default_option = plan.id
+                                        endif
+                                      endfor
+                                    endif
+                                  -%}
+                                  <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
+                                    <input
+                                      id="CartSubscribeCheckbox-{{ item.index | plus: 1 }}"
+                                      type="checkbox"
+                                      class="w-4 h-4 box-content mr-1 input"
+                                      name="subscribe"
+                                      data-index="{{ item.index | plus: 1 }}"
+                                      data-default="{{ default_option }}"
+                                      {% if item.selling_plan_allocation %}checked{% endif %}
+                                    >
+                                    <span id="CartSubscribeCheckbox-label" class="whitespace-nowrap">{% if item.selling_plan_allocation != nil %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
+                                  </label>
+                                  <div class="relative text-seaweed-700 flex-1">
+                                    {%- if item.selling_plan_allocation != nil -%}
+                                      <label for="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">Ship every</label>
+                                      <select
+                                        id="CartSubscribeSelect-{{ item.index | plus: 1 }}"
+                                        class="input input-sm pl-[5rem] box-border"
+                                        name="selling_plan"
                                         data-index="{{ item.index | plus: 1 }}"
-                                        data-default="{{ default_option }}"
-                                        {% if item.selling_plan_allocation %}checked{% endif %}
                                       >
-                                      <span id="CartSubscribeCheckbox-label" class="whitespace-nowrap">{% if item.selling_plan_allocation != nil %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
-                                    </label>
-                                    <div class="relative text-seaweed-700 flex-1">
-                                      {%- if item.selling_plan_allocation != nil -%}
-                                        <label for="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">Ship every</label>
-                                        <select
-                                          id="CartSubscribeSelect-{{ item.index | plus: 1 }}"
-                                          class="input input-sm pl-[5rem] box-border"
-                                          name="selling_plan"
-                                          data-index="{{ item.index | plus: 1 }}"
-                                        >
-                                          {%- for option in subscription_group.selling_plans -%}
-                                            <option value="{{ option.id }}" {%- if option.id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}>
-                                              {{- option.name -}}
-                                            </option>
-                                          {%- endfor -%}
-                                        </select>
-                                      {%- endif -%}
-                                    </div>
+                                        {%- for option in subscription_group.selling_plans -%}
+                                          <option value="{{ option.id }}" {%- if option.id == item.selling_plan_allocation.selling_plan.id -%}selected{%- endif -%}>
+                                            {{- option.name -}}
+                                          </option>
+                                        {%- endfor -%}
+                                      </select>
+                                    {%- endif -%}
                                   </div>
-                                {%- endunless -%}
+                                </div>
                               {%- endif -%}
                             </td>
                             <td class="cart-item__totals p-0 [grid-area:price]" role="cell" headers="CartDrawer-ColumnTotal">
