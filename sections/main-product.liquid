@@ -7,7 +7,7 @@
     {%- if product.media.size > 1 -%}
       <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden lg:pr-4 xl:pr-10">
         {% comment %} New image-slider snippet {% endcomment %}
-        {% render 'image-slider', section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
+        {% render 'product-image-slider', section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
       </div>
     {%- else -%}
       <div class="bg-wave-100 mb-6 md:w-1/2 lg:w-2/5 relative md:sticky md:top-[148px] max-w-full">
