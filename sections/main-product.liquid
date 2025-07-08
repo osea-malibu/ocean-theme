@@ -124,7 +124,7 @@
 
             {%- when 'variant_picker' -%}
               {% comment %} variant_picker snippet {% endcomment %}
-              {% render 'variant-picker', section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
+              {% render 'variant-picker', block: block, section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
               
               {% if product.type contains 'Gift Card' %}
                 <!-- ShopKeeper Gift Card -->
@@ -147,8 +147,6 @@
                 </gift-card-fields>
                 <!-- End ShopKeeper -->
               {% endif %}
-
-
               
             {%- when 'subscription_picker' -%} {%comment%} cannot start snipet with when {% endcomment %}
               {%- liquid
