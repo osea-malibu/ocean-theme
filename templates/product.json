@@ -106,6 +106,7 @@
         "collapsible_tab_7MxGMU": {
           "type": "collapsible_tab",
           "name": "Scent profile",
+          "disabled": true,
           "settings": {
             "heading": "Scent profile",
             "content": "{{ product.metafields.custom.scent_profile.value }}",
@@ -126,6 +127,7 @@
         "collapsible_tab_xFbwdC": {
           "type": "collapsible_tab",
           "name": "Skin types",
+          "disabled": true,
           "settings": {
             "heading": "Skin types",
             "content": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
