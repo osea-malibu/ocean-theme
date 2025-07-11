@@ -1,4 +1,21 @@
 {%- case block.settings.heading -%}
+  {%- when 'Additional info' -%}
+    {%- capture additional_info_html -%}
+      <div class="mb-4">
+        {%- if product.metafields.custom.skin_types_list != blank -%}
+          <p class="!mb-1"><b>Skin types:</b> {{ product.metafields.custom.skin_types_list.value | join: ', ' }}</p>
+        {%- endif -%}
+        {%- if product.metafields.custom.scent_profile != blank -%}
+          <p><b>Scent profile:</b> {{ product.metafields.custom.scent_profile | strip_html }}</p>
+        {%- elsif product.metafields.custom.scent_profile_short != blank -%}
+          <p><b>Scent profile:</b> {{ product.metafields.custom.scent_profile_short | strip_html }}</p>
+        {%- endif -%}
+        {{ block.settings.content }}
+      </div>
+    {%- endcapture -%}
+    {%- if block.settings.content != blank -%}
+      {%- assign content = additional_info_html -%}
+    {%- endif -%}
   {%- when 'Benefits' -%}
     {%- liquid
       assign hide_benefit_icons = false
