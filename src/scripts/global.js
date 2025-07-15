@@ -1624,33 +1624,6 @@ class CollectionAnchors extends HTMLElement {
 }
 customElements.define("collection-anchors", CollectionAnchors);
 
-class PostscriptTeaser extends HTMLElement {
-  connectedCallback() {
-    this.button = this.querySelector("button");
-    this.popupId = this.dataset.popupId;
-
-    //show teaser when postscript is ready
-    window.addEventListener("postscriptReady", () => {
-      console.log("postscript ready");
-      this.style.display = "block";
-
-      this.button.addEventListener("click", () => {
-        console.log("button clicked");
-        this.openPopup();
-      });
-    });
-  }
-
-  openPopup() {
-    console.log("open popup", this.popupId);
-    window.postscript.popups.open(this.popupId, {
-      activePopupBehavior: "ALWAYS_DISMISS",
-      respectPopupStatus: false,
-    });
-  }
-}
-customElements.define("postscript-teaser", PostscriptTeaser);
-
 // TODO: consider removing - replace with css only solution, or move to only pages that use it
 class Accordion {
   constructor(el) {
