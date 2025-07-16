@@ -21,7 +21,7 @@
           "type": "code",
           "settings": {
             "column_classes": "",
-            "code": "<div id=\"skin-quiz\"></div>\n<script>\n(function (c, a, r, t, f, u, l) {\n  l = document.createElement(r),\n  l.async = 1;\n  l.id = a + 'scr';\n  l.src = f;\n  l.setAttribute('quizId', c);\n  l.setAttribute('flowId', a);\n  l.setAttribute('target', u);\n  document[t].appendChild(l);\n})(\"0196cfb4-1f5c-7ff2-abed-b4935c86bcf5\", \"0196d0ec-d4e5-7aad-a647-4959b02e6d26\", 'script', 'body', 'https://studio-assets.cartfulsolutions.com/embed/studio.js?' + (new Date).getTime(), 'page');\n</script>"
+            "code": "<script>\n(function (c, a, r, t, f, u, l) {\n  l = document.createElement(r),\n  l.async = 1;\n  l.id = a + 'scr';\n  l.src = f;\n  l.setAttribute('quizId', c);\n  l.setAttribute('flowId', a);\n  l.setAttribute('target', u);\n  document[t].appendChild(l);\n})(\"0196cfb4-1f5c-7ff2-abed-b4935c86bcf5\", \"0196d0ec-d4e5-7aad-a647-4959b02e6d26\", 'script', 'body', 'https://studio-assets.cartfulsolutions.com/embed/studio.js?' + (new Date).getTime(), 'page');\n</script>"
           }
         }
       },
@@ -31,7 +31,7 @@
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "section_heading": "",
-        "section_classes": "container px-0 xs:px-6\" id=\"skincare-quiz",
+        "section_classes": "container px-0 xs:px-6",
         "container_classes": "w-full",
         "logged_in_only": false,
         "is_slider": false,
@@ -43,10 +43,18 @@
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
+    },
+    "custom_liquid_NMKEmL": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<div id=\"skin-quiz\"></div>"
+      }
     }
   },
   "order": [
     "main",
-    "multicolumn_VjjjG7"
+    "multicolumn_VjjjG7",
+    "custom_liquid_NMKEmL"
   ]
 }
