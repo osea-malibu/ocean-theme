@@ -77,7 +77,7 @@
           </div>
         {%- endif -%}
         <div>
-          <h3 class="relative font-bold text-2xl">{{ section.settings.header | replace: '®', '<sup>®</sup>' }}</h3>
+          <h3 class="relative font-bold text-2xl">{{ section.settings.header | replace: '®', '<sup class="text-[60%]">®</sup>' }}</h3>
           <p class="relative leading-tight tracking-wide mb-4">{{ section.settings.subheader }}</p>
           {%- for clinical_result in product.metafields.custom.clinical_results.value -%}
             <div class="{% unless forloop.last %}mb-4{% endunless %}">
