@@ -42,6 +42,7 @@ Accepts:
           data-is-main-pdp="true"
           data-mini-sizes="{{ mini_size_array | join: ',' }}"
         >
+          {%- assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1' | split: ', ' -%}
           {%- for option in product.options_with_values -%}
             <fieldset class="js group">
               <legend class="font-medium text-sm mb-1{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">Select {{ option.name | downcase }}:</legend>
@@ -51,8 +52,14 @@ Accepts:
                     assign mini_variant = false
                     assign jumbo_variant = false
                     assign normalized_value = value | replace: 'fl ', ''
+                    assign is_small_product = false
+                    if small_products contains product.handle
+                      assign is_small_product = true
+                    endif
 
-                    if mini_size_array contains normalized_value
+                    if is_small_product and normalized_value == '0.34 oz'
+                      assign mini_variant = true
+                    elsif mini_size_array contains normalized_value and is_small_product == false
                       assign mini_variant = true
                     elsif jumbo_size_array contains normalized_value
                       assign jumbo_variant = true
@@ -74,7 +81,7 @@ Accepts:
                     >
                       {%- if option.name == 'Size' -%}
                         {%- if mini_variant -%}
-                          <b class="tracking-normal leading-none capitalize">Mini</b>
+                          <b class="tracking-normal leading-none capitalize">Travel</b>
                         {%- elsif jumbo_variant -%}
                           <b class="tracking-normal leading-none capitalize">Jumbo</b>
                         {%- else -%}
