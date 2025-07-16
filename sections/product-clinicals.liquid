@@ -8,7 +8,7 @@
 {%- if product.metafields.custom.clinical_results != blank -%}
 <div class="product-clinicals mb-12 {{ section.settings.section_classes }}">
   <div class="container">
-    <div class="{{ product_color }} p-4 lg:p-6">
+    <div class="{{ product_color }} p-4 lg:p-6 rounded-lg">
       <div class="flex flex-col sm:flex-row gap-4 lg:gap-8 relative">
         {%- if product.metafields.custom.clinical_images.value.count == 1 -%}
           {%- liquid

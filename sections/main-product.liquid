@@ -322,6 +322,12 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    const sheet = new CSSStyleSheet;
+    sheet.replaceSync(`.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }`);
+    const host = document.querySelector('delivery-promise-wc');
+    host.shadowRoot.adoptedStyleSheets.push(sheet);
+
+
     function isIE() {
       const ua = window.navigator.userAgent;
       const msie = ua.indexOf('MSIE ');
