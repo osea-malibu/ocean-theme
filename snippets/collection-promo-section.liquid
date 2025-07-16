@@ -1,8 +1,8 @@
 {%- liquid
   assign mobile_image_src = promo_section_image_mobile | image_url: width: 400
   assign mobile_image_src_2x = promo_section_image_mobile | image_url: width: 800
-  assign desktop_image_src = promo_section_image_desktop | image_url: width: 800
-  assign desktop_image_src_2x = promo_section_image_desktop | image_url: width: 1600
+  assign desktop_image_src = promo_section_image_desktop | image_url: width: 1232
+  assign desktop_image_src_2x = promo_section_image_desktop | image_url: width: 2464
 -%}
 {%- if promo_section_url != blank -%}
   <a href="{{ promo_section_url }}" class="block">
