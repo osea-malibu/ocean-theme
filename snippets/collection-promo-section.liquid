@@ -1,0 +1,53 @@
+{%- liquid
+  assign mobile_image_src = promo_section_image_mobile | image_url: width: 400
+  assign mobile_image_src_2x = promo_section_image_mobile | image_url: width: 800
+  assign desktop_image_src = promo_section_image_desktop | image_url: width: 800
+  assign desktop_image_src_2x = promo_section_image_desktop | image_url: width: 1600
+-%}
+{%- if promo_section_url != blank -%}
+  <a href="{{ promo_section_url }}" class="block">
+{%- endif -%}
+{% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
+<picture class="absolute inset-y-0 inset-x-0 z-0">
+  {%- if mobile_image_src != blank -%}
+    <source
+      {% if mobile_image_src contains '.gif' %}
+        srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
+      {% else %}
+        srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+      {% endif %}
+      media="(max-width: 639px)"
+    >
+  {%- endif %}
+  {%- if desktop_image_src != blank -%}
+    <source
+      {% if desktop_image_src contains '.gif' %}
+        srcset="{{ desktop_image_src }} 1x, {{ desktop_image_src_2x }} 2x"
+      {% else %}
+        srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+      {% endif %}
+      media="(min-width: 640px)"
+    >
+  {%- endif %}
+  <img
+    {% if mobile_image_src contains '.gif' %}
+      srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
+      src="{{ mobile_image_src }}"
+    {% else %}
+      srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+      src="{% render 'imgix', src: mobile_image_src %}"
+    {% endif %}
+    loading="lazy"
+    alt="{{ mobile_image_src.alt }}"
+    width="{{ mobile_image_src.width }}"
+    height="{{ mobile_image_src.height }}"
+    class="object-cover block w-full h-full {{ promo_section_image_classes }}"
+  >
+</picture>
+{% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
+{%- if promo_section_url != blank -%}
+</a>
+{%- endif -%}
+<div class="absolute z-10 {{ promo_section_content_classes }}">
+  {{ promo_section_content }}
+</div>
