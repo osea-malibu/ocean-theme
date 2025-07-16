@@ -1,0 +1,62 @@
+{%- comment -%}
+  Product Button Snippet with Props
+  
+  Usage:
+  {% render 'product-button',
+    product: product,
+    button_type: 'submit',
+    button_name: 'add',
+    button_classes: 'relative col-span-2 w-full product-form__submit button button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white',
+    disabled: false,
+    show_loading_spinner: true,
+    loading_spinner_classes: 'h-4 w-4 mr-2 text-white',
+    label_text_available: 'products.product.add_to_cart',
+    label_text_unavailable: 'products.product.sold_out',
+    show_price: false,
+    price_classes: 'main-price ml-auto',
+    slashed_price_color: 'text-seaweed-800 md:text-white'
+  %}
+{%- endcomment -%}
+
+{%- liquid
+  assign button_type = button_type | default: 'submit'
+  assign button_name = button_name | default: 'add'
+  assign button_classes = button_classes | default: 'relative col-span-2 w-full product-form__submit button button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white'
+  assign disabled = disabled | default: false
+  assign show_loading_spinner = show_loading_spinner | default: true
+  assign loading_spinner_classes = loading_spinner_classes | default: 'h-4 w-4 mr-2 text-white'
+  assign label_text_available = label_text_available | default: 'products.product.add_to_cart'
+  assign label_text_unavailable = label_text_unavailable | default: 'products.product.sold_out'
+  assign show_price = show_price | default: false
+  assign price_classes = price_classes | default: 'main-price ml-auto'
+  assign slashed_price_color = slashed_price_color | default: 'text-seaweed-800 md:text-white'
+  
+  if product and disabled != true
+    if product.selected_or_first_available_variant.available
+      assign disabled = false
+    else
+      assign disabled = true
+    endif
+  endif
+-%}
+
+<button
+    type="{{ button_type }}"
+    name="{{ button_name }}"
+    class="{{ button_classes }}"
+    {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+  >
+      <span class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 loading-spinner">
+        {% render 'icon-spinner', classes: loading_spinner_classes %}
+      </span>
+      <span class="label">
+        {%- if product.selected_or_first_available_variant.available -%}
+          {{ label_text_available | t }}
+        {%- else -%}
+          {{ label_text_unavailable | t }}
+        {%- endif -%}
+      </span>
+      {%- if show_price -%}
+        {%- render 'price', product: product, use_variant: true, price_class: price_classes, slashed_price_color: slashed_price_color -%}
+      {%- endif -%}
+  </button>

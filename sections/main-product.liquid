@@ -140,26 +140,21 @@
                         <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
                       {%- endif -%}
                       <div class="grid relative grid-cols-2 gap-2 product-form__buttons" id="AddToCart">
-                        <button
-                          type="submit"
-                          name="add"
-                          class="relative col-span-2 w-full product-form__submit button button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
-                          {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                        >
-                            <span class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 loading-spinner">
-                              {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-                            </span>
-                            <span class="label">
-                              {%- if product.selected_or_first_available_variant.available -%}
-                                {{ 'products.product.add_to_cart' | t }}
-                              {%- else -%}
-                                {{ 'products.product.sold_out' | t }}
-                              {%- endif -%}
-                            </span>
-                            {%- if block.settings.atc_show_price -%}
-                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto', slashed_price_color: 'text-seaweed-800 md:text-white' -%}
-                            {%- endif -%}
-                        </button>
+                        {% comment %} product-button snippet {% endcomment %}
+                        {% render 'product-button', 
+                            product: product, 
+                            button_type: 'submit', 
+                            button_name: 'add', 
+                            button_classes: 'relative col-span-2 w-full product-form__submit button button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white', 
+                            show_loading_spinner: true, 
+                            loading_spinner_classes: 'h-4 w-4 mr-2 text-white', 
+                            label_text_available: 'products.product.add_to_cart', 
+                            label_text_unavailable: 'products.product.sold_out', 
+                            show_price: block.settings.atc_show_price, 
+                            price_classes: 'main-price ml-auto', 
+                            slashed_price_color: 'text-seaweed-800 md:text-white' 
+                          %}
+
                         {%- unless product.selected_or_first_available_variant.available -%}
                           {%- if product.handle == 'ocean-glow-body-trio' %}
                             <a class="button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11" target="_blank" href="https://www.ulta.com/p/ocean-glow-body-trio-pimprod2051657?sku=2638931">
@@ -322,6 +317,12 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    const sheet = new CSSStyleSheet;
+    sheet.replaceSync(`.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }`);
+    const host = document.querySelector('delivery-promise-wc');
+    host.shadowRoot.adoptedStyleSheets.push(sheet);
+
+
     function isIE() {
       const ua = window.navigator.userAgent;
       const msie = ua.indexOf('MSIE ');
