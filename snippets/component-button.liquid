@@ -1,0 +1,88 @@
+{% comment %}
+  Accepts:
+  - classes: {String} (optional) string of TailwindCSS classnames
+  - disabled: {Boolean} true or false (default: false)
+  - label: {String} text to display in the button
+  - aria_label: {String} (optional) aria-label for the button
+  - show_spinner: {Boolean} true or false (default: false)
+
+  - element: {String} 'a' or 'button'
+
+  // a element types
+  - href: {String} (optional) URL to link to
+  
+  // button element types
+  - name: {String} (optional) name of the button
+  - type: {String} (optional) type of the button // consider renaming
+  - onclick: {String} (optional) onclick function for the button
+
+  // ATC buttons
+  - price: {Boolean} price to display in the button (default: false)
+  - price_class: {String} (optional) string of TailwindCSS classnames for the price
+  - slashed_price_color: {String} (optional) color for the slashed price
+  - product: {Product} (optional) ShopifyProductDrop product to display the price for
+  - use_variant: {Boolean} true or false
+
+  Usage:
+  {% render 'component-button',
+    style: 'primary',
+    size: 'sm',
+    classes: 'w-full',
+    label: 'Add to Cart',
+    aria_label: 'Add to Cart: Undaria Algae Body Oil',
+    element: 'a',
+    href: 'www.oseamalibu.com',
+    price: true,
+    product: product,
+    use_variant: true,
+    price_class: 'text-sm',
+    slashed_price_color: 'text-gray-500'
+  %}
+{% endcomment %}
+ <script>
+  console.log('slashed_price_color component-button', '{{ slashed_price_color }}');
+ </script>
+
+{%- liquid
+  assign button_classes = 'button'
+
+  if classes != blank
+    assign button_classes = button_classes | append: ' ' | append: classes
+  endif
+-%}
+
+{%- if element == 'a' -%}
+  <a
+    href="{{ href }}"
+    class="{{ button_classes }}"
+    {% if disabled %}disabled{% endif %}
+    {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
+  >
+{%- else -%}
+  <button
+    type="{{ type }}"
+    name="{{ name }}"
+    class="{{ button_classes }}"
+    {% if disabled %}disabled{% endif %}
+    {% if onclick != blank %}onclick="{{ onclick }}"{% endif %}
+  >
+{%- endif -%}
+  {%- if show_spinner -%}
+    <span class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 loading-spinner">
+      {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+    </span>
+  {%- endif -%}
+  <span class="label">{{ label }}</span>
+  {%- if price -%}
+    {%- render 'price',
+      product: product,
+      use_variant: use_variant,
+      price_class: price_class,
+      slashed_price_color: slashed_price_color
+    -%}
+  {%- endif -%}
+{%- if element == 'a' -%}
+  </a>
+{%- else -%}
+  </button>
+{%- endif -%}
