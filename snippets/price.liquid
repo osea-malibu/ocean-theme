@@ -48,9 +48,6 @@
 
   assign slashed_price_color = slashed_price_color | default: 'text-seaweed-800'
 -%}
-<script>
-  console.log('slashed_price_color price', '{{ slashed_price_color }}');
-</script>
 
 <span class="price whitespace-nowrap flex flex-row{% if price_class %} {{ price_class }}{% endif %}"{% if price_id != blank %} id="{{ price_id }}"{% endif %}>
   {%- if subscription -%}
