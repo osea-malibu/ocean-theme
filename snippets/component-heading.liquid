@@ -1,0 +1,35 @@
+{% comment %}
+1. REQUIRED PARAMETERS
+    - level:{Number} 1-6 - The semantic heading level
+    - text: {String} - The heading text content
+    - classes: {String} - TailwindCSS classes for styling
+
+2. CONDITIONAL PARAMETERS
+
+3. OPTIONAL PARAMETERS
+
+  Usage:
+  {% render 'component-heading',
+    level: 1,
+    text: product.title,
+    classes: 'text-4xl font-bold'
+  %}
+{% endcomment %}
+
+
+{% case level %}
+  {% when 1 %}
+    <h1 class="{{ classes }}">{{- text | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}</h1>
+  {% when 2 %}
+    <h2 class="{{ classes }}">{{ text }}</h2>
+  {% when 3 %}
+    <h3 class="{{ classes }}">{{ text | replace: 'Eye Serum', 'Serum' | escape -}}</h3>
+  {% when 4 %}
+    <h4 class="{{ classes }}">{{ text }}</h4>
+  {% when 5 %}
+    <h5 class="{{ classes }}">{{ text }}</h5>
+  {% when 6 %}
+    <h6 class="{{ classes }}">{{ text }}</h6>
+{% endcase %}
+  
+

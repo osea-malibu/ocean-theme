@@ -57,9 +57,20 @@
                 </div>
               {%- endif -%}
             {%- when 'title' -%}
+              
+            {% comment %}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
                 {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}
               </h1>
+            {% endcomment %}
+           
+              {% render 'component-heading',
+                level: 1,
+                text: product.title,
+                classes: 'title text-2xl font-medium col-span-12'
+              %}
+             
+
             {%- when 'price' -%}
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
                 {%- render 'price', product: product, use_variant: true -%}
@@ -222,7 +233,17 @@
                 <div class="{{ block.settings.upsell_classes }}{% if upsell_count > 1 %} max-h-[132px] overflow-hidden peer-checked:max-h-[1000px] motion-safe:transition-max-height{% endif %}" {{ block.shopify_attributes }}>
                   {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
                     <div class="mt-2 upsell-sets">
-                      <h2 class="mb-1 font-medium tracking-wide">Save with Sets</h2>
+
+                      {% comment %}
+                       <h2 class="mb-1 font-medium tracking-wide">Save with Sets</h2>
+                      {% endcomment %}
+
+                      {% render 'component-heading',
+                        level: 2,
+                        text: 'Save with Sets',
+                        classes: 'mb-1 font-medium tracking-wide'
+                      %}
+
                       {%- for set in product.metafields.my_fields.save_with_sets.value -%}
                         {%- render 'product-upsell', product: set -%}
                       {%- endfor -%}
@@ -230,7 +251,17 @@
                   {%- endif -%}
                   {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
                     <div class="upsell-partner {% if product.metafields.my_fields.save_with_sets != nil %}mt-4{% else %}mt-2{% endif %}">
-                      <h2 class="mb-1 font-medium tracking-wide">Pairs Well With</h2>
+                      
+                     {% comment %} 
+                      <h2 class="mb-1 font-medium tracking-wide">Pairs Well With</h2> 
+                      {% endcomment %}
+                     
+                     {% render 'component-heading',
+                        level: 2,
+                        text: 'Pairs Well With',
+                        classes: 'mb-1 font-medium tracking-wide'
+                      %}
+
                       {%- for pair_with_product in product.metafields.my_fields.pair_with_product.value -%}
                         {%- render 'product-upsell', product: pair_with_product -%}
                       {%- endfor -%}
@@ -238,7 +269,15 @@
                   {%- endif -%}
                   {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
                     <div class="mt-4 upsell-routine">
-                      <h2 class="mb-1 font-medium tracking-wide">Complete Your Routine</h2>
+
+                      {% comment %} <h2 class="mb-1 font-medium tracking-wide">Complete Your Routine</h2> {% endcomment %}
+
+                      {% render 'component-heading',
+                        level: 2,
+                        text: 'Complete Your Routine',
+                        classes: 'mb-1 font-medium tracking-wide'
+                      %}
+
                       {%- for step in product.metafields.custom.upsell_complete_routine.value -%}
                         {%- render 'product-upsell', product: step, button_style: 'link', step_number: forloop.index -%}
                       {%- endfor -%}
@@ -253,7 +292,17 @@
             {%- when 'set_includes' -%}
               {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
                 <div class="{{ block.settings.set_includes_classes }}">
-                  <h2 class="mb-2 font-medium tracking-wide">Set includes</h2>
+
+                  {% comment %} 
+                   <h2 class="mb-2 font-medium tracking-wide">Set includes</h2> 
+                   {% endcomment %}
+
+                  {% render 'component-heading',
+                    level: 2,
+                    text: 'Set includes',
+                    classes: 'mb-2 font-medium tracking-wide'
+                  %}
+
                   <ul>
                     {%- for product_in_set in product.metafields.custom.set_contains.value -%}
                       {%- render 'product-in-set', product: product_in_set -%}
@@ -286,9 +335,20 @@
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         <div class="flex flex-col gap-1 justify-between items-center w-full sm:flex-row sm:gap-2">
           <div class="flex flex-col justify-between w-full">
+
+         {% comment %}
             <h3 class="h-5 text-lg font-medium tracking-wide leading-none truncate">
               {{- product.title | replace: 'Eye Serum', 'Serum' | escape -}}
             </h3>
+        {% endcomment %}
+
+        {% render 'component-heading',
+          level: 3,
+          text: product.title,
+          classes: 'h-5 text-lg font-medium tracking-wide leading-none truncate'
+        %}
+
+            
             <p class="text-sm font-book sr-only sm:!not-sr-only">
               {{- product.metafields.custom_fields.short_description -}}
             </p>
