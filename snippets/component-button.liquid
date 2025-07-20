@@ -1,0 +1,102 @@
+{% comment %}
+
+1. REQUIRED PARAMETERS
+ - classes: {String} string of TailwindCSS classnames (includes size and style)
+ - disabled: {Boolean} true or false (default: false)
+ - label: {String} text to display in the button
+ - show_spinner: {Boolean} true or false (default: false)
+ - element: {String} 'a' or 'button'
+
+
+2. CONDITIONAL PARAMETERS
+  [IF element === 'a']
+   - href: {String} CONTEXTUALLY REQUIRED - URL destination
+   - target: {String} e.g. "_blank"
+   - rel: {String} strongly recommended w/target="_blank" (e.g. "noopener noreferrer")
+
+   [IF element === 'button']
+    - type: {String} CONTEXTUALLY REQUIRED - 'submit'|'button'|'reset'
+
+3. OPTIONAL PARAMETERS
+  - name: {String} name of the button
+  - onclick: {String} onclick function for the button
+  - aria_label: {String}
+
+4. ATC PARAMETERS
+   REQUIRED:
+   - price: {Boolean} price to display in the button (default: false)
+   - use_variant: {Boolean} true or false
+  
+   OPTIONAAL:
+    - price_class: {String} string of TailwindCSS classnames for the price
+    - slashed_price_color: {String} color for the slashed price
+    - product: {Product} ShopifyProductDrop product to display the price 
+
+
+  Usage:
+  {% render 'component-button',
+    type: 'submit',
+    name: 'add',
+    classes: 'w-full',
+    label: atc_label, // will generate 'Add to Cart' or 'Sold Out'
+    aria_label: atc_aria_label, // will generate 'Add to Cart: product name' or 'Sold Out: product name'
+    element: 'a',
+    href: 'www.oseamalibu.com' , (if element is 'a', this is required) ,
+    target: '_blank',
+    rel: 'noopener noreferrer',
+    disabled: false,
+    price: true,`
+    product: product,
+    use_variant: true,
+    price_class: 'main-price ml-auto',
+    slashed_price_color: 'text-seaweed-800 md:text-white'
+  %}
+{% endcomment %}
+
+{%- liquid
+    assign button_classes = 'button'
+    
+    if classes != blank
+      assign button_classes = button_classes | append: ' ' | append: classes
+    endif
+  -%}
+  
+  {%- if element == 'a' -%}
+    <a
+      href="{{ href | default: product.url }}"
+      class="{{ button_classes }}"
+      role="button"
+      {% if disabled %}disabled{% endif %}
+      {% if target != blank %}target="{{ target }}"{% endif %}
+      {% if rel != blank %}rel="{{ rel }}"{% endif %}
+      {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
+    >
+  {%- else -%}
+    <button
+      type="{{ type }}"
+      name="{{ name }}"
+      class="{{ button_classes }}"
+      {% if disabled %}disabled{% endif %}
+      {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
+      {% if onclick != blank %}onclick="{{ onclick }}"{% endif %}
+    >
+  {%- endif -%}
+    {%- if show_spinner -%}
+      <span class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 loading-spinner">
+        {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+      </span>
+    {%- endif -%}
+    <span class="label">{{ label }}</span>
+    {%- if price -%}
+      {%- render 'price',
+        product: product,
+        use_variant: use_variant,
+        price_class: price_class,
+        slashed_price_color: slashed_price_color
+      -%}
+    {%- endif -%}
+  {%- if element == 'a' -%}
+    </a>
+  {%- else -%}
+    </button>
+  {%- endif -%}
