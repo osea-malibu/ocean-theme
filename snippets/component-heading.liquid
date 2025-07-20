@@ -16,8 +16,14 @@
   %}
 {% endcomment %}
 
+{%- liquid
+    assign valid_level = level | plus: 0
+  if valid_level < 1 or valid_level > 6
+    assign valid_level = 1
+  endif
+-%}
 
-{% case level %}
+{% case valid_level %}
   {% when 1 %}
     <h1 class="{{ classes }}">{{- text | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}</h1>
   {% when 2 %}
@@ -31,5 +37,3 @@
   {% when 6 %}
     <h6 class="{{ classes }}">{{ text }}</h6>
 {% endcase %}
-  
-

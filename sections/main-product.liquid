@@ -270,7 +270,9 @@
                   {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
                     <div class="mt-4 upsell-routine">
 
-                      {% comment %} <h2 class="mb-1 font-medium tracking-wide">Complete Your Routine</h2> {% endcomment %}
+                      {% comment %} 
+                       <h2 class="mb-1 font-medium tracking-wide">Complete Your Routine</h2> 
+                      {% endcomment %}
 
                       {% render 'component-heading',
                         level: 2,
@@ -342,13 +344,11 @@
             </h3>
         {% endcomment %}
 
-        {% render 'component-heading',
-          level: 3,
-          text: product.title,
-          classes: 'h-5 text-lg font-medium tracking-wide leading-none truncate'
-        %}
-
-            
+          {% render 'component-heading',
+            level: 3,
+            text: product.title,
+            classes: 'h-5 text-lg font-medium tracking-wide leading-none truncate'
+          %}
             <p class="text-sm font-book sr-only sm:!not-sr-only">
               {{- product.metafields.custom_fields.short_description -}}
             </p>
