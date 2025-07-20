@@ -1,0 +1,52 @@
+{% comment %}
+
+1. REQUIRED PARAMETERS
+    - text: {String} - The text content (when used as simple text component)
+    - classes: {String} - TailwindCSS classes for styling
+
+2. CONDITIONAL PARAMETERS
+    - short_description_text: {String} - Custom short description text (when used for product descriptions)
+    - card_product: {Object} - Product object (when used for product descriptions)
+
+3. OPTIONAL PARAMETERS
+    - tag: {String} - HTML tag to wrap the text in (default: 'div')
+
+  Usage as simple text component:
+  {% render 'component-text',
+    text: 'Hello, world!',
+    classes: 'text-2xl font-bold'   
+  %}
+
+  Usage as product description component:
+  {% render 'component-text',
+    short_description_text: 'Custom description',
+    card_product: product,
+    classes: 'text-sm !leading-[1.1]',
+    tag: 'p'
+  %}
+{% endcomment %}
+
+{%- liquid
+    assign text_classes = ''
+    assign html_tag = 'div'
+
+    if classes != blank
+      assign text_classes = classes
+    endif
+
+    if tag != blank
+      assign html_tag = tag
+    endif
+-%}
+
+{%- if short_description_text != blank or card_product != blank -%}
+  <{{ html_tag }} class="{{ text_classes }}">
+    {%- if short_description_text != blank -%}
+      {{- short_description_text | escape -}}
+    {%- else -%}
+      {{- card_product.metafields.custom_fields.short_description | escape -}}
+    {%- endif -%}
+  </{{ html_tag }}>
+{%- else -%}
+  <{{ html_tag }} class="{{ text_classes }}">{{- text -}}</{{ html_tag }}>
+{%- endif -%}

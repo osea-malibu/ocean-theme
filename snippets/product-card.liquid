@@ -58,14 +58,25 @@
       {% unless remove_linking %}</a>{% endunless %}
     </div>
 
-    <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
-      {%- if short_description_text != blank -%}
-        {{- short_description_text | escape -}}
-      {%- else -%}
-        {{- card_product.metafields.custom_fields.short_description | escape -}}
-      {%- endif -%}
-    </p>
-    
+    {% comment %}
+      <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
+        {%- if short_description_text != blank -%}
+          {{- short_description_text | escape -}}
+        {%- else -%}
+          {{- card_product.metafields.custom_fields.short_description | escape -}}
+        {%- endif -%}
+      </p>
+    {% endcomment %}
+
+    {%- if short_description_text != blank or card_product.metafields.custom_fields.short_description != blank -%}
+      {% render 'component-text',
+        short_description_text: short_description_text,
+        card_product: card_product,
+        classes: 'text-sm !leading-[1.1]' | append: description_class,
+        tag: 'p'
+      %}
+    {%- endif -%}
+     
     {%- liquid
       assign product_collections_handles = card_product.collections | map: 'handle'
       if product_collections_handles contains 'exclude-from-site'
