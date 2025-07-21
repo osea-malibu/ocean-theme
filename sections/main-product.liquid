@@ -75,18 +75,7 @@
                   </a>
                 {%- endunless -%}
                 {%- if product.metafields.custom.faq != nil -%}
-                  {% comment %} 
                   <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
-                  {% endcomment %}
-
-                  {% render 'component-button',
-                    element: 'a',
-                    href: '#ProductFaqs',
-                    classes: 'text-xs link',
-                    label: 'Product FAQs',
-                    aria_label: 'Product FAQs'
-                  %}
-                  
                 {%- endif -%}
               </div>
               {%- if product.metafields.custom.set_value -%}
@@ -151,30 +140,6 @@
                         <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
                       {%- endif -%}
                       <div class="grid relative grid-cols-2 gap-2 product-form__buttons" id="AddToCart">
-
-                        {% comment %}
-                        <button
-                          type="submit"
-                          name="add"
-                          class="relative col-span-2 w-full product-form__submit button button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
-                          {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                        >
-                            <span class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 loading-spinner">
-                              {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-                            </span>
-                            <span class="label">
-                              {%- if product.selected_or_first_available_variant.available -%}
-                                {{ 'products.product.add_to_cart' | t }}
-                              {%- else -%}
-                                {{ 'products.product.sold_out' | t }}
-                              {%- endif -%}
-                            </span>
-                            {%- if block.settings.atc_show_price -%}
-                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto', slashed_price_color: 'text-seaweed-800 md:text-white' -%}
-                            {%- endif -%}
-                        </button>
-                        {% endcomment %}
-
                         {%- liquid
                           if product.selected_or_first_available_variant.available
                             assign atc_label = 'products.product.add_to_cart' | t
@@ -187,41 +152,24 @@
                           else
                             assign atc_disabled = true
                           endif
-
-                          assign atc_aria_label = atc_label | append: ': ' | append: product.title
                         -%}
-                        
                         {% render 'component-button',
-                          type: 'submit',
-                          name: 'add',
                           classes: 'relative col-span-2 w-full product-form__submit button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white',
                           label: atc_label,
-                          aria_label: atc_aria_label,
                           element: 'button',
+                          type: 'submit',
+                          name: 'add',
                           disabled: atc_disabled,
                           price: block.settings.atc_show_price,
                           product: product,
                           use_variant: true,
                           price_class: 'main-price ml-auto',
-                          slashed_price_color: 'text-seaweed-800 md:text-white',
+                          slashed_price_color: 'md:text-white text-seaweed-800',
                           show_spinner: true
                         %}
-
                         {%- unless product.selected_or_first_available_variant.available -%}
-                          {% comment %}
-                          {%- if product.handle == 'ocean-glow-body-trio' %}
-                            <a class="button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11" target="_blank" href="https://www.ulta.com/p/ocean-glow-body-trio-pimprod2051657?sku=2638931">
-                              <span class="text-white">Shop now on ULTA</span>
-                            </a>
-                          {%- else -%}
-                            <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
-                            <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
-                          {%- endif -%}
-                            {% endcomment %}
-
-                            <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
-                            <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
-
+                          <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
+                          <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
                         {%- endunless -%}
                       </div>
                       {%- if product.selected_or_first_available_variant.available -%}
