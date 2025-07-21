@@ -20,10 +20,29 @@
       "settings": {
         "custom_liquid": "<div id=\"skin-quiz\"></div>\n<script>\n(function (c, a, r, t, f, u, l) {\n  l = document.createElement(r),\n  l.async = 1;\n  l.id = a + 'scr';\n  l.src = f;\n  l.setAttribute('quizId', c);\n  l.setAttribute('flowId', a);\n  l.setAttribute('target', u);\n  document[t].appendChild(l);\n})(\"0196cfb4-1f5c-7ff2-abed-b4935c86bcf5\", \"0196d0ec-d4e5-7aad-a647-4959b02e6d26\", 'script', 'body', 'https://studio-assets.cartfulsolutions.com/embed/studio.js', 'page');\n</script>"
       }
+    },
+    "multicolumn_BUQddm": {
+      "type": "multicolumn",
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "section_heading": "",
+        "section_classes": "mb-10",
+        "container_classes": "",
+        "logged_in_only": false,
+        "is_slider": false,
+        "slider_indicator_count": 3,
+        "slider_breakpoint_limit": "none",
+        "slider_classes": "",
+        "show_arrow_nav": true,
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "show_dot_nav": false,
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+      }
     }
   },
   "order": [
     "main",
-    "custom_liquid_NMKEmL"
+    "custom_liquid_NMKEmL",
+    "multicolumn_BUQddm"
   ]
 }
