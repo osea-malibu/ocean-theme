@@ -22,6 +22,9 @@
         >
       </picture>
     {%- endif -%}
+
+
+
     <div class="relative w-full bg-white/90 rounded-md{% if section.settings.image_mobile %} p-4 m-4 sm:p-6 sm:m-6{% endif %}">
       <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
       <div class="mb-4">
@@ -51,6 +54,8 @@
         <button class="underline cursor-pointer" type="button" aria-haspopup="dialog">Full ingredients list</button>
       </modal-opener>
     </div>
+
+    
     <modal-dialog id="IngredientsPopup">
       <div role="dialog" aria-label="Full ingredients list" aria-modal="true" class="!pr-4" tabindex="-1">
         <button id="ModalClose-IngredientsPopup" type="button" aria-label="{{ 'accessibility.close' | t }}">

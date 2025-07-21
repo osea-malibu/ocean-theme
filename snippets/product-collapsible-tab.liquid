@@ -3,12 +3,44 @@
     {%- capture more_info_html -%}
       <div class="mb-4">
         {%- if product.metafields.custom.skin_types_list != blank -%}
+        {% comment %}
           <p class="!mb-1"><b>Skin types:</b> {{ product.metafields.custom.skin_types_list.value | join: ', ' }}</p>
+        {% endcomment %}
+
+        {% render 'component-text',
+          label: 'Skin types:',
+          text: product.metafields.custom.skin_types_list.value | join: ', ',
+          classes: '!mb-1',
+          tag: 'p'
+        %}
+
         {%- endif -%}
         {%- if product.metafields.custom.scent_profile != blank -%}
+          {% comment %}
           <p><b>Scent profile:</b> {{ product.metafields.custom.scent_profile | strip_html }}</p>
+          {% endcomment %}
+
+        {% render 'component-text',
+          label: 'Scent profile:',
+          product: product,
+          metafield: 'custom.scent_profile',
+          apply_strip_html: true,
+          tag: 'p'
+        %}
+
         {%- elsif product.metafields.custom.scent_profile_short != blank -%}
+          {% comment %}
           <p><b>Scent profile:</b> {{ product.metafields.custom.scent_profile_short | strip_html }}</p>
+          {% endcomment %}
+
+        {% render 'component-text',
+          label: 'Scent profile:',
+          product: product,
+          metafield: 'custom.scent_profile_short',
+          apply_strip_html: true,
+          tag: 'p'
+        %}
+
         {%- endif -%}
         {{ block.settings.content }}
       </div>
@@ -79,6 +111,7 @@
     {%- capture how_to_html -%} 
       {%- if product.metafields.custom.how_to_use != blank -%}
         {%- assign how_to_use = product.metafields.custom.how_to_use.value -%}
+        
         <table class="mb-4">
           <tr class="align-top td:pb-2">
             <th scope="row" class="text-left"><b class="mr-1">How:</b></th>
@@ -107,6 +140,7 @@
             </tr>
           {%- endif -%}
         </table>
+
       {%- elsif product.metafields.custom_fields.how_it_works != blank -%}
         <div class="p:mb-3">{{ product.metafields.custom_fields.how_it_works }}</div>
       {%- endif -%}

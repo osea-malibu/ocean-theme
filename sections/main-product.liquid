@@ -51,21 +51,31 @@
             {%- when '@app' -%}
               {% render block %}
             {%- when 'text' -%}
+              {% comment %}
               {%- if block.settings.text != blank -%}
                 <div class="{{ block.settings.text_block_classes }}" {{ block.shopify_attributes }}>
                   {{- block.settings.text -}}
                 </div>
               {%- endif -%}
+              {% endcomment %}
+                
+              {% render 'component-text',
+                text: block.settings.text,
+                classes: block.settings.text_block_classes
+              %}
+
             {%- when 'title' -%}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
                 {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}
               </h1>
             {%- when 'price' -%}
+
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
                 {%- render 'price', product: product, use_variant: true -%}
                 {%- if product.metafields.custom.set_value -%}
                   <span class="self-center px-1.5 py-px ml-2 text-sm font-medium tracking-wide whitespace-nowrap bg-seafoam-200 text-seaweed-700">${{ product.metafields.custom.set_value }} value</span>
                 {%- endif -%}
+                
               </div>
             {%- when 'rating' -%}
               <div class="{{ block.settings.rating_classes }} flex gap-2 items-center">

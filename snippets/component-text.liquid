@@ -1,0 +1,139 @@
+{% comment %}
+Text component snippet for use in sections & snippets. 
+Can render text of any size and style with proper accessibility.
+
+Accepts:
+1. REQUIRED PARAMETERS
+   - text: {String} - The text content
+   - classes: {String} - TailwindCSS classes for styling
+
+2. CONDITIONAL PARAMETERS
+   - short_description_text: {String} - Custom short description text (when used for product descriptions)
+   - card_product: {Object} - Product object (when used for product descriptions)
+
+3. METAFIELD PARAMETERS
+   - product: {Object} - Product object for metafield access
+   - metafield: {String} - Metafield path (e.g., "custom.scent_profile")
+   - apply_strip_html: {Boolean} - Apply strip_html filter (default: false)
+   - apply_escape: {Boolean} - Apply escape filter (default: false)
+
+4. OPTIONAL PARAMETERS
+   - tag: {String} - HTML tag to wrap the text in (default: 'div')
+   - label: {String} - Bold label text to display before the content (e.g., "Skin types:")
+   - use_strong: {Boolean} - Use <strong> instead of <b> for important labels (default: false)
+
+Usage as section block:
+{% render 'component-text', block: block %}
+
+Usage as direct component:
+{% render 'component-text',
+  text: 'Text content',
+  classes: 'text-2xl font-bold'
+%}
+
+Usage as product description component:
+{% render 'component-text',
+  short_description_text: 'Custom description',
+  card_product: product,
+  classes: 'text-sm !leading-[1.1]',
+  tag: 'p'
+%}
+
+Usage with text and label:
+{% render 'component-text',
+  label: 'Skin types:',
+  text: product.metafields.custom.skin_types_list.value | join: ', ',
+  classes: '!mb-1',
+  tag: 'p'
+%}
+
+Usage with metafield (handles strip_html internally):
+{% render 'component-text',
+  label: 'Scent profile:',
+  product: product,
+  metafield: 'custom.scent_profile',
+  apply_strip_html: true,
+  tag: 'p'
+%}
+{% endcomment %}
+
+{%- liquid
+    assign text_classes = '' 
+    assign html_tag = 'div'
+    assign text_content = ''
+    assign final_content = ''
+  
+    if block != blank
+      assign text_classes = block.settings.text_block_classes
+      assign text_content = block.settings.text
+    elsif classes != blank
+      assign text_classes = classes
+    endif
+  
+    if tag != blank
+      assign html_tag = tag
+    endif
+  
+    # Handle metafield content processing
+    if product != blank and metafield != blank
+      assign metafield_parts = metafield | split: '.'
+      if metafield_parts.size == 2
+        assign namespace = metafield_parts[0]
+        assign key = metafield_parts[1]
+        
+        case namespace
+          when 'custom'
+            assign raw_metafield = product.metafields.custom[key]
+          when 'custom_fields'
+            assign raw_metafield = product.metafields.custom_fields[key]
+          else
+            assign raw_metafield = product.metafields[namespace][key]
+        endcase
+        
+        if raw_metafield != blank
+          assign final_content = raw_metafield
+          
+          # Apply filters if requested
+          if apply_strip_html
+            assign stripped_content = raw_metafield | strip_html
+            if stripped_content != blank
+              assign final_content = stripped_content
+            endif
+          endif
+          
+          if apply_escape
+            assign final_content = final_content | escape
+          endif
+        endif
+      endif
+    elsif text != blank
+      assign final_content = text
+    endif
+  -%}
+  
+  {%- if block != blank -%}
+    {%- if block.settings.text != blank -%}
+      <{{ html_tag }} class="{{ text_classes }}" {{ block.shopify_attributes }}>
+        {{- text_content -}}
+      </{{ html_tag }}>
+    {%- endif -%}
+  {%- elsif short_description_text != blank or card_product != blank -%}
+    <{{ html_tag }} class="{{ text_classes }}">
+      {%- if short_description_text != blank -%}
+        {{- short_description_text | escape -}}
+      {%- else -%}
+        {{- card_product.metafields.custom_fields.short_description | escape -}}
+      {%- endif -%}
+    </{{ html_tag }}>
+  {%- elsif final_content != blank -%}
+    <{{ html_tag }} class="{{ text_classes }}">
+      {%- if label != blank -%}
+        {%- if use_strong -%}
+          <strong>{{ label }}</strong>{{ ' ' }}
+        {%- else -%}
+          <b>{{ label }}</b>{{ ' ' }}
+        {%- endif -%}
+      {%- endif -%}
+      {{- final_content -}}
+    </{{ html_tag }}>
+  {%- endif -%}
