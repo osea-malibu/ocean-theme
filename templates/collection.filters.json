@@ -9,6 +9,18 @@
  */
 {
   "sections": {
+    "image_banner_UaYpfk": {
+      "type": "image-banner",
+      "settings": {
+        "image_mobile": "shopify://shop_images/BF2024_PLP_Hero_Banner_-_Early_Access_-_Mobile_LAYOUT_5.jpg",
+        "image": "shopify://shop_images/BF2024_PLP_Hero_Banner_-_Early_Access_-_Desktop_LAYOUT.jpg",
+        "is_lazy": false,
+        "image_link": "",
+        "banner_classes": "hidden plp-banner container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "max-w-md top-1/3"
+      }
+    },
     "banner": {
       "type": "collection-banner",
       "settings": {
@@ -17,7 +29,7 @@
       }
     },
     "product-grid": {
-      "type": "main-collection",
+      "type": "main-collection-filters",
       "settings": {
         "products_per_page": 20,
         "enable_filtering": true,
@@ -27,11 +39,7 @@
         "show_reviews": false
       }
     },
-    "comparison-matrix": {
-      "type": "collection-comparison-matrix",
-      "settings": {}
-    },
-    "quiz": {
+    "eec6e816-c976-4406-bfd7-b416c719939e": {
       "type": "rich-text",
       "blocks": {
         "template--15166819401911__eec6e816-c976-4406-bfd7-b416c719939e-heading-1": {
@@ -69,15 +77,15 @@
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "container",
-        "container_classes": "text-center bg-seafoam-200 py-8 rounded"
+        "section_classes": "bg-seafoam-200 py-8",
+        "container_classes": "container text-center"
       }
     }
   },
   "order": [
+    "image_banner_UaYpfk",
     "banner",
     "product-grid",
-    "comparison-matrix",
-    "quiz"
+    "eec6e816-c976-4406-bfd7-b416c719939e"
   ]
 }
