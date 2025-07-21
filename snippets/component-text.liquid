@@ -1,0 +1,48 @@
+{% comment %}
+Text component snippet for use in sections & snippets. 
+Can render text of any size and style with proper accessibility.
+
+Accepts:
+    Required Parameters
+        - text: {String} - The text content
+        - classes: {String} - TailwindCSS classes for styling
+        - tag: {String} - HTML tag to wrap the text in (default: 'div')
+    Conditional Parameters
+        - short_description_text: {String} - Custom short description text (when used for product descriptions)
+        - card_product: {Object} - Product object (when used for product descriptions)
+Usage:
+{% render 'component-text',
+  text: 'Text content',
+  classes: 'text-2xl font-bold'
+%}
+{% endcomment %}
+
+{%- liquid
+    assign text_classes = '' 
+    assign html_tag = tag | default: 'p'
+    assign text_content = ''
+
+    if block != blank
+      assign text_classes = block.settings.text_block_classes
+      assign text_content = block.settings.text
+    elsif classes != blank
+      assign text_classes = classes
+      assign text_content = text
+    endif
+
+    if tag != blank
+      assign html_tag = tag
+    endif
+-%}
+      
+{%- if block != blank -%}
+    {%- if block.settings.text != blank -%}
+      <{{ html_tag }} class="{{ text_classes }}" {{ block.shopify_attributes }}>
+        {{- text_content -}}
+      </{{ html_tag }}>
+    {%- endif -%}
+{%- elsif text_content != blank -%}
+    <{{ html_tag }} class="{{ text_classes }}">
+        {{- text_content -}}
+    </{{ html_tag }}>
+{%- endif -%}
