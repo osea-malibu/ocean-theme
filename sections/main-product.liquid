@@ -62,7 +62,8 @@
               {% render 'component-text',
                 text: block.settings.text,
                 classes: block.settings.text_block_classes,
-                tag: 'p'
+                tag: 'p',
+                shopify_attributes: block.shopify_attributes
               %}
 
             {%- when 'title' -%}
