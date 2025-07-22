@@ -1,0 +1,39 @@
+{% comment %}
+  Text component snippet for use in sections & snippets. 
+
+  Accepts:
+  Required Parameters
+    - text: {String} - The text content
+    - classes: {String} - TailwindCSS classes for styling
+    - tag: {String} - HTML tag to wrap the text in (default: 'p')
+
+  Optional Parameters
+    - shopify_attributes: {String} - Additional Shopify attributes
+
+  Usage with Shopify attributes:
+    {% render 'component-text',
+      text: 'Text content',
+      classes: 'text-2xl font-bold',
+      tag: 'p',
+      shopify_attributes: block.shopify_attributes
+    %}
+
+  Usage without Shopify attributes:
+    {% render 'component-text',
+      text: 'Text content',
+      classes: 'text-2xl font-bold',
+      tag: 'p'
+    %}
+{% endcomment %}
+
+{%- liquid
+  assign html_tag = tag | default: 'p'
+  assign text_classes = classes | default: ''
+  assign attributes = shopify_attributes | default: ''
+-%}
+
+{%- if text != blank -%}
+  <{{ html_tag }} class="{{ text_classes }}"{% if attributes != blank %} {{ attributes }}{% endif %}>
+      {{- text -}}
+  </{{ html_tag }}>
+{%- endif -%}
