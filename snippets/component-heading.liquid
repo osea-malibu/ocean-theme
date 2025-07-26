@@ -1,23 +1,22 @@
 {% comment %}
-  Heading component snippet for use in sections & snippets. 
-  Can render headings of any level (h1-h6).
+  Heading component snippet for use in sections & snippets. Can render headings of any level (h1-h6).
 
-Accepts:
-1. REQUIRED PARAMETERS
-    - level:{Number} 1-6 - The semantic heading level
-    - text: {String} - The heading text content
-    - classes: {String} - TailwindCSS classes for styling
+  Accepts:
+  Required Parameters
+      - level:{Number} 1-6 - The semantic heading level
+      - text: {String} - The heading text content
+      - classes: {String} - TailwindCSS classes for styling
 
-2. CONDITIONAL PARAMETERS
+  Conditional Parameters
 
-3. OPTIONAL PARAMETERS
+  Optional Parameters
 
   Usage:
-  {% render 'component-heading',
-    level: 1,
-    text: product.title,
-    classes: 'text-4xl font-bold'
-  %}
+    {% render 'component-heading',
+      level: 1,
+      text: product.title,
+      classes: 'text-4xl font-bold'
+    %}
 {% endcomment %}
 
 {%- liquid
@@ -25,19 +24,27 @@ Accepts:
   if valid_level < 1 or valid_level > 6
     assign valid_level = 1
   endif
+
+  if valid_level == 1
+    assign modified_text = product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', ''
+  elsif valid_level == 3
+    assign modified_text = product.title | replace: 'Eye Serum', 'Serum' | escape
+  else
+    assign modified_text = text | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>'
+  endif
 -%}
 
 {% case valid_level %}
   {% when 1 %}
-    <h1 class="{{ classes }}">{{- text | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}</h1>
+    <h1 class="{{ classes }}">{{ modified_text }}</h1>
   {% when 2 %}
-    <h2 class="{{ classes }}">{{ text }}</h2>
+    <h2 class="{{ classes }}">{{ modified_text }}</h2>
   {% when 3 %}
-    <h3 class="{{ classes }}">{{ text | replace: 'Eye Serum', 'Serum' | escape -}}</h3>
+    <h3 class="{{ classes }}">{{ modified_text }}</h3>
   {% when 4 %}
-    <h4 class="{{ classes }}">{{ text }}</h4>
+    <h4 class="{{ classes }}">{{ modified_text }}</h4>
   {% when 5 %}
-    <h5 class="{{ classes }}">{{ text }}</h5>
+    <h5 class="{{ classes }}">{{ modified_text }}</h5>
   {% when 6 %}
-    <h6 class="{{ classes }}">{{ text }}</h6>
+    <h6 class="{{ classes }}">{{ modified_text }}</h6>
 {% endcase %}

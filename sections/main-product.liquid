@@ -57,20 +57,16 @@
                 </div>
               {%- endif -%}
             {%- when 'title' -%}
-              
             {% comment %}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
                 {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}
               </h1>
             {% endcomment %}
-           
               {% render 'component-heading',
                 level: 1,
-                text: product.title,
+                text: {{modified_text}}
                 classes: 'title text-2xl font-medium col-span-12'
               %}
-             
-
             {%- when 'price' -%}
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
                 {%- render 'price', product: product, use_variant: true -%}
@@ -346,7 +342,7 @@
 
           {% render 'component-heading',
             level: 3,
-            text: product.title,
+            text: {{modified_text}}
             classes: 'h-5 text-lg font-medium tracking-wide leading-none truncate'
           %}
             <p class="text-sm font-book sr-only sm:!not-sr-only">
