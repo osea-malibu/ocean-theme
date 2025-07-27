@@ -187,7 +187,7 @@
                         </button>
                         {% endcomment %}
                         {% render 'component-button',
-                          classes: 'relative col-span-2 w-full product-form__submit button button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white',
+                          classes: 'relative col-span-2 w-full product-form__submit button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white',
                           type: 'submit',
                           name: 'add',
                           atc_label: true,
@@ -196,7 +196,7 @@
                           price: block.settings.atc_show_price,
                           use_variant: true,
                           price_class: 'main-price ml-auto',
-                          slashed_price_color: 'text-seaweed-800 md:text-white'
+                          slashed_price_color: 'md:text-white text-seaweed-800'
                         %}
                         {%- unless product.selected_or_first_available_variant.available -%}
                           {%- if product.handle == 'ocean-glow-body-trio' %}
