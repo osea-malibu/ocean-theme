@@ -1,9 +1,16 @@
 {% comment %} theme-check-disable TemplateLength {% endcomment %}
 <section id="main-product">
   <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0">
+    {% comment %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
+    {% endcomment %}
+    {% render 'component-link',
+      classes: 'sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100',
+      label: accessibility.skip_to_product_info,
+      href: '#ProductInfo-' | append: section.id
+    %}
     {%- if product.media.size > 1 -%}
       <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden lg:pr-4 xl:pr-10">
         {% comment %} New image-slider snippet {% endcomment %}
@@ -73,9 +80,23 @@
                   <a href="#reviews">
                     {% render 'product-rating', product: product %}
                   </a>
+                 {% comment %}
+                  {% render 'component-link',
+                    classes: '',
+                    label: '',
+                    href: '#reviews'
+                  %} 
+                  {% endcomment %}
                 {%- endunless -%}
                 {%- if product.metafields.custom.faq != nil -%}
-                  <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
+                  {% comment %}
+                    <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
+                  {% endcomment %}
+                  {% render 'component-link',
+                    classes: 'text-xs link',
+                    label: 'Product FAQs',
+                    href: '#ProductFaqs'
+                  %}
                 {%- endif -%}
               </div>
               {%- if product.metafields.custom.set_value -%}
@@ -169,13 +190,31 @@
                         %}
                         {%- unless product.selected_or_first_available_variant.available -%}
                           {%- if product.handle == 'ocean-glow-body-trio' %}
+                            {% comment %}
                             <a class="button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11" target="_blank" href="https://www.ulta.com/p/ocean-glow-body-trio-pimprod2051657?sku=2638931">
                               <span class="text-white">Shop now on ULTA</span>
                             </a>
+                            {% endcomment %}
+                            {% render 'component-link',
+                              classes: 'button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11',
+                              label: 'Shop now on ULTA',
+                              href: 'https://www.ulta.com/p/ocean-glow-body-trio-pimprod2048199',
+                              target: '_blank',
+                              rel: 'noopener noreferrer'
+                            %}
                           {%- elsif product.handle == 'cleanse-glow-body-set' -%}
+                            {% comment %}
                             <a class="cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11" target="_blank" href="https://www.nordstrom.com/s/cleanse-glow-body-set-104-value/8356995">
                               <span class="text-white">Shop now on Nordstrom</span>
                             </a>
+                            {% endcomment %}
+                            {% render 'component-link',
+                              classes: 'cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11',
+                              label: 'Shop now on Nordstrom',
+                              href: 'https://www.nordstrom.com/s/cleanse-glow-body-set/7204082',
+                              target: '_blank',
+                              rel: 'noopener noreferrer'
+                            %}
                           {%- else -%}
                             <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
                             <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
@@ -305,6 +344,7 @@
             </p>
           </div>
           <div class="relative w-full sm:w-60 md:w-80 shrink-0">
+           
             <button
               type="submit"
               name="add"
@@ -324,6 +364,22 @@
                 </span>
                 {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
             </button>
+            
+             {% comment %}
+             {% render 'component-button',
+                classes: 'gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50',
+                label: 'Add to Cart',
+                type: 'submit',
+                name: 'add',
+                disabled: product.selected_or_first_available_variant.available == false,
+                aria_label: 'Add to Cart: Undaria Algae Body Oil',
+                show_spinner: true,
+                product: product,
+                use_variant: true,
+                price_class: 'main-price ml-auto',
+                slashed_price_color: 'md:text-white text-seaweed-800'
+             %}
+              {% endcomment %}
           </div>
         </div>
       </div>

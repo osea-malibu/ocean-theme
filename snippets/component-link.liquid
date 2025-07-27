@@ -1,0 +1,49 @@
+{% comment %}
+    Link component snippet for use in sections & snippets. Renders anchor links with button styling.
+        
+    Accepts:
+        Required Parameters:
+        - classes: {String} string of TailwindCSS classnames (includes size and style)
+        - label: {String} text to display in the link
+        - href: {String} REQUIRED - URL destination
+
+        Optional Parameters:
+        - target: {String} e.g. "_blank", "_self", "_parent", "_top"
+        - rel: {String} strongly recommended with target="_blank" (e.g. "noopener noreferrer")
+        - aria_label: {String} accessibility label
+        - title: {String} title attribute for additional context
+
+  Usage:
+    {% render 'component-link',
+    classes: 'your-classes-here',
+    label: 'Link Text Here',
+    href: 'link-or-anchor-here',
+    target: 'optional',
+    rel: 'optional',
+    aria_label: 'optional',
+    title: 'optional'
+    %}
+{% endcomment %}
+
+{%- liquid
+    # Check if 'link' class is already included in the passed classes
+    if classes contains 'link'
+        assign link_classes = classes
+    else
+        assign link_classes = 'link'
+        if classes != blank
+            assign link_classes = link_classes | append: ' ' | append: classes
+        endif
+    endif 
+  -%}
+  
+  <a
+    href="{{ href }}"
+    class="{{ link_classes }}"
+    {% if target != blank %}target="{{ target }}"{% endif %}
+    {% if rel != blank %}rel="{{ rel }}"{% endif %}
+    {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
+    {% if title != blank %}title="{{ title }}"{% endif %}
+  >
+   {{ label }}
+  </a>
