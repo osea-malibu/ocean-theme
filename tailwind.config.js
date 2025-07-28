@@ -212,6 +212,7 @@ module.exports = {
         orange: "#FFBA49",
       },
       owc: {
+        light: "#FCFFE7",
         blue: "#1C39BB",
         blue2: "#0A30DF",
         blue3: "#E9F3FC",
