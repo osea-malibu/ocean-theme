@@ -175,12 +175,32 @@
                         {%- if product.metafields.custom.limited_availability_badge or product.selected_or_first_available_variant.inventory_quantity <= settings.low_stock_threshold -%}
                           <div class="my-1 font-bold tracking-wide text-center text-coral-800">Limited stock available!</div>
                         {%- else -%}
+                          {% comment %} %}
                           <div class="my-1 text-sm font-book">
                             <ul>
                             <li>+ 30 Day Money Back Guarantee</li>
                             <li>+ Free Shipping{% if settings.shipping_countdown_threshold > 0 %} on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+{% endif %}</li>
                             </ul>
                           </div>
+                          {% endcomment %}
+
+                          {%- liquid
+                            assign benefits = '+ 30 Day Money Back Guarantee' | split: ', '
+                            if settings.shipping_countdown_threshold > 0
+                              assign shipping_text = '+ Free Shipping on Orders ' | append: settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros | append: '+'
+                            else
+                              assign shipping_text = '+ Free Shipping'
+                            endif
+                            assign benefits = benefits | concat: shipping_text | split: ', '
+                          -%}
+                          
+                          {% render 'component-list',
+                            items: benefits,
+                            type: 'ul',
+                            wrapper: true,
+                            wrapper_classes: 'my-1 text-sm font-book'
+                          %}
+                          
                         {%- endif -%}
                       {%- endif -%}
                     {%- endform -%}
