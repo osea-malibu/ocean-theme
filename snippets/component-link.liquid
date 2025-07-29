@@ -13,6 +13,21 @@
         - aria_label: {String} accessibility label
         - title: {String} title attribute for additional context
 
+    Important Notes:
+        - For translation strings, assign the translated value before passing to component in the file where the link is used
+        - For dynamic href , assign the concatenated value before passing to component in the file where the link is used
+    
+    Component is best for:
+       - Button-style links with complex styling
+       - External links that need security attributes
+       - Reusable links across multiple templates
+       - Links with multiple optional attributes
+
+    Component should NOT be used for:
+       - Simple internal anchor links (like #reviews)
+       - Basic text links with minimal styling
+       - When the overhead outweighs the benefit
+        
   Usage:
     {% render 'component-link',
     classes: 'your-classes-here',
@@ -22,6 +37,19 @@
     rel: 'optional',
     aria_label: 'optional',
     title: 'optional'
+    %}
+
+  Usage with translations + dynamic href:
+  Skip is used for the accessibility skip link - screen readers will skip to the section
+
+    {%- liquid
+      assign skip_link_label = 'accessibility.skip_to_section' | t
+      assign skip_link_href = '#ProductInfo-' | append: section.id
+    -%}
+    {% render 'component-link',
+      classes: 'sr-only button button-secondary',
+      label: skip_link_label,
+      href: skip_link_href
     %}
 {% endcomment %}
 

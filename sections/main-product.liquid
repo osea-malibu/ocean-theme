@@ -6,10 +6,14 @@
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {% endcomment %}
+    {%- liquid
+      assign skip_link_label = 'accessibility.skip_to_product_info' | t
+      assign skip_link_href = '#ProductInfo-' | append: section.id
+    -%}
     {% render 'component-link',
       classes: 'sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100',
-      label: accessibility.skip_to_product_info,
-      href: '#ProductInfo-' | append: section.id
+      label: skip_link_label,
+      href: skip_link_href
     %}
     {%- if product.media.size > 1 -%}
       <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden lg:pr-4 xl:pr-10">
@@ -77,29 +81,12 @@
             {%- when 'rating' -%}
               <div class="{{ block.settings.rating_classes }} flex gap-2 items-center">
                 {%- unless excluded_from_site -%}
-                  {% comment %}
-                    <a href="#reviews">
-                      {% render 'product-rating', product: product %}
-                    </a> 
-                  {% endcomment %}
-                  {%- capture rating_content -%}
+                  <a href="#reviews">
                     {% render 'product-rating', product: product %}
-                  {%- endcapture -%}
-                  {% render 'component-link',
-                    classes: ' ',
-                    label: rating_content,
-                    href: '#reviews'
-                  %}
+                  </a> 
                 {%- endunless -%}
                 {%- if product.metafields.custom.faq != nil -%}
-                  {% comment %}
-                    <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
-                  {% endcomment %}
-                  {% render 'component-link',
-                    classes: 'text-xs link',
-                    label: 'Product FAQs',
-                    href: '#ProductFaqs'
-                  %}
+                  <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
                 {%- endif -%}
               </div>
               {%- if product.metafields.custom.set_value -%}
