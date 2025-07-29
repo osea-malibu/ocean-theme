@@ -8,14 +8,14 @@
     - tag: {String} - HTML tag to wrap the text in (default: 'p')
 
   Optional Parameters
-    - shopify_attributes: {String} - Additional Shopify attributes
+    - attributes: {String} - Additional HTML attributes (e.g., style, data-*, etc.)
 
-  Usage with Shopify attributes:
+  Usage with attributes:
     {% render 'component-text',
       text: 'Text content',
       classes: 'text-2xl font-bold',
       tag: 'p',
-      shopify_attributes: block.shopify_attributes
+      attributes: block.shopify_attributes
     %}
 
   Usage without Shopify attributes:
@@ -29,7 +29,7 @@
 {%- liquid
   assign html_tag = tag | default: 'p'
   assign text_classes = classes | default: ''
-  assign attributes = shopify_attributes | default: ''
+  assign attributes = attributes | default: ''
 -%}
 
 {%- if text != blank -%}
