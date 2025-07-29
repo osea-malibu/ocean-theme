@@ -1,9 +1,20 @@
 {% comment %} theme-check-disable TemplateLength {% endcomment %}
 <section id="main-product">
   <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0">
+    {% comment %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
+    {% endcomment %}
+    {%- liquid
+      assign skip_link_label = 'accessibility.skip_to_product_info' | t
+      assign skip_link_href = '#ProductInfo-' | append: section.id
+    -%}
+    {% render 'component-link',
+      classes: 'sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100',
+      label: skip_link_label,
+      href: skip_link_href
+    %}
     {%- if product.media.size > 1 -%}
       <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden lg:pr-4 xl:pr-10">
         {% comment %} New image-slider snippet {% endcomment %}
@@ -72,7 +83,7 @@
                 {%- unless excluded_from_site -%}
                   <a href="#reviews">
                     {% render 'product-rating', product: product %}
-                  </a>
+                  </a> 
                 {%- endunless -%}
                 {%- if product.metafields.custom.faq != nil -%}
                   <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
@@ -140,42 +151,67 @@
                         <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
                       {%- endif -%}
                       <div class="grid relative grid-cols-2 gap-2 product-form__buttons" id="AddToCart">
-                        {%- liquid
-                          if product.selected_or_first_available_variant.available
-                            assign atc_label = 'products.product.add_to_cart' | t
-                          else
-                            assign atc_label = 'products.product.sold_out' | t
-                          endif
-
-                          if product.selected_or_first_available_variant.available
-                            assign atc_disabled = false
-                          else
-                            assign atc_disabled = true
-                          endif
-                        -%}
+                        {% comment %}
+                        <button
+                          type="submit"
+                          name="add"
+                          class="relative col-span-2 w-full product-form__submit button button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
+                          {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                        >
+                            <span class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 loading-spinner">
+                              {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+                            </span>
+                            <span class="label">
+                              {%- if product.selected_or_first_available_variant.available -%}
+                                {{ 'products.product.add_to_cart' | t }}
+                              {%- else -%}
+                                {{ 'products.product.sold_out' | t }}
+                              {%- endif -%}
+                            </span>
+                            {%- if block.settings.atc_show_price -%}
+                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto', slashed_price_color: 'text-seaweed-800 md:text-white' -%}
+                            {%- endif -%}
+                        </button>
+                        {% endcomment %}
                         {% render 'component-button',
                           classes: 'relative col-span-2 w-full product-form__submit button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white',
-                          label: atc_label,
-                          element: 'button',
                           type: 'submit',
                           name: 'add',
-                          disabled: atc_disabled,
-                          price: block.settings.atc_show_price,
+                          atc_label: true,
                           product: product,
+                          show_spinner: true,
+                          price: block.settings.atc_show_price,
                           use_variant: true,
                           price_class: 'main-price ml-auto',
-                          slashed_price_color: 'md:text-white text-seaweed-800',
-                          show_spinner: true
+                          slashed_price_color: 'md:text-white text-seaweed-800'
                         %}
                         {%- unless product.selected_or_first_available_variant.available -%}
                           {%- if product.handle == 'ocean-glow-body-trio' %}
+                            {% comment %}
                             <a class="button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11" target="_blank" href="https://www.ulta.com/p/ocean-glow-body-trio-pimprod2051657?sku=2638931">
                               <span class="text-white">Shop now on ULTA</span>
                             </a>
+                            {% endcomment %}
+                            {% render 'component-link',
+                              classes: 'button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11',
+                              label: 'Shop now on ULTA',
+                              href: 'https://www.ulta.com/p/ocean-glow-body-trio-pimprod2048199',
+                              target: '_blank',
+                              rel: 'noopener noreferrer'
+                            %}
                           {%- elsif product.handle == 'cleanse-glow-body-set' -%}
-                            <a class="cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11" target="_blank" href="https://www.nordstrom.com/s/cleanse-glow-body-set-104-value/8356995">
-                              <span class="text-white">Shop now on Nordstrom</span>
-                            </a>
+                            {% comment %}
+                              <a class="cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11" target="_blank" href="https://www.nordstrom.com/s/cleanse-glow-body-set-104-value/8356995">
+                                <span class="text-white">Shop now on Nordstrom</span>
+                              </a>
+                            {% endcomment %}
+                            {% render 'component-link',
+                              classes: 'cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11',
+                              label: 'Shop now on Nordstrom',
+                              href: 'https://www.nordstrom.com/s/cleanse-glow-body-set/7204082',
+                              target: '_blank',
+                              rel: 'noopener noreferrer'
+                            %}
                           {%- else -%}
                             <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
                             <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
@@ -305,6 +341,7 @@
             </p>
           </div>
           <div class="relative w-full sm:w-60 md:w-80 shrink-0">
+           {% comment %}
             <button
               type="submit"
               name="add"
@@ -324,6 +361,21 @@
                 </span>
                 {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
             </button>
+            {% endcomment %}
+
+            {% render 'component-button',
+              classes: 'gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50',
+              type: 'submit',
+              name: 'add',
+              form: product_form_id,
+              atc_label: true,
+              product: product,
+              show_spinner: true,
+              spinner_style: 'relative',
+              price: true,
+              use_variant: true,
+              price_class: 'main-price ml-auto'
+            %}
           </div>
         </div>
       </div>

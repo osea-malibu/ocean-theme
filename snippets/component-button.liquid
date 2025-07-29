@@ -1,52 +1,46 @@
 {% comment %}
-    Button component snippet for use in sections & snippets. Can render buttons or links.
+    Button component snippet for use in sections & snippets.
         
     Accepts:
-        Required Parameters
+        Required Parameters:
         - classes: {String} string of TailwindCSS classnames (includes size and style)
-        - disabled: {Boolean} true or false (default: false)
         - label: {String} text to display in the button
+        - type: {String} example: 'submit'|'button'|'reset'
+
+        Optional Parameters:
+        - disabled: {Boolean} true or false (default: false)
         - show_spinner: {Boolean} true or false (default: false)
-        - element: {String} 'a' or 'button'
-
-    Conditional Parameters
-        [IF element === 'a']
-            - href: {String} CONTEXTUALLY REQUIRED - URL destination
-            - target: {String} e.g. "_blank"
-            - rel: {String} strongly recommended w/target="_blank" (e.g. "noopener noreferrer")
-        [IF element === 'button']
-            - type: {String} CONTEXTUALLY REQUIRED - 'submit'|'button'|'reset'
-
-    Optional Parameters
-        - name: {String} name of the button
+        - name: {String} name attribute for the button
         - onclick: {String} onclick function for the button
-        - aria_label: {String}
+        - aria_label: {String} accessibility label
+        - form: {String} form id to associate button with
+        - value: {String} value attribute for the button
 
-    ATC Parameters
-        Required:
-        - price: {Boolean} price to display in the button (default: false)
-        - use_variant: {Boolean} true or false
-    
-    Optional:
-        - price_class: {String} string of TailwindCSS classnames for the price
+        ATC/Price Parameters:
+        - price: {Boolean} whether to display price in the button (default: false)
+        - use_variant: {Boolean} true or false (required if price is true)
+        - price_class: {String} TailwindCSS classnames for the price
         - slashed_price_color: {String} color for the slashed price
-        - product: {Product} ShopifyProductDrop product to display the price 
+        - product: {Product} ShopifyProductDrop (required if price is true)
+        - atc_label: {Boolean} automatically show "Add to Cart" or "Sold Out" based on product availability (default: false)
+        - spinner_style: {String} 'relative' or 'absolute' positioning for spinner (default: 'absolute')
 
-  Usage:
-  {% render 'component-button',
-    style: 'primary',
-    size: 'sm',
-    classes: 'w-full',
-    label: 'Add to Cart',
-    aria_label: 'Add to Cart: Undaria Algae Body Oil',
-    element: 'a',
-    href: 'www.oseamalibu.com',
-    price: true,
-    product: product,
-    use_variant: true,
-    price_class: 'text-sm',
-    slashed_price_color: 'text-gray-500'
-  %}
+    Usage:
+    {% render 'component-button',
+        classes: 'button-primary button-lg w-full',
+        type: 'submit',
+        atc_label: true,
+        disabled: false,
+        show_spinner: true,
+        spinner_style: 'relative', #No spinner_style parameter = defaults to absolute
+        aria_label: 'Add to Cart: Undaria Algae Body Oil',
+        name: 'add',
+        price: true,
+        product: product,
+        use_variant: true,
+        price_class: 'ml-auto',
+        slashed_price_color: 'text-gray-500'
+    %}
 {% endcomment %}
 
 {%- liquid
@@ -55,40 +49,55 @@
     if classes != blank
       assign button_classes = button_classes | append: ' ' | append: classes
     endif
-  -%}
+
+    if atc_label and product != blank
+    if product.selected_or_first_available_variant.available
+      assign label = 'products.product.add_to_cart' | t
+      assign disabled = false
+    else
+      assign label = 'products.product.sold_out' | t
+      assign disabled = true
+    endif
+  endif
+-%}
   
-  {%- if element == 'a' -%}
-    <a
-      href="{{ href }}"
-      class="{{ button_classes }}"
-      {% if disabled %}disabled{% endif %}
-      {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
-    >
-  {%- else -%}
-    <button
-      type="{{ type }}"
-      name="{{ name }}"
-      class="{{ button_classes }}"
-      {% if disabled %}disabled{% endif %}
-      {% if onclick != blank %}onclick="{{ onclick }}"{% endif %}
-    >
-  {%- endif -%}
+<button
+    type="{{ type }}"
+    {% if name != blank %}name="{{ name }}"{% endif %}
+    class="{{ button_classes }}"
+    {% if disabled %}disabled{% endif %}
+    {% if onclick != blank %}onclick="{{ onclick }}"{% endif %}
+    {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
+    {% if form != blank %}form="{{ form }}"{% endif %}
+  >
     {%- if show_spinner -%}
-      <span class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 loading-spinner">
-        {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-      </span>
-    {%- endif -%}
+        {%- if spinner_style == 'relative' -%}
+          <span class="hidden relative -ml-6 loading-spinner">
+            {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+          </span>
+        {%- else -%}
+          <span class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 loading-spinner">
+            {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+          </span>
+        {%- endif -%}
+      {%- endif -%}
+
     <span class="label">{{ label }}</span>
-    {%- if price -%}
+
+  {%- if price and product != blank -%}
+    {%- if slashed_price_color != blank -%}
       {%- render 'price',
-        product: product,
-        use_variant: use_variant,
-        price_class: price_class,
-        slashed_price_color: slashed_price_color
+          product: product,
+          use_variant: use_variant,
+          price_class: price_class,
+          slashed_price_color: slashed_price_color
+      -%}
+    {%- else -%}
+      {%- render 'price',
+          product: product,
+          use_variant: use_variant,
+          price_class: price_class
       -%}
     {%- endif -%}
-  {%- if element == 'a' -%}
-    </a>
-  {%- else -%}
-    </button>
   {%- endif -%}
+  </button>

@@ -1,0 +1,77 @@
+{% comment %}
+    Link component snippet for use in sections & snippets. Renders anchor links with button styling.
+        
+    Accepts:
+        Required Parameters:
+        - classes: {String} string of TailwindCSS classnames (includes size and style)
+        - label: {String} text to display in the link
+        - href: {String} REQUIRED - URL destination
+
+        Optional Parameters:
+        - target: {String} e.g. "_blank", "_self", "_parent", "_top"
+        - rel: {String} strongly recommended with target="_blank" (e.g. "noopener noreferrer")
+        - aria_label: {String} accessibility label
+        - title: {String} title attribute for additional context
+
+    Important Notes:
+        - For translation strings, assign the translated value before passing to component in the file where the link is used
+        - For dynamic href , assign the concatenated value before passing to component in the file where the link is used
+    
+    Component is best for:
+       - Button-style links with complex styling
+       - External links that need security attributes
+       - Reusable links across multiple templates
+       - Links with multiple optional attributes
+
+    Component should NOT be used for:
+       - Simple internal anchor links (like #reviews)
+       - Basic text links with minimal styling
+       - When the overhead outweighs the benefit
+        
+  Usage:
+    {% render 'component-link',
+    classes: 'your-classes-here',
+    label: 'Link Text Here',
+    href: 'link-or-anchor-here',
+    target: 'optional',
+    rel: 'optional',
+    aria_label: 'optional',
+    title: 'optional'
+    %}
+
+  Usage with translations + dynamic href:
+  Skip is used for the accessibility skip link - screen readers will skip to the section
+
+    {%- liquid
+      assign skip_link_label = 'accessibility.skip_to_section' | t
+      assign skip_link_href = '#ProductInfo-' | append: section.id
+    -%}
+    {% render 'component-link',
+      classes: 'sr-only button button-secondary',
+      label: skip_link_label,
+      href: skip_link_href
+    %}
+{% endcomment %}
+
+{%- liquid
+    # Check if 'link' class is already included in the passed classes
+    if classes contains 'link'
+        assign link_classes = classes
+    else
+        assign link_classes = 'link'
+        if classes != blank
+            assign link_classes = link_classes | append: ' ' | append: classes
+        endif
+    endif 
+  -%}
+  
+  <a
+    href="{{ href }}"
+    class="{{ link_classes }}"
+    {% if target != blank %}target="{{ target }}"{% endif %}
+    {% if rel != blank %}rel="{{ rel }}"{% endif %}
+    {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
+    {% if title != blank %}title="{{ title }}"{% endif %}
+  >
+   {{ label }}
+  </a>
