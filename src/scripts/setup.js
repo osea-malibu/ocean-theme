@@ -95,6 +95,7 @@ export function setupManualRedirects() {
   const loopBundles = [
     "/a/loop_subscriptions/bundle/f32e72b2b9174c49afc9418fdc687742",
     "/a/loop_subscriptions/bundle/eee9c289024140ab984c3fb75988e223",
+    "/a/loop_subscriptions/bundle/b4e1b70501be453eaeac952c14a0a778",
   ];
 
   if (loopBundles.includes(pathname)) {
