@@ -1,0 +1,74 @@
+{% comment %}
+    List component snippet for use in sections & snippets.
+        
+    Accepts:
+        Required Parameters:
+        - items: {Array} array of list items or {String} comma-separated items
+        
+        Optional Parameters:
+        - type: {String} 'ul' or 'ol' (default: 'ul')
+        - classes: {String} TailwindCSS classnames for the list element
+        - item_classes: {String} TailwindCSS classnames for each li element
+        - wrapper_classes: {String} TailwindCSS classnames for wrapper div
+        - wrapper: {Boolean} whether to wrap list in a div (default: false)
+
+    Usage Examples:
+    
+    <!-- Simple text list -->
+    {% assign benefits = '+ 30 Day Money Back Guarantee, + Free Shipping on Orders $50+' | split: ', ' %}
+    {% render 'component-list',
+        items: benefits,
+        type: 'ul',
+        wrapper: true,
+        wrapper_classes: 'my-1 text-sm font-book'
+    %}
+    
+    <!-- Dynamic content list -->
+    {% render 'component-list',
+        items: product.metafields.custom.set_contains.value,
+        type: 'ul'
+    %}
+    
+    <!-- Ordered list with custom styling -->
+    {% assign steps = 'Apply to clean skin, Massage gently, Rinse with warm water' | split: ', ' %}
+    {% render 'component-list',
+        items: steps,
+        type: 'ol',
+        classes: 'list-decimal list-inside',
+        item_classes: 'mb-2 text-gray-700'
+    %}
+{% endcomment %}
+
+{%- liquid
+    assign list_type = type | default: 'ul'
+    
+    if items == blank
+      assign list_items = ''
+    elsif items.first
+      assign list_items = items
+    else
+      assign list_items = items | split: ', '
+    endif
+-%}
+
+{%- if wrapper -%}
+<div{% if wrapper_classes != blank %} class="{{ wrapper_classes }}"{% endif %}>
+{%- endif -%}
+
+<{{ list_type }}{% if classes != blank %} class="{{ classes }}"{% endif %}>
+  {%- for item in list_items -%}
+    <li{% if item_classes != blank %} class="{{ item_classes }}"{% endif %}>
+      {%- if item.title -%}
+        {%- comment -%} Handle product objects or complex objects {%- endcomment -%}
+        {%- render 'product-in-set', product: item -%}
+      {%- else -%}
+        {%- comment -%} Handle simple text items {%- endcomment -%}
+        {{ item }}
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+</{{ list_type }}>
+
+{%- if wrapper -%}
+</div>
+{%- endif -%}
