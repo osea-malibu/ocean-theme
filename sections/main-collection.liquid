@@ -76,7 +76,7 @@
               </li>
             {%- endif -%}
             {%- if collection.metafields.custom.promo_section_image_mobile != blank -%}
-              <li class="relative overflow-hidden rounded min-h-[400px] {{ collection.metafields.custom.promo_section_classes }}">
+              <li class="relative overflow-hidden rounded {{ collection.metafields.custom.promo_section_classes }}">
                 {% render 'collection-promo-section',
                   promo_section_image_mobile: collection.metafields.custom.promo_section_image_mobile,
                   promo_section_image_desktop: collection.metafields.custom.promo_section_image_desktop,

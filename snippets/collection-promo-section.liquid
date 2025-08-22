@@ -8,7 +8,7 @@
   <a href="{{ promo_section_url }}" class="block">
 {%- endif -%}
 {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
-<picture class="absolute inset-y-0 inset-x-0 z-0">
+<picture class="relativez-0">
   {%- if mobile_image_src != blank -%}
     <source
       {% if mobile_image_src contains '.gif' %}
