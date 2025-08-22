@@ -218,6 +218,9 @@ module.exports = {
         blue3: "#E9F3FC",
         yellow: "#F2FF63",
       },
+      ld: {
+        yellow: "#FDFF95",
+      },
       "light-black": "#1F1E1F",
       "neon-green": "#DCF5AB",
       "dream-navy": "#1D284D",
