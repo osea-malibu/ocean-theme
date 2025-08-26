@@ -380,13 +380,14 @@
                                       {%- elsif item.product.type == 'Free Gift' -%}
                                         <div class="flex flex-col items-end">
                                           <span class="flex bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs font-book tracking-wide whitespace-nowrap">
-                                            {%- if item.product_id == all_products[settings.gwp_tier2_product].id -%}
+                                            {% comment %} {%- if item.product_id == all_products[settings.gwp_tier2_product].id -%}
                                               <span>2nd Free Gift</span>
                                             {%- elsif item.product_id == all_products[settings.gwp_tier3_product].id -%}
                                               <span>3rd Free Gift</span>
                                             {%- else -%}
                                               <span>Free Gift</span>
-                                            {% endif %}
+                                            {% endif %} {% endcomment %}
+                                            <span>Free Gift</span>
                                           </span>
                                           {%- if item.variant.compare_at_price != nil -%}
                                             <span class="whitespace-nowrap text-sm font-book">{{ item.variant.compare_at_price | money_without_trailing_zeros }} value</span>
