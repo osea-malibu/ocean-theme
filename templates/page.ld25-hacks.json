@@ -325,7 +325,7 @@
         "column_ryXU8F": {
           "type": "column",
           "settings": {
-            "column_classes": "col-span-4 md:order-2 md:col-span-2 md:row-span-1 md:flex md:flex-col md:justify-center",
+            "column_classes": "ld-badge-element md:flex md:flex-col md:justify-center",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "",
@@ -366,7 +366,7 @@
         "column_ygEUWn": {
           "type": "column",
           "settings": {
-            "column_classes": "col-span-4 md:order-1 md:col-span-2 md:row-span-4",
+            "column_classes": "ld-video-element",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "",
@@ -408,7 +408,7 @@
         "product_xXAKT6": {
           "type": "product",
           "settings": {
-            "column_classes": "col-span-2 border border-wave-300 rounded-lg p-2 md:order-3 md:col-span-1 md:row-span-2 md:self-start bg-white",
+            "column_classes": "ld-product-card border border-wave-300 rounded-lg p-2 md:self-start bg-white",
             "product": "undaria-algae-oil",
             "image_classes": "",
             "image_element_classes": "",
@@ -434,7 +434,7 @@
         "product_8iF4kV": {
           "type": "product",
           "settings": {
-            "column_classes": "col-span-2 border border-wave-300 rounded-lg p-2 md:order-4 md:col-span-1 md:row-span-2 md:self-start bg-white",
+            "column_classes": "ld-product-card border border-wave-300 rounded-lg p-2 md:self-start bg-white",
             "product": "anti-aging-body-balm",
             "image_classes": "",
             "image_element_classes": "",
@@ -460,7 +460,7 @@
         "column_FGVdUD": {
           "type": "column",
           "settings": {
-            "column_classes": "col-span-4 md:order-4 md:col-span-2 md:row-span-1 bg-white p-2 rounded-lg mt-4 border-2 border-dashed border-seaweed-700 flex items-center justify-center relative pt-6",
+            "column_classes": "ld-gift-element bg-white p-2 rounded-lg mt-4 border-2 border-dashed border-seaweed-700 flex items-center justify-center relative pt-6",
             "image": "shopify://shop_images/Group_2426.png",
             "is_bg_image": false,
             "image_link": "",
@@ -507,10 +507,11 @@
         "product_8iF4kV",
         "column_FGVdUD"
       ],
+      "custom_css": [],
       "settings": {
         "section_heading": "",
         "section_classes": "py-4 bg-ld-yellow/25",
-        "container_classes": "container lg:max-w-screen-lg grid grid-cols-4 gap-2 md:grid-rows-4 md:gap-y-0",
+        "container_classes": "container lg:max-w-screen-lg ld-grid-container",
         "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
