@@ -1,9 +1,17 @@
-<div class="w-full bg-wave-200 rounded-lg px-2 pb-1">
+{%- liquid
+  if product.metafields.custom.product_image_transparent != blank
+    assign gift_image_src = product.metafields.custom.product_image_transparent | image_url: width: 192
+    assign gift_image_src_2x = product.metafields.custom.product_image_transparent | image_url: width: 252
+  else
+    assign gift_image_src = product.featured_image | image_url: width: 192
+    assign gift_image_src_2x = product.featured_image | image_url: width: 252
+  endif
+
+  assign threshold_total = threshold | times: 100
+-%}
+{%- unless cart.total_price >= threshold_total -%}
+<div class="w-full bg-wave-200 rounded-lg px-2 py-1 my-2">
   <div class="flex items-center gap-2">
-    {%- liquid
-      assign gift_image_src = product.metafields.custom.product_image_transparent | image_url: width: 192
-      assign gift_image_src_2x = product.metafields.custom.product_image_transparent | image_url: width: 252
-    -%}
     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
     <img
       srcset="{% render 'imgix', src: gift_image_src %} 1x, {% render 'imgix', src: gift_image_src_2x %} 2x"
@@ -15,9 +23,12 @@
       class="w-12 object-cover rounded"
     >
     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-    <div class="flex flex-col pt-1">
-      <p class="text-sm font-bold uppercase tracking-wider">Free Gift with orders {{ threshold | times: 100 | money_without_trailing_zeros }}+</p>
+    <div class="flex flex-col">
+      {% comment %} <p class="text-sm font-bold uppercase tracking-wider">Free Gift with orders {{ threshold | times: 100 | money_without_trailing_zeros }}+</p> {% endcomment %}
+      <p class="text-sm font-bold uppercase tracking-wider">Spend {{ threshold_total | minus: cart.total_price | money_without_trailing_zeros }} more for a free gift!</p>
       <p class="text-sm leading-tight">Claim your free {{ product.title | replace: 'Free Gift - ', '' }} with orders over {{ threshold | times: 100 | money_without_trailing_zeros }}!</p>
+      {% comment %} <p class="text-sm leading-tight">Spend {{ threshold_total | minus: cart.total_price | money_without_trailing_zeros }} to claim your free {{ product.title | replace: 'Free Gift - ', '' }}!</p> {% endcomment %}
     </div>
   </div>
 </div>
+{%- endunless -%}
