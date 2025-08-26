@@ -104,6 +104,7 @@
                   assign free_gifts_active = false
                 endif
               -%}
+              <script>console.log('free_gifts_active', '{{ free_gifts_active }}');</script>
               {%- if free_gifts_active -%}
                 <div class="{{ block.settings.free_gift_info_classes }}">
                   <script>
