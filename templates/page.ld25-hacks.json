@@ -271,7 +271,7 @@
             "image_static_size": "",
             "text_classes": "text-center",
             "remove_text_wrapper": false,
-            "heading": "<h2 class=\"text-4xl font-bold uppercase mt-4 leading-none\">Team Selections</h2>",
+            "heading": "<h2 class=\"thick-underline text-4xl font-bold uppercase mt-4 leading-none\">Team Selections</h2>",
             "heading_classes": "mb-2",
             "paragraph": "Our staff’s favorite way to build the perfect cart to unlock gifts",
             "paragraph_classes": "text-lg tracking-wide leading-tight max-w-2xs mx-auto mb-2",
@@ -303,6 +303,9 @@
       },
       "block_order": [
         "column_CYChPP"
+      ],
+      "custom_css": [
+        ".thick-underline {text-decoration: underline; text-decoration-color: #ff6b6b; text-decoration-thickness: 12px; text-underline-offset: -8px;}"
       ],
       "settings": {
         "section_heading": "",
