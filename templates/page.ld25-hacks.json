@@ -13,7 +13,7 @@
       "type": "custom-liquid",
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "custom_liquid": "{% style %}\n.thick-underline:after {\n  content: \"\";\n  display: block;\n  height: 20px;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: #fdff95;\n}\n{% endstyle %}"
+        "custom_liquid": "{% style %}\n.thick-underline {\n  position: relative;\n  z-index: 10;\n}\n.thick-underline:after {\n  content: \"\";\n  display: block;\n  height: 20px;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: #fdff95;\n  z-index:-10;\n}\n{% endstyle %}"
       }
     },
     "multicolumn_HjWEDQ": {
@@ -278,7 +278,7 @@
             "image_static_size": "",
             "text_classes": "text-center",
             "remove_text_wrapper": false,
-            "heading": "<h2 class=\"thick-underline text-4xl font-bold uppercase mt-4 leading-none\">Team Selections</h2>",
+            "heading": "<span class=\"thick-underline text-4xl font-bold uppercase mt-4 leading-none px-2\">Team Selections</span>",
             "heading_classes": "mb-2",
             "paragraph": "Our staff’s favorite way to build the perfect cart to unlock gifts",
             "paragraph_classes": "text-lg tracking-wide leading-tight max-w-2xs mx-auto mb-2",
