@@ -54,9 +54,9 @@
           {%- endif -%}
           {%- liquid
             if section.settings.perks_promo_heading != blank
-              assign subscription_promo_open = true
-            else
               assign subscription_promo_open = false
+            else
+              assign subscription_promo_open = true
             endif
           -%}
           {% render 'accordion-item',
