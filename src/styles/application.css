@@ -865,40 +865,40 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto auto;
   grid-template-areas:
-    "blue blue"
-    "red red"
-    "green1 green2"
-    "yellow yellow";
+    "badge badge"
+    "video video"
+    "card1 card2"
+    "gift gift";
 }
 @media (min-width: 768px) {
   .ld-grid-container {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto auto auto;
     grid-template-areas:
-      "red red blue blue"
-      "red red green1 green2"
-      "red red green1 green2"
-      "red red yellow yellow";
+      "video video badge badge"
+      "video video card1 card2"
+      "video video card1 card2"
+      "video video gift gift";
   }
 }
 .ld-video-element {
-  grid-area: red;
+  grid-area: video;
 }
 .ld-badge-element {
-  grid-area: blue;
-  min-height: 80px;
+  grid-area: badge;
+  min-height: 28px;
 }
 .ld-product-card-one,
 .ld-product-card-two {
   min-height: 150px;
 }
 .ld-product-card-one {
-  grid-area: green1;
+  grid-area: card1;
 }
 .ld-product-card-two {
-  grid-area: green2;
+  grid-area: card2;
 }
 .ld-gift-element {
-  grid-area: yellow;
+  grid-area: gift;
   min-height: 120px;
 }
