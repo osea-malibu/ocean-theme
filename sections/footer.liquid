@@ -39,9 +39,12 @@
           <p class="mb-4">{{ section.settings.perks_description }}</p>
 
           {%- if section.settings.perks_promo_heading != blank -%}
+            {%- capture promo_summary -%}
+              <div class="flex justify-between items-center"><span>{{ section.settings.perks_promo_heading }}</span><span class="{{ badge_class }}">Free Gift</span></div>
+            {%- endcapture -%}
             {% render 'accordion-item',
               id: 'footer-subscription',
-              summary: section.settings.perks_promo_heading,
+              summary: promo_summary,
               content: section.settings.perks_promo_description,
               default_open: true,
               summary_classes: 'py-4',
