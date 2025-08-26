@@ -863,19 +863,21 @@
 }
 .ld-grid-container {
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto;
   grid-template-areas:
     "badge badge"
     "video video"
+    "card-title card-title"
     "card1 card2"
     "gift gift";
 }
 @media (min-width: 768px) {
   .ld-grid-container {
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     grid-template-areas:
       "video video badge badge"
+      "video video card-title card-title"
       "video video card1 card2"
       "video video card1 card2"
       "video video gift gift";
@@ -887,6 +889,9 @@
 .ld-badge-element {
   grid-area: badge;
   min-height: 28px;
+}
+.ld-card-title-element {
+  grid-area: card-title;
 }
 .ld-product-card-one,
 .ld-product-card-two {
