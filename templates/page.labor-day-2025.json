@@ -9,11 +9,33 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
-      "settings": {}
+    "rich_text_k9BhC8": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_BNGmkE": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "Terms &amp; Conditions",
+            "heading_classes": "text-2xl tracking-wide font-medium text-center",
+            "subheading_text": "",
+            "subheading_classes": ""
+          }
+        },
+        "paragraph_xAxifF": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph_text": "*From 8/26/25, until 11:59 PM PT on 9/1/25, eligible customers will receive a free 12oz Salts of the Earth Body Scrub with purchase of $125 or more, a free Travel Size Ocean Wave Cleanser (0.6oz fl oz) + free Travel Size Dream Night Serum (0.17 oz) with purchase of $175 or more, a free 2oz Atmosphere Protection® Cream with purchase of $225 or more (less applicable taxes, shipping and handling). Prices are marked on oseamalibu.com. Offer is available on oseamalibu.com. Offer is not valid on previous purchases. No additional discount may be taken at checkout, quantities are limited. If an item goes out of stock during the promotion period, it cannot be purchased at the promotional price when it comes back in stock after the promotion period has ended. Once an order is submitted, we are not able to make any adjustments or cancellations to the order. Exceptions will not be granted. Offer not transferable or redeemable for cash. We reserve the right to modify or replace any part of these Terms and Conditions and terminate this offer at any time without notice. Offer subject to change in OSEA Malibu’s sole discretion.",
+            "paragraph_classes": "container px-4 xs:px-6 xs:mb-8"
+          }
+        }
+      },
+      "block_order": ["heading_BNGmkE", "paragraph_xAxifF"],
+      "settings": {
+        "section_heading": "",
+        "section_classes": "container pb-6 pt-6",
+        "container_classes": "bg-ld-yellow/50 pt-6 pb-1"
+      }
     }
   },
-  "order": ["main"]
+  "order": ["rich_text_k9BhC8"]
 }
