@@ -9,6 +9,13 @@
  */
 {
   "sections": {
+    "custom_liquid_hULVgf": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "{% style %}\n.thick-underline:after {\n  content: \"\";\n  display: block;\n  height: 20px;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: #fdff95;\n}\n{% endstyle %}"
+      }
+    },
     "multicolumn_HjWEDQ": {
       "type": "multicolumn",
       "blocks": {
@@ -304,9 +311,7 @@
       "block_order": [
         "column_CYChPP"
       ],
-      "custom_css": [
-        ".thick-underline:after {display: block; height: 20px; position: absolute; bottom: 0; left: 0; right: 0; background-color: #fdff95;}"
-      ],
+      "custom_css": [],
       "settings": {
         "section_heading": "",
         "section_classes": "py-4 bg-ld-yellow/25",
@@ -570,6 +575,7 @@
     }
   },
   "order": [
+    "custom_liquid_hULVgf",
     "multicolumn_HjWEDQ",
     "multicolumn_xcJztA",
     "multicolumn_6Nme7c"
