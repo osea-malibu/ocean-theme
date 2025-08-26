@@ -13,7 +13,7 @@
       "type": "custom-liquid",
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "custom_liquid": "{% style %}\n.thick-underline {\n  position: relative;\n  z-index: 10;\n}\n.thick-underline:after {\n  content: \"\";\n  display: block;\n  height: 20px;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: #fdff95;\n  z-index:-10;\n}\n.single-product-card > div {\n  margin-right: -70%;\n  margin-left: 30%;\n}\n{% endstyle %}"
+        "custom_liquid": "{% style %}\n.thick-underline {\n  position: relative;\n  z-index: 10;\n}\n.thick-underline:after {\n  content: \"\";\n  display: block;\n  height: 20px;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: #fdff95;\n  z-index:-10;\n}\n.single-product-card > div {\n  margin-right: -70%;\n  margin-left: 30%;\n}\n@media (min-width: 768px) {\n.single-product-card > div {\n  margin-right: -60%;\n  margin-left: 40%;\n}\n}\n{% endstyle %}"
       }
     },
     "multicolumn_HjWEDQ": {
