@@ -281,8 +281,13 @@
     <product-sticky-atc class="fixed inset-x-0 bottom-0 invisible z-40 py-2.5 bg-white opacity-0 motion-safe:transition-visibility" style="box-shadow: 0 0 5px rgba(11, 46, 37, 0.15);">
       <div class="container flex flex-row gap-2 px-4 sm:px-6">
         {%- liquid
-          assign sticky_image_src = product.selected_or_first_available_variant.featured_media | image_url: width: 192
-          assign sticky_image_src_2x = product.selected_or_first_available_variant.featured_media | image_url: width: 252
+          if product.selected_or_first_available_variant.featured_media != blank
+            assign sticky_image_src = product.selected_or_first_available_variant.featured_media | image_url: width: 192
+            assign sticky_image_src_2x = product.selected_or_first_available_variant.featured_media | image_url: width: 252
+          else
+            assign sticky_image_src = product.featured_image | image_url: width: 192
+            assign sticky_image_src_2x = product.featured_image | image_url: width: 252
+          endif
         -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
