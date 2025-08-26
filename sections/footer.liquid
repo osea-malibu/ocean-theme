@@ -38,11 +38,29 @@
           <h2 class="font-serif text-3xl">{{ section.settings.perks_heading }}</h2>
           <p class="mb-4">{{ section.settings.perks_description }}</p>
 
+          {%- if section.settings.perks_promo_heading != blank -%}
+            {% render 'accordion-item',
+              id: 'footer-subscription',
+              summary: section.settings.perks_promo_heading,
+              content: section.settings.perks_promo_description,
+              default_open: true,
+              summary_classes: 'py-4',
+              content_classes: 'pt-0 pb-4',
+              classes: 'border-b border-seaweed-300'
+            %}
+          {%- endif -%}
+          {%- liquid
+            if section.settings.perks_promo_heading != blank
+              assign subscription_promo_open = true
+            else
+              assign subscription_promo_open = false
+            endif
+          -%}
           {% render 'accordion-item',
             id: 'footer-subscription',
             summary: subscribe_summary,
             content: subscribe_content,
-            default_open: true,
+            default_open: subscription_promo_open,
             summary_classes: 'py-4',
             content_classes: 'pt-0 pb-4',
             classes: 'border-b border-seaweed-300'
@@ -311,6 +329,16 @@
       "type": "image_picker",
       "id": "perks_image",
       "label": "Image",
+    },
+    {
+      "type": "text",
+      "id": "perks_promo_heading",
+      "label": "Promo heading"
+    },
+    {
+      "type": "textarea",
+      "id": "perks_promo_description",
+      "label": "Promo description"
     },
     {
       "type": "textarea",
