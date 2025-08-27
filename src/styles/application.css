@@ -877,6 +877,16 @@
       "video video card1 card2"
       "video video gift gift";
   }
+  .ld-grid-container.alt {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas:
+      "badge badge video video"
+      "card-title card-title video video"
+      "card1 card2 video video"
+      "card1 card2 video video"
+      "gift gift video video";
+  }
 }
 .ld-video-element {
   grid-area: video;
