@@ -285,7 +285,7 @@
                                     {%- else -%}
                                       <span>{{ 'products.product.add_to_cart' | t }}</span>
                                     {%- endif -%}
-                                    {%- if block.settings.hide_atc_button_price -%}
+                                    {%- unless block.settings.hide_atc_button_price -%}
                                       <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
                                         {% render 'price',
                                           product: block.settings.atc_button_product,
@@ -294,7 +294,7 @@
                                           subscription: block.settings.is_subscription
                                         %}
                                       </span>
-                                    {%- endif -%}
+                                    {%- endunless -%}
                                   {%- else -%}
                                     {{ 'products.product.sold_out' | t }}
                                   {%- endif -%}
@@ -753,7 +753,7 @@
         {
           "type": "checkbox",
           "id": "hide_atc_button_price",
-          "default": true,
+          "default": false,
           "label": "Hide add to cart button price"
         },
         {
