@@ -285,14 +285,16 @@
                                     {%- else -%}
                                       <span>{{ 'products.product.add_to_cart' | t }}</span>
                                     {%- endif -%}
-                                    <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
-                                      {% render 'price',
-                                        product: block.settings.atc_button_product,
-                                        show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
-                                        use_variant: true,
-                                        subscription: block.settings.is_subscription
-                                      %}
-                                    </span>
+                                    {%- if block.settings.hide_atc_button_price -%}
+                                      <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
+                                        {% render 'price',
+                                          product: block.settings.atc_button_product,
+                                          show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
+                                          use_variant: true,
+                                          subscription: block.settings.is_subscription
+                                        %}
+                                      </span>
+                                    {%- endif -%}
                                   {%- else -%}
                                     {{ 'products.product.sold_out' | t }}
                                   {%- endif -%}
@@ -747,6 +749,12 @@
           "type": "checkbox",
           "id": "is_atc_button",
           "label": "Add to cart button"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_atc_button_price",
+          "default": true,
+          "label": "Hide add to cart button price"
         },
         {
           "type": "checkbox",
