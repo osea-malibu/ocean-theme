@@ -13,7 +13,7 @@
       "type": "custom-liquid",
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "custom_liquid": "{% style %}\n.labor-day-hero {\n  background: #4f74a9;\n  background: linear-gradient(\n    180deg,\n    rgba(79, 116, 169, 1) 0%,\n    rgba(96, 137, 189, 1) 100%\n  );\n}\n.thick-underline {\n  position: relative;\n  z-index: 10;\n}\n.thick-underline:after {\n  content: \"\";\n  display: block;\n  height: 20px;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: #fdff95;\n  z-index:-10;\n}\n.single-product-card > div {\n  margin-right: -70%;\n  margin-left: 30%;\n}\n.text-shadow-white {\n  text-shadow: 1px 1px 2px rgba(255, 255, 255, 1);\n}\n@media (min-width: 768px) {\n.single-product-card > div {\n  margin-right: -50%;\n  margin-left: 50%;\n}\n}\n{% endstyle %}"
+        "custom_liquid": "{% style %}\n.labor-day-hero {\n  background: #4f74a9;\n  background: linear-gradient(\n    180deg,\n    rgba(79, 116, 169, 1) 0%,\n    rgba(96, 137, 189, 1) 100%\n  );\n}\n.thick-underline {\n  position: relative;\n  z-index: 10;\n}\n.thick-underline:after {\n  content: \"\";\n  display: block;\n  height: 20px;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: #fdff95;\n  z-index:-10;\n}\n.single-product-card > div {\n  margin-right: -70%;\n  margin-left: 30%;\n}\n.text-shadow-white {\n  text-shadow: 1px 1px 2px rgba(255, 255, 255, 1);\n}\n.image-sizer {\n  width: calc(100% + 32px);\n}\n@media (min-width: 768px) {\n.single-product-card > div {\n  margin-right: -50%;\n  margin-left: 50%;\n}\n}\n{% endstyle %}"
       }
     },
     "multicolumn_HjWEDQ": {
@@ -38,7 +38,7 @@
             "image": "shopify://shop_images/LDAY2025_EXTENDED_HP_Banner_Desktop_BLANK_1.jpg",
             "is_bg_image": false,
             "image_link": "",
-            "image_classes": "absolute inset-0 z-0 blur-sm h-full object-cover object-center",
+            "image_classes": "absolute -inset-4 z-0 blur-sm h-full object-cover object-center image-sizer",
             "image_wrapper_classes": "",
             "image_link_classes": "",
             "image_static_size": "",
