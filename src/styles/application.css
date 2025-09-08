@@ -10,6 +10,20 @@
 @source "../scripts/*.js";
 @source "../../config/settings_data.json";
 
+/* Container utility to match old config (center: true, padding) */
+@utility container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  
+  @media (min-width: 414px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
 @layer base {
   .icon-list.check li:before {
     @apply content-['✓'] font-bold mr-2;
