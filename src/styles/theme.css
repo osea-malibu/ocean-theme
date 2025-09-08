@@ -1,0 +1,244 @@
+/* Tailwind CSS v4 Theme Configuration */
+
+@theme {
+  /* OSEA Brand Colors */
+  --color-seaweed-100: #F6FCFA;
+  --color-seaweed-200: #E7F1EF;
+  --color-seaweed-300: #D4E1DE;
+  --color-seaweed-400: #A0BEB7;
+  --color-seaweed-500: #6E958B;
+  --color-seaweed-600: #497469;
+  --color-seaweed-700: #1D4D41;
+  --color-seaweed-800: #0B2E25;
+
+  --color-coral-100: #FFF9F9;
+  --color-coral-200: #FFEFED;
+  --color-coral-300: #FDDDD8;
+  --color-coral-400: #FFC2B9;
+  --color-coral-500: #FFA496;
+  --color-coral-600: #FF6F61;
+  --color-coral-700: #F55445;
+  --color-coral-800: #DD2715;
+
+  --color-wave-100: #F9FBFA;
+  --color-wave-200: #F1F5F4;
+  --color-wave-300: #E6ECEE;
+  --color-wave-400: #CAD8DD;
+  --color-wave-500: #A2BAC1;
+  --color-wave-600: #809BA5;
+  --color-wave-700: #607981;
+  --color-wave-800: #435961;
+
+  --color-seafoam-100: #F5F9F1;
+  --color-seafoam-200: #EDF2EB;
+  --color-seafoam-300: #DBE5D3;
+  --color-seafoam-400: #C4D5B6;
+  --color-seafoam-500: #B0C69F;
+  --color-seafoam-600: #98AE87;
+  --color-seafoam-700: #7B9268;
+  --color-seafoam-800: #627851;
+
+  --color-sand-100: #FFFEF9;
+  --color-sand-200: #FAF9F1;
+  --color-sand-300: #F4F3E7;
+  --color-sand-400: #E8E6CD;
+  --color-sand-500: #DAD6AE;
+  --color-sand-600: #CCC895;
+  --color-sand-700: #BEB97A;
+  --color-sand-800: #A9A35E;
+
+  --color-shell-100: #FFFCF6;
+  --color-shell-200: #FBF5E9;
+  --color-shell-300: #F5EBDE;
+  --color-shell-400: #E9D8C3;
+  --color-shell-500: #DBC09E;
+  --color-shell-600: #CBAB82;
+  --color-shell-700: #BA9763;
+  --color-shell-800: #A98045;
+
+  /* Product-Specific Colors */
+  --color-aas-light: #FAF7EC;
+  --color-adv-light: #F6F2F0;
+  --color-apc-light: #E9EFEB;
+  --color-areye-light: #F5F4EF;
+  --color-bbalm-light: #F4F3EE;
+  --color-cdnc-light: #F1EFF5;
+  --color-cdnc-medium: #D3C3E0;
+  --color-ec-light: #F5F5F0;
+  --color-eh-light: #F7F5EF;
+  --color-hss-light: #EFF4EC;
+  --color-oc-light: #F7F9F6;
+  --color-oey-light: #FBF6F6;
+  --color-oey-medium: #F8EAEA;
+  --color-sos-light: #F8F1EF;
+  --color-swc-light: #EFF7F9;
+  --color-uabb-light: #FAF5EA;
+  --color-uabw-light: #FFF6E4;
+  --color-uabw-medium: #FF8400;
+  --color-uao-light: #FFF8E1;
+  --color-uao-medium: #FFE49F;
+  --color-ucbl-light: #FFFAF0;
+  --color-ucbp-light: #F7F0E2;
+
+  /* Campaign Colors */
+  --color-bfcm-blue: #8BD5FF;
+  --color-bfcm-green: #CFFF50;
+  --color-bfcm-orange: #FFBA49;
+  --color-owc-light: #FCFFE7;
+  --color-owc-blue: #1C39BB;
+  --color-owc-blue2: #0A30DF;
+  --color-owc-blue3: #E9F3FC;
+  --color-owc-yellow: #F2FF63;
+  --color-ld-yellow: #FDFF95;
+
+  /* Base Colors */
+  --color-light-black: #1F1E1F;
+  --color-neon-green: #DCF5AB;
+  --color-dream-navy: #1D284D;
+  --color-black: #000;
+  --color-white: #FFF;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Font Families */
+  --font-sans: Circular, sans-serif;
+  --font-serif: Canela, serif;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-book: 500;
+  --font-weight-medium: 600;
+  --font-weight-bold: 700;
+
+  /* Letter Spacing */
+  --letter-spacing-tightest: -0.075em;
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-slight: 0.015em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+
+  /* Screens (Breakpoints) */
+  --breakpoint-2xs: 414px;
+  --breakpoint-xs: 472px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* Extended Spacing */
+  --spacing-0: 0px;
+  --spacing-px: 1px;
+  --spacing-0-5: 0.125rem;
+  --spacing-1: 0.25rem;
+  --spacing-1-5: 0.375rem;
+  --spacing-2: 0.5rem;
+  --spacing-2-5: 0.625rem;
+  --spacing-3: 0.75rem;
+  --spacing-3-5: 0.875rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-7: 1.75rem;
+  --spacing-8: 2rem;
+  --spacing-9: 2.25rem;
+  --spacing-10: 2.5rem;
+  --spacing-11: 2.75rem;
+  --spacing-12: 3rem;
+  --spacing-14: 3.5rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-28: 7rem;
+  --spacing-32: 8rem;
+  --spacing-36: 9rem;
+  --spacing-40: 10rem;
+  --spacing-44: 11rem;
+  --spacing-48: 12rem;
+  --spacing-52: 13rem;
+  --spacing-56: 14rem;
+  --spacing-60: 15rem;
+  --spacing-64: 16rem;
+  --spacing-72: 18rem;
+  --spacing-80: 20rem;
+  --spacing-96: 24rem;
+
+  /* Extended Order */
+  --order-13: 13;
+  --order-14: 14;
+  --order-15: 15;
+  --order-16: 16;
+  --order-17: 17;
+  --order-18: 18;
+  --order-19: 19;
+  --order-20: 20;
+
+  /* Extended Max Widths */
+  --max-width-2xs: 18rem;
+  --max-width-xs: 20rem;
+  --max-width-sm: 24rem;
+  --max-width-md: 28rem;
+  --max-width-lg: 32rem;
+  --max-width-xl: 36rem;
+  --max-width-2xl: 42rem;
+  --max-width-3xl: 48rem;
+  --max-width-4xl: 56rem;
+  --max-width-5xl: 64rem;
+  --max-width-6xl: 72rem;
+  --max-width-7xl: 80rem;
+
+  /* Extended Max Heights */
+  --max-height-100: 28rem;
+
+  /* Custom Z-Index */
+  --z-index-60: 60;
+  --z-index-70: 70;
+  --z-index-80: 80;
+  --z-index-90: 90;
+  --z-index-100: 100;
+
+  /* Custom Animations */
+  --animate-marquee: marquee 100s linear infinite;
+  --animate-skeleton: skeleton 2s cubic-bezier(0.4,0,0.6,1) infinite;
+
+  /* Text Shadow */
+  --text-shadow-sm: 0 0 2px var(--tw-shadow-color);
+  --text-shadow-default: 0 0 4px var(--tw-shadow-color);
+  --text-shadow-lg: 0 0 16px var(--tw-shadow-color);
+
+  /* Custom Stroke Widths */
+  --stroke-width-1: 1px;
+  --stroke-width-1-25: 1.25px;
+  --stroke-width-1-50: 1.5px;
+  --stroke-width-1-75: 1.75px;
+  --stroke-width-2: 2px;
+  --stroke-width-2-25: 2.25px;
+  --stroke-width-2-50: 2.5px;
+  --stroke-width-2-75: 2.75px;
+
+  /* Custom Gradients */
+  --gradient-radial: radial-gradient(var(--tw-gradient-stops));
+
+  /* Transition Properties */
+  --transition-height: height;
+  --transition-max-height: max-height;
+  --transition-max-width: max-width;
+  --transition-spacing: margin, padding;
+  --transition-transform-opacity: transform, opacity;
+  --transition-visibility: visibility, opacity;
+  --transition-transform-visibility: transform, visibility;
+  --transition-transform-border: transform, border;
+}
+
+/* Custom Keyframes */
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes skeleton {
+  50% { opacity: 0.5; }
+}

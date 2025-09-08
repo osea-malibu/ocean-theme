@@ -1,6 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "./theme.css";
+
+@source "../../layout/*.liquid";
+@source "../../templates/customers/*.liquid";
+@source "../../templates/*.json"; 
+@source "../../sections/*.liquid";
+@source "../../snippets/*.liquid";
+@source "../../assets/*.js";
+@source "../scripts/*.js";
+@source "../../config/settings_data.json";
 
 @layer base {
   .icon-list.check li:before {
@@ -148,7 +156,7 @@
 
   menu-drawer .menu-drawer,
   menu-drawer .menu-submenu {
-    @apply motion-safe:transition-transform-visibility md:w-[28rem];
+    @apply motion-safe:transition-transform md:w-[28rem];
   }
   menu-drawer details.menu-opening > .menu-drawer,
   menu-drawer details[open].menu-opening > .menu-submenu {
@@ -204,25 +212,25 @@
     @apply px-8 py-4 text-xl rounded-lg;
   }
   .button-primary {
-    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-800 hover:border-seaweed-800 hover:text-white visited:bg-seaweed-700 visited:text-white link:bg-seaweed-700 link:text-white link:hover:bg-seaweed-800 active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
+    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-800 hover:border-seaweed-800 hover:text-white visited:bg-seaweed-700 visited:text-white active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
   }
   .button-secondary {
-    @apply bg-white border-seaweed-400 text-seaweed-800 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-800 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
+    @apply bg-white border-seaweed-400 text-seaweed-800 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
   }
   .button-tertiary {
-    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-800 hover:bg-seaweed-200 hover:border-seaweed-400 hover:text-seaweed-800 visited:bg-seaweed-200 visited:text-seaweed-700 link:bg-seaweed-200 link:text-seaweed-800 active:bg-seaweed-200 active:text-seaweed-800 focus:bg-seaweed-200 focus:text-seaweed-800;
+    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-800 hover:bg-seaweed-200 hover:border-seaweed-400 hover:text-seaweed-800 visited:bg-seaweed-200 visited:text-seaweed-700 active:bg-seaweed-200 active:text-seaweed-800 focus:bg-seaweed-200 focus:text-seaweed-800;
   }
   .button-white {
-    @apply bg-white border-white text-seaweed-800 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 link:bg-white link:text-seaweed-800 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
+    @apply bg-white border-white text-seaweed-800 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
   }
   .button-black {
-    @apply bg-black border-black text-white hover:bg-seaweed-500 hover:border-seaweed-500 hover:text-white visited:bg-black visited:text-white link:bg-black link:text-white link:hover:bg-seaweed-500 active:bg-black active:text-white focus:bg-seaweed-800 focus:text-white;
+    @apply bg-black border-black text-white hover:bg-seaweed-500 hover:border-seaweed-500 hover:text-white visited:bg-black visited:text-white active:bg-black active:text-white focus:bg-seaweed-800 focus:text-white;
   }
   .button-neon {
-    @apply bg-neon-green border-neon-green text-seaweed-800 hover:bg-seaweed-200 hover:border-seaweed-200 hover:text-seaweed-800 visited:bg-neon-green visited:text-seaweed-700 link:bg-neon-green link:text-seaweed-800 active:bg-neon-green active:text-seaweed-800 focus:bg-neon-green focus:text-seaweed-800;
+    @apply bg-neon-green border-neon-green text-seaweed-800 hover:bg-seaweed-200 hover:border-seaweed-200 hover:text-seaweed-800 visited:bg-neon-green visited:text-seaweed-700 active:bg-neon-green active:text-seaweed-800 focus:bg-neon-green focus:text-seaweed-800;
   }
   .button-navy {
-    @apply bg-dream-navy border-dream-navy text-white hover:bg-dream-navy hover:border-dream-navy hover:text-cdnc-light visited:bg-dream-navy visited:text-white link:bg-dream-navy link:text-white active:bg-dream-navy active:text-white focus:bg-dream-navy focus:text-white;
+    @apply bg-dream-navy border-dream-navy text-white hover:bg-dream-navy hover:border-dream-navy hover:text-cdnc-light visited:bg-dream-navy visited:text-white active:bg-dream-navy active:text-white focus:bg-dream-navy focus:text-white;
   }
   .button-icon.button-xs svg {
     @apply w-3 h-3 stroke-2;
@@ -705,7 +713,7 @@
 
   /* Klaviyo - Back in Stock PDP button */
   .pdp .klaviyo-bis-trigger.button {
-    @apply button-neon h-11 absolute bottom-0 !w-[calc(50%-4px)] flex items-center;
+    @apply bg-neon-green border-neon-green text-seaweed-800 h-11 absolute bottom-0 !w-[calc(50%-4px)] flex items-center;
   }
   .pdp .klaviyo-bis-trigger.button.hidden {
     display: none;
@@ -716,7 +724,7 @@
     @apply !z-10 absolute bottom-0 !w-[calc(50%-4px)] right-0;
   }
   #ps__bis_container_root #ps-bis-widget__button.ps-bis-button {
-    @apply button button-neon button-sm h-11 block whitespace-normal leading-tight w-full;
+    @apply cursor-pointer inline-flex items-center justify-center border px-4 py-1 text-sm rounded-md font-bold tracking-widest uppercase whitespace-nowrap text-center bg-neon-green border-neon-green text-seaweed-800 h-11 block leading-tight w-full;
   }
 
   /* Gorgias chat widget */
