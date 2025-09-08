@@ -725,6 +725,10 @@
     bottom: var(--sticky-atc-height) !important;
     transition: bottom 0.2s;
   }
+  #chat-window[class*="gorgias-chat-key"] {
+    bottom: calc(var(--sticky-atc-height) + 68px) !important;
+    transition: bottom 0.2s;
+  }
 
   /* Loop Bundles */
   [id^="CartBundleItem"] {
