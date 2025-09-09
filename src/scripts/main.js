@@ -1,4 +1,5 @@
 // Main Shopify theme JS entry
+// Import other modules
 import "./product-form.js";
 import "./global.js";
 import "./cart.js";
