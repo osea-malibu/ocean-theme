@@ -3,7 +3,7 @@
 
 @source "../../layout/*.liquid";
 @source "../../templates/customers/*.liquid";
-@source "../../templates/*.json"; 
+@source "../../templates/*.json";
 @source "../../sections/*.liquid";
 @source "../../snippets/*.liquid";
 @source "../../assets/*.js";
@@ -17,12 +17,32 @@
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  
+
   @media (min-width: 414px) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 }
+
+@custom-variant child (& > *);
+@custom-variant child-hover (& > *:hover);
+@custom-variant link (&:link);
+@custom-variant small (& small);
+@custom-variant span (& > span);
+@custom-variant video (& > video);
+@custom-variant label (& label);
+@custom-variant img (& img);
+@custom-variant li (& li);
+@custom-variant ul (& ul);
+@custom-variant td (& > td);
+@custom-variant tr (& > tr);
+@custom-variant th (& > th);
+@custom-variant h1 (& h1);
+@custom-variant h2 (& h2);
+@custom-variant a (& a);
+@custom-variant b (& b);
+@custom-variant i (& i);
+@custom-variant p (& p);
 
 @layer base {
   .icon-list.check li:before {
