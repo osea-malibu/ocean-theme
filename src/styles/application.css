@@ -206,27 +206,6 @@
     @apply hidden;
   }
 
-  /* Select */
-  select.input {
-    webkit-appearance: none;
-    appearance: none;
-    padding-right: var(--spacing-8);
-    cursor: pointer;
-    background-position: right var(--spacing-2) center;
-    background-repeat: no-repeat;
-    background-size: var(--spacing-5);
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231d4d41' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  }
-  select.input-sm {
-    @apply pr-5 bg-[right_0.125rem_center] xs:bg-[right_0.25rem_center];
-  }
-  [type="checkbox"] {
-    @apply cursor-pointer p-0 w-4 h-4 text-seaweed-700 bg-white rounded-sm border-seaweed-400 focus:ring-seaweed-300 focus:ring-2;
-  }
-  [type="checkbox"]:checked {
-    @apply bg-seaweed-700;
-  }
-
   /* Badge */
   .badge {
     @apply inline-block px-1 py-0.5 font-bold tracking-wide bg-seafoam-300 text-seaweed-700;
@@ -782,6 +761,44 @@
   padding-block: var(--spacing-4);
   font-size: var(--text-xl);
   border-radius: var(--radius-lg);
+}
+
+/* Select */
+select.input {
+  webkit-appearance: none;
+  appearance: none;
+  padding-right: var(--spacing-8);
+  cursor: pointer;
+  background-position: right var(--spacing-2) center;
+  background-repeat: no-repeat;
+  background-size: var(--spacing-5);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231d4d41' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+select.input-sm {
+  padding-right: var(--spacing-5);
+  background-position: right 0.125rem center;
+
+  @media (min-width: 30rem) {
+    background-position: right 0.25rem center;
+  }
+}
+[type="checkbox"] {
+  cursor: pointer;
+  width: var(--spacing-4);
+  height: var(--spacing-4);
+  text-align: center;
+  padding: 0;
+  background-color: var(--color-white);
+  border-color: var(--color-seaweed-400);
+  border-radius: var(--radius-sm);
+  color: var(--color-seaweed-700);
+
+  &:focus {
+    outline: 2px solid rgba(var(--color-seaweed-700), 0.5);
+  }
+  &:checked {
+    background-color: var(--color-seaweed-700);
+  }
 }
 
 @layer utilities {
