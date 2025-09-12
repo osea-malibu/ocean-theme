@@ -10,20 +10,6 @@
 @source "../scripts/*.js";
 @source "../../config/settings_data.json";
 
-/* Container utility to match old config (center: true, padding) */
-@utility container {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-
-  @media (min-width: 414px) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
 @custom-variant child (& > *);
 @custom-variant child-hover (& > *:hover);
 @custom-variant link (&:link);
@@ -220,130 +206,7 @@
     @apply hidden;
   }
 
-  /* Links */
-  .link {
-    @apply underline underline-offset-2 decoration-1 hover:text-seaweed-500 transition-colors;
-  }
-
-  /* Buttons */
-  .button,
-  .shopify-challenge__button {
-    @apply cursor-pointer inline-flex items-center justify-center border px-6 py-2 rounded-md font-bold tracking-widest uppercase whitespace-nowrap text-center motion-safe:transition-colors active:ring-2 focus:ring-2 focus:ring-offset-2;
-  }
-  .button-xs {
-    @apply px-3 py-0.5 text-xs;
-  }
-  .button-sm {
-    @apply px-4 py-1 text-sm;
-  }
-  .button-md {
-    @apply px-6 py-2 text-base;
-  }
-  .button-lg {
-    @apply px-7 py-3 text-lg rounded-lg;
-  }
-  .button-xl {
-    @apply px-8 py-4 text-xl rounded-lg;
-  }
-  .button-primary {
-    @apply bg-seaweed-700 border-seaweed-700 text-white hover:bg-seaweed-800 hover:border-seaweed-800 hover:text-white visited:bg-seaweed-700 visited:text-white active:bg-seaweed-700 active:text-white focus:bg-seaweed-800 focus:text-white;
-  }
-  .button-secondary {
-    @apply bg-white border-seaweed-400 text-seaweed-800 hover:bg-seafoam-100 hover:border-seaweed-500 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
-  }
-  .button-tertiary {
-    @apply bg-seaweed-200 border-seaweed-200 text-seaweed-800 hover:bg-seaweed-200 hover:border-seaweed-400 hover:text-seaweed-800 visited:bg-seaweed-200 visited:text-seaweed-700 active:bg-seaweed-200 active:text-seaweed-800 focus:bg-seaweed-200 focus:text-seaweed-800;
-  }
-  .button-white {
-    @apply bg-white border-white text-seaweed-800 hover:bg-seafoam-100 hover:border-seafoam-100 hover:text-seaweed-800 visited:bg-white visited:text-seaweed-700 active:bg-white active:text-seaweed-800 focus:bg-white focus:text-seaweed-800;
-  }
-  .button-black {
-    @apply bg-black border-black text-white hover:bg-seaweed-500 hover:border-seaweed-500 hover:text-white visited:bg-black visited:text-white active:bg-black active:text-white focus:bg-seaweed-800 focus:text-white;
-  }
-  .button-neon {
-    @apply bg-neon-green border-neon-green text-seaweed-800 hover:bg-seaweed-200 hover:border-seaweed-200 hover:text-seaweed-800 visited:bg-neon-green visited:text-seaweed-700 active:bg-neon-green active:text-seaweed-800 focus:bg-neon-green focus:text-seaweed-800;
-  }
-  .button-navy {
-    @apply bg-dream-navy border-dream-navy text-white hover:bg-dream-navy hover:border-dream-navy hover:text-cdnc-light visited:bg-dream-navy visited:text-white active:bg-dream-navy active:text-white focus:bg-dream-navy focus:text-white;
-  }
-  .button-icon.button-xs svg {
-    @apply w-3 h-3 stroke-2;
-  }
-  .button-icon.button-sm svg {
-    @apply w-4 h-4 stroke-2;
-  }
-  .button-icon svg {
-    @apply w-5 h-5 stroke-1/50;
-  }
-  .button-icon.button-lg svg {
-    @apply w-6 h-6 stroke-1/75;
-  }
-  .button-icon.button-xl svg {
-    @apply w-7 h-7 stroke-1/75;
-  }
-  .button-icon-left.button-xs svg,
-  .button-icon-left.button-sm svg {
-    @apply mr-1;
-  }
-  .button-icon-right.button-xs svg,
-  .button-icon-right.button-sm svg {
-    @apply ml-1;
-  }
-  .button-icon-left svg {
-    @apply mr-2;
-  }
-  .button-icon-right svg {
-    @apply ml-2;
-  }
-  .button-icon-left.button-lg svg,
-  .button-icon-left.button-xl svg {
-    @apply mr-3;
-  }
-  .button-icon-right.button-lg svg,
-  .button-icon-right.button-xl svg {
-    @apply ml-3;
-  }
-  .button-group .button {
-    @apply rounded-none relative;
-  }
-  .button-group .button:focus {
-    @apply z-10;
-  }
-  .button-group .button:first-of-type {
-    @apply rounded-l;
-  }
-  .button-group .button:last-of-type {
-    @apply rounded-r;
-  }
-  .button-group .button:not(:first-of-type) {
-    @apply -ml-px;
-  }
-
-  /* Inputs */
-  .field {
-    @apply block w-full tracking-wide;
-  }
-  .field .label {
-    @apply font-medium mb-1;
-  }
-  .field .input {
-    @apply block w-full;
-  }
-  .input {
-    @apply cursor-text bg-white border border-seaweed-400 rounded-md px-4 tracking-wide focus:ring-2 focus:ring-neon-green/50;
-  }
-  .input-xs {
-    @apply px-1 py-0.5 text-xs;
-  }
-  .input-sm {
-    @apply px-2 py-1 text-sm leading-4;
-  }
-  .input-lg {
-    @apply px-7 py-3 text-lg rounded-lg;
-  }
-  .input-xl {
-    @apply px-8 py-4 text-xl rounded-lg;
-  }
+  /* Select */
   select.input {
     webkit-appearance: none;
     appearance: none;
@@ -605,6 +468,320 @@
   .pdp .footer-main {
     @apply pb-20;
   }
+}
+
+/* Container utility to match old config (center: true, padding) */
+@utility container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+
+  @media (min-width: 414px) {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+  }
+}
+
+/* Links */
+@utility link {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+
+  &:hover {
+    color: var(--color-seaweed-500);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition-property: color, text-decoration-color;
+    transition-timing-function: var(--ease-in-out);
+    transition-duration: 0.15s;
+  }
+}
+
+/* Buttons */
+@utility button {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  padding-inline: calc(var(--spacing) * 6);
+  padding-block: calc(var(--spacing) * 2);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition-property: color, background-color, border-color, opacity, box-shadow;
+    transition-timing-function: var(--ease-in-out);
+    transition-duration: 0.15s;
+  }
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px rgba(var(--color-neon-green), 0.5);
+  }
+}
+@utility button-xs {
+  padding-inline: var(--spacing-3);
+  padding-block: calc(var(--spacing) * 0.5);
+  font-size: var(--text-xs);
+}
+@utility button-sm {
+  padding-inline: var(--spacing-4);
+  padding-block: var(--spacing-1);
+  font-size: var(--text-sm);
+}
+@utility button-md {
+  padding-inline: var(--spacing-6);
+  padding-block: var(--spacing-2);
+  font-size: var(--text-base);
+}
+@utility button-lg {
+  padding-inline: var(--spacing-7);
+  padding-block: var(--spacing-3);
+  font-size: var(--text-lg);
+  border-radius: var(--radius-lg);
+}
+@utility button-xl {
+  padding-inline: var(--spacing-8);
+  padding-block: var(--spacing-4);
+  font-size: var(--text-xl);
+  border-radius: var(--radius-lg);
+}
+@utility button-primary {
+  background-color: var(--color-seaweed-700);
+  border-color: var(--color-seaweed-700);
+  color: var(--color-white);
+
+  &:visited,
+  &:active,
+  &:focus,
+  &:link {
+    background-color: var(--color-seaweed-700);
+    color: var(--color-white);
+  }
+  &:hover {
+    background-color: var(--color-seaweed-800);
+    border-color: var(--color-seaweed-800);
+    color: var(--color-white);
+  }
+}
+@utility button-secondary {
+  background-color: var(--color-white);
+  border-color: var(--color-seaweed-400);
+  color: var(--color-seaweed-800);
+
+  &:visited,
+  &:active,
+  &:focus,
+  &:link {
+    background-color: var(--color-white);
+    color: var(--color-seaweed-800);
+  }
+  &:hover {
+    background-color: var(--color-seafoam-100);
+    border-color: var(--color-seaweed-500);
+    color: var(--color-seaweed-800);
+  }
+}
+@utility button-tertiary {
+  background-color: var(--color-seaweed-200);
+  border-color: var(--color-seaweed-200);
+  color: var(--color-seaweed-800);
+
+  &:visited,
+  &:active,
+  &:focus,
+  &:link {
+    background-color: var(--color-seaweed-200);
+    color: var(--color-seaweed-800);
+  }
+  &:hover {
+    background-color: var(--color-seaweed-200);
+    border-color: var(--color-seaweed-400);
+    color: var(--color-seaweed-800);
+  }
+}
+@utility button-white {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-seaweed-800);
+
+  &:visited,
+  &:active,
+  &:focus,
+  &:link {
+    background-color: var(--color-white);
+    color: var(--color-seaweed-800);
+  }
+  &:hover {
+    background-color: var(--color-seafoam-100);
+    border-color: var(--color-seafoam-100);
+    color: var(--color-seaweed-800);
+  }
+}
+@utility button-black {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+
+  &:visited,
+  &:active,
+  &:focus,
+  &:link {
+    background-color: var(--color-black);
+    color: var(--color-white);
+  }
+  &:hover {
+    background-color: var(--color-seaweed-700);
+    border-color: var(--color-seaweed-700);
+    color: var(--color-white);
+  }
+}
+@utility button-neon {
+  background-color: var(--color-neon-green);
+  border-color: var(--color-neon-green);
+  color: var(--color-seaweed-800);
+
+  &:visited,
+  &:active,
+  &:focus,
+  &:link {
+    background-color: var(--color-neon-green);
+    color: var(--color-seaweed-800);
+  }
+  &:hover {
+    background-color: var(--color-seaweed-200);
+    border-color: var(--color-seaweed-200);
+    color: var(--color-seaweed-800);
+  }
+}
+@utility button-icon {
+  &.button-xs svg {
+    width: var(--spacing-3);
+    height: var(--spacing-3);
+    stroke-width: 2px;
+  }
+  &.button-sm svg {
+    width: var(--spacing-4);
+    height: var(--spacing-4);
+    stroke-width: 2px;
+  }
+  &.button-lg svg {
+    width: var(--spacing-6);
+    height: var(--spacing-6);
+    stroke-width: 2px;
+  }
+  &.button-xl svg {
+    width: var(--spacing-7);
+    height: var(--spacing-7);
+    stroke-width: 2px;
+  }
+}
+@utility button-icon-left {
+  & svg {
+    margin-right: var(--spacing-2);
+  }
+  &.button-xs svg,
+  &.button-sm svg {
+    margin-right: var(--spacing-1);
+  }
+  &.button-lg svg,
+  &.button-xl svg {
+    margin-right: var(--spacing-3);
+  }
+}
+@utility button-icon-right {
+  & svg {
+    margin-left: var(--spacing-2);
+  }
+  &.button-xs svg,
+  &.button-sm svg {
+    margin-left: var(--spacing-1);
+  }
+  &.button-lg svg,
+  &.button-xl svg {
+    margin-left: var(--spacing-3);
+  }
+}
+@utility button-group {
+  & .button {
+    position: relative;
+    border-radius: 0;
+
+    &:focus {
+      z-index: 10;
+    }
+    &:first-of-type {
+      border-top-left-radius: var(--radius-md);
+      border-bottom-left-radius: var(--radius-md);
+    }
+    &:last-of-type {
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+    }
+    &:not(:first-of-type) {
+      margin-left: -1px;
+    }
+  }
+}
+
+/* Inputs */
+@utility field {
+  display: block;
+  width: 100%;
+  letter-spacing: var(--tracking-wide);
+
+  & .label {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-1);
+  }
+  & .input {
+    display: block;
+    width: 100%;
+  }
+}
+@utility input {
+  cursor: text;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-seaweed-400);
+  border-radius: var(--radius-md);
+  padding-inline: var(--spacing-4);
+  letter-spacing: var(--tracking-wide);
+
+  &:focus {
+    outline: 2px solid rgba(var(--color-neon-green), 0.5);
+    outline-offset: 2px;
+  }
+}
+@utility input-xs {
+  padding-inline: var(--spacing-1);
+  padding-block: calc(var(--spacing) * 0.5);
+  font-size: var(--text-xs);
+}
+@utility input-sm {
+  padding-inline: var(--spacing-2);
+  padding-block: var(--spacing-1);
+  font-size: var(--text-sm);
+  line-height: var(--leading-4);
+}
+@utility input-lg {
+  padding-inline: var(--spacing-7);
+  padding-block: var(--spacing-3);
+  font-size: var(--text-lg);
+  border-radius: var(--radius-lg);
+}
+@utility input-xl {
+  padding-inline: var(--spacing-8);
+  padding-block: var(--spacing-4);
+  font-size: var(--text-xl);
+  border-radius: var(--radius-lg);
 }
 
 @layer utilities {
