@@ -345,7 +345,13 @@
     @apply px-8 py-4 text-xl rounded-lg;
   }
   select.input {
-    @apply cursor-pointer pr-8;
+    webkit-appearance: none;
+    appearance: none;
+    padding-right: var(--spacing-8);
+    cursor: pointer;
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1rem;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231d4d41' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   }
   select.input-sm {
@@ -758,7 +764,7 @@
     @apply !z-10 absolute bottom-0 !w-[calc(50%-4px)] right-0;
   }
   #ps__bis_container_root #ps-bis-widget__button.ps-bis-button {
-    @apply cursor-pointer inline-flex items-center justify-center border px-4 py-1 text-sm rounded-md font-bold tracking-widest uppercase whitespace-nowrap text-center bg-neon-green border-neon-green text-seaweed-800 h-11 block leading-tight w-full;
+    @apply cursor-pointer inline-flex items-center justify-center border px-4 py-1 text-sm rounded-md font-bold tracking-widest uppercase whitespace-nowrap text-center bg-neon-green border-neon-green text-seaweed-800 h-11 leading-tight w-full;
   }
 
   /* Gorgias chat widget */
