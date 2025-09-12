@@ -144,66 +144,103 @@
 @layer components {
   /* Base details / summary */
   summary {
-    @apply cursor-pointer list-none relative;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
   }
   summary::-webkit-details-marker {
-    @apply hidden;
+    display: none;
   }
 
   /* Cart + header +  menu drawers */
   menu-drawer .menu-scrim,
   cart-drawer .cart-scrim {
-    @apply opacity-0 motion-safe:transition-opacity;
+    opacity: 0;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: opacity;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.15s;
+    }
   }
   menu-drawer details.menu-opening .menu-scrim,
   cart-drawer.active .cart-scrim {
-    @apply opacity-100;
+    opacity: 1;
   }
 
   cart-drawer .cart-drawer {
-    @apply translate-x-full motion-safe:transition-transform;
+    translate: 100%;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: translate;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.15s;
+    }
   }
   cart-drawer.active .cart-drawer {
-    @apply translate-x-0;
+    translate: 0;
   }
-
   cart-drawer .desktop-cart-recommendations {
-    @apply -right-32 opacity-0 motion-safe:transition-all motion-safe:duration-300;
+    opacity: 0;
+    right: calc(var(--spacing) * -32);
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: opacity, right;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.3s;
+    }
   }
   cart-drawer.active:not(.is-empty) .desktop-cart-recommendations {
-    @apply right-[32rem] opacity-100 motion-safe:delay-200;
+    right: 32rem;
+    opacity: 1;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition-delay: 200ms;
+    }
   }
 
   menu-drawer .menu-drawer,
   menu-drawer .menu-submenu {
-    @apply motion-safe:transition-transform md:w-[28rem];
+    translate: -100%;
+    visibility: hidden;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: translate, visibility;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.15s;
+    }
   }
   menu-drawer details.menu-opening > .menu-drawer,
   menu-drawer details[open].menu-opening > .menu-submenu {
-    @apply translate-x-0 visible;
+    translate: 0;
+    visibility: visible;
   }
   .js details[open]:not(.menu-opening) > .header__icon--menu .icon-close {
-    @apply invisible;
+    visibility: hidden;
   }
   .js details[open]:not(.menu-opening) > .header__icon--menu .icon-hamburger {
-    @apply visible opacity-100 scale-105;
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1.05);
   }
 
   /* Modal toggle */
   .no-js details[open] .modal__toggle {
-    @apply absolute z-0;
+    position: absolute;
+    z-index: 0;
   }
   .modal__toggle-close {
-    @apply hidden;
+    visibility: hidden;
   }
   .no-js details[open] svg.modal__toggle-close {
-    @apply flex z-10;
+    display: flex;
+    z-index: 10;
   }
   .modal__toggle-open {
-    @apply flex;
+    display: flex;
   }
   .no-js details[open] .modal__toggle-open {
-    @apply hidden;
+    display: none;
   }
 
   /* Badge */
