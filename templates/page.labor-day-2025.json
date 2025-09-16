@@ -730,6 +730,13 @@
         "section_classes": "container pb-6 pt-6",
         "container_classes": "bg-ld-yellow/50 pt-6 pb-1"
       }
+    },
+    "custom_liquid_GCgC6T": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "{% style %}\n.ld-grid-container {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  grid-template-rows: auto auto auto auto auto;\n  grid-template-areas:\n    \"badge badge\"\n    \"video video\"\n    \"card-title card-title\"\n    \"card1 card2\"\n    \"gift gift\";\n}\n@media (min-width: 768px) {\n  .ld-grid-container {\n    grid-template-columns: 1fr 1fr 1fr 1fr;\n    grid-template-rows: auto auto auto auto auto;\n    grid-template-areas:\n      \"video video badge badge\"\n      \"video video card-title card-title\"\n      \"video video card1 card2\"\n      \"video video card1 card2\"\n      \"video video gift gift\";\n  }\n  .ld-grid-container.alt {\n    grid-template-columns: 1fr 1fr 1fr 1fr;\n    grid-template-rows: auto auto auto auto auto;\n    grid-template-areas:\n      \"badge badge video video\"\n      \"card-title card-title video video\"\n      \"card1 card2 video video\"\n      \"card1 card2 video video\"\n      \"gift gift video video\";\n  }\n}\n.ld-video-element {\n  grid-area: video;\n}\n.ld-badge-element {\n  grid-area: badge;\n  min-height: 28px;\n}\n.ld-card-title-element {\n  grid-area: card-title;\n}\n.ld-product-card-one,\n.ld-product-card-two {\n  min-height: 150px;\n}\n.ld-product-card-one {\n  grid-area: card1;\n}\n.ld-product-card-two {\n  grid-area: card2;\n}\n.ld-gift-element {\n  grid-area: gift;\n  min-height: 120px;\n}\n{% endstyle %}"
+      }
     }
   },
   "order": [
@@ -743,6 +750,7 @@
     "rich_text_yr6wMC",
     "featured_collections_dKGeNq",
     "rich_text_fzmKx4",
-    "rich_text_k9BhC8"
+    "rich_text_k9BhC8",
+    "custom_liquid_GCgC6T"
   ]
 }
