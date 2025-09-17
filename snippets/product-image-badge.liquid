@@ -10,7 +10,7 @@
 {% endcomment %}
 
 {%- if badge_text != '' and product.handle != 'gift-card' -%}
-  <div class="flex flex-col gap-2 absolute {{ classes }}">
+  <div class="flex flex-col absolute {{ classes }}">
     {%- for badge in product.metafields.custom.badge_image.value -%}
       {%- case badge -%}
         {%- when 'Eczema Approved' -%}
