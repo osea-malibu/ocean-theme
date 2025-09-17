@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="{{ request.locale.iso_code }}" style="--sticky-atc-height: 0px;">
+<html class="no-js bg-white text-seaweed-700" lang="{{ request.locale.iso_code }}" style="--sticky-atc-height: 0px;">
   <head>
     {% render 'gpc-integration-script' %}
     
@@ -109,7 +109,7 @@
       <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
     </ul>
 
-    <div id="HeaderScrollPixel"></div>
+    <div id="HeaderScrollPixel" class="absolute w-px h-px bg-transparent top-8"></div>
     
     <script>
       window.shopUrl = '{{ shop.url }}';
