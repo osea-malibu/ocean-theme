@@ -7,7 +7,7 @@
     - percent_discount: {Boolean} Show % off instead of $ off in savings badge (optional)
 
     Usage:
-    {% render 'product-badge', product: product %}
+    {% render 'product-text-badge', product: product %}
 {% endcomment %}
 {%- liquid
   assign set_products = collections['skincare-sets'].products | map: 'handle'

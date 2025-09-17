@@ -1,0 +1,29 @@
+{% comment %}
+    Renders image badges from metafields
+
+    Accepts:
+    - product: {Object} Product Liquid object
+    - classes: {Object} Tailwind CSS classes
+    
+    Usage:
+    {% render 'product-image-badge', product: product %}
+{% endcomment %}
+
+{%- if badge_text != '' and product.handle != 'gift-card' -%}
+  <div class="flex flex-col absolute {{ classes }}">
+    {%- for badge in product.metafields.custom.badge_image.value -%}
+      {%- case badge -%}
+        {%- when 'Eczema Approved' -%}
+          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Eczema_Association_Accepted.png" alt="National Eczema Association Accepted" width="150" height="150" class="px-1">
+        {%- when 'Allure 2025' -%}
+          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Allure_BestofBeauty_2025.png" alt="Allure Best of Beauty 2025" width="150" height="150">
+        {%- when 'Allure 2024' -%}
+          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Allure_BestofBeauty_2024.png" alt="Allure Best of Beauty 2024" width="150" height="150">
+        {%- when 'Allure 2023' -%}
+          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Allure_BestofBeauty_2023.png" alt="Allure Best of Beauty 2023" width="150" height="150">
+        {%- when 'Allure 2022' -%}
+          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Allure_BestofBeauty_2022.png" alt="Allure Best of Beauty 2022" width="150" height="150">
+        {%- endcase -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

@@ -16,11 +16,12 @@ Accepts:
 {% endcomment %}
 
 <glide-slider
-  class="overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2"
+  class="overflow-hidden gap-0 mb-6 max-w-full glide type-carousel perView-1 lg:flex lg:flex-row-reverse lg:gap-2"
   id="Product-Slider"
   data-breakpoint-limit="none"
 >
-  {% render 'product-badge', product: product, classes: 'z-10 left-1 !right-auto md:!left-auto md:!right-1' %}
+  {% render 'product-text-badge', product: product, classes: 'z-10 right-2 top-2' %}
+  {% render 'product-image-badge', product: product, classes: 'z-10 left-2 top-2 w-16 lg:left-28 lg:w-20 gap-2' %}
   <div class="glide__track" data-glide-el="track">
     <ul class="min-h-full glide__slides">
 
