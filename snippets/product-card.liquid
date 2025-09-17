@@ -13,10 +13,12 @@
     - product_form_class: {String} Tailwind styling classes (optional)
     - image_class: {String} Tailwind styling classes (optional)
     - image_element_class: {String} Tailwind styling classes (optional)
-    - badge_class: {String} Tailwind styling classes (optional)
     - name_class: {String} Tailwind styling classes (optional)
     - description_class: {String} Tailwind styling classes (optional)
-    - hide_badge: {Boolean} Hide badge in upper left corner of tile (optional)
+    - badge_class: {String} Tailwind styling classes (optional)
+    - image_badge_class: {String} Tailwind styling classes (optional)
+    - hide_badge: {Boolean} Hide text badge in upper right corner of tile (optional)
+    - hide_image_badge: {Boolean} Hide image badge in upper right corner of tile (optional)
     - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
     - show_benefits: {Boolean} Show benefits icons. Default: false (optional)
     - subscription: {Boolean} Deafult to subscription selection insead of variants (optional)
@@ -420,14 +422,25 @@
       </h2>
     {%- endif -%}
 
-    {%- if hide_badge != true -%}
+    {%- unless hide_badge -%}
       {%- if custom_badge_html != blank -%}
         <div class="absolute top-1 right-1{% if custom_badge_classes != blank %} {{ custom_badge_classes }}{% endif %}">
           {{ custom_badge_html }}
         </div>
       {%- else -%}
-        {% render 'product-badge', product: card_product, classes: badge_class, percent_discount: percent_discount %}
+        {% render 'product-text-badge', product: card_product, classes: badge_class, percent_discount: percent_discount %}
       {%- endif -%}
-    {%- endif -%}
+    {%- endunless -%}
+    {%- unless hide_image_badge -%}
+      {%- liquid
+        if image_badge_class != blank
+          assign image_badge_class_value = image_badge_class
+        else
+          assign image_badge_class_value = 'z-10 left-1 top-1 w-10'
+        endif
+      -%}
+
+      {% render 'product-image-badge', product: card_product, classes: image_badge_class_value %}
+    {%- endunless -%}
   </div>
 </div>

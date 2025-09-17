@@ -15,7 +15,8 @@
           assign main_image_src = product.media[0] | image_url: width: 300, height: 375, crop: 'center'
           assign main_image_src_2x = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
         -%}
-        {% render 'product-badge', product: product, classes: 'z-10' %}
+        {% render 'product-text-badge', product: product, classes: 'z-10' %}
+        {% render 'product-image-badge', product: product %}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           class="mx-auto"
