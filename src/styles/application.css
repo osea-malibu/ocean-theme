@@ -58,8 +58,8 @@
   /* Remove number input controls on quantity */
   input.quantity__input::-webkit-outer-spin-button,
   input.quantity__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
     appearance: none;
-    webkit-appearance: none;
     margin: 0;
   }
 
@@ -193,181 +193,274 @@
   /* Predictive search */
   [type="search"]::-webkit-search-cancel-button,
   #Search-In-Modal::-webkit-search-cancel-button {
-    @apply appearance-none h-5 w-[60px] text-wave-400;
+    appearance: none;
+    height: var(--spacing-5);
+    width: 60px;
+    color: var(--color-wave-400);
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='20px' width='60px'><text x='6' y='15' fill='%23818181' font-size='14' font-family='neuzeit-grotesk, sans-serif' style='text-transform: uppercase; letter-spacing: 0.25px;'>Clear</text></svg>");
   }
   predictive-search[open] .predictive-search,
   predictive-search[loading] .predictive-search {
-    @apply max-h-[calc(100vh-72px)] ml-4;
+    max-height: calc(100vh - 72px);
+    margin-left: var(--spacing-4);
   }
   predictive-search:not([loading]) .loading-spinner,
   predictive-search:not([loading]) .predictive-search__loading-state,
   predictive-search:not([loading]) .predictive-search-status__loading {
-    @apply hidden;
+    display: none;
   }
   predictive-search[loading] .predictive-search__heading ~ .predictive-search__loading-state,
   predictive-search[loading] .predictive-search__results-list:first-child {
-    @apply hidden;
+    display: none;
   }
   predictive-search [role="option"][aria-selected="true"] {
-    @apply ring;
+    outline: 1px solid var(--color-seaweed-500);
+    outline-offset: 2px;
   }
 
   /* Tab controller */
   tab-controller [role="tabpanel"] {
-    @apply hidden;
+    display: none;
   }
   tab-controller [role="tabpanel"][aria-expanded="true"] {
-    @apply block;
+    display: block;
   }
 
   /* Modal dialog (popup modal) */
   modal-dialog {
-    @apply fixed inset-0 bg-seaweed-700/50 z-50 p-6 invisible opacity-0 motion-safe:transition-[visibility_0s,opacity_200ms];
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(29, 77, 65, 0.5);
+    z-index: 50;
+    padding: var(--spacing-6);
+    visibility: hidden;
+    opacity: 0;
+    @media (prefers-reduced-motion: no-preference) {
+      transition: visibility 0s linear 200ms, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
   }
   modal-dialog[open] {
-    @apply visible opacity-100;
+    visibility: visible;
+    opacity: 1;
   }
   modal-dialog [role="dialog"] {
-    @apply absolute top-1/2 left-6 right-6 -translate-y-1/2 bg-white rounded-md px-6 sm:px-8 py-10 shadow-xl shadow-seaweed-800/20 max-w-md mx-auto scale-0 origin-center motion-safe:transition-transform duration-200 delay-200;
+    position: absolute;
+    top: 50%;
+    left: var(--spacing-6);
+    right: var(--spacing-6);
+    transform: translateY(-50%);
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    padding-inline: var(--spacing-6);
+    padding-block: var(--spacing-10);
+    box-shadow: 0 20px 25px -5px rgba(11, 46, 37, 0.2);
+    max-width: var(--max-width-md);
+    margin-inline: auto;
+    transform: scale(0);
+    transform-origin: center;
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: transform;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 200ms;
+      transition-delay: 200ms;
+    }
+    @media (min-width: 48rem) {
+      padding-inline: var(--spacing-8);
+    }
   }
   modal-dialog[open] [role="dialog"] {
-    @apply scale-100;
+    transform: scale(1);
   }
   modal-dialog button[id^="ModalClose-"] {
-    @apply absolute top-2 right-2 text-seaweed-600;
+    position: absolute;
+    top: var(--spacing-2);
+    right: var(--spacing-2);
+    color: var(--color-seaweed-600);
   }
 
   /* Deferred media (video poster) */
   deferred-media {
-    @apply block;
+    display: block;
   }
   .deferred-media__poster {
-    @apply bg-transparent border-0 cursor-pointer m-0 p-0 h-full w-full;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
   }
   .deferred-media__poster img {
-    @apply w-full h-full;
+    width: 100%;
+    height: 100%;
   }
   .deferred-media {
-    @apply overflow-hidden;
+    overflow: hidden;
   }
   .deferred-media:not([loaded]) template {
-    @apply -z-10;
+    z-index: -10;
   }
   .deferred-media[loaded] > .deferred-media__poster {
-    @apply hidden;
+    display: none;
   }
   .deferred-media__poster:focus {
-    @apply outline-offset-2;
+    outline-offset: var(--spacing-2);
   }
 
   /* Glide.js slider */
   .glide {
-    @apply relative block w-full box-border;
+    position: relative;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
   }
   .glide * {
-    @apply box-border;
+    box-sizing: border-box;
   }
   .glide__track {
-    @apply overflow-hidden;
+    overflow: hidden;
   }
   .glide__slides {
-    @apply relative w-full list-none overflow-hidden p-0 whitespace-nowrap flex flex-nowrap backface-hidden will-change-transform touch-pan-y;
+    position: relative;
+    width: 100%;
+    list-style: none;
+    overflow: hidden;
+    padding: 0;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+    transform-style: preserve-3d;
+    will-change: transform;
+    touch-action: pan-y;
+    backface-visibility: hidden;
     transform-style: preserve-3d;
   }
   .glide__slides--dragging {
-    @apply select-none;
+    user-select: none;
   }
   .glide__slide {
-    @apply w-full shrink-0 whitespace-normal select-none;
+    width: 100%;
+    flex-shrink: 0;
+    white-space: normal;
+    user-select: none;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
   }
   .glide__slide a {
-    @apply select-none;
+    user-select: none;
     -webkit-user-drag: none;
   }
   .glide__arrows,
   .glide__bullets {
-    @apply select-none;
+    user-select: none;
     -webkit-touch-callout: none;
   }
   .glide__bullet {
-    @apply opacity-50 motion-safe:transition-opacity;
+    opacity: 0.5;
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: opacity;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.15s;
+    }
   }
   .glide__bullet--active {
-    @apply opacity-100;
+    opacity: 1;
   }
   .pdp .glide__bullet {
-    @apply opacity-100;
+    opacity: 1;
   }
   .pdp .glide__bullet-icon {
-    @apply opacity-50 motion-safe:transition-opacity;
+    opacity: 0.5;
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: opacity;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.15s;
+    }
   }
   .pdp .glide__bullet--active .glide__bullet-icon {
-    @apply opacity-100;
+    opacity: 1;
   }
   .pdp .glide__bullet-icon.bg-transparent {
     @apply md:opacity-100;
   }
   .glide__bullet img {
-    @apply border border-transparent motion-safe:transition-colors;
+    border: 1px solid transparent;
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: color, background-color, border-color;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.15s;
+    }
   }
   .glide__bullet--active img {
-    @apply opacity-100 border-seaweed-700;
+    opacity: 1;
+    border-color: var(--color-seaweed-700);
   }
   .glide.arrows-on-hover .glide__arrows {
-    @apply invisible;
+    visibility: hidden;
   }
   .glide.arrows-on-hover:hover .glide__arrows {
-    @apply visible;
+    visibility: visible;
   }
   .glide__arrow {
-    @apply absolute opacity-80 hover:opacity-100 motion-safe:transition-opacity;
+    position: absolute;
+    opacity: 0.8;
+    transition: opacity 150ms ease-in-out;
+    &:hover {
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: opacity;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.15s;
+    }
   }
   .glide__arrow--left {
-    @apply left-2;
+    left: var(--spacing-2);
   }
   .glide__arrow--right {
-    @apply right-2;
+    right: var(--spacing-2);
   }
 
   /* Loading states */
   #ProductGridContainer .collection.loading .loading-overlay {
-    @apply block;
+    display: block;
   }
 
   /* Recover password */
   #recover,
   #recover + div {
-    @apply hidden;
+    display: none;
   }
   #recover:target {
-    @apply block;
+    display: block;
   }
   #recover:target + div {
-    @apply block;
+    display: block;
   }
   #recover:target ~ #login,
   #recover:target ~ #login + div {
-    @apply hidden;
+    display: none;
   }
   #recover,
   #login {
-    @apply scroll-mt-40;
+    scroll-margin-top: var(--spacing-40);
   }
 
   /* Addresses */
   .addresses [aria-expanded="false"] ~ div[id] {
-    @apply hidden;
+    display: none;
   }
   .addresses [aria-expanded="true"] ~ div[id] {
-    @apply block;
+    display: block;
   }
 
   /* Padding adjustment for PDP footer to accommodate sticky ATC */
   .pdp .footer-main {
-    @apply pb-20;
+    padding-bottom: var(--spacing-20);
   }
 }
 
@@ -436,8 +529,8 @@
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  padding-inline: calc(var(--spacing) * 6);
-  padding-block: calc(var(--spacing) * 2);
+  padding-inline: var(--spacing-6);
+  padding-block: var(--spacing-2);
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--tracking-widest);
@@ -712,10 +805,27 @@
   border-radius: var(--radius-lg);
 }
 
+/* Line heights (needed from tailwind 3 - migrate HTML and remove */
+@utility leading-tight {
+  line-height: 1.25;
+}
+@utility leading-snug {
+  line-height: 1.375;
+}
+@utility leading-normal {
+  line-height: 1.5;
+}
+@utility leading-relaxed {
+  line-height: 1.625;
+}
+@utility leading-loose {
+  line-height: 2;
+}
+
 /* Badge */
 @utility badge {
   display: inline-block;
-  padding-inline: calc(var(--spacing) * 1);
+  padding-inline: var(--spacing-1);
   padding-block: var(--spacing-0-5);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--tracking-wide);
@@ -1020,49 +1130,6 @@ strong.highlight {
 }
 
 /* this will always be included in your compiled CSS */
-@layer utilities {
-  /* Workable job listing */
-  .whr-date {
-    @apply hidden;
-  }
-  ul.whr-items {
-    @apply p-0 list-none;
-  }
-  ul.whr-items .whr-item {
-    @apply py-6 px-6 sm:px-8 leading-normal mx-0 mt-0 mb-6 border border-seaweed-400 rounded-md;
-  }
-  ul.whr-items .whr-item h3 {
-    @apply m-0 relative;
-  }
-  ul.whr-items .whr-item h3::before {
-    @apply absolute top-1/2 right-2 w-4 h-0.5 bg-seaweed-500 block content-[''] rotate-45;
-  }
-  ul.whr-items .whr-item h3::after {
-    @apply absolute top-1/2 -right-0.5 w-4 h-0.5 bg-seaweed-500 block content-[''] -rotate-45;
-  }
-  ul.whr-items .whr-item h3 a {
-    @apply text-lg border-0 block w-full font-book tracking-wide leading-snug pr-6;
-  }
-  ul.whr-items .whr-item h3 a::before {
-    @apply content-none;
-  }
-  ul.whr-items .whr-item .whr-info {
-    @apply m-0 list-none max-h-0 p-0 overflow-hidden transition-all;
-  }
-  ul.whr-items .whr-item .whr-more-detail {
-    @apply mb-0;
-  }
-  ul.whr-items .whr-item.active .whr-info {
-    @apply max-h-[200px] pt-8 px-0 pb-2;
-  }
-  ul.whr-items .whr-item.active h3::before {
-    @apply -rotate-45;
-  }
-  ul.whr-items .whr-item.active h3::after {
-    @apply rotate-45;
-  }
-}
-/* this will always be included in your compiled CSS */
 /* Okendo */
 div.oke-sr {
   display: flex;
@@ -1105,7 +1172,7 @@ div.oke-sr > div {
   justify-content: center;
   margin-top: var(--spacing-2);
 }
-@media (min-width: var(--breakpoint-md)) {
+@media (min-width: 48rem) {
   #catch-callout-cart {
     justify-content: flex-end;
   }
@@ -1213,7 +1280,7 @@ delivery-promise-wc {
   flex-grow: 0;
   max-width: 11rem;
 }
-@media (min-width: var(--breakpoint-xs)) {
+@media (min-width: 30rem) {
   [id^="CartBundleItem"] .product-option {
     max-width: 100%;
   }
@@ -1288,6 +1355,91 @@ tr#bud .cart-item__price-wrapper:not(:last-of-type) {
 #chat-window[class*="gorgias-chat-key"] {
   bottom: calc(var(--sticky-atc-height) + 68px) !important;
   transition: bottom 0.2s;
+}
+
+/* Workable job listing */
+.whr-date {
+  display: none;
+}
+ul.whr-items {
+  padding: 0;
+  list-style: none;
+}
+ul.whr-items .whr-item {
+  padding: var(--spacing-6);
+  line-height: var(--leading-normal);
+  margin-inline: 0;
+  margin-top: 0;
+  margin-bottom: var(--spacing-6);
+  border: 1px solid var(--color-seaweed-400);
+  border-radius: var(--radius-md);
+}
+@media (min-width: 48rem) {
+  ul.whr-items .whr-item {
+    padding-inline: var(--spacing-8);
+  }
+}
+ul.whr-items .whr-item h3 {
+  margin: 0;
+  position: relative;
+}
+ul.whr-items .whr-item h3::before,
+ul.whr-items .whr-item h3::after {
+  position: absolute;
+  right: 0;
+  width: var(--spacing-4);
+  height: var(--spacing-0-5);
+  background-color: var(--color-seaweed-500);
+  display: block;
+  content: "";
+}
+ul.whr-items .whr-item h3::before {
+  top: 6px;
+  transform: rotate(45deg);
+}
+ul.whr-items .whr-item h3::after {
+  top: 16px;
+  transform: rotate(-45deg);
+}
+ul.whr-items .whr-item h3 a {
+  font-size: var(--text-lg);
+  border: 0;
+  display: block;
+  width: 100%;
+  font-weight: var(--font-weight-book);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-snug);
+  padding-right: var(--spacing-6);
+}
+ul.whr-items .whr-item h3 a::before {
+  content: none;
+}
+ul.whr-items .whr-item .whr-info {
+  margin: 0;
+  list-style: none;
+  max-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  ul.whr-items .whr-item .whr-info {
+    transition: all 0.3s ease-in-out;
+  }
+}
+ul.whr-items .whr-item .whr-more-detail {
+  margin-bottom: 0;
+}
+ul.whr-items .whr-item.active .whr-info {
+  max-height: 200px;
+  padding-top: var(--spacing-8);
+  padding-inline: 0;
+  padding-bottom: var(--spacing-2);
+}
+ul.whr-items .whr-item.active h3::before {
+  transform: rotate(-45deg);
+}
+ul.whr-items .whr-item.active h3::after {
+  transform: rotate(45deg);
 }
 
 /* OWC Takeover */
