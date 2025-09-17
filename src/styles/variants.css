@@ -1,0 +1,29 @@
+/* Named variants */
+@custom-variant child (& > *);
+@custom-variant child-hover (& > *:hover);
+@custom-variant link (&:link);
+@custom-variant small (& small);
+@custom-variant span (& > span);
+@custom-variant video (& > video);
+@custom-variant label (& label);
+@custom-variant img (& img);
+@custom-variant li (& li);
+@custom-variant ul (& ul);
+@custom-variant td (& > td);
+@custom-variant tr (& > tr);
+@custom-variant th (& > th);
+@custom-variant h1 (& h1);
+@custom-variant h2 (& h2);
+@custom-variant a (& a);
+@custom-variant b (& b);
+@custom-variant i (& i);
+@custom-variant p (& p);
+
+/* Named group variants (hyphen form like `group-accordion-hover:`) */
+@custom-variant group-accordion-hover (&:where(.group-accordion:hover *));
+@custom-variant group-accordion-open (&:where(.group-accordion[open] *));
+@custom-variant group-child-hover (&:where(.group-child:hover *));
+@custom-variant group-child-open (&:where(.group-child[open] *));
+
+/* peer → group combo (checked peer before a .group ancestor) */
+@custom-variant group-peer-checked (.peer:checked ~ .group &);
