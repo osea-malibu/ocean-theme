@@ -73,6 +73,9 @@
   summary::-webkit-details-marker {
     display: none;
   }
+  summary::marker {
+    content: "";
+  }
 
   /* Cart + header +  menu drawers */
   menu-drawer .menu-scrim,

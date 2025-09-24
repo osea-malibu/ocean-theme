@@ -86,13 +86,13 @@
       <details-modal class="header__search flex justify-center items-center">
         <details class="group">
           <summary
-            class="header__icon--search cursor-pointer w-10 h-10{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3{% endunless %}"
+            class="header__icon--search flex size-10 flex-none items-center justify-center relative{% unless section.settings.enable_navbar %} lg:absolute lg:right-[136px] lg:top-3{% endunless %}"
             aria-haspopup="dialog"
             aria-label="{{ 'general.search.search' | t }}"
           >
-            <span class="flex items-center justify-center h-full">
-              {% render 'icon-search', classes: 'modal__toggle-open icon-search h-6 w-6 hover:text-seaweed-500', aria-hidden: true, stroke_width: 2 %}
-              {% render 'icon-close', classes: 'modal__toggle-close icon-close h-7 w-7 hover:text-seaweed-500', aria-hidden: true, stroke_width: 1.5 %}
+            <span class="flex h-full items-center justify-center">
+              {% render 'icon-search', classes: 'modal__toggle-open icon-search h-6 w-6 hover:text-seaweed-500 shrink-0', aria-hidden: true, stroke_width: 2 %}
+              {% render 'icon-close', classes: 'modal__toggle-close icon-close h-7 w-7 hover:text-seaweed-500 shrink-0 absolute inset-0', aria-hidden: true, stroke_width: 1.5 %}
             </span>
           </summary>
           <div class="search-modal absolute inset-0 z-40 opacity-0 h-full motion-safe:transition-opacity group-open:opacity-100" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
@@ -110,7 +110,7 @@
                     class="search w-full relative -translate-y-6 group-open:translate-y-0 tranition-transform duration-300"
                   >
                     <div class="relative flex items-center w-full">
-                      <input class="border-seaweed-500 rounded-md w-full h-8 tracking-wide focus:ring focus:ring-seafoam-300 focus:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
+                      <input class="border border-seaweed-500 rounded-md w-full h-8 px-4 py-2 tracking-wide focus-visible:outline-hidden focus-visible:outline-offset-0 focus-visible:ring-offset-0 focus-visible:ring-[3px] focus-visible:ring-seafoam-300 focus-visible:border-seaweed-700 placeholder:overflow-visible motion-safe:transition-all"
                         id="Search-In-Modal"
                         type="text"
                         name="q"
