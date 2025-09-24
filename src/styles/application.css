@@ -177,6 +177,9 @@
     color: var(--color-wave-400);
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='20px' width='60px'><text x='6' y='15' fill='%23818181' font-size='14' font-family='neuzeit-grotesk, sans-serif' style='text-transform: uppercase; letter-spacing: 0.25px;'>Clear</text></svg>");
   }
+  predictive-search .predictive-search {
+    max-height: 0;
+  }
   predictive-search[open] .predictive-search,
   predictive-search[loading] .predictive-search {
     max-height: calc(100vh - 72px);
