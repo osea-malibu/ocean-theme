@@ -576,6 +576,14 @@ div.oke-sr > div {
   height: var(--spacing-4);
 }
 
+#article-newsletter-tabs form.klaviyo-form [data-testid="form-row"] {
+  display: flex;
+  gap: var(--spacing-1);
+}
+#article-newsletter-tabs form.klaviyo-form input {
+  padding-left: var(--spacing-10);
+}
+
 /* Klaviyo - Back in Stock PDP button */
 .pdp .klaviyo-bis-trigger.button {
   background-color: var(--color-neon-green);
