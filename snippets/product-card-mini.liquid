@@ -19,7 +19,7 @@
 <li class="flex flex-col relative grow h-full {{ card_class }}">
   <div class="w-full order-1 grow flex flex-col">
     {%- if disable_links == false or disable_links == nil -%}<a href="{{ card_product.url | default: '#' }}" class="group">{%- endif -%}
-      <h4 class="text-xs font-book group-hover:underline underline-offset-1 decoration-1 tracking-wide text-center {% if card_product.title.size >= 28 %}leading-none{% else %}leading-tight{% endif %}">
+      <h4 class="text-xs font-book group-hover:underline decoration-1 tracking-wide text-center leading-tight">
         {{ card_product.title | replace: ' - Sample', '' | escape }}
       </h4>
     {%- if disable_links == false or disable_links == nil -%}</a>{%- endif -%}
