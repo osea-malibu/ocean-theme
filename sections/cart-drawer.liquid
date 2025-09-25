@@ -260,7 +260,7 @@
                                 <cart-remove-button
                                   id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
                                   data-index="{{ item.index | plus: 1 }}"
-                                  class="{% if excluded_from_site %}block{% else %}hidden xs:block{% endif %}"
+                                  class="block"
                                 >
                                   <button class="block button button-secondary button-sm px-2" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}" name="remove" type="button">
                                     {% render 'icon-remove', classes: 'w-4 h-4 pointer-events-none', stroke_width: 2, aria_hidden: true %}

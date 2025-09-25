@@ -34,7 +34,7 @@
                 {{ ' ' }}<em class="text-sm text-seaweed-600">({{ block.settings.ingredient_scientific_name }})</em>
               {%- endif -%}
             </label>
-            <div class="max-h-0 {% if block.settings.ingredient_description contains '<img' %}peer-checked:max-h-96{% else%}peer-checked:max-h-24{% endif %} motion-safe:transition-max-height motion-safe:duration-500">
+            <div class="max-h-0 {% if block.settings.ingredient_description contains '<img' %}peer-checked:max-h-[28rem]{% else%}peer-checked:max-h-24{% endif %} motion-safe:transition-max-height motion-safe:duration-500">
               <div class="pb-5 leading-tight">
                 {%- if block.settings.ingredient_description != blank -%}
                   <p>{{ block.settings.ingredient_description }}</p>
