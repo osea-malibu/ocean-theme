@@ -187,6 +187,8 @@
       if template.name == 'product'
         render 'klaviyo-add-to-cart'
         render 'recently-viewed-add'
+      elsif template.name == 'collection'
+        render 'cartful'
       endif
       render 'klaviyo-back-in-stock'
       render 'gorgias-chat-widget'
@@ -194,7 +196,6 @@
       render 'data-layer'
       render 'postscript-popup'
       render 'axon-script'
-      render 'cartful'
     -%}
 
     {% render 'content_for_footer' %}
