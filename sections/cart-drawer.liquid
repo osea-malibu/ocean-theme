@@ -260,7 +260,7 @@
                                 <cart-remove-button
                                   id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
                                   data-index="{{ item.index | plus: 1 }}"
-                                  class="{% if excluded_from_site %}block{% else %}hidden xs:block{% endif %}"
+                                  class="block"
                                 >
                                   <button class="block button button-secondary button-sm px-2" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}" name="remove" type="button">
                                     {% render 'icon-remove', classes: 'w-4 h-4 pointer-events-none', stroke_width: 2, aria_hidden: true %}
@@ -439,8 +439,8 @@
             <printed-gift-note>
               <div class="max-w-md mx-auto mb-4">
                 <input type="checkbox" id="PrintedGiftNote-Enable" class="peer mr-1" />
-                <label for="PrintedGiftNote-Enable" class="inline-block leading-4 relative -bottom-0.5 tracking-wide peer-checked:hidden">Add a gift message?</label>
-                <label for="PrintedGiftNote-Enable" class="hidden leading-4 relative -bottom-0.5 tracking-wide peer-checked:inline-block">This is a gift!</label>
+                <label for="PrintedGiftNote-Enable" class="inline-block leading-4 relative bottom-px tracking-wide peer-checked:hidden">Add a gift message?</label>
+                <label for="PrintedGiftNote-Enable" class="hidden leading-4 relative bottom-px tracking-wide peer-checked:inline-block">This is a gift!</label>
                 <div class="peer-checked:h-28 h-0 transition-height overflow-hidden flex flex-col mt-3 relative">
                   <label for="PrintedGiftNote-Message" class="text-sm font-medium mb-0.5">Your message:</label>
                   <textarea id="PrintedGiftNote-Message" maxlength="410" aria-labelledby="PrintedGiftNote-Message" aria-describedby="PrintedGiftNote-Error" class="input px-3 mb-px"></textarea>
@@ -467,7 +467,7 @@
           >
             <div class="block max-w-md mx-auto bg-wave-100 py-4 pl-4 rounded-sm mb-6">
               <h3 class="tracking-wide font-medium text-sm mb-1">You may also like</h3>
-              <div class="cart-recommendations overflow-x-auto ul:flex ul:gap-2 li:w-24 li:shrink-0">
+              <div class="cart-recommendations overflow-x-auto ul:flex ul:gap-2 li:w-24 li:shrink-0 h4:leading-none h4:min-h-6 img:h-[90px]">
               </div>
             </div>
           </cart-recommendations>
