@@ -76,7 +76,7 @@
     {% comment %} End PostPilot SiteMatch {% endcomment %}
   </head>
 
-  <body class="antialiased{% if template.name == 'product' %} pdp pdp-{{ product.handle }}{% elsif template.name == 'collection' %} plp plp-{{ page.handle }}{% endif %}{% if customer %} logged-in{% endif %}">
+  <body class="antialiased{% if template.name == 'product' %} pdp pdp-{{ product.handle }}{% elsif template.name == 'collection' %} plp plp-{{ collection.handle }}{% endif %}{% if customer %} logged-in{% endif %}">
     {% render 'adswizz' %}
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#MainContent">
       {{- "accessibility.skip_to_text" | t -}}
