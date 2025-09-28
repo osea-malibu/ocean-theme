@@ -21,7 +21,6 @@ Accepts:
   data-breakpoint-limit="none"
 >
   {% render 'product-text-badge', product: product, classes: 'z-10 right-2 top-2' %}
-  {% render 'product-image-badge', product: product, classes: 'z-10 left-2 top-2 w-16 lg:left-28 lg:w-20 gap-2' %}
   <div class="glide__track" data-glide-el="track">
     <ul class="min-h-full glide__slides">
 
@@ -38,11 +37,14 @@ Accepts:
         endif 
       -%}
       {%- for media in slider_images limit: gallery_limit -%}
-        <li class="glide__slide" data-media-id="{{ section.id }}-{{ media.id }}">
+        <li class="glide__slide relative" data-media-id="{{ section.id }}-{{ media.id }}">
           {%- if media.media_type == 'image' -%}
+            {%- if forloop.first -%}
+              {% render 'product-image-badge', product: product, classes: 'z-10 left-2 top-2 w-16 xl:w-20 2xl:w-24 gap-2' %}
+            {%- endif -%}
             {%- liquid
               assign main_image_src = media | image_url: width: 400, height: 500, crop: 'center'
-              assign main_image_src_2x = media | image_url: width: 1280, height: 1600, crop: 'center'
+              assign main_image_src_2x = media | image_url: width: 1200, height: 1500, crop: 'center'
             -%}
             {% comment %} theme-check-disable RemoteAsset {% endcomment %}
             <img
