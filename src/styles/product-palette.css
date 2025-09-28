@@ -1,0 +1,66 @@
+/* =========================
+   Product palette utilities
+   Values come from CSS vars set on #main-product
+   (surface/inverse/accent/core + text-on-*)
+========================= */
+
+/* Raw mappings (just color, no paired text) */
+@utility bg-p-surface {
+  background-color: var(--p-surface);
+}
+@utility bg-p-core {
+  background-color: var(--p-core);
+}
+@utility bg-p-inverse {
+  background-color: var(--p-inverse);
+}
+@utility bg-p-accent {
+  background-color: var(--p-accent);
+}
+
+@utility text-p-surface {
+  color: var(--p-surface);
+}
+@utility text-p-core {
+  color: var(--p-core);
+}
+@utility text-p-inverse {
+  color: var(--p-inverse);
+}
+@utility text-p-accent {
+  color: var(--p-accent);
+}
+
+@utility border-p-surface {
+  border-color: var(--p-surface);
+}
+@utility border-p-core {
+  border-color: var(--p-core);
+}
+@utility border-p-inverse {
+  border-color: var(--p-inverse);
+}
+@utility border-p-accent {
+  border-color: var(--p-accent);
+}
+
+/* Gradients (works with bg-gradient-to-*) */
+@utility from-p-surface {
+  --tw-gradient-from: var(--p-surface);
+  --tw-gradient-to: color-mix(in oklab, var(--p-surface) 0%, transparent);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+@utility from-p-core {
+  --tw-gradient-from: var(--p-core);
+  --tw-gradient-to: color-mix(in oklab, var(--p-core) 0%, transparent);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+@utility to-p-core {
+  --tw-gradient-to: var(--p-core);
+}
+@utility to-p-inverse {
+  --tw-gradient-to: var(--p-inverse);
+}
+@utility to-p-accent {
+  --tw-gradient-to: var(--p-accent);
+}
