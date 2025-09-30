@@ -756,6 +756,43 @@
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     },
+    "rich_text_H9e8x7": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_FXzBhg": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "Still Stumped?",
+            "heading_classes": "font-serif text-4xl tracking-tight leading-none mb-2 w-64 mx-auto xs:w-auto",
+            "subheading_text": "",
+            "subheading_classes": ""
+          }
+        },
+        "paragraph_g6jKyL": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph_text": "Take the quiz and we’ll match you with your perfect gift",
+            "paragraph_classes": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_FXzBhg",
+        "paragraph_g6jKyL"
+      ],
+      "settings": {
+        "section_heading": "",
+        "section_classes": "container text-center mb-2",
+        "container_classes": "px-6 py-8 rounded-xl"
+      }
+    },
+    "custom_liquid_FDGewL": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<div class=\"container\"><div class=\"holiday-gift-finder rounded-xl overflow-hidden\"></div></div>\n<script>\n(\"function\"===typeof window.CartfulQuiz?window.CartfulQuiz:undefined);(function(c,a,r,t,f,u,l){l=document.createElement(r),l.async=1,l.id=a+\"scr\",l.src=f,l.setAttribute(\"quizId\",c),l.setAttribute(\"flowId\",a),l.setAttribute(\"target\",u),document[t].appendChild(l)})(\"01999604-cef0-7884-a323-df9d48120089\",\"0199960b-39f9-7884-a325-987d71f5572a\",\"script\",\"body\",\"https://studio-assets.cartfulsolutions.com/embed/studio.js\",\"page\");</script>"
+      }
+    },
     "ce552a81-0b6a-4120-aedf-86c8ae353285": {
       "type": "rich-text",
       "blocks": {
@@ -789,13 +826,6 @@
         "section_classes": "container text-center mb-12",
         "container_classes": "bg-seafoam-200 px-6 py-8 rounded-xl"
       }
-    },
-    "custom_liquid_FDGewL": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "custom_liquid": "<div class=\"container\"><div class=\"holiday-gift-finder rounded-xl overflow-hidden\"></div></div>\n<script>\n(\"function\"===typeof window.CartfulQuiz?window.CartfulQuiz:undefined);(function(c,a,r,t,f,u,l){l=document.createElement(r),l.async=1,l.id=a+\"scr\",l.src=f,l.setAttribute(\"quizId\",c),l.setAttribute(\"flowId\",a),l.setAttribute(\"target\",u),document[t].appendChild(l)})(\"01999604-cef0-7884-a323-df9d48120089\",\"0199960b-39f9-7884-a325-987d71f5572a\",\"script\",\"body\",\"https://studio-assets.cartfulsolutions.com/embed/studio.js\",\"page\");</script>"
-      }
     }
   },
   "order": [
@@ -805,7 +835,8 @@
     "83ee83e2-c5d6-4aa5-855f-9cefaa79b74c",
     "923f8a8c-0393-4c9a-a9b1-cb2d7f8a488d",
     "e58c612d-a478-4f19-b729-a49639970538",
-    "ce552a81-0b6a-4120-aedf-86c8ae353285",
-    "custom_liquid_FDGewL"
+    "rich_text_H9e8x7",
+    "custom_liquid_FDGewL",
+    "ce552a81-0b6a-4120-aedf-86c8ae353285"
   ]
 }
