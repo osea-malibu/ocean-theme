@@ -24,6 +24,13 @@
             "rating_classes": "rating col-span-12 md:col-span h-full"
           }
         },
+        "tags_rLP97K": {
+          "type": "tags",
+          "settings": {
+            "tags": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
+            "tag_block_classes": ""
+          }
+        },
         "text_BqQDJk": {
           "type": "text",
           "name": "Short description",
@@ -162,6 +169,7 @@
       "block_order": [
         "title",
         "6a44c417-fd63-4240-a103-3540393f4f89",
+        "tags_rLP97K",
         "text_BqQDJk",
         "variant_picker",
         "free_gift_info_pULUCz",
