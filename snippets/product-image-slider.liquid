@@ -30,21 +30,23 @@ Accepts:
           assign slider_images = product.metafields.custom.pdp_main_image.value | concat: product.media
           assign variant_image_index = 1
           assign gallery_limit = section.settings.gallery_limit | plus: 1
+          assign badge_count = 2
         else
           assign slider_images = product.media
           assign variant_image_index = 0
           assign gallery_limit = section.settings.gallery_limit
+          assign badge_count = 1
         endif 
       -%}
       {%- for media in slider_images limit: gallery_limit -%}
         <li class="glide__slide relative" data-media-id="{{ section.id }}-{{ media.id }}">
           {%- if media.media_type == 'image' -%}
-            {%- if forloop.first -%}
+            {%- if forloop.index <= badge_count -%}
               {% render 'product-image-badge', product: product, classes: 'z-10 left-2 top-2 w-16 xl:w-20 2xl:w-24 gap-2' %}
             {%- endif -%}
             {%- liquid
               assign main_image_src = media | image_url: width: 400, height: 500, crop: 'center'
-              assign main_image_src_2x = media | image_url: width: 1200, height: 1500, crop: 'center'
+              assign main_image_src_2x = media | image_url: width: 1600, height: 2000, crop: 'center'
             -%}
             {% comment %} theme-check-disable RemoteAsset {% endcomment %}
             <img

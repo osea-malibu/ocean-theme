@@ -40,7 +40,7 @@
       </div>
     {%- endif -%}
     <div class="container md:px-0 md:flex-1">
-      <div id="ProductInfo-{{ section.id }}" class="bg-white rounded-lg p-4 {{ section.settings.product_info_classes }}">
+      <div id="ProductInfo-{{ section.id }}" class="bg-white rounded-lg p-4 xl:p-6 2xl:px-8 {{ section.settings.product_info_classes }}">
           {%- liquid
             assign product_form_id = 'product-form-' | append: section.id
             assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
@@ -282,7 +282,7 @@
           {%- endcase -%}
         {%- endfor -%}
       </div>
-      <div class="bg-white rounded-lg p-4">
+      <div class="bg-white rounded-lg p-4 xl:p-6 2xl:px-8">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'collapsible_tab' -%}
@@ -495,6 +495,23 @@
           "type": "textarea",
           "id": "qty_classes",
           "label": "Quantity classes"
+        }
+      ]
+    },
+    {
+      "type": "tags",
+      "name": "Tags",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tags",
+          "label": "Tags",
+          "info": "Enter tag data separated by commas"
+        },
+        {
+          "type": "textarea",
+          "id": "tag_block_classes",
+          "label": "Tag block classes"
         }
       ]
     },
