@@ -192,7 +192,7 @@
         "gallery_limit": 12
       }
     },
-    "product_ugc_xyF98H": {
+    "ugc": {
       "type": "product-ugc",
       "settings": {
         "section_classes": "hidden",
@@ -215,7 +215,7 @@
         "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-6 lg:mb-12"
       }
     },
-    "ingredients": {
+    "ingredients_accordion": {
       "type": "product-ingredients",
       "blocks": {
         "95142030-9e11-4090-aa41-a3e9d4183397": {
@@ -229,9 +229,7 @@
           }
         }
       },
-      "block_order": [
-        "95142030-9e11-4090-aa41-a3e9d4183397"
-      ],
+      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
       "disabled": true,
       "custom_css": [],
       "settings": {
@@ -241,7 +239,7 @@
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
-    "product_ingredients_images_ewxaEn": {
+    "ingredients_images": {
       "type": "product-ingredients-images",
       "blocks": {
         "key_ingredient_tNNTPC": {
@@ -256,13 +254,18 @@
           }
         }
       },
-      "block_order": [
-        "key_ingredient_tNNTPC"
-      ],
+      "block_order": ["key_ingredient_tNNTPC"],
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
         "full_ingredients": ""
+      }
+    },
+    "scent_profile": {
+      "type": "product-scent-profile",
+      "settings": {
+        "header": "Scent Profile",
+        "wrapper_classes": ""
       }
     },
     "routine": {
@@ -318,11 +321,12 @@
   },
   "order": [
     "main",
-    "product_ugc_xyF98H",
+    "ugc",
     "clinicals",
     "video",
-    "ingredients",
-    "product_ingredients_images_ewxaEn",
+    "ingredients_accordion",
+    "ingredients_images",
+    "scent_profile",
     "routine",
     "faqs",
     "reviews",
