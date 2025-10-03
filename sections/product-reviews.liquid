@@ -10,17 +10,19 @@
 {%- unless excluded_from_site -%}
   <div class="{{ section.settings.wrapper_classes }}">
     <span class="block relative -top-32 invisible" id="reviews"></span>
-    <div class="container xl:max-w-screen-lg tracking-tight bg-white rounded-xl p-6 lg:p-10 mb-12">
-      <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
-      {%- if product.metafields.my_fields.reformulation_date != blank -%}
-        <div class="bg-seaweed-400/10 p-6 leading-tight tracking-wide max-w-2xl mx-auto mb-5">
-          <h3 class="font-medium mb-2">This product’s formula was upgraded on {{ product.metafields.my_fields.reformulation_date | date: "%B %e, %Y" }}</h3>
-          {%- if product.metafields.my_fields.reformulation_details != blank -%}
-            <p>{{ product.metafields.my_fields.reformulation_details }}</p>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-      <div data-oke-widget data-oke-reviews-product-id="shopify-{% if product.handle == 'undaria-algae-body-oil-v2' %}8092623623{% else %}{{ product.id }}{% endif %}">{{ product.metafields.okendo.ReviewsWidgetSnippet }}</div>
+    <div class="container xl:max-w-screen-lg">
+      <div class="bg-white rounded-xl p-6 lg:p-10 mb-12 tracking-tight">
+        <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
+        {%- if product.metafields.my_fields.reformulation_date != blank -%}
+          <div class="bg-seaweed-400/10 p-6 leading-tight tracking-wide max-w-2xl mx-auto mb-5">
+            <h3 class="font-medium mb-2">This product’s formula was upgraded on {{ product.metafields.my_fields.reformulation_date | date: "%B %e, %Y" }}</h3>
+            {%- if product.metafields.my_fields.reformulation_details != blank -%}
+              <p>{{ product.metafields.my_fields.reformulation_details }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        <div data-oke-widget data-oke-reviews-product-id="shopify-{% if product.handle == 'undaria-algae-body-oil-v2' %}8092623623{% else %}{{ product.id }}{% endif %}">{{ product.metafields.okendo.ReviewsWidgetSnippet }}</div>
+      </div>
     </div>
   </div>
 {% endunless %}

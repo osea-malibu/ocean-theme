@@ -1,8 +1,9 @@
 {%- unless product.metafields.custom.scent_profile_image == blank -%}
   <div class="{{ section.settings.wrapper_classes }}">
-    <span class="block relative -top-32 invisible" id="reviews"></span>
-    <div class="container xl:max-w-screen-lg tracking-tight bg-white rounded-xl p-6 lg:p-10 mb-12">
-      <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
+    <div class="container">
+      <div class="bg-white rounded-xl p-6 lg:p-10 mb-6 lg:mb-12">
+        <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
+      </div>
     </div>
   </div>
 {% endunless %}
