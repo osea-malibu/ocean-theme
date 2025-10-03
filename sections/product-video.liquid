@@ -75,7 +75,7 @@
               loading="lazy"
               width="1280"
               height="1000"
-              class="rounded-lg"
+              class="rounded-xl"
             >
           </picture>
         {%- else -%}
@@ -86,7 +86,7 @@
         </span>
       </button>
       <template>
-        <video autoplay controls loop muted playsinline poster="{{ source_jpg }}" class="bg-wave-200 border-0 absolute w-full h-full rounded-lg">
+        <video autoplay controls loop muted playsinline poster="{{ source_jpg }}" class="bg-wave-200 border-0 absolute w-full h-full rounded-xl">
           <source src="{{ source_mp4 }}" type="video/mp4">
           <source src="{{ source_webm }}" type="video/webm">
           {%- if source_jpg -%}

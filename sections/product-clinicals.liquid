@@ -1,15 +1,62 @@
-{%- liquid
-  if product.metafields.custom.product_color_light != blank
-    assign product_color = product.metafields.custom.product_color_light
-  else
-    assign product_color = 'bg-wave-200'
-  endif
--%}
 {%- if product.metafields.custom.clinical_results != blank -%}
-<div class="product-clinicals mb-12 {{ section.settings.section_classes }}">
-  <div class="container">
-    <div class="{{ product_color }} p-4 lg:p-6 rounded-lg">
-      <div class="flex flex-col sm:flex-row gap-4 lg:gap-8 relative">
+<div class="product-clinicals container mb-6 lg:mb-12 {{ section.settings.section_classes }}">
+  <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-0 justify-between">
+    <div class="w-full lg:basis-[calc(50%-9px)] relative overflow-hidden h-full p-4 lg:p-10 bg-white rounded-xl">
+      <div class="mb-6 lg:mb-8 xl:mb-10">
+        <h3 class="font-serif text-2xl lg:text-3xl xl:text-4xl tracking-tight">{{ section.settings.header | replace: '®', '<sup class="text-[60%]">®</sup>' }}</h3>
+        <p class="leading-tight tracking-wide mb-4 lg:mb-8">{{ section.settings.subheader }}</p>
+        {%- for clinical_result in product.metafields.custom.clinical_results.value -%}
+          <div class="{% unless forloop.last %}mb-6 lg:mb-8{% endunless %}">
+            <h4 class="font-bold text-xs lg:text-sm xl:text-base tracking-widest uppercase mb-1">{{ clinical_result.title }}</h4>
+            <ul>
+              {%- for stat in clinical_result.stats -%}
+                <li class="my-2 leading-tight">
+                  {%- if stat.value != nil -%}
+                    {%- if stat.value_type == 'text' -%}
+                      <b class="font-bold text-lg lg:text-xl xl:text-2xl leading-normal">{{ stat.value }}&nbsp;</b>
+                    {%- else -%}
+                      <b class="font-medium text-2xl lg:text-3xl leading-none">
+                        {{- stat.value -}}
+                        <small class="font-bold">{% if stat.value_type == 'percent' %}%{% else %}&nbsp;hours{% endif %}</small>
+                      </b>
+                    {%- endif -%}
+                  {%- endif -%}
+                  <span class="lg:text-lg">{{ stat.description }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+            {%- if clinical_result.citations != blank -%}
+              {%- assign citations_array = clinical_result.citations | split: '<br />' -%}
+              <cite class="block mt-4 lg:mt-6 text-xs pr-4 sm:pr-6">
+                <ul class="leading-tight">
+                  {%- for citation in citations_array -%}
+                    <li>{{ citation }}</li>
+                  {%- endfor -%}
+                </ul>
+              </cite>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if product.metafields.featured_review.content != blank -%}
+      <div class="text-center font-serif border border-wave-300 rounded-xl p-4 lg:p-6">
+        <h3 class="sr-only">Featured Review</h3>
+        <svg aria-label="5 stars" xmlns="http://www.w3.org/2000/svg" width="116" height="20" viewbox="0 0 116 20" fill="currentColor" class="mx-auto mb-3">
+          <polygon points="13.09 6.26 20 7.27 15 12.14 16.18 19.02 10 15.77 3.82 19.02 5 12.14 0 7.27 6.91 6.26 10 0"></polygon>
+          <polygon points="37.09 6.26 44 7.27 39 12.14 40.18 19.02 34 15.77 27.82 19.02 29 12.14 24 7.27 30.91 6.26 34 0"></polygon>
+          <polygon points="61.09 6.26 68 7.27 63 12.14 64.18 19.02 58 15.77 51.82 19.02 53 12.14 48 7.27 54.91 6.26 58 0"></polygon>
+          <polygon points="85.09 6.26 92 7.27 87 12.14 88.18 19.02 82 15.77 75.82 19.02 77 12.14 72 7.27 78.91 6.26 82 0"></polygon>
+          <polygon points="109.09 6.26 116 7.27 111 12.14 112.18 19.02 106 15.77 99.82 19.02 101 12.14 96 7.27 102.91 6.26 106 0"></polygon>
+        </svg>
+        <em class="block text-lg lg:text-2xl xl:text-3xl mb-2">{{ product.metafields.featured_review.title }}</em>
+        <p class="lg:text-lg">
+          <span>"{{ product.metafields.featured_review.content }}"</span> <span class="whitespace-nowrap">— {{ product.metafields.featured_review.name }}</span>
+        </p>
+      </div>
+      {%- endif -%}
+    </div>
+    <div class="w-full lg:block lg:basis-[calc(50%-12px)] overflow-hidden rounded-xl h-max top-20 sticky">
+      <div class="relative w-full lg:max-h-[calc(100vh-180px)]">
         {%- if product.metafields.custom.clinical_images.value.count == 1 -%}
           {%- liquid
             assign first_image = product.metafields.custom.clinical_images.value | first
@@ -18,7 +65,7 @@
           -%}
           {% comment %} theme-check-disable RemoteAsset {% endcomment %}
           <img
-            class="w-full h-80 sm:w-96 sm:h-96 object-cover rounded sm:hidden lg:block"
+            class="w-full"
             srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
             src="{% render 'imgix', src: image_src_2x %}"
             loading="lazy"
@@ -28,90 +75,52 @@
           >
           {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         {%- elsif product.metafields.custom.clinical_images.value.count > 1 -%}
-          <div class="xl:px-4">
-            <glide-slider
-              class="glide type-carousel gap-0 w-full sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96"
-              id="pdp-clinicals-slider"
-              data-breakpoint-limit="none"
-            >
-              <div class="glide__track" data-glide-el="track">
-                <ul class="glide__slides">
-                  {%- for image in product.metafields.custom.clinical_images.value -%}
-                    {%- liquid
-                      assign image_src = image | image_url: width: 400, height: 400, crop: 'center'
-                      assign image_src_2x = image | image_url: width: 800, height: 800, crop: 'center'
-                    -%}
-                    <li class="glide__slide" role="region">
-                      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-                      <img
-                        class="object-cover rounded"
-                        srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
-                        src="{% render 'imgix', src: image_src_2x %}"
-                        loading="lazy"
-                        alt="{{ image.alt | escape }}"
-                        width="{{ image.width }}"
-                        height="{{ image.height }}"
-                      >
-                      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-                    </li>
-                  {%- endfor -%}
-                </ul>
-                <div class="glide__arrows" data-glide-el="controls">
-                  <button
-                    class="glide__arrow glide__arrow--left top-1/2 -translate-y-1/2 -left-5 z-10"
-                    aria-label="Go to previous"
-                    data-glide-dir="<"
-                  >
-                    {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-seaweed-700 block' %}
-                  </button>
-                  <button
-                    class="glide__arrow glide__arrow--right top-1/2 -translate-y-1/2 -right-5 z-10"
-                    aria-label="Go to next"
-                    data-glide-dir=">"
-                  >
-                    {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-seaweed-700 block rotate-180' %}
-                  </button>
-                </div>
-              </div>
-            </glide-slider>
-          </div>
-        {%- endif -%}
-        <div>
-          <h3 class="relative font-bold text-2xl">{{ section.settings.header | replace: '®', '<sup class="text-[60%]">®</sup>' }}</h3>
-          <p class="relative leading-tight tracking-wide mb-4">{{ section.settings.subheader }}</p>
-          {%- for clinical_result in product.metafields.custom.clinical_results.value -%}
-            <div class="{% unless forloop.last %}mb-4{% endunless %}">
-              <h4 class="font-bold text-xs tracking-widest uppercase mb-1">{{ clinical_result.title }}</h4>
-              <ul>
-                {%- for stat in clinical_result.stats -%}
-                  <li class="{% if product.metafields.custom.clinical_results.value.size > 1 %}mb-1{% else %}my-2{% endif %}">
-                    {%- if stat.value != nil -%}
-                      {%- if stat.value_type == 'text' -%}
-                        <b class="font-bold text-lg leading-normal">{{ stat.value }}&nbsp;</b>
-                      {%- else -%}
-                        <b class="font-medium text-2xl leading-none">
-                          {{- stat.value -}}
-                          <small class="font-bold">{% if stat.value_type == 'percent' %}%{% else %}&nbsp;hours{% endif %}</small>
-                        </b>
-                      {%- endif -%}
-                    {%- endif -%}
-                    <span>{{ stat.description }}</span>
+          <glide-slider
+            class="glide type-carousel gap-0 w-full"
+            id="pdp-clinicals-slider"
+            data-breakpoint-limit="none"
+          >
+            <div class="glide__track rounded-xl overflow-hidden" data-glide-el="track">
+              <ul class="glide__slides">
+                {%- for image in product.metafields.custom.clinical_images.value -%}
+                  {%- liquid
+                    assign image_src = image | image_url: width: 400, height: 400, crop: 'center'
+                    assign image_src_2x = image | image_url: width: 800, height: 800, crop: 'center'
+                  -%}
+                  <li class="glide__slide" role="region">
+                    {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                    <img
+                      class="object-cover"
+                      srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
+                      src="{% render 'imgix', src: image_src_2x %}"
+                      loading="lazy"
+                      alt="{{ image.alt | escape }}"
+                      width="{{ image.width }}"
+                      height="{{ image.height }}"
+                    >
+                    {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                   </li>
                 {%- endfor -%}
               </ul>
-              {%- if clinical_result.citations != blank -%}
-                {%- assign citations_array = clinical_result.citations | split: '<br />' -%}
-                <cite class="block mt-4 text-xs pr-4 sm:pr-6">
-                  <ul class="leading-tight">
-                    {%- for citation in citations_array -%}
-                      <li>{{ citation }}</li>
-                    {%- endfor -%}
-                  </ul>
-                </cite>
-              {%- endif -%}
+              <div class="glide__arrows" data-glide-el="controls">
+                <button
+                  class="glide__arrow glide__arrow--left top-1/2 -translate-y-1/2 -left-5 z-10"
+                  aria-label="Go to previous"
+                  data-glide-dir="<"
+                >
+                  {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-seaweed-700 block' %}
+                </button>
+                <button
+                  class="glide__arrow glide__arrow--right top-1/2 -translate-y-1/2 -right-5 z-10"
+                  aria-label="Go to next"
+                  data-glide-dir=">"
+                >
+                  {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-seaweed-700 block rotate-180' %}
+                </button>
+              </div>
             </div>
-          {%- endfor -%}
-        </div>
+          </glide-slider>
+        {%- endif -%}
       </div>
     </div>
   </div>

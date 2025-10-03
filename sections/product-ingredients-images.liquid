@@ -1,7 +1,7 @@
 {%- if section.blocks.size > 0 -%}
-  <div class="container relative mb-12 flex w-full">
-    <div class="content relative w-full bg-white border border-owc-blue2 rounded-lg p-6 sm:p-8">
-      <h3 class="text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4 lg:mb-6 text-center">{{ section.settings.header }}</h3>
+  <div class="container relative mb-6 lg:mb-12 flex w-full">
+    <div class="content relative w-full bg-white rounded-xl p-6 lg:p-10">
+      <h3 class="text-3xl sm:text-4xl lg:text-5xl font-serif tracking-tight mb-4 lg:mb-6 text-center">{{ section.settings.header }}</h3>
       <div class="mb-4 max-w-lg lg:max-w-4xl mx-auto lg:flex lg:items-start lg:gap-8 lg:justify-around">
         {%- for block in section.blocks -%}
           {%- assign index_modulo = forloop.index0 | modulo: 2 -%}
@@ -38,7 +38,7 @@
         {%- endfor -%}
       </div>
       <modal-opener class="no-js-hidden block text-center" data-modal="#IngredientsPopup">
-        <button class="button bg-owc-blue2 border-owc-blue2 text-white" type="button" aria-haspopup="dialog">Full ingredients list</button>
+        <button class="button button-secondary" type="button" aria-haspopup="dialog">Full ingredients list</button>
       </modal-opener>
     </div>
     <modal-dialog id="IngredientsPopup">

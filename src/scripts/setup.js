@@ -36,24 +36,41 @@ export function setupFocusVisiblePolyfill() {
 
 /**
  * Intersection observer to add/remove border to header when scrolling
+ * + also show navbar only at top
  */
 export function setupHeaderBorderObserver() {
   const headerWrapper = document.querySelector("#HeaderContent");
   const pixelTarget = document.querySelector("#HeaderScrollPixel");
+  const navbar = document.getElementById("SiteNavbar");
+  if (!pixelTarget) return;
 
-  if (!headerWrapper || !pixelTarget) return;
+  const io = new IntersectionObserver((entries) => {
+    const entry = entries[0];
 
-  let observer = new IntersectionObserver((entries) => {
-    if (entries[0].boundingClientRect.y < 0) {
-      headerWrapper.classList.add("border-seaweed-300");
-      headerWrapper.classList.remove("border-transparent");
-    } else {
-      headerWrapper.classList.remove("border-seaweed-300");
-      headerWrapper.classList.add("border-transparent");
+    // Existing border behavior (unchanged)
+    if (headerWrapper) {
+      if (entry.boundingClientRect.y < 0) {
+        headerWrapper.classList.add("border-seaweed-300");
+        headerWrapper.classList.remove("border-transparent");
+      } else {
+        headerWrapper.classList.remove("border-seaweed-300");
+        headerWrapper.classList.add("border-transparent");
+      }
+    }
+
+    // Visible only at top: use transform/opacity (no layout shift)
+    if (navbar) {
+      if (entry.boundingClientRect.y < 0) {
+        navbar.classList.add("-mt-7", "opacity-0", "pointer-events-none");
+        navbar.classList.remove("-mt-1", "opacity-100");
+      } else {
+        navbar.classList.remove("-mt-7", "opacity-0", "pointer-events-none");
+        navbar.classList.add("-mt-1", "opacity-100");
+      }
     }
   });
 
-  observer.observe(pixelTarget);
+  io.observe(pixelTarget);
 }
 
 /**

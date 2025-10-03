@@ -18,8 +18,8 @@
     {%- endif -%}
   {%- when 'Benefits' -%}
     {%- liquid
-      assign hide_benefit_icons = false
-      assign benefit_tag_classes = 'flex items-center bg-sand-300 rounded px-1.5 py-1 text-seaweed-800 gap-1'
+      assign hide_benefit_icons = true
+      assign benefit_tag_classes = 'flex items-center badge bg-sand-300 text-seaweed-800 gap-1'
       assign normalized_variant_title = product.selected_or_first_available_variant.title | replace: 'fl ', ''
       assign is_fragrance_free = false
       if product.options contains 'Scent' and normalized_variant_title contains 'Fragrance free'

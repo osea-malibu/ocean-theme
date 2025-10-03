@@ -9,14 +9,16 @@
       --p-accent: {{ product.metafields.theme.accent | default: '#dcf5ab' }};
 
       background-color: var(--p-surface);
+      background-color: oklab(from var(--p-surface) l calc(a * 0.6) calc(b * 0.6));
+      
     }
   </style>
-  <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0">
+  <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0 lg:mb-6">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {%- if product.media.size > 1 -%}
-      <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden lg:pr-4 xl:pr-10">
+      <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[88px] overflow-hidden mb-6 md:mb-0 lg:pr-4 xl:pr-10">
         {% comment %} New image-slider snippet {% endcomment %}
         {% render 'product-image-slider', section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
       </div>
@@ -40,21 +42,21 @@
       </div>
     {%- endif -%}
     <div class="container md:px-0 md:flex-1">
-      <div id="ProductInfo-{{ section.id }}" class="bg-white rounded-lg p-4 xl:p-6 2xl:px-8 {{ section.settings.product_info_classes }}">
-          {%- liquid
-            assign product_form_id = 'product-form-' | append: section.id
-            assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
-            assign mini_size_array = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
-            assign jumbo_size_array = '9.6 oz, 9.2 oz' | split: ', '
-            assign set_products = collections['skincare-sets'].products | map: 'handle'
+      <div id="ProductInfo-{{ section.id }}" class="bg-white rounded-xl p-4 xl:p-6 2xl:px-8 mb-6 {{ section.settings.product_info_classes }}">
+        {%- liquid
+          assign product_form_id = 'product-form-' | append: section.id
+          assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
+          assign mini_size_array = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+          assign jumbo_size_array = '9.6 oz, 9.2 oz' | split: ', '
+          assign set_products = collections['skincare-sets'].products | map: 'handle'
 
-            assign product_collections_handles = product.collections | map: 'handle'
-            if product_collections_handles contains 'exclude-from-site'
-              assign excluded_from_site = true
-            else
-              assign excluded_from_site = false
-            endif
-          -%}
+          assign product_collections_handles = product.collections | map: 'handle'
+          if product_collections_handles contains 'exclude-from-site'
+            assign excluded_from_site = true
+          else
+            assign excluded_from_site = false
+          endif
+        -%}
 
         {%- for block in section.blocks -%}
           {%- case block.type -%}
@@ -70,6 +72,8 @@
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
                 {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}
               </h1>
+            {%- when 'tags' -%}
+              {%  render 'product-tags', block: block %}
             {%- when 'price' -%}
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
                 {%- render 'price', product: product, use_variant: true -%}
@@ -84,15 +88,10 @@
                     {% render 'product-rating', product: product %}
                   </a>
                 {%- endunless -%}
-                {%- if product.metafields.custom.faq != nil -%}
+                {% comment %} {%- if product.metafields.custom.faq != nil -%}
                   <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
-                {%- endif -%}
+                {%- endif -%} {% endcomment %}
               </div>
-              {%- if product.metafields.custom.set_value -%}
-                <div class="relative -bottom-2 col-span-12">
-                  <strong class="self-center px-1.5 py-px text-sm font-medium tracking-wide whitespace-nowrap bg-seafoam-200 text-seaweed-700">${{ product.metafields.custom.set_value }} value</strong>
-                </div>
-              {%- endif -%}
             {%- when 'info_tabs' -%}
               {% comment %} product tabs snippet {% endcomment %}
               {% render 'product-info-tabs', block: block, product: product %}
@@ -237,7 +236,7 @@
                 {%- if upsell_count > 1 -%}
                   <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
                 {%- endif -%}
-                <div class="{{ block.settings.upsell_classes }}{% if upsell_count > 1 %} max-h-[132px] overflow-hidden peer-checked:max-h-[1000px] motion-safe:transition-max-height{% endif %}" {{ block.shopify_attributes }}>
+                <div class="{{ block.settings.upsell_classes }}{% if upsell_count > 1 %} max-h-[140px] overflow-hidden peer-checked:max-h-[1000px] motion-safe:transition-max-height{% endif %}" {{ block.shopify_attributes }}>
                   {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
                     <div class="mt-2 upsell-sets">
                       <h2 class="mb-1 font-medium tracking-wide">Save with Sets</h2>
@@ -282,7 +281,7 @@
           {%- endcase -%}
         {%- endfor -%}
       </div>
-      <div class="bg-white rounded-lg p-4 xl:p-6 2xl:px-8">
+      <div class="bg-white rounded-xl p-4 xl:p-6 2xl:px-8 mb-6 md:mb-0">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'collapsible_tab' -%}

@@ -1,0 +1,44 @@
+{%- if block.settings.tags != blank -%}
+  {%- assign raw_tags = block.settings.tags | split: ',' -%}
+  {%- assign chip_base = 'badge text-sm' -%}
+
+  <div class="{{ block.settings.tag_block_classes }} flex gap-1.5 flex-wrap" {{ block.shopify_attributes }}>
+    {%- for t in raw_tags -%}
+      {%- liquid
+        assign tag = t | strip
+        if tag == blank
+          continue
+        endif
+
+        assign chip = chip_base
+
+        if tag contains 'Set value:'
+          # 1) Normalize/handle "Set value:"
+          assign amount = tag | remove: 'Set value:' | strip
+          if amount == blank
+            continue
+          endif
+          assign tag = '$' | append: amount | append: ' value'
+          assign chip = chip | append: ' bg-seafoam-200 text-seaweed-700'
+        else
+          # 2) Seaweed + Skin types
+          assign t_down = tag | downcase
+          if t_down contains 'undaria'
+            assign chip = chip | append: ' bg-seafoam-200 text-seaweed-700'
+          elsif t_down contains 'japanese miru' or t_down contains 'miru'
+            assign chip = chip | append: ' bg-seaweed-200 text-seaweed-700'
+          elsif t_down contains 'red'
+            assign chip = chip | append: ' bg-coral-200 text-seaweed-700'
+          elsif t_down contains 'brown'
+            assign chip = chip | append: ' bg-sand-200 text-seaweed-700'
+          else
+            # Everything else = Skin Types
+            assign chip = chip | append: ' bg-p-surface border-p-core text-seaweed-700'
+          endif
+        endif
+      -%}
+
+      <strong class="{{ chip }}">{{ tag }}</strong>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

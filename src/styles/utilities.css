@@ -6,7 +6,7 @@
   padding-left: var(--spacing-4);
   padding-right: var(--spacing-4);
 
-  @media (min-width: 414px) {
+  @media (min-width: 25rem) {
     padding-left: var(--spacing-6);
     padding-right: var(--spacing-6);
   }
@@ -370,14 +370,16 @@
 /* Badge */
 @utility badge {
   display: inline-block;
-  padding-inline: var(--spacing-1);
+  padding-inline: var(--spacing-1-5);
   padding-block: var(--spacing-0-5);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--tracking-wide);
+  font-weight: var(--font-weight-medium);
   background-color: var(--color-seafoam-300);
   color: var(--color-seaweed-700);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
 }
 @utility badge-sm {
+  padding-inline: var(--spacing-1);
   padding-block: var(--spacing-0-5);
   font-size: var(--text-sm);
 }

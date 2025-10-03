@@ -64,3 +64,50 @@
 @utility to-p-accent {
   --tw-gradient-to: var(--p-accent);
 }
+
+/* Buttons */
+@utility button-p-core {
+  background-color: var(--p-core);
+  border-color: var(--p-core);
+  color: var(--text-seaweed-800);
+
+  &:visited,
+  &:active,
+  &:focus,
+  &:focus-visible,
+  &:link {
+    background-color: var(--p-core);
+    border-color: var(--p-core);
+    color: var(--text-seaweed-800);
+  }
+
+  &:hover {
+    /* Slightly darker for hover */
+    background-color: color-mix(in oklab, var(--p-core) 90%, black);
+    border-color: color-mix(in oklab, var(--p-core) 90%, black);
+    color: var(--text-seaweed-800);
+  }
+}
+
+@utility button-p-accent {
+  background-color: var(--p-accent);
+  border-color: var(--p-accent);
+  color: var(--text-seaweed-800);
+
+  &:visited,
+  &:active,
+  &:focus,
+  &:focus-visible,
+  &:link {
+    background-color: var(--p-accent);
+    border-color: var(--p-accent);
+    color: var(--text-seaweed-800);
+  }
+
+  &:hover {
+    /* Slightly darker for hover */
+    background-color: color-mix(in oklab, var(--p-accent) 90%, black);
+    border-color: color-mix(in oklab, var(--p-accent) 90%, black);
+    color: var(--text-seaweed-800);
+  }
+}

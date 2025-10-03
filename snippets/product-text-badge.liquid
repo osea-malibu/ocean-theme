@@ -31,9 +31,9 @@
   endif
 
   if product.available == false
-    assign badge_class = badge_class | append: ' ' | append: 'bg-wave-200 text-wave-800 text-xs'
+    assign badge_class = badge_class | append: ' ' | append: 'bg-wave-200 text-wave-800 text-xs sm:text-sm'
   elsif product.metafields.badge.type == blank or product.metafields.badge.type == 'Default'
-    assign badge_class = badge_class | append: ' ' | append: 'text-xs'
+    assign badge_class = badge_class | append: ' ' | append: 'text-xs sm:text-sm'
   elsif product.metafields.badge.type == 'Round'
     assign badge_class = badge_class | append: ' ' | append: 'rounded-full w-12 h-12 lg:w-16 lg:h-16 text-sm uppercase flex items-center justify-center'
   endif
