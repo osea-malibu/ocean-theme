@@ -200,19 +200,19 @@
         "subheader": ""
       }
     },
-    "video": {
-      "type": "product-video",
-      "settings": {
-        "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
-        "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-12"
-      }
-    },
     "clinicals": {
       "type": "product-clinicals",
       "settings": {
         "section_classes": "",
         "header": "Results You Can Sea®",
         "subheader": ""
+      }
+    },
+    "video": {
+      "type": "product-video",
+      "settings": {
+        "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
+        "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-6 lg:mb-12"
       }
     },
     "ingredients": {
