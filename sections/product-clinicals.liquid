@@ -56,7 +56,7 @@
       {%- endif -%}
     </div>
     <div class="w-full lg:block lg:basis-[calc(50%-12px)] overflow-hidden rounded-xl h-max top-20 sticky">
-      <div class="relative w-full lg:max-h-[calc(100vh-180px)]">
+      <div class="relative w-full lg:h-[calc(100vh-180px)]">
         {%- if product.metafields.custom.clinical_images.value.count == 1 -%}
           {%- liquid
             assign first_image = product.metafields.custom.clinical_images.value | first
