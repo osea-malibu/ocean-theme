@@ -1,0 +1,262 @@
+{% comment %}
+  media-image.liquid — flexible, DPR-agnostic image snippet
+  ----------------------------------------------------------------
+  Purpose: one snippet to cover single-source images and art-directed
+  (mobile/desktop) images using width descriptors (w) + sizes.
+
+  Params (pass any subset):
+    image                — single source (Image/MediaImage)
+    image_mobile         — mobile source (Image/MediaImage)
+    image_desktop        — desktop source (Image/MediaImage)
+
+    sizes                — sizes string for single (and default for art)
+    sizes_mobile         — sizes string for mobile source (optional)
+    sizes_desktop        — sizes string for desktop source (optional)
+
+    widths               — CSV list of widths to generate (e.g. "320,480,640,800")
+    widths_preset        — 'plp' | 'banner' | 'generic' (ignored if widths given)
+
+    alt                  — override alt text (falls back to asset alt)
+    loading              — 'lazy' | 'eager' (default 'lazy', forced to 'eager' when fetchpriority=='high')
+    fetchpriority        — 'high' | 'low' | 'auto' (optional)
+    decoding             — 'async' | 'auto' (default 'async')
+
+    class                — classes for <img>
+    id                   — id for <img>
+    fit                  — 'cover' | 'contain' (adds object-fit class)
+    desktop_min          — breakpoint for desktop source (default '640px')
+
+  Notes:
+    • Always runs through imgix via {% render 'imgix' %}; GIFs bypass imgix.
+    • Uses width descriptors + sizes so DPR is automatic (no explicit 2x/3x).
+    • Keep your width ladders modest (≈8–12 candidates) to avoid HTML bloat.
+{% endcomment %}
+
+{%- liquid
+  assign mode = 'single'
+  if image_mobile != blank and image_desktop != blank
+    assign mode = 'art'
+  endif
+
+  # Width ladder
+  if widths != blank
+    assign widths_list = widths
+  else
+    case widths_preset
+      when 'banner' 
+        # Full-bleed/hero across breakpoints (rem-aware)
+        assign widths_list = '800,1200,1600,2000,2400,2880'
+      when 'mobile-full-desktop-half'
+        # 100vw on mobile, ~50vw on desktop (>= lg)
+        assign widths_list = '400,640,800,960,1200,1440,1600'
+      when 'mobile-half-desktop-fifth'
+        # 50vw on mobile, ~20vw on desktop (>= lg)
+        assign widths_list = '175,208,232,288,328,400,464,576,720,960'
+      else          
+        # Generic ladder
+        assign widths_list = '320,480,640,800,1024,1280,1600,1920,2400'
+    endcase
+  endif
+  assign widths_arr = widths_list | split: ','
+
+  # Sizes
+  assign sizes_single  = sizes | default: '100vw'
+  assign sizes_mobile  = sizes_mobile | default: sizes | default: '100vw'
+  assign sizes_desktop = sizes_desktop | default: sizes | default: '100vw'
+  assign desktop_min   = desktop_min | default: '40rem'
+
+  # If sizes aren't provided, infer sensible defaults from widths_preset
+  if mode == 'single' and sizes == blank and widths_preset != blank
+    case widths_preset
+      when 'banner'
+        assign sizes_single = '100vw'
+      when 'mobile-full-desktop-half'
+        assign sizes_single = '(min-width: 64rem) 50vw, 100vw'
+      when 'mobile-half-desktop-fifth'
+        assign sizes_single = '(min-width: 64rem) 20vw, 50vw'
+    endcase
+  endif
+
+  # rem-based auto-sizes for art direction presets
+  if mode == 'art' and widths_preset != blank
+    if sizes_mobile == blank or sizes_desktop == blank
+      case widths_preset
+        when 'banner'
+          assign sizes_mobile  = '100vw'
+          assign sizes_desktop = '100vw'
+        when 'mobile-full-desktop-half'
+          assign sizes_mobile  = '100vw'
+          assign sizes_desktop = '50vw'
+        when 'mobile-half-desktop-fifth'
+          assign sizes_mobile  = '50vw'
+          assign sizes_desktop = '20vw'
+      endcase
+    endif
+  endif
+
+  # Fit classes
+  assign fit_class = ''
+  if fit == 'cover'
+    assign fit_class = 'object-cover'
+  elsif fit == 'contain'
+    assign fit_class = 'object-contain'
+  endif
+
+  # Loading defaults
+  if loading == blank
+    if fetchpriority == 'high'
+      assign loading = 'eager'
+    else
+      assign loading = 'lazy'
+    endif
+  endif
+  assign decoding = decoding | default: 'async'
+-%}
+
+{%- if mode == 'single' and image != blank -%}
+  {%- liquid
+    # Build srcset for single image
+    assign srcset_parts = ''
+    for w in widths_arr
+      assign w = w | strip
+      if w == ''
+        continue
+      endif
+      assign raw_url = image | image_url: width: w
+      if image contains '.gif'
+        assign optimized = raw_url
+      else
+        capture optimized
+          render 'imgix', src: raw_url
+        endcapture
+      endif
+      if srcset_parts == ''
+        assign srcset_parts = optimized | append: ' ' | append: w | append: 'w'
+      else
+        assign srcset_parts = srcset_parts | append: '||' | append: optimized | append: ' ' | append: w | append: 'w'
+      endif
+    endfor
+    assign srcset_attr = srcset_parts | split: '||' | join: ', '
+
+    # Fallback src (use the smallest width provided)
+    assign first_w = widths_arr | first | strip
+    assign raw_src = image | image_url: width: first_w
+    if image contains '.gif'
+      assign src_attr = raw_src
+    else
+      capture src_attr
+        render 'imgix', src: raw_src
+      endcapture
+    endif
+
+    # Alt text
+    assign alt_text = alt
+    if alt_text == blank and image.alt
+      assign alt_text = image.alt | escape
+    endif
+  -%}
+
+  {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+  <img
+    {% if id %}id="{{ id }}"{% endif %}
+    class="{{ class }} {{ fit_class }}"
+    srcset="{{ srcset_attr }}"
+    sizes="{{ sizes_single }}"
+    src="{{ src_attr }}"
+    {% if alt_text != blank %}alt="{{ alt_text }}"{% else %}alt="" aria-hidden="true"{% endif %}
+    loading="{{ loading }}"
+    {% if fetchpriority %}fetchpriority="{{ fetchpriority }}"{% endif %}
+    decoding="{{ decoding }}"
+    width="{{ image.width }}"
+    height="{{ image.height }}"
+  >
+  {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+
+{%- elsif mode == 'art' -%}
+  {%- liquid
+    # Build srcset for MOBILE
+    assign m_parts = ''
+    for w in widths_arr
+      assign w = w | strip
+      if w == ''
+        continue
+      endif
+      assign m_raw = image_mobile | image_url: width: w
+      if image_mobile contains '.gif'
+        assign m_opt = m_raw
+      else
+        capture m_opt
+          render 'imgix', src: m_raw
+        endcapture
+      endif
+      if m_parts == ''
+        assign m_parts = m_opt | append: ' ' | append: w | append: 'w'
+      else
+        assign m_parts = m_parts | append: '||' | append: m_opt | append: ' ' | append: w | append: 'w'
+      endif
+    endfor
+    assign m_srcset = m_parts | split: '||' | join: ', '
+    assign m_first_w = widths_arr | first | strip
+    assign m_raw_src = image_mobile | image_url: width: m_first_w
+    if image_mobile contains '.gif'
+      assign m_src = m_raw_src
+    else
+      capture m_src
+        render 'imgix', src: m_raw_src
+      endcapture
+    endif
+
+    # Build srcset for DESKTOP
+    assign d_parts = ''
+    for w in widths_arr
+      assign w = w | strip
+      if w == ''
+        continue
+      endif
+      assign d_raw = image_desktop | image_url: width: w
+      if image_desktop contains '.gif'
+        assign d_opt = d_raw
+      else
+        capture d_opt
+          render 'imgix', src: d_raw
+        endcapture
+      endif
+      if d_parts == ''
+        assign d_parts = d_opt | append: ' ' | append: w | append: 'w'
+      else
+        assign d_parts = d_parts | append: '||' | append: d_opt | append: ' ' | append: w | append: 'w'
+      endif
+    endfor
+    assign d_srcset = d_parts | split: '||' | join: ', '
+
+    # Alt text preference: explicit alt > mobile alt > desktop alt
+    assign alt_text = alt
+    if alt_text == blank and image_mobile.alt
+      assign alt_text = image_mobile.alt | escape
+    endif
+    if alt_text == blank and image_desktop.alt
+      assign alt_text = image_desktop.alt | escape
+    endif
+  -%}
+
+  {% comment %} theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
+  <picture>
+    <source srcset="{{ d_srcset }}" sizes="{{ sizes_desktop }}" media="(min-width: {{ desktop_min }})">
+    <source srcset="{{ m_srcset }}" sizes="{{ sizes_mobile }}" media="(max-width: calc({{ desktop_min }} - 1px))">
+    <img
+      {% if id %}id="{{ id }}"{% endif %}
+      class="{{ class }} {{ fit_class }}"
+      srcset="{{ m_srcset }}"
+      sizes="{{ sizes_mobile }}"
+      src="{{ m_src }}"
+      {% if alt_text != blank %}alt="{{ alt_text }}"{% else %}alt="" aria-hidden="true"{% endif %}
+      loading="{{ loading }}"
+      {% if fetchpriority %}fetchpriority="{{ fetchpriority }}"{% endif %}
+      decoding="{{ decoding }}"
+      width="{{ image_mobile.width }}"
+      height="{{ image_mobile.height }}"
+    >
+  </picture>
+  {% comment %} theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
+
+{%- endif -%}
