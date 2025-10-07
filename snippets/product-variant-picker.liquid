@@ -51,6 +51,7 @@ Accepts:
                   {%- liquid
                     assign mini_variant = false
                     assign jumbo_variant = false
+                    assign duo_variant = false
                     assign normalized_value = value | replace: 'fl ', ''
                     assign is_small_product = false
                     if small_products contains product.handle
@@ -63,6 +64,8 @@ Accepts:
                       assign mini_variant = true
                     elsif jumbo_size_array contains normalized_value
                       assign jumbo_variant = true
+                    elsif value contains 'Duo'
+                      assign duo_variant = true
                     endif
                   -%}
                   <div>
@@ -84,6 +87,8 @@ Accepts:
                           <b class="tracking-normal leading-none capitalize">Travel</b>
                         {%- elsif jumbo_variant -%}
                           <b class="tracking-normal leading-none capitalize">Jumbo</b>
+                        {%- elsif duo_variant -%}
+                          <b class="tracking-normal leading-none capitalize">Duo</b>
                         {%- else -%}
                           <b class="tracking-normal leading-none capitalize">Standard</b>
                         {%- endif -%}
