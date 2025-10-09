@@ -270,8 +270,9 @@
       "settings": {
         "heading": "Scent Profile",
         "wrapper_classes": "",
-        "title": "",
-        "body": ""
+        "image": "{{ product.metafields.custom.scent_profile_image.value }}",
+        "title": "Scent Profile",
+        "body": "{{ product.metafields.custom.scent_profile.value }}"
       }
     },
     "routine": {
