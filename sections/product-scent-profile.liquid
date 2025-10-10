@@ -1,8 +1,24 @@
 {%- unless product.metafields.custom.scent_profile_image == blank -%}
-  <div class="{{ section.settings.wrapper_classes }}">
-    <div class="container">
-      <div class="bg-white rounded-xl p-6 lg:p-10 mb-6 lg:mb-12">
+  <div class="product-clinicals container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
+    <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-x-6 justify-between lg:max-h-[calc(100vh-180px)]">
+      {%- liquid
+        assign image_src = section.settings.image | image_url: width: 750, height: 750, crop: 'center'
+        assign image_src_2x = section.settings.image | image_url: width: 1500, height: 1500, crop: 'center'
+      -%}
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+      <img
+        class="flex-1 object-cover rounded-xl"
+        srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
+        src="{% render 'imgix', src: image_src_2x %}"
+        loading="lazy"
+        alt="{{ section.settings.image.alt | escape }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+      >
+      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+      <div class="flex-1 p-4 lg:p-10 bg-white rounded-xl flex flex-col items-center justify-center">
         <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
+        <div class="text-lg lg:text-xl max-w-sm mx-autov text-center">{{ section.settings.body }}</div>
       </div>
     </div>
   </div>

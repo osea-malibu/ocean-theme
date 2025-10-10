@@ -2,12 +2,12 @@
   <div class="container relative mb-6 lg:mb-12 flex w-full">
     <div class="content relative w-full bg-white rounded-xl p-6 lg:p-10">
       <h3 class="text-3xl sm:text-4xl lg:text-5xl font-serif tracking-tight mb-4 lg:mb-6 text-center">{{ section.settings.header }}</h3>
-      <div class="mb-4 max-w-lg lg:max-w-4xl mx-auto lg:flex lg:items-start lg:gap-8 lg:justify-around">
+      <div class="mb-4 max-w-lg lg:max-w-full mx-auto lg:flex lg:items-start lg:justify-center {% if section.blocks.size > 3 %}lg:gap-16{% else %}lg:gap-24{% endif %}">
         {%- for block in section.blocks -%}
           {%- assign index_modulo = forloop.index0 | modulo: 2 -%}
           <div class="flex items-center gap-3 md:gap-6 mb-4 w-full {% if index_modulo == 1 %}flex-row-reverse{% else %}flex-row{% endif %} lg:flex-col-reverse lg:w-52">
             <div class="relative w-full lg:text-center{% if index_modulo == 1 %} text-right{% endif %}">
-              <p class="relative block mb-2 text-lg md:text-xl lg:text-2xl after:content-[''] after:block after:w-full after:h-px after:bg-owc-blue2 before:content-[''] before:block before:bg-owc-blue2 before:w-[5px] before:h-[5px] before:rounded-full before:absolute before:top-[26px] {% if index_modulo == 1 %}before:left-0{% else %}before:right-0{% endif %} lg:before:hidden lg:after:hidden">
+              <p class="relative block mb-2 text-lg md:text-xl lg:text-2xl md:leading-4 lg:leading-6 after:content-[''] after:block after:w-full after:h-px after:bg-p-core before:content-[''] before:block before:bg-p-core before:w-[5px] before:h-[5px] before:rounded-full before:absolute before:top-[26px] {% if index_modulo == 1 %}before:left-0{% else %}before:right-0{% endif %} lg:before:hidden lg:after:hidden">
                 <b class="font-medium">{{ block.settings.ingredient_name | split: ' [' | first }}</b>
                 {%- if block.settings.ingredient_scientific_name != blank -%}
                   {{ ' ' }}<em class="text-sm text-seaweed-600">({{ block.settings.ingredient_scientific_name }})</em>

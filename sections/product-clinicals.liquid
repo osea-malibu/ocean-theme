@@ -3,7 +3,7 @@
   <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-0 justify-between">
     <div class="w-full lg:basis-[calc(50%-12px)] relative overflow-hidden h-full p-4 lg:p-10 bg-white rounded-xl">
       <div class="mb-6 lg:mb-8 xl:mb-10">
-        <h3 class="font-serif text-2xl lg:text-3xl xl:text-4xl tracking-tight">{{ section.settings.header | replace: '®', '<sup class="text-[60%]">®</sup>' }}</h3>
+        <h3 class="font-serif text-2xl lg:text-3xl xl:text-4xl">{{ section.settings.header | replace: '®', '<sup class="text-[60%]">®</sup>' }}</h3>
         <p class="leading-tight tracking-wide mb-4 lg:mb-8">{{ section.settings.subheader }}</p>
         {%- for clinical_result in product.metafields.custom.clinical_results.value -%}
           <div class="{% unless forloop.last %}mb-6 lg:mb-8{% endunless %}">
@@ -39,7 +39,7 @@
         {%- endfor -%}
       </div>
       {%- if product.metafields.featured_review.content != blank -%}
-      <div class="text-center font-serif border border-wave-300 rounded-xl p-4 lg:p-6">
+      <div class="text-center border border-wave-300 rounded-xl p-4 lg:p-6">
         <h3 class="sr-only">Featured Review</h3>
         <svg aria-label="5 stars" xmlns="http://www.w3.org/2000/svg" width="116" height="20" viewbox="0 0 116 20" fill="currentColor" class="mx-auto mb-3">
           <polygon points="13.09 6.26 20 7.27 15 12.14 16.18 19.02 10 15.77 3.82 19.02 5 12.14 0 7.27 6.91 6.26 10 0"></polygon>
@@ -48,10 +48,11 @@
           <polygon points="85.09 6.26 92 7.27 87 12.14 88.18 19.02 82 15.77 75.82 19.02 77 12.14 72 7.27 78.91 6.26 82 0"></polygon>
           <polygon points="109.09 6.26 116 7.27 111 12.14 112.18 19.02 106 15.77 99.82 19.02 101 12.14 96 7.27 102.91 6.26 106 0"></polygon>
         </svg>
-        <em class="block text-lg lg:text-2xl xl:text-3xl mb-2">{{ product.metafields.featured_review.title }}</em>
-        <p class="lg:text-lg">
+        <em class="block text-lg lg:text-2xl xl:text-3xl mb-2 font-serif">{{ product.metafields.featured_review.title }}</em>
+        <p class="lg:text-lg font-serif">
           <span>"{{ product.metafields.featured_review.content }}"</span> <span class="whitespace-nowrap">— {{ product.metafields.featured_review.name }}</span>
         </p>
+        <a href="#reviews" class="block mt-4"><span class="link">Read more reviews</span> →</a>
       </div>
       {%- endif -%}
     </div>
