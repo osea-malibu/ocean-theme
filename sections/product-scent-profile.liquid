@@ -17,8 +17,10 @@
       >
       {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       <div class="flex-1 p-4 lg:p-10 bg-white rounded-xl flex flex-col items-center justify-center">
-        <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
-        <div class="text-lg lg:text-xl max-w-sm mx-autov text-center">{{ section.settings.body }}</div>
+        <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-6 py-2">
+          <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
+          <div class="text-lg lg:text-xl max-w-sm mx-autov text-center">{{ section.settings.body }}</div>
+        </div>
       </div>
     </div>
   </div>

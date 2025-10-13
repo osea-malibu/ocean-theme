@@ -75,6 +75,17 @@
             height="{{ first_image.height }}"
           >
           {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+        {%- elsif product.handle == 'dream-night-serum' -%}
+          {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+          <img
+            class="w-full h-full object-cover"
+            src="https://cdn.shopify.com/s/files/1/1368/9993/files/dns-lifestyle.jpg?v=1760115264"
+            loading="lazy"
+            alt="Dream Night Serum being used by women of multiple ages"
+            width="1500"
+            height="1212"
+          >
+          {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         {%- elsif product.metafields.custom.clinical_images.value.count > 1 -%}
           <glide-slider
             class="glide type-carousel gap-0 w-full"
