@@ -125,7 +125,7 @@
                 <div class="mt-2">
                   <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
                   <div class="overflow-hidden max-h-10 peer-checked:max-h-screen transition-max-height leading-6">
-                    <small class="block text-xs leading-none mt-1">*10% off is valid for new subscribers and on first purchase only. Offer not valid on gift cards, shipping, or tax. By entering your email address and/or phone number, you consent to receive marketing and promotional communications from OSEA, including recurring automated text messages (e.g. cart reminders) which may be sent using an autodialer to the number provided. Message frequency varies. Msg & data rates may apply. Consent is not a condition of purchase. By subscribing, you confirm that you have read and acknowledged our Privacy Policy, Text Messaging Terms and Conditions, and Terms of Use. Reply HELP for help and STOP to cancel.</small>
+                    <small class="block text-xs leading-none mt-1">{{ section.settings.newsletter_terms }}</small>
                   </div>
                   <label aria-hidden="true" for="collapsible" class="text-xs link mt-1 block peer-checked:hidden">Read more</label>
                   <label aria-hidden="true" for="collapsible" class="text-xs link mt-1 hidden peer-checked:block">Read less</label>
@@ -311,6 +311,11 @@
       "id": "newsletter_paragraph",
       "default": "Get news and exclusive offers to your inbox",
       "label": "Newsletter subheader"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_terms",
+      "label": "Newsletter terms"
     },
     {
       "type": "header",
