@@ -27,12 +27,41 @@
                 </div>
               </div>
             {%- endfor -%}
+            {%- if product.metafields.custom.recycling != blank -%}
+              <div class="relative overflow-hidden border-b border-seaweed-300">
+                <input type="checkbox" name="panel" id="faq_panel-recycling" class="hidden peer">
+                <label for="faq_panel-recycling" class="relative block py-2 lg:py-4 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-4 after:w-4 before:h-0.5 after:h-0.5 before:rounded-full after:rounded-full before:bg-seaweed-500 after:bg-seaweed-500 before:scale-75 after:scale-75 before:my-0.5 after:my-0.5 before:top-4 after:top-4 lg:before:top-6 lg:after:top-6 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform after:motion-safe:duration-200">
+                  <b class="font-medium pr-5 block leading-tight"></b>
+                </label>
+                <div class="max-h-0 peer-checked:max-h-80 motion-safe:transition-max-height motion-safe:duration-500">
+                  <div class="pb-5 leading-tight">
+                    <table>
+                      {%- if product.metafields.custom.recycling.value.packaging != nil -%}
+                        <tr class="align-top">
+                          <td><b class="mr-1 whitespace-nowrap">Packaging:</b></td>
+                          <td>{{ product.metafields.custom.recycling.value.packaging }}</td>
+                        </tr>
+                      {%- endif -%}
+                      {%- if product.metafields.custom.recycling.value.recycling != nil -%}
+                        <tr class="align-top">
+                          <td><b class="mr-1 whitespace-nowrap">Recycling:</b></td>
+                          <td>{{ product.metafields.custom.recycling.value.recycling }}</td>
+                        </tr>
+                      {%- endif -%}
+                    </table>
+                    {%- if product.metafields.custom.recycling.value.disclaimer != nil -%}
+                      <small class="block leading-tight mt-2">{{ product.metafields.custom.recycling.value.disclaimer }}</small>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
           </div>
         </div>
       {%- endif -%}
       {%- if product.metafields.custom.related_articles != nil -%}
         <div class="flex-1 articles w-full rounded-xl bg-white p-4 lg:p-10">
-          <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">Related blogs</h3>
+          <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">Learn</h3>
           {%- liquid
             if is_split_view
               assign list_wrapper_classes = 'flex flex-wrap gap-2 lg:gap-3'
