@@ -1,5 +1,5 @@
-{%- unless product.metafields.custom.scent_profile_image == blank -%}
-  <div class="product-clinicals container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
+{%- if product.metafields.custom.scent_profile_image -%}
+  <div class="product-scent-profile container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
     <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-x-6 justify-between lg:max-h-[calc(100vh-180px)]">
       {%- liquid
         assign image_src = section.settings.image | image_url: width: 750, height: 750, crop: 'center'
@@ -17,14 +17,40 @@
       >
       {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       <div class="flex-1 p-4 lg:p-10 bg-white rounded-xl flex flex-col items-center justify-center">
-        <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-6 py-2">
+        <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-6 py-2 max-w-sm mx-auto">
           <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
-          <div class="text-lg lg:text-xl max-w-sm mx-autov text-center">{{ section.settings.body }}</div>
+          <div class="text-lg lg:text-xl">{{ section.settings.body }}</div>
         </div>
       </div>
     </div>
   </div>
-{% endunless %}
+{% else %}
+  <div class="product-jp-quote container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
+    <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-x-6 justify-between lg:max-h-[calc(100vh-180px)]">
+      {%- liquid
+        assign image_src = section.settings.fallback_image | image_url: width: 750, height: 750, crop: 'center'
+        assign image_src_2x = section.settings.fallback_image | image_url: width: 1500, height: 1500, crop: 'center'
+      -%}
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+      <img
+        class="flex-1 object-cover rounded-xl"
+        srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
+        src="{% render 'imgix', src: image_src_2x %}"
+        loading="lazy"
+        alt="{{ section.settings.fallback_image.alt | escape }}"
+        width="{{ section.settings.fallback_image.width }}"
+        height="{{ section.settings.fallback_image.height }}"
+      >
+      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+      <div class="flex-1 p-4 lg:p-10 bg-white rounded-xl flex flex-col items-center justify-center">
+        <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-6 py-2 max-w-sm mx-auto">
+          <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.fallback_heading }}</h2>
+          <div class="text-lg lg:text-xl">{{ section.settings.fallback_body }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
 
 {% schema %}
 {
@@ -32,7 +58,7 @@
   "tag": "section",
   "settings": [
     {
-      "type": "paragraph",
+      "type": "header",
       "content": "Scent profile"
     },
     {
@@ -55,6 +81,25 @@
       "type": "text",
       "id": "body",
       "label": "Body"
+    },
+    {
+      "type": "header",
+      "content": "Fallback content"
+    },
+    {
+      "type": "text",
+      "id": "fallback_heading",
+      "label": "Fallback heading"
+    },
+    {
+      "type": "richtext",
+      "id": "fallback_body",
+      "label": "Fallback body"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback image"
     }
   ]
 }
