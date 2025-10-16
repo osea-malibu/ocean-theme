@@ -107,13 +107,23 @@
             "default_open": false
           }
         },
+        "collapsible_tab_q8BQDB": {
+          "type": "collapsible_tab",
+          "name": "Care",
+          "settings": {
+            "heading": "Care",
+            "content": "{{ product.metafields.custom.product_care.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
         "collapsible_tab_MQbqTH": {
           "type": "collapsible_tab",
           "name": "How to use",
           "settings": {
             "heading": "How to use",
             "content": "{{ product.metafields.custom_fields.how_it_works.value }}",
-            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "tab_classes": "col-span-12",
             "default_open": false
           }
         },
@@ -124,16 +134,6 @@
           "settings": {
             "heading": "Skin types",
             "content": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
-            "tab_classes": "col-span-12 border-b border-seaweed-300",
-            "default_open": false
-          }
-        },
-        "collapsible_tab_q8BQDB": {
-          "type": "collapsible_tab",
-          "name": "Care",
-          "settings": {
-            "heading": "Care",
-            "content": "{{ product.metafields.custom.product_care.value }}",
             "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
@@ -180,9 +180,9 @@
         "collapsible_tab_JxagAC",
         "collapsible_tab_YPUDfU",
         "collapsible_tab_7MxGMU",
+        "collapsible_tab_q8BQDB",
         "collapsible_tab_MQbqTH",
         "collapsible_tab_xFbwdC",
-        "collapsible_tab_q8BQDB",
         "collapsible_tab_QBCMfF",
         "collapsible_tab_h7h39z",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
