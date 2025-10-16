@@ -271,7 +271,10 @@
         "wrapper_classes": "",
         "image": "{{ product.metafields.custom.scent_profile_image.value }}",
         "heading": "Scent Profile",
-        "body": "{{ product.metafields.custom.scent_profile.value }}"
+        "body": "{{ product.metafields.custom.scent_profile.value }}",
+        "fallback_heading": "",
+        "fallback_body": "",
+        "fallback_image": "shopify://shop_images/Jenefer_Palmer_12.jpg"
       }
     },
     "routine": {
