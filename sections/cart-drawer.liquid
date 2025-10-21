@@ -475,7 +475,7 @@
           {% comment %} Free samples {% endcomment %}
           {%- assign samples_in_cart = cart.items | map: 'product' | where: 'type', 'Sample' -%}
           {%- if samples_in_cart.size < 3 and settings.cart_samples_collection.products.size > 0 and only_gc_in_cart == false -%}
-            <div class="cart-samples w-full max-w-md mx-auto bg-wave-100 pt-4 pl-4 pb-1 rounded-sm">
+            <div class="cart-samples w-full max-w-md mx-auto bg-wave-100 pt-4 pl-4 pb-1 rounded-sm mb-6">
               {%- liquid
                 assign available_sample_count = 0
                 for sample in settings.cart_samples_collection.products
@@ -507,6 +507,20 @@
               </div>
             </div>
           {%- endif -%}
+
+          {% comment %} Shipping calculator {% endcomment %}
+          <shipping-calculator class="flex gap-2 items-end w-full max-w-md mx-auto bg-wave-100 p-4 rounded-sm">
+            <form class="relative">
+              <label for="shippingzip" class="tracking-wide font-medium text-sm mb-1">Estimated shipping time</label><br/>
+              <input class="py-2 w-60 input input-sm" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
+              <input class="absolute right-1 bottom-1 px-2 py-0.5 button button-tertiary button-sm" type="submit" value="Submit">
+            </form>
+            <div
+              id="transitTimeOutput"
+              data-transition-end="opacity-100 translate-x-0"
+              data-transition-start="-translate-x-4 opacity-0"
+              class="inline-flex px-2 mt-2 mb-px font-bold leading-8 rounded-lg opacity-0 duration-300 -translate-x-4 pointer-events-none transition-transform-opacity bg-seaweed-300"></div>
+          </shipping-calculator>
         </div>
 
         <div class="cart-drawer-footer bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-2">
