@@ -26,7 +26,7 @@
   </div>
 {% else %}
   <div class="product-jp-quote container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
-    <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-x-6 justify-between lg:max-h-[calc(100vh-180px)]">
+    <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-x-6 justify-between lg:max-h-[372px]">
       {%- liquid
         assign image_src = section.settings.fallback_image | image_url: width: 750, height: 750, crop: 'center'
         assign image_src_2x = section.settings.fallback_image | image_url: width: 1500, height: 1500, crop: 'center'
