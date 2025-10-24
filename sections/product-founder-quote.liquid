@@ -1,35 +1,9 @@
-{%- if product.metafields.custom.scent_profile_metaobject -%}
-  <div class="product-scent-profile container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
-    <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-x-6 justify-between lg:max-h-[calc(100vh-180px)]">
-      {%- liquid
-        assign image_src = section.settings.image | image_url: width: 750, height: 750, crop: 'center'
-        assign image_src_2x = section.settings.image | image_url: width: 1500, height: 1500, crop: 'center'
-      -%}
-      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-      <img
-        class="flex-1 object-cover rounded-xl"
-        srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
-        src="{% render 'imgix', src: image_src_2x %}"
-        loading="lazy"
-        alt="{{ section.settings.image.alt | escape }}"
-        width="{{ section.settings.image.width }}"
-        height="{{ section.settings.image.height }}"
-      >
-      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-      <div class="flex-1 p-4 lg:p-10 bg-white rounded-xl flex flex-col items-center justify-center">
-        <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-6 py-2 max-w-sm mx-auto">
-          <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
-          <div class="text-lg lg:text-xl">{{ section.settings.body }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-{% else %}
+{%- if section.settings.founder_image and section.settings.founder_body != blank -%}
   <div class="product-jp-quote container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
     <div class="w-full flex flex-col md:flex-row gap-y-5 md:gap-x-4 lg:gap-x-6 justify-between md:max-h-[372px] items-stretch">
       {%- liquid
-        assign image_src = section.settings.fallback_image | image_url: width: 750, height: 750, crop: 'center'
-        assign image_src_2x = section.settings.fallback_image | image_url: width: 1500, height: 1500, crop: 'center'
+        assign image_src = section.settings.founder_image | image_url: width: 750, height: 750, crop: 'center'
+        assign image_src_2x = section.settings.founder_image | image_url: width: 1500, height: 1500, crop: 'center'
       -%}
     
       <!-- Image column -->
@@ -40,9 +14,9 @@
           srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
           src="{% render 'imgix', src: image_src_2x %}"
           loading="lazy"
-          alt="{{ section.settings.fallback_image.alt | escape }}"
-          width="{{ section.settings.fallback_image.width }}"
-          height="{{ section.settings.fallback_image.height }}"
+          alt="{{ section.settings.founder_image.alt | escape }}"
+          width="{{ section.settings.founder_image.width }}"
+          height="{{ section.settings.founder_image.height }}"
         >
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       </div>
@@ -51,8 +25,8 @@
       <div class="flex-1 md:basis-0 min-w-0 bg-white rounded-xl flex flex-col items-center justify-center overflow-hidden">
         <div class="p-4 sm:p-6 lg:p-10">
           <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-4 sm:pl-6 pt-2 md:max-w-sm xl:max-w-md mx-auto">
-            <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.fallback_heading }}</h2>
-            <div class="text-lg lg:text-xl p:mb-4">{{ section.settings.fallback_body }}</div>
+            <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.founder_heading }}</h2>
+            <div class="text-lg lg:text-xl p:mb-4">{{ section.settings.founder_body }}</div>
           </div>
         </div>
       </div>
@@ -62,22 +36,12 @@
 
 {% schema %}
 {
-  "name": "Scent Profile",
+  "name": "Founder Quote",
   "tag": "section",
   "settings": [
     {
       "type": "header",
-      "content": "Scent profile"
-    },
-    {
-      "type": "metaobject",
-      "metaobject_type": "scent_profile",
-      "id": "object",
-      "label": "Scent object",
-    },
-    {
-      "type": "header",
-      "content": "Fallback content"
+      "content": "Founder quote"
     },
     {
       "type": "textarea",
@@ -85,21 +49,21 @@
       "label": "Wrapper classes"
     },
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image"
+      "type": "text",
+      "id": "founder_heading",
+      "label": "Heading"
     },
     {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Scent Profile"
-    },
-    {
-      "type": "text",
-      "id": "body",
+      "type": "richtext",
+      "id": "founder_body",
       "label": "Body"
+    },
+    {
+      "type": "image_picker",
+      "id": "founder_image",
+      "label": "Image"
     }
   ]
 }
 {% endschema %}
+
