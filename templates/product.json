@@ -230,7 +230,9 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
       "disabled": true,
       "custom_css": [],
       "settings": {
@@ -255,7 +257,9 @@
           }
         }
       },
-      "block_order": ["key_ingredient_tNNTPC"],
+      "block_order": [
+        "key_ingredient_tNNTPC"
+      ],
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
@@ -265,18 +269,21 @@
     "scent_profile": {
       "type": "product-scent-profile",
       "settings": {
+        "object": "",
         "wrapper_classes": "",
         "image": "{{ product.metafields.custom.scent_profile_image.value }}",
         "heading": "Scent Profile",
-        "body": "{{ product.metafields.custom.scent_profile.value }}",
-        "fallback_heading": "",
-        "fallback_body": "<p>“Over 30 years ago, I started OSEA to share the healing powers of the sea. Since then, it’s been our mission to create clean, clinically tested skincare, combining pure, potent seaweed with active botanicals for results you can sea. My vision is to create waves of kindness for people and our planet.” </p><p><em>— Jenefer Palmer, OSEA Founder</em></p>",
-        "fallback_image": "shopify://shop_images/012624_OSEA_PRSHOOT-ROBIN-938.jpg"
+        "body": "{{ product.metafields.custom.scent_profile.value }}"
       }
     },
     "founder_quote": {
       "type": "product-founder-quote",
-      "settings": {}
+      "settings": {
+        "wrapper_classes": "",
+        "founder_heading": "",
+        "founder_body": "<p>Over 30 years ago, I started OSEA to share the healing powers of the sea. Since then, it’s been our mission to create clean, clinically tested skincare, combining pure, potent seaweed with active botanicals for results you can sea. My vision is to create waves of kindness for people and our planet.</p><p><em>-Jenefer Palmer, OSEA Founder</em></p>",
+        "founder_image": "shopify://shop_images/012624_OSEA_PRSHOOT-ROBIN-938.jpg"
+      }
     },
     "routine": {
       "type": "product-routine",
