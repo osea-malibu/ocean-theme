@@ -25,8 +25,8 @@
       <div class="flex-1 md:basis-0 min-w-0 bg-white/75 rounded-xl flex flex-col items-center justify-center overflow-hidden">
         <div class="p-4 sm:p-6 lg:p-10">
           <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-4 sm:pl-6 pt-2 md:max-w-sm xl:max-w-md mx-auto">
-            <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.founder_heading }}</h2>
-            <div class="text-lg lg:text-xl p:mb-4">{{ section.settings.founder_body }}</div>
+            <div class="text-xl lg:text-xl p:mb-4 text-serif">{{ section.settings.founder_body }}</div>
+            <cite class="text-lg lg:text-xl p:mb-4 text-right">{{ section.settings.founder_name }}</cite>
           </div>
         </div>
       </div>
@@ -49,14 +49,14 @@
       "label": "Wrapper classes"
     },
     {
-      "type": "text",
-      "id": "founder_heading",
-      "label": "Heading"
-    },
-    {
       "type": "richtext",
       "id": "founder_body",
-      "label": "Body"
+      "label": "Quote"
+    },
+    {
+      "type": "text",
+      "id": "founder_name",
+      "label": "Name"
     },
     {
       "type": "image_picker",
