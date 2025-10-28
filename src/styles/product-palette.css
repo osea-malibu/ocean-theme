@@ -44,6 +44,23 @@
   border-color: var(--p-accent);
 }
 
+@utility decoration-p-surface {
+  -webkit-text-decoration-color: var(--p-surface);
+  text-decoration-color: var(--p-surface);
+}
+@utility decoration-p-core {
+  -webkit-text-decoration-color: var(--p-core);
+  text-decoration-color: var(--p-core);
+}
+@utility decoration-p-inverse {
+  -webkit-text-decoration-color: var(--p-inverse);
+  text-decoration-color: var(--p-inverse);
+}
+@utility decoration-p-accent {
+  -webkit-text-decoration-color: var(--p-accent);
+  text-decoration-color: var(--p-accent);
+}
+
 /* Gradients (works with bg-gradient-to-*) */
 @utility from-p-surface {
   --tw-gradient-from: var(--p-surface);

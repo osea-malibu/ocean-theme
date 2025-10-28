@@ -1,62 +1,59 @@
 {%- if product.metafields.custom.scent_profile_metaobject -%}
+  {%- assign scent_object = product.metafields.custom.scent_profile_metaobject.value -%}
   <div class="product-scent-profile container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
-    <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-x-6 justify-between lg:max-h-[calc(100vh-180px)]">
-      {%- liquid
-        assign image_src = section.settings.image | image_url: width: 750, height: 750, crop: 'center'
-        assign image_src_2x = section.settings.image | image_url: width: 1500, height: 1500, crop: 'center'
-      -%}
-      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-      <img
-        class="flex-1 object-cover rounded-xl"
-        srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
-        src="{% render 'imgix', src: image_src_2x %}"
-        loading="lazy"
-        alt="{{ section.settings.image.alt | escape }}"
-        width="{{ section.settings.image.width }}"
-        height="{{ section.settings.image.height }}"
-      >
-      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-      <div class="flex-1 p-4 lg:p-10 bg-white rounded-xl flex flex-col items-center justify-center">
-        <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-6 py-2 max-w-sm mx-auto">
-          <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.heading }}</h2>
-          <div class="text-lg lg:text-xl">{{ section.settings.body }}</div>
+    <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-0 justify-between">
+      <div class="w-full lg:block lg:basis-[calc(50%-12px)] overflow-hidden rounded-xl h-max top-20 sticky">
+        <div class="relative w-full lg:h-[calc(100vh-180px)]">
+          {%- liquid
+            assign image_src = scent_object.image | image_url: width: 750, height: 750, crop: 'center'
+            assign image_src_2x = scent_object.image | image_url: width: 1500, height: 1500, crop: 'center'
+          -%}
+          {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+          <img
+            class="w-full h-full object-cover"
+            srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
+            src="{% render 'imgix', src: image_src_2x %}"
+            loading="lazy"
+            alt="{{ scent_object.image.alt | escape }}"
+            width="{{ scent_object.image.width }}"
+            height="{{ scent_object.image.height }}"
+          >
+          {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         </div>
+      </div>
+      <div class="w-full lg:basis-[calc(50%-12px)] relative overflow-hidden h-full p-4 lg:p-10 xl:px-14 xl:py-16 bg-white rounded-xl">
+        <div class="flex flex-col items-start justify-center {% comment %} border-l-4 border-p-surface pl-6 {% endcomment %} py-2 mx-auto mb-6 lg:mb-8 xl:mb-10">
+          <h2 class="font-serif text-4xl mb-4 underline decoration-wavy decoration-2 decoration-p-core underline-offset-4">{{ scent_object.name }}</h2>
+          <div class="text-lg lg:text-xl">{{ scent_object.description }}</div>
+        </div>
+        {%- if scent_object.products.value and scent_object.products.value.count > 1 -%}
+          <h3 class="text-xl font-bold mb-4">Shop the Scent</h3>
+          <horizontal-scroll-box class="relative block w-full max-w-full">
+            <div class="scroll-box w-full max-w-full flex gap-4 snap-x snap-mandatory overflow-x-auto pb-3">
+              {%- for scent_product in scent_object.products.value -%}
+                {%- unless scent_product.handle == product.handle -%}
+                  {% render 'product-card',
+                    card_product: scent_product,
+                    section_id: section.id,
+                    card_class: 'flex flex-col relative w-52 shrink-0',
+                    button_class: 'flex-col py-1 leading-none md:px-3 xl:px-4',
+                    variant_picker_classes: 'xs:!mr-1.5 xs:!px-2.5'
+                  %}
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+            <nav>
+              <button class="next nav-hide absolute top-1/2 -right-4 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Next">
+                {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
+              </button>
+              <button class="prev nav-hide absolute top-1/2 -left-4 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Previous">
+                {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6 rotate-180', stroke_width: 1.5 %}
+              </button>
+            </nav>
+          </horizontal-scroll-box>
+        {%- endif -%}
       </div>
     </div>
-  </div>
-{% else %}
-  <div class="product-jp-quote container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
-    <div class="w-full flex flex-col md:flex-row gap-y-5 md:gap-x-4 lg:gap-x-6 justify-between md:max-h-[372px] items-stretch">
-      {%- liquid
-        assign image_src = section.settings.fallback_image | image_url: width: 750, height: 750, crop: 'center'
-        assign image_src_2x = section.settings.fallback_image | image_url: width: 1500, height: 1500, crop: 'center'
-      -%}
-    
-      <!-- Image column -->
-      <div class="flex-1 md:basis-0 min-w-0 overflow-hidden rounded-xl">
-        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-        <img
-          class="w-full h-full object-cover"
-          srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
-          src="{% render 'imgix', src: image_src_2x %}"
-          loading="lazy"
-          alt="{{ section.settings.fallback_image.alt | escape }}"
-          width="{{ section.settings.fallback_image.width }}"
-          height="{{ section.settings.fallback_image.height }}"
-        >
-        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-      </div>
-    
-      <!-- Content column -->
-      <div class="flex-1 md:basis-0 min-w-0 bg-white rounded-xl flex flex-col items-center justify-center overflow-hidden">
-        <div class="p-4 sm:p-6 lg:p-10">
-          <div class="flex flex-col items-start justify-center border-l-4 border-p-core pl-4 sm:pl-6 pt-2 md:max-w-sm xl:max-w-md mx-auto">
-            <h2 class="text-center font-serif text-4xl mb-2">{{ section.settings.fallback_heading }}</h2>
-            <div class="text-lg lg:text-xl p:mb-4">{{ section.settings.fallback_body }}</div>
-          </div>
-        </div>
-      </div>
-    </div>    
   </div>
 {% endif %}
 

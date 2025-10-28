@@ -179,7 +179,7 @@
                     {{- option.name -}}
                   </label>
                   <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                    class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                    class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}{% if variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
                     name="options[{{ option.name | escape }}]"
                     form="{{ product_form_id }}"
                   >
@@ -234,11 +234,11 @@
                         {% endif %}
                       >
                       <label
-                        class="button button-xs block button-secondary rounded-full lowercase tracking-wide peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-1.5 2xs:px-2 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}{% if section.settings.variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                        class="button button-xs block button-secondary rounded-full lowercase tracking-wide peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-1.5 2xs:px-2 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}{% if variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
                         for="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
                         tabindex="0"
                       >
-                        {{ value }}
+                        {{ value | replace: 'fl oz Duo', 'oz Duo' }}
                       </label>
                     </div>
                   {%- endfor -%}
@@ -328,12 +328,12 @@
   <div class="relative block overflow-hidden no-underline rounded mb-2" tabindex="-1">
     {%- if card_product.featured_media -%}
       {%- if remove_linking -%}
-        <div class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
+        <div class="group block bg-wave-100 aspect-4/5{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
       {%- else -%}
         <a
           aria-label="{{ card_product.title | escape }}"
           href="{{ card_product.url | default: '#' }}"
-          class="group block bg-wave-100{% if image_class != blank %} {{ image_class }}{% endif %}"
+          class="group block bg-wave-100 aspect-4/5{% if image_class != blank %} {{ image_class }}{% endif %}"
           tabindex="-1"
         >
       {%- endif -%}
@@ -397,7 +397,7 @@
             height="{{ default_image.height }}"
             id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
             {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
-            {% if image_element_class != blank %}class="{{ image_element_class }}"{% endif %}
+            class="{% if image_element_class != blank %}{{ image_element_class }}{% else %} w-full h-full object-cover{% endif %}"
           >
         {%- endif -%}
         {%- if card_product.media[1] != nil and show_secondary_image_on_hover -%}
