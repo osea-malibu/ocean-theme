@@ -263,7 +263,7 @@
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
-        "full_ingredients": ""
+        "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
     "scent_profile": {
