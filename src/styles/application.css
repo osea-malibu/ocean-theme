@@ -232,7 +232,6 @@
     top: 50%;
     left: var(--spacing-6);
     right: var(--spacing-6);
-    transform: translateY(-50%);
     background-color: var(--color-white);
     border-radius: var(--radius-md);
     padding-inline: var(--spacing-6);
@@ -240,7 +239,7 @@
     box-shadow: 0 20px 25px -5px --alpha(var(--color-seaweed-800) / 20%);
     max-width: var(--max-width-md);
     margin-inline: auto;
-    transform: scale(0);
+    transform: scale(0) translateY(-50%);
     transform-origin: center;
     @media (prefers-reduced-motion: no-preference) {
       transition-property: transform;
@@ -253,7 +252,7 @@
     }
   }
   modal-dialog[open] [role="dialog"] {
-    transform: scale(1);
+    transform: scale(1) translateY(-50%);
   }
   modal-dialog button[id^="ModalClose-"] {
     position: absolute;
