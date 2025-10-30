@@ -6,16 +6,36 @@
 
 /* Raw mappings (just color, no paired text) */
 @utility bg-p-surface {
-  background-color: var(--p-surface);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(
+    in oklab,
+    var(--p-surface) calc(var(--tw-bg-opacity) * 100%),
+    transparent
+  );
 }
 @utility bg-p-core {
-  background-color: var(--p-core);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(
+    in oklab,
+    var(--p-core) calc(var(--tw-bg-opacity) * 100%),
+    transparent
+  );
 }
 @utility bg-p-inverse {
-  background-color: var(--p-inverse);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(
+    in oklab,
+    var(--p-inverse) calc(var(--tw-bg-opacity) * 100%),
+    transparent
+  );
 }
 @utility bg-p-accent {
-  background-color: var(--p-accent);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(
+    in oklab,
+    var(--p-accent) calc(var(--tw-bg-opacity) * 100%),
+    transparent
+  );
 }
 
 @utility text-p-surface {
