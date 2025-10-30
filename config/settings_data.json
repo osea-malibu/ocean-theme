@@ -41,15 +41,15 @@
     "shipping_countdown_text": "You are remaining_amount away from free shipping!",
     "shipping_countdown_text_success": "Congrats! You get free shipping.",
     "cart_recommendations_travel_handles": "reusable-cotton-rounds, anti-aging-body-balm, ocean-cleanser, undaria-algae-body-lotion, undaria-algae-oil, hyaluronic-body-serum, undaria-algae-body-butter, ocean-cleansing-milk, ocean-cleansing-mudd, dayglow-face-oil, sea-minerals-mist, essential-hydrating-oil-1, undaria-algae-body-wash",
-    "enable_gwp": false,
+    "enable_gwp": true,
     "gwp_type": "auto",
     "is_loyalty_gwp": false,
     "enable_annoucement_bar_message": false,
     "enable_product_qualifier_gwp": false,
     "gwp_product_qualifier": "",
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
-    "gwp_tier1_product": "free-gift-mask-brush",
-    "gwp_tier1_threshold": 75,
+    "gwp_tier1_product": "free-gift-cleanse-moisturize-mini-duo",
+    "gwp_tier1_threshold": 80,
     "gwp_tier1_text": "You're remaining_amount away from a gift_product!",
     "gwp_tier2_product": "",
     "gwp_tier2_threshold": 0,
@@ -94,6 +94,12 @@
               "text": "<p>Extended! <a href=\"/pages/labor-day-2025\" title=\"Labor Day 2025 | Up to 4 FREE Gifts!\">Get Up to 4 Free Gifts</a></p>"
             }
           },
+          "announcement_Kb6KLr": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p>Free mini duo on orders $80+</p>"
+            }
+          },
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
@@ -103,23 +109,16 @@
           "announcement_riDaDQ": {
             "type": "announcement",
             "settings": {
-              "text": "<p>Just Launched! <a href=\"/pages/holiday-gift-guide\" title=\"The Holiday Gift Guide\">Shop Our New Holiday Sets</a></p>"
-            }
-          },
-          "announcement_Kb6KLr": {
-            "type": "announcement",
-            "disabled": true,
-            "settings": {
-              "text": "<p>Free shipping on orders over $50</p>"
+              "text": "<p><a href=\"/pages/holiday-gift-guide\" title=\"The Holiday Gift Guide\">Shop Our New Holiday Sets</a></p>"
             }
           }
         },
         "block_order": [
           "announcement_3qbKGP",
           "announcement_gBbEG3",
+          "announcement_Kb6KLr",
           "announcement-bar-0",
-          "announcement_riDaDQ",
-          "announcement_Kb6KLr"
+          "announcement_riDaDQ"
         ],
         "settings": {
           "slide_interval": 2,
@@ -135,11 +134,11 @@
           "hamburger_menu": "sun-hamburger-menu",
           "enable_navbar": true,
           "navbar_menu": "ocean-navbar",
-          "promo_image": "shopify://shop_images/Mega_Menu___Holiday_Sets___2025-10-02_3.jpg",
-          "promo_heading": "NEW! Holiday Sets Are Here",
-          "promo_paragraph": "<p>Limited-edition gifts</p>",
-          "promo_link": "shopify://collections/skincare-sets",
-          "promo_button": "Shop Now"
+          "promo_image": "shopify://shop_images/10-24-25_Mega_Menu_-_Team_Tries_It_UAO.jpg",
+          "promo_heading": "Undaria Algae Body Oil",
+          "promo_paragraph": "<p>Find out what our team has to say about the <em>Allure</em> award winner.</p>",
+          "promo_link": "shopify://blogs/wellness-blog/team-tries-it-this-is-the-best-body-oil",
+          "promo_button": "Read More"
         }
       },
       "footer": {
