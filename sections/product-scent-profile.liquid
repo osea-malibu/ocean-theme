@@ -26,7 +26,7 @@
           {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         </div>
       </div>
-      <div class="w-full lg:basis-[calc(50%-12px)] relative overflow-hidden h-full p-4 lg:p-10 xl:px-14 xl:py-16 bg-white rounded-xl">
+      <div class="w-full lg:basis-[calc(50%-12px)] relative overflow-hidden h-full p-8 lg:p-12 xl:px-20 xl:pt-24 xl:pb-36 bg-white rounded-xl">
         <div class="flex flex-col items-start justify-center {% comment %} border-l-4 border-p-surface pl-6 {% endcomment %} py-2 mx-auto mb-6 lg:mb-8 xl:mb-10">
           <h2 class="font-serif text-4xl mb-4 underline decoration-wavy decoration-2 decoration-p-core underline-offset-4">{{ scent_object.name }}</h2>
           <div class="text-lg lg:text-xl">{{ scent_object.description }}</div>
@@ -59,7 +59,7 @@
         {%- elsif product.metafields.custom.scent_profile_testimonials != blank -%}
           <div class="flex gap-3 flex-col">
             {%- for testimonial in product.metafields.custom.scent_profile_testimonials.value -%}
-              <div class="bg-p-surface [--tw-bg-opacity:0.5] p-4 rounded-xl flex gap-3">
+              <div class="bg-p-surface [--tw-bg-opacity:0.5] p-4 rounded-xl flex flex-col sm:flex-row items-start gap-3">
                 <div class="flex flex-col">
                   <svg xmlns="http://www.w3.org/2000/svg" width="151" height="37" viewbox="0 0 151 37" fill="none" class="w-20 h-5">
                     <path d="M16.5979 5.8541C17.1966 4.01148 19.8034 4.01148 20.4021 5.8541L22.2045 11.4012C22.4722 12.2253 23.2401 12.7832 24.1066 12.7832H29.9392C31.8766 12.7832 32.6822 15.2624 31.1147 16.4012L26.3961 19.8295C25.6951 20.3388 25.4018 21.2415 25.6695 22.0656L27.4719 27.6127C28.0706 29.4553 25.9617 30.9876 24.3942 29.8488L19.6756 26.4205C18.9746 25.9112 18.0254 25.9112 17.3244 26.4205L12.6058 29.8488C11.0383 30.9876 8.92938 29.4553 9.52809 27.6127L11.3305 22.0656C11.5982 21.2415 11.3049 20.3388 10.6039 19.8295L5.88525 16.4012C4.31782 15.2624 5.12337 12.7832 7.06082 12.7832H12.8934C13.7599 12.7832 14.5278 12.2253 14.7955 11.4012L16.5979 5.8541Z" fill="#FACF17"></path>
