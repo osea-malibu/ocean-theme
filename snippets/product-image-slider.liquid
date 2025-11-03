@@ -26,19 +26,19 @@ Accepts:
 
     
       {%- liquid
+        assign gallery_limit = section.settings.gallery_limit
+
         if product.metafields.custom.pdp_main_image != blank
           assign slider_images = product.metafields.custom.pdp_main_image.value | concat: product.media
           assign variant_image_index = 1
-          assign gallery_limit = section.settings.gallery_limit | plus: 1
           assign badge_count = 2
         else
           assign slider_images = product.media
           assign variant_image_index = 0
-          assign gallery_limit = section.settings.gallery_limit
           assign badge_count = 1
         endif 
       -%}
-      {%- for media in slider_images limit: gallery_limit -%}
+      {%- for media in slider_images limit: section.settings.gallery_limit -%}
         <li class="glide__slide relative" data-media-id="{{ section.id }}-{{ media.id }}">
           {%- if media.media_type == 'image' -%}
             {%- if forloop.index <= badge_count -%}
