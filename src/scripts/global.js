@@ -1368,38 +1368,257 @@ class HorizontalScrollBox extends HTMLElement {
     this.scrollBox = this.querySelector(".scroll-box");
     this.navNext = this.querySelector("nav .next");
     this.navPrev = this.querySelector("nav .prev");
+    // Prefer explicit snap children; fall back to all direct children
+    this.items = Array.from(this.scrollBox.querySelectorAll(".snap-start"));
+    if (this.items.length === 0) {
+      this.items = Array.from(this.scrollBox.children);
+    }
+
+    // Bind once
+    this.handleShowNav = this.handleShowNav.bind(this);
 
     this.addEventListeners();
     this.handleShowNav();
   }
 
   addEventListeners() {
-    if (this.scrollBox.getBoundingClientRect().width < this.scrollBox.scrollWidth) {
-      this.navNext.addEventListener("click", () => this.scrollContainer("next"));
-      this.navPrev.addEventListener("click", () => this.scrollContainer("prev"));
+    if (!this.scrollBox) return;
+    // Only wire buttons if there is overflow and at least 2 items
+    if (
+      this.scrollBox.getBoundingClientRect().width < this.scrollBox.scrollWidth &&
+      this.items.length > 1
+    ) {
+      this.navNext?.addEventListener("click", () => this.scrollToSnap("next"));
+      this.navPrev?.addEventListener("click", () => this.scrollToSnap("prev"));
 
-      this.scrollBox.addEventListener("scroll", this.handleShowNav.bind(this));
+      this.scrollBox.addEventListener("scroll", this.handleShowNav);
+      // Re-measure after resizes/content changes
+      window.addEventListener("resize", this.handleShowNav);
     }
   }
 
-  scrollContainer(direction) {
-    this.scrollBox.scrollTo({
-      left:
-        direction === "next" ? this.scrollBox.scrollLeft + 120 : this.scrollBox.scrollLeft - 120,
-      behavior: "smooth",
-    });
+  // Read logical padding used by scroll snapping (if any)
+  get scrollPadStart() {
+    const cs = getComputedStyle(this.scrollBox);
+    // `scroll-padding-inline-start` preferred, fallback to left
+    const v = cs.scrollPaddingInlineStart || cs.scrollPaddingLeft || "0";
+    const n = parseFloat(v);
+    return isNaN(n) ? 0 : n;
+  }
+
+  // Index of the item currently aligned at/just before the left edge
+  getCurrentIndex() {
+    const left = this.scrollBox.scrollLeft + this.scrollPadStart;
+    let idx = 0;
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].offsetLeft <= left + 1) idx = i;
+      else break;
+    }
+    return idx;
+  }
+
+  scrollToIndex(i) {
+    i = Math.max(0, Math.min(this.items.length - 1, i));
+    const targetLeft = this.items[i].offsetLeft - this.scrollPadStart;
+    this.scrollBox.scrollTo({ left: targetLeft, behavior: "smooth" });
+  }
+
+  scrollToSnap(direction) {
+    const cur = this.getCurrentIndex();
+    const next = direction === "next" ? cur + 1 : cur - 1;
+    this.scrollToIndex(next);
   }
 
   handleShowNav() {
-    this.navNext.classList.toggle(
-      "nav-hide",
-      this.scrollBox.scrollWidth - this.scrollBox.scrollLeft ==
-        this.scrollBox.getBoundingClientRect().width
-    );
-    this.navPrev.classList.toggle("nav-hide", this.scrollBox.scrollLeft == 0);
+    const epsilon = 1; // account for sub-pixel rounding
+    const atStart = this.scrollBox.scrollLeft <= epsilon;
+    const atEnd =
+      this.scrollBox.scrollLeft >=
+      this.scrollBox.scrollWidth - this.scrollBox.getBoundingClientRect().width - epsilon;
+
+    this.navPrev?.classList.toggle("nav-hide", atStart);
+    this.navNext?.classList.toggle("nav-hide", atEnd);
   }
 }
 customElements.define("horizontal-scroll-box", HorizontalScrollBox);
+
+class ExpandableSection extends HTMLElement {
+  static get observedAttributes() {
+    return ["data-collapsed-height", "data-collapsed-lines"];
+  }
+
+  constructor() {
+    super();
+    this.content = this.querySelector("[data-content]");
+    this.btnMore = this.querySelector("[data-expand]");
+    this.btnLess = this.querySelector("[data-collapse]");
+    this.open = false;
+
+    // Fallbacks
+    if (!this.content) {
+      // Create a content wrapper if none provided
+      const wrap = document.createElement("div");
+      wrap.setAttribute("data-content", "");
+      wrap.className = "leading-6";
+      while (this.firstChild) wrap.appendChild(this.firstChild);
+      this.appendChild(wrap);
+      this.content = wrap;
+    }
+    if (!this.btnMore) {
+      this.btnMore = document.createElement("button");
+      this.btnMore.type = "button";
+      this.btnMore.dataset.expand = "";
+      this.btnMore.className = "text-xs link mt-1 block";
+      this.btnMore.textContent = "Read more";
+      this.appendChild(this.btnMore);
+    }
+    if (!this.btnLess) {
+      this.btnLess = document.createElement("button");
+      this.btnLess.type = "button";
+      this.btnLess.dataset.collapse = "";
+      this.btnLess.className = "text-xs link mt-1 hidden";
+      this.btnLess.textContent = "Read less";
+      this.appendChild(this.btnLess);
+    }
+
+    // Inline transition is reliable regardless of Tailwind plugins
+    const ms = this.transitionMs;
+    this.content.style.transition = `max-height ${ms}ms ease`;
+    this.content.style.overflow = "hidden";
+
+    // Bindings
+    this.handleAssess = this.assess.bind(this);
+    this.handleOpen = this.expand.bind(this);
+    this.handleClose = this.collapse.bind(this);
+
+    // Observers for dynamic content/resize
+    this.ro = new ResizeObserver(this.handleAssess);
+    this.mo = new MutationObserver(this.handleAssess);
+  }
+
+  connectedCallback() {
+    // a11y
+    if (!this.content.id) this.content.id = `exp-${Math.random().toString(36).slice(2)}`;
+    this.btnMore.setAttribute("aria-controls", this.content.id);
+    this.btnLess.setAttribute("aria-controls", this.content.id);
+    this.btnMore.setAttribute("aria-expanded", "false");
+    this.btnLess.setAttribute("aria-expanded", "false");
+    this.content.setAttribute("role", "region");
+    this.content.setAttribute("aria-hidden", "true");
+
+    // Events
+    this.btnMore.addEventListener("click", this.handleOpen);
+    this.btnLess.addEventListener("click", this.handleClose);
+    window.addEventListener("resize", this.handleAssess);
+
+    // Observe layout & DOM changes
+    this.ro.observe(this.content);
+    this.mo.observe(this.content, { childList: true, subtree: true, characterData: true });
+
+    // Initial state
+    this.collapse({ silent: true });
+
+    // Re-assess after images/fonts load
+    if (document.readyState === "complete") {
+      this.assess();
+    } else {
+      window.addEventListener("load", this.handleAssess, { once: true });
+    }
+  }
+
+  disconnectedCallback() {
+    this.btnMore.removeEventListener("click", this.handleOpen);
+    this.btnLess.removeEventListener("click", this.handleClose);
+    window.removeEventListener("resize", this.handleAssess);
+    this.ro.disconnect();
+    this.mo.disconnect();
+  }
+
+  attributeChangedCallback() {
+    // Recompute height constraints if attributes change
+    if (!this.open) this.applyCollapsedHeight();
+    this.assess();
+  }
+
+  get transitionMs() {
+    const n = parseInt(this.dataset.transitionMs || "400", 10);
+    return isNaN(n) ? 400 : n;
+  }
+
+  get collapsedHeightPx() {
+    // Priority: lines → height px → default 40px
+    const lines = parseInt(this.dataset.collapsedLines || "", 10);
+    if (!isNaN(lines)) {
+      const lh = parseFloat(getComputedStyle(this.content).lineHeight);
+      if (!isNaN(lh) && lh > 0) return Math.round(lh * lines);
+    }
+    const px = parseInt(this.dataset.collapsedHeight || "", 10);
+    return isNaN(px) ? 40 : px;
+  }
+
+  applyCollapsedHeight() {
+    // Ensure overflow hidden while collapsed
+    this.content.style.maxHeight = `${this.collapsedHeightPx}px`;
+    this.content.style.overflow = "hidden";
+  }
+
+  assess() {
+    // Determine if toggle is needed based on natural content height
+    const natural = this.content.scrollHeight;
+    const needsToggle = natural > this.collapsedHeightPx + 1;
+
+    // Show/hide buttons appropriately
+    this.btnMore.classList.toggle("hidden", !needsToggle || this.open);
+    this.btnLess.classList.toggle("hidden", !needsToggle || !this.open);
+
+    if (!needsToggle) {
+      // No overflow → fully open, no controls, no clipping
+      this.content.style.maxHeight = "none";
+      this.content.style.overflow = "visible";
+      this.btnMore.setAttribute("aria-expanded", "false");
+      this.btnLess.setAttribute("aria-expanded", "false");
+      this.content.setAttribute("aria-hidden", "false");
+      this.open = true; // treat as open
+    } else {
+      if (this.open) {
+        // Keep max-height in sync with content growth (e.g., images loaded)
+        this.content.style.maxHeight = `${natural}px`;
+        this.content.style.overflow = "visible";
+      } else {
+        this.applyCollapsedHeight();
+      }
+    }
+  }
+
+  expand() {
+    this.open = true;
+    const natural = this.content.scrollHeight;
+    this.content.style.maxHeight = `${natural}px`;
+    this.content.style.overflow = "visible";
+    this.btnMore.classList.add("hidden");
+    this.btnLess.classList.remove("hidden");
+    this.btnMore.setAttribute("aria-expanded", "true");
+    this.btnLess.setAttribute("aria-expanded", "true");
+    this.content.setAttribute("aria-hidden", "false");
+  }
+
+  collapse({ silent = false } = {}) {
+    this.open = false;
+    this.applyCollapsedHeight();
+    this.btnMore.classList.remove("hidden");
+    this.btnLess.classList.add("hidden");
+    this.btnMore.setAttribute("aria-expanded", "false");
+    this.btnLess.setAttribute("aria-expanded", "false");
+    this.content.setAttribute("aria-hidden", "true");
+
+    if (!silent) {
+      // Scroll back to top of section if user collapsed while scrolled down
+      const rect = this.getBoundingClientRect();
+      if (rect.top < 0) this.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+}
+customElements.define("expandable-section", ExpandableSection);
 
 // TODO: replace all sliders with CSS-only solution
 // Glide.js: https://glidejs.com/docs/

@@ -24,9 +24,9 @@
     assign product_ingredients = product.metafields.custom_fields.ingredients
   endif
 -%}
-<div class="relative bg-white px-3 pt-3 items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
-  <div class="flex flex-row gap-4">
-    <div class="w-full order-1 grow flex flex-col items-start pt-1 pb-6">
+<div class="relative bg-white items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
+  <div class="flex flex-row gap-4 items-center">
+    <div class="w-full order-1 grow flex flex-col items-start py-2">
       <a href="{{ product_url | default: '#' }}" class="group text-sm tracking-wide leading-tight no-underline">
         <h4 class="font-medium group-hover:underline mb-0.5">
           {{ product.title | replace: 'Deluxe Sample ', '' | escape }}
@@ -67,7 +67,7 @@
     {%- endif -%}
   </div>
   <details
-    class="accordion group-accordion relative -top-6 -mb-3"
+    class="hidden accordion group-accordion relative -top-6 -mb-3"
     id="Details-SetIncludes"
     data-duration="400"
   >

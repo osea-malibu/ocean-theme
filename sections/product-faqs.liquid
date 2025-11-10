@@ -1,17 +1,97 @@
-{%- if product.metafields.custom.faq != nil or product.metafields.custom.related_articles != nil -%}
-  {%- liquid
-    assign is_split_view = false
-    if product.metafields.custom.faq != nil and product.metafields.custom.related_articles != nil
-      assign is_split_view = true
+{%- liquid
+  assign set_products = collections['skincare-sets'].products | map: 'handle'
+  assign is_set_page = false
+  if set_products contains product.handle and product.metafields.custom.set_contains.value != blank and product.metafields.custom.set_contains.value.count > 0
+    assign is_set_page = true
+  endif
+
+  assign has_related = false
+  if product.metafields.custom.related_articles != nil
+    assign has_related = true
+  endif
+
+  assign has_faq_content = false
+  if is_set_page
+    for p in product.metafields.custom.set_contains.value
+      assign faq_product = p
+      if p.metafields.custom.parent_product != blank
+        assign faq_product = p.metafields.custom.parent_product.value
+      endif
+      if faq_product.metafields.custom.faq != nil and faq_product.metafields.custom.faq.value != blank
+        assign has_faq_content = true
+        break
+      endif
+    endfor
+  else
+    if product.metafields.custom.faq != nil and product.metafields.custom.faq.value != blank
+      assign has_faq_content = true
     endif
-  -%}
+  endif
+
+  assign is_split_view = false
+  if has_faq_content and has_related
+    assign is_split_view = true
+  endif
+-%}
+
+{%- if has_faq_content or has_related -%}
   <div class="anchor" id="ProductFaqs"></div>
   <div class="mb-12 container">
     <div class="flex flex-col sm:flex-row gap-6 md:gap-4 lg:gap-6">
-      {%- if product.metafields.custom.faq != nil -%}
+
+      {%- if has_faq_content -%}
         <div class="flex-1 w-full rounded-xl bg-white p-4 lg:p-10">
           <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
-          <div>
+
+          {%- if is_set_page -%}
+            {%- comment -%}
+              SET MODE: Show first 3 FAQs for each product in the set (using parent product when present)
+            {%- endcomment -%}
+            {%- for product_in_set in product.metafields.custom.set_contains.value -%}
+              {%- liquid
+                assign faq_product = product_in_set
+                if product_in_set.metafields.custom.parent_product != blank
+                  assign faq_product = product_in_set.metafields.custom.parent_product.value
+                endif
+                assign faqs = faq_product.metafields.custom.faq.value
+
+                if product.metafields.custom.set_contains.value.count > 2
+                  assign limit = 2
+                else
+                  assign limit = 3
+                endif
+              -%}
+
+              {%- if faqs != blank -%}
+                <div class="{% unless forloop.last %}mb-5{% endunless %}">
+                  <h4 class="text-lg/tight font-bold mb-1">
+                    {{ faq_product.title | replace: 'Deluxe Sample ', '' | escape }}
+                  </h4>
+
+                  {%- for faq in faqs limit: limit -%}
+                    <div class="relative overflow-hidden{% unless forloop.last %} border-b border-seaweed-300{% endunless %}">
+                      {%- comment -%} Ensure unique IDs across nested loops {%- endcomment -%}
+                      <input type="checkbox" name="panel-{{ faq_product.handle }}" id="faq_panel-{{ forloop.parentloop.index }}-{{ forloop.index }}" class="hidden peer">
+                      <label for="faq_panel-{{ forloop.parentloop.index }}-{{ forloop.index }}" class="relative block py-2 lg:py-3 before:content-[''] after:content-[''] before:absolute after:absolute before:block after:block before:w-4 after:w-4 before:h-0.5 after:h-0.5 before:rounded-full after:rounded-full before:bg-seaweed-500 after:bg-seaweed-500 before:scale-75 after:scale-75 before:my-0.5 after:my-0.5 before:top-4 after:top-4 lg:before:top-6 lg:after:top-6 before:right-0 after:right-0 after:rotate-90 peer-checked:after:rotate-0 after:motion-safe:transition-transform after:motion-safe:duration-200">
+                        <b class="font-medium pr-5 block leading-tight">{{ faq.question }}</b>
+                      </label>
+                      <div class="max-h-0 peer-checked:max-h-[600px] motion-safe:transition-max-height motion-safe:duration-500">
+                        <div class="pb-5 leading-tight">
+                          {%- if faq.answer != blank -%}
+                            <p>{{ faq.answer }}</p>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+
+          {%- else -%}
+            {%- comment -%}
+              SINGLE PRODUCT MODE: original FAQ + optional recycling block
+            {%- endcomment -%}
             {%- for faq in product.metafields.custom.faq.value -%}
               <div class="relative overflow-hidden{% unless forloop.last and product.metafields.custom.recycling == blank %} border-b border-seaweed-300{% endunless %}">
                 <input type="checkbox" name="panel" id="faq_panel-{{ forloop.index }}" class="hidden peer">
@@ -27,6 +107,7 @@
                 </div>
               </div>
             {%- endfor -%}
+
             {%- if product.metafields.custom.recycling != blank -%}
               <div class="relative overflow-hidden">
                 <input type="checkbox" name="panel" id="faq_panel-recycling" class="hidden peer">
@@ -56,10 +137,11 @@
                 </div>
               </div>
             {%- endif -%}
-          </div>
+          {%- endif -%}
         </div>
       {%- endif -%}
-      {%- if product.metafields.custom.related_articles != nil -%}
+
+      {%- if has_related -%}
         <div class="flex-1 articles w-full rounded-xl bg-white p-4 lg:p-10">
           <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">Learn</h3>
           {%- liquid
@@ -107,13 +189,13 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "This section is powered by the product metafield labeled 'FAQ'."
+      "content": "This section shows either the product FAQs or, on set pages, the first 3 FAQs from each product in the set."
     },
     {
       "type": "text",
       "id": "header",
       "label": "Header",
-      "default": "Ingredients"
+      "default": "FAQs"
     }
   ]
 }

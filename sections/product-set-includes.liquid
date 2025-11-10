@@ -1,0 +1,180 @@
+{%- assign set_products = collections['skincare-sets'].products | map: 'handle' -%}
+{%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
+  <div class="mb-12 container">
+    <div class="flex-1 w-full rounded-xl bg-white p-4 lg:p-10">
+      <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
+      <horizontal-scroll-box class="relative block w-full max-w-full">
+        <ul class="scroll-box flex gap-4 lg:gap-6 snap-x snap-mandatory overflow-x-auto">
+          {%- for product_in_set in product.metafields.custom.set_contains.value -%}
+            {%- liquid
+              if product_in_set.metafields.custom.parent_product != blank
+                assign product_url = product_in_set.metafields.custom.parent_product.value.url
+                assign description = product_in_set.metafields.custom.parent_product.value.metafields.custom_fields.description
+                assign short_description = product_in_set.metafields.custom.parent_product.value.metafields.custom_fields.short_description
+                assign key_ingredients_list = product_in_set.metafields.custom.parent_product.value.metafields.custom.key_ingredients_list
+                assign key_ingredients_text = product_in_set.metafields.custom.parent_product.value.metafields.custom.key_ingredients_text
+                assign product_ingredients = product_in_set.metafields.custom.parent_product.value.metafields.custom_fields.ingredients
+              else
+                assign product_url = product_in_set.url
+                assign description = product_in_set.metafields.custom_fields.description
+                assign short_description = product_in_set.metafields.custom_fields.short_description
+                assign key_ingredients_list = product_in_set.metafields.custom.key_ingredients_list
+                assign key_ingredients_text = product_in_set.metafields.custom.key_ingredients_text
+                assign product_ingredients = product_in_set.metafields.custom_fields.ingredients
+              endif
+            -%}
+            <li class="snap-start flex-1 rounded-lg bg-p-surface p-4 lg:p-6 xl:p-8 min-w-[620px]" style="--p-surface: {{ product_in_set.metafields.theme.surface | default: '#f1f5f4' }}">
+              <div class="flex flex-row gap-4 mb-4">
+                <div class="w-full order-1 grow flex flex-col items-start">
+                  <a href="{{ product_url | default: '#' }}" class="block no-underline">
+                    <h4 class="text-lg leading-tight font-bold">
+                      {{ product_in_set.title | replace: 'Deluxe Sample ', '' | escape }}
+                    </h4>
+                  </a>
+                  <p class="text-sm">{{ short_description }}</p>
+                  <p class="text-sm mb-3">{{ product_in_set.metafields.my_fields.size }}</p>
+                  <div class="mb-3">
+                    <h5 class="font-bold leading-tight mb-0.5">Description</h5>
+                    <expandable-section
+                      data-collapsed-height="80"
+                      data-transition-ms="400"
+                      class="block"
+                    >
+                      <div data-content class="transition-max-height duration-500 p:text-sm a:link br:hidden p:mb-2">
+                        {{ description }}
+                      </div>
+                  
+                      <!-- Controls (auto-shown only if needed) -->
+                      <button type="button" data-expand class="text-xs link mt-1 block">Read more</button>
+                      <button type="button" data-collapse class="text-xs link mt-1 hidden">Read less</button>
+                    </expandable-section>
+                  </div>
+                  {%- if product_in_set.metafields.custom.scent_profile != blank -%}
+                    <div class="mb-3">
+                      <h5 class="font-bold leading-tight mb-0.5">Scent profile</h5>
+                      <div class="text-sm p:text-sm p:mb-2">{{ product_in_set.metafields.custom.scent_profile.value }}</div>
+                    </div>
+                  {%- endif -%}
+                  <a class="link text-sm font-book" href="{{ product_url }}">
+                    <span>View full product details</span>
+                    {% render 'icon-arrow', variant: 'short', classes: 'w-4 h-4 inline-block ml-0.5', stroke_width: 2 %}
+                  </a>
+                </div>
+            
+                {%- liquid
+                  if product_in_set.metafields.custom.pdp_main_image.value != blank
+                    assign image_object = product_in_set.metafields.custom.pdp_main_image.value | first
+                  elsif product_in_set.featured_media
+                    assign image_object = product_in_set.featured_media
+                  endif
+                  assign main_image_src = image_object | image_url: width: 400
+                  assign main_image_src_2x = image_object | image_url: width: 800
+                -%}
+                {%- if image_object -%}
+                  <a
+                    aria-label="{{ product_in_set.title | escape }}"
+                    href="{{ product_url | default: '#' }}"
+                    class="group relative block mx-auto no-underline shrink-0 w-72 h-84 bg-wave-100 rounded-l-lg"
+                    tabindex="-1"
+                  >
+                    {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                    <img
+                      srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
+                      src="{% render 'imgix', src: main_image_src_2x %}"
+                      alt="{{ product_in_set.featured_media.alt | escape }}"
+                      loading="lazy"
+                      width="72"
+                      height="72"
+                      class="w-full h-full object-cover rounded-lg"
+                    >
+                    {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+                  </a>
+                {%- endif -%}
+              </div>
+              <div class="content py-3">
+                <h5 class="font-bold mb-2">Key ingredients</h5>
+                {%- if key_ingredients_list -%}
+                  <div class="flex gap-4 overflow-x-auto">
+                  {%- for ingredient in key_ingredients_list.value -%}
+                    <div class="w-36 shrink-0">
+                      {%- if ingredient.image -%}
+                        <img 
+                          srcset="{{ ingredient.image | image_url: width: 400 }} 1x, {{ ingredient.image | image_url: width: 800 }} 2x"
+                          src="{{ ingredient.image | image_url: width: 800 }}"
+                          alt=""
+                          aria-hidden="true"
+                          height="{{ ingredient.image }}"
+                          width="{{ ingredient.image }}"
+                          class="block rounded-full w-28 h-28 shrink-0 mb-4 mx-auto"
+                          loading="lazy"
+                        >
+                      {%- else -%}
+                        <div class="block rounded-full w-28 h-28 shrink-0 bg-p-core mb-4 mx-auto"></div>
+                      {%- endif -%}
+                      <div class="text-sm mb-2 last:mb-0">
+                        <p class="text-sm leading-tight mb-1">
+                          <b class="font-bold">{{ ingredient.name | split: ' [' | first }}</b>
+                        </p>
+                        {%- if ingredient.description != blank -%}
+                          <p>{{ ingredient.description }}</p>
+                        {%- endif -%}
+                        {%- if ingredient.citation != blank -%}
+                          <cite>{{ ingredient.citation }}</cite>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                  </div>
+                {%- elsif key_ingredients_text != blank -%}
+                  <div class="li:text-sm">{{ key_ingredients_text }}</div>
+                {%- endif -%}
+                <modal-opener class="no-js-hidden" data-modal="#SetIngredientsPopup-{{ product_in_set.handle }}">
+                  <button class="link text-sm mt-2 font-book">View all ingredients</button>
+                </modal-opener>
+                <modal-dialog id="SetIngredientsPopup-{{ product_in_set.handle }}">
+                  <div role="dialog" aria-label="Read full ingredients list" aria-modal="true" class="product-popup-modal__content max-h-screen overflow-y-auto" tabindex="-1">
+                    <button id="ModalClose-{{ product_in_set.handle }}" type="button" aria-label="{{ 'accessibility.close' | t }}">
+                      {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
+                    </button>
+                    <div class="w-full">
+                      <h2 class="font-bold mb-2">Ingredients</h2>
+                      <div class="p:text-sm p:mb-2">{{ product_ingredients }}</div>
+                    </div>
+                  </div>
+                </modal-dialog>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <nav>
+          <button class="next nav-hide absolute top-1/2 -right-4 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Next">
+            {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
+          </button>
+          <button class="prev nav-hide absolute top-1/2 -left-4 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Previous">
+            {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6 rotate-180', stroke_width: 1.5 %}
+          </button>
+        </nav>
+      </horizontal-scroll-box>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Set Includes",
+  "class": "set-includes",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section is automatically populated with data from the products in the set."
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "Set Includes"
+    }
+  ]
+}
+{% endschema %}
