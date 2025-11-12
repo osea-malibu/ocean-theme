@@ -5,14 +5,14 @@
       <div class="mb-8 max-w-lg lg:max-w-full mx-auto lg:flex lg:items-start lg:justify-center {% if section.blocks.size > 3 %}lg:gap-4 xl:gap-16{% else %}lg:gap-12 xl:gap-24{% endif %}">
         {%- for block in section.blocks -%}
           {%- assign index_modulo = forloop.index0 | modulo: 2 -%}
-          <div class="flex items-center gap-3 md:gap-6 mb-4 w-full lg:flex-col-reverse {% if index_modulo == 1 %}flex-row-reverse{% else %}flex-row{% endif %} {% if section.blocks.size > 3 %}lg:w-52 xl:w-60{% else %}lg:w-60 xl:w-64{% endif %}">
+          <div class="flex items-center gap-3 md:gap-6 mb-4 w-full lg:flex-col-reverse {% if index_modulo == 1 %}flex-row-reverse{% else %}flex-row{% endif %} {% if section.blocks.size > 3 %}lg:w-52 xl:w-60{% elsif section.blocks.size > 2 %}lg:w-60 xl:w-64{% else %}lg:w-64 xl:w-72{% endif %}">
             <div class="relative w-full lg:text-center{% if index_modulo == 1 %} text-right{% endif %}">
-              <p class="relative block mb-2 text-lg md:text-xl lg:text-2xl lg:leading-6 after:content-[''] after:block after:w-full after:h-px after:bg-p-core before:content-[''] before:block before:bg-p-core before:w-[5px] before:h-[5px] before:rounded-full before:absolute before:top-[26px] {% if index_modulo == 1 %}before:left-0{% else %}before:right-0{% endif %} lg:before:hidden lg:after:hidden">
+              <p class="relative block mb-2 text-lg/snug md:text-xl lg:text-2xl lg:leading-6 after:content-[''] after:block after:w-full after:h-px after:bg-p-core before:content-[''] before:block before:bg-p-core before:w-[5px] before:h-[5px] before:rounded-full before:absolute before:bottom-[-2px] {% if index_modulo == 1 %}before:left-0{% else %}before:right-0{% endif %} lg:before:hidden lg:after:hidden">
                 <b class="font-medium">{{ block.settings.ingredient_name | split: ' [' | first }}</b>
               </p>
               <div class="leading-tight">
                 {%- if block.settings.ingredient_description != blank -%}
-                  <p class="md:text-lg md:leading-tight">{{ block.settings.ingredient_description | strip_html }}</p>
+                  <p class="md:text-lg/tight">{{ block.settings.ingredient_description | strip_html }}</p>
                 {%- endif -%}
                 {%- if block.settings.ingredient_citation != blank -%}
                   <cite>{{ block.settings.ingredient_citation }}</cite>
