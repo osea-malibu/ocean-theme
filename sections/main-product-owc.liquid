@@ -1,122 +1,26 @@
 {% comment %} theme-check-disable TemplateLength {% endcomment %}
- <section id="main-product">
-  <div class="product flex flex-col md:flex-row md:container md:mx-auto md:px-6 md:gap-6 lg:gap-4 xl:gap-10 md:py-6 md:items-start">
+<section id="main-product">
+  <style>
+    /* Scoped to this PDP only */
+    .pdp {
+      --p-surface: {{ product.metafields.theme.surface | default: '#f1f5f4' }};
+      --p-core: {{ product.metafields.theme.core | default: '#c4d5b6' }};
+      --p-inverse: {{ product.metafields.theme.inverse | default: '#1d4d41' }};
+      --p-accent: {{ product.metafields.theme.accent | default: '#dcf5ab' }};
+
+      background-color: var(--p-surface);
+      background-color: oklab(from var(--p-surface) l calc(a * 0.6) calc(b * 0.6));
+      
+    }
+  </style>
+  <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0 lg:mb-6">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {%- if product.media.size > 1 -%}
-      <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[120px] overflow-hidden">
-        <glide-slider
-          class="glide type-carousel gap-0 sm:perView-1 md:perView-2 perView-1 mb-6 overflow-hidden max-w-full lg:flex lg:flex-row-reverse lg:gap-2"
-          id="Product-Slider"
-          data-breakpoint-limit="none"
-        >
-          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/owc-new-badge.png" width="100" height="100" class="absolute z-10 right-4 top-2 md:top-4 xl:w-28 xl:h-28" alt="NEW!">
-          <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides min-h-full">
-              {%- liquid
-                if product.metafields.custom.pdp_main_image != blank
-                  assign slider_images = product.metafields.custom.pdp_main_image.value | concat: product.media
-                  assign variant_image_index = 1
-                  assign gallery_limit = section.settings.gallery_limit | plus: 1
-                else
-                  assign slider_images = product.media
-                  assign variant_image_index = 0
-                  assign gallery_limit = section.settings.gallery_limit
-                endif 
-              -%}
-              {%- for media in slider_images limit: gallery_limit -%}
-                <li class="glide__slide" data-media-id="{{ section.id }}-{{ media.id }}">
-                  {%- if media.media_type == 'image' -%}
-                    {%- liquid
-                      assign main_image_src = media | image_url: width: 400, height: 500, crop: 'center'
-                      assign main_image_src_2x = media | image_url: width: 1280, height: 1600, crop: 'center'
-                    -%}
-                    {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-                    <img
-                      {% if product.selected_or_first_available_variant.featured_media != null and forloop.index0 == variant_image_index %}id="Product-VariantImage"{% endif %}
-                      srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
-                      src="{% render 'imgix', src: main_image_src_2x %}"
-                      loading="lazy"
-                      alt="{{ media.alt | escape }}"
-                      width="{{ media.width }}"
-                      height="{{ media.height }}"
-                      class="min-h-full object-cover md:rounded-md"
-                    >
-                    {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-                  {%- elsif media.media_type == 'video' -%}
-                    <deferred-media class="relative deferred-media no-js-hidden w-full h-full" data-media-id="{{ section.id }}">
-                      <button
-                        id="Deferred-Poster-Modal-{{ section.id }}"
-                        class="absolute w-full h-full deferred-media__poster"
-                        type="button"
-                      >
-                        <img
-                          srcset="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }} 1x, {{ media.preview_image | image_url: width: 800, height: 1000, crop: 'center' }} 2x"
-                          src="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}"
-                          alt="Loading product video"
-                          loading="lazy"
-                          width="1280"
-                          height="1000"
-                          class="md:rounded-md"
-                        >
-                        <span class="deferred-media__poster-button bg-white/50 rounded-full flex items-center justify-center h-20 w-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 z-10 motion-safe:transition-transform hover:scale-110">
-                          {%- render 'icon-play', classes: 'w-8 h-8 text-white -mr-1 ml-1' -%}
-                        </span>
-                      </button>
-                      <template>
-                        <video class="h-full w-full object-cover md:rounded-md" playsinline autoplay muted loop controls poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}">
-                          {%- for source in media.sources -%}
-                            {%- comment -%} theme-check-disable RemoteAsset {%- endcomment -%}
-                            <source src="{{ source.url }}" type="video/{{ source.format }}" />
-                            {%- comment -%} theme-check-enable RemoteAsset {%- endcomment -%}
-                          {%- endfor -%}
-                          <img
-                            src="{{ media.preview_image | image_url: width: 480, height: 500, crop: 'center' }}"
-                            alt=""
-                            width="{{ media.preview_image.width }}"
-                            height="{{ media.preview_image.width | divided_by: media.preview_image.aspect_ratio | round }}"
-                            loading=lazy
-                          >
-                        </video>
-                      </template>
-                    </deferred-media>
-                  {%- endif -%}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-          <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[596px] xl:h-[760px] lg:overflow-y-auto" data-glide-el="controls[nav]">
-            {%- for media in slider_images limit: gallery_limit -%}
-              <button class="glide__bullet relative {% if media.media_type == 'image' %}p-2{% else %}py-2 px-3{% endif %} md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
-                <span class="sr-only">Go to slide {{ forloop.index }}</span>
-                {%- if media.media_type == 'image' -%}
-                  <span class="glide__bullet-icon block w-2 h-2 bg-owc-yellow rounded-full md:hidden"></span>
-                {%- elsif media.media_type == 'video' -%}
-                  <div class="glide__bullet-icon absolute z-10 w-5 h-5 md:w-8 md:h-8 rounded-full text-owc-yellow bg-transparent md:bg-white/50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    {%- render 'icon-play', classes: 'absolute inset-0 scale-75 md:text-white md:ml-0.5' -%}
-                  </div>
-                {%- endif -%}
-                {%- liquid
-                  assign thumb_image_src = media | image_url: width: 192
-                  assign thumb_image_src_2x = media | image_url: width: 252
-                -%}
-                {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-                <img
-                  {% if product.selected_or_first_available_variant.featured_media != null and forloop.index0 == variant_image_index %}id="Product-ThumbImage"{% endif %}
-                  srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
-                  src="{% render 'imgix', src: thumb_image_src_2x %}"
-                  loading="lazy"
-                  alt="{{ media.alt | escape }}"
-                  width="{{ media.width }}"
-                  height="{{ media.width | divided_by: media.aspect_ratio | round }}"
-                  class="hidden md:block w-24 md:h-20 lg:h-32 object-cover rounded"
-                >
-                {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-              </button>
-            {%- endfor -%}
-          </div>
-        </glide-slider>
+      <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[88px] overflow-hidden mb-6 md:mb-0 lg:pr-4 xl:pr-10">
+        {% comment %} New image-slider snippet {% endcomment %}
+        {% render 'product-image-slider', section: section, product: product, classes: 'overflow-hidden gap-0 mb-6 max-w-full glide type-carousel sm:perView-1 md:perView-2 perView-1 lg:flex lg:flex-row-reverse lg:gap-2' %}
       </div>
     {%- else -%}
       <div class="bg-wave-100 mb-6 md:w-1/2 lg:w-2/5 relative md:sticky md:top-[148px] max-w-full">
@@ -124,7 +28,6 @@
           assign main_image_src = product.media[0] | image_url: width: 300, height: 375, crop: 'center'
           assign main_image_src_2x = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
         -%}
-        {% render 'product-image-badge', product: product, classes: 'z-10' %}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           class="mx-auto"
@@ -139,11 +42,11 @@
       </div>
     {%- endif -%}
     <div class="container md:px-0 md:flex-1">
-      <div id="ProductInfo-{{ section.id }}" class="{{ section.settings.product_info_classes }}">
+      <div id="ProductInfo-{{ section.id }}" class="bg-white rounded-xl p-4 xl:p-6 2xl:px-8 mb-6 {{ section.settings.product_info_classes }}">
         {%- liquid
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
-          assign mini_size_array = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
+          assign mini_size_array = '1.7 oz, 1.5 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz' | split: ', '
           assign jumbo_size_array = '9.6 oz, 9.2 oz' | split: ', '
           assign set_products = collections['skincare-sets'].products | map: 'handle'
 
@@ -167,13 +70,15 @@
               {%- endif -%}
             {%- when 'title' -%}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
-                {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' -}}
+                {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}
               </h1>
+            {%- when 'tags' -%}
+              {%  render 'product-tags', block: block %}
             {%- when 'price' -%}
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
                 {%- render 'price', product: product, use_variant: true -%}
                 {%- if product.metafields.custom.set_value -%}
-                  <span class="ml-2 self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</span>
+                  <span class="self-center px-1.5 py-px ml-2 text-sm font-medium tracking-wide whitespace-nowrap bg-seafoam-200 text-seaweed-700">${{ product.metafields.custom.set_value }} value</span>
                 {%- endif -%}
               </div>
             {%- when 'rating' -%}
@@ -183,275 +88,51 @@
                     {% render 'product-rating', product: product %}
                   </a>
                 {%- endunless -%}
-                {%- if product.metafields.custom.faq != nil -%}
-                  <a href="#ProductFaqs" class="link text-xs">Product FAQs</a>
-                {%- endif -%}
+                {% comment %} {%- if product.metafields.custom.faq != nil -%}
+                  <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
+                {%- endif -%} {% endcomment %}
               </div>
-              {%- if product.metafields.custom.set_value -%}
-                <div class="col-span-12 relative -bottom-2">
-                  <strong class="self-center text-sm bg-seafoam-200 text-seaweed-700 font-medium px-1.5 py-px tracking-wide whitespace-nowrap">${{ product.metafields.custom.set_value }} value</strong>
-                </div>
-              {%- endif -%}
             {%- when 'info_tabs' -%}
-              {% render 'product-info-tabs', product: product, block: block %}
-            {%- when 'collapsible_tab' -%}
-              {% render 'product-collapsible-tab', product: product, block: block %}
-            {%- when 'quantity_selector' -%}
-              {%- unless excluded_from_site -%}
-                <div class="{{ block.settings.qty_classes }}" {{ block.shopify_attributes }}>
-                  <label class="sr-only" for="Quantity-{{ section.id }}">
-                    {{ 'products.product.quantity.label' | t }}
-                  </label>
-                  <quantity-input class="quantity pdp-quantity inline-flex border border-seaweed-400 rounded-md w-full">
-                    <button
-                      class="{{ quantity_classes }} rounded-l-md"
-                      name="minus"
-                      type="button"
-                    >
-                      <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-                      {% render 'icon-minus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-                    </button>
-                    <input
-                      class="quantity__input w-8 h-10 border-0 py-1 px-0 text-xl grow text-center"
-                      type="number"
-                      name="quantity"
-                      id="Quantity-{{ section.id }}"
-                      min="1"
-                      value="1"
-                      form="{{ product_form_id }}"
-                    >
-                    <button
-                      class="{{ quantity_classes }} rounded-r-md"
-                      name="plus"
-                      type="button"
-                    >
-                      <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-                      {% render 'icon-plus', classes: 'h-5 w-5 text-seaweed-700 pointer-events-none', stroke_width: 2, aria_hidden: true %}
-                    </button>
-                  </quantity-input>
-                </div>
-              {%- endunless -%}
-            {%- when 'variant_picker' -%}
-              {%- unless set_products contains product.handle -%}
-                <div class="{{ block.settings.variant_classes }}">
-                  {%- unless product.has_only_default_variant -%}
-                    {%- if product.variants.size == 1 -%}
-                      {%- for option in product.options_with_values -%}
-                        <strong class="block font-medium tracking-wide text-sm{% if block.settings.hide_label %} sr-only{% endif %}">{{ option.name }}</strong>
-                        {%- for value in option.values -%}
-                          <div class="button button-xs button-secondary rounded-full lowercase bg-wave-200 mr-2 mb-2">
-                            {{ value }}
-                          </div>
-                        {%- endfor -%}
-                      {%- endfor -%}
-                    {%- else -%}
-                      <variant-radios
-                        class="no-js-hidden block"
-                        data-section="{{ section.id }}"
-                        data-url="{{ product.url }}"
-                        data-is-main-pdp="true"
-                      >
-                        {%- for option in product.options_with_values -%}
-                          <fieldset class="js group">
-                            <legend class="font-medium text-sm mb-1{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">Select {{ option.name | downcase }}:</legend>
-                            <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
-                              {%- for value in option.values -%}
-                                {%- liquid
-                                  assign mini_variant = false
-                                  assign jumbo_variant = false
-                                  assign normalized_value = value | replace: 'fl ', ''
-
-                                  if mini_size_array contains normalized_value
-                                    assign mini_variant = true
-                                  elsif jumbo_size_array contains normalized_value
-                                    assign jumbo_variant = true
-                                  endif
-                                -%}
-                                <div>
-                                  {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
-                                  <input type="radio"
-                                    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                    class="peer hidden{% if mini_size_array contains normalized_option_value %} travel-input{% endif %}"
-                                    name="{{ option.name }}"
-                                    value="{{ value | escape }}"
-                                    form="{{ product_form_id }}"
-                                    {% if option.selected_value == value %}checked{% endif %}
-                                  >
-                                  <label
-                                    class="flex-col gap-0.5 px-4 {% if option.name == 'Size' %}py-1{% else %}py-2.5{% endif %} button button-xs border-owc-blue bg-white rounded-full peer-checked:bg-owc-blue3 peer-checked:outline peer-checked:outline-owc-yellow outline-offset-2 mr-2 mb-1 peer-disabled:opacity-50"
-                                    for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                  >
-                                    {%- if option.name == 'Size' -%}
-                                      {%- if mini_variant -%}
-                                        <b class="tracking-normal leading-none capitalize">Mini</b>
-                                      {%- elsif jumbo_variant -%}
-                                        <b class="tracking-normal leading-none capitalize">Jumbo</b>
-                                      {%- else -%}
-                                        <b class="tracking-normal leading-none capitalize">Standard</b>
-                                      {%- endif -%}
-                                    {%- endif -%}
-                                    <span class="leading-none {% if option.name == 'Scent' %}normal-case tracking-normal{% else %}lowercase tracking-wide{% endif %}">{{ value }}</span>
-                                  </label>
-                                </div>
-                              {%- endfor -%}
-                            </div>
-                          </fieldset>
-                        {%- endfor -%}
-                        <script type="application/json" class="variant-data">
-                          {{ product.variants | json }}
-                        </script>
-                      </variant-radios>
-                    {%- endif -%}
-                  {%- endunless -%}
-
-                  <noscript class="product-form__noscript-wrapper-{{ section.id }}">
-                    <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
-                      <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
-                      <div class="select">
-                        <select name="id" id="Variants-{{ section.id }}" form="{{ product_form_id }}">
-                          {%- for variant in product.variants -%}
-                            <option
-                              {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-                              {% if variant.available == false %}disabled{% endif %}
-                              value="{{ variant.id }}"
-                            >
-                              {{ variant.title }}
-                              {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
-                              - {{ variant.price | money | strip_html }}
-                            </option>
-                          {%- endfor -%}
-                        </select>
-                        {% render 'icon-caret', classes: 'w-4 h-4' %}
-                      </div>
-                    </div>
-                  </noscript>
-                </div>
-              {%- endunless -%}
-            {%- when 'subscription_picker' -%}
+              {% comment %} product tabs snippet {% endcomment %}
+              {% render 'product-info-tabs', block: block, product: product %}
+            {%- when 'free_gift_info' -%}
               {%- liquid
-                assign subscription_group = null
-                for group in product.selling_plan_groups
-                  if group.name == 'Subscribe and Save'
-                    assign subscription_group = group
+                assign loyalty_only = settings.is_loyalty_gwp
+                if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto'
+                  if loyalty_only and customer
+                    assign free_gifts_active = true 
+                  elsif loyalty_only == false
+                    assign free_gifts_active = true
+                  else
+                    assign free_gifts_active = false
                   endif
-                endfor
-
-                assign allocations = product.selected_or_first_available_variant.selling_plan_allocations
-                assign non_subscription_allocation = false
-                if allocations.size == 1 and allocations[0].selling_plan_group_id != subscription_group.id
-                  assign non_subscription_allocation = true
+                else
+                  assign free_gifts_active = false
                 endif
               -%}
-              {%- unless product.selling_plan_groups.size == 0 -%}
-                {%- assign purchase_options = 'onetime, autodeliver' | split: ', ' -%}
-                <subscription-radios
-                  class="subscription motion-safe:transition-max-height overflow-hidden {{ block.settings.subscription_classes }} {% if product.selected_or_first_available_variant.selling_plan_allocations.size == 0 or non_subscription_allocation %}max-h-0{% else %}max-h-52{% endif %}"
-                  data-recommended-interval="{{ product.metafields.custom.subscription_interval }}"
-                  data-subscription-group-id="{{ subscription_group.id }}"
-                  data-selected-color="bg-owc-blue3"
-                >
-                  <fieldset class="border border-owc-blue2 rounded-lg overflow-hidden mt-2">
-                    <legend class="sr-only">Purchase options</legend>
-                    {%- for option in purchase_options -%}
-                      <div class="purchase-option {{ option }} relative block w-full motion-safe:transition-colors duration-200 {% if option == 'onetime' %}bg-owc-blue3 border-b border-owc-blue2{% else %}bg-white{% endif %}">
-                        <input type="radio"
-                          name="purchase_option"
-                          id="purchase_option-{{ option }}"
-                          class="sr-only peer bg-white"
-                          value="{{ option }}"
-                          {% if option == 'onetime' %}checked{% endif %}
-                        />
-                        <span class="absolute pointer-events-none left-2 2xs:left-3 top-3 cursor-pointer w-5 h-5 border-2 border-owc-blue2 bg-white rounded-full flex justify-center items-center peer-checked:border-owc-blue peer-checked:child:scale-100 motion-safe:transition-colors">
-                          <span class="absolute top-0.5 left-0.5 w-3 h-3 bg-owc-blue2 rounded-full scale-0 motion-safe:transition-transform"></span>
-                        </span>
-                        <label for="purchase_option-{{ option }}" class="block py-3 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4">
-                          <span class="flex justify-between">
-                            <strong class="block leading-5 font-bold tracking-wide xs:tracking-widest md:tracking-wide lg:tracking-widest uppercase text-sm text-owc-blue">
-                              {%- if option == 'onetime' -%}
-                                <span>One-time purchase</span>
-                              {%- else -%}
-                                <span>Subscribe & save 10%</span>
-                                <span class="popular-badge normal-case bg-owc-yellow text-owc-blue rounded font-bold tracking-normal text-xs px-1 h-4">Popular</span>
-                              {%- endif -%}
-                            </strong>
-                            {%- if option == 'onetime' -%}
-                              {% render 'price', product: product, use_variant: true, price_class: 'text-sm font-medium text-owc-blue', slashed_price_color: 'text-owc-blue/50' %}
-                            {%- else -%}
-                              {% render 'price', product: product, subscription: true, price_class: 'text-sm font-medium text-owc-blue', slashed_price_color: 'text-owc-blue/50' %}
-                            {%- endif -%}
-                          </span>
-                        </label>
-                        {%- if option == 'autodeliver' -%}
-                          <span class="text-xs 2xs:tracking-wide md:tracking-normal lg:tracking-wide block leading-tight -mt-2 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 mb-3 text-owc-blue">
-                            <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
-                            <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                              <button class="product-popup-modal__button underline cursor-pointer md:tracking-tight lg:tracking-wide" type="button" aria-haspopup="dialog">Learn more</button>
-                            </modal-opener>
-                          </span>
-                          <div class="overflow-hidden max-h-0 pl-9 2xs:pl-10 pr-2 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
-                            <fieldset class="selling-plan-options js flex mb-2 pb-3">
-                              <legend class="text-sm font-medium text-owc-blue">Delivery every</legend>
-                              {%- for allocation in product.selected_or_first_available_variant.selling_plan_allocations -%}
-                                {%- if allocation.selling_plan_group_id == subscription_group.id -%}
-                                  {%- liquid
-                                    for group in product.selling_plan_groups
-                                      if group.id == allocation.selling_plan_group_id
-                                        assign selling_plan_group = group
-                                      endif
-                                    endfor
-
-                                    for plan in selling_plan_group.selling_plans
-                                      if plan.id == allocation.selling_plan.id
-                                        assign selling_plan = plan
-                                      endif
-                                    endfor
-                                  -%}
-                                  <div class="block grow{% unless forloop.last %} mr-1{% endunless %}">
-                                    <input type="radio"
-                                      id="{{ allocation.selling_plan.id }}"
-                                      class="peer sr-only"
-                                      name="selling_plan"
-                                      value="{{ allocation.selling_plan.id }}"
-                                      form="{{ product_form_id }}"
-                                    />
-                                    <label
-                                      class="w-full button button-xs lowercase tracking-wide border-owc-blue2 bg-white text-owc-blue px-1 peer-checked:bg-owc-yellow peer-checked:outline peer-checked:outline-owc-yellow outline-offset-1"
-                                      for="{{ allocation.selling_plan.id }}"
-                                    >
-                                      {{- selling_plan.name | replace: "Delivery every", "" -}}
-                                    </label>
-                                  </div>
-                                {%- endif -%}
-                              {%- endfor -%}
-                              <div class="sr-only shrink">
-                                <input type="radio"
-                                  id="{{ block.id }}-none"
-                                  name="selling_plan"
-                                  value=""
-                                  form="{{ product_form_id }}"
-                                  checked
-                                />
-                                <label for="{{ block.id }}-none">None</label>
-                              </div>
-                            </fieldset>
-                          </div>
-                        {%- endif -%}
-                      </div>
-                    {%- endfor -%}
-                  </fieldset>
-                  <modal-dialog id="SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
-                    <div role="dialog" aria-label="{{ block.settings.text }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
-                      <button id="ModalClose-{{ block.id }}" type="button" aria-label="{{ 'accessibility.close' | t }}">
-                        {%- render 'icon-close', classes: 'w-8 h-8', stroke_width: 1, aria_hidden: true -%}
-                      </button>
-                      <div class="w-full">
-                        <h2 class="font-serif text-3xl tracking-tight mb-2">{{ block.settings.subscription_modal_heading }}</h2>
-                        {{ block.settings.subscription_modal_content }}
-                      </div>
-                    </div>
-                  </modal-dialog>
-                </subscription-radios>
-              {%- endunless -%}
+              {%- if free_gifts_active -%}
+                <div class="{{ block.settings.free_gift_info_classes }}">
+                  {%- if settings.gwp_tier1_product != blank -%}
+                    {% render 'product-free-gift-info', product: settings.gwp_tier1_product, threshold: settings.gwp_tier1_threshold %}
+                  {%- endif -%}
+                  {%- if settings.gwp_tier2_product != blank -%}
+                    {% render 'product-free-gift-info', product: settings.gwp_tier2_product, threshold: settings.gwp_tier2_threshold %}
+                  {%- endif -%}
+                  {%- if settings.gwp_tier3_product != blank -%}
+                    {% render 'product-free-gift-info', product: settings.gwp_tier3_product, threshold: settings.gwp_tier3_threshold %}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+              
+            {%- when 'quantity_selector' -%}
+              {% comment %} quantity_selector snippet {% endcomment %}
+              {% render 'product-quantity-selector', block: block, section_id: section.id, quantity_classes: quantity_classes, product_form_id: product_form_id %}
+            {%- when 'variant_picker' -%}
+              {% comment %} variant_picker snippet {% endcomment %}
+              {% render 'product-variant-picker', block: block, section: section, product: product, set_products: set_products, mini_size_array: mini_size_array, jumbo_size_array: jumbo_size_array, product_form_id: product_form_id %}
+            {%- when 'subscription_picker' -%}
+              {% comment %} subscription_picker snippet {% endcomment %}
+              {% render 'product-subscription-picker', block: block, section: section, product: product, product_form_id: product_form_id %}
             {%- when 'buy_buttons' -%}
               {%- unless excluded_from_site -%}
                 <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
@@ -464,99 +145,138 @@
                         <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
                         <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
                       {%- endif -%}
-                      <div class="product-form__buttons relative grid grid-cols-2 gap-2" id="AddToCart">
-                        <button
-                          type="submit"
-                          name="add"
-                          class="product-form__submit relative button button-md bg-owc-yellow text-owc-blue border-owc-yellow w-full col-span-2 disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
-                          {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-                        >
-                            <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
-                              {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-                            </span>
-                            <span class="label">
-                              {%- if product.selected_or_first_available_variant.available -%}
-                                {{ 'products.product.add_to_cart' | t }}
-                              {%- else -%}
-                                {{ 'products.product.sold_out' | t }}
-                              {%- endif -%}
-                            </span>
-                            {%- if block.settings.atc_show_price -%}
-                              {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
-                            {%- endif -%}
-                        </button>
+                      <div class="grid relative grid-cols-2 gap-2 product-form__buttons" id="AddToCart">
+                        {%- liquid
+                          if product.selected_or_first_available_variant.available
+                            assign atc_label = 'products.product.add_to_cart' | t
+                          else
+                            assign atc_label = 'products.product.sold_out' | t
+                          endif
+
+                          if product.selected_or_first_available_variant.available
+                            assign atc_disabled = false
+                          else
+                            assign atc_disabled = true
+                          endif
+                        -%}
+                        {% render 'component-button',
+                          classes: 'relative col-span-2 w-full product-form__submit button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white',
+                          label: atc_label,
+                          element: 'button',
+                          type: 'submit',
+                          name: 'add',
+                          disabled: atc_disabled,
+                          price: block.settings.atc_show_price,
+                          product: product,
+                          use_variant: true,
+                          price_class: 'main-price ml-auto',
+                          slashed_price_color: 'md:text-white text-seaweed-800',
+                          show_spinner: true
+                        %}
                         {%- unless product.selected_or_first_available_variant.available -%}
-                          <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
-                          <div class="skeleton z-0 w-full h-11 bg-wave-400 rounded-md"></div>
+                          {%- if product.handle == 'ocean-glow-body-trio' %}
+                            <a class="button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11" target="_blank" href="https://www.ulta.com/p/ocean-glow-body-trio-pimprod2051657?sku=2638931">
+                              <span class="text-white">Shop now on ULTA</span>
+                            </a>
+                          {%- elsif product.handle == 'cleanse-glow-body-set' -%}
+                            <a class="cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11" target="_blank" href="https://www.nordstrom.com/s/cleanse-glow-body-set-104-value/8356995">
+                              <span class="text-white">Shop now on Nordstrom</span>
+                            </a>
+                          {%- else -%}
+                            <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
+                            <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
+                          {%- endif -%}
                         {%- endunless -%}
                       </div>
                       {%- if product.selected_or_first_available_variant.available -%}
                         {%- if product.metafields.custom.limited_availability_badge or product.selected_or_first_available_variant.inventory_quantity <= settings.low_stock_threshold -%}
-                          <div class="text-coral-800 font-bold tracking-wide my-1 text-center">Limited stock available!</div>
+                          <div class="my-1 font-bold tracking-wide text-center text-coral-800">Limited stock available!</div>
                         {%- else -%}
-                          <div class="my-1 text-sm font-book text-owc-blue">
+                          <div class="my-1 text-sm font-book">
                             <ul>
-                            <li>+ 30 Day Money Back Guarantee</li>
-                            <li>+ Free Shipping{% if settings.shipping_countdown_threshold > 0 %} on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+{% endif %}</li>
+                              <li class="flex items-center gap-1">
+                                {% render 'icon-award', classes: 'w-3 h-3 inline-block', stroke_width: 2.5 %}
+                                <span>30 Day Money Back Guarantee</span>
+                              </li>
+                              <li class="flex items-center gap-1">
+                                {% render 'icon-truck', classes: 'w-3 h-3 inline-block', stroke_width: 2.5 %}
+                                <span>Free Shipping{% if settings.shipping_countdown_threshold > 0 %} on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+{% endif %}</span>
+                              </li>
                             </ul>
                           </div>
                         {%- endif -%}
                       {%- endif -%}
                     {%- endform -%}
-                    <div class="product-form__error-message-wrapper absolute left-0 mt-1 text-coral-800 text-sm" role="alert" hidden>
+                    <div class="absolute left-0 mt-1 text-sm product-form__error-message-wrapper text-coral-800" role="alert" hidden>
                       {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
-                      <span class="product-form__error-message leading-4 align-bottom"></span>
+                      <span class="leading-4 align-bottom product-form__error-message"></span>
                     </div>
                   </product-form>
                 </div>
-                <div class="shipping-calculator hidden col-span-12 mt-4">
-                  <shipping-calculator class="flex items-end gap-2">
+                <div class="hidden col-span-12 mt-4 shipping-calculator">
+                  <shipping-calculator class="flex gap-2 items-end">
                     <form class="relative">
                       <label for="shippingzip" class="font-medium">Estimated shipping time:</label><br/>
-                      <input class="input input-sm py-2 w-60" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
-                      <input class="button button-tertiary button-sm absolute right-1 bottom-1 py-0.5 px-2" type="submit" value="Submit">
+                      <input class="py-2 w-60 input input-sm" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
+                      <input class="absolute right-1 bottom-1 px-2 py-0.5 button button-tertiary button-sm" type="submit" value="Submit">
                     </form>
                     <div
                       id="transitTimeOutput"
                       data-transition-end="opacity-100 translate-x-0"
                       data-transition-start="-translate-x-4 opacity-0"
-                      class="leading-8 mb-px -translate-x-4 opacity-0 transition-transform-opacity duration-300 inline-flex bg-seafoam-300 font-bold rounded-lg px-2 mt-2 pointer-events-none"></div>
+                      class="inline-flex px-2 mt-2 mb-px font-bold leading-8 rounded-lg opacity-0 duration-300 -translate-x-4 pointer-events-none transition-transform-opacity bg-seafoam-300"></div>
                   </shipping-calculator>
                 </div>
               {%- endunless -%}
             {%- when 'upsells' -%}
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
-                <div class="{{ block.settings.upsell_classes }}" {{ block.shopify_attributes }}>
+                {%- liquid
+                  if product.metafields.my_fields.save_with_sets != nil and product.metafields.my_fields.pair_with_product != nil
+                    assign upsell_count = product.metafields.my_fields.save_with_sets.value.count | plus: product.metafields.my_fields.pair_with_product.value.count
+                  elsif product.metafields.my_fields.save_with_sets != nil
+                    assign upsell_count = product.metafields.my_fields.save_with_sets.value.count
+                  elsif product.metafields.my_fields.pair_with_product != nil
+                    assign upsell_count = product.metafields.my_fields.pair_with_product.value.count
+                  endif
+                -%}
+                {%- if upsell_count > 1 -%}
+                  <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
+                {%- endif -%}
+                <div class="{{ block.settings.upsell_classes }}{% if upsell_count > 1 %} max-h-[140px] overflow-hidden peer-checked:max-h-[1000px] motion-safe:transition-max-height{% endif %}" {{ block.shopify_attributes }}>
                   {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
-                    <div class="upsell-sets">
-                      <h2 class="font-medium tracking-wide mb-1 text-owc-blue">Save with Sets</h2>
+                    <div class="mt-2 upsell-sets">
+                      <h2 class="mb-1 font-medium tracking-wide">Save with Sets</h2>
                       {%- for set in product.metafields.my_fields.save_with_sets.value -%}
-                        {%- render 'product-upsell', product: set, classes: 'border-owc-blue2 text-owc-blue', button_classes: 'bg-owc-blue3 text-owc-blue' -%}
+                        {%- render 'product-upsell', product: set -%}
                       {%- endfor -%}
                     </div>
                   {%- endif -%}
                   {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
-                    <div class="upsell-partner mt-4">
-                      <h2 class="font-medium tracking-wide mb-1">Pairs Well With</h2>
+                    <div class="upsell-partner {% if product.metafields.my_fields.save_with_sets != nil %}mt-4{% else %}mt-2{% endif %}">
+                      <h2 class="mb-1 font-medium tracking-wide">Pairs Well With</h2>
                       {%- for pair_with_product in product.metafields.my_fields.pair_with_product.value -%}
                         {%- render 'product-upsell', product: pair_with_product -%}
                       {%- endfor -%}
                     </div>
                   {%- endif -%}
                   {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
-                    <div class="upsell-routine mt-4">
-                      <h2 class="font-medium tracking-wide mb-1">Complete Your Routine</h2>
+                    <div class="mt-4 upsell-routine">
+                      <h2 class="mb-1 font-medium tracking-wide">Complete Your Routine</h2>
                       {%- for step in product.metafields.custom.upsell_complete_routine.value -%}
                         {%- render 'product-upsell', product: step, button_style: 'link', step_number: forloop.index -%}
                       {%- endfor -%}
                     </div>
                   {% endif %}
                 </div>
+                {%- if upsell_count > 1 -%}
+                  <label aria-hidden="true" for="collapsible" class="block col-span-12 mt-1 text-sm link peer-checked:hidden">View more {% render 'icon-arrow', variant: 'short', classes: 'rotate-90 w-4 h-4 inline-block ml-1' %}</label>
+                  <label aria-hidden="true" for="collapsible" class="hidden col-span-12 mt-1 text-sm link peer-checked:block">View less {% render 'icon-arrow', variant: 'short', classes: '-rotate-90 w-4 h-4 inline-block ml-1' %}</label>
+                {%- endif -%}
               {%- endif -%}
             {%- when 'set_includes' -%}
               {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
                 <div class="{{ block.settings.set_includes_classes }}">
-                  <h2 class="font-medium tracking-wide mb-2">Set includes</h2>
+                  <h2 class="mb-2 font-medium tracking-wide">Set includes</h2>
                   <ul>
                     {%- for product_in_set in product.metafields.custom.set_contains.value -%}
                       {%- render 'product-in-set', product: product_in_set -%}
@@ -567,14 +287,28 @@
           {%- endcase -%}
         {%- endfor -%}
       </div>
+      <div class="bg-white rounded-xl p-4 xl:p-6 2xl:px-8 mb-6 md:mb-0">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'collapsible_tab' -%}
+              {% comment %} accordion item snippet {% endcomment %}
+              {% render 'product-collapsible-tab', block: block, product: product, mini_size_array: mini_size_array %}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
     </div>
   </div>
   {%- if excluded_from_site == false and product.type != 'Gift Card' and product.type != 'Subscription Gift' -%}
-    <product-sticky-atc class="fixed z-40 inset-x-0 bottom-0 py-2.5 bg-white invisible opacity-0 motion-safe:transition-visibility" style="box-shadow: 0 0 5px rgba(11, 46, 37, 0.15);">
-      <div class="flex flex-row gap-2 px-4 sm:px-6 container">
+    <product-sticky-atc class="fixed inset-x-0 bottom-0 invisible z-40 py-2.5 bg-white opacity-0 motion-safe:transition-visibility" style="box-shadow: 0 0 5px rgba(11, 46, 37, 0.15);">
+      <div class="container flex flex-row gap-2 px-4 sm:px-6">
         {%- liquid
-          assign sticky_image_src = product.selected_or_first_available_variant.featured_media | image_url: width: 192
-          assign sticky_image_src_2x = product.selected_or_first_available_variant.featured_media | image_url: width: 252
+          if product.selected_or_first_available_variant.featured_media != blank
+            assign sticky_image_src = product.selected_or_first_available_variant.featured_media | image_url: width: 192
+            assign sticky_image_src_2x = product.selected_or_first_available_variant.featured_media | image_url: width: 252
+          else
+            assign sticky_image_src = product.featured_image | image_url: width: 192
+            assign sticky_image_src_2x = product.featured_image | image_url: width: 252
+          endif
         -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
@@ -584,15 +318,15 @@
           alt="{{ product.selected_or_first_available_variant.featured_media.alt | escape }}"
           width="120"
           height="150"
-          class="h-16 sm:h-12 w-auto object-cover"
+          class="object-cover w-auto h-16 sm:h-12"
         >
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-        <div class="flex flex-col sm:flex-row gap-1 sm:gap-2 justify-between items-center w-full">
+        <div class="flex flex-col gap-1 justify-between items-center w-full sm:flex-row sm:gap-2">
           <div class="flex flex-col justify-between w-full">
-            <h3 class="font-medium tracking-wide leading-none text-lg h-5 truncate">
+            <h3 class="h-5 text-lg font-medium tracking-wide leading-none truncate">
               {{- product.title | replace: 'Eye Serum', 'Serum' | escape -}}
             </h3>
-            <p class="text-sm font-book sr-only sm:!not-sr-only text-owc-blue">
+            <p class="text-sm font-book sr-only sm:!not-sr-only">
               {{- product.metafields.custom_fields.short_description -}}
             </p>
           </div>
@@ -600,11 +334,11 @@
             <button
               type="submit"
               name="add"
-              class="product-form__submit button bg-owc-yellow border-owc-yellow text-owc-blue button-md w-full gap-3 disabled:opacity-50"
+              class="gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50"
               {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
               form="{{ product_form_id }}"
             >
-                <span class="loading-spinner relative -ml-6 hidden">
+                <span class="hidden relative -ml-6 loading-spinner">
                   {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
                 </span>
                 <span>
@@ -625,18 +359,27 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    const sheet = new CSSStyleSheet;
+    sheet.replaceSync(`.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }`);
+    const host = document.querySelector('delivery-promise-wc');
+    host.shadowRoot.adoptedStyleSheets.push(sheet);
+
+
     function isIE() {
       const ua = window.navigator.userAgent;
       const msie = ua.indexOf('MSIE ');
       const trident = ua.indexOf('Trident/');
+
       return (msie > 0 || trident > 0);
     }
+
     if (!isIE()) return;
     const hiddenInput = document.querySelector('#{{ product_form_id }} input[name="id"]');
     const noScriptInputWrapper = document.createElement('div');
     const variantSwitcher = document.querySelector('variant-radios[data-section="{{ section.id }}"]') || document.querySelector('variant-selects[data-section="{{ section.id }}"]');
     noScriptInputWrapper.innerHTML = document.querySelector('.product-form__noscript-wrapper-{{ section.id }}').textContent;
     variantSwitcher.outerHTML = noScriptInputWrapper.outerHTML;
+
     document.querySelector('#Variants-{{ section.id }}').addEventListener('change', function(event) {
       hiddenInput.value = event.currentTarget.value;
     });
@@ -757,6 +500,35 @@
           "type": "textarea",
           "id": "qty_classes",
           "label": "Quantity classes"
+        }
+      ]
+    },
+    {
+      "type": "tags",
+      "name": "Tags",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tags",
+          "label": "Tags",
+          "info": "Enter tag data separated by commas"
+        },
+        {
+          "type": "textarea",
+          "id": "tag_block_classes",
+          "label": "Tag block classes"
+        }
+      ]
+    },
+    {
+      "type": "free_gift_info",
+      "name": "Free gift info",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "free_gift_info_classes",
+          "label": "Free gift info classes"
         }
       ]
     },
@@ -990,77 +762,6 @@
           "type": "textarea",
           "id": "rating_classes",
           "label": "Rating classes"
-        }
-      ]
-    },
-    {
-      "type": "benefits",
-      "name": "Benefits",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "benefits_classes",
-          "label": "Wrapper classes"
-        },
-        {
-          "type": "checkbox",
-          "id": "benefits_hide_icons",
-          "label": "Hide icons"
-        },
-        {
-          "type": "textarea",
-          "id": "benefits_label_classes",
-          "label": "Label classes"
-        },
-        {
-          "type": "textarea",
-          "id": "benefits_content_classes",
-          "label": "Content classes"
-        }
-      ]
-    },
-    {
-      "type": "skin_types",
-      "name": "Skin types",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "skin_types_classes",
-          "label": "Wrapper classes"
-        },
-        {
-          "type": "textarea",
-          "id": "skin_types_label_classes",
-          "label": "Label classes"
-        },
-        {
-          "type": "textarea",
-          "id": "skin_types_content_classes",
-          "label": "Content classes"
-        }
-      ]
-    },
-    {
-      "type": "scent_profile",
-      "name": "Scent profile",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "scent_profile_classes",
-          "label": "Wrapper classes"
-        },
-        {
-          "type": "textarea",
-          "id": "scent_profile_label_classes",
-          "label": "Label classes"
-        },
-        {
-          "type": "textarea",
-          "id": "scent_profile_content_classes",
-          "label": "Content classes"
         }
       ]
     },

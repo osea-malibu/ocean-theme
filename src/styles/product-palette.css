@@ -51,6 +51,17 @@
   color: var(--p-accent);
 }
 
+/* darken text for backgrounds */
+@utility text-p-inverse-d1 {
+  color: color-mix(in oklab, var(--p-inverse) 88%, black 12%);
+}
+@utility text-p-inverse-d2 {
+  color: color-mix(in oklab, var(--p-inverse) 82%, black 24%);
+}
+@utility text-p-inverse-d3 {
+  color: color-mix(in oklab, var(--p-inverse) 76%, black 36%);
+}
+
 @utility border-p-surface {
   border-color: var(--p-surface);
 }

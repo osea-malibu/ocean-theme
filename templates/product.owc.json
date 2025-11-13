@@ -10,39 +10,46 @@
 {
   "sections": {
     "main": {
-      "type": "main-product-owc",
+      "type": "main-product",
       "blocks": {
         "title": {
           "type": "title",
           "settings": {
-            "title_classes": "title text-2xl tracking-wide col-span-12 text-owc-blue font-medium"
-          }
-        },
-        "price": {
-          "type": "price",
-          "disabled": true,
-          "settings": {
-            "price_classes": "col-span-4 md:col-span-6 text-lg"
+            "title_classes": "title text-2xl font-medium col-span-12"
           }
         },
         "6a44c417-fd63-4240-a103-3540393f4f89": {
           "type": "rating",
           "settings": {
-            "rating_classes": "rating col-span-12 md:col-span h-full text-owc-blue2"
+            "rating_classes": "rating col-span-12 md:col-span h-full"
           }
         },
-        "text_njP7Aq": {
+        "tags_rLP97K": {
+          "type": "tags",
+          "settings": {
+            "tags": "Set value: {{ product.metafields.custom.set_value.value }}, {{ product.metafields.custom.skin_types_list | metafield_text }}, {{ product.metafields.custom.seaweed | metafield_text }}",
+            "tag_block_classes": "col-span-12 mt-2"
+          }
+        },
+        "text_BqQDJk": {
           "type": "text",
+          "name": "Short description",
           "settings": {
             "text": "{{ product.metafields.custom.pdp_short_description.value }}",
-            "text_block_classes": "col-span-12 mt-4 leading-snug text-sm xl:text-base xl:leading-snug text-owc-blue"
+            "text_block_classes": "col-span-12 mt-4 leading-snug text-sm xl:text-base xl:leading-snug"
           }
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "variant_classes": "variants col-span-12 mt-4 text-owc-blue2",
+            "variant_classes": "variants col-span-12 mt-4",
             "hide_label": false
+          }
+        },
+        "free_gift_info_pULUCz": {
+          "type": "free_gift_info",
+          "settings": {
+            "free_gift_info_classes": "free-gift-block hidden col-span-12 my-2"
           }
         },
         "b1cbaec2-3770-42c2-906e-d3f144bcda1f": {
@@ -51,13 +58,6 @@
             "subscription_classes": "subscription col-span-12",
             "subscription_modal_heading": "Subscribe & Save 10%",
             "subscription_modal_content": "<p class=\"mb-3\">We automatically ship your selected items at the interval you choose. Shipping is free in the contiguous U.S., and you can adjust, skip or cancel at anytime through your OSEA account or by <a href=\"/pages/contact-us\" class=\"link\">contacting support</a> via <a href=\"mailto:support@oseamalibu.com\" class=\"link\">email</a> or <button onclick=\"GorgiasChat.open()\" class=\"link\">chat</button>.</p>\n<ul class=\"leading-tight tracking-wide icon-list check mb-4\">\n<li class=\"mb-2\">10% off every order</li>\n<li class=\"mb-2\">Free shipping on recurring orders</li>\n<li class=\"mb-2\">Early access to new products</li>\n<li>Skip, edit or cancel anytime</li>\n</ul>\n<small class=\"block\">Click here for our <a href=\"/pages/terms-of-use\" class=\"underline\">Terms of Use</a>.</small>"
-          }
-        },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "disabled": true,
-          "settings": {
-            "qty_classes": "col-span-4 lg:col-span-3 mr-2 mt-3"
           }
         },
         "buy_buttons": {
@@ -76,76 +76,87 @@
             "upsell_enable_routine": false
           }
         },
-        "2431ba77-22b9-43d0-a67d-f9858b6d8b58": {
-          "type": "info_tabs",
-          "disabled": true,
-          "settings": {
-            "info_tab_wrapper_classes": "col-span-12 mt-4",
-            "info_tab_label_classes": "font-bold uppercase text-xs text-owc-blue2",
-            "info_tab_content_classes": "text-owc-blue2",
-            "enable_info_tab_description": true,
-            "info_tab_description_label": "Description",
-            "enable_info_tab_howto": true,
-            "info_tab_howto_label": "How To Use",
-            "enable_info_tab_sustainability": true,
-            "info_tab_sustainability_label": "Recycling",
-            "enable_info_tab_care": true,
-            "info_tab_care_label": "Care",
-            "enable_info_tab_articles": true,
-            "info_tab_articles_label": "Learn",
-            "enable_info_tab_custom": true,
-            "info_tab_custom_tab_label": "Ingredients",
-            "info_tab_custom_tab_content": "{{ product.metafields.custom_fields.ingredients.value }}",
-            "info_tab_custom_tab_handles": "osea-for-parachute-hydrating-hand-cream, osea-for-parachute-purifying-hand-soap"
-          }
-        },
-        "collapsible_tab_EKrTCy": {
+        "collapsible_tab_JxagAC": {
           "type": "collapsible_tab",
           "name": "Benefits",
           "settings": {
             "heading": "Benefits",
             "content": "{{ product.metafields.custom.key_benefits | metafield_text }}",
-            "tab_classes": "mt-6 col-span-12 border-b border-seaweed-300 text-owc-blue",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": true
+          }
+        },
+        "collapsible_tab_YPUDfU": {
+          "type": "collapsible_tab",
+          "name": "More info",
+          "settings": {
+            "heading": "Why you'll love it",
+            "content": "{{ product.metafields.custom_fields.description.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
         },
-        "collapsible_tab_kATiP3": {
+        "collapsible_tab_7MxGMU": {
           "type": "collapsible_tab",
           "name": "Scent profile",
+          "disabled": true,
           "settings": {
             "heading": "Scent profile",
-            "content": "{{ product.metafields.custom.scent_profile_short.value }}",
-            "tab_classes": "col-span-12 border-b border-seaweed-300 text-owc-blue",
+            "content": "{{ product.metafields.custom.scent_profile.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
         },
-        "collapsible_tab_W9FUni": {
+        "collapsible_tab_q8BQDB": {
+          "type": "collapsible_tab",
+          "name": "Care",
+          "settings": {
+            "heading": "Care",
+            "content": "{{ product.metafields.custom.product_care.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_MQbqTH": {
           "type": "collapsible_tab",
           "name": "How to use",
           "settings": {
             "heading": "How to use",
             "content": "{{ product.metafields.custom_fields.how_it_works.value }}",
-            "tab_classes": "col-span-12 border-b border-seaweed-300 text-owc-blue",
+            "tab_classes": "col-span-12",
             "default_open": false
           }
         },
-        "collapsible_tab_D8nXb3": {
+        "collapsible_tab_xFbwdC": {
           "type": "collapsible_tab",
           "name": "Skin types",
+          "disabled": true,
           "settings": {
             "heading": "Skin types",
-            "content": "{{ product.metafields.custom_fields.skin_types.value }}",
-            "tab_classes": "col-span-12 border-b border-seaweed-300 text-owc-blue",
+            "content": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
         },
-        "collapsible_tab_KUcTqh": {
+        "collapsible_tab_QBCMfF": {
           "type": "collapsible_tab",
           "name": "Recycling",
+          "disabled": true,
           "settings": {
             "heading": "Recycling",
             "content": "",
-            "tab_classes": "col-span-12 text-owc-blue",
+            "tab_classes": "col-span-12",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_h7h39z": {
+          "type": "collapsible_tab",
+          "name": "Blogs",
+          "disabled": true,
+          "settings": {
+            "heading": "Related blogs",
+            "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
+            "tab_classes": "col-span-12",
             "default_open": false
           }
         },
@@ -158,65 +169,60 @@
       },
       "block_order": [
         "title",
-        "price",
         "6a44c417-fd63-4240-a103-3540393f4f89",
-        "text_njP7Aq",
+        "tags_rLP97K",
+        "text_BqQDJk",
         "variant_picker",
+        "free_gift_info_pULUCz",
         "b1cbaec2-3770-42c2-906e-d3f144bcda1f",
-        "quantity_selector",
         "buy_buttons",
         "f8ca449b-3a83-411f-ac44-40e011b825f3",
-        "2431ba77-22b9-43d0-a67d-f9858b6d8b58",
-        "collapsible_tab_EKrTCy",
-        "collapsible_tab_kATiP3",
-        "collapsible_tab_W9FUni",
-        "collapsible_tab_D8nXb3",
-        "collapsible_tab_KUcTqh",
+        "collapsible_tab_JxagAC",
+        "collapsible_tab_YPUDfU",
+        "collapsible_tab_7MxGMU",
+        "collapsible_tab_q8BQDB",
+        "collapsible_tab_MQbqTH",
+        "collapsible_tab_xFbwdC",
+        "collapsible_tab_QBCMfF",
+        "collapsible_tab_h7h39z",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
-      "custom_css": [
-        ".bg-sand-300 {background-color: #e9f3fc; color: #1c39bb;}",
-        ".upsell-partner > div {border-color: #0a30df;}",
-        ".upsell-partner a {color: #1c39bb;}",
-        ".upsell-partner button {color: #1c39bb; background-color: #e9f3fc;}",
-        ".accordion svg.text-seaweed-500 {color: #0a30df;}"
-      ],
       "settings": {
-        "product_info_classes": "grid grid-cols-12 mb-8 relative gap-x-2",
+        "product_info_classes": "grid grid-cols-12 relative gap-x-2",
         "enable_sticky_info": true,
-        "gallery_limit": 8
+        "gallery_limit": 10
       }
     },
-    "product_ugc_xyF98H": {
+    "ugc": {
       "type": "product-ugc",
       "settings": {
         "section_classes": "hidden",
-        "header": "",
+        "header": "What Our Customers Are Saying",
         "subheader": ""
       }
     },
-    "video": {
-      "type": "product-video",
-      "custom_css": [
-        ".pdp-ocean-wave-cleanser .product-video deferred-media {border-radius: 0.5rem; border: 1px solid #0a30df; overflow: hidden;}"
-      ],
+    "set-includes": {
+      "type": "product-set-includes",
       "settings": {
-        "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
-        "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-12"
+        "header": "Set Includes"
       }
     },
     "clinicals": {
       "type": "product-clinicals",
-      "custom_css": [
-        "h4,li,cite {color: #1c39bb;}"
-      ],
       "settings": {
         "section_classes": "",
         "header": "Results You Can Sea®",
         "subheader": ""
       }
     },
-    "ingredients": {
+    "video": {
+      "type": "product-video",
+      "settings": {
+        "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
+        "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-6 lg:mb-12"
+      }
+    },
+    "ingredients_accordion": {
       "type": "product-ingredients",
       "blocks": {
         "95142030-9e11-4090-aa41-a3e9d4183397": {
@@ -230,9 +236,7 @@
           }
         }
       },
-      "block_order": [
-        "95142030-9e11-4090-aa41-a3e9d4183397"
-      ],
+      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
       "disabled": true,
       "custom_css": [],
       "settings": {
@@ -242,227 +246,10 @@
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
       }
     },
-    "rich_text_btfngN": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_maNiHT": {
-          "type": "heading",
-          "settings": {
-            "heading_text": "<h3>How To Use It</h3>",
-            "heading_classes": "text-center font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight font-serif mb-3 md:mb-4",
-            "subheading_text": "",
-            "subheading_classes": ""
-          }
-        }
-      },
-      "block_order": [
-        "heading_maNiHT"
-      ],
-      "name": "Rich text",
-      "settings": {
-        "section_heading": "",
-        "section_classes": "",
-        "container_classes": "container"
-      }
-    },
-    "multicolumn_cRwjUa": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_rn7aRQ": {
-          "type": "column",
-          "settings": {
-            "column_classes": "relative bg-white border border-owc-blue2 rounded-lg overflow-hidden",
-            "image": "shopify://shop_images/owc-htu-1.jpg",
-            "is_bg_image": false,
-            "image_link": "",
-            "image_classes": "relative z-0",
-            "image_wrapper_classes": "",
-            "image_link_classes": "",
-            "image_static_size": "",
-            "text_classes": "absolute top-0 left-0 z-10 p-2 lg:p-3 xl:p-4 text-owc-blue2",
-            "remove_text_wrapper": false,
-            "heading": "1 - <b>Shake</b>",
-            "heading_classes": "text-lg leading-none font-book lg:text-xl lg:leading-none xl:text-2xl xl:leading-none",
-            "paragraph": "to activate",
-            "paragraph_classes": "leading-none lg:text-lg lg:leading-none xl:text-xl xl:leading-none",
-            "button_label": "",
-            "button_aria_label": "",
-            "link": "",
-            "target_blank": false,
-            "button_classes": "",
-            "button_icon": "",
-            "product_form_classes": "",
-            "is_atc_button": false,
-            "is_subscription": false,
-            "atc_button_product": "",
-            "show_variants": false,
-            "variant_picker_type": "button",
-            "variant_classes": "",
-            "variant_button_classes": "",
-            "variant_button_nofl": false,
-            "video_autoplay": false,
-            "video_loop": false,
-            "video_hide_controls": false,
-            "video_muted": false,
-            "video_classes": "",
-            "video_poster_size": "",
-            "prod_slider_handles": "",
-            "prod_slider_classes": ""
-          }
-        },
-        "column_U6xecN": {
-          "type": "column",
-          "settings": {
-            "column_classes": "relative bg-white border border-owc-blue2 rounded-lg overflow-hidden",
-            "image": "shopify://shop_images/owc-htu-2.jpg",
-            "is_bg_image": false,
-            "image_link": "",
-            "image_classes": "relative z-0",
-            "image_wrapper_classes": "",
-            "image_link_classes": "",
-            "image_static_size": "",
-            "text_classes": "absolute top-0 left-0 z-10 p-2 lg:p-3 xl:p-4 text-owc-blue2",
-            "remove_text_wrapper": false,
-            "heading": "2 - <b>Massage</b>",
-            "heading_classes": "text-lg leading-none font-book lg:text-xl lg:leading-none xl:text-2xl xl:leading-none",
-            "paragraph": "into dry skin",
-            "paragraph_classes": "leading-none lg:text-lg lg:leading-none xl:text-xl xl:leading-none",
-            "button_label": "",
-            "button_aria_label": "",
-            "link": "",
-            "target_blank": false,
-            "button_classes": "",
-            "button_icon": "",
-            "product_form_classes": "",
-            "is_atc_button": false,
-            "is_subscription": false,
-            "atc_button_product": "",
-            "show_variants": false,
-            "variant_picker_type": "button",
-            "variant_classes": "",
-            "variant_button_classes": "",
-            "variant_button_nofl": false,
-            "video_autoplay": false,
-            "video_loop": false,
-            "video_hide_controls": false,
-            "video_muted": false,
-            "video_classes": "",
-            "video_poster_size": "",
-            "prod_slider_handles": "",
-            "prod_slider_classes": ""
-          }
-        },
-        "column_tKxjH8": {
-          "type": "column",
-          "settings": {
-            "column_classes": "relative bg-white border border-owc-blue2 rounded-lg overflow-hidden",
-            "image": "shopify://shop_images/owc-htu-3.jpg",
-            "is_bg_image": false,
-            "image_link": "",
-            "image_classes": "relative z-0",
-            "image_wrapper_classes": "",
-            "image_link_classes": "",
-            "image_static_size": "",
-            "text_classes": "absolute top-0 left-0 z-10 p-2 lg:p-3 xl:p-4 text-owc-blue2",
-            "remove_text_wrapper": false,
-            "heading": "3 - <b>Dissolve</b>",
-            "heading_classes": "text-lg leading-none font-book lg:text-xl lg:leading-none xl:text-2xl xl:leading-none",
-            "paragraph": "makeup &amp; impurities",
-            "paragraph_classes": "leading-none lg:text-lg lg:leading-none xl:text-xl xl:leading-none",
-            "button_label": "",
-            "button_aria_label": "",
-            "link": "",
-            "target_blank": false,
-            "button_classes": "",
-            "button_icon": "",
-            "product_form_classes": "",
-            "is_atc_button": false,
-            "is_subscription": false,
-            "atc_button_product": "",
-            "show_variants": false,
-            "variant_picker_type": "button",
-            "variant_classes": "",
-            "variant_button_classes": "",
-            "variant_button_nofl": false,
-            "video_autoplay": false,
-            "video_loop": false,
-            "video_hide_controls": false,
-            "video_muted": false,
-            "video_classes": "",
-            "video_poster_size": "",
-            "prod_slider_handles": "",
-            "prod_slider_classes": ""
-          }
-        },
-        "column_Ri7rrD": {
-          "type": "column",
-          "settings": {
-            "column_classes": "relative bg-white border border-owc-blue2 rounded-lg overflow-hidden",
-            "image": "shopify://shop_images/owc-htu-4.jpg",
-            "is_bg_image": false,
-            "image_link": "",
-            "image_classes": "relative z-0",
-            "image_wrapper_classes": "",
-            "image_link_classes": "",
-            "image_static_size": "",
-            "text_classes": "absolute top-0 left-0 z-10 p-2 lg:p-3 xl:p-4 text-owc-blue2",
-            "remove_text_wrapper": false,
-            "heading": "4 - <b>Rinse</b>",
-            "heading_classes": "text-lg leading-none font-book lg:text-xl lg:leading-none xl:text-2xl xl:leading-none",
-            "paragraph": "with warm water",
-            "paragraph_classes": "leading-none lg:text-lg lg:leading-none xl:text-xl xl:leading-none",
-            "button_label": "",
-            "button_aria_label": "",
-            "link": "",
-            "target_blank": false,
-            "button_classes": "",
-            "button_icon": "",
-            "product_form_classes": "",
-            "is_atc_button": false,
-            "is_subscription": false,
-            "atc_button_product": "",
-            "show_variants": false,
-            "variant_picker_type": "button",
-            "variant_classes": "",
-            "variant_button_classes": "",
-            "variant_button_nofl": false,
-            "video_autoplay": false,
-            "video_loop": false,
-            "video_hide_controls": false,
-            "video_muted": false,
-            "video_classes": "",
-            "video_poster_size": "",
-            "prod_slider_handles": "",
-            "prod_slider_classes": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_rn7aRQ",
-        "column_U6xecN",
-        "column_tKxjH8",
-        "column_Ri7rrD"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "section_heading": "",
-        "section_classes": "container mb-12",
-        "container_classes": "grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4",
-        "logged_in_only": false,
-        "is_slider": false,
-        "slider_indicator_count": 3,
-        "slider_breakpoint_limit": "none",
-        "slider_classes": "",
-        "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
-        "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
-      }
-    },
-    "product_ingredients_images_94Xbm6": {
+    "ingredients_images": {
       "type": "product-ingredients-images",
       "blocks": {
-        "key_ingredient_dBBbXd": {
+        "key_ingredient_tNNTPC": {
           "type": "key_ingredient",
           "repeater": "{{ product.metafields.custom.key_ingredients_list.value }}",
           "settings": {
@@ -474,16 +261,29 @@
           }
         }
       },
-      "block_order": [
-        "key_ingredient_dBBbXd"
-      ],
-      "custom_css": [
-        ".product-ingredients-images em,.product-ingredients-images b,.product-ingredients-images p {color: #0a30df;}"
-      ],
+      "block_order": ["key_ingredient_tNNTPC"],
       "name": "Ingredients with Images",
       "settings": {
-        "header": "Cleanse With Benefits",
+        "header": "Clean Ingredients",
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
+      }
+    },
+    "scent_profile": {
+      "type": "product-scent-profile",
+      "settings": {
+        "wrapper_classes": "",
+        "image": "{{ product.metafields.custom.scent_profile_image.value }}",
+        "heading": "Scent Profile",
+        "body": "{{ product.metafields.custom.scent_profile.value }}"
+      }
+    },
+    "founder_quote": {
+      "type": "product-founder-quote",
+      "settings": {
+        "wrapper_classes": "",
+        "founder_body": "<p>Over 30 years ago, I started OSEA to share the healing powers of the sea. Since then, it’s been our mission to create clean, clinically tested skincare, combining pure, potent seaweed with active botanicals for results you can sea. My vision is to create waves of kindness for people and our planet.</p>",
+        "founder_name": "-Jenefer Palmer, OSEA Founder",
+        "founder_image": "shopify://shop_images/012624_OSEA_PRSHOOT-ROBIN-938.jpg"
       }
     },
     "routine": {
@@ -499,13 +299,7 @@
     },
     "faqs": {
       "type": "product-faqs",
-      "custom_css": [
-        "a.link.uppercase {color: #1c39bb;}",
-        "b,p {color: #1c39bb;}",
-        ".product-faqs label:before,.product-faqs label:after {background-color: #0a30df;}",
-        ".product-faqs .container > div {border-radius: 0.5rem; border: 1px solid #0a30df;}",
-        ".product-faqs .border-seaweed-400 {border-color: rgba(10, 48, 223, 0.5);}"
-      ],
+      "custom_css": [],
       "settings": {
         "header": "FAQs"
       }
@@ -520,7 +314,7 @@
     "recently-viewed": {
       "type": "product-recently-viewed",
       "settings": {
-        "section_classes": "hidden",
+        "section_classes": "",
         "container_classes": "container lg:max-w-screen-lg mx-auto px-6 py-8",
         "heading": "Recently viewed products",
         "heading_classes": "font-bold mb-2",
@@ -531,7 +325,7 @@
     "recommendations": {
       "type": "product-recommendations",
       "settings": {
-        "section_classes": "hidden",
+        "section_classes": "",
         "container_classes": "container lg:max-w-screen-lg mx-auto px-6 py-8",
         "heading": "You may also like",
         "heading_classes": "font-bold mb-2",
@@ -545,13 +339,14 @@
   },
   "order": [
     "main",
-    "product_ugc_xyF98H",
-    "video",
+    "ugc",
+    "set-includes",
     "clinicals",
-    "ingredients",
-    "rich_text_btfngN",
-    "multicolumn_cRwjUa",
-    "product_ingredients_images_94Xbm6",
+    "video",
+    "ingredients_accordion",
+    "ingredients_images",
+    "scent_profile",
+    "founder_quote",
     "routine",
     "faqs",
     "reviews",
