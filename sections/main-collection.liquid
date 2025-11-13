@@ -71,19 +71,6 @@
                 assign has_promo_content = false
               endif
             -%}
-            {% if collection.metafields.custom.promo_tile_ignore_global == false %}
-              <script>
-                console.log('promo_tile_ignore_global is false');
-              </script>
-            {% elsif collection.metafields.custom.promo_tile_ignore_global == nil %}
-              <script>
-                console.log('promo_tile_ignore_global is nil');
-              </script>
-            {% else %}
-              <script>
-                console.log('promo_tile_ignore_global is true');
-              </script>
-            {% endif %}
             {%- if has_promo_content -%}
               <li class="collection-promo-tile relative overflow-hidden rounded" style="order: 0">
                 {%- render 'collection-promo-tile',
