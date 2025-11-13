@@ -75,6 +75,10 @@
               <script>
                 console.log('promo_tile_ignore_global is false');
               </script>
+            {% elsif collection.metafields.custom.promo_tile_ignore_global == nil %}
+              <script>
+                console.log('promo_tile_ignore_global is nil');
+              </script>
             {% else %}
               <script>
                 console.log('promo_tile_ignore_global is true');
