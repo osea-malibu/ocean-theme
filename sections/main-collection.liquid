@@ -55,7 +55,7 @@
                 assign has_global_tile_content = true
               endif
 
-              if settings.enable_global_plp_tile and has_global_tile_content and collection.metafields.custom.promo_tile_ignore_global == false
+              if settings.enable_global_plp_tile and has_global_tile_content
                 assign promo_tile_image = settings.global_plp_tile_image
                 assign promo_tile_video = settings.global_plp_tile_video
                 assign promo_tile_url = settings.global_plp_tile_url
