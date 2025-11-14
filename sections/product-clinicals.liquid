@@ -61,8 +61,8 @@
         {%- if product.metafields.custom.clinical_images.value.count == 1 -%}
           {%- liquid
             assign first_image = product.metafields.custom.clinical_images.value | first
-            assign image_src = first_image | image_url: width: 400, height: 400, crop: 'center'
-            assign image_src_2x = first_image | image_url: width: 800, height: 800, crop: 'center'
+            assign image_src = first_image | image_url: width: 750, height: 750, crop: 'center'
+            assign image_src_2x = first_image | image_url: width: 1500, height: 1500, crop: 'center'
           -%}
           {% comment %} theme-check-disable RemoteAsset {% endcomment %}
           <img
@@ -71,8 +71,8 @@
             src="{% render 'imgix', src: image_src_2x %}"
             loading="lazy"
             alt="{{ first_image.alt | escape }}"
-            width="{{ first_image.width }}"
-            height="{{ first_image.height }}"
+            width="750"
+            height="{{ 750 | divided_by: first_image.aspect_ratio | round }}"
           >
           {% comment %} theme-check-enable RemoteAsset {% endcomment %}
         {%- elsif product.handle == 'dream-night-serum' -%}

@@ -21,7 +21,7 @@
           <h2 class="sr-only sm:!not-sr-only" id="filter-sort-title">
             <span class="block border-b border-seaweed-700 mb-2 pb-2 font-bold">Filter and sort</span>
           </h2>
-          <div class="absolute top-0 left-0 -mt-7 z-10 sm:relative sm:!mt-0 grid grid-cols-2 gap-2 w-66 sm:w-full">
+          <div class="absolute top-0 left-0 -mt-7 z-10 sm:relative sm:!mt-0 grid grid-cols-2 gap-2 w-66 sm:w-full sm:max-w-full">
             <form id="search-form" class="sm:pt-2 lg:pt-4 col-span-2">
               <label for="searchbyname" class="{{ form_header_class }}">Search</label>
               <div class="flex items-center gap-1 w-full">
@@ -32,7 +32,7 @@
                 </button>
               </div>
             </form>
-            <form id="sort-form" class="sm:pt-2 lg:pt-4 col-start-2 row-start-2 sm:col-span-2">
+            <form id="sort-form" class="sm:pt-2 lg:pt-4 col-start-2 row-start-2 sm:col-span-2 sm:!col-start-1">
               <label for="sortby" class="{{ form_header_class }}">Sort by</label>
               <select id="sortby" class="input input-sm w-full lg:w-40">
                 <option value="az">Name (A-Z)</option>
