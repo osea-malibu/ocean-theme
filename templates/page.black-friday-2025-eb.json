@@ -711,14 +711,15 @@
         "column_4Kkp8R": {
           "type": "column",
           "settings": {
-            "column_classes": "relative bg-[#F8FAF9]",
+            "column_classes": "relative bg-[#F8FAF9] flex flex-col",
+            "image": "shopify://shop_images/BFCM-set1.png",
             "is_bg_image": false,
             "image_link": "",
             "image_classes": "",
-            "image_wrapper_classes": "",
+            "image_wrapper_classes": "order-3",
             "image_link_classes": "",
             "image_static_size": "",
-            "text_classes": "text-center text-light-black",
+            "text_classes": "text-center text-light-black order-1",
             "remove_text_wrapper": false,
             "heading": "<span class=\"bg-neon-green px-1\">Save $62</span>",
             "heading_classes": "text-3xl font-bold mb-2",
@@ -745,7 +746,7 @@
             "video_loop": true,
             "video_hide_controls": true,
             "video_muted": true,
-            "video_classes": "",
+            "video_classes": "order-2",
             "video_poster_size": "",
             "prod_slider_handles": "",
             "prod_slider_classes": ""
