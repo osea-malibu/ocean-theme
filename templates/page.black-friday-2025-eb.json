@@ -305,7 +305,7 @@
             "image_wrapper_classes": "order-2",
             "image_link_classes": "",
             "image_static_size": "",
-            "text_classes": "order-1 w-36 shrink-0",
+            "text_classes": "order-1 w-36 sm:w-full shrink-0",
             "remove_text_wrapper": false,
             "heading": "Spend $125+",
             "heading_classes": "font-medium text-lg md:text-xl leading-none uppercase",
@@ -339,8 +339,9 @@
         },
         "code_N7m84F": {
           "type": "code",
+          "disabled": true,
           "settings": {
-            "column_classes": "container",
+            "column_classes": "container sm:absolute",
             "code": "<span class=\"block w-36 text-center text-4xl font-medium\">+</span>"
           }
         },
@@ -355,7 +356,7 @@
             "image_wrapper_classes": "order-2",
             "image_link_classes": "",
             "image_static_size": "",
-            "text_classes": "order-1 w-36 shrink-0",
+            "text_classes": "order-1 w-36 sm:w-full shrink-0",
             "remove_text_wrapper": false,
             "heading": "Spend $175+",
             "heading_classes": "font-medium text-lg md:text-xl leading-none uppercase",
@@ -389,8 +390,9 @@
         },
         "code_QxbADi": {
           "type": "code",
+          "disabled": true,
           "settings": {
-            "column_classes": "container",
+            "column_classes": "container sm:absolute",
             "code": "<span class=\"block w-36 text-center text-4xl font-medium\">+</span>"
           }
         },
@@ -406,7 +408,7 @@
             "image_wrapper_classes": "order-2",
             "image_link_classes": "",
             "image_static_size": "",
-            "text_classes": "order-1 w-36 shrink-0",
+            "text_classes": "order-1 w-36 sm:w-full shrink-0",
             "remove_text_wrapper": false,
             "heading": "Spend $225+",
             "heading_classes": "font-medium text-lg md:text-xl leading-none uppercase",
@@ -492,7 +494,7 @@
       ],
       "settings": {
         "section_heading": "",
-        "section_classes": "container px-0 md:px-6 mb-8",
+        "section_classes": "relative container px-0 md:px-6 mb-8",
         "container_classes": "bg-white border-bfcm-green border-4 py-6 lg:py-10 grid grid-cols-3 sm:gap-4 md:gap-2 lg:gap-4 text-black xl:px-32 md:px-4 xl:px-6",
         "logged_in_only": false,
         "is_slider": false,
