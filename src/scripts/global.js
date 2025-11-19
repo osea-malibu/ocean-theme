@@ -623,27 +623,16 @@ class ShippingCountdown extends HTMLElement {
     // Initial paint
     this.refresh();
 
+    // inside ShippingCountdown.connectedCallback()
     const link = this.querySelector(".calc-link");
     if (link) {
       link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const sel = this.dataset.calculator;
-        // prefer explicit selector; fallback to next sibling <shipping-calculator>
-        const calc =
-          (sel && document.querySelector(sel)) ||
-          this.parentElement?.querySelector("shipping-calculator") ||
-          (this.nextElementSibling instanceof HTMLElement &&
-            this.nextElementSibling.tagName === "SHIPPING-CALCULATOR")
-            ? this.nextElementSibling
-            : null;
-
-        if (calc?.open) calc.open();
-        else if (calc) {
-          // graceful fallback if custom element hasn't upgraded yet
-          const form = calc.querySelector("form");
-          form?.classList.remove("hidden");
-          form?.querySelector("input")?.focus();
-        }
+        e.preventDefault(); // prevent hash-jump but keep a11y-safe href
+        const sel = this.dataset.calculator || `#${link.getAttribute("aria-controls")}`;
+        const calc = document.querySelector(sel);
+        if (!calc) return;
+        if (calc.toggle) calc.toggle();
+        else if (calc.open) calc.open();
       });
     }
 
