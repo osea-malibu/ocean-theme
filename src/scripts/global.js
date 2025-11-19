@@ -743,7 +743,7 @@ class ShippingCountdown extends HTMLElement {
     }
 
     const remaining = this.thresholdCents - total;
-    this.setText(`Add ${this.formatMoney(remaining)} for free shipping.`);
+    this.setText(`Add ${this.formatMoney(remaining)} to bag for free shipping`);
   }
 
   setText(str) {
