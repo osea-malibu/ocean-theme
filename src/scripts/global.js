@@ -246,7 +246,28 @@ class ShippingCalculator extends HTMLElement {
     this.zipInput = this.querySelector("#shippingzip");
     this.output = this.querySelector("#transitTimeOutput");
 
+    if (this.dataset.collapsed !== "false") this.collapse();
+
     this.zipForm.addEventListener("submit", (e) => this.onZipSubmit(e));
+  }
+
+  // PUBLIC: used by ShippingCountdown
+  open() {
+    this.zipForm.classList.remove("hidden");
+    this.style.removeProperty("--sc-hidden"); // in case you add CSS hooks later
+    // focus input (next frame for iOS)
+    requestAnimationFrame(() => this.zipInput?.focus());
+    // mark as expanded so we don't re-hide on any re-init
+    this.dataset.collapsed = "false";
+  }
+
+  collapse() {
+    this.zipForm.classList.add("hidden");
+    this.dataset.collapsed = "true";
+  }
+
+  toggle() {
+    this.dataset.collapsed === "true" ? this.open() : this.collapse();
   }
 
   onZipSubmit(e) {
@@ -517,6 +538,250 @@ class ShippingCalculator extends HTMLElement {
   }
 }
 customElements.define("shipping-calculator", ShippingCalculator);
+
+class ShippingCountdown extends HTMLElement {
+  static ensureCartSignalsPatched() {
+    if (window.__oseaPatchedCartFetch) return;
+    window.__oseaPatchedCartFetch = true;
+
+    const origFetch = window.fetch;
+    const CART_URL_RE = /\/cart(\.js|\/(add|update|change|clear)\.js)?(\?.*)?$/;
+
+    // Patch fetch so ANY cart mutation/reads trigger a refresh signal.
+    window.fetch = async function patchedFetch(input, init) {
+      const res = await origFetch(input, init);
+      try {
+        const url = typeof input === "string" ? input : input?.url || "";
+        const method = (
+          init?.method ||
+          (typeof input !== "string" ? input?.method : "") ||
+          "GET"
+        ).toUpperCase();
+        // Fire after any successful cart call (read or write); write ops will also hit /cart.js afterwards anyway.
+        if (CART_URL_RE.test(url) && res.ok) {
+          // Dispatch a consistent, theme-agnostic signal
+          const evt = new CustomEvent("cart:refresh", { bubbles: true });
+          window.dispatchEvent(evt);
+          document.dispatchEvent(evt);
+          // also alias to common names used by various themes
+          window.dispatchEvent(new CustomEvent("cart:updated", { bubbles: true }));
+          document.dispatchEvent(new CustomEvent("cart:updated", { bubbles: true }));
+        }
+      } catch (_) {}
+      return res;
+    };
+
+    // Cross-tab signals (nice to have)
+    try {
+      window.__oseaCartBC = new BroadcastChannel("osea:cart");
+      window.__oseaCartBC.onmessage = (m) => {
+        if (m?.type === "cart:refresh") {
+          const evt = new CustomEvent("cart:refresh", { bubbles: true });
+          window.dispatchEvent(evt);
+          document.dispatchEvent(evt);
+        }
+      };
+    } catch (_) {}
+
+    // If any script touches localStorage key, piggyback as a signal
+    const _setItem = localStorage.setItem.bind(localStorage);
+    localStorage.setItem = function (k, v) {
+      _setItem(k, v);
+      if (k === "osea.cart.bump") {
+        const evt = new CustomEvent("cart:refresh", { bubbles: true });
+        window.dispatchEvent(evt);
+        document.dispatchEvent(evt);
+      }
+    };
+  }
+
+  constructor() {
+    super();
+    this.textEl = this.querySelector(".shipping-countdown-text");
+    this.thresholdDollars = Number(this.getAttribute("threshold") || 0);
+    this.thresholdCents = Math.max(0, Math.round(this.thresholdDollars * 100));
+
+    // Debounce to collapse bursts of events
+    this._refreshDebounced = ((fn) => {
+      let t;
+      return () => {
+        clearTimeout(t);
+        t = setTimeout(fn, 120);
+      };
+    })(() => this.refresh());
+    this.refresh = this.refresh.bind(this);
+
+    // Coalesce in-flight cart requests
+    this._cartInflight = null;
+    this._lastCartJson = null;
+
+    // One-time global patch
+    ShippingCountdown.ensureCartSignalsPatched();
+  }
+
+  connectedCallback() {
+    // Initial paint
+    this.refresh();
+
+    const link = this.querySelector(".calc-link");
+    if (link) {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const sel = this.dataset.calculator;
+        // prefer explicit selector; fallback to next sibling <shipping-calculator>
+        const calc =
+          (sel && document.querySelector(sel)) ||
+          this.parentElement?.querySelector("shipping-calculator") ||
+          (this.nextElementSibling instanceof HTMLElement &&
+            this.nextElementSibling.tagName === "SHIPPING-CALCULATOR")
+            ? this.nextElementSibling
+            : null;
+
+        if (calc?.open) calc.open();
+        else if (calc) {
+          // graceful fallback if custom element hasn't upgraded yet
+          const form = calc.querySelector("form");
+          form?.classList.remove("hidden");
+          form?.querySelector("input")?.focus();
+        }
+      });
+    }
+
+    // 1) Listen to common cart events (your original list)
+    [
+      "cart:updated",
+      "cart:update",
+      "cart:change",
+      "cart:refresh",
+      "lineItem:added",
+      "lineItem:removed",
+    ].forEach((name) => {
+      window.addEventListener(name, this._refreshDebounced, { passive: true });
+      document.addEventListener(name, this._refreshDebounced, { passive: true });
+    });
+
+    // 2) Listen to cart-drawer specific events if your drawer dispatches them
+    const cartDrawer = document.querySelector("cart-drawer");
+    if (cartDrawer) {
+      ["cart:updated", "cart:change", "updated", "change"].forEach((name) =>
+        cartDrawer.addEventListener(name, this._refreshDebounced, { passive: true })
+      );
+    }
+
+    // 3) Section re-renders often imply cart UI changed
+    document.addEventListener("shopify:section:load", this._refreshDebounced, { passive: true });
+
+    // 4) BroadcastChannel echo (from patched fetch)
+    if (window.__oseaCartBC) {
+      this._bcHandler = (m) => m?.type === "cart:refresh" && this._refreshDebounced();
+      window.__oseaCartBC.addEventListener?.("message", this._bcHandler);
+    }
+  }
+
+  disconnectedCallback() {
+    [
+      "cart:updated",
+      "cart:update",
+      "cart:change",
+      "cart:refresh",
+      "lineItem:added",
+      "lineItem:removed",
+    ].forEach((name) => {
+      window.removeEventListener(name, this._refreshDebounced);
+      document.removeEventListener(name, this._refreshDebounced);
+    });
+
+    const cartDrawer = document.querySelector("cart-drawer");
+    if (cartDrawer) {
+      ["cart:updated", "cart:change", "updated", "change"].forEach((name) =>
+        cartDrawer.removeEventListener(name, this._refreshDebounced)
+      );
+    }
+
+    document.removeEventListener("shopify:section:load", this._refreshDebounced);
+
+    if (window.__oseaCartBC && this._bcHandler) {
+      window.__oseaCartBC.removeEventListener?.("message", this._bcHandler);
+    }
+  }
+
+  async getCartJson() {
+    // Coalesce concurrent requests
+    if (this._cartInflight) return this._cartInflight;
+
+    this._cartInflight = (async () => {
+      const res = await fetch("/cart.js", { credentials: "same-origin", cache: "no-store" });
+      if (!res.ok) throw new Error("Cart fetch failed");
+      const json = await res.json();
+      this._lastCartJson = json;
+      // Tell other tabs
+      try {
+        window.__oseaCartBC?.postMessage?.({ type: "cart:refresh" });
+      } catch (_) {}
+      return json;
+    })().finally(() => (this._cartInflight = null));
+
+    return this._cartInflight;
+  }
+
+  async refresh() {
+    // If no threshold, it's always free shipping
+    if (this.thresholdCents <= 0) {
+      this.setText(`You get free shipping!`);
+      return;
+    }
+
+    let cart;
+    try {
+      cart = await this.getCartJson();
+    } catch (e) {
+      // Fallback to default message on error
+      this.setText(`Free Shipping on Orders ${this.formatMoney(this.thresholdCents)}+`);
+      return;
+    }
+
+    const total = Number(cart.total_price || 0); // cents
+    const itemCount = Number(cart.item_count || 0);
+
+    if (itemCount === 0) {
+      this.setText(`Free Shipping on Orders ${this.formatMoney(this.thresholdCents)}+`);
+      return;
+    }
+
+    if (total >= this.thresholdCents) {
+      this.setText(`You get free shipping!`);
+      return;
+    }
+
+    const remaining = this.thresholdCents - total;
+    this.setText(`Spend ${this.formatMoney(remaining)} more to get free shipping`);
+  }
+
+  setText(str) {
+    if (this.textEl) {
+      this.textEl.textContent = str;
+    } else {
+      this.textContent = str;
+    }
+  }
+
+  formatMoney(cents) {
+    if (window.Shopify && typeof Shopify.formatMoney === "function") {
+      const fmt =
+        window.theme?.moneyFormat ||
+        window.moneyFormat ||
+        (window.Shopify.currency?.active === "JPY" ? "${{amount_no_decimals}}" : "${{amount}}");
+
+      return Shopify.formatMoney(Math.round(cents), fmt).replace(/(\.00)(?!\d)/, "");
+    }
+
+    const currency = window.Shopify?.currency?.active || "USD";
+    const value = cents / 100;
+    const withCents = value.toLocaleString(undefined, { style: "currency", currency });
+    return Number.isInteger(value) ? withCents.replace(/(\.00)(?!\d)/, "") : withCents;
+  }
+}
+customElements.define("shipping-countdown", ShippingCountdown);
 
 class MenuDrawer extends HTMLElement {
   constructor() {

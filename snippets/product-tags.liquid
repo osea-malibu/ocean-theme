@@ -1,10 +1,6 @@
 {%- if block.settings.tags != blank -%}
   {%- assign raw_tags = block.settings.tags | replace: ' and ', ', ' | split: ',' -%}
   {%- assign chip_base = 'badge text-sm' -%}
-<script>
-  console.log('block.settings.tags', {{ block.settings.tags | json }});
-  console.log('raw_tags', {{ raw_tags | json }});
-</script>
   <div class="{{ block.settings.tag_block_classes }} flex gap-1.5 flex-wrap" {{ block.shopify_attributes }}>
     {%- for t in raw_tags -%}
       {%- liquid
