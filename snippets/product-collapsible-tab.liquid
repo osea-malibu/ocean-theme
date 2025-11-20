@@ -43,14 +43,6 @@
               </li>
             {%- endif -%}
           {%- endif -%}
-          {%- if hide_benefit_icons -%}
-            <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">TSA Friendly</li>
-          {%- else -%}
-            <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">
-              {%- render 'icon-benefit-mini', icon: 'tsa-friendly', stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
-              <span class="text-sm font-book leading-none">TSA Friendly</span>
-            </li>
-          {%- endif -%}
           {%- for benefit in product.metafields.custom.benefits.value -%}
             {%- if hide_benefit_icons -%}
               <li class="{{ benefit_tag_classes }}">{{ benefit }}</li>
@@ -64,6 +56,14 @@
               </li>
             {%- endif -%}
           {%- endfor -%}
+          {%- if hide_benefit_icons -%}
+            <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">TSA Friendly</li>
+          {%- else -%}
+            <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">
+              {%- render 'icon-benefit-mini', icon: 'tsa-friendly', stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
+              <span class="text-sm font-book leading-none">TSA Friendly</span>
+            </li>
+          {%- endif -%}
         </ul>
       {%- endif -%}
       {%- if product.metafields.custom.key_benefits != blank -%}
