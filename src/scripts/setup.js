@@ -124,6 +124,10 @@ export function setupManualRedirects() {
       window.location.replace("https://oseamalibu.com/collections/body-care");
     }
   }
+
+  if (pathname === "/products/lip-oil-keychain") {
+    window.location.replace("https://oseamalibu.com/pages/black-friday-2025");
+  }
 }
 
 /**
