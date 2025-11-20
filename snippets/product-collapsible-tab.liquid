@@ -33,16 +33,18 @@
     {%- capture benefits_html -%}
       {%- if product.metafields.custom.benefits != blank -%}
         <ul class="mb-2 flex gap-2 flex-wrap">
-          {%- if hide_benefit_icons -%}
-            <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">Fragrance free</li>
-          {%- else -%}
-            <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">
-              {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
-              <span class="text-sm font-book leading-none">Fragrance Free</span>
-            </li>
+          {%- if product.options contains 'Scent' -%}
+            {%- if hide_benefit_icons -%}
+              <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">Fragrance free</li>
+            {%- else -%}
+              <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">
+                {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
+                <span class="text-sm font-book leading-none">Fragrance Free</span>
+              </li>
+            {%- endif -%}
           {%- endif -%}
           {%- if hide_benefit_icons -%}
-            <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">Fragrance free</li>
+            <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">TSA Friendly</li>
           {%- else -%}
             <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">
               {%- render 'icon-benefit-mini', icon: 'tsa-friendly', stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
