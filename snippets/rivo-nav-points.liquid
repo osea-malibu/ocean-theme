@@ -5,12 +5,12 @@
 {% assign default_points = signup_way_to_earn.points_amount | times: 1 %}
 {% assign points_balance = customer.metafields.custom.rivo.value.points_balance | default: default_points %}
 {% if customer %}
-  <a href="/pages/loyalty-program" class="rivo-nav-points hidden inline bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs leading-none text-center font-medium max-w-12">
+  {% comment %} <a href="/pages/loyalty-program" class="rivo-nav-points hidden inline bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs leading-none text-center font-medium max-w-12">
     {% assign adjusted_balance = points_balance | times: 100 %}
     {% assign formatted_balance = adjusted_balance | money_without_currency %}
     {% assign formatted_balance = formatted_balance | replace: ',' , '' | replace: '.00', '' %}
     {{ formatted_balance }} <span class="tracking-tight 2xs:tracking-normal">Points</span>
-  </a>
+  </a> {% endcomment %}
   <span class="rivo-pretty-points-balance rivo-points-total inline bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs leading-none text-center font-medium max-w-12"></span>
 
   <script type="text/javascript">
