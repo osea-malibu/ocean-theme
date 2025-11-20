@@ -111,12 +111,6 @@
                   assign free_gifts_active = false
                 endif
               -%}
-              <script>
-                console.log('free_gifts_active', {{ free_gifts_active }});
-                console.log('loyalty_only', {{ loyalty_only }});
-                console.log('customer', {{ customer | json }});
-                console.log('enable_gwp and gwp_type', {{ settings.enable_gwp }}, '{{ settings.gwp_type }}');
-              </script>
               {%- if free_gifts_active -%}
                 <div class="{{ block.settings.free_gift_info_classes }}">
                   {%- if settings.gwp_tier1_product != blank -%}
