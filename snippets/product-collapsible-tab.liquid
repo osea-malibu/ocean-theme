@@ -35,7 +35,7 @@
         <ul class="mb-2 flex gap-2 flex-wrap">
           {%- if product.options contains 'Scent' -%}
             {%- if hide_benefit_icons -%}
-              <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">Fragrance free</li>
+              <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">Fragrance Free</li>
             {%- else -%}
               <li class="scent-fragrance-free {{ benefit_tag_classes }}{% unless is_fragrance_free %} hidden{% endunless %}">
                 {%- render 'icon-benefit-mini', icon: 'fragrance-free', stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
