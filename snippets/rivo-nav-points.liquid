@@ -11,7 +11,7 @@
     {% assign formatted_balance = formatted_balance | replace: ',' , '' | replace: '.00', '' %}
     {{ formatted_balance }} <span class="tracking-tight 2xs:tracking-normal">Points</span>
   </a> {% endcomment %}
-  <span class="rivo-pretty-points-balance inline bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs leading-none text-center font-medium max-w-12" rivo-ax-text="$store.rivo_profile_customer?.pretty_points_tally"></span>
+  <span class="rivo-pretty-points-balance {% comment %} inline bg-seafoam-200 rounded-sm px-1 py-0.5 text-xs leading-none text-center font-medium max-w-12 {% endcomment %}" rivo-ax-text="$store.rivo_profile_customer?.pretty_points_tally"></span>
 {% else %}
   <!-- Handle case when customer is not available -->
 {% endif %}
