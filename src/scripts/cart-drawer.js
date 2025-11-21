@@ -7,6 +7,7 @@ class CartDrawer extends HTMLElement {
 
     this.overlay = this.querySelector(".cart-scrim");
     this.drawer = this.querySelector(".cart-drawer");
+    this.hasEnsuredGwp = false;
 
     this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
     this.overlay.addEventListener("click", this.close.bind(this));
@@ -66,6 +67,8 @@ class CartDrawer extends HTMLElement {
   open(triggeredBy) {
     if (triggeredBy) this.setActiveElement(triggeredBy);
 
+    this.ensureGiftWithPurchase();
+
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');
     if (cartDrawerNote && !cartDrawerNote.hasAttribute("role")) {
       this.setSummaryAccessibility(cartDrawerNote);
@@ -92,6 +95,32 @@ class CartDrawer extends HTMLElement {
     );
 
     document.body.classList.add("overflow-hidden");
+  }
+
+  ensureGiftWithPurchase() {
+    if (this.hasEnsuredGwp) return;
+
+    const gwpSettings = window?.gwpSettings;
+    if (!gwpSettings?.enabled) return;
+
+    const cartItemsElement =
+      document.querySelector("cart-drawer-items") || document.querySelector("cart-items");
+    if (!cartItemsElement?.handleGiftWithPurchase) return;
+
+    this.hasEnsuredGwp = true;
+
+    fetch(`${window.Shopify.routes.root}cart.js`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Failed to fetch cart: ${response.status}`);
+        return response.json();
+      })
+      .then((cartState) => {
+        cartItemsElement.handleGiftWithPurchase(cartState);
+      })
+      .catch((error) => {
+        console.error("Error running gift with purchase sync:", error);
+        this.hasEnsuredGwp = false;
+      });
   }
 
   close() {
