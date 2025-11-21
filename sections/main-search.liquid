@@ -126,7 +126,7 @@
                         -%}
                         {% render 'search-card',
                           url: item.url,
-                          image: item.image,
+                          image: item.metafields.custom.search_image,
                           title: page_title,
                           description: page_description,
                           search_page: true
