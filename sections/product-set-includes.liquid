@@ -4,7 +4,7 @@
     <div class="flex-1 w-full rounded-xl bg-white p-4 lg:p-10">
       <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>
       <horizontal-scroll-box class="relative block w-full max-w-full">
-        <ul class="scroll-box flex gap-4 lg:gap-6 snap-x snap-mandatory overflow-x-auto">
+        <ul class="scroll-box flex gap-2 sm:gap-4 lg:gap-6 snap-x snap-mandatory overflow-x-auto">
           {%- for product_in_set in product.metafields.custom.set_contains.value -%}
             {%- liquid
               if product_in_set.metafields.custom.parent_product != blank
@@ -23,8 +23,8 @@
                 assign product_ingredients = product_in_set.metafields.custom_fields.ingredients
               endif
             -%}
-            <li class="snap-start flex-1 rounded-lg bg-p-surface p-4 lg:p-6 xl:p-8 min-w-[620px]" style="--p-surface: {{ product_in_set.metafields.theme.surface | default: '#f1f5f4' }}">
-              <div class="flex flex-row gap-4 mb-4">
+            <li class="snap-start flex-1 rounded-lg bg-p-surface p-4 lg:p-6 xl:p-8 min-w-[288px] xs:min-w-[320px] sm:min-w-[480px] md:min-w-[620px]" style="--p-surface: {{ product_in_set.metafields.theme.surface | default: '#f1f5f4' }}">
+              <div class="flex flex-col md:flex-row gap-4 mb-4">
                 <div class="w-full order-1 grow flex flex-col items-start">
                   <a href="{{ product_url | default: '#' }}" class="block no-underline">
                     <h4 class="text-lg leading-tight font-bold">
@@ -94,7 +94,7 @@
               <div class="content py-3">
                 <h5 class="font-bold mb-2">Key ingredients</h5>
                 {%- if key_ingredients_list -%}
-                  <div class="flex gap-4 overflow-x-auto pb-2">
+                  <div class="flex gap-2 sm:gap-4 overflow-x-auto pb-2">
                   {%- for ingredient in key_ingredients_list.value -%}
                     <div class="w-36 shrink-0">
                       {%- if ingredient.image -%}
