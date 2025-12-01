@@ -56,6 +56,7 @@
               </li>
             {%- endif -%}
           {%- endfor -%}
+          <script>console.log('variants', {{  product.variants | json }});</script>
           {%- if hide_benefit_icons -%}
             <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">TSA Friendly</li>
           {%- else -%}
