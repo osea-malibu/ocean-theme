@@ -29,6 +29,16 @@
       if mini_size_array contains normalized_variant_title
         assign is_mini = true
       endif
+      assign has_mini_variant = false
+      assign variant_titles = product.variants | map: 'title'
+      for variant_title in variant_titles
+        unless has_mini_variant
+          assign normalized_variant_option_title = variant_title | replace: 'fl ', ''
+          if mini_size_array contains normalized_variant_option_title
+            assign has_mini_variant = true
+          endif
+        endunless
+      endfor
     -%}
     {%- capture benefits_html -%}
       {%- if product.metafields.custom.benefits != blank -%}
@@ -56,14 +66,15 @@
               </li>
             {%- endif -%}
           {%- endfor -%}
-          <script>console.log('variants', {{  product.variants | json }});</script>
-          {%- if hide_benefit_icons -%}
-            <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">TSA Friendly</li>
-          {%- else -%}
-            <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">
-              {%- render 'icon-benefit-mini', icon: 'tsa-friendly', stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
-              <span class="text-sm font-book leading-none">TSA Friendly</span>
-            </li>
+          {%- if has_mini_variant -%}
+            {%- if hide_benefit_icons -%}
+              <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">TSA Friendly</li>
+            {%- else -%}
+              <li class="size-mini {{ benefit_tag_classes }}{% unless is_mini %} hidden{% endunless %}">
+                {%- render 'icon-benefit-mini', icon: 'tsa-friendly', stroke_width: 10, classes: 'w-3.5 h-3.5 block', aria_hidden: true -%}
+                <span class="text-sm font-book leading-none">TSA Friendly</span>
+              </li>
+            {%- endif -%}
           {%- endif -%}
         </ul>
       {%- endif -%}
