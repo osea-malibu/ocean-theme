@@ -42,7 +42,7 @@
     assign cart_contains_bundle = false
   endif
 
-  assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, Scented / 1 oz' | split: ', '
+  assign travel_sizes = settings.travel_sizes | split: ', '
   assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1, hyaluronic-sea-serum, advanced-repair-eye-cream, anti-aging-sea-serum, seaglow-resurfacing-scrub' | split: ', '
 
   assign has_ordered_tote = false
