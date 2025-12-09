@@ -2,6 +2,7 @@
 <html class="no-js bg-white text-seaweed-700" lang="{{ request.locale.iso_code }}" style="--sticky-atc-height: 0px;">
   <head>
     {% render 'gpc-integration-script' %}
+    {% render 'google-tag-manager' %}
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,7 +29,6 @@
     {% liquid
       render 'meta-tags'
       render 'prefetch'
-      render 'google-tag-manager'
       render 'howl'
       render 'amazon-marketing-cloud'
     %}
