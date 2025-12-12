@@ -69,6 +69,50 @@
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:left-1/2 mt-0 sm:mt-0 sm:pr-12"
       }
     },
+    "image_banner_mQetMC": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_hrG9AE": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Season for Self-Care",
+            "heading_classes": "text-6xl lg:text-7xl xl:text-8xl text-white sm:mt-6 sm:mb-2 sm:text-5xl tracking-tight xs:tracking-normal xl:mb-4 xl:mt-3 font-serif mt-4 max-w-xs sm:max-w-2xl"
+          }
+        },
+        "paragraph_hqJXME": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Promote a sense of well-being with products designed for moments of relaxation.",
+            "paragraph_classes": "text-white sm:mb-4 lg:text-xl text-xl  font-book leading-tight xl:mb-6 hidden sm:block"
+          }
+        },
+        "button_FkNWnN": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop to redeem: Shop all OSEA products",
+            "button_link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "button-white mt-auto text-green sm:mt-2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hrG9AE",
+        "paragraph_hqJXME",
+        "button_FkNWnN"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify://shop_images/12.13.25_HP_Banner_Self_Care_Holiday_V1_-_Mobile_BLANK.jpg",
+        "image": "shopify://shop_images/12.13.25_HP_Banner_Self_Care_Holiday_V1_-_Desktop_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/shop",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-start mt-4"
+      }
+    },
     "image_banner_i3NeaW": {
       "type": "image-banner",
       "blocks": {
@@ -1917,6 +1961,7 @@
   },
   "order": [
     "image_banner_eQ8pB7",
+    "image_banner_mQetMC",
     "image_banner_i3NeaW",
     "image_banner_WcwHKf",
     "image_banner_picygx",
