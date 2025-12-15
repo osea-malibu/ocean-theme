@@ -177,7 +177,7 @@
           <tr>
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
               <td class="text-left px-2 align-top text-sm pb-2">
-                <ul class="icon-list bullet !pl-5">
+                <ul class="icon-list bullet">
                   {%- for ingredient in matrix_product.metafields.custom.key_ingredients_list.value -%}
                     <li>{{ ingredient.name | split: '[' | first }}</li>
                   {%- endfor -%}
