@@ -138,6 +138,44 @@
   {%- endif -%}
 </div>
 
+{%- if collection and collection.products_count > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": {{ collection.title | json }},
+      "url": {{ shop.url | append: collection.url | json }},
+      {%- liquid
+        assign seo_description = collection.metafields.custom.seo_description
+        if seo_description != blank
+          assign schema_description = seo_description
+        else
+          assign schema_description = collection.description
+        endif
+      -%}
+      "description": {{ schema_description | strip_html | truncate: 160 | json }},
+      {% if collection.image %}
+        "image": [
+          {{ collection.image | image_url: width: 1200 | prepend: "https:" | json }}
+        ],
+      {% endif %}
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {%- for product in collection.products -%}
+            {
+              "@type": "ListItem",
+              "position": {{ forloop.index }},
+              "url": {{ shop.url | append: product.url | json }},
+              "name": {{ product.title | json }}
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    }
+  </script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "t:sections.main-collection-product-grid.name",
