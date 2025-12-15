@@ -27,6 +27,12 @@
         "show_reviews": false
       }
     },
+    "faqs": {
+      "type": "collection-faqs",
+      "settings": {
+        "header": "FAQs"
+      }
+    },
     "comparison-matrix": {
       "type": "collection-comparison-matrix",
       "settings": {}
@@ -74,10 +80,5 @@
       }
     }
   },
-  "order": [
-    "banner",
-    "product-grid",
-    "comparison-matrix",
-    "quiz"
-  ]
+  "order": ["banner", "product-grid", "faqs", "comparison-matrix", "quiz"]
 }
