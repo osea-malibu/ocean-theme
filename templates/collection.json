@@ -18,6 +18,9 @@
     },
     "product-grid": {
       "type": "main-collection",
+      "custom_css": [
+        ".plp-shop {background: #EEF3F2;}"
+      ],
       "settings": {
         "products_per_page": 20,
         "enable_filtering": true,
@@ -80,5 +83,11 @@
       }
     }
   },
-  "order": ["banner", "product-grid", "faqs", "comparison-matrix", "quiz"]
+  "order": [
+    "banner",
+    "product-grid",
+    "faqs",
+    "comparison-matrix",
+    "quiz"
+  ]
 }
