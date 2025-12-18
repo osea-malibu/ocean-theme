@@ -60,7 +60,7 @@
       {% unless remove_linking %}</a>{% endunless %}
     </div>
 
-    <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
+    <p class="text-sm lg:text-base !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
       {%- if short_description_text != blank -%}
         {{- short_description_text | escape -}}
       {%- else -%}
