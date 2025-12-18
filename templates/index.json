@@ -9,6 +9,50 @@
  */
 {
   "sections": {
+    "image_banner_F4hWnV": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_kVdqPp": {
+          "type": "heading",
+          "settings": {
+            "heading": "Dream Bio-Retinol<br>Body Serum",
+            "heading_classes": "text-4xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-white tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl"
+          }
+        },
+        "paragraph_UNK7Rk": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Visibly firmer, smoother skin while you sleep",
+            "paragraph_classes": "text-white sm:mb-4 lg:text-xl text-md  font-book leading-tight xl:mb-6"
+          }
+        },
+        "button_PGtDHV": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop to redeem: Shop all OSEA products",
+            "button_link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "bg-dbbs-surface border-dbbs-surface text-dream-navy mt-2 mb-6"
+          }
+        }
+      },
+      "block_order": [
+        "heading_kVdqPp",
+        "paragraph_UNK7Rk",
+        "button_PGtDHV"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify://shop_images/DBBS_Launch_-_HP_Banner_Mobile_-_BLANK.jpg",
+        "image": "shopify://shop_images/DBBS_Launch_-_HP_Banner_Desktop_-_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/shop",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:left-1/2 mt-0 sm:mt-0 sm:pr-12"
+      }
+    },
     "image_banner_cPTTKe": {
       "type": "image-banner",
       "blocks": {
@@ -369,50 +413,6 @@
         "container_classes": "text-center"
       }
     },
-    "image_banner_F4hWnV": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_kVdqPp": {
-          "type": "heading",
-          "settings": {
-            "heading": "Dream Bio-Retinol<br>Body Serum",
-            "heading_classes": "text-4xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-white tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl"
-          }
-        },
-        "paragraph_UNK7Rk": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Visibly firmer, smoother skin while you sleep",
-            "paragraph_classes": "text-white sm:mb-4 lg:text-xl text-md  font-book leading-tight xl:mb-6"
-          }
-        },
-        "button_PGtDHV": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_aria_label": "Shop to redeem: Shop all OSEA products",
-            "button_link": "shopify://collections/shop",
-            "target_blank": false,
-            "button_classes": "bg-dbbs-surface border-dbbs-surface text-dream-navy mt-2 mb-6"
-          }
-        }
-      },
-      "block_order": [
-        "heading_kVdqPp",
-        "paragraph_UNK7Rk",
-        "button_PGtDHV"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify://shop_images/DBBS_Launch_-_HP_Banner_Mobile_-_BLANK.jpg",
-        "image": "shopify://shop_images/DBBS_Launch_-_HP_Banner_Desktop_-_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://collections/shop",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:left-1/2 mt-0 sm:mt-0 sm:pr-12"
-      }
-    },
     "709b7e8c-8f79-49e5-8cfc-b63791bb19f7": {
       "type": "product-grid",
       "settings": {
@@ -425,6 +425,7 @@
     }
   },
   "order": [
+    "image_banner_F4hWnV",
     "image_banner_cPTTKe",
     "multicolumn_JAkzJh",
     "5825ef80-7eba-428f-aef6-379126e7f97c",
@@ -432,7 +433,6 @@
     "image_banner_miYQ6K",
     "c4d3f8bc-418e-4184-a588-698c391f3344",
     "165703204544efb73d",
-    "image_banner_F4hWnV",
     "709b7e8c-8f79-49e5-8cfc-b63791bb19f7"
   ]
 }
