@@ -1,9 +1,17 @@
-{%- if section.settings.founder_image and section.settings.founder_body != blank -%}
+{%- liquid
+  assign founder_body = section.settings.founder_body_sku | default: section.settings.founder_body
+  assign founder_name = section.settings.founder_name_sku | default: section.settings.founder_name
+  assign founder_image = section.settings.founder_image_sku
+  if founder_image == blank
+    assign founder_image = section.settings.founder_image
+  endif
+-%}
+{%- if founder_image and founder_body != blank -%}
   <div class="product-jp-quote container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
     <div class="w-full flex flex-col md:flex-row-reverse gap-y-5 md:gap-x-4 lg:gap-x-6 justify-between md:max-h-[372px] items-stretch">
       {%- liquid
-        assign image_src = section.settings.founder_image | image_url: width: 750, height: 750, crop: 'center'
-        assign image_src_2x = section.settings.founder_image | image_url: width: 1500, height: 1500, crop: 'center'
+        assign image_src = founder_image | image_url: width: 750, height: 750, crop: 'center'
+        assign image_src_2x = founder_image | image_url: width: 1500, height: 1500, crop: 'center'
       -%}
     
       <!-- Image column -->
@@ -14,9 +22,9 @@
           srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
           src="{% render 'imgix', src: image_src_2x %}"
           loading="lazy"
-          alt="{{ section.settings.founder_image.alt | escape }}"
-          width="{{ section.settings.founder_image.width }}"
-          height="{{ section.settings.founder_image.height }}"
+          alt="{{ founder_image.alt | escape }}"
+          width="{{ founder_image.width }}"
+          height="{{ founder_image.height }}"
         >
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       </div>
@@ -34,8 +42,8 @@
             >
               <path fill="currentColor" d="M76.19617,0.96 C88.9960786,0.96 99.996,9.75958 99.996,28.75998 C99.996,55.4597893 78.1961557,71.1596771 65.7962443,72.7596657 L63.1964414,65.35954 C70.39639,60.6595736 76.2961693,52.5596314 75.6963521,47.859665 C67.5965886,47.2597764 54.4965036,42.9595214 54.4965036,25.3598257 C54.3960579,12.0604564 61.8960936,0.96 76.1963486,0.96 L76.19617,0.96 Z M21.8965579,0.96017857 C34.6964664,0.96017857 45.6963879,9.76029428 45.6963879,28.75998 C45.6963879,55.4597893 23.8965436,71.1596771 11.4966321,72.7596657 L8.89682928,65.35954 C15.9964214,60.6602879 21.8962007,52.6601664 21.1958486,47.8603793 C13.1964414,47.2597943 -0.004,42.9602357 -0.004,25.36054 C-0.004,12.060635 7.59576714,0.96017857 21.8958436,0.96017857 L21.8965579,0.96017857 Z"></path>
             </svg>
-            <div class="text-xl lg:text-2xl p:mb-4 font-serif">{{ section.settings.founder_body }}</div>
-            <cite class="block text-lg lg:text-xl p:mb-4 self-end">{{ section.settings.founder_name }}</cite>
+            <div class="text-xl lg:text-2xl p:mb-4 font-serif">{{ founder_body }}</div>
+            <cite class="block text-lg lg:text-xl p:mb-4 self-end">{{ founder_name }}</cite>
           </div>
         </div>
       </div>
@@ -49,28 +57,47 @@
   "tag": "section",
   "settings": [
     {
-      "type": "header",
-      "content": "Founder quote"
-    },
-    {
       "type": "textarea",
       "id": "wrapper_classes",
       "label": "Wrapper classes"
     },
     {
+      "type": "header",
+      "content": "Founder quote (Product-specific)"
+    },
+    {
       "type": "richtext",
-      "id": "founder_body",
+      "id": "founder_body_sku",
       "label": "Quote"
     },
     {
       "type": "text",
-      "id": "founder_name",
+      "id": "founder_name_sku",
       "label": "Name"
     },
     {
       "type": "image_picker",
-      "id": "founder_image",
+      "id": "founder_image_sku",
       "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Founder quote (Default)"
+    },
+    {
+      "type": "richtext",
+      "id": "founder_body",
+      "label": "Quote (default)"
+    },
+    {
+      "type": "text",
+      "id": "founder_name",
+      "label": "Name (default)"
+    },
+    {
+      "type": "image_picker",
+      "id": "founder_image",
+      "label": "Image (default)"
     }
   ]
 }
