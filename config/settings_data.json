@@ -37,9 +37,9 @@
     "cart_empty_state_links": "cart-empty-state",
     "cart_disclaimer": "By checking out, I accept the <a href=\"/pages/terms-of-use\">Terms of Use</a> and acknowledge that my information will be used in accordance with the <a href=\"/pages/privacy-policy\">Privacy Policy</a>.",
     "enable_shipping_countdown": true,
-    "shipping_countdown_threshold": 150,
-    "shipping_countdown_text": "You are remaining_amount away from free 2-day shipping!",
-    "shipping_countdown_text_success": "Congrats! You get free 2-day shipping.",
+    "shipping_countdown_threshold": 50,
+    "shipping_countdown_text": "You are remaining_amount away from free shipping!",
+    "shipping_countdown_text_success": "Congrats! You get free shipping.",
     "cart_recommendations_travel_handles": "reusable-cotton-rounds, anti-aging-body-balm, ocean-cleanser, undaria-algae-body-lotion, undaria-algae-oil, hyaluronic-body-serum, undaria-algae-body-butter, ocean-cleansing-milk, ocean-cleansing-mudd, dayglow-face-oil, sea-minerals-mist, essential-hydrating-oil-1, undaria-algae-body-wash",
     "enable_gwp": false,
     "gwp_type": "auto",
@@ -65,7 +65,7 @@
     "gwp_firsttime_product": "",
     "enableImgix": true,
     "shopifyCdnUrl": "//oseamalibu.com/cdn/shop",
-    "enable_global_plp_tile": true,
+    "enable_global_plp_tile": false,
     "global_plp_tile_image": "shopify://shop_images/PLP_Tile___2-Day_Shipping_Promo___2025-12-15.jpg",
     "global_plp_tile_url": "",
     "enable_postscript_teaser": true,
@@ -82,19 +82,20 @@
         "blocks": {
           "announcement_JpDQf6": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
-              "text": "<p>Order by 12/18 with 2-day shipping for 12/24 delivery</p>"
+              "text": "<p>Ends tonight! Free 2-day shipping on orders $150+</p>"
             }
           },
           "announcement_3qbKGP": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
-              "text": "<p>Free 2-day shipping on orders $150+</p>"
+              "text": "<p>$150+ orders arrive by 12/24</p>"
             }
           },
           "announcement-bar-0": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
               "text": "<p>Free shipping on orders $50+</p>"
             }
@@ -119,11 +120,11 @@
           "hamburger_menu": "sun-hamburger-menu",
           "enable_navbar": true,
           "navbar_menu": "ocean-navbar",
-          "promo_image": "shopify://shop_images/2025-12-15___Mega_Menu___2-day_Shipping_Promotion.jpg",
-          "promo_heading": "Free 2-Day Shipping",
-          "promo_paragraph": "<p>Spend $150+ and enjoy free upgraded shipping for on-time gifts. </p>",
-          "promo_link": "shopify://collections/shop",
-          "promo_button": "Shop Now"
+          "promo_image": "shopify://shop_images/12-19___Mega_Menu___Winter_Skincare_Tips-2.jpg",
+          "promo_heading": "Our Tips for Moisturized Winter Skin",
+          "promo_paragraph": "",
+          "promo_link": "shopify://blogs/wellness-blog/winter-skincare-tips-to-fight-dryness",
+          "promo_button": "Read More"
         }
       },
       "footer": {
