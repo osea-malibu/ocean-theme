@@ -1135,7 +1135,7 @@ class VariantSelects extends HTMLElement {
       const variantImageEl = document.querySelector("#Product-VariantImage");
       const newImageSrc = this.currentVariant.featured_image.src;
       if (variantImageEl) {
-        variantImageEl.srcset = `${newImageSrc}&width=294 1x, ${newImageSrc}&width=588 2x`;
+        variantImageEl.srcset = `${newImageSrc}&width=800 1x, ${newImageSrc}&width=1600 2x`;
         variantImageEl.src = newImageSrc;
       }
       // change thumbanil image in product page gallery thumb navigator
