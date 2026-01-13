@@ -590,25 +590,36 @@ div.oke-sr > div {
 /* Klaviyo - Back in Stock PDP button */
 
 /* PDP: Klaviyo BIS button */
-.pdp .klaviyo-bis-trigger.button {
+
+/* PDP: Klaviyo Back in Stock container positioning */
+
+/* PDP: position the BIS container (layout) */
+.pdp #klaviyo-bis-button-container {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  margin-bottom: 0 !important;
+  width: calc(50% - 4px);
+}
+
+/* PDP: style the BIS button (visual) */
+.pdp #klaviyo-bis-button-container .klaviyo-bis-trigger.button {
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
   color: var(--color-seaweed-800);
   height: var(--spacing-11);
-  position: absolute;
-  bottom: 0;
-  width: calc(50% - 4px);
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.pdp .klaviyo-bis-trigger.button.hidden {
+.pdp #klaviyo-bis-button-container .klaviyo-bis-trigger.button.hidden {
   display: none;
 }
 
 /* PLP: container that Klaviyo injects into */
 .klaviyo-product-container .klaviyo-button-container[klaviyo-bis-trigger] {
-  /* beat Klaviyo inline "center me" */
   position: absolute !important;
   inset: 0 !important;
   margin-left: 0 !important;
@@ -621,7 +632,6 @@ div.oke-sr > div {
 .klaviyo-product-container
   .klaviyo-button-container[klaviyo-bis-trigger]
   > a.klaviyo-bis-trigger {
-  /* Klaviyo sets padding: inherit inline; override it */
   padding: 0 !important;
 
   @apply button button-tertiary w-full h-10 flex items-center justify-between
