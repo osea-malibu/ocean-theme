@@ -1,0 +1,69 @@
+<script>
+  (function () {
+    const raw = sessionStorage.getItem('bis_intent');
+    if (!raw) return;
+
+    let intent;
+    try { intent = JSON.parse(raw); } catch { return; }
+
+    const maxAgeMs = 2 * 60 * 1000;
+    if (!intent.ts || Date.now() - intent.ts > maxAgeMs) {
+      sessionStorage.removeItem('bis_intent');
+      return;
+    }
+
+    const params = new URLSearchParams(location.search);
+    const currentVariant = params.get('variant') || '';
+    const currentHandle = (location.pathname.split('/products/')[1] || '').split('/')[0];
+
+    const productKey = currentVariant ? `variant:${currentVariant}` : `handle:${currentHandle}`;
+
+    let openedMap = {};
+    try { openedMap = JSON.parse(sessionStorage.getItem('bis_opened_map') || '{}'); } catch {}
+
+    if (openedMap[productKey]) {
+      sessionStorage.removeItem('bis_intent');
+      return;
+    }
+
+    if (intent.variant && currentVariant && intent.variant !== currentVariant) return;
+
+    sessionStorage.removeItem('bis_intent');
+    openedMap[productKey] = Date.now();
+    sessionStorage.setItem('bis_opened_map', JSON.stringify(openedMap));
+
+    const SELECTORS = [
+      '#klaviyo-bis-button-container button[type="button"]',
+      '#klaviyo-bis-button-container [data-a11y-identifier^="bis-button-"] button[type="button"]',
+      '[data-a11y-identifier^="bis-button-"] button[type="button"]'
+    ];
+
+    function findBtn() {
+      for (const sel of SELECTORS) {
+        const el = document.querySelector(sel);
+        if (el) return el;
+      }
+      return null;
+    }
+
+    function tryClick() {
+      const el = findBtn();
+      if (!el) return false;
+
+      const disabled = el.disabled || el.getAttribute('aria-disabled') === 'true';
+      if (disabled) return false;
+
+      el.click();
+      return true;
+    }
+
+    if (tryClick()) return;
+
+    const obs = new MutationObserver(() => {
+      if (tryClick()) obs.disconnect();
+    });
+
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+    setTimeout(() => obs.disconnect(), 10000);
+  })();
+</script>

@@ -379,6 +379,9 @@
       </div>
     </product-sticky-atc>
   {%- endif -%}
+  {%- if product.selected_or_first_available_variant.available == false -%}
+    {% render 'klaviyo-bis-pdp' %}
+  {%- endif -%}
 </section>
 
 <script>

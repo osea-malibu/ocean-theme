@@ -189,8 +189,8 @@
         render 'recently-viewed-add'
       elsif template.name == 'collection'
         render 'cartful-quiz'
+        render 'klaviyo-bis-plp'
       endif
-      render 'klaviyo-back-in-stock'
       render 'gorgias-chat-widget'
       render 'bazaarvoice'
       render 'data-layer'
@@ -198,6 +198,129 @@
       render 'axon-script'
       render 'minty'
     -%}
+{% comment %} <script>
+  /**
+   * PLP: Store "intent" when user clicks Join Waitlist.
+   * Add data-bis-plp to the PLP link/button.
+   */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-bis-plp]');
+    if (!a) return;
+
+    const url = new URL(a.href, window.location.origin);
+    const variant = url.searchParams.get('variant') || '';
+    const handle = (url.pathname.split('/products/')[1] || '').split('?')[0];
+
+    const payload = { handle, variant, ts: Date.now() };
+    sessionStorage.setItem('bis_intent', JSON.stringify(payload));
+    console.log('[BIS INTENT] set', payload);
+  }, true);
+
+  /**
+   * PDP: Auto-open the new BIS modal ONLY:
+   * - if there is recent bis_intent
+   * - AND this product/variant has NOT already auto-opened in this session
+   */
+  (function () {
+    const P = '[BIS AUTOOPEN]';
+
+    if (!location.pathname.startsWith('/products/')) return;
+
+    const raw = sessionStorage.getItem('bis_intent');
+    console.log(P, 'loaded', location.href, 'intent raw=', raw);
+    if (!raw) return;
+
+    let intent;
+    try { intent = JSON.parse(raw); } catch { return; }
+
+    // Expire intent quickly (prevents surprise auto-open later)
+    const maxAgeMs = 2 * 60 * 1000; // 2 minutes
+    if (!intent.ts || Date.now() - intent.ts > maxAgeMs) {
+      console.log(P, 'intent expired, clearing');
+      sessionStorage.removeItem('bis_intent');
+      return;
+    }
+
+    // Figure out current product identity
+    const params = new URLSearchParams(location.search);
+    const currentVariant = params.get('variant') || '';
+    const currentHandle = (location.pathname.split('/products/')[1] || '').split('/')[0];
+
+    // Build a stable "product key" for "once per product page per session"
+    // Prefer variant if present; otherwise fall back to handle.
+    const productKey = currentVariant
+      ? `variant:${currentVariant}`
+      : `handle:${currentHandle}`;
+
+    // Read/opened map
+    const openedRaw = sessionStorage.getItem('bis_opened_map') || '{}';
+    let openedMap = {};
+    try { openedMap = JSON.parse(openedRaw); } catch { openedMap = {}; }
+
+    // If this product has already been auto-opened this session, do nothing.
+    if (openedMap[productKey]) {
+      console.log(P, 'already auto-opened this session for', productKey, '— skipping');
+      // consume intent so it doesn't keep trying on refresh
+      sessionStorage.removeItem('bis_intent');
+      return;
+    }
+
+    // OPTIONAL: enforce variant match only if URL includes variant
+    if (intent.variant && currentVariant && intent.variant !== currentVariant) {
+      console.log(P, 'variant mismatch', { intent: intent.variant, current: currentVariant });
+      // do NOT consume intent; maybe they landed on a different variant
+      return;
+    }
+
+    // Consume intent NOW so it won't re-trigger from refresh/back
+    sessionStorage.removeItem('bis_intent');
+
+    // Mark this product as opened for this session
+    openedMap[productKey] = Date.now();
+    sessionStorage.setItem('bis_opened_map', JSON.stringify(openedMap));
+    console.log(P, 'marked opened for session:', productKey);
+
+    // Selector for the new BIS button on PDP (from your rendered HTML)
+    const SELECTORS = [
+      '#klaviyo-bis-button-container button[type="button"]',
+      '#klaviyo-bis-button-container [data-a11y-identifier^="bis-button-"] button[type="button"]',
+      '[data-a11y-identifier^="bis-button-"] button[type="button"]',
+    ];
+
+    function findBtn() {
+      for (const sel of SELECTORS) {
+        const el = document.querySelector(sel);
+        if (el) return { el, sel };
+      }
+      return { el: null, sel: null };
+    }
+
+    function tryClick(reason) {
+      const { el, sel } = findBtn();
+      console.log(P, 'tryClick', reason, { found: !!el, sel });
+
+      if (!el) return false;
+
+      const disabled = el.disabled || el.getAttribute('aria-disabled') === 'true';
+      console.log(P, 'found button', { disabled, text: (el.textContent || '').trim() });
+
+      if (disabled) return false;
+
+      console.log(P, 'CLICKING', sel);
+      el.click();
+      return true;
+    }
+
+    if (tryClick('initial')) return;
+
+    const obs = new MutationObserver(() => {
+      if (tryClick('observer')) obs.disconnect();
+    });
+
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+    setTimeout(() => obs.disconnect(), 10000);
+  })();
+</script> {% endcomment %}
 
     {% render 'content_for_footer' %}
   </body>
