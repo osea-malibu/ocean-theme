@@ -591,8 +591,6 @@ div.oke-sr > div {
 
 /* PDP: Klaviyo BIS button */
 
-/* PDP: Klaviyo Back in Stock container positioning */
-
 /* PDP: position the BIS container (layout) */
 .pdp #klaviyo-bis-button-container {
   position: absolute;
@@ -619,7 +617,7 @@ div.oke-sr > div {
 }
 
 /* PLP: container that Klaviyo injects into */
-.klaviyo-product-container .klaviyo-button-container[klaviyo-bis-trigger] {
+.plp .klaviyo-product-container .klaviyo-button-container[klaviyo-bis-trigger] {
   position: absolute !important;
   inset: 0 !important;
   margin-left: 0 !important;
@@ -629,7 +627,8 @@ div.oke-sr > div {
 }
 
 /* PLP: injected <a> styled like ATC button */
-.klaviyo-product-container
+.plp
+  .klaviyo-product-container
   .klaviyo-button-container[klaviyo-bis-trigger]
   > a.klaviyo-bis-trigger {
   padding: 0 !important;
@@ -648,23 +647,24 @@ div.oke-sr > div {
   z-index: 10 !important;
 }
 #ps__bis_container_root #ps-bis-widget__button.ps-bis-button {
+  font-family: "circular-bold-600", Arial, "Helvetica Neue", Helvetica,
+    sans-serif;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  padding-inline: var(--spacing-4);
+  /* padding-inline: var(--spacing-4); */
   padding-block: var(--spacing-1);
-  font-size: var(--text-sm);
+  font-size: 16px;
   border-radius: var(--radius-md);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--tracking-widest);
+  font-weight: var(--font-weight-medium);
+  /* letter-spacing: var(--tracking-widest); */
   text-transform: uppercase;
-  white-space: nowrap;
   text-align: center;
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
-  color: var(--color-seaweed-800);
+  color: var(--color-seaweed-700);
   height: var(--spacing-11);
   width: 100%;
   line-height: 1.25;

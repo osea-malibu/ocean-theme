@@ -381,6 +381,8 @@
   {%- endif -%}
   {%- if product.selected_or_first_available_variant.available == false -%}
     {% render 'klaviyo-bis-pdp' %}
+    {% comment %} <div id="ps__bis_target_container"></div> {% endcomment %}
+
   {%- endif -%}
 </section>
 
