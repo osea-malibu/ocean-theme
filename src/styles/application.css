@@ -446,41 +446,6 @@
   .pdp .footer-main {
     padding-bottom: var(--spacing-20);
   }
-
-  .klaviyo-product-container .klaviyo-button-container[klaviyo-bis-trigger] {
-    /* beat Klaviyo inline "center me" */
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    margin-left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-
-    /* keep it visible */
-    opacity: 1 !important;
-
-    /* your layout */
-    @apply flex items-center justify-center;
-  }
-
-  /* 2) Make the injected <a> match your ATC button */
-  .klaviyo-product-container
-    .klaviyo-button-container[klaviyo-bis-trigger]
-    > a.klaviyo-bis-trigger {
-    /* Klaviyo sets padding: inherit inline; override it */
-    padding: 0 !important;
-
-    /* copy the ATC button’s classes */
-    @apply button button-tertiary w-full h-10 flex justify-between flex-col sm:flex-row
-      py-1 sm:py-2 leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4;
-  }
-
-  /* Optional: if you want label centered for BIS instead of justify-between */
-  .klaviyo-product-container
-    .klaviyo-button-container[klaviyo-bis-trigger]
-    > a.klaviyo-bis-trigger {
-    @apply items-center;
-  }
 }
 
 /* Select */
@@ -623,6 +588,8 @@ div.oke-sr > div {
 }
 
 /* Klaviyo - Back in Stock PDP button */
+
+/* PDP: Klaviyo BIS button */
 .pdp .klaviyo-bis-trigger.button {
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
@@ -630,12 +597,36 @@ div.oke-sr > div {
   height: var(--spacing-11);
   position: absolute;
   bottom: 0;
-  width: calc(50% - 4px) !important;
+  width: calc(50% - 4px);
   display: flex;
   align-items: center;
 }
+
 .pdp .klaviyo-bis-trigger.button.hidden {
   display: none;
+}
+
+/* PLP: container that Klaviyo injects into */
+.klaviyo-product-container .klaviyo-button-container[klaviyo-bis-trigger] {
+  /* beat Klaviyo inline "center me" */
+  position: absolute !important;
+  inset: 0 !important;
+  margin-left: 0 !important;
+  opacity: 1 !important;
+
+  @apply flex items-center justify-center;
+}
+
+/* PLP: injected <a> styled like ATC button */
+.klaviyo-product-container
+  .klaviyo-button-container[klaviyo-bis-trigger]
+  > a.klaviyo-bis-trigger {
+  /* Klaviyo sets padding: inherit inline; override it */
+  padding: 0 !important;
+
+  @apply button button-tertiary w-full h-10 flex items-center justify-between
+    flex-col sm:flex-row py-1 sm:py-2 leading-none sm:leading-normal
+    md:px-3 md:tracking-wider lg:px-4;
 }
 
 /* Postscript - Back in Stock PDP button */
