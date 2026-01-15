@@ -50,21 +50,23 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
     {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
-    <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
-    <script>
-      async function bootstrapCartProductsSection() {
-        // this function is responsible for handling drawer part
-        window.Loop = {};
-        window.Loop.bundleCartAllItems = await getCartItems();
-        // console.log(window.Loop.bundleCartAllItems)
-        initLoopBundle("LOOP_osea-malibu_bundles_drawer");
-      }
-      async function getCartItems() {
-        const url = `https://${Shopify.cdnHost.split("/cdn")[0]}/cart.json`;
-        const res = await fetch(url).then(response => response.json());
-        return res?.items ?? [];
-      }
-    </script>
+    {% if settings.enable_loop_bundles %}
+      <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
+      <script>
+        window.bootstrapCartProductsSection = async function () {
+          window.Loop = {};
+          window.Loop.bundleCartAllItems = await getCartItems();
+          initLoopBundle("LOOP_osea-malibu_bundles_drawer");
+        }
+
+        async function getCartItems() {
+          const url = `https://${Shopify.cdnHost.split("/cdn")[0]}/cart.json`;
+          const res = await fetch(url).then(response => response.json());
+          return res?.items ?? [];
+        }
+      </script>
+    {% endif %}
+
     {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
 
     {% comment %} Start PostPilot SiteMatch {% endcomment %}
@@ -201,7 +203,6 @@
       render 'axon-script'
       render 'minty'
     -%}
-
     {% render 'content_for_footer' %}
   </body>
 </html>
