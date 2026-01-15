@@ -8,7 +8,8 @@ class CartRemoveButton extends HTMLElement {
 
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
-      const cartItems = this.closest("cart-items") || this.closest("cart-drawer-items");
+      const cartItems =
+        this.closest("cart-items") || this.closest("cart-drawer-items");
       cartItems.updateCartItem(this.dataset.index, 0, event.target.name);
     });
   }
@@ -25,7 +26,9 @@ export class CartItems extends HTMLElement {
       document.getElementById("shopping-cart-line-item-status") ||
       document.getElementById("CartDrawer-LineItemStatus");
 
-    this.currentItemCount = Array.from(this.querySelectorAll('[name="updates[]"]')).reduce(
+    this.currentItemCount = Array.from(
+      this.querySelectorAll('[name="updates[]"]')
+    ).reduce(
       (total, quantityInput) => total + parseInt(quantityInput.value),
       0
     );
@@ -37,7 +40,10 @@ export class CartItems extends HTMLElement {
     this.addEventListener("change", this.debouncedOnChange.bind(this));
 
     // Add event listener for customer login and run handleGiftWithPurchase
-    document.addEventListener("rivo-accounts:shopify:login", this.onCustomerLogin.bind(this));
+    document.addEventListener(
+      "rivo-accounts:shopify:login",
+      this.onCustomerLogin.bind(this)
+    );
 
     // Add check for cart page and run handleGiftWithPurchase
     if (window.location.pathname === "/cart") {
@@ -102,8 +108,13 @@ export class CartItems extends HTMLElement {
     const { enabled } = window.gwpSettings;
     if (!enabled) return;
 
-    const { loyaltyOnly, productQualifierEnabled, productQualifierId, tiers, type } =
-      window.gwpSettings;
+    const {
+      loyaltyOnly,
+      productQualifierEnabled,
+      productQualifierId,
+      tiers,
+      type,
+    } = window.gwpSettings;
 
     // Use cart state to get current product IDs
     const cartIdArray = parsedState.items.map((item) => item.product_id);
@@ -113,7 +124,8 @@ export class CartItems extends HTMLElement {
 
     // Don’t exit if qualifier is missing — just track it
     const qualifierMissing =
-      productQualifierEnabled && !cartIdArray.includes(parseInt(productQualifierId));
+      productQualifierEnabled &&
+      !cartIdArray.includes(parseInt(productQualifierId));
 
     let giftsToAdd = [];
     let giftsToRemove = [];
@@ -144,8 +156,13 @@ export class CartItems extends HTMLElement {
         }
 
         // URL-type logic (still gated by qualifier)
-        if (type === "url" && localStorage.getItem("osea.gwpUrlVariantId") === tier.variant) {
-          document.querySelector("gift-with-purchase-url")?.checkGiftQualifiers();
+        if (
+          type === "url" &&
+          localStorage.getItem("osea.gwpUrlVariantId") === tier.variant
+        ) {
+          document
+            .querySelector("gift-with-purchase-url")
+            ?.checkGiftQualifiers();
         }
       }
     });
@@ -180,16 +197,25 @@ export class CartItems extends HTMLElement {
 
   updateCartItem(line, value, name, target) {
     /* Handle subscription quantity limit */
-    const lineItemSubscription = document.getElementById(`CartSubscribeCheckbox-${line}`);
-    if (lineItemSubscription && lineItemSubscription.checked && name === "updates[]" && value > 4) {
+    const lineItemSubscription = document.getElementById(
+      `CartSubscribeCheckbox-${line}`
+    );
+    if (
+      lineItemSubscription &&
+      lineItemSubscription.checked &&
+      name === "updates[]" &&
+      value > 4
+    ) {
       const quantityElement =
         document.getElementById(`Quantity-${line}`) ||
         document.getElementById(`Drawer-quantity-${line}`);
       const errors =
-        document.getElementById("cart-errors") || document.getElementById("CartDrawer-CartErrors");
+        document.getElementById("cart-errors") ||
+        document.getElementById("CartDrawer-CartErrors");
 
       quantityElement.value = 4;
-      errors.textContent = "You may not subscribe to more than 4 of this product.";
+      errors.textContent =
+        "You may not subscribe to more than 4 of this product.";
       setTimeout(() => (errors.textContent = ""), 5000);
 
       return;
@@ -229,7 +255,10 @@ export class CartItems extends HTMLElement {
         const parsedState = JSON.parse(state);
 
         // if the only items in the cart are samples
-        if (parsedState?.items?.filter((i) => i.product_type !== "Sample").length === 0) {
+        if (
+          parsedState?.items?.filter((i) => i.product_type !== "Sample")
+            .length === 0
+        ) {
           this.cart.clearCart();
         }
 
@@ -241,9 +270,13 @@ export class CartItems extends HTMLElement {
         const cartDrawerWrapper = document.querySelector("cart-drawer");
         const cartFooter = document.getElementById("main-cart-footer");
 
-        if (cartFooter) cartFooter.classList.toggle("is-empty", parsedState.item_count === 0);
+        if (cartFooter)
+          cartFooter.classList.toggle("is-empty", parsedState.item_count === 0);
         if (cartDrawerWrapper)
-          cartDrawerWrapper.classList.toggle("is-empty", parsedState.item_count === 0);
+          cartDrawerWrapper.classList.toggle(
+            "is-empty",
+            parsedState.item_count === 0
+          );
 
         this.replaceSections(parsedState);
         this.updateLiveRegions(line, parsedState.item_count);
@@ -253,7 +286,10 @@ export class CartItems extends HTMLElement {
           document.getElementById(`CartDrawer-Item-${line}`);
         if (lineItem && lineItem.querySelector(`[name="${name}"]`)) {
           cartDrawerWrapper
-            ? trapFocus(cartDrawerWrapper, lineItem.querySelector(`[name="${name}"]`))
+            ? trapFocus(
+                cartDrawerWrapper,
+                lineItem.querySelector(`[name="${name}"]`)
+              )
             : lineItem.querySelector(`[name="${name}"]`).focus();
         } else if (parsedState.item_count === 0 && cartDrawerWrapper) {
           trapFocus(
@@ -261,7 +297,10 @@ export class CartItems extends HTMLElement {
             cartDrawerWrapper.querySelector("a")
           );
         } else if (document.querySelector(".cart-item") && cartDrawerWrapper) {
-          trapFocus(cartDrawerWrapper, document.querySelector(".cart-item__name"));
+          trapFocus(
+            cartDrawerWrapper,
+            document.querySelector(".cart-item__name")
+          );
         }
         this.disableLoading();
       })
@@ -287,7 +326,9 @@ export class CartItems extends HTMLElement {
     // https://github.com/Shopify/shopify-cli/issues/1797
     if (!parsedState.sections) {
       fetch(
-        `${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map(
+        `${
+          window.Shopify.routes.root
+        }?sections=${this.getSectionsToRender().map(
           (section) => section.section
         )}`
       )
@@ -297,7 +338,9 @@ export class CartItems extends HTMLElement {
 
           this.getSectionsToRender().forEach((section) => {
             const elementToReplace =
-              document.getElementById(section.id).querySelector(section.selector) ||
+              document
+                .getElementById(section.id)
+                .querySelector(section.selector) ||
               document.getElementById(section.id);
             elementToReplace.innerHTML = this.getSectionInnerHTML(
               parsedState.sections[section.section],
@@ -348,7 +391,10 @@ export class CartItems extends HTMLElement {
         return;
       }
       lineItemError.querySelector(".cart-item__error-text").innerHTML =
-        window.cartStrings.quantityError.replace("[quantity]", quantityElement.value);
+        window.cartStrings.quantityError.replace(
+          "[quantity]",
+          quantityElement.value
+        );
     }
 
     this.currentItemCount = itemCount;
@@ -367,15 +413,20 @@ export class CartItems extends HTMLElement {
   }
 
   getSectionInnerHTML(html, selector) {
-    return new DOMParser().parseFromString(html, "text/html").querySelector(selector).innerHTML;
+    return new DOMParser()
+      .parseFromString(html, "text/html")
+      .querySelector(selector).innerHTML;
   }
 
   enableLoading(line) {
     const mainCartItems =
-      document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
+      document.getElementById("main-cart-items") ||
+      document.getElementById("CartDrawer-CartItems");
     mainCartItems.classList.add("pointer-events-none");
 
-    const cartItemElements = this.querySelectorAll(`#CartItem-${line} .loading-spinner`);
+    const cartItemElements = this.querySelectorAll(
+      `#CartItem-${line} .loading-spinner`
+    );
     const cartDrawerItemElements = this.querySelectorAll(
       `#CartDrawer-Item-${line} .loading-spinner`
     );
@@ -390,7 +441,8 @@ export class CartItems extends HTMLElement {
 
   disableLoading() {
     const mainCartItems =
-      document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
+      document.getElementById("main-cart-items") ||
+      document.getElementById("CartDrawer-CartItems");
     mainCartItems && mainCartItems.classList.remove("pointer-events-none");
   }
 }
@@ -425,9 +477,12 @@ class RewardCountdown extends HTMLElement {
       (isGwpActive && !isLoyaltyOnly) ||
       (isGwpActive && isLoyaltyOnly && window.customerLoggedIn)
     ) {
-      if (this.tier1Threshold && hasTier1Product) this.thresholds.push(this.tier1Threshold);
-      if (this.tier2Threshold && hasTier2Product) this.thresholds.push(this.tier2Threshold);
-      if (this.tier3Threshold && hasTier3Product) this.thresholds.push(this.tier3Threshold);
+      if (this.tier1Threshold && hasTier1Product)
+        this.thresholds.push(this.tier1Threshold);
+      if (this.tier2Threshold && hasTier2Product)
+        this.thresholds.push(this.tier2Threshold);
+      if (this.tier3Threshold && hasTier3Product)
+        this.thresholds.push(this.tier3Threshold);
     }
 
     this.progressBar = this.querySelector("progress");
@@ -448,7 +503,10 @@ class RewardCountdown extends HTMLElement {
       if (this.total >= currentThreshold) {
         // If the total is above the current threshold, set progress to the next level
         progressPercent = ((i + 1) / this.thresholds.length) * 100;
-      } else if (this.total > previousThreshold && this.total < currentThreshold) {
+      } else if (
+        this.total > previousThreshold &&
+        this.total < currentThreshold
+      ) {
         // Calculate progress within the range
         const range = currentThreshold - previousThreshold;
         const withinRange = this.total - previousThreshold;
@@ -511,7 +569,10 @@ class SaveWithSets extends HTMLElement {
       line: this.dataset.itemToRemove,
       quantity: 0,
     });
-    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body: removeBody } })
+    fetch(`${routes.cart_change_url}`, {
+      ...fetchConfig(),
+      ...{ body: removeBody },
+    })
       .then(() => {
         const addBody = JSON.stringify({
           items: [
@@ -521,7 +582,10 @@ class SaveWithSets extends HTMLElement {
             },
           ],
         });
-        fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body: addBody } })
+        fetch(`${routes.cart_add_url}`, {
+          ...fetchConfig(),
+          ...{ body: addBody },
+        })
           .then((res) => res.json())
           .then((res) => this.cart.renderContents(res))
           .catch((error) => console.error(error));
@@ -533,10 +597,13 @@ class SaveWithSets extends HTMLElement {
 
   enableLoading(line) {
     const mainCartItems =
-      document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
+      document.getElementById("main-cart-items") ||
+      document.getElementById("CartDrawer-CartItems");
     mainCartItems.classList.add("pointer-events-none");
 
-    const cartItemElements = this.cart.querySelectorAll(`#CartItem-${line} .loading-spinner`);
+    const cartItemElements = this.cart.querySelectorAll(
+      `#CartItem-${line} .loading-spinner`
+    );
     const cartDrawerItemElements = this.cart.querySelectorAll(
       `#CartDrawer-Item-${line} .loading-spinner`
     );
@@ -551,7 +618,8 @@ class SaveWithSets extends HTMLElement {
 
   disableLoading() {
     const mainCartItems =
-      document.getElementById("main-cart-items") || document.getElementById("CartDrawer-CartItems");
+      document.getElementById("main-cart-items") ||
+      document.getElementById("CartDrawer-CartItems");
     mainCartItems.classList.remove("pointer-events-none");
   }
 }
@@ -574,8 +642,14 @@ class PrintedGiftNote extends HTMLElement {
         this.updateGiftMessage(event.target.value);
       }, 1000)
     );
-    this.noteEnabledCheckbox.addEventListener("change", this.handleCheckboxChange.bind(this));
-    this.checkoutButton.addEventListener("click", this.handleCheckoutClick.bind(this));
+    this.noteEnabledCheckbox.addEventListener(
+      "change",
+      this.handleCheckboxChange.bind(this)
+    );
+    this.checkoutButton.addEventListener(
+      "click",
+      this.handleCheckoutClick.bind(this)
+    );
   }
 
   connectedCallback() {
@@ -610,7 +684,8 @@ class PrintedGiftNote extends HTMLElement {
     this.getCartContents().then((cart) => {
       const { giftEnabled, giftMessage } = cart.attributes;
 
-      if (giftEnabled) this.noteEnabledCheckbox.checked = giftEnabled === "true";
+      if (giftEnabled)
+        this.noteEnabledCheckbox.checked = giftEnabled === "true";
       if (giftMessage) this.messageTextarea.value = giftMessage;
     });
   }
