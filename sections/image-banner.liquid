@@ -15,6 +15,11 @@
         assign desktop_image_src_3x = section.settings.image | image_url: width: 2400
       -%}
       {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
+
+      {% assign is_lcp = false %}
+      {% if request.page_type == 'index' and section.index == 1 %}
+        {% assign is_lcp = true %}
+      {% endif %}
       <picture>
         {%- if section.settings.image_mobile != blank -%}
           <source
@@ -52,7 +57,15 @@
             srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
             src="{% render 'imgix', src: mobile_image_src %}"
           {% endif %}
-          {% if section.settings.is_lazy %}loading="lazy"{% endif %}
+
+          {% comment %} LCP Fallback {% endcomment %}
+          {% if is_lcp %}
+            loading="eager"
+            fetchpriority="high"
+          {% else %}
+            {% if section.settings.is_lazy %}loading="lazy"{% endif %}
+          {% endif %}
+          
           alt="{{ section.settings.image_mobile.alt }}"
           width="{{ section.settings.image_mobile.width }}"
           height="{{ section.settings.image_mobile.width | divided_by: section.settings.image_mobile.aspect_ratio | round }}"

@@ -1,4 +1,9 @@
-import { debounce, pauseAllMedia, trapFocus, removeTrapFocus } from "./utils.js";
+import {
+  debounce,
+  pauseAllMedia,
+  trapFocus,
+  removeTrapFocus,
+} from "./utils.js";
 import {
   setupSummaryAriaAttributes,
   setupFocusVisiblePolyfill,
@@ -28,12 +33,16 @@ class QuantityInput extends HTMLElement {
   }
 
   onInputChange(event) {
-    const autodeliverOptionEl = document.querySelector('input[value="autodeliver"]');
+    const autodeliverOptionEl = document.querySelector(
+      'input[value="autodeliver"]'
+    );
     const inputValueInteger = parseInt(event.currentTarget.value);
     const plusButtonEl = this.querySelector('button[name="plus"]');
 
     if (autodeliverOptionEl && autodeliverOptionEl.checked) {
-      this.productForm = document.querySelector("product-form.pdp-product-form");
+      this.productForm = document.querySelector(
+        "product-form.pdp-product-form"
+      );
       if (inputValueInteger > 4) {
         this.input.value = 4;
         this.productForm.handleErrorMessage(
@@ -57,7 +66,8 @@ class QuantityInput extends HTMLElement {
     const previousValue = this.input.value;
 
     event.target.name === "plus" ? this.input.stepUp() : this.input.stepDown();
-    if (previousValue !== this.input.value) this.input.dispatchEvent(this.changeEvent);
+    if (previousValue !== this.input.value)
+      this.input.dispatchEvent(this.changeEvent);
   }
 }
 customElements.define("quantity-input", QuantityInput);
@@ -70,7 +80,9 @@ class IconMarquee extends HTMLElement {
     this.items = [];
     this.animationID = null;
     this.speed = parseFloat(this.getAttribute("speed")) || 1;
-    this._reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this._reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     this._positionMap = new Map();
     this._observer = null;
     this._isVisible = false;
@@ -326,7 +338,10 @@ class ShippingCalculator extends HTMLElement {
       st = "CO";
       state = "Colorado";
       transitTime = "3-4 days";
-    } else if ((zipcode >= 6000 && zipcode <= 6389) || (zipcode >= 6391 && zipcode <= 6999)) {
+    } else if (
+      (zipcode >= 6000 && zipcode <= 6389) ||
+      (zipcode >= 6391 && zipcode <= 6999)
+    ) {
       st = "CT";
       state = "Connecticut";
       transitTime = "5-6 days";
@@ -338,7 +353,10 @@ class ShippingCalculator extends HTMLElement {
       st = "FL";
       state = "Florida";
       transitTime = "5-6 days";
-    } else if ((zipcode >= 30000 && zipcode <= 31999) || (zipcode >= 39800 && zipcode <= 39999)) {
+    } else if (
+      (zipcode >= 30000 && zipcode <= 31999) ||
+      (zipcode >= 39800 && zipcode <= 39999)
+    ) {
       st = "GA";
       state = "Georgia";
       transitTime = "4-5 days";
@@ -382,7 +400,11 @@ class ShippingCalculator extends HTMLElement {
       st = "MD";
       state = "Maryland";
       transitTime = "5-6 days";
-    } else if ((zipcode >= 1000 && zipcode <= 2799) || zipcode == 5501 || zipcode == 5544) {
+    } else if (
+      (zipcode >= 1000 && zipcode <= 2799) ||
+      zipcode == 5501 ||
+      zipcode == 5544
+    ) {
       st = "MA";
       state = "Massachusetts";
       transitTime = "5-6 days";
@@ -447,7 +469,10 @@ class ShippingCalculator extends HTMLElement {
       st = "OH";
       state = "Ohio";
       transitTime = "4-5 days";
-    } else if ((zipcode >= 73000 && zipcode <= 73199) || (zipcode >= 73400 && zipcode <= 74999)) {
+    } else if (
+      (zipcode >= 73000 && zipcode <= 73199) ||
+      (zipcode >= 73400 && zipcode <= 74999)
+    ) {
       st = "OK";
       state = "Oklahoma";
       transitTime = "3-4 days";
@@ -564,8 +589,12 @@ class ShippingCountdown extends HTMLElement {
           window.dispatchEvent(evt);
           document.dispatchEvent(evt);
           // also alias to common names used by various themes
-          window.dispatchEvent(new CustomEvent("cart:updated", { bubbles: true }));
-          document.dispatchEvent(new CustomEvent("cart:updated", { bubbles: true }));
+          window.dispatchEvent(
+            new CustomEvent("cart:updated", { bubbles: true })
+          );
+          document.dispatchEvent(
+            new CustomEvent("cart:updated", { bubbles: true })
+          );
         }
       } catch (_) {}
       return res;
@@ -628,7 +657,8 @@ class ShippingCountdown extends HTMLElement {
     if (link) {
       link.addEventListener("click", (e) => {
         e.preventDefault(); // prevent hash-jump but keep a11y-safe href
-        const sel = this.dataset.calculator || `#${link.getAttribute("aria-controls")}`;
+        const sel =
+          this.dataset.calculator || `#${link.getAttribute("aria-controls")}`;
         const calc = document.querySelector(sel);
         if (!calc) return;
         if (calc.toggle) calc.toggle();
@@ -646,23 +676,30 @@ class ShippingCountdown extends HTMLElement {
       "lineItem:removed",
     ].forEach((name) => {
       window.addEventListener(name, this._refreshDebounced, { passive: true });
-      document.addEventListener(name, this._refreshDebounced, { passive: true });
+      document.addEventListener(name, this._refreshDebounced, {
+        passive: true,
+      });
     });
 
     // 2) Listen to cart-drawer specific events if your drawer dispatches them
     const cartDrawer = document.querySelector("cart-drawer");
     if (cartDrawer) {
       ["cart:updated", "cart:change", "updated", "change"].forEach((name) =>
-        cartDrawer.addEventListener(name, this._refreshDebounced, { passive: true })
+        cartDrawer.addEventListener(name, this._refreshDebounced, {
+          passive: true,
+        })
       );
     }
 
     // 3) Section re-renders often imply cart UI changed
-    document.addEventListener("shopify:section:load", this._refreshDebounced, { passive: true });
+    document.addEventListener("shopify:section:load", this._refreshDebounced, {
+      passive: true,
+    });
 
     // 4) BroadcastChannel echo (from patched fetch)
     if (window.__oseaCartBC) {
-      this._bcHandler = (m) => m?.type === "cart:refresh" && this._refreshDebounced();
+      this._bcHandler = (m) =>
+        m?.type === "cart:refresh" && this._refreshDebounced();
       window.__oseaCartBC.addEventListener?.("message", this._bcHandler);
     }
   }
@@ -687,7 +724,10 @@ class ShippingCountdown extends HTMLElement {
       );
     }
 
-    document.removeEventListener("shopify:section:load", this._refreshDebounced);
+    document.removeEventListener(
+      "shopify:section:load",
+      this._refreshDebounced
+    );
 
     if (window.__oseaCartBC && this._bcHandler) {
       window.__oseaCartBC.removeEventListener?.("message", this._bcHandler);
@@ -699,7 +739,10 @@ class ShippingCountdown extends HTMLElement {
     if (this._cartInflight) return this._cartInflight;
 
     this._cartInflight = (async () => {
-      const res = await fetch("/cart.js", { credentials: "same-origin", cache: "no-store" });
+      const res = await fetch("/cart.js", {
+        credentials: "same-origin",
+        cache: "no-store",
+      });
       if (!res.ok) throw new Error("Cart fetch failed");
       const json = await res.json();
       this._lastCartJson = json;
@@ -725,7 +768,9 @@ class ShippingCountdown extends HTMLElement {
       cart = await this.getCartJson();
     } catch (e) {
       // Fallback to default message on error
-      this.setText(`Free Shipping on Orders ${this.formatMoney(this.thresholdCents)}+`);
+      this.setText(
+        `Free Shipping on Orders ${this.formatMoney(this.thresholdCents)}+`
+      );
       return;
     }
 
@@ -733,7 +778,9 @@ class ShippingCountdown extends HTMLElement {
     const itemCount = Number(cart.item_count || 0);
 
     if (itemCount === 0) {
-      this.setText(`Free Shipping on Orders ${this.formatMoney(this.thresholdCents)}+`);
+      this.setText(
+        `Free Shipping on Orders ${this.formatMoney(this.thresholdCents)}+`
+      );
       return;
     }
 
@@ -759,15 +806,25 @@ class ShippingCountdown extends HTMLElement {
       const fmt =
         window.theme?.moneyFormat ||
         window.moneyFormat ||
-        (window.Shopify.currency?.active === "JPY" ? "${{amount_no_decimals}}" : "${{amount}}");
+        (window.Shopify.currency?.active === "JPY"
+          ? "${{amount_no_decimals}}"
+          : "${{amount}}");
 
-      return Shopify.formatMoney(Math.round(cents), fmt).replace(/(\.00)(?!\d)/, "");
+      return Shopify.formatMoney(Math.round(cents), fmt).replace(
+        /(\.00)(?!\d)/,
+        ""
+      );
     }
 
     const currency = window.Shopify?.currency?.active || "USD";
     const value = cents / 100;
-    const withCents = value.toLocaleString(undefined, { style: "currency", currency });
-    return Number.isInteger(value) ? withCents.replace(/(\.00)(?!\d)/, "") : withCents;
+    const withCents = value.toLocaleString(undefined, {
+      style: "currency",
+      currency,
+    });
+    return Number.isInteger(value)
+      ? withCents.replace(/(\.00)(?!\d)/, "")
+      : withCents;
   }
 }
 customElements.define("shipping-countdown", ShippingCountdown);
@@ -779,7 +836,10 @@ class MenuDrawer extends HTMLElement {
     this.mainDetailsToggle = this.querySelector("details");
 
     if (navigator.platform === "iPhone")
-      document.documentElement.style.setProperty("--viewport-height", `${window.innerHeight}px`);
+      document.documentElement.style.setProperty(
+        "--viewport-height",
+        `${window.innerHeight}px`
+      );
 
     this.addEventListener("keyup", this.onKeyUp.bind(this));
     this.addEventListener("focusout", this.onFocusOut.bind(this));
@@ -790,7 +850,10 @@ class MenuDrawer extends HTMLElement {
     this.querySelectorAll("summary").forEach((summary) =>
       summary.addEventListener("click", this.onSummaryClick.bind(this))
     );
-    this.querySelector(".menu-scrim").addEventListener("click", this.onSummaryClick.bind(this));
+    this.querySelector(".menu-scrim").addEventListener(
+      "click",
+      this.onSummaryClick.bind(this)
+    );
     this.querySelectorAll(".submenu-close").forEach((button) =>
       button.addEventListener("click", this.onCloseSubmenu.bind(this))
     );
@@ -799,7 +862,8 @@ class MenuDrawer extends HTMLElement {
     );
 
     const closeButton = this.querySelector(".menu-close");
-    closeButton && closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
+    closeButton &&
+      closeButton.addEventListener("click", this.closeMenuDrawer.bind(this));
   }
 
   onKeyUp(event) {
@@ -809,7 +873,10 @@ class MenuDrawer extends HTMLElement {
     if (!openDetailsElement) return;
 
     openDetailsElement === this.mainDetailsToggle
-      ? this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector("summary"))
+      ? this.closeMenuDrawer(
+          event,
+          this.mainDetailsToggle.querySelector("summary")
+        )
       : this.closeSubmenu(openDetailsElement);
   }
 
@@ -820,20 +887,31 @@ class MenuDrawer extends HTMLElement {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function addTrapFocus() {
-      trapFocus(summaryElement.nextElementSibling, detailsElement.querySelector("button"));
-      summaryElement.nextElementSibling.removeEventListener("transitionend", addTrapFocus);
+      trapFocus(
+        summaryElement.nextElementSibling,
+        detailsElement.querySelector("button")
+      );
+      summaryElement.nextElementSibling.removeEventListener(
+        "transitionend",
+        addTrapFocus
+      );
     }
 
     if (detailsElement === this.mainDetailsToggle) {
       if (isOpen) event.preventDefault();
-      isOpen ? this.closeMenuDrawer(event, summaryElement) : this.openMenuDrawer(summaryElement);
+      isOpen
+        ? this.closeMenuDrawer(event, summaryElement)
+        : this.openMenuDrawer(summaryElement);
     } else {
       setTimeout(() => {
         detailsElement.classList.add("menu-opening");
         summaryElement.setAttribute("aria-expanded", true);
         !reducedMotion || reducedMotion.matches
           ? addTrapFocus()
-          : summaryElement.nextElementSibling.addEventListener("transitionend", addTrapFocus);
+          : summaryElement.nextElementSibling.addEventListener(
+              "transitionend",
+              addTrapFocus
+            );
       }, 100);
     }
   }
@@ -881,7 +959,9 @@ class MenuDrawer extends HTMLElement {
 
   closeSubmenu(detailsElement) {
     detailsElement.classList.remove("menu-opening");
-    detailsElement.querySelector("summary").setAttribute("aria-expanded", false);
+    detailsElement
+      .querySelector("summary")
+      .setAttribute("aria-expanded", false);
     removeTrapFocus();
     this.closeAnimation(detailsElement);
   }
@@ -939,7 +1019,9 @@ class DismissableAnnoucement extends HTMLElement {
   }
 
   connectedCallback() {
-    let isDismissed = JSON.parse(sessionStorage.getItem("osea.announcementDismissed"));
+    let isDismissed = JSON.parse(
+      sessionStorage.getItem("osea.announcementDismissed")
+    );
     if (isDismissed) {
       this.useDefaultMessage();
     } else {
@@ -970,7 +1052,10 @@ customElements.define("dismissable-announcement", DismissableAnnoucement);
 class ModalDialog extends HTMLElement {
   constructor() {
     super();
-    this.querySelector('[id^="ModalClose-"]').addEventListener("click", this.hide.bind(this));
+    this.querySelector('[id^="ModalClose-"]').addEventListener(
+      "click",
+      this.hide.bind(this)
+    );
     this.querySelectorAll(".close-modal").forEach((i) =>
       i.addEventListener("click", this.hide.bind(this))
     );
@@ -979,7 +1064,10 @@ class ModalDialog extends HTMLElement {
     });
     if (this.classList.contains("media-modal")) {
       this.addEventListener("pointerup", (event) => {
-        if (event.pointerType === "mouse" && !event.target.closest("deferred-media, product-model"))
+        if (
+          event.pointerType === "mouse" &&
+          !event.target.closest("deferred-media, product-model")
+        )
           this.hide();
       });
     } else {
@@ -1012,7 +1100,8 @@ class ModalOpener extends HTMLElement {
   constructor() {
     super();
 
-    const button = this.querySelector("button") || this.querySelector('[type="button"]');
+    const button =
+      this.querySelector("button") || this.querySelector('[type="button"]');
 
     if (!button) return;
     button.addEventListener("click", () => {
@@ -1036,7 +1125,9 @@ class DeferredMedia extends HTMLElement {
     pauseAllMedia();
     if (!this.getAttribute("loaded")) {
       const content = document.createElement("div");
-      content.appendChild(this.querySelector("template").content.firstElementChild.cloneNode(true));
+      content.appendChild(
+        this.querySelector("template").content.firstElementChild.cloneNode(true)
+      );
 
       this.setAttribute("loaded", true);
       this.appendChild(content).focus();
@@ -1085,7 +1176,10 @@ class VariantSelects extends HTMLElement {
   }
 
   updateOptions() {
-    this.options = Array.from(this.querySelectorAll("select"), (select) => select.value);
+    this.options = Array.from(
+      this.querySelectorAll("select"),
+      (select) => select.value
+    );
   }
 
   updateMasterId() {
@@ -1118,9 +1212,13 @@ class VariantSelects extends HTMLElement {
       window.location.pathname.includes("/products/") &&
       document.querySelector("subscription-radios")
     ) {
-      document.querySelector(".purchase-option.onetime").classList.add("bg-wave-200");
+      document
+        .querySelector(".purchase-option.onetime")
+        .classList.add("bg-wave-200");
       document.querySelector('input[value="onetime"]').checked = true;
-      document.querySelector(".purchase-option.autodeliver").classList.remove("bg-wave-200");
+      document
+        .querySelector(".purchase-option.autodeliver")
+        .classList.remove("bg-wave-200");
       document.querySelector('input[value="autodeliver"]').checked = false;
     }
   }
@@ -1161,7 +1259,11 @@ class VariantSelects extends HTMLElement {
 
   updateURL() {
     if (!this.currentVariant || this.dataset.updateUrl === "false") return;
-    window.history.replaceState({}, "", `${this.dataset.url}?variant=${this.currentVariant.id}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${this.dataset.url}?variant=${this.currentVariant.id}`
+    );
   }
 
   updateVariantInput() {
@@ -1188,7 +1290,10 @@ class VariantSelects extends HTMLElement {
     fetch(`${this.dataset.url}?variant=${id}`)
       .then((response) => response.text())
       .then((responseText) => {
-        const responseHTML = new DOMParser().parseFromString(responseText, "text/html");
+        const responseHTML = new DOMParser().parseFromString(
+          responseText,
+          "text/html"
+        );
 
         const replaceContent = (selector, sourceSelector) => {
           const source = responseHTML.querySelector(sourceSelector || selector);
@@ -1205,20 +1310,29 @@ class VariantSelects extends HTMLElement {
         );
         replaceContent(".subscription .selling-plan-options");
 
-        this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
+        this.toggleAddButton(
+          !this.currentVariant.available,
+          window.variantStrings.soldOut
+        );
       });
   }
 
   updateOptionVisibility() {
-    if (this.currentVariant && window.location.pathname.includes("/products/")) {
+    if (
+      this.currentVariant &&
+      window.location.pathname.includes("/products/")
+    ) {
       const subscriptionRadios = document.querySelector("subscription-radios");
       if (subscriptionRadios) {
-        const allcoationGroupIds = this.currentVariant.selling_plan_allocations.map(
-          (i) => i.selling_plan_group_id
-        );
+        const allcoationGroupIds =
+          this.currentVariant.selling_plan_allocations.map(
+            (i) => i.selling_plan_group_id
+          );
         const hasSubscriptionOption =
           this.currentVariant.selling_plan_allocations.length > 0 &&
-          allcoationGroupIds.includes(subscriptionRadios.dataset.subscriptionGroupId);
+          allcoationGroupIds.includes(
+            subscriptionRadios.dataset.subscriptionGroupId
+          );
         if (hasSubscriptionOption) {
           subscriptionRadios.classList.add("max-h-52");
           subscriptionRadios.classList.remove("max-h-0");
@@ -1229,12 +1343,16 @@ class VariantSelects extends HTMLElement {
       }
 
       const scentValues = ["Fragrance free", "Scented"];
-      const hasScentVariant = this.currentVariant.options.some((r) => scentValues.indexOf(r) >= 0);
+      const hasScentVariant = this.currentVariant.options.some(
+        (r) => scentValues.indexOf(r) >= 0
+      );
       if (hasScentVariant) {
         const scentRadios = document.getElementsByName("Scent");
         const sizeRadios = document.getElementsByName("Size");
         const originalScentInfo = document.querySelectorAll(".scent-scented");
-        const fragranceFreeScentInfo = document.querySelectorAll(".scent-fragrance-free");
+        const fragranceFreeScentInfo = document.querySelectorAll(
+          ".scent-fragrance-free"
+        );
 
         originalScentInfo.forEach((i) => {
           i.classList.toggle("hidden", scentRadios[1].checked);
@@ -1271,7 +1389,10 @@ class VariantSelects extends HTMLElement {
       }
 
       const miniSizeArray = this.dataset.miniSizes.split(",");
-      const normalizedVariantTitle = this.currentVariant.title.replace("fl oz", "oz");
+      const normalizedVariantTitle = this.currentVariant.title.replace(
+        "fl oz",
+        "oz"
+      );
       const isMiniSize = miniSizeArray.includes(normalizedVariantTitle);
       const miniInfo = document.querySelectorAll(".size-mini");
       miniInfo.forEach((i) => {
@@ -1281,7 +1402,9 @@ class VariantSelects extends HTMLElement {
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
-    const productForm = document.getElementById(`product-form-${this.dataset.section}`);
+    const productForm = document.getElementById(
+      `product-form-${this.dataset.section}`
+    );
     if (!productForm) return;
     const addButton = productForm.querySelector('[name="add"]');
     const addButtonText = productForm.querySelector('[name="add"] > .label');
@@ -1312,7 +1435,9 @@ class VariantSelects extends HTMLElement {
   }
 
   setUnavailable() {
-    const button = document.getElementById(`product-form-${this.dataset.section}`);
+    const button = document.getElementById(
+      `product-form-${this.dataset.section}`
+    );
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
     const price = document.getElementById(`price-${this.dataset.section}`);
@@ -1358,7 +1483,9 @@ class VariantSelects extends HTMLElement {
   getVariantData() {
     this.variantData =
       this.variantData ||
-      JSON.parse(this.querySelector('[type="application/json"].variant-data').textContent);
+      JSON.parse(
+        this.querySelector('[type="application/json"].variant-data').textContent
+      );
     return this.variantData;
   }
 }
@@ -1372,7 +1499,9 @@ class VariantRadios extends VariantSelects {
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll("fieldset"));
     this.options = fieldsets.map((fieldset) => {
-      return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
+      return Array.from(fieldset.querySelectorAll("input")).find(
+        (radio) => radio.checked
+      ).value;
     });
   }
 }
@@ -1382,15 +1511,20 @@ class SubscriptionRadios extends HTMLElement {
   constructor() {
     super();
 
-    this.isSubscriptionInput = document.querySelector('input[name="properties[_is_subscription]"]');
-    this.purchaseOptionInputs = Array.from(this.querySelectorAll('input[name="purchase_option"]'));
+    this.isSubscriptionInput = document.querySelector(
+      'input[name="properties[_is_subscription]"]'
+    );
+    this.purchaseOptionInputs = Array.from(
+      this.querySelectorAll('input[name="purchase_option"]')
+    );
 
     const urlParams = new URLSearchParams(window.location.search);
     const urlPurchaseType = urlParams.get("type");
 
     this.purchaseOptionInputs.forEach((input) => {
       const isSubscription =
-        urlPurchaseType === "subscription" || document.referrer.includes("/pages/subscribe");
+        urlPurchaseType === "subscription" ||
+        document.referrer.includes("/pages/subscribe");
       if (isSubscription && input.value === "autodeliver") {
         input.checked = true;
         this.setActiveState();
@@ -1415,16 +1549,23 @@ class SubscriptionRadios extends HTMLElement {
       this.setActiveState();
       this.updateMainPrice(e.currentTarget);
 
-      const plusButtonEl = document.querySelector('.pdp-quantity button[name="plus"]');
+      const plusButtonEl = document.querySelector(
+        '.pdp-quantity button[name="plus"]'
+      );
 
       if (value === "onetime") {
         this.clearSellingPlanValues();
         this.isSubscriptionInput.value = false;
-        this.productForm = document.querySelector("product-form.pdp-product-form");
+        this.productForm = document.querySelector(
+          "product-form.pdp-product-form"
+        );
 
-        document.querySelector("#PayInstallments")?.classList.remove("opacity-0");
+        document
+          .querySelector("#PayInstallments")
+          ?.classList.remove("opacity-0");
 
-        if (plusButtonEl && plusButtonEl.disabled) plusButtonEl.removeAttribute("disabled");
+        if (plusButtonEl && plusButtonEl.disabled)
+          plusButtonEl.removeAttribute("disabled");
         this.productForm.handleErrorMessage();
       } else if (value === "autodeliver") {
         this.setDefaultSellingPlan();
@@ -1451,13 +1592,20 @@ class SubscriptionRadios extends HTMLElement {
     this.purchaseOptionInputs?.forEach((input) => {
       input
         .closest(".purchase-option")
-        .classList.toggle(this.dataset.selectedColor || "bg-wave-200", input.checked);
-      input.closest(".purchase-option").classList.toggle("bg-white", !input.checked);
+        .classList.toggle(
+          this.dataset.selectedColor || "bg-wave-200",
+          input.checked
+        );
+      input
+        .closest(".purchase-option")
+        .classList.toggle("bg-white", !input.checked);
     });
   }
 
   updateMainPrice(currentTarget) {
-    const currentPrice = currentTarget.closest(".purchase-option").querySelector(".price");
+    const currentPrice = currentTarget
+      .closest(".purchase-option")
+      .querySelector(".price");
     const mainPrice = document.querySelector(".main-price.price");
 
     mainPrice.innerHTML = currentPrice.innerHTML;
@@ -1471,9 +1619,9 @@ class SubscriptionRadios extends HTMLElement {
 
   setDefaultSellingPlan() {
     const defaultSellingPlanInt = this.dataset.recommendedInterval || 2;
-    const defaultSellingPlanInput = Array.from(this.querySelectorAll('input[name="selling_plan"]'))[
-      defaultSellingPlanInt - 1
-    ];
+    const defaultSellingPlanInput = Array.from(
+      this.querySelectorAll('input[name="selling_plan"]')
+    )[defaultSellingPlanInt - 1];
 
     defaultSellingPlanInput.checked = true;
   }
@@ -1499,7 +1647,9 @@ class ProductStickyAtc extends HTMLElement {
       }
     });
 
-    this.atcObserver.observe(document.querySelector(".product-form.pdp-product-form"));
+    this.atcObserver.observe(
+      document.querySelector(".product-form.pdp-product-form")
+    );
   }
 
   disconnectedCallback() {
@@ -1541,7 +1691,9 @@ class TabController extends HTMLElement {
       switch (e.keyCode) {
         case 35: // end key
           e.preventDefault();
-          this.setActiveTab(this.tabs[this.tabs.length - 1].getAttribute("aria-controls"));
+          this.setActiveTab(
+            this.tabs[this.tabs.length - 1].getAttribute("aria-controls")
+          );
           break;
         case 36: // home key
           e.preventDefault();
@@ -1568,7 +1720,9 @@ class TabController extends HTMLElement {
   // Public function to set the tab by id
   // This can be called by the developer too.
   setActiveTab(id, skipFocus = false) {
-    const activeTabClass = this.dataset.activeClass?.split(" ") || ["bg-wave-200"];
+    const activeTabClass = this.dataset.activeClass?.split(" ") || [
+      "bg-wave-200",
+    ];
     for (let tab of this.tabs) {
       if (tab.getAttribute("aria-controls") == id) {
         tab.setAttribute("aria-selected", "true");
@@ -1640,7 +1794,8 @@ class HorizontalScrollBox extends HTMLElement {
     if (!this.scrollBox) return;
     // Only wire buttons if there is overflow and at least 2 items
     if (
-      this.scrollBox.getBoundingClientRect().width < this.scrollBox.scrollWidth &&
+      this.scrollBox.getBoundingClientRect().width <
+        this.scrollBox.scrollWidth &&
       this.items.length > 1
     ) {
       this.navNext?.addEventListener("click", () => this.scrollToSnap("next"));
@@ -1689,7 +1844,9 @@ class HorizontalScrollBox extends HTMLElement {
     const atStart = this.scrollBox.scrollLeft <= epsilon;
     const atEnd =
       this.scrollBox.scrollLeft >=
-      this.scrollBox.scrollWidth - this.scrollBox.getBoundingClientRect().width - epsilon;
+      this.scrollBox.scrollWidth -
+        this.scrollBox.getBoundingClientRect().width -
+        epsilon;
 
     this.navPrev?.classList.toggle("nav-hide", atStart);
     this.navNext?.classList.toggle("nav-hide", atEnd);
@@ -1753,7 +1910,8 @@ class ExpandableSection extends HTMLElement {
 
   connectedCallback() {
     // a11y
-    if (!this.content.id) this.content.id = `exp-${Math.random().toString(36).slice(2)}`;
+    if (!this.content.id)
+      this.content.id = `exp-${Math.random().toString(36).slice(2)}`;
     this.btnMore.setAttribute("aria-controls", this.content.id);
     this.btnLess.setAttribute("aria-controls", this.content.id);
     this.btnMore.setAttribute("aria-expanded", "false");
@@ -1768,7 +1926,11 @@ class ExpandableSection extends HTMLElement {
 
     // Observe layout & DOM changes
     this.ro.observe(this.content);
-    this.mo.observe(this.content, { childList: true, subtree: true, characterData: true });
+    this.mo.observe(this.content, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
 
     // Initial state
     this.collapse({ silent: true });
@@ -1869,7 +2031,8 @@ class ExpandableSection extends HTMLElement {
     if (!silent) {
       // Scroll back to top of section if user collapsed while scrolled down
       const rect = this.getBoundingClientRect();
-      if (rect.top < 0) this.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (rect.top < 0)
+        this.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 }
@@ -1916,7 +2079,9 @@ class GlideSlider extends HTMLElement {
   }
 
   getPath(currentBreakpoint) {
-    return currentBreakpoint ? this.options.breakpoints[currentBreakpoint] : this.options;
+    return currentBreakpoint
+      ? this.options.breakpoints[currentBreakpoint]
+      : this.options;
   }
 
   addOtherPeek(currentPeek, currentBreakpoint) {
@@ -1929,7 +2094,9 @@ class GlideSlider extends HTMLElement {
   parseValue(valueString) {
     let value;
     if (isNaN(valueString)) {
-      value = ["true", "false"].includes(valueString) ? valueString === "true" : valueString;
+      value = ["true", "false"].includes(valueString)
+        ? valueString === "true"
+        : valueString;
     } else {
       value = parseInt(valueString);
     }
@@ -1944,7 +2111,8 @@ class GlideSlider extends HTMLElement {
             ...[this.getPath(currentBreakpoint)]?.[level1],
             [level2]: this.parseValue(level3),
             // fixes bug: property fails when only before/after is present
-            ...(level1 === "peek" && this.addOtherPeek(level2, currentBreakpoint)),
+            ...(level1 === "peek" &&
+              this.addOtherPeek(level2, currentBreakpoint)),
           }
         : this.parseValue(level2),
     };
@@ -1964,12 +2132,21 @@ class GlideSlider extends HTMLElement {
 
         this.options.breakpoints[breakpointInt] = {
           ...this.options.breakpoints?.[breakpointInt],
-          ...this.buildOptionObject(splitClass[1], splitClass[2], splitClass[3], breakpointInt),
+          ...this.buildOptionObject(
+            splitClass[1],
+            splitClass[2],
+            splitClass[3],
+            breakpointInt
+          ),
         };
       } else {
         this.options = {
           ...this.options,
-          ...this.buildOptionObject(splitClass[0], splitClass[1], splitClass[2]),
+          ...this.buildOptionObject(
+            splitClass[0],
+            splitClass[1],
+            splitClass[2]
+          ),
         };
       }
     });
@@ -1979,7 +2156,15 @@ class GlideSlider extends HTMLElement {
     const classes = Array.from(this.classList);
 
     if (classes.length > 0) {
-      const optionTypes = ["perView", "peek", "focusAt", "type", "bound", "gap", "autoplay"];
+      const optionTypes = [
+        "perView",
+        "peek",
+        "focusAt",
+        "type",
+        "bound",
+        "gap",
+        "autoplay",
+      ];
       const optionClasses = classes.filter((className) =>
         optionTypes.some((optionType) => className.includes(optionType))
       );
@@ -2046,7 +2231,9 @@ class CountdownComponent extends HTMLElement {
     setInterval(() => {
       const dateArray = this.dataset.date.split("/");
       const sortedDateArray = [dateArray[2], dateArray[0], dateArray[1]];
-      const future = new Date(`${sortedDateArray.join("-")}T${this.dataset.time}:00-07:00`);
+      const future = new Date(
+        `${sortedDateArray.join("-")}T${this.dataset.time}:00-07:00`
+      );
       const now = new Date();
       const diff = future - now;
 
@@ -2071,8 +2258,9 @@ class GiftCardFields extends HTMLElement {
   }
 
   onInputChange(event) {
-    document.querySelector(`product-form.pdp-product-form #sktc${event.target.id}`).value =
-      event.target.value;
+    document.querySelector(
+      `product-form.pdp-product-form #sktc${event.target.id}`
+    ).value = event.target.value;
   }
 }
 customElements.define("gift-card-fields", GiftCardFields);
@@ -2087,13 +2275,15 @@ class CollectionAnchors extends HTMLElement {
   }
 
   onAnchorClick(anchor) {
-    document.querySelectorAll("details.subcollection").forEach((subcollection) => {
-      if (subcollection.id === anchor.getAttribute("href").substring(1)) {
-        subcollection.setAttribute("open", "");
-      } else {
-        subcollection.removeAttribute("open");
-      }
-    });
+    document
+      .querySelectorAll("details.subcollection")
+      .forEach((subcollection) => {
+        if (subcollection.id === anchor.getAttribute("href").substring(1)) {
+          subcollection.setAttribute("open", "");
+        } else {
+          subcollection.removeAttribute("open");
+        }
+      });
   }
 }
 customElements.define("collection-anchors", CollectionAnchors);
@@ -2156,7 +2346,9 @@ class Accordion {
   expand() {
     this.isExpanding = true;
     const startHeight = `${this.el.offsetHeight}px`;
-    const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight}px`;
+    const endHeight = `${
+      this.summary.offsetHeight + this.content.offsetHeight
+    }px`;
 
     if (this.animation) {
       this.animation.cancel();
