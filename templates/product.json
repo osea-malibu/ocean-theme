@@ -190,7 +190,7 @@
       "settings": {
         "product_info_classes": "grid grid-cols-12 relative gap-x-2",
         "enable_sticky_info": true,
-        "gallery_limit": 10
+        "gallery_limit": 12
       }
     },
     "ugc": {
@@ -285,6 +285,9 @@
       "type": "product-founder-quote",
       "settings": {
         "wrapper_classes": "",
+        "founder_body_sku": "{{ product.metafields.custom.founder_quote.value.quote | metafield_tag }}",
+        "founder_name_sku": "{{ product.metafields.custom.founder_quote.value.name.value }}",
+        "founder_image_sku": "{{ product.metafields.custom.founder_quote.value.image.value }}",
         "founder_body": "<p>Over 30 years ago, I started OSEA to share the healing powers of the sea. Since then, it’s been our mission to create clean, clinically tested skincare, combining pure, potent seaweed with active botanicals for results you can sea. My vision is to create waves of kindness for people and our planet.</p>",
         "founder_name": "-Jenefer Palmer, OSEA Founder",
         "founder_image": "shopify://shop_images/012624_OSEA_PRSHOOT-ROBIN-938.jpg"
