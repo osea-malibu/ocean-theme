@@ -89,7 +89,7 @@ class CartDrawer extends HTMLElement {
       this.classList.remove("invisible");
       this.classList.add("active");
 
-      bootstrapCartProductsSection();
+      window.bootstrapCartProductsSection?.();
     });
 
     this.addEventListener(
