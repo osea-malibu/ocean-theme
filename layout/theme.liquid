@@ -51,31 +51,7 @@
 
     {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
 
-    <script>
-  // Always define the function so any existing calls won't crash when Loop is disabled
-      function bootstrapCartProductsSection() {}
-    </script>
 
-    {% if settings.enable_loop_bundles %}
-      <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
-      <script>
-        async function getCartItems() {
-          const url = `https://${Shopify.cdnHost.split("/cdn")[0]}/cart.json`;
-          const res = await fetch(url).then(response => response.json());
-          return res?.items ?? [];
-        }
-
-        // Override the global fallback with the real implementation when enabled
-        async function bootstrapCartProductsSection() {
-          window.Loop = {};
-          window.Loop.bundleCartAllItems = await getCartItems();
-          initLoopBundle("LOOP_osea-malibu_bundles_drawer");
-        }
-
-        // Keep this too if you want window access elsewhere
-        window.bootstrapCartProductsSection = bootstrapCartProductsSection;
-      </script>
-    {% endif %}
 
     {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
 
@@ -214,5 +190,31 @@
       render 'minty'
     -%}
     {% render 'content_for_footer' %}
+
+        <script>
+  // Always define the function so any existing calls won't crash when Loop is disabled
+      function bootstrapCartProductsSection() {}
+    </script>
+
+    {% if settings.enable_loop_bundles %}
+      <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
+      <script>
+        async function getCartItems() {
+          const url = `https://${Shopify.cdnHost.split("/cdn")[0]}/cart.json`;
+          const res = await fetch(url).then(response => response.json());
+          return res?.items ?? [];
+        }
+
+        // Override the global fallback with the real implementation when enabled
+        async function bootstrapCartProductsSection() {
+          window.Loop = {};
+          window.Loop.bundleCartAllItems = await getCartItems();
+          initLoopBundle("LOOP_osea-malibu_bundles_drawer");
+        }
+
+        // Keep this too if you want window access elsewhere
+        window.bootstrapCartProductsSection = bootstrapCartProductsSection;
+      </script>
+    {% endif %}
   </body>
 </html>
