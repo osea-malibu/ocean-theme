@@ -58,11 +58,16 @@
       {%- assign newSrc = imageUrl | strip | prepend: imgixUrl | append: imgParam -%}
     {%- endfor -%}
 
-    {% if hasImageSize %}
+    {%- assign requested_w = w | default: width -%}
+
+    {% if requested_w %}
+      {{- newSrc | default: src | append: '&w=' | append: requested_w -}}
+    {% elsif hasImageSize %}
       {{- newSrc | default: src | append: '&w=' | append: imageSize -}}
     {% else %}
       {{- newSrc | default: src -}}
     {% endif %}
+
   {%- else -%}
     {{- src -}}
   {%- endif -%}
