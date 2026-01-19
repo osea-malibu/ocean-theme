@@ -86,6 +86,7 @@
                           {%- liquid
                             assign mobile_master = block.settings.image | image_url
                             assign desktop_master = block.settings.image_desktop | image_url
+                            assign sizes_attr = "(min-width: 1024px) 305px, (min-width: 640px) 240px, 176px"
                           -%}
 
                           <picture class="{{ block.settings.image_wrapper_classes }}">
@@ -93,45 +94,50 @@
                               <source
                                 media="(min-width: 640px)"
                                 srcset="
+                                  {% render 'imgix', src: desktop_master, w: 480 %} 480w,
                                   {% render 'imgix', src: desktop_master, w: 640 %} 640w,
                                   {% render 'imgix', src: desktop_master, w: 800 %} 800w,
                                   {% render 'imgix', src: desktop_master, w: 960 %} 960w,
                                   {% render 'imgix', src: desktop_master, w: 1200 %} 1200w
                                 "
-                                sizes="(min-width: 1024px) 50vw, 100vw"
+                                sizes="{{ sizes_attr }}"
                               >
                             {%- else -%}
                               <source
                                 media="(min-width: 640px)"
                                 srcset="
                                   {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+                                  {% render 'imgix', src: mobile_master, w: 640 %} 640w,
                                   {% render 'imgix', src: mobile_master, w: 800 %} 800w,
+                                  {% render 'imgix', src: mobile_master, w: 960 %} 960w,
                                   {% render 'imgix', src: mobile_master, w: 1200 %} 1200w
                                 "
-                                sizes="100vw"
+                                sizes="{{ sizes_attr }}"
                               >
                             {%- endif -%}
 
                             <source
                               media="(max-width: 639px)"
                               srcset="
+                                {% render 'imgix', src: mobile_master, w: 200 %} 200w,
                                 {% render 'imgix', src: mobile_master, w: 320 %} 320w,
                                 {% render 'imgix', src: mobile_master, w: 480 %} 480w,
                                 {% render 'imgix', src: mobile_master, w: 640 %} 640w,
                                 {% render 'imgix', src: mobile_master, w: 750 %} 750w
                               "
-                              sizes="100vw"
+                              sizes="{{ sizes_attr }}"
                             >
 
                             <img
                               src="{% render 'imgix', src: mobile_master, w: 480 %}"
                               srcset="
+                                {% render 'imgix', src: mobile_master, w: 200 %} 200w,
                                 {% render 'imgix', src: mobile_master, w: 320 %} 320w,
                                 {% render 'imgix', src: mobile_master, w: 480 %} 480w,
                                 {% render 'imgix', src: mobile_master, w: 640 %} 640w,
                                 {% render 'imgix', src: mobile_master, w: 750 %} 750w
                               "
-                              sizes="100vw"
+                              sizes="{{ sizes_attr }}"
                               alt="{{ block.settings.image.alt }}"
                               height="{{ block.settings.image.height }}"
                               width="{{ block.settings.image.width }}"
@@ -209,7 +215,7 @@
                         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                       </video>
                     {%- endif -%}
-{%- when 'product' -%}
+                {%- when 'product' -%}
                     {% comment %} theme-check-disable LiquidTag {% endcomment %}
                     {%- if block.settings.product -%}
                       {% render 'product-card',
