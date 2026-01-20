@@ -185,18 +185,15 @@
 
     {%- liquid
       if template.name == 'product'
-      render 'klaviyo-add-to-cart'
+        render 'recently-viewed-add'
+        render 'klaviyo-add-to-cart'
         if product.selected_or_first_available_variant.available == false
           render 'klaviyo-bis-pdp'
         endif
-
-        render 'recently-viewed-add'
-
       elsif template.name == 'collection'
         render 'cartful-quiz'
         render 'klaviyo-bis-plp'
       endif
-
       render 'gorgias-chat-widget'
       render 'bazaarvoice'
       render 'data-layer'
