@@ -48,19 +48,18 @@
       {%- endif -%}
       {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}">{% endunless %}
         {%- if title_text != blank -%}
-          <h3 class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if name_class != blank %} {{ name_class }}{% endif %}">
+          <h3 class="text-lg lg:text-xl font-medium !leading-[1.1] hover:underline mb-1{% if name_class != blank %} {{ name_class }}{% endif %}">
             {{- title_text | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' -}}
           </h3>
         {%- else -%}
           {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
-          <h3 class="text-sm 2xs:text-base font-bold 2xs:font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
+          <h3 class="text-lg lg:text-xl font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
             {{- card_product.title | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' -}}
           </h3>
         {%- endif -%}
       {% unless remove_linking %}</a>{% endunless %}
     </div>
-
-    <p class="text-sm !leading-[1.1]{% if description_class != blank %} {{ description_class }}{% endif %}">
+    <p class="text-sm lg:text-base !leading-[1.1]{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
       {%- if short_description_text != blank -%}
         {{- short_description_text | escape -}}
       {%- else -%}
