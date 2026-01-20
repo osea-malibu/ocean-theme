@@ -263,37 +263,40 @@
                   assign default_id = card_product.variants[mini_index].id
                 elsif default_to_jumbo
                   assign default_id = card_product.variants[0].id
-                else 
+                else
                   assign default_id = card_product.selected_or_first_available_variant.id
                 endif
+
+                assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
+                assign set_products = collections['skincare-sets'].products | map: 'handle'
+                assign is_set = false
+                assign show_range = true
+                assign price_class = 'tracking-wide'
+                if set_products contains card_product.handle
+                  assign is_set = true
+                endif
+                if is_set
+                  assign show_range = false
+                  assign price_class = 'tracking-wide set-price'
+                endif
               -%}
+
               <input type="hidden" name="id" value="{{ default_id }}" disabled />
               <input type="hidden" name="properties[_is_subscription]" value="{% if subscription %}true{% else %}false{% endif %}" />
-              <button
-                id="{{ product_form_id }}-submit"
-                type="submit"
-                name="add"
-                aria-haspopup="dialog"
-                aria-live="polite"
-                class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if card_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ button_class }}"
-                {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-              >
-                {%- if card_product.selected_or_first_available_variant.available -%}
-                  <span class="label">{% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}&nbsp;</span>
-                  {%- liquid
-                    assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
-                    assign set_products = collections['skincare-sets'].products | map: 'handle'
-                    assign is_set = false
-                    assign show_range = true
-                    assign price_class = 'tracking-wide'
-                    if set_products contains card_product.handle
-                      assign is_set = true
-                    endif
-                    if is_set
-                      assign show_range = false
-                      assign price_class = 'tracking-wide set-price'
-                    endif
-                  -%}
+
+              {%- if card_product.selected_or_first_available_variant.available -%}
+                <button
+                  id="{{ product_form_id }}-submit"
+                  type="submit"
+                  name="add"
+                  aria-haspopup="dialog"
+                  aria-live="polite"
+                  class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50 justify-between {{ button_class }}"
+                >
+                  <span class="label">
+                    {% if subscription %}Subscribe{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}&nbsp;
+                  </span>
+
                   {%- render 'price',
                     product: card_product,
                     price_id: price_id,
@@ -304,22 +307,20 @@
                     default_to_mini: default_to_mini,
                     default_to_jumbo: default_to_jumbo
                   -%}
-                {%- else -%}
-                  <span class="label">{{ 'products.product.sold_out' | t }}</span>
-                {%- endif -%}
-              </button>
-              {%- if card_product.selected_or_first_available_variant.available == false -%}
-                <div class="absolute z-10 inset-x-0 bottom-0 h-10 sm:h-[42px]">
-                  <div
-                    class="klaviyo-product-container"
-                    data-klaviyo-handle="{{ card_product.handle }}"
-                    id="klaviyo-data-handle-{{ card_product.handle }}-{{ section_id }}"
-                  >
-                    <div class="klaviyo-button-container !inset-0 !w-full !opacity-100 !-ml-0"></div>
-                  </div>
-                </div>
+                </button>
+              {%- else -%}
+                {% comment %} Replace SOLD OUT button with Klaviyo BIS button  {% endcomment %}
+                <a
+                  data-bis-plp
+                  href="{{ card_product.url }}?variant={{ card_product.selected_or_first_available_variant.id }}"
+                  class="button button-tertiary w-full motion-safe:transition  disabled:opacity-50 h-10  button-sm sm:button-md leading-none sm:leading-normal  md:tracking-wider "
+                >
+                  JOIN THE WAITLIST
+                </a>
+
               {%- endif -%}
             {%- endform -%}
+
           </product-form>
         </div>
       {%- endunless -%}

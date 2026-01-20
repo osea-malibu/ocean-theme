@@ -191,7 +191,9 @@
   predictive-search:not([loading]) .predictive-search-status__loading {
     display: none;
   }
-  predictive-search[loading] .predictive-search__heading ~ .predictive-search__loading-state,
+  predictive-search[loading]
+    .predictive-search__heading
+    ~ .predictive-search__loading-state,
   predictive-search[loading] .predictive-search__results-list:first-child {
     display: none;
   }
@@ -221,7 +223,8 @@
     visibility: hidden;
     opacity: 0;
     @media (prefers-reduced-motion: no-preference) {
-      transition: visibility 0s linear 200ms, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: visibility 0s linear 200ms,
+        opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
   modal-dialog[open] {
@@ -585,19 +588,54 @@ div.oke-sr > div {
 }
 
 /* Klaviyo - Back in Stock PDP button */
-.pdp .klaviyo-bis-trigger.button {
+
+/* PDP: Klaviyo BIS button */
+
+/* PDP: position the BIS container (layout) */
+.pdp #klaviyo-bis-button-container {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  margin-bottom: 0 !important;
+  width: calc(50% - 4px);
+}
+
+/* PDP: style the BIS button (visual) */
+.pdp #klaviyo-bis-button-container .klaviyo-bis-trigger.button {
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
   color: var(--color-seaweed-800);
   height: var(--spacing-11);
-  position: absolute;
-  bottom: 0;
-  width: calc(50% - 4px) !important;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
-.pdp .klaviyo-bis-trigger.button.hidden {
+
+.pdp #klaviyo-bis-button-container .klaviyo-bis-trigger.button.hidden {
   display: none;
+}
+
+/* PLP: container that Klaviyo injects into */
+.plp .klaviyo-product-container .klaviyo-button-container[klaviyo-bis-trigger] {
+  position: absolute !important;
+  inset: 0 !important;
+  margin-left: 0 !important;
+  opacity: 1 !important;
+
+  @apply flex items-center justify-center;
+}
+
+/* PLP: injected <a> styled like ATC button */
+.plp
+  .klaviyo-product-container
+  .klaviyo-button-container[klaviyo-bis-trigger]
+  > a.klaviyo-bis-trigger {
+  padding: 0 !important;
+
+  @apply button button-tertiary w-full h-10 flex items-center justify-between
+    flex-col sm:flex-row py-1 sm:py-2 leading-none sm:leading-normal
+    md:px-3 md:tracking-wider lg:px-4;
 }
 
 /* Postscript - Back in Stock PDP button */
@@ -609,23 +647,24 @@ div.oke-sr > div {
   z-index: 10 !important;
 }
 #ps__bis_container_root #ps-bis-widget__button.ps-bis-button {
+  font-family: "circular-bold-600", Arial, "Helvetica Neue", Helvetica,
+    sans-serif;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  padding-inline: var(--spacing-4);
+  /* padding-inline: var(--spacing-4); */
   padding-block: var(--spacing-1);
-  font-size: var(--text-sm);
+  font-size: 16px;
   border-radius: var(--radius-md);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--tracking-widest);
+  font-weight: var(--font-weight-medium);
+  /* letter-spacing: var(--tracking-widest); */
   text-transform: uppercase;
-  white-space: nowrap;
   text-align: center;
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
-  color: var(--color-seaweed-800);
+  color: var(--color-seaweed-700);
   height: var(--spacing-11);
   width: 100%;
   line-height: 1.25;

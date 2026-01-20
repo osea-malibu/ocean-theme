@@ -1,0 +1,31 @@
+<script>
+  document.addEventListener(
+    'click',
+    (e) => {
+      // Only normal left-clicks (ignore right click / cmd+click / open in new tab etc.)
+      if (e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      // Fast bail-out: if the click isn't inside something that could contain your target,
+      // closest() won't walk the DOM much anyway, but this still helps.
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+
+      const a = target.closest('a[data-bis-plp]');
+      if (!a) return;
+
+      const href = a.getAttribute('href');
+      if (!href) return;
+
+      const url = new URL(href, location.origin);
+      const variant = url.searchParams.get('variant') || '';
+      const handle = (url.pathname.split('/products/')[1] || '').split('?')[0];
+
+      sessionStorage.setItem(
+        'bis_intent',
+        JSON.stringify({ handle, variant, ts: Date.now() })
+      );
+    },
+    { capture: true, passive: true }
+  );
+</script>
