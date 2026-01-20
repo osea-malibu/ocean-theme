@@ -365,8 +365,10 @@
   .pdp .glide__bullet--active .glide__bullet-icon {
     opacity: 1;
   }
-  .pdp .glide__bullet-icon.bg-transparent {
-    @apply md:opacity-100;
+  @media (min-width: 48rem) {
+    .pdp .glide__bullet-icon.bg-transparent {
+      opacity: 1;
+    }
   }
   .glide__bullet img {
     border: 1px solid transparent;
@@ -486,7 +488,8 @@ select.input-sm {
 
 /* Text highlight (used in search results) */
 strong.highlight {
-  @apply font-regular bg-seafoam-300;
+  font-weight: var(--font-weight-regular);
+  background-color: var(--color-seafoam-300);
 }
 
 /* this will always be included in your compiled CSS */
@@ -585,21 +588,12 @@ div.oke-sr > div {
 }
 
 /* Klaviyo - Back in Stock PDP button */
-
-/* PDP: Klaviyo BIS button */
-
-/* PDP: position the BIS container (layout) */
 .pdp #klaviyo-bis-button-container {
   position: absolute;
   bottom: 0;
   z-index: 10;
   margin-bottom: 0 !important;
   width: calc(50% - 4px);
-}
-
-/* PDP: style the BIS button (visual) */
-.pdp #klaviyo-bis-button-container {
-  margin-bottom: 0 !important;
 }
 .pdp #klaviyo-bis-button-container .klaviyo-bis-trigger.button {
   background-color: var(--color-neon-green);
