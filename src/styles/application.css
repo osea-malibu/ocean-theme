@@ -191,9 +191,7 @@
   predictive-search:not([loading]) .predictive-search-status__loading {
     display: none;
   }
-  predictive-search[loading]
-    .predictive-search__heading
-    ~ .predictive-search__loading-state,
+  predictive-search[loading] .predictive-search__heading ~ .predictive-search__loading-state,
   predictive-search[loading] .predictive-search__results-list:first-child {
     display: none;
   }
@@ -223,8 +221,7 @@
     visibility: hidden;
     opacity: 0;
     @media (prefers-reduced-motion: no-preference) {
-      transition: visibility 0s linear 200ms,
-        opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: visibility 0s linear 200ms, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
   modal-dialog[open] {
@@ -601,6 +598,9 @@ div.oke-sr > div {
 }
 
 /* PDP: style the BIS button (visual) */
+.pdp #klaviyo-bis-button-container {
+  margin-bottom: 0 !important;
+}
 .pdp #klaviyo-bis-button-container .klaviyo-bis-trigger.button {
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
@@ -611,7 +611,6 @@ div.oke-sr > div {
   justify-content: center;
   width: 100%;
 }
-
 .pdp #klaviyo-bis-button-container .klaviyo-bis-trigger.button.hidden {
   display: none;
 }
@@ -622,8 +621,6 @@ div.oke-sr > div {
   inset: 0 !important;
   margin-left: 0 !important;
   opacity: 1 !important;
-
-  @apply flex items-center justify-center;
 }
 
 /* PLP: injected <a> styled like ATC button */
@@ -632,10 +629,6 @@ div.oke-sr > div {
   .klaviyo-button-container[klaviyo-bis-trigger]
   > a.klaviyo-bis-trigger {
   padding: 0 !important;
-
-  @apply button button-tertiary w-full h-10 flex items-center justify-between
-    flex-col sm:flex-row py-1 sm:py-2 leading-none sm:leading-normal
-    md:px-3 md:tracking-wider lg:px-4;
 }
 
 /* Postscript - Back in Stock PDP button */
@@ -647,8 +640,7 @@ div.oke-sr > div {
   z-index: 10 !important;
 }
 #ps__bis_container_root #ps-bis-widget__button.ps-bis-button {
-  font-family: "circular-bold-600", Arial, "Helvetica Neue", Helvetica,
-    sans-serif;
+  font-family: "circular-bold-600", Arial, "Helvetica Neue", Helvetica, sans-serif;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
