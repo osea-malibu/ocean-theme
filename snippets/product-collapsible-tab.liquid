@@ -217,6 +217,13 @@
     {%- endif -%}
 {%- endcase -%}
 
+{%- if content == blank and block.settings.fallback_content != blank -%}
+  {%- capture fallback_html -%}
+    <div class="mb-4">{{ block.settings.fallback_content }}</div>
+  {%- endcapture -%}
+  {%- assign content = fallback_html -%}
+{%- endif -%}
+
 {%- if content != blank -%}
   <div class="{{ block.settings.tab_classes }}">
     {%- assign tab_id = "Details-" | append: block.id | append: "-" | append: section.id -%}
