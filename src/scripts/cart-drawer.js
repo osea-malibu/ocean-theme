@@ -1,10 +1,5 @@
 import { CartItems } from "./cart.js";
-import {
-  onKeyUpEscape,
-  fetchConfig,
-  trapFocus,
-  removeTrapFocus,
-} from "./utils.js";
+import { onKeyUpEscape, fetchConfig, trapFocus, removeTrapFocus } from "./utils.js";
 
 class CartDrawer extends HTMLElement {
   constructor() {
@@ -14,10 +9,7 @@ class CartDrawer extends HTMLElement {
     this.drawer = this.querySelector(".cart-drawer");
     this.hasEnsuredGwp = false;
 
-    this.addEventListener(
-      "keyup",
-      (evt) => evt.code === "Escape" && this.close()
-    );
+    this.addEventListener("keyup", (evt) => evt.code === "Escape" && this.close());
     this.overlay.addEventListener("click", this.close.bind(this));
     this.setHeaderCartIconAccessibility();
     this.attachEventListeners();
@@ -45,9 +37,7 @@ class CartDrawer extends HTMLElement {
         const response = await fetch("/cart.js");
         if (!response.ok) {
           const errorText = await response.text();
-          throw new Error(
-            `Could not fetch cart contents - ${response.status}: ${errorText}`
-          );
+          throw new Error(`Could not fetch cart contents - ${response.status}: ${errorText}`);
         }
 
         const contents = await response.json();
@@ -114,16 +104,14 @@ class CartDrawer extends HTMLElement {
     if (!gwpSettings?.enabled) return;
 
     const cartItemsElement =
-      document.querySelector("cart-drawer-items") ||
-      document.querySelector("cart-items");
+      document.querySelector("cart-drawer-items") || document.querySelector("cart-items");
     if (!cartItemsElement?.handleGiftWithPurchase) return;
 
     this.hasEnsuredGwp = true;
 
     fetch(`${window.Shopify.routes.root}cart.js`)
       .then((response) => {
-        if (!response.ok)
-          throw new Error(`Failed to fetch cart: ${response.status}`);
+        if (!response.ok) throw new Error(`Failed to fetch cart: ${response.status}`);
         return response.json();
       })
       .then((cartState) => {
@@ -152,10 +140,7 @@ class CartDrawer extends HTMLElement {
     cartDrawerNote.setAttribute("aria-expanded", "false");
 
     if (cartDrawerNote.nextElementSibling.getAttribute("id")) {
-      cartDrawerNote.setAttribute(
-        "aria-controls",
-        cartDrawerNote.nextElementSibling.id
-      );
+      cartDrawerNote.setAttribute("aria-controls", cartDrawerNote.nextElementSibling.id);
     }
 
     cartDrawerNote.addEventListener("click", (event) => {
@@ -165,14 +150,11 @@ class CartDrawer extends HTMLElement {
       );
     });
 
-    cartDrawerNote.parentElement.addEventListener("keyup", (event) =>
-      onKeyUpEscape(event)
-    );
+    cartDrawerNote.parentElement.addEventListener("keyup", (event) => onKeyUpEscape(event));
   }
 
   renderContents(parsedState) {
-    this.drawer.classList.contains("is-empty") &&
-      this.drawer.classList.remove("is-empty");
+    this.drawer.classList.contains("is-empty") && this.drawer.classList.remove("is-empty");
     this.productId = parsedState.id;
     // BUG WORKAROUND FOR SHOPIFY CLI
     // cart/add does not return sections via dev server
@@ -199,10 +181,7 @@ class CartDrawer extends HTMLElement {
           });
 
           setTimeout(() => {
-            this.querySelector(".cart-scrim").addEventListener(
-              "click",
-              this.close.bind(this)
-            );
+            this.querySelector(".cart-scrim").addEventListener("click", this.close.bind(this));
             this.open();
           });
         })
@@ -219,10 +198,7 @@ class CartDrawer extends HTMLElement {
       });
 
       setTimeout(() => {
-        this.querySelector(".cart-scrim").addEventListener(
-          "click",
-          this.close.bind(this)
-        );
+        this.querySelector(".cart-scrim").addEventListener("click", this.close.bind(this));
         this.open();
       });
     }
@@ -269,9 +245,7 @@ class CartDrawer extends HTMLElement {
   }
 
   getSectionInnerHTML(html, selector = ".shopify-section") {
-    return new DOMParser()
-      .parseFromString(html, "text/html")
-      .querySelector(selector).innerHTML;
+    return new DOMParser().parseFromString(html, "text/html").querySelector(selector).innerHTML;
   }
 
   getSectionsToRender() {
@@ -292,9 +266,7 @@ class CartDrawer extends HTMLElement {
   }
 
   getSectionDOM(html, selector = ".shopify-section") {
-    return new DOMParser()
-      .parseFromString(html, "text/html")
-      .querySelector(selector);
+    return new DOMParser().parseFromString(html, "text/html").querySelector(selector);
   }
 
   setActiveElement(element) {
