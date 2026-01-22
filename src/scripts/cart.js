@@ -511,10 +511,7 @@ class SaveWithSets extends HTMLElement {
       line: this.dataset.itemToRemove,
       quantity: 0,
     });
-    fetch(`${routes.cart_change_url}`, {
-      ...fetchConfig(),
-      ...{ body: removeBody },
-    })
+    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body: removeBody } })
       .then(() => {
         const addBody = JSON.stringify({
           items: [
@@ -524,10 +521,7 @@ class SaveWithSets extends HTMLElement {
             },
           ],
         });
-        fetch(`${routes.cart_add_url}`, {
-          ...fetchConfig(),
-          ...{ body: addBody },
-        })
+        fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body: addBody } })
           .then((res) => res.json())
           .then((res) => this.cart.renderContents(res))
           .catch((error) => console.error(error));

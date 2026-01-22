@@ -162,9 +162,9 @@ class CartDrawer extends HTMLElement {
     // https://github.com/Shopify/shopify-cli/issues/1797
     if (!parsedState.sections) {
       fetch(
-        `${
-          window.Shopify.routes.root
-        }?sections=${this.getSectionsToRender().map((section) => section.id)}`
+        `${window.Shopify.routes.root}?sections=${this.getSectionsToRender().map(
+          (section) => section.id
+        )}`
       )
         .then((response) => response.json())
         .then((response) => {

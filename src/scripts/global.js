@@ -646,25 +646,19 @@ class ShippingCountdown extends HTMLElement {
       "lineItem:removed",
     ].forEach((name) => {
       window.addEventListener(name, this._refreshDebounced, { passive: true });
-      document.addEventListener(name, this._refreshDebounced, {
-        passive: true,
-      });
+      document.addEventListener(name, this._refreshDebounced, { passive: true });
     });
 
     // 2) Listen to cart-drawer specific events if your drawer dispatches them
     const cartDrawer = document.querySelector("cart-drawer");
     if (cartDrawer) {
       ["cart:updated", "cart:change", "updated", "change"].forEach((name) =>
-        cartDrawer.addEventListener(name, this._refreshDebounced, {
-          passive: true,
-        })
+        cartDrawer.addEventListener(name, this._refreshDebounced, { passive: true })
       );
     }
 
     // 3) Section re-renders often imply cart UI changed
-    document.addEventListener("shopify:section:load", this._refreshDebounced, {
-      passive: true,
-    });
+    document.addEventListener("shopify:section:load", this._refreshDebounced, { passive: true });
 
     // 4) BroadcastChannel echo (from patched fetch)
     if (window.__oseaCartBC) {
@@ -705,10 +699,7 @@ class ShippingCountdown extends HTMLElement {
     if (this._cartInflight) return this._cartInflight;
 
     this._cartInflight = (async () => {
-      const res = await fetch("/cart.js", {
-        credentials: "same-origin",
-        cache: "no-store",
-      });
+      const res = await fetch("/cart.js", { credentials: "same-origin", cache: "no-store" });
       if (!res.ok) throw new Error("Cart fetch failed");
       const json = await res.json();
       this._lastCartJson = json;
@@ -775,10 +766,7 @@ class ShippingCountdown extends HTMLElement {
 
     const currency = window.Shopify?.currency?.active || "USD";
     const value = cents / 100;
-    const withCents = value.toLocaleString(undefined, {
-      style: "currency",
-      currency,
-    });
+    const withCents = value.toLocaleString(undefined, { style: "currency", currency });
     return Number.isInteger(value) ? withCents.replace(/(\.00)(?!\d)/, "") : withCents;
   }
 }
@@ -1780,11 +1768,7 @@ class ExpandableSection extends HTMLElement {
 
     // Observe layout & DOM changes
     this.ro.observe(this.content);
-    this.mo.observe(this.content, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
+    this.mo.observe(this.content, { childList: true, subtree: true, characterData: true });
 
     // Initial state
     this.collapse({ silent: true });
