@@ -52,12 +52,6 @@
     {{ 'application.css' | asset_url | stylesheet_tag: preload: true }}
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
-
-    {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
-
-    {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
-
-
   </head>
 
   <body class="antialiased{% if template.name == 'product' %} pdp pdp-{{ product.handle }}{% elsif template.name == 'collection' %} plp plp-{{ collection.handle }}{% endif %}{% if customer %} logged-in{% endif %}">
@@ -193,7 +187,9 @@
     </script>
 
     {% if settings.enable_loop_bundles %}
+      {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
       <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
+      {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
       <script>
         async function getCartItems() {
           const url = `https://${Shopify.cdnHost.split("/cdn")[0]}/cart.json`;
