@@ -82,6 +82,7 @@
           "settings": {
             "heading": "Benefits",
             "content": "{{ product.metafields.custom.key_benefits | metafield_text }}",
+            "fallback_content": "",
             "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": true
           }
@@ -92,6 +93,7 @@
           "settings": {
             "heading": "Why you'll love it",
             "content": "{{ product.metafields.custom_fields.description.value }}",
+            "fallback_content": "",
             "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
@@ -102,6 +104,7 @@
           "settings": {
             "heading": "Scent profile",
             "content": "{{ product.metafields.custom.scent_profile.value }}",
+            "fallback_content": "{{ product.metafields.custom.scent_profile_short.value }}",
             "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
@@ -112,6 +115,7 @@
           "settings": {
             "heading": "Care",
             "content": "{{ product.metafields.custom.product_care.value }}",
+            "fallback_content": "",
             "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
@@ -122,6 +126,7 @@
           "settings": {
             "heading": "How to use",
             "content": "{{ product.metafields.custom_fields.how_it_works.value }}",
+            "fallback_content": "",
             "tab_classes": "col-span-12",
             "default_open": false
           }
@@ -133,6 +138,7 @@
           "settings": {
             "heading": "Skin types",
             "content": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
+            "fallback_content": "",
             "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
@@ -144,6 +150,7 @@
           "settings": {
             "heading": "Recycling",
             "content": "",
+            "fallback_content": "",
             "tab_classes": "col-span-12",
             "default_open": false
           }
@@ -155,6 +162,7 @@
           "settings": {
             "heading": "Related blogs",
             "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
+            "fallback_content": "",
             "tab_classes": "col-span-12",
             "default_open": false
           }
@@ -235,7 +243,9 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
       "disabled": true,
       "custom_css": [],
       "settings": {
@@ -260,7 +270,9 @@
           }
         }
       },
-      "block_order": ["key_ingredient_tNNTPC"],
+      "block_order": [
+        "key_ingredient_tNNTPC"
+      ],
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
