@@ -79,7 +79,7 @@ class CartDrawer extends HTMLElement {
       this.classList.remove("invisible");
       this.classList.add("active");
 
-      bootstrapCartProductsSection();
+      window.bootstrapCartProductsSection?.();
     });
 
     this.addEventListener(
@@ -205,7 +205,10 @@ class CartDrawer extends HTMLElement {
   }
 
   addFreeGift(productArray) {
-    const giftItemsArray = productArray.map((product) => ({ id: product, quantity: 1 }));
+    const giftItemsArray = productArray.map((product) => ({
+      id: product,
+      quantity: 1,
+    }));
     const body = JSON.stringify({ items: giftItemsArray });
     fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body } })
       .then((response) => response.json())
