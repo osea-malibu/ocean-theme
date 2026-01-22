@@ -221,7 +221,9 @@
     visibility: hidden;
     opacity: 0;
     @media (prefers-reduced-motion: no-preference) {
-      transition: visibility 0s linear 200ms, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition:
+        visibility 0s linear 200ms,
+        opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
   modal-dialog[open] {
