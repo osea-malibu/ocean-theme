@@ -10,6 +10,10 @@
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.shopifycloud.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.shopifycloud.com">
+    <link rel="dns-prefetch" href="//cdn.shopify.com">
+
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -34,12 +38,12 @@
     %}
     
     <script src="{{ 'slider.js' | asset_url }}" defer></script>
-    <script src="{{ 'main.min.js' | asset_url }}" type="module"></script>
 
     {% comment %} {{ content_for_header }} {% endcomment %}
     {% comment %}theme-check-disable ContentForHeaderModification,RemoteAsset{% endcomment %}
     {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" content="" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" content="" id="amazon-payments-metadata"' }}
     {% comment %}theme-check-enable ContentForHeaderModification,RemoteAsset{% endcomment %}
+    <script src="{{ 'main.min.js' | asset_url }}" type="module"></script>
 
     {% style %}
       {% render 'font-face' %}
@@ -50,30 +54,12 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
     {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
-    <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
-    <script>
-      async function bootstrapCartProductsSection() {
-        // this function is responsible for handling drawer part
-        window.Loop = {};
-        window.Loop.bundleCartAllItems = await getCartItems();
-        // console.log(window.Loop.bundleCartAllItems)
-        initLoopBundle("LOOP_osea-malibu_bundles_drawer");
-      }
-      async function getCartItems() {
-        const url = `https://${Shopify.cdnHost.split("/cdn")[0]}/cart.json`;
-        const res = await fetch(url).then(response => response.json());
-        return res?.items ?? [];
-      }
-    </script>
+
+
+
     {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
 
-    {% comment %} Start PostPilot SiteMatch {% endcomment %}
-    <script type='text/javascript'>
-      var script = document.createElement('script');
-      script.src = 'https://xp2023-pix.s3.amazonaws.com/px_FshFG.js';
-      document.getElementsByTagName('head')[0].appendChild(script);
-    </script>
-    {% comment %} End PostPilot SiteMatch {% endcomment %}
+
   </head>
 
   <body class="antialiased{% if template.name == 'product' %} pdp pdp-{{ product.handle }}{% elsif template.name == 'collection' %} plp plp-{{ collection.handle }}{% endif %}{% if customer %} logged-in{% endif %}">
@@ -201,7 +187,40 @@
       render 'axon-script'
       render 'minty'
     -%}
-
     {% render 'content_for_footer' %}
+
+        <script>
+  // Always define the function so any existing calls won't crash when Loop is disabled
+      function bootstrapCartProductsSection() {}
+    </script>
+
+    {% if settings.enable_loop_bundles %}
+      <script src="{{ 'loop_bundle.js' | asset_url }}"></script>
+      <script>
+        async function getCartItems() {
+          const url = `https://${Shopify.cdnHost.split("/cdn")[0]}/cart.json`;
+          const res = await fetch(url).then(response => response.json());
+          return res?.items ?? [];
+        }
+
+        // Override the global fallback with the real implementation when enabled
+        async function bootstrapCartProductsSection() {
+          window.Loop = {};
+          window.Loop.bundleCartAllItems = await getCartItems();
+          initLoopBundle("LOOP_osea-malibu_bundles_drawer");
+        }
+
+        // Keep this too if you want window access elsewhere
+        window.bootstrapCartProductsSection = bootstrapCartProductsSection;
+      </script>
+    {% endif %}
+        {% comment %} Start PostPilot SiteMatch {% endcomment %}
+    <script>
+      var script = document.createElement('script');
+      script.src = 'https://xp2023-pix.s3.amazonaws.com/px_FshFG.js';
+      document.head.appendChild(script);
+    </script>
+
+    {% comment %} End PostPilot SiteMatch {% endcomment %}
   </body>
 </html>
