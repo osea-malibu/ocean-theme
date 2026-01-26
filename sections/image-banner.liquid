@@ -7,71 +7,94 @@
         aria-label="Main site banner"
       >
     {%- endif -%}
-      {%- liquid
-        assign mobile_image_src = section.settings.image_mobile | image_url: width: 400
-        assign mobile_image_src_2x = section.settings.image_mobile | image_url: width: 800
-        assign desktop_image_src = section.settings.image | image_url: width: 800
-        assign desktop_image_src_2x = section.settings.image | image_url: width: 1600
-        assign desktop_image_src_3x = section.settings.image | image_url: width: 2400
-      -%}
-      {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
+    {%- liquid
+      assign mobile_master = section.settings.image_mobile | image_url
+      assign desktop_master = section.settings.image | image_url
+    -%}
 
-      {% assign is_lcp = false %}
+    {% assign is_lcp = false %}
       {% if request.page_type == 'index' and section.index == 1 %}
         {% assign is_lcp = true %}
       {% endif %}
-      <picture>
-        {%- if section.settings.image_mobile != blank -%}
-          <source
-            {% if section.settings.image contains '.gif' %}
-              srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
-            {% else %}
-              srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-            {% endif %}
-            media="(max-width: 639px)"
-          >
-        {%- endif %}
-        {%- if section.settings.image != blank -%}
-          <source
-            {% if section.settings.image contains '.gif' %}
-              srcset="{{ desktop_image_src }} 1x, {{ desktop_image_src_2x }} 2x"
-            {% else %}
-              srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
-            {% endif %}
-            media="(min-width: 640px) and (max-width: 1023px)"
-          >
-          <source
-            {% if section.settings.image contains '.gif' %}
-              srcset="{{ desktop_image_src_2x }} 1x, {{ desktop_image_src_3x }} 2x"
-            {% else %}
-              srcset="{% render 'imgix', src: desktop_image_src_2x %} 1x, {% render 'imgix', src: desktop_image_src_3x %} 2x"
-            {% endif %}
-            media="(min-width: 1024px)"
-          >
-        {%- endif %}
-        <img
-          {% if section.settings.image contains '.gif' %}
-            srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
-            src="{{ mobile_image_src }}"
-          {% else %}
-            srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-            src="{% render 'imgix', src: mobile_image_src %}"
-          {% endif %}
 
-          {% comment %} LCP Fallback {% endcomment %}
+    <picture>
+      {%- if section.settings.image_mobile != blank -%}
+        <source
+          media="(max-width: 639px)"
+          {% if section.settings.image_mobile contains '.gif' %}
+            srcset="{{ mobile_master }}"
+          {% else %}
+            srcset="
+              {% render 'imgix', src: mobile_master, w: 320 %} 320w,
+              {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+              {% render 'imgix', src: mobile_master, w: 640 %} 640w,
+              {% render 'imgix', src: mobile_master, w: 750 %} 750w
+            "
+            sizes="100vw"
+          {% endif %}
+        >
+      {%- endif -%}
+
+      {%- if section.settings.image != blank -%}
+        <source
+          media="(min-width: 640px) and (max-width: 1023px)"
+          {% if section.settings.image contains '.gif' %}
+            srcset="{{ desktop_master }}"
+          {% else %}
+            srcset="
+              {% render 'imgix', src: desktop_master, w: 640 %} 640w,
+              {% render 'imgix', src: desktop_master, w: 800 %} 800w,
+              {% render 'imgix', src: desktop_master, w: 960 %} 960w,
+              {% render 'imgix', src: desktop_master, w: 1200 %} 1200w
+            "
+            sizes="100vw"
+          {% endif %}
+        >
+
+        <source
+          media="(min-width: 1024px)"
+          {% if section.settings.image contains '.gif' %}
+            srcset="{{ desktop_master }}"
+          {% else %}
+            srcset="
+              {% render 'imgix', src: desktop_master, w: 960 %} 960w,
+              {% render 'imgix', src: desktop_master, w: 1200 %} 1200w,
+              {% render 'imgix', src: desktop_master, w: 1600 %} 1600w,
+              {% render 'imgix', src: desktop_master, w: 2000 %} 2000w,
+              {% render 'imgix', src: desktop_master, w: 2400 %} 2400w
+            "
+            sizes="100vw"
+          {% endif %}
+        >
+      {%- endif -%}
+
+      <img
+        {% if section.settings.image_mobile contains '.gif' %}
+          src="{{ mobile_master }}"
+        {% else %}
+          src="{% render 'imgix', src: mobile_master, w: 480 %}"
+          srcset="
+            {% render 'imgix', src: mobile_master, w: 320 %} 320w,
+            {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+            {% render 'imgix', src: mobile_master, w: 640 %} 640w,
+            {% render 'imgix', src: mobile_master, w: 750 %} 750w
+          "
+          sizes="100vw"
+        {% endif %}
+         {% comment %} LCP Fallback {% endcomment %}
           {% if is_lcp %}
             loading="eager"
             fetchpriority="high"
           {% else %}
             {% if section.settings.is_lazy %}loading="lazy"{% endif %}
           {% endif %}
-          
-          alt="{{ section.settings.image_mobile.alt }}"
-          width="{{ section.settings.image_mobile.width }}"
-          height="{{ section.settings.image_mobile.width | divided_by: section.settings.image_mobile.aspect_ratio | round }}"
-          class="{{ section.settings.image_classes }} block"
-        >
-      </picture>
+        alt="{{ section.settings.image.alt | default: section.settings.image_mobile.alt }}"
+        class="{{ section.settings.image_classes }} block"
+      >
+    </picture>
+
+
+
       {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
     {%- if section.settings.image_link != blank -%}
       </a>
