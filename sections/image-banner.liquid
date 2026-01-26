@@ -89,6 +89,8 @@
             {% if section.settings.is_lazy %}loading="lazy"{% endif %}
           {% endif %}
         alt="{{ section.settings.image.alt | default: section.settings.image_mobile.alt }}"
+        width="{{ section.settings.image_mobile.width }}"
+        height="{{ section.settings.image_mobile.width | divided_by: section.settings.image_mobile.aspect_ratio | round }}"
         class="{{ section.settings.image_classes }} block"
       >
     </picture>

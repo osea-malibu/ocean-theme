@@ -2,11 +2,7 @@
   {% if section.settings.section_heading != blank %}
     <h2 class="sr-only">{{ section.settings.section_heading }}</h2>
   {% endif %}
-
-  {%- liquid
-    assign row_bg_master = section.settings.row_bg_image | image_url
-  -%}
-
+  {%- assign row_bg_master = section.settings.row_bg_image | image_url -%}
   <div
     {% if section.settings.section_classes != blank %}class="{{ section.settings.section_classes }}"{% endif %}
     {% if section.settings.row_bg_image != blank %}style="background-image: url({% render 'imgix', src: row_bg_master, w: 1420 %})"{% endif %}
@@ -28,13 +24,6 @@
             {%- for block in section.blocks -%}
               {%- liquid
                 assign bg_image_master = block.settings.image | image_url
-
-                comment
-                  Simple, grid-aware sizes:
-                  - wide (lg 5 cols): ~20vw
-                  - mid (sm 3 cols): ~33vw
-                  - base (2 cols): ~50vw
-                endcomment
                 assign sizes_attr = "(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
               -%}
 
@@ -53,9 +42,7 @@
                       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
 
                       {%- if block.settings.image contains '.gif' -%}
-                        {%- liquid
-                          assign gif_master = block.settings.image | image_url
-                        -%}
+                       {%- assign gif_master = block.settings.image | image_url -%}
                         <img
                           src="{{ gif_master }}"
                           srcset="{{ gif_master }}"
@@ -379,48 +366,45 @@
                     {%- endunless -%}
                     {%- endif -%}
 
-                    {%- if block.settings.video_mp4 != blank -%}
+                    {%- if block.settings.video_mp4 != blank and block.settings.video_mp4.preview_image != blank -%}
                       {%- liquid
-                        if block.settings.video_poster_size != blank
-                          assign video_poster_width = block.settings.video_poster_size | split: ', ' | first
-                        else
-                          assign video_poster_width = 480
-                        endif
-                        assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: video_poster_width
+                        assign video_poster_master = block.settings.video_mp4.preview_image | image_url
                       -%}
+
                       <video
                         {% if block.settings.video_autoplay %}autoplay{% endif %}
                         {% unless block.settings.video_hide_controls %}controls{% endunless %}
                         {% if block.settings.video_loop %}loop{% endif %}
                         {% if block.settings.video_muted %}muted{% endif %}
                         playsinline
-                        poster="{% render 'imgix', src: video_poster_url, w: 704 %}"
+                        poster="{% render 'imgix', src: video_poster_master, w: 480 %}"
+
                         class="lazy bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
                       >
                         {%- for source in block.settings.video_mp4.sources -%}
                           <source data-src="{{ source.url }}" type="video/{{ source.format }}">
                         {%- endfor -%}
 
-                        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                        {% comment %} Fallback poster image {% endcomment %}
                         <img
-                          src="{% render 'imgix', src: video_poster_url, w: 240 %}"
+                          src="{% render 'imgix', src: video_poster_master, w: 240 %}"
                           srcset="
-                            {% render 'imgix', src: video_poster_url, w: 200 %} 200w,
-                            {% render 'imgix', src: video_poster_url, w: 240 %} 240w,
-                            {% render 'imgix', src: video_poster_url, w: 320 %} 320w,
-                            {% render 'imgix', src: video_poster_url, w: 480 %} 480w,
-                            {% render 'imgix', src: video_poster_url, w: 640 %} 640w,
-                            {% render 'imgix', src: video_poster_url, w: 704 %} 704w
+                            {% render 'imgix', src: video_poster_master, w: 200 %} 200w,
+                            {% render 'imgix', src: video_poster_master, w: 240 %} 240w,
+                            {% render 'imgix', src: video_poster_master, w: 320 %} 320w,
+                            {% render 'imgix', src: video_poster_master, w: 480 %} 480w,
+                            {% render 'imgix', src: video_poster_master, w: 640 %} 640w,
+                            {% render 'imgix', src: video_poster_master, w: 704 %} 704w
                           "
-                          sizes="{{ sizes_attr }}"
+                          sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
                           alt=""
                           width="{{ block.settings.video_mp4.preview_image.width }}"
                           height="{{ block.settings.video_mp4.preview_image.height }}"
                           loading="lazy"
                         >
-                        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                       </video>
                     {%- endif -%}
+
 
                 {%- when 'product' -%}
                     {% comment %} theme-check-disable LiquidTag {% endcomment %}
