@@ -1,71 +1,90 @@
 {%- comment -%}
   @param {string} src
+  @param {number} w (optional)
+  @param {number} width (optional)
 {%- endcomment -%}
 
 {% comment %} theme-check-disable LiquidTag {% endcomment %}
 {%- capture imgIx -%}
   {%- if settings.enableImgix -%}
     {%- for i in (1..1) -%}
+
       {%- comment -%}
-      Check to make sure the src exists, and that imgix url theme settings is not blank. If blank, stop!
+      Check to make sure the src exists, and that imgix url theme settings is not blank.
+      If blank, stop!
       {%- endcomment -%}
-      {%- unless src or settings.imgixUrl != blank -%}{{- src -}}{%- break -%}{%- endunless -%}
+      {%- unless src or settings.imgixUrl != blank -%}
+        {{- src -}}
+        {%- break -%}
+      {%- endunless -%}
 
       {%- assign hasImageSize = false -%}
-      {%- assign imageSize = '' %}
+      {%- assign imageSize = '' -%}
 
-      {%- comment -%}Filter Sizes{%- endcomment -%}
+      {%- comment -%} Filter sizes from Shopify-style filenames {%- endcomment -%}
       {% unless src contains 'scale_' or src contains 'crop_' or src contains '{width}' %}
-        {%- comment -%}Image File Extension{%- endcomment -%}
         {%- assign fileExtension = src | split: '_' | last | split: '.' | last -%}
-
-        {%- comment -%}Get Image Size if available{%- endcomment -%}
         {%- assign sizeUrlFragment = src | split: '_' | last | split: '.' | first -%}
+
         {%- if sizeUrlFragment contains 'x' -%}
           {%- assign imageSize = sizeUrlFragment | split: 'x' | first | times: 1 -%}
           {%- assign hasImageSize = true -%}
         {%- endif -%}
 
-        {%- comment -%}Confirming if image size exist{%- endcomment -%}
-        {%- assign checkString = imageSize | times: 1 -%}
-        {% if checkString > 0 %}
+        {%- if imageSize > 0 -%}
           {%- assign sizeToRemove = src | split: '_' | last | prepend: '_' -%}
           {%- assign cleanedSrc = src | remove: sizeToRemove | append: '.' | append: fileExtension -%}
           {%- assign src = cleanedSrc -%}
-        {% else %}
-          {%- comment -%}No image size{%- endcomment -%}
+        {%- else -%}
           {%- assign hasImageSize = false -%}
-        {% endif %}
-
+        {%- endif -%}
       {% endunless %}
 
       {%- comment -%}
-      Check to make sure the src has the Shopify CDN url in it. If it doesn't this does not need to run any further
+      Check to make sure the src has the Shopify CDN url in it.
+      If it doesn't, this does not need to run any further.
       {%- endcomment -%}
       {%- assign cdnUrl = settings.shopifyCdnUrl -%}
-      {%- unless src contains cdnUrl -%}{{ src }}{%- break -%}{%- endunless -%}
+      {%- unless src contains cdnUrl -%}
+        {{- src -}}
+        {%- break -%}
+      {%- endunless -%}
+
       {%- assign imgixUrl = settings.imgixUrl | strip -%}
       {%- assign imgParam = settings.imgFormatParam -%}
       {%- assign imageUrl = src | remove: cdnUrl -%}
 
-      {%- comment -%}Checking if url already contains ? before adding imgIX parameters{%- endcomment -%}
+      {%- comment -%} Check if URL already contains ? before adding imgix params {%- endcomment -%}
       {%- unless imageUrl contains '?' -%}
         {%- assign imgParam = imgParam | remove_first: '&' | prepend: '?' -%}
       {%- endunless -%}
 
-      {%- comment -%}Checking to make sure remove https from original URL if exists{%- endcomment -%}
       {%- assign imageUrl = imageUrl | remove: 'https:' -%}
       {%- assign newSrc = imageUrl | strip | prepend: imgixUrl | append: imgParam -%}
+
     {%- endfor -%}
 
-    {% if hasImageSize %}
+    {%- comment -%}
+    WIDTH PRIORITY (IMPORTANT):
+    1. Explicit width passed to snippet (w: or width:)
+    2. Filename-based Shopify size (_400x)
+    3. No width constraint
+    {%- endcomment -%}
+
+    {%- assign requested_w = w | default: width -%}
+
+    {% if requested_w %}
+      {{- newSrc | default: src | append: '&w=' | append: requested_w -}}
+    {% elsif hasImageSize %}
       {{- newSrc | default: src | append: '&w=' | append: imageSize -}}
     {% else %}
       {{- newSrc | default: src -}}
     {% endif %}
+
   {%- else -%}
     {{- src -}}
   {%- endif -%}
 {%- endcapture -%}
+
 {{- imgIx | strip | replace: ' ', '' | strip_newlines -}}
 {% comment %} theme-check-enable LiquidTag {% endcomment %}

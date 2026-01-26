@@ -1,44 +1,51 @@
 {% if section.settings.logged_in_only == false or customer %}
-{% if section.settings.section_heading != blank %}<h2 class="sr-only">{{ section.settings.section_heading }}</h2>{% endif %}
-<div
-  {% if section.settings.section_classes != blank %}class="{{ section.settings.section_classes }}"{% endif %}
-  {% if section.settings.row_bg_image != blank %}style="background-image: url({{ section.settings.row_bg_image | image_url: width: 1420 }})"{% endif %}
->
-  {%- if section.settings.is_slider and section.blocks.size > 1 -%}
-    {% comment %} theme-check-disable UnclosedHTMLElement {% endcomment %}
-    <glide-slider
-      class="glide{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %}{% if section.settings.slider_classes != '' %} {{ section.settings.slider_classes }}{% endif %}"
-      id="slider-{{ section.id }}"
-      data-breakpoint-limit="{{ section.settings.slider_breakpoint_limit }}"
-    >
-      <div class="glide__track {{ section.settings.container_classes }}" data-glide-el="track">
-  {%- endif -%}
-        <ul
-          class="{% if section.settings.is_slider %}glide__slides{% else %}{% unless section.settings.container_classes contains 'grid' %}flex {% endunless %}md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
-          role="presentation"
-        >
-          {%- for block in section.blocks -%}
-            {%- assign bg_image_src = block.settings.image | image_url: width: 1420 -%}
-            <li
-              class="{% if block.settings.column_classes != blank %}{{ block.settings.column_classes }}{% endif %}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
-              {% if block.settings.is_bg_image %}style="background-image: url({% render 'imgix', src: bg_image_src %})"{% endif %}
-              {{ block.shopify_attributes }}
-            >
-              {%- case block.type -%}
-                {%- when 'column' %}
-                  {%- if block.settings.image != blank and block.settings.is_bg_image == false -%}
-                    {%- if block.settings.image_link != blank -%}
-                      <a href="{{ block.settings.image_link }}"{% if block.settings.image_link_classes != blank %} class="{{ block.settings.image_link_classes }}"{% endif %}>
-                    {%- endif -%}
+  {% if section.settings.section_heading != blank %}
+    <h2 class="sr-only">{{ section.settings.section_heading }}</h2>
+  {% endif %}
+  {%- assign row_bg_master = section.settings.row_bg_image | image_url -%}
+  <div
+    {% if section.settings.section_classes != blank %}class="{{ section.settings.section_classes }}"{% endif %}
+    {% if section.settings.row_bg_image != blank %}style="background-image: url({% render 'imgix', src: row_bg_master, w: 1420 %})"{% endif %}
+  >
+    {%- if section.settings.is_slider and section.blocks.size > 1 -%}
+      {% comment %} theme-check-disable UnclosedHTMLElement {% endcomment %}
+      <glide-slider
+        class="glide{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:pb-0{% endif %}{% if section.settings.slider_classes != '' %} {{ section.settings.slider_classes }}{% endif %}"
+        id="slider-{{ section.id }}"
+        data-breakpoint-limit="{{ section.settings.slider_breakpoint_limit }}"
+      >
+        <div class="glide__track {{ section.settings.container_classes }}" data-glide-el="track">
+    {%- endif -%}
+
+          <ul
+            class="{% if section.settings.is_slider %}glide__slides{% else %}{% unless section.settings.container_classes contains 'grid' %}flex {% endunless %}md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
+            role="presentation"
+          >
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign bg_image_master = block.settings.image | image_url
+                assign sizes_attr = "(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+              -%}
+
+              <li
+                class="{% if block.settings.column_classes != blank %}{{ block.settings.column_classes }}{% endif %}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
+                {% if block.settings.is_bg_image %}style="background-image: url({% render 'imgix', src: bg_image_master, w: 1420 %})"{% endif %}
+                {{ block.shopify_attributes }}
+              >
+                {%- case block.type -%}
+                  {%- when 'column' -%}
+                    {%- if block.settings.image != blank and block.settings.is_bg_image == false -%}
+                      {%- if block.settings.image_link != blank -%}
+                        <a href="{{ block.settings.image_link }}"{% if block.settings.image_link_classes != blank %} class="{{ block.settings.image_link_classes }}"{% endif %}>
+                      {%- endif -%}
+
                       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+
                       {%- if block.settings.image contains '.gif' -%}
-                        {%- liquid
-                          assign mobile_image_src = block.settings.image | image_url: width: 400
-                          assign mobile_image_src_2x = block.settings.image | image_url: width: 800
-                        -%}
+                       {%- assign gif_master = block.settings.image | image_url -%}
                         <img
-                          srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
-                          src="{{ mobile_image_src }}"
+                          src="{{ gif_master }}"
+                          srcset="{{ gif_master }}"
                           alt="{{ block.settings.image.alt }}"
                           height="{{ block.settings.image.height }}"
                           width="{{ block.settings.image.width }}"
@@ -46,18 +53,22 @@
                           loading="lazy"
                         >
                       {%- else -%}
+
                         {%- if block.settings.image_static_size != blank -%}
                           {%- liquid
                             assign static_image_size_array = block.settings.image_static_size | split: ', '
-                            assign static_image_width = static_image_size_array | first
+                            assign static_image_width = static_image_size_array | first | times: 1
                             assign static_image_height = static_image_size_array | last
-                            assign static_image_width_mobile = static_image_size_array | first | divided_by: 2
-                            assign static_image_src = block.settings.image | image_url: width: static_image_width_mobile
-                            assign static_image_src_2x = block.settings.image | image_url: width: static_image_width
+                            assign static_image_width_mobile = static_image_width | divided_by: 2 | round
+                            assign master = block.settings.image | image_url
                           -%}
                           <img
-                            srcset="{% render 'imgix', src: static_image_src %} 1x, {% render 'imgix', src: static_image_src_2x %} 2x"
-                            src="{% render 'imgix', src: static_image_src %}"
+                            src="{% render 'imgix', src: master, w: static_image_width_mobile %}"
+                            srcset="
+                              {% render 'imgix', src: master, w: static_image_width_mobile %} {{ static_image_width_mobile }}w,
+                              {% render 'imgix', src: master, w: static_image_width %} {{ static_image_width }}w
+                            "
+                            sizes="(max-width: 639px) {{ static_image_width_mobile }}px, {{ static_image_width }}px"
                             alt="{{ block.settings.image.alt }}"
                             height="{{ static_image_height }}"
                             width="{{ static_image_width }}"
@@ -66,31 +77,59 @@
                           >
                         {%- else -%}
                           {%- liquid
-                            assign mobile_image_src = block.settings.image | image_url: width: 400
-                            assign mobile_image_src_2x = block.settings.image | image_url: width: 800
-                            assign mobile_image_src_4x = block.settings.image | image_url: width: 1600
-                            assign desktop_image_src = block.settings.image_desktop | image_url: width: 800
-                            assign desktop_image_src_2x = block.settings.image_desktop | image_url: width: 1600
+                            assign mobile_master = block.settings.image | image_url
+                            assign desktop_master = block.settings.image_desktop | image_url
                           -%}
+
                           <picture class="{{ block.settings.image_wrapper_classes }}">
                             {%- if block.settings.image_desktop != blank -%}
                               <source
-                                srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
                                 media="(min-width: 640px)"
+                                srcset="
+                                  {% render 'imgix', src: desktop_master, w: 480 %} 480w,
+                                  {% render 'imgix', src: desktop_master, w: 640 %} 640w,
+                                  {% render 'imgix', src: desktop_master, w: 800 %} 800w,
+                                  {% render 'imgix', src: desktop_master, w: 960 %} 960w,
+                                  {% render 'imgix', src: desktop_master, w: 1200 %} 1200w
+                                "
+                                sizes="{{ sizes_attr }}"
                               >
                             {%- else -%}
                               <source
-                                srcset="{% render 'imgix', src: mobile_image_src_2x %} 1x, {% render 'imgix', src: mobile_image_src_4x %} 2x"
                                 media="(min-width: 640px)"
+                                srcset="
+                                  {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+                                  {% render 'imgix', src: mobile_master, w: 640 %} 640w,
+                                  {% render 'imgix', src: mobile_master, w: 800 %} 800w,
+                                  {% render 'imgix', src: mobile_master, w: 960 %} 960w,
+                                  {% render 'imgix', src: mobile_master, w: 1200 %} 1200w
+                                "
+                                sizes="{{ sizes_attr }}"
                               >
                             {%- endif -%}
+
                             <source
-                              srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-                              media="(min-width: 0px)"
+                              media="(max-width: 639px)"
+                              srcset="
+                                {% render 'imgix', src: mobile_master, w: 200 %} 200w,
+                                {% render 'imgix', src: mobile_master, w: 320 %} 320w,
+                                {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+                                {% render 'imgix', src: mobile_master, w: 640 %} 640w,
+                                {% render 'imgix', src: mobile_master, w: 750 %} 750w
+                              "
+                              sizes="{{ sizes_attr }}"
                             >
+
                             <img
-                              srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-                              src="{% render 'imgix', src: mobile_image_src %}"
+                              src="{% render 'imgix', src: mobile_master, w: 480 %}"
+                              srcset="
+                                {% render 'imgix', src: mobile_master, w: 200 %} 200w,
+                                {% render 'imgix', src: mobile_master, w: 320 %} 320w,
+                                {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+                                {% render 'imgix', src: mobile_master, w: 640 %} 640w,
+                                {% render 'imgix', src: mobile_master, w: 750 %} 750w
+                              "
+                              sizes="{{ sizes_attr }}"
                               alt="{{ block.settings.image.alt }}"
                               height="{{ block.settings.image.height }}"
                               width="{{ block.settings.image.width }}"
@@ -100,15 +139,18 @@
                           </picture>
                         {%- endif -%}
                       {%- endif -%}
+
                       {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-                    {%- if block.settings.image_link != blank -%}
-                      </a>
+
+                      {%- if block.settings.image_link != blank -%}
+                        </a>
+                      {%- endif -%}
                     {%- endif -%}
-                  {%- endif -%}
-                  {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
-                    {%- unless block.settings.remove_text_wrapper -%}
-                      <div {% if block.settings.text_classes != blank %}class="{{ block.settings.text_classes }}"{% endif %}>
-                    {%- endunless -%}
+
+                    {%- if block.settings.heading != "" or block.settings.paragraph != "" or block.settings.button_label != "" -%}
+                      {%- unless block.settings.remove_text_wrapper -%}
+                        <div {% if block.settings.text_classes != blank %}class="{{ block.settings.text_classes }}"{% endif %}>
+                      {%- endunless -%}
                       {%- if block.settings.heading != "" -%}
                         <div class="{{ block.settings.heading_classes }}">{{- block.settings.heading -}}</div>
                       {%- endif -%}
@@ -119,6 +161,7 @@
                           {%- endif -%}
                         </div>
                       {%- endif -%}
+
                       {%- if block.settings.button_label != "" or block.settings.is_atc_button -%}
                         {%- if block.settings.is_atc_button and block.settings.atc_button_product != blank -%}
                           <div{% if block.settings.product_form_classes != blank %} class="{{ block.settings.product_form_classes }}"{% endif %}>
@@ -247,7 +290,7 @@
                                             {%- else -%}
                                               {{ value }}
                                             {%- endif -%}
-                                          </label> 
+                                          </label>
                                         </div>
                                       {%- endfor -%}
                                     </fieldset>
@@ -317,191 +360,175 @@
                           </a>
                         {%- endif -%}
                       {%- endif -%}
+
                     {%- unless block.settings.remove_text_wrapper -%}
                       </div>
                     {%- endunless -%}
-                  {%- endif -%}
-                  {%- if block.settings.video_mp4 != blank -%}
-                    {%- liquid
-                      if block.settings.video_poster_size != blank
-                        assign video_poster_width = block.settings.video_poster_size | split: ', ' | first
-                      else
-                        assign video_poster_width = 480
-                      endif
-                      assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: video_poster_width
-                    -%}
-                    <video
-                      {% if block.settings.video_autoplay %}autoplay{% endif %}
-                      {% unless block.settings.video_hide_controls %}controls{% endunless %}
-                      {% if block.settings.video_loop %}loop{% endif %}
-                      {% if block.settings.video_muted %}muted{% endif %}
-                      playsinline
-                      poster="{% render 'imgix', src: video_poster_url %}"
-                      class="lazy bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
-                    >
-                      {%- for source in block.settings.video_mp4.sources -%}
-                        <source data-src="{{ source.url }}" type="video/{{ source.format }}">
-                      {%- endfor -%}
-                      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-                      <img
-                        src="{% render 'imgix', src: video_poster_url %}"
-                        alt=""
-                        width="{{ block.settings.video_mp4.preview_image.width }}"
-                        height="{{ block.settings.video_mp4.preview_image.height }}"
-                        loading="lazy"
-                      >
-                      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-                    </video>
-                  {%- endif -%}
-                  {%- if block.settings.prod_slider_handles != blank -%}
-                    {%- assign product_handles = block.settings.prod_slider_handles | split: ', ' -%}
-                    <horizontal-scroll-box class="relative">
-                      <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
-                        {%- for handle in product_handles -%}
-                          <div class="snap-start w-44 shrink-0{% if forloop.last %} mr-6{% endif %}">
-                            {% render 'product-card',
-                              card_product: all_products[handle],
-                              section_id: block.id,
-                              image_class: '!bg-white',
-                              button_class: 'flex-col py-1 button-sm leading-none md:px-3 xl:px-4',
-                              name_class: '2xs:text-sm',
-                              description_class: ''
-                            %}
-                          </div>
-                        {%- endfor -%}
-                      </div>
-                      <nav>
-                        <button class="next nav-hide absolute top-1/2 -right-3 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Next">
-                          {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6', stroke_width: 1.5 %}
-                        </button>
-                        <button class="prev nav-hide absolute top-1/2 -left-7 bottom-3 z-10 bg-white w-8 h-8 -mt-7 rounded-full shadow-md shadow-seaweed-700/10 flex items-center justify-center motion-safe:transition-opacity" aria-label="Previous">
-                          {% render 'icon-arrow', variant: 'short', classes: 'w-6 h-6 rotate-180', stroke_width: 1.5 %}
-                        </button>
-                      </nav>
-                    </horizontal-scroll-box>
-                  {%- endif -%}
-                {%- when 'product' %}
-                  {% comment %} theme-check-disable LiquidTag {% endcomment %}
-                  {%- if block.settings.product -%}
-                    {% render 'product-card',
-                      card_product: block.settings.product,
-                      section_id: block.id,
-                      custom_default_image: block.settings.custom_product_image,
-                      image_class: block.settings.image_classes,
-                      image_element_class: block.settings.image_element_classes,
-                      button_class: block.settings.button_classes,
-                      product_form_class: block.settings.product_form_classes,
-                      name_class: block.settings.name_classes,
-                      description_class: block.settings.description_classes,
-                      hide_badge: block.settings.hide_badge,
-                      show_reviews: block.settings.show_reviews,
-                      show_benefits: block.settings.show_benefits,
-                      subscription: block.settings.subscription,
-                      percent_discount: block.settings.percent_discount,
-                      is_pdp_link: section.settings.is_pdp_link,
-                      pdp_link_label: section.settings.pdp_link_label,
-                      default_to_mini: block.settings.default_to_mini,
-                      default_to_jumbo: block.settings.default_to_jumbo,
-                      variant_picker_type: block.settings.variant_picker_type,
-                      title_text: block.settings.title_text,
-                      short_description_text: block.settings.short_description_text,
-                      custom_badge_html: block.settings.custom_badge_html,
-                      custom_badge_classes: block.settings.custom_badge_classes
-                    %}
-                  {%- endif -%}
-                  {% comment %} theme-check-enable LiquidTag {% endcomment %}
-                {%- when 'article' -%}
-                  {% render 'article-card'
-                    article: block.settings.article,
-                    card_classes: block.settings.card_classes,
-                    show_image: block.settings.show_image,
-                    image_classes: block.settings.image_classes,
-                    date_classes: block.settings.date_classes,
-                    author_classes: block.settings.author_classes,
-                    title_classes: block.settings.title_classes,
-                    excerpt_classes: block.settings.excerpt_classes,
-                    link_classes: block.settings.link_classes,
-                    tag_classes: block.settings.tag_classes
-                  %}
-                {%- when 'code' -%}
-                  {%- if block.settings.code != "" -%}
-                    {{- block.settings.code -}}
-                  {%- endif -%}
-                {%- when 'countdown' -%}
-                  {%- if block.settings.countdown_date != blank and block.settings.countdown_time != blank -%}
-                    {%- assign increment_array = 'days, hours, minutes, seconds' | split: ', ' -%}
-                    <countdown-component
-                      data-date="{{ block.settings.countdown_date }}"
-                      data-time="{{ block.settings.countdown_time }}"
-                    >
-                      <dl class="flex justify-center {{ block.settings.text_classes }}">
-                        {%- for increment in increment_array -%}
-                          {%- liquid
-                            if block.settings.short_labels
-                              assign increment_label = increment | split: '' | first
-                            else
-                              assign increment_label = increment
-                            endif
-                          -%}
-                          <div class="flex flex-1 flex-col-reverse text-center">
-                            <dt class="{{ block.settings.label_classes }}">{{ increment_label }}</dt>
-                            <dd class="countdown-{{ increment }} {{ block.settings.count_classes }}">00</dd>
-                          </div>
-                        {%- endfor -%}
-                      </dl>
-                    </countdown-component>
-                  {%- endif -%}
-                {%- when 'upsell' -%}
-                  {%- if block.settings.product -%}
-                      {%- render 'product-upsell', product: block.settings.product -%}
-                  {%- endif -%}
-              {%- endcase -%}
-            </li>
-          {%- endfor -%}
-        </ul>
-  {%- if section.settings.is_slider -%}
-      </div>
-      
-      {%- if section.settings.show_arrow_nav -%}
-        <div class="glide__arrows" data-glide-el="controls">
-          <button
-            class="glide__arrow glide__arrow--left {{ section.settings.arrow_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
-            aria-label="Go to previous"
-            data-glide-dir="<"
-          >
-            {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white' %}
-          </button>
-          <button
-            class="glide__arrow glide__arrow--right {{ section.settings.arrow_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
-            aria-label="Go to next"
-            data-glide-dir=">"
-          >
-            {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white rotate-180' %}
-          </button>
-        </div>
-      {%- endif -%}
+                    {%- endif -%}
 
-      {%- if section.settings.show_dot_nav -%}
-        <ol
-          class="glide__bullets flex {{ section.settings.dot_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
-          data-glide-el="controls[nav]"
-        >
-          {%- for dot in (1..section.settings.slider_indicator_count) -%}
-            <li
-              class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
-              data-glide-dir="={{ forloop.index0 }}"
+                    {%- if block.settings.video_mp4 != blank and block.settings.video_mp4.preview_image != blank -%}
+                      {%- liquid
+                        assign video_poster_master = block.settings.video_mp4.preview_image | image_url
+                      -%}
+
+                      <video
+                        {% if block.settings.video_autoplay %}autoplay{% endif %}
+                        {% unless block.settings.video_hide_controls %}controls{% endunless %}
+                        {% if block.settings.video_loop %}loop{% endif %}
+                        {% if block.settings.video_muted %}muted{% endif %}
+                        playsinline
+                        poster="{% render 'imgix', src: video_poster_master, w: 480 %}"
+
+                        class="lazy bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
+                      >
+                        {%- for source in block.settings.video_mp4.sources -%}
+                          <source data-src="{{ source.url }}" type="video/{{ source.format }}">
+                        {%- endfor -%}
+
+                        {% comment %} Fallback poster image {% endcomment %}
+                        <img
+                          src="{% render 'imgix', src: video_poster_master, w: 240 %}"
+                          srcset="
+                            {% render 'imgix', src: video_poster_master, w: 200 %} 200w,
+                            {% render 'imgix', src: video_poster_master, w: 240 %} 240w,
+                            {% render 'imgix', src: video_poster_master, w: 320 %} 320w,
+                            {% render 'imgix', src: video_poster_master, w: 480 %} 480w,
+                            {% render 'imgix', src: video_poster_master, w: 640 %} 640w,
+                            {% render 'imgix', src: video_poster_master, w: 704 %} 704w
+                          "
+                          sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                          alt=""
+                          width="{{ block.settings.video_mp4.preview_image.width }}"
+                          height="{{ block.settings.video_mp4.preview_image.height }}"
+                          loading="lazy"
+                        >
+                      </video>
+                    {%- endif -%}
+
+
+                {%- when 'product' -%}
+                    {% comment %} theme-check-disable LiquidTag {% endcomment %}
+                    {%- if block.settings.product -%}
+                      {% render 'product-card',
+                        card_product: block.settings.product,
+                        section_id: block.id,
+                        custom_default_image: block.settings.custom_product_image,
+                        image_class: block.settings.image_classes,
+                        image_element_class: block.settings.image_element_classes,
+                        button_class: block.settings.button_classes,
+                        product_form_class: block.settings.product_form_classes,
+                        name_class: block.settings.name_classes,
+                        description_class: block.settings.description_classes,
+                        hide_badge: block.settings.hide_badge,
+                        show_reviews: block.settings.show_reviews,
+                        show_benefits: block.settings.show_benefits,
+                        subscription: block.settings.subscription,
+                        percent_discount: block.settings.percent_discount,
+                        is_pdp_link: section.settings.is_pdp_link,
+                        pdp_link_label: section.settings.pdp_link_label,
+                        default_to_mini: block.settings.default_to_mini,
+                        default_to_jumbo: block.settings.default_to_jumbo,
+                        variant_picker_type: block.settings.variant_picker_type,
+                        title_text: block.settings.title_text,
+                        short_description_text: block.settings.short_description_text,
+                        custom_badge_html: block.settings.custom_badge_html,
+                        custom_badge_classes: block.settings.custom_badge_classes
+                      %}
+                    {%- endif -%}
+                    {% comment %} theme-check-enable LiquidTag {% endcomment %}
+
+                  {%- when 'article' -%}
+                    {% render 'article-card'
+                      article: block.settings.article,
+                      card_classes: block.settings.card_classes,
+                      show_image: block.settings.show_image,
+                      image_classes: block.settings.image_classes,
+                      date_classes: block.settings.date_classes,
+                      author_classes: block.settings.author_classes,
+                      title_classes: block.settings.title_classes,
+                      excerpt_classes: block.settings.excerpt_classes,
+                      link_classes: block.settings.link_classes,
+                      tag_classes: block.settings.tag_classes
+                    %}
+
+                  {%- when 'code' -%}
+                    {%- if block.settings.code != "" -%}
+                      {{- block.settings.code -}}
+                    {%- endif -%}
+
+                  {%- when 'countdown' -%}
+                    {%- if block.settings.countdown_date != blank and block.settings.countdown_time != blank -%}
+                      {%- assign increment_array = 'days, hours, minutes, seconds' | split: ', ' -%}
+                      <countdown-component data-date="{{ block.settings.countdown_date }}" data-time="{{ block.settings.countdown_time }}">
+                        <dl class="flex justify-center {{ block.settings.text_classes }}">
+                          {%- for increment in increment_array -%}
+                            {%- liquid
+                              if block.settings.short_labels
+                                assign increment_label = increment | split: '' | first
+                              else
+                                assign increment_label = increment
+                              endif
+                            -%}
+                            <div class="flex flex-1 flex-col-reverse text-center">
+                              <dt class="{{ block.settings.label_classes }}">{{ increment_label }}</dt>
+                              <dd class="countdown-{{ increment }} {{ block.settings.count_classes }}">00</dd>
+                            </div>
+                          {%- endfor -%}
+                        </dl>
+                      </countdown-component>
+                    {%- endif -%}
+
+                  {%- when 'upsell' -%}
+                    {%- if block.settings.product -%}
+                      {%- render 'product-upsell', product: block.settings.product -%}
+                    {%- endif -%}
+                {%- endcase -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+
+    {%- if section.settings.is_slider -%}
+        </div>
+
+        {%- if section.settings.show_arrow_nav -%}
+          <div class="glide__arrows" data-glide-el="controls">
+            <button
+              class="glide__arrow glide__arrow--left {{ section.settings.arrow_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+              aria-label="Go to previous"
+              data-glide-dir="<"
             >
-              <span class="sr-only">Go to slide {{ forloop.index }}</span>
-              <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
-            </li>
-          {%- endfor -%}
-        </ol>
-      {%- endif -%}
-    </glide-slider>
-    {% comment %} theme-check-enable UnclosedHTMLElement {% endcomment %}
-  {%- endif -%}
-</div>
+              {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white' %}
+            </button>
+            <button
+              class="glide__arrow glide__arrow--right {{ section.settings.arrow_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+              aria-label="Go to next"
+              data-glide-dir=">"
+            >
+              {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white rotate-180' %}
+            </button>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_dot_nav -%}
+          <ol
+            class="glide__bullets flex {{ section.settings.dot_nav_classes }}{% if section.settings.slider_breakpoint_limit != 'none' %} {{ section.settings.slider_breakpoint_limit }}:hidden{% endif %}"
+            data-glide-el="controls[nav]"
+          >
+            {%- for dot in (1..section.settings.slider_indicator_count) -%}
+              <li class="glide__bullet p-2{% if forloop.first %} active{% endif %}" data-glide-dir="={{ forloop.index0 }}">
+                <span class="sr-only">Go to slide {{ forloop.index }}</span>
+                <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
+              </li>
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+      </glide-slider>
+      {% comment %} theme-check-enable UnclosedHTMLElement {% endcomment %}
+    {%- endif -%}
+  </div>
 {% endif %}
+
+
 
 {% schema %}
 {
