@@ -7,54 +7,6 @@
         aria-label="Main site banner"
       >
     {%- endif -%}
-<<<<<<< HEAD
-      {%- liquid
-        assign mobile_image_src = section.settings.image_mobile | image_url: width: 400
-        assign mobile_image_src_2x = section.settings.image_mobile | image_url: width: 800
-        assign desktop_image_src = section.settings.image | image_url: width: 800
-        assign desktop_image_src_2x = section.settings.image | image_url: width: 1600
-        assign desktop_image_src_3x = section.settings.image | image_url: width: 2400
-      -%}
-      {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
-
-      {% assign is_lcp = false %}
-      {% if request.page_type == 'index' and section.index == 1 %}
-        {% assign is_lcp = true %}
-      {% endif %}
-      <picture>
-        {%- if section.settings.image_mobile != blank -%}
-          <source
-            {% if section.settings.image contains '.gif' %}
-              srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
-            {% else %}
-              srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-            {% endif %}
-            media="(max-width: 639px)"
-          >
-        {%- endif %}
-        {%- if section.settings.image != blank -%}
-          <source
-            {% if section.settings.image contains '.gif' %}
-              srcset="{{ desktop_image_src }} 1x, {{ desktop_image_src_2x }} 2x"
-            {% else %}
-              srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
-            {% endif %}
-            media="(min-width: 640px) and (max-width: 1023px)"
-          >
-          <source
-            {% if section.settings.image contains '.gif' %}
-              srcset="{{ desktop_image_src_2x }} 1x, {{ desktop_image_src_3x }} 2x"
-            {% else %}
-              srcset="{% render 'imgix', src: desktop_image_src_2x %} 1x, {% render 'imgix', src: desktop_image_src_3x %} 2x"
-            {% endif %}
-            media="(min-width: 1024px)"
-          >
-        {%- endif %}
-        <img
-          {% if section.settings.image contains '.gif' %}
-            srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
-            src="{{ mobile_image_src }}"
-=======
     {%- liquid
       assign mobile_master = section.settings.image_mobile | image_url
       assign desktop_master = section.settings.image | image_url
@@ -66,7 +18,6 @@
           media="(max-width: 639px)"
           {% if section.settings.image_mobile contains '.gif' %}
             srcset="{{ mobile_master }}"
->>>>>>> a25fc6ee (Update Image Banner srcset rendering)
           {% else %}
             srcset="
               {% render 'imgix', src: mobile_master, w: 320 %} 320w,
@@ -76,22 +27,6 @@
             "
             sizes="100vw"
           {% endif %}
-<<<<<<< HEAD
-
-          {% comment %} LCP Fallback {% endcomment %}
-          {% if is_lcp %}
-            loading="eager"
-            fetchpriority="high"
-          {% else %}
-            {% if section.settings.is_lazy %}loading="lazy"{% endif %}
-          {% endif %}
-          
-          alt="{{ section.settings.image_mobile.alt }}"
-          width="{{ section.settings.image_mobile.width }}"
-          height="{{ section.settings.image_mobile.width | divided_by: section.settings.image_mobile.aspect_ratio | round }}"
-          class="{{ section.settings.image_classes }} block"
-=======
->>>>>>> a25fc6ee (Update Image Banner srcset rendering)
         >
       {%- endif -%}
 
