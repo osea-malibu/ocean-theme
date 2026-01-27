@@ -11,8 +11,9 @@
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     <link rel="preconnect" href="https://cdn.shopifycloud.com" crossorigin>
-    <link rel="dns-prefetch" href="//cdn.shopifycloud.com">
-    <link rel="dns-prefetch" href="//cdn.shopify.com">
+
+    {{ 'CircularLLVarWeb-[wght].woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
+    {{ 'font-canela-light.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
 
 
     {%- if settings.favicon != blank -%}
@@ -43,13 +44,14 @@
     {% comment %}theme-check-disable ContentForHeaderModification,RemoteAsset{% endcomment %}
     {{ content_for_header | remove: '"https:\/\/static.rechargecdn.com\/assets\/js\/widget.min.js?shop=osea-malibu.myshopify.com",' | replace: 'id="in-context-paypal-metadata"', 'name="paypal-metadata" content="" id="in-context-paypal-metadata"' | replace: 'id="amazon-payments-metadata"', 'name="amazon-metadata" content="" id="amazon-payments-metadata"' }}
     {% comment %}theme-check-enable ContentForHeaderModification,RemoteAsset{% endcomment %}
-    <script src="{{ 'main.min.js' | asset_url }}" type="module"></script>
-
+    
     {% style %}
       {% render 'font-face' %}
     {% endstyle %}
 
     {{ 'application.css' | asset_url | stylesheet_tag: preload: true }}
+
+    <script src="{{ 'main.min.js' | asset_url }}" type="module"></script>
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
