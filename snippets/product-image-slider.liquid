@@ -48,9 +48,29 @@ Accepts:
               {% render 'product-image-badge', product: product, classes: 'z-10 left-2 top-2 w-16 xl:w-20 2xl:w-24 gap-2' %}
             {%- endif -%}
 
+            {%- comment -%}
+            Prepare safe masters and aspect handling
+            {%- endcomment -%}
             {%- liquid
-              assign main_image_src = media | image_url: width: 800, height: 1000, crop: 'center'
-              assign main_image_src_2x = media | image_url: width: 1600, height: 2000, crop: 'center'
+              assign main_master = media | image_url
+              assign main_w_small = 480
+              assign main_w_large = 960
+
+              # safe aspect guard
+              if media.aspect_ratio and media.aspect_ratio > 0
+                assign _aspect = media.aspect_ratio
+              else
+                assign _aspect = 1
+              endif
+
+              # choose a width attr fallback
+              if media.width and media.width > 0
+                assign _display_width = media.width
+              else
+                assign _display_width = main_w_small
+              endif
+
+              assign _display_height = _display_width | divided_by: _aspect | round
             -%}
 
             {% comment %} theme-check-disable RemoteAsset {% endcomment %}
@@ -59,16 +79,24 @@ Accepts:
                 id="Product-VariantImage"
               {% endif %}
 
-              srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
-              src="{% render 'imgix', src: main_image_src %}"
+              srcset="
+                {% render 'imgix', src: main_master, w: 480 %} 480w,
+                {% render 'imgix', src: main_master, w: 800 %} 800w,
+                {% render 'imgix', src: main_master, w: 1200 %} 1200w,
+                {% render 'imgix', src: main_master, w: 1600 %} 1600w
+              "
+              src="{% render 'imgix', src: main_master, w: 800 %}"
 
               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
               {% if forloop.first %}fetchpriority="high"{% endif %}
               decoding="async"
 
               alt="{{ media.alt | escape }}"
-              width="{{ media.width }}"
-              height="{{ media.width | divided_by: 0.8 | round }}"
+
+              width="{{ _display_width }}"
+              height="{{ _display_height }}"
+
+              sizes="(min-width: 1024px) 1200px, (min-width: 640px) 800px, 480px"
               class="object-cover min-h-full"
             >
             {% comment %} theme-check-enable RemoteAsset {% endcomment %}
@@ -79,10 +107,33 @@ Accepts:
               {% render 'video-poster-button', section_id: section.id, media: media, classes: 'absolute w-full h-full deferred-media__poster' %}
 
               <template>
+                {%- comment -%}
+                video <poster> is a single URL only — choose a sensible size for poster.
+                We still use imgix to serve that poster at a fixed width (800)
+                {%- endcomment -%}
+
+                {%- liquid
+                  assign poster_master = media.preview_image | image_url
+                  # safe aspect ratio & dims for poster
+                  if media.preview_image.width and media.preview_image.width > 0
+                    assign poster_w_attr = media.preview_image.width
+                  else
+                    assign poster_w_attr = 800
+                  endif
+
+                  if media.preview_image.aspect_ratio and media.preview_image.aspect_ratio > 0
+                    assign poster_aspect = media.preview_image.aspect_ratio
+                  else
+                    assign poster_aspect = 1
+                  endif
+
+                  assign poster_h_attr = poster_w_attr | divided_by: poster_aspect | round
+                -%}
+
                 <video
                   class="object-cover w-full h-full md:rounded-md"
                   playsinline autoplay muted loop controls
-                  poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}"
+                  poster="{% render 'imgix', src: poster_master, w: 800 %}"
                 >
                   {%- for source in media.sources -%}
                     <source src="{{ source.url }}" type="video/{{ source.format }}">
@@ -104,20 +155,37 @@ Accepts:
         <span class="sr-only">Go to slide {{ forloop.index }}</span>
 
         {%- liquid
-          assign thumb_image_src = media | image_url: width: 192
-          assign thumb_image_src_2x = media | image_url: width: 252
+          assign thumb_master = media | image_url
+          # safe thumb dimensions
+          if media.width and media.width > 0
+            assign _thumb_w = media.width
+          else
+            assign _thumb_w = 192
+          endif
+
+          if media.aspect_ratio and media.aspect_ratio > 0
+            assign _thumb_aspect = media.aspect_ratio
+          else
+            assign _thumb_aspect = 1
+          endif
+
+          assign _thumb_h = _thumb_w | divided_by: _thumb_aspect | round
         -%}
 
         <img
-          srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
-          src="{% render 'imgix', src: thumb_image_src_2x %}"
+          srcset="
+            {% render 'imgix', src: thumb_master, w: 192 %} 192w,
+            {% render 'imgix', src: thumb_master, w: 256 %} 256w
+          "
+          src="{% render 'imgix', src: thumb_master, w: 256 %}"
           loading="lazy"
           alt="{{ media.alt | escape }}"
-          width="{{ media.width }}"
-          height="{{ media.width | divided_by: media.aspect_ratio | round }}"
+          width="{{ _thumb_w }}"
+          height="{{ _thumb_h }}"
           class="hidden object-cover w-24 rounded-md md:block lg:h-32"
         >
       </button>
     {%- endfor -%}
   </div>
 </glide-slider>
+
