@@ -48,9 +48,6 @@ Accepts:
               {% render 'product-image-badge', product: product, classes: 'z-10 left-2 top-2 w-16 xl:w-20 2xl:w-24 gap-2' %}
             {%- endif -%}
 
-            {%- comment -%}
-            Prepare safe masters and aspect handling
-            {%- endcomment -%}
             {%- liquid
               assign main_master = media | image_url
               assign main_w_small = 480
@@ -107,10 +104,6 @@ Accepts:
               {% render 'video-poster-button', section_id: section.id, media: media, classes: 'absolute w-full h-full deferred-media__poster' %}
 
               <template>
-                {%- comment -%}
-                video <poster> is a single URL only — choose a sensible size for poster.
-                We still use imgix to serve that poster at a fixed width (800)
-                {%- endcomment -%}
 
                 {%- liquid
                   assign poster_master = media.preview_image | image_url
