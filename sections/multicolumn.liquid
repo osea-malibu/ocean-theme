@@ -5,7 +5,7 @@
   {%- assign row_bg_master = section.settings.row_bg_image | image_url -%}
   <div
     {% if section.settings.section_classes != blank %}class="{{ section.settings.section_classes }}"{% endif %}
-    {% if section.settings.row_bg_image != blank %}style="background-image: url({% render 'imgix', src: row_bg_master, w: 1420 %})"{% endif %}
+    {% if section.settings.row_bg_image != blank %}style="background-image: url({% render 'imgix', src: row_bg_master, w: 1600 %})"{% endif %}
   >
     {%- if section.settings.is_slider and section.blocks.size > 1 -%}
       {% comment %} theme-check-disable UnclosedHTMLElement {% endcomment %}
@@ -24,12 +24,29 @@
             {%- for block in section.blocks -%}
               {%- liquid
                 assign bg_image_master = block.settings.image | image_url
-                assign sizes_attr = "(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                assign sizes_attr = "100vw"
+
+                assign is_grid_layout = false
+                if section.settings.container_classes contains 'grid'
+                  assign is_grid_layout = true
+                endif
+
+                if is_grid_layout
+                  assign sizes_attr = "(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw"
+                else
+                  if block.settings.column_classes contains 'md:w-2/3'
+                    assign sizes_attr = "(min-width: 768px) 67vw, 100vw"
+                  elsif block.settings.column_classes contains 'md:w-1/3'
+                    assign sizes_attr = "(min-width: 768px) 33vw, 100vw"
+                  elsif block.settings.column_classes contains 'md:w-1/2'
+                    assign sizes_attr = "(min-width: 768px) 50vw, 100vw"
+                  endif
+                endif
               -%}
 
               <li
                 class="{% if block.settings.column_classes != blank %}{{ block.settings.column_classes }}{% endif %}{% if section.settings.is_slider %} glide__slide{% endif %}{% if block.settings.is_bg_image %} bg-cover{% endif %}"
-                {% if block.settings.is_bg_image %}style="background-image: url({% render 'imgix', src: bg_image_master, w: 1420 %})"{% endif %}
+                {% if block.settings.is_bg_image %}style="background-image: url({% render 'imgix', src: bg_image_master, w: 1600 %})"{% endif %}
                 {{ block.shopify_attributes }}
               >
                 {%- case block.type -%}
@@ -39,10 +56,10 @@
                         <a href="{{ block.settings.image_link }}"{% if block.settings.image_link_classes != blank %} class="{{ block.settings.image_link_classes }}"{% endif %}>
                       {%- endif -%}
 
-                      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                      {% comment %}theme-check-disable RemoteAsset {% endcomment %}
 
                       {%- if block.settings.image contains '.gif' -%}
-                       {%- assign gif_master = block.settings.image | image_url -%}
+                        {%- assign gif_master = block.settings.image | image_url -%}
                         <img
                           src="{{ gif_master }}"
                           srcset="{{ gif_master }}"
@@ -88,9 +105,10 @@
                                 srcset="
                                   {% render 'imgix', src: desktop_master, w: 480 %} 480w,
                                   {% render 'imgix', src: desktop_master, w: 640 %} 640w,
-                                  {% render 'imgix', src: desktop_master, w: 800 %} 800w,
                                   {% render 'imgix', src: desktop_master, w: 960 %} 960w,
-                                  {% render 'imgix', src: desktop_master, w: 1200 %} 1200w
+                                  {% render 'imgix', src: desktop_master, w: 1200 %} 1200w,
+                                  {% render 'imgix', src: desktop_master, w: 1600 %} 1600w,
+                                  {% render 'imgix', src: desktop_master, w: 2400 %} 2400w
                                 "
                                 sizes="{{ sizes_attr }}"
                               >
@@ -100,9 +118,10 @@
                                 srcset="
                                   {% render 'imgix', src: mobile_master, w: 480 %} 480w,
                                   {% render 'imgix', src: mobile_master, w: 640 %} 640w,
-                                  {% render 'imgix', src: mobile_master, w: 800 %} 800w,
                                   {% render 'imgix', src: mobile_master, w: 960 %} 960w,
-                                  {% render 'imgix', src: mobile_master, w: 1200 %} 1200w
+                                  {% render 'imgix', src: mobile_master, w: 1200 %} 1200w,
+                                  {% render 'imgix', src: mobile_master, w: 1600 %} 1600w,
+                                  {% render 'imgix', src: mobile_master, w: 2400 %} 2400w
                                 "
                                 sizes="{{ sizes_attr }}"
                               >
@@ -115,19 +134,25 @@
                                 {% render 'imgix', src: mobile_master, w: 320 %} 320w,
                                 {% render 'imgix', src: mobile_master, w: 480 %} 480w,
                                 {% render 'imgix', src: mobile_master, w: 640 %} 640w,
-                                {% render 'imgix', src: mobile_master, w: 750 %} 750w
+                                {% render 'imgix', src: mobile_master, w: 750 %} 750w,
+                                {% render 'imgix', src: mobile_master, w: 960 %} 960w,
+                                {% render 'imgix', src: mobile_master, w: 1200 %} 1200w
                               "
                               sizes="{{ sizes_attr }}"
                             >
 
                             <img
-                              src="{% render 'imgix', src: mobile_master, w: 480 %}"
+                              src="{% render 'imgix', src: mobile_master, w: 640 %}"
                               srcset="
                                 {% render 'imgix', src: mobile_master, w: 200 %} 200w,
                                 {% render 'imgix', src: mobile_master, w: 320 %} 320w,
                                 {% render 'imgix', src: mobile_master, w: 480 %} 480w,
                                 {% render 'imgix', src: mobile_master, w: 640 %} 640w,
-                                {% render 'imgix', src: mobile_master, w: 750 %} 750w
+                                {% render 'imgix', src: mobile_master, w: 750 %} 750w,
+                                {% render 'imgix', src: mobile_master, w: 960 %} 960w,
+                                {% render 'imgix', src: mobile_master, w: 1200 %} 1200w,
+                                {% render 'imgix', src: mobile_master, w: 1600 %} 1600w,
+                                {% render 'imgix', src: mobile_master, w: 2400 %} 2400w
                               "
                               sizes="{{ sizes_attr }}"
                               alt="{{ block.settings.image.alt }}"
@@ -140,7 +165,7 @@
                         {%- endif -%}
                       {%- endif -%}
 
-                      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+                      {% comment %}theme-check-enable RemoteAsset {% endcomment %}
 
                       {%- if block.settings.image_link != blank -%}
                         </a>
@@ -281,7 +306,7 @@
                                             {% if option.selected_value == value %}checked{% endif %}
                                           >
                                           <label
-                                            class="button button-xs rounded-full lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}{% if block.settings.variant_button_classes != blank %} {{ block.settings.variant_button_classes }}{% endif %}"
+                                            class="button button-xs rounded-full lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else %} px-2.5 xs:px-3{% endif %}{% if block.settings.variant_button_classes != blank %} {{ block.settings.variant_button_classes }}{% endif %}"
                                             for="{{ block.settings.atc_button_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ block.id }}"
                                             tabindex="0"
                                           >
@@ -361,9 +386,9 @@
                         {%- endif -%}
                       {%- endif -%}
 
-                    {%- unless block.settings.remove_text_wrapper -%}
+                      {%- unless block.settings.remove_text_wrapper -%}
                       </div>
-                    {%- endunless -%}
+                      {%- endunless -%}
                     {%- endif -%}
 
                     {%- if block.settings.video_mp4 != blank and block.settings.video_mp4.preview_image != blank -%}
@@ -371,14 +396,14 @@
                         assign video_poster_master = block.settings.video_mp4.preview_image | image_url
                       -%}
 
+                      {% comment %}theme-check-disable RemoteAsset {% endcomment %}
                       <video
                         {% if block.settings.video_autoplay %}autoplay{% endif %}
                         {% unless block.settings.video_hide_controls %}controls{% endunless %}
                         {% if block.settings.video_loop %}loop{% endif %}
                         {% if block.settings.video_muted %}muted{% endif %}
                         playsinline
-                        poster="{% render 'imgix', src: video_poster_master, w: 480 %}"
-
+                        poster="{% render 'imgix', src: video_poster_master, w: 640 %}"
                         class="lazy bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
                       >
                         {%- for source in block.settings.video_mp4.sources -%}
@@ -386,29 +411,25 @@
                         {%- endfor -%}
 
                         {% comment %} Fallback poster image {% endcomment %}
-                        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
                         <img
-                          src="{% render 'imgix', src: video_poster_master, w: 240 %}"
+                          src="{% render 'imgix', src: video_poster_master, w: 480 %}"
                           srcset="
-                            {% render 'imgix', src: video_poster_master, w: 200 %} 200w,
                             {% render 'imgix', src: video_poster_master, w: 240 %} 240w,
-                            {% render 'imgix', src: video_poster_master, w: 320 %} 320w,
                             {% render 'imgix', src: video_poster_master, w: 480 %} 480w,
                             {% render 'imgix', src: video_poster_master, w: 640 %} 640w,
-                            {% render 'imgix', src: video_poster_master, w: 704 %} 704w
+                            {% render 'imgix', src: video_poster_master, w: 960 %} 960w
                           "
-                          sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                          sizes="{{ sizes_attr }}"
                           alt=""
                           width="{{ block.settings.video_mp4.preview_image.width }}"
                           height="{{ block.settings.video_mp4.preview_image.height }}"
                           loading="lazy"
                         >
-                        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
                       </video>
+                      {% comment %}theme-check-enable RemoteAsset {% endcomment %}
                     {%- endif -%}
 
-
-                {%- when 'product' -%}
+                  {%- when 'product' -%}
                     {% comment %} theme-check-disable LiquidTag {% endcomment %}
                     {%- if block.settings.product -%}
                       {% render 'product-card',
@@ -529,8 +550,6 @@
     {%- endif -%}
   </div>
 {% endif %}
-
-
 
 {% schema %}
 {
