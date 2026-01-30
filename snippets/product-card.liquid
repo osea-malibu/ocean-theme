@@ -48,18 +48,18 @@
       {%- endif -%}
       {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}">{% endunless %}
         {%- if title_text != blank -%}
-          <h3 class="text-lg lg:text-xl font-medium !leading-[1.1] hover:underline mb-1{% if name_class != blank %} {{ name_class }}{% endif %}">
+          <h3 class="text-lg lg:text-xl font-medium leading-[1.1]! hover:underline mb-1{% if name_class != blank %} {{ name_class }}{% endif %}">
             {{- title_text | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' -}}
           </h3>
         {%- else -%}
           {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
-          <h3 class="text-lg lg:text-xl font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
+          <h3 class="text-lg lg:text-xl font-medium leading-[1.1]! hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
             {{- card_product.title | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' -}}
           </h3>
         {%- endif -%}
       {% unless remove_linking %}</a>{% endunless %}
     </div>
-    <p class="text-sm lg:text-base !leading-[1.1]{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
+    <p class="text-sm lg:text-base leading-[1.1]!{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
       {%- if short_description_text != blank -%}
         {{- short_description_text | escape -}}
       {%- else -%}
@@ -123,7 +123,7 @@
                 <legend class="sr-only">Ship every:</legend>
                 <div class="overflow-x-auto flex">
                   {%- for option in subscription_group.selling_plans -%}
-                    <div class="flex-grow{% unless forloop.last %} mr-0.5{% endunless %}">
+                    <div class="grow{% unless forloop.last %} mr-0.5{% endunless %}">
                       <input type="radio"
                         id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
                         class="peer hidden"
@@ -149,7 +149,7 @@
                   Ship every:
                 </label>
                 <select id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                  class="block input input-xs w-full pl-[76px] xs:pl-20 !pr-6"
+                  class="block input input-xs w-full pl-[76px] xs:pl-20 pr-6!"
                   name="selling_plan"
                   form="{{ product_form_id }}"
                 >
@@ -370,33 +370,16 @@
       {% comment %} theme-check-disable RemoteAsset {% endcomment %}
 
       {%- if default_master contains '.gif' -%}
-        {%- if plp_card -%}
-          <picture>
-            <img
-              src="{{ default_master }}"
-              srcset="{{ default_master }}"
-              alt="{{ default_image.alt | escape }}"
-              sizes="{{ card_sizes }}"
-              width="{{ default_image.width }}"
-              height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
-              id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
-              {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
-              {% if image_element_class != blank %}class="{{ image_element_class }}"{% else %}class="w-full h-full object-cover"{% endif %}
-            >
-          </picture>
-        {%- else -%}
-          <img
-            src="{{ default_master }}"
-            srcset="{{ default_master }}"
-            alt="{{ default_image.alt | escape }}"
-            sizes="{{ card_sizes }}"
-            width="{{ default_image.width }}"
-            height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
-            id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
-            {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
-            class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
-          >
-        {%- endif -%}
+        <img
+          src="{{ default_master }}"
+          alt="{{ default_image.alt | escape }}"
+          sizes="{{ card_sizes }}"
+          width="{{ default_image.width }}"
+          height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
+          id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+          {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
+          class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
+        >
 
       {%- else -%}
         {%- if plp_card -%}

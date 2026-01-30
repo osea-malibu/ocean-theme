@@ -55,19 +55,19 @@ Accepts:
 
               # safe aspect guard
               if media.aspect_ratio and media.aspect_ratio > 0
-                assign _aspect = media.aspect_ratio
+                assign aspect = media.aspect_ratio
               else
-                assign _aspect = 1
+                assign aspect = 1
               endif
 
               # choose a width attr fallback
               if media.width and media.width > 0
-                assign _display_width = media.width
+                assign display_width = media.width
               else
-                assign _display_width = main_w_small
+                assign display_width = main_w_small
               endif
 
-              assign _display_height = _display_width | divided_by: _aspect | round
+              assign display_height = display_width | divided_by: aspect | round
             -%}
 
             {% comment %} theme-check-disable RemoteAsset {% endcomment %}
@@ -90,8 +90,8 @@ Accepts:
 
               alt="{{ media.alt | escape }}"
 
-              width="{{ _display_width }}"
-              height="{{ _display_height }}"
+              width="{{ display_width }}"
+              height="{{ display_height }}"
 
               sizes="(min-width: 1024px) 1200px, (min-width: 640px) 800px, 480px"
               class="object-cover min-h-full"
@@ -115,14 +115,15 @@ Accepts:
                   endif
 
                   if media.preview_image.aspect_ratio and media.preview_image.aspect_ratio > 0
-                    assign poster_aspect = media.preview_image.aspect_ratio
+                    assign posteraspect = media.preview_image.aspect_ratio
                   else
-                    assign poster_aspect = 1
+                    assign posteraspect = 1
                   endif
 
-                  assign poster_h_attr = poster_w_attr | divided_by: poster_aspect | round
+                  assign poster_h_attr = poster_w_attr | divided_by: posteraspect | round
                 -%}
 
+                {% comment %}theme-check-disable RemoteAsset {% endcomment %}
                 <video
                   class="object-cover w-full h-full md:rounded-md"
                   playsinline autoplay muted loop controls
@@ -132,6 +133,7 @@ Accepts:
                     <source src="{{ source.url }}" type="video/{{ source.format }}">
                   {%- endfor -%}
                 </video>
+                {% comment %}theme-check-enable RemoteAsset {% endcomment %}
               </template>
             </deferred-media>
 
@@ -151,20 +153,21 @@ Accepts:
           assign thumb_master = media | image_url
           # safe thumb dimensions
           if media.width and media.width > 0
-            assign _thumb_w = media.width
+            assign thumb_w = media.width
           else
-            assign _thumb_w = 192
+            assign thumb_w = 192
           endif
 
           if media.aspect_ratio and media.aspect_ratio > 0
-            assign _thumb_aspect = media.aspect_ratio
+            assign thumbaspect = media.aspect_ratio
           else
-            assign _thumb_aspect = 1
+            assign thumbaspect = 1
           endif
 
-          assign _thumb_h = _thumb_w | divided_by: _thumb_aspect | round
+          assign thumb_h = thumb_w | divided_by: thumbaspect | round
         -%}
 
+        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
         <img
           srcset="
             {% render 'imgix', src: thumb_master, w: 192 %} 192w,
@@ -173,10 +176,11 @@ Accepts:
           src="{% render 'imgix', src: thumb_master, w: 256 %}"
           loading="lazy"
           alt="{{ media.alt | escape }}"
-          width="{{ _thumb_w }}"
-          height="{{ _thumb_h }}"
+          width="{{ thumb_w }}"
+          height="{{ thumb_h }}"
           class="hidden object-cover w-24 rounded-md md:block lg:h-32"
         >
+        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
       </button>
     {%- endfor -%}
   </div>
