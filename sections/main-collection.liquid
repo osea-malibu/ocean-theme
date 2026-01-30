@@ -125,11 +125,11 @@
   {%- endpaginate -%}
 
   {%- if collection.metafields.custom.seo_description != nil -%}
-    <div class="!mt-10 max-w-screen-md mx-auto">
+    <div class="mt-10! max-w-3xl mx-auto">
       {%- if collection.metafields.custom.seo_description.value.size > 400 -%}
         <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
       {%- endif -%}
-      <div class="a:link h2:font-medium h2:mb-2{% if collection.metafields.custom.seo_description.value.size > 400 %} overflow-hidden max-h-[4.5rem] peer-checked:max-h-[2000px] transition-max-height leading-6{% endif %}">
+      <div class="a:link h2:font-medium h2:mb-2{% if collection.metafields.custom.seo_description.value.size > 400 %} overflow-hidden max-h-18 peer-checked:max-h-[2000px] transition-max-height leading-6{% endif %}">
         {{ collection.metafields.custom.seo_description }}
       </div>
       {%- if collection.metafields.custom.seo_description.value.size > 400 -%}

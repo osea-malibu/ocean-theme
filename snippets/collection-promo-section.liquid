@@ -21,6 +21,10 @@
   assign dim_h = dim_w | divided_by: dim_ar | round
 -%}
 
+{%- if promo_section_url != blank -%}
+<a href="{{ promo_section_url }}">
+{%- endif -%}
+{% comment %}theme-check-disable RemoteAsset {% endcomment %}
 <picture class="relative z-0">
   {%- if mobile_img != blank -%}
     <source
@@ -94,9 +98,7 @@
     class="object-cover block w-full h-full {{ promo_section_image_classes }}"
   >
 </picture>
-
-
-{% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
+{% comment %}theme-check-enable RemoteAsset {% endcomment %}
 {%- if promo_section_url != blank -%}
 </a>
 {%- endif -%}
