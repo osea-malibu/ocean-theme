@@ -18,7 +18,7 @@
     {%- endif -%}
 
           <ul
-            class="{% if section.settings.is_slider %}glide__slides{% else %}{% unless section.settings.container_classes contains 'grid' %}flex {% endunless %}md:flex-shrink-0 {{ section.settings.container_classes }}{% endif %}"
+            class="{% if section.settings.is_slider %}glide__slides{% else %}{% unless section.settings.container_classes contains 'grid' %}flex {% endunless %}md:shrink-0 {{ section.settings.container_classes }}{% endif %}"
             role="presentation"
           >
             {%- for block in section.blocks -%}
@@ -189,7 +189,7 @@
                                 <fieldset class="js flex">
                                   <legend class="sr-only">Ship every:</legend>
                                   {%- for option in subscription_group.selling_plans -%}
-                                    <div class="flex-grow{% unless forloop.last %} mr-0.5{% endunless %}">
+                                    <div class="grow{% unless forloop.last %} mr-0.5{% endunless %}">
                                       <input type="radio"
                                         id="SubscriptionOption-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}"
                                         class="peer hidden"
@@ -386,6 +386,7 @@
                         {%- endfor -%}
 
                         {% comment %} Fallback poster image {% endcomment %}
+                        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
                         <img
                           src="{% render 'imgix', src: video_poster_master, w: 240 %}"
                           srcset="
@@ -402,6 +403,7 @@
                           height="{{ block.settings.video_mp4.preview_image.height }}"
                           loading="lazy"
                         >
+                        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
                       </video>
                     {%- endif -%}
 

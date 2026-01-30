@@ -1,49 +1,101 @@
 {%- liquid
-  assign mobile_image_src = promo_section_image_mobile | image_url: width: 400
-  assign mobile_image_src_2x = promo_section_image_mobile | image_url: width: 800
-  assign desktop_image_src = promo_section_image_desktop | image_url: width: 1232
-  assign desktop_image_src_2x = promo_section_image_desktop | image_url: width: 2464
+  assign mobile_img = promo_section_image_mobile
+  assign desktop_img = promo_section_image_desktop
+
+  assign mobile_master = mobile_img | image_url
+  assign desktop_master = desktop_img | image_url
+
+  assign promo_sizes = '(min-width: 1024px) 50vw, (min-width: 640px) 75vw, 100vw'
+
+  # pick a fallback image object to read width/height from
+  assign dim_img = mobile_img
+  if dim_img == blank
+    assign dim_img = desktop_img
+  endif
+
+  assign dim_w = dim_img.width
+  assign dim_ar = dim_img.aspect_ratio
+  if dim_ar == blank or dim_ar == 0
+    assign dim_ar = 1
+  endif
+  assign dim_h = dim_w | divided_by: dim_ar | round
 -%}
-{%- if promo_section_url != blank -%}
-  <a href="{{ promo_section_url }}" class="block">
-{%- endif -%}
-{% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
-<picture class="relativez-0">
-  {%- if mobile_image_src != blank -%}
+
+<picture class="relative z-0">
+  {%- if mobile_img != blank -%}
     <source
-      {% if mobile_image_src contains '.gif' %}
-        srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
-      {% else %}
-        srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-      {% endif %}
       media="(max-width: 639px)"
-    >
-  {%- endif %}
-  {%- if desktop_image_src != blank -%}
-    <source
-      {% if desktop_image_src contains '.gif' %}
-        srcset="{{ desktop_image_src }} 1x, {{ desktop_image_src_2x }} 2x"
+      {% if mobile_master contains '.gif' %}
+        srcset="{{ mobile_master }}"
       {% else %}
-        srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+        srcset="
+          {% render 'imgix', src: mobile_master, w: 320 %} 320w,
+          {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+          {% render 'imgix', src: mobile_master, w: 640 %} 640w,
+          {% render 'imgix', src: mobile_master, w: 750 %} 750w
+        "
+        sizes="{{ promo_sizes }}"
       {% endif %}
-      media="(min-width: 640px)"
     >
-  {%- endif %}
+  {%- endif -%}
+
+  {%- if desktop_img != blank -%}
+    <source
+      media="(min-width: 640px)"
+      {% if desktop_master contains '.gif' %}
+        srcset="{{ desktop_master }}"
+      {% else %}
+        srcset="
+          {% render 'imgix', src: desktop_master, w: 640 %} 640w,
+          {% render 'imgix', src: desktop_master, w: 960 %} 960w,
+          {% render 'imgix', src: desktop_master, w: 1200 %} 1200w,
+          {% render 'imgix', src: desktop_master, w: 1600 %} 1600w,
+          {% render 'imgix', src: desktop_master, w: 2000 %} 2000w
+        "
+        sizes="{{ promo_sizes }}"
+      {% endif %}
+    >
+  {%- endif -%}
+
   <img
-    {% if mobile_image_src contains '.gif' %}
-      srcset="{{ mobile_image_src }} 1x, {{ mobile_image_src_2x }} 2x"
-      src="{{ mobile_image_src }}"
+    {%- comment -%} fallback src: mobile if present else desktop {%- endcomment -%}
+    {% if mobile_img != blank %}
+      {% if mobile_master contains '.gif' %}
+        src="{{ mobile_master }}"
+      {% else %}
+        src="{% render 'imgix', src: mobile_master, w: 480 %}"
+        srcset="
+          {% render 'imgix', src: mobile_master, w: 320 %} 320w,
+          {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+          {% render 'imgix', src: mobile_master, w: 640 %} 640w,
+          {% render 'imgix', src: mobile_master, w: 750 %} 750w
+        "
+        sizes="{{ promo_sizes }}"
+      {% endif %}
+      alt="{{ mobile_img.alt }}"
     {% else %}
-      srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-      src="{% render 'imgix', src: mobile_image_src %}"
+      {% if desktop_master contains '.gif' %}
+        src="{{ desktop_master }}"
+      {% else %}
+        src="{% render 'imgix', src: desktop_master, w: 960 %}"
+        srcset="
+          {% render 'imgix', src: desktop_master, w: 640 %} 640w,
+          {% render 'imgix', src: desktop_master, w: 960 %} 960w,
+          {% render 'imgix', src: desktop_master, w: 1200 %} 1200w,
+          {% render 'imgix', src: desktop_master, w: 1600 %} 1600w
+        "
+        sizes="{{ promo_sizes }}"
+      {% endif %}
+      alt="{{ desktop_img.alt }}"
     {% endif %}
     loading="lazy"
-    alt="{{ mobile_image_src.alt }}"
-    width="{{ mobile_image_src.width }}"
-    height="{{ mobile_image_src.height }}"
+    width="{{ dim_w }}"
+    height="{{ dim_h }}"
     class="object-cover block w-full h-full {{ promo_section_image_classes }}"
   >
 </picture>
+
+
 {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
 {%- if promo_section_url != blank -%}
 </a>
