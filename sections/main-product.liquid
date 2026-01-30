@@ -207,7 +207,7 @@
                             <li class="mt-0.5">
                               <shipping-countdown threshold="{{ settings.shipping_countdown_threshold }}" class="flex gap-1">
                                 {% render 'icon-truck', classes: 'w-3 h-3 inline-block mt-0.5', stroke_width: 2.5 %}
-                                <div class="min-w-0 whitespace-normal break-words leading-tight">
+                                <div class="min-w-0 whitespace-normal wrap-break-word leading-tight">
                                   <span class="shipping-countdown-text">
                                     Free Shipping{% if settings.shipping_countdown_threshold > 0 %} on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+{% endif %}
                                   </span>
@@ -350,7 +350,7 @@
             <h3 class="h-5 text-lg font-medium tracking-wide leading-none truncate">
               {{- product.title | replace: 'Eye Serum', 'Serum' | escape -}}
             </h3>
-            <p class="text-sm font-book sr-only sm:!not-sr-only">
+            <p class="text-sm font-book sr-only sm:not-sr-only!">
               {{- product.metafields.custom_fields.short_description -}}
             </p>
           </div>

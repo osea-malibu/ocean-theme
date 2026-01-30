@@ -21,10 +21,10 @@ Accepts:
   data-breakpoint-limit="none"
 >
   {% render 'product-text-badge', product: product, classes: 'z-10 right-2 top-2 bg-p-surface text-p-inverse-d3 lg:text-base' %}
+
   <div class="glide__track md:rounded-xl" data-glide-el="track">
     <ul class="min-h-full glide__slides">
 
-    
       {%- liquid
         assign gallery_limit = section.settings.gallery_limit
 
@@ -36,86 +36,153 @@ Accepts:
           assign slider_images = product.media
           assign variant_image_index = 0
           assign badge_count = 1
-        endif 
+        endif
       -%}
-      {%- for media in slider_images limit: section.settings.gallery_limit -%}
+
+      {%- for media in slider_images limit: gallery_limit -%}
         <li class="glide__slide relative" data-media-id="{{ section.id }}-{{ media.id }}">
+
           {%- if media.media_type == 'image' -%}
+
             {%- if forloop.index <= badge_count -%}
               {% render 'product-image-badge', product: product, classes: 'z-10 left-2 top-2 w-16 xl:w-20 2xl:w-24 gap-2' %}
             {%- endif -%}
+
             {%- liquid
-              assign main_image_src = media | image_url: width: 800, height: 1000, crop: 'center'
-              assign main_image_src_2x = media | image_url: width: 1600, height: 2000, crop: 'center'
+              assign main_master = media | image_url
+              assign main_w_small = 480
+              assign main_w_large = 960
+
+              # safe aspect guard
+              if media.aspect_ratio and media.aspect_ratio > 0
+                assign aspect = media.aspect_ratio
+              else
+                assign aspect = 1
+              endif
+
+              # choose a width attr fallback
+              if media.width and media.width > 0
+                assign display_width = media.width
+              else
+                assign display_width = main_w_small
+              endif
+
+              assign display_height = display_width | divided_by: aspect | round
             -%}
+
             {% comment %} theme-check-disable RemoteAsset {% endcomment %}
             <img
-              {% if product.selected_or_first_available_variant.featured_media != null and forloop.index0 == variant_image_index %}id="Product-VariantImage"{% endif %}
-              srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
-              src="{% render 'imgix', src: main_image_src_2x %}"
-              loading="lazy"
+              {% if product.selected_or_first_available_variant.featured_media != null and forloop.index0 == variant_image_index %}
+                id="Product-VariantImage"
+              {% endif %}
+
+              srcset="
+                {% render 'imgix', src: main_master, w: 480 %} 480w,
+                {% render 'imgix', src: main_master, w: 800 %} 800w,
+                {% render 'imgix', src: main_master, w: 1200 %} 1200w,
+                {% render 'imgix', src: main_master, w: 1600 %} 1600w
+              "
+              src="{% render 'imgix', src: main_master, w: 800 %}"
+
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              {% if forloop.first %}fetchpriority="high"{% endif %}
+              decoding="async"
+
               alt="{{ media.alt | escape }}"
-              width="{{ media.width }}"
-              height="{{ media.width | divided_by: 0.8 | round }}"
+
+              width="{{ display_width }}"
+              height="{{ display_height }}"
+
+              sizes="(min-width: 1024px) 1200px, (min-width: 640px) 800px, 480px"
               class="object-cover min-h-full"
             >
             {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-          {%- elsif media.media_type == 'video' -%}
-            <deferred-media class="relative w-full h-full deferred-media no-js-hidden" data-media-id="{{ section.id }}">
 
-          {% comment %} New video poster button snippet {% endcomment %}
-            {% render 'video-poster-button', section_id: section.id, media: media, classes: 'absolute w-full h-full deferred-media__poster' %}
+          {%- elsif media.media_type == 'video' -%}
+
+            <deferred-media class="relative w-full h-full deferred-media no-js-hidden" data-media-id="{{ section.id }}">
+              {% render 'video-poster-button', section_id: section.id, media: media, classes: 'absolute w-full h-full deferred-media__poster' %}
 
               <template>
-                <video class="object-cover w-full h-full md:rounded-md" playsinline autoplay muted loop controls poster="{{ media.preview_image | image_url: width: 400, height: 500, crop: 'center' }}">
+
+                {%- liquid
+                  assign poster_master = media.preview_image | image_url
+                  # safe aspect ratio & dims for poster
+                  if media.preview_image.width and media.preview_image.width > 0
+                    assign poster_w_attr = media.preview_image.width
+                  else
+                    assign poster_w_attr = 800
+                  endif
+
+                  if media.preview_image.aspect_ratio and media.preview_image.aspect_ratio > 0
+                    assign posteraspect = media.preview_image.aspect_ratio
+                  else
+                    assign posteraspect = 1
+                  endif
+
+                  assign poster_h_attr = poster_w_attr | divided_by: posteraspect | round
+                -%}
+
+                {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+                <video
+                  class="object-cover w-full h-full md:rounded-md"
+                  playsinline autoplay muted loop controls
+                  poster="{% render 'imgix', src: poster_master, w: 800 %}"
+                >
                   {%- for source in media.sources -%}
-                    {%- comment -%} theme-check-disable RemoteAsset {%- endcomment -%}
-                    <source src="{{ source.url }}" type="video/{{ source.format }}" />
-                    {%- comment -%} theme-check-enable RemoteAsset {%- endcomment -%}
+                    <source src="{{ source.url }}" type="video/{{ source.format }}">
                   {%- endfor -%}
-                  <img
-                    src="{{ media.preview_image | image_url: width: 480, height: 500, crop: 'center' }}"
-                    alt=""
-                    width="{{ media.preview_image.width }}"
-                    height="{{ media.preview_image.width | divided_by: media.preview_image.aspect_ratio | round }}"
-                    loading=lazy
-                  >
                 </video>
+                {% comment %}theme-check-enable RemoteAsset {% endcomment %}
               </template>
             </deferred-media>
+
           {%- endif -%}
+
         </li>
       {%- endfor -%}
     </ul>
   </div>
+
   <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[596px] xl:h-[760px] 2xl:h-[954px] lg:overflow-y-auto" data-glide-el="controls[nav]">
     {%- for media in slider_images limit: gallery_limit -%}
       <button class="relative p-2 glide__bullet md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
         <span class="sr-only">Go to slide {{ forloop.index }}</span>
-        {%- if media.media_type == 'image' -%}
-          <span class="block w-2 h-2 rounded-full glide__bullet-icon bg-seaweed-700 md:hidden"></span>
-        {%- elsif media.media_type == 'video' -%}
-          <div class="absolute top-1/2 left-1/2 z-10 w-5 h-5 bg-transparent rounded-full -translate-x-1/2 -translate-y-1/2 glide__bullet-icon md:w-8 md:h-8 md:bg-white/50">
-            {%- render 'icon-play', classes: 'absolute inset-0 scale-75 md:text-white md:ml-0.5' -%}
-          </div>
-        {%- endif -%}
+
         {%- liquid
-          assign thumb_image_src = media | image_url: width: 192
-          assign thumb_image_src_2x = media | image_url: width: 252
+          assign thumb_master = media | image_url
+          # safe thumb dimensions
+          if media.width and media.width > 0
+            assign thumb_w = media.width
+          else
+            assign thumb_w = 192
+          endif
+
+          if media.aspect_ratio and media.aspect_ratio > 0
+            assign thumbaspect = media.aspect_ratio
+          else
+            assign thumbaspect = 1
+          endif
+
+          assign thumb_h = thumb_w | divided_by: thumbaspect | round
         -%}
-        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+
+        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
         <img
-          {% if product.selected_or_first_available_variant.featured_media != null and forloop.index0 == variant_image_index %}id="Product-ThumbImage"{% endif %}
-          srcset="{% render 'imgix', src: thumb_image_src %} 1x, {% render 'imgix', src: thumb_image_src_2x %} 2x"
-          src="{% render 'imgix', src: thumb_image_src_2x %}"
+          srcset="
+            {% render 'imgix', src: thumb_master, w: 192 %} 192w,
+            {% render 'imgix', src: thumb_master, w: 256 %} 256w
+          "
+          src="{% render 'imgix', src: thumb_master, w: 256 %}"
           loading="lazy"
           alt="{{ media.alt | escape }}"
-          width="{{ media.width }}"
-          height="{{ media.width | divided_by: media.aspect_ratio | round }}"
+          width="{{ thumb_w }}"
+          height="{{ thumb_h }}"
           class="hidden object-cover w-24 rounded-md md:block lg:h-32"
         >
-        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
       </button>
     {%- endfor -%}
   </div>
-</glide-slider> 
+</glide-slider>
+

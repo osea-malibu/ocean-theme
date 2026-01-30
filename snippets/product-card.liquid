@@ -48,18 +48,18 @@
       {%- endif -%}
       {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}">{% endunless %}
         {%- if title_text != blank -%}
-          <h3 class="text-lg lg:text-xl font-medium !leading-[1.1] hover:underline mb-1{% if name_class != blank %} {{ name_class }}{% endif %}">
+          <h3 class="text-lg lg:text-xl font-medium leading-[1.1]! hover:underline mb-1{% if name_class != blank %} {{ name_class }}{% endif %}">
             {{- title_text | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' -}}
           </h3>
         {%- else -%}
           {%- assign tight_title_products = 'vitamin-c-enzyme-polish, bestsellers-bodycare-set, best-sellers-discovery-set, undaria-body-bestsellers' | split: ', ' -%}
-          <h3 class="text-lg lg:text-xl font-medium !leading-[1.1] hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
+          <h3 class="text-lg lg:text-xl font-medium leading-[1.1]! hover:underline mb-1{% if tight_title_products contains card_product.handle %} -tracking-[0.001em]{% endif %}{% if name_class != blank %} {{ name_class }}{% endif %}">
             {{- card_product.title | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' -}}
           </h3>
         {%- endif -%}
       {% unless remove_linking %}</a>{% endunless %}
     </div>
-    <p class="text-sm lg:text-base !leading-[1.1]{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
+    <p class="text-sm lg:text-base leading-[1.1]!{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
       {%- if short_description_text != blank -%}
         {{- short_description_text | escape -}}
       {%- else -%}
@@ -123,7 +123,7 @@
                 <legend class="sr-only">Ship every:</legend>
                 <div class="overflow-x-auto flex">
                   {%- for option in subscription_group.selling_plans -%}
-                    <div class="flex-grow{% unless forloop.last %} mr-0.5{% endunless %}">
+                    <div class="grow{% unless forloop.last %} mr-0.5{% endunless %}">
                       <input type="radio"
                         id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
                         class="peer hidden"
@@ -149,7 +149,7 @@
                   Ship every:
                 </label>
                 <select id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
-                  class="block input input-xs w-full pl-[76px] xs:pl-20 !pr-6"
+                  class="block input input-xs w-full pl-[76px] xs:pl-20 pr-6!"
                   name="selling_plan"
                   form="{{ product_form_id }}"
                 >
@@ -339,84 +339,147 @@
           tabindex="-1"
         >
       {%- endif -%}
-        {%- liquid
-          if custom_default_image != nil
-            assign default_image = custom_default_image
-          elsif default_to_mini and card_product.variants.size > 1 and is_set == false and card_product.title != 'Digital Gift Card'
-            assign default_image = card_product.variants[mini_index].featured_media
-          elsif card_product.selected_or_first_available_variant.featured_media != nil
-            assign default_image = card_product.selected_or_first_available_variant.featured_media
-          else
-            assign default_image = card_product.featured_media
-          endif
 
-          assign default_image_src_390 = default_image | image_url: width: 175
-          assign default_image_src_390_2x = default_image | image_url: width: 350
-          assign default_image_src_472 = default_image | image_url: width: 208
-          assign default_image_src_472_2x = default_image | image_url: width: 416
-          assign default_image_src_640 = default_image | image_url: width: 288
-          assign default_image_src_640_2x = default_image | image_url: width: 576
-          assign default_image_src_768 = default_image | image_url: width: 232
-          assign default_image_src_768_2x = default_image | image_url: width: 464
+      {%- liquid
+        if custom_default_image != nil
+          assign default_image = custom_default_image
+        elsif default_to_mini and card_product.variants.size > 1 and is_set == false and card_product.title != 'Digital Gift Card'
+          assign default_image = card_product.variants[mini_index].featured_media
+        elsif card_product.selected_or_first_available_variant.featured_media != nil
+          assign default_image = card_product.selected_or_first_available_variant.featured_media
+        else
+          assign default_image = card_product.featured_media
+        endif
 
-          assign default_image_src = default_image | image_url: width: 328
-          assign default_image_src_2x = default_image | image_url: width: 656
-          assign hover_image_src = card_product.media[1] | image_url: width: 328
-          assign hover_image_src_2x = card_product.media[1] | image_url: width: 656
-        -%}
-        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        assign default_master = default_image | image_url
+
+        if card_product.media[1] != nil
+          assign hover_media = card_product.media[1]
+          assign hover_master = hover_media | image_url
+        endif
+
+        comment
+          IMPORTANT: sizes="100vw" makes the browser pick too-large candidates for grid tiles.
+          Use a better default for cards. Override by passing `sizes_attr` into the snippet if you want.
+        endcomment
+        assign card_sizes = sizes_attr | default: '(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw'
+
+        assign default_w = 480
+      -%}
+
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+
+      {%- if default_master contains '.gif' -%}
+        <img
+          src="{{ default_master }}"
+          alt="{{ default_image.alt | escape }}"
+          sizes="{{ card_sizes }}"
+          width="{{ default_image.width }}"
+          height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
+          id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+          {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
+          class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
+        >
+
+      {%- else -%}
         {%- if plp_card -%}
           <picture>
             <source
-              srcset="{% render 'imgix', src: default_image_src_472 %} 1x, {% render 'imgix', src: default_image_src_472_2x %} 2x"
-              media="(min-width: 472px)"
+              media="(max-width: 639px)"
+              srcset="
+                {% render 'imgix', src: default_master, w: 320 %} 320w,
+                {% render 'imgix', src: default_master, w: 480 %} 480w,
+                {% render 'imgix', src: default_master, w: 640 %} 640w
+              "
+              sizes="{{ card_sizes }}"
             >
             <source
-              srcset="{% render 'imgix', src: default_image_src_640 %} 1x, {% render 'imgix', src: default_image_src_640_2x %} 2x"
               media="(min-width: 640px)"
+              srcset="
+                {% render 'imgix', src: default_master, w: 640 %} 640w,
+                {% render 'imgix', src: default_master, w: 960 %} 960w,
+                {% render 'imgix', src: default_master, w: 1200 %} 1200w
+              "
+              sizes="{{ card_sizes }}"
             >
-            <source
-              srcset="{% render 'imgix', src: default_image_src_768 %} 1x, {% render 'imgix', src: default_image_src_768_2x %} 2x"
-              media="(min-width: 768px)"
-            >
-            <source srcset="{% render 'imgix', src: default_image_src_390 %} 1x, {% render 'imgix', src: default_image_src_390_2x %} 2x">
             <img
-              src="{% render 'imgix', src: default_image_src_390 %}"
-              alt="{% if remove_linking %}{{ default_image.alt | escape }}{% endif %}"
+              src="{% render 'imgix', src: default_master, w: default_w %}"
+              srcset="
+                {% render 'imgix', src: default_master, w: 320 %} 320w,
+                {% render 'imgix', src: default_master, w: 480 %} 480w,
+                {% render 'imgix', src: default_master, w: 640 %} 640w,
+                {% render 'imgix', src: default_master, w: 960 %} 960w,
+                {% render 'imgix', src: default_master, w: 1200 %} 1200w
+              "
+              sizes="{{ card_sizes }}"
+              alt="{{ default_image.alt | escape }}"
               width="{{ default_image.width }}"
-              height="{{ default_image.height }}"
+              height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
               id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
               {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
-              {% if image_element_class != blank %}class="{{ image_element_class }}"{% endif %}
+              {% if image_element_class != blank %}class="{{ image_element_class }}"{% else %}class="w-full h-full object-cover"{% endif %}
             >
           </picture>
         {%- else -%}
           <img
-            srcset="{% render 'imgix', src: default_image_src %} 1x, {% render 'imgix', src: default_image_src_2x %} 2x"
-            src="{% render 'imgix', src: default_image_src %}"
-            alt="{% if remove_linking %}{{ default_image.alt | escape }}{% endif %}"
+            src="{% render 'imgix', src: default_master, w: default_w %}"
+            srcset="
+              {% render 'imgix', src: default_master, w: 320 %} 320w,
+              {% render 'imgix', src: default_master, w: 480 %} 480w,
+              {% render 'imgix', src: default_master, w: 640 %} 640w,
+              {% render 'imgix', src: default_master, w: 960 %} 960w,
+              {% render 'imgix', src: default_master, w: 1200 %} 1200w
+            "
+            sizes="{{ card_sizes }}"
+            alt="{{ default_image.alt | escape }}"
             width="{{ default_image.width }}"
-            height="{{ default_image.height }}"
+            height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
             id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
             {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
-            class="{% if image_element_class != blank %}{{ image_element_class }}{% else %} w-full h-full object-cover{% endif %}"
+            class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
           >
         {%- endif -%}
-        {%- if card_product.media[1] != nil and show_secondary_image_on_hover -%}
+      {%- endif -%}
+
+      {%- if hover_master and show_secondary_image_on_hover -%}
+        {%- assign hover_classes = 'object-cover ' | append: 'absolute min-h-full inset-x-0 top-1/2 -translate-y-1/2 bg-cover bg-center bg-wave-100 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity duration-300' -%}
+
+        {%- if hover_master contains '.gif' -%}
           <img
-            srcset="{% render 'imgix', src: hover_image_src %} 1x, {% render 'imgix', src: hover_image_src_2x %} 2x"
-            src="{% render 'imgix', src: hover_image_src %}"
-            alt="{{ card_product.media[1].alt | escape }}"
+            src="{{ hover_master }}"
+            srcset="{{ hover_master }}"
+            sizes="{{ card_sizes }}"
+            alt="{{ hover_media.alt | escape }}"
             loading="lazy"
-            class="{% if show_secondary_image_on_hover %}absolute min-h-full inset-x-0 top-1/2 -translate-y-1/2 bg-cover bg-center bg-wave-100 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity{% endif %} duration-300"
-            width="{{ card_product.media[1].width }}"
-            height="{{ card_product.media[1].height }}"
-            class="object-cover"
+            class="{{ hover_classes }}"
+            width="{{ hover_media.width }}"
+            height="{{ hover_media.width | divided_by: hover_media.aspect_ratio | round }}"
+          >
+        {%- else -%}
+          <img
+            src="{% render 'imgix', src: hover_master, w: default_w %}"
+            srcset="
+              {% render 'imgix', src: hover_master, w: 320 %} 320w,
+              {% render 'imgix', src: hover_master, w: 480 %} 480w,
+              {% render 'imgix', src: hover_master, w: 640 %} 640w,
+              {% render 'imgix', src: hover_master, w: 960 %} 960w,
+              {% render 'imgix', src: hover_master, w: 1200 %} 1200w
+            "
+            sizes="{{ card_sizes }}"
+            alt="{{ hover_media.alt | escape }}"
+            loading="lazy"
+            class="{{ hover_classes }}"
+            width="{{ hover_media.width }}"
+            height="{{ hover_media.width | divided_by: hover_media.aspect_ratio | round }}"
           >
         {%- endif -%}
-        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-        {% if remove_linking %}</div>{% else %}</a>{% endif %}
+      {%- endif -%}
+
+      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+
+      {% if remove_linking %}</div>{% else %}</a>{% endif %}
     {%- else -%}
+
       <h2 class="h3">
         <a href="{{ card_product.url | default: '#' }}">
           {{ card_product.title }}

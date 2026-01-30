@@ -13,10 +13,11 @@
     -%}
 
     {% assign is_lcp = false %}
-      {% if request.page_type == 'index' and section.index == 1 %}
-        {% assign is_lcp = true %}
-      {% endif %}
+    {% if request.page_type == 'index' and section.index == 1 %}
+      {% assign is_lcp = true %}
+    {% endif %}
 
+    {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
     <picture>
       {%- if section.settings.image_mobile != blank -%}
         <source
@@ -81,7 +82,7 @@
           "
           sizes="100vw"
         {% endif %}
-         {% comment %} LCP Fallback {% endcomment %}
+        {% comment %} LCP Fallback {% endcomment %}
           {% if is_lcp %}
             loading="eager"
             fetchpriority="high"
@@ -94,10 +95,8 @@
         class="{{ section.settings.image_classes }} block"
       >
     </picture>
-
-
-
-      {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
+    {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
+    
     {%- if section.settings.image_link != blank -%}
       </a>
     {%- endif -%}

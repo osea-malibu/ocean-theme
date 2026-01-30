@@ -1,4 +1,4 @@
-<cart-drawer class="fixed z-[2147483637] top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
+<cart-drawer class="fixed z-2147483637 top-0 left-0 w-screen h-full invisible{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer">
     {% comment %} Scrim - Page overlay {% endcomment %}
     <div class="cart-scrim block fixed z-0 inset-0 bg-seaweed-800/50"></div>
@@ -34,7 +34,7 @@
     </cart-recommendations>
 
     {% comment %} Drawer {% endcomment %}
-    <div class="cart-drawer bg-white fixed z-20 right-0 inset-y-0 w-[32rem] max-w-full overflow-hidden flex flex-col"
+    <div class="cart-drawer bg-white fixed z-20 right-0 inset-y-0 w-lg max-w-full overflow-hidden flex flex-col"
       role="dialog"
       aria-modal="true"
       aria-label="{{ 'sections.cart.title' | t }}"
@@ -63,7 +63,7 @@
       {%- if cart == empty -%}
         {% render 'cart-empty-state' %}
       {%- else -%}
-        <div class="cart-drawer-body flex-grow overflow-y-auto px-4 2xs:px-6 pb-12 flex flex-col">
+        <div class="cart-drawer-body grow overflow-y-auto px-4 2xs:px-6 pb-12 flex flex-col">
           {% comment %} Save with sets upsell / Free loyalty tote {% endcomment %}
           {% render 'cart-save-with-sets' %}
 
@@ -324,7 +324,7 @@
                                       <label for="CartSubscribeSelect-{{ item.index | plus: 1 }}" class="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">Ship every</label>
                                       <select
                                         id="CartSubscribeSelect-{{ item.index | plus: 1 }}"
-                                        class="input input-sm pl-[5rem] box-border"
+                                        class="input input-sm pl-20 box-border"
                                         name="selling_plan"
                                         data-index="{{ item.index | plus: 1 }}"
                                       >
@@ -523,7 +523,7 @@
           </shipping-calculator>
         </div>
 
-        <div class="cart-drawer-footer bg-seafoam-200 flex-shrink-0 px-4 2xs:px-6 py-2">
+        <div class="cart-drawer-footer bg-seafoam-200 shrink-0 px-4 2xs:px-6 py-2">
           <div class="max-w-md mx-auto">
             {%- if settings.show_cart_note -%}
               <details id="Details-CartDrawer mb-4">
