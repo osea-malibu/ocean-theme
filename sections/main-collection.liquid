@@ -94,26 +94,32 @@
                 </li>
               {%- endfor -%}
             {%- endif -%}
-            {%- for product in collection.products -%}
-              {% assign remove_lazy_loading = false %}
-              {%- if forloop.index < 3 -%}
-                {%- assign remove_lazy_loading = true -%}
-              {%- endif -%}
-              <li style="order: {{ forloop.index }}">
-                {%- render 'product-card',
-                  card_product: product,
-                  section_id: collection.id,
-                  button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
-                  default_to_mini: collection.metafields.my_fields.default_to_mini,
-                  subscription: collection.metafields.custom.default_to_subscription,
-                  show_reviews: section.settings.show_reviews,
-                  hide_atc: hide_atc,
-                  remove_linking: remove_linking,
-                  remove_lazy_loading: remove_lazy_loading
-                  image_element_class: 'aspect-[4/5]'
-                -%}
-              </li>
-            {%- endfor -%}
+           {%- for product in collection.products -%}
+            {% assign remove_lazy_loading = false %}
+            {% assign fetch_priority_high = false %}
+
+            {%- if forloop.index == 1 -%}
+              {%- assign remove_lazy_loading = true -%}
+              {%- assign fetch_priority_high = true -%}
+            {%- endif -%}
+
+            <li style="order: {{ forloop.index }}">
+              {%- render 'product-card',
+                card_product: product,
+                section_id: collection.id,
+                button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
+                default_to_mini: collection.metafields.my_fields.default_to_mini,
+                subscription: collection.metafields.custom.default_to_subscription,
+                show_reviews: section.settings.show_reviews,
+                hide_atc: hide_atc,
+                remove_linking: remove_linking,
+                remove_lazy_loading: remove_lazy_loading,
+                fetch_priority_high: fetch_priority_high,
+                image_element_class: 'aspect-[4/5]'
+              -%}
+            </li>
+          {%- endfor -%}
+
           </ul>
 
           {%- if paginate.pages > 1 -%}

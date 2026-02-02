@@ -435,7 +435,10 @@
             width="{{ default_image.width }}"
             height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
             id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
-            {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
+            loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
+            {% if fetch_priority_high %}
+              fetchpriority="high"
+            {% endif %}
             class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
           >
         {%- endif -%}
