@@ -30,6 +30,7 @@
     - hide_atc: {Boolean} Hide add to cart button, default: false (optional)
     - remove_linking: {Boolean} Remove linking from product title, default: false (optional)
     - remove_lazy_loading: {Boolean} Remove lazy loading from images, default: false (optional)
+    - fetch_priority_high: {Boolean} Sets fetchpriority="high" on the default image (optional)
     - plp_card: {Boolean} Renders card in two column layout, makes image smaller default: false (optional)
     - title_text: {Boolean} Replaces product name with custom title (optional)
     - short_description_text: {Boolean} Replaces short description with custom text (optional)
@@ -66,7 +67,7 @@
         {{- card_product.metafields.custom_fields.short_description | escape -}}
       {%- endif -%}
     </p>
-    
+
     {%- liquid
       assign product_collections_handles = card_product.collections | map: 'handle'
       if product_collections_handles contains 'exclude-from-site'
@@ -367,7 +368,7 @@
         assign default_w = 480
       -%}
 
-      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+      {% comment %}theme-check-disable RemoteAsset {% endcomment %}
 
       {%- if default_master contains '.gif' -%}
         <img
@@ -377,7 +378,10 @@
           width="{{ default_image.width }}"
           height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
           id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
-          {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
+          loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
+          {% if fetch_priority_high %}
+            fetchpriority="high"
+          {% endif %}
           class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
         >
 
@@ -416,7 +420,10 @@
               width="{{ default_image.width }}"
               height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
               id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
-              {% unless remove_lazy_loading %}loading="lazy"{% endunless %}
+              loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
+              {% if fetch_priority_high %}
+                fetchpriority="high"
+              {% endif %}
               {% if image_element_class != blank %}class="{{ image_element_class }}"{% else %}class="w-full h-full object-cover"{% endif %}
             >
           </picture>
@@ -478,7 +485,7 @@
         {%- endif -%}
       {%- endif -%}
 
-      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+      {% comment %}theme-check-enable RemoteAsset {% endcomment %}
 
       {% if remove_linking %}</div>{% else %}</a>{% endif %}
     {%- else -%}
