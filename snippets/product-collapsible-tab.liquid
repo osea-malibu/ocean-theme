@@ -29,16 +29,22 @@
       if mini_size_array contains normalized_variant_title
         assign is_mini = true
       endif
+      assign disable_tsa_badge = false
+      if product.metafields.custom.disable_tsa_badge != blank
+        assign disable_tsa_badge = product.metafields.custom.disable_tsa_badge.value
+      endif
       assign has_mini_variant = false
-      assign variant_titles = product.variants | map: 'title'
-      for variant_title in variant_titles
-        unless has_mini_variant
-          assign normalized_variant_option_title = variant_title | replace: 'fl ', ''
-          if mini_size_array contains normalized_variant_option_title
-            assign has_mini_variant = true
-          endif
-        endunless
-      endfor
+      unless disable_tsa_badge
+        assign variant_titles = product.variants | map: 'title'
+        for variant_title in variant_titles
+          unless has_mini_variant
+            assign normalized_variant_option_title = variant_title | replace: 'fl ', ''
+            if mini_size_array contains normalized_variant_option_title
+              assign has_mini_variant = true
+            endif
+          endunless
+        endfor
+      endunless
     -%}
     {%- capture benefits_html -%}
       {%- if product.metafields.custom.benefits != blank -%}
