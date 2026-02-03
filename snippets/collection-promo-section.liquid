@@ -20,6 +20,8 @@
   endif
   assign dim_h = dim_w | divided_by: dim_ar | round
 -%}
+<script>console.log('mobile_img', {{ mobile_img | json }})</script>
+<script>console.log('desktop_img', {{ desktop_img | json }})</script>
 
 {%- if promo_section_url != blank -%}
 <a href="{{ promo_section_url }}" class="block">
