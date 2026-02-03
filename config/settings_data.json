@@ -41,15 +41,15 @@
     "shipping_countdown_text": "You are remaining_amount away from free shipping!",
     "shipping_countdown_text_success": "Congrats! You get free shipping.",
     "cart_recommendations_travel_handles": "reusable-cotton-rounds, anti-aging-body-balm, ocean-cleanser, undaria-algae-body-lotion, undaria-algae-oil, hyaluronic-body-serum, undaria-algae-body-butter, ocean-cleansing-milk, ocean-cleansing-mudd, dayglow-face-oil, sea-minerals-mist, essential-hydrating-oil-1, undaria-algae-body-wash",
-    "enable_gwp": false,
+    "enable_gwp": true,
     "gwp_type": "auto",
     "is_loyalty_gwp": false,
     "enable_annoucement_bar_message": true,
     "enable_product_qualifier_gwp": false,
     "gwp_product_qualifier": "",
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
-    "gwp_tier1_product": "free-gift-face-body-mini-cleanser-duo",
-    "gwp_tier1_threshold": 90,
+    "gwp_tier1_product": "free-gift-anti-aging-body-balm",
+    "gwp_tier1_threshold": 125,
     "gwp_tier1_text": "You're remaining_amount away from an gift_product!",
     "gwp_tier2_product": "",
     "gwp_tier2_threshold": 0,
@@ -102,7 +102,11 @@
             }
           }
         },
-        "block_order": ["announcement_JpDQf6", "announcement_3qbKGP", "announcement-bar-0"],
+        "block_order": [
+          "announcement_JpDQf6",
+          "announcement_3qbKGP",
+          "announcement-bar-0"
+        ],
         "settings": {
           "slide_interval": 2,
           "enable_dismissable_announcement": false,
@@ -152,7 +156,11 @@
             }
           }
         },
-        "block_order": ["link_list_7eLgQG", "link_list_mWHHgL", "link_list_xjkxMM"],
+        "block_order": [
+          "link_list_7eLgQG",
+          "link_list_mWHHgL",
+          "link_list_xjkxMM"
+        ],
         "settings": {
           "legal_links": "sun-footer-legal",
           "hide_brand_icons": false,
@@ -249,7 +257,9 @@
               "settings": {}
             }
           },
-          "block_order": ["announcement-bar-0"],
+          "block_order": [
+            "announcement-bar-0"
+          ],
           "settings": {}
         }
       }
