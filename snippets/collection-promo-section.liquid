@@ -2,6 +2,16 @@
   assign mobile_img = promo_section_image_mobile
   assign desktop_img = promo_section_image_desktop
 
+  assign mobile_media = mobile_img.value
+  assign desktop_media = desktop_img.value
+
+  assign has_video = false
+  if mobile_media and mobile_media.media_type == 'video'
+    assign has_video = true
+  elsif desktop_media and desktop_media.media_type == 'video'
+    assign has_video = true
+  endif
+
   assign mobile_master = mobile_img | image_url
   assign desktop_master = desktop_img | image_url
 
@@ -20,90 +30,96 @@
   endif
   assign dim_h = dim_w | divided_by: dim_ar | round
 -%}
-<script>console.log('mobile_img', {{ mobile_img | json }})</script>
-<script>console.log('desktop_img', {{ desktop_img | json }})</script>
 
 {%- if promo_section_url != blank -%}
 <a href="{{ promo_section_url }}" class="block">
 {%- endif -%}
-{% comment %}theme-check-disable RemoteAsset {% endcomment %}
-<picture class="relative z-0">
-  {%- if mobile_img != blank -%}
-    <source
-      media="(max-width: 639px)"
-      {% if mobile_master contains '.gif' %}
-        srcset="{{ mobile_master }}"
-      {% else %}
-        srcset="
-          {% render 'imgix', src: mobile_master, w: 320 %} 320w,
-          {% render 'imgix', src: mobile_master, w: 480 %} 480w,
-          {% render 'imgix', src: mobile_master, w: 640 %} 640w,
-          {% render 'imgix', src: mobile_master, w: 750 %} 750w
-        "
-        sizes="{{ promo_sizes }}"
-      {% endif %}
-    >
-  {%- endif -%}
 
-  {%- if desktop_img != blank -%}
-    <source
-      media="(min-width: 640px)"
-      {% if desktop_master contains '.gif' %}
-        srcset="{{ desktop_master }}"
-      {% else %}
-        srcset="
-          {% render 'imgix', src: desktop_master, w: 640 %} 640w,
-          {% render 'imgix', src: desktop_master, w: 960 %} 960w,
-          {% render 'imgix', src: desktop_master, w: 1200 %} 1200w,
-          {% render 'imgix', src: desktop_master, w: 1600 %} 1600w,
-          {% render 'imgix', src: desktop_master, w: 2000 %} 2000w
-        "
-        sizes="{{ promo_sizes }}"
-      {% endif %}
-    >
-  {%- endif -%}
+{% if has_video %}
+  <div class="relative w-full h-full overflow-hidden">
+    {% if mobile_media and mobile_media.media_type == 'video' %}
+      {{ mobile_media | video_tag:
+        autoplay: true,
+        loop: true,
+        muted: true,
+        controls: false,
+        playsinline: true,
+        class: 'block w-full h-full object-cover sm:hidden'
+      }}
+    {% endif %}
 
-  <img
-    {%- comment -%} fallback src: mobile if present else desktop {%- endcomment -%}
-    {% if mobile_img != blank %}
-      {% if mobile_master contains '.gif' %}
-        src="{{ mobile_master }}"
-      {% else %}
+    {% if desktop_media and desktop_media.media_type == 'video' %}
+      {{ desktop_media | video_tag:
+        autoplay: true,
+        loop: true,
+        muted: true,
+        controls: false,
+        playsinline: true,
+        class: 'hidden sm:block w-full h-full object-cover'
+      }}
+    {% endif %}
+  </div>
+{% else %}
+  {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+  <picture class="relative z-0">
+    {%- if mobile_img != blank -%}
+      <source
+        media="(max-width: 639px)"
+        {% if mobile_master contains '.gif' %}
+          srcset="{{ mobile_master }}"
+        {% else %}
+          srcset="
+            {% render 'imgix', src: mobile_master, w: 320 %} 320w,
+            {% render 'imgix', src: mobile_master, w: 480 %} 480w,
+            {% render 'imgix', src: mobile_master, w: 640 %} 640w,
+            {% render 'imgix', src: mobile_master, w: 750 %} 750w
+          "
+          sizes="{{ promo_sizes }}"
+        {% endif %}
+      >
+    {%- endif -%}
+
+    {%- if desktop_img != blank -%}
+      <source
+        media="(min-width: 640px)"
+        {% if desktop_master contains '.gif' %}
+          srcset="{{ desktop_master }}"
+        {% else %}
+          srcset="
+            {% render 'imgix', src: desktop_master, w: 640 %} 640w,
+            {% render 'imgix', src: desktop_master, w: 960 %} 960w,
+            {% render 'imgix', src: desktop_master, w: 1200 %} 1200w,
+            {% render 'imgix', src: desktop_master, w: 1600 %} 1600w,
+            {% render 'imgix', src: desktop_master, w: 2000 %} 2000w,
+            {% render 'imgix', src: desktop_master, w: 2400 %} 2400w,
+            {% render 'imgix', src: desktop_master, w: 2800 %} 2800w
+          "
+          sizes="{{ promo_sizes }}"
+        {% endif %}
+      >
+    {%- endif -%}
+
+    <img
+      {% if mobile_img != blank %}
         src="{% render 'imgix', src: mobile_master, w: 480 %}"
-        srcset="
-          {% render 'imgix', src: mobile_master, w: 320 %} 320w,
-          {% render 'imgix', src: mobile_master, w: 480 %} 480w,
-          {% render 'imgix', src: mobile_master, w: 640 %} 640w,
-          {% render 'imgix', src: mobile_master, w: 750 %} 750w
-        "
-        sizes="{{ promo_sizes }}"
-      {% endif %}
-      alt="{{ mobile_img.alt }}"
-    {% else %}
-      {% if desktop_master contains '.gif' %}
-        src="{{ desktop_master }}"
+        alt="{{ mobile_img.alt }}"
       {% else %}
         src="{% render 'imgix', src: desktop_master, w: 960 %}"
-        srcset="
-          {% render 'imgix', src: desktop_master, w: 640 %} 640w,
-          {% render 'imgix', src: desktop_master, w: 960 %} 960w,
-          {% render 'imgix', src: desktop_master, w: 1200 %} 1200w,
-          {% render 'imgix', src: desktop_master, w: 1600 %} 1600w
-        "
-        sizes="{{ promo_sizes }}"
+        alt="{{ desktop_img.alt }}"
       {% endif %}
-      alt="{{ desktop_img.alt }}"
-    {% endif %}
-    loading="lazy"
-    width="{{ dim_w }}"
-    height="{{ dim_h }}"
-    class="object-cover block w-full h-full {{ promo_section_image_classes }}"
-  >
-</picture>
-{% comment %}theme-check-enable RemoteAsset {% endcomment %}
+      loading="lazy"
+      width="{{ dim_w }}"
+      height="{{ dim_h }}"
+      class="object-cover block w-full h-full {{ promo_section_image_classes }}"
+    >
+  </picture>
+  {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+{% endif %}
+
 {%- if promo_section_url != blank -%}
 </a>
 {%- endif -%}
+
 <div class="absolute z-10 {{ promo_section_content_classes }}">
   {{ promo_section_content }}
 </div>
