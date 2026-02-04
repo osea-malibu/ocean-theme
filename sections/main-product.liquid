@@ -207,17 +207,7 @@
                                 <span class="text-white">Shop now on Nordstrom</span>
                               </a>
                             {%- else -%}
-                              {%- comment -%}
-                                IMPORTANT:
-                                This is the explicit mount point Klaviyo support recommended.
-                                Klaviyo will render the “EMAIL ME WHEN AVAILABLE” button *here* instead of guessing.
-                              {%- endcomment -%}
                               <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400 klaviyo-bis-trigger"></div>
-
-                              {%- comment -%}
-                                Postscript OOS button placeholder (your Postscript script should mount into/near this area).
-                                If Postscript already renders elsewhere, we’ll move it via JS below.
-                              {%- endcomment -%}
                               <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
                             {%- endif -%}
                           </div>
@@ -460,13 +450,6 @@
   });
 </script>
 
-{%- comment -%}
-  Sticky OOS sync:
-  - If PDP is OOS, we already render [data-oos-actions] in the main ATC grid.
-  - When sticky ATC becomes visible, we move [data-oos-actions] into the sticky slot.
-  - If sticky hides again, we move it back.
-  - If Postscript renders a root node (id="ps__bis_container_root") later, we move it alongside.
-{%- endcomment -%}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const stickyAtc = document.querySelector('product-sticky-atc');
