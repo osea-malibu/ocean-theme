@@ -246,7 +246,8 @@
                               <shipping-calculator
                                 id="pdp-shipcalc"
                                 data-collapsed="true"
-                              >                                <div class="flex gap-2 items-end pl-4">
+                              >                                
+                              <div class="flex gap-2 items-end pl-4">
                                   <form class="relative mt-2">
                                     <label for="shippingzip" class="block font-medium mb-1">Estimated shipping time:</label>
                                     <input class="py-2 w-60 input input-sm" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
@@ -509,7 +510,42 @@
 <script type="application/ld+json">
   {
     "@context": "http://schema.org/",
-	@@ -452,20 +563,21 @@
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ shop.url | append: product.url | json }},
+    {%- if product.selected_or_first_available_variant.featured_media -%}
+      {%- assign media_size = product.selected_or_first_available_variant.featured_media.preview_image.width -%}
+      "image": [
+        {%- if product.metafields.my_fields.white_image_bg != blank -%}
+          {{ product.metafields.my_fields.white_image_bg | image_url: width: 1200 | prepend: "https:" | json }}
+        {%- else -%}
+          {{ product.selected_or_first_available_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
+        {%- endif -%}
+      ],
+    {%- endif -%}
+    "description": {{ product.description | strip_html | json }},
+    {%- if product.selected_or_first_available_variant.sku != blank -%}
+      "sku": {{ product.selected_or_first_available_variant.sku | json }},
+    {%- endif -%}
+    {%- if product.metafields.okendo.summaryData.reviewCount > 0 -%}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "description": "Okendo Reviews",
+        "ratingValue": "{{ product.metafields.okendo.summaryData.reviewAverageValue }}",
+        "ratingCount": "{{ product.metafields.okendo.summaryData.reviewCount }}"
+      },
+    {%- elsif product.metafields.okendo.ReviewCount > 0 -%}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "description": "Okendo Reviews",
+        "ratingValue": "{{ product.metafields.okendo.ReviewAverageValue }}",
+        "ratingCount": "{{ product.metafields.okendo.ReviewCount }}"
+      },
+    {%- endif -%}
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | json }}
+    },
     "offers": [
       {%- for variant in product.variants -%}
         {
