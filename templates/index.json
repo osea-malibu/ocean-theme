@@ -9,6 +9,66 @@
  */
 {
   "sections": {
+    "image_banner_QyWDpx": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_GYkeyx": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>New!</em>",
+            "heading_classes": "text-3xl lg:text-5xl 2xl:text-6xl font-serif text-white tracking-tight xs:tracking-normal lg:mb-2 xl:mb-4"
+          }
+        },
+        "heading_JhdhPw": {
+          "type": "heading",
+          "settings": {
+            "heading": "Dream Lip Mask",
+            "heading_classes": "text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-serif text-white text-shadow-lg/50 text-shadow-white md:mb-2 xl:mb-4"
+          }
+        },
+        "paragraph_YtAiPz": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "with Bio-Retinol",
+            "paragraph_classes": "text-white sm:mb-4 lg:text-xl text-md  font-book leading-tight xl:mb-6 sm:hidden"
+          }
+        },
+        "paragraph_Giqz6B": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Softer, smoother lips while you sleep",
+            "paragraph_classes": "text-white sm:mb-4 lg:text-xl xl:text-2xl 2xl:text-3xl text-md  font-book leading-tight xl:mb-6 hidden sm:block"
+          }
+        },
+        "button_DRxedH": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop now: Shop our new Dream Lip Mask",
+            "button_link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "text-dream-navy border-white bg-white mt-auto sm:mt-0 xl:button-lg"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GYkeyx",
+        "heading_JhdhPw",
+        "paragraph_YtAiPz",
+        "paragraph_Giqz6B",
+        "button_DRxedH"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify://shop_images/DLM_Launch_-_HP_Banner_Mobile_-_BLANK.jpg",
+        "image": "shopify://shop_images/DLM_Launch_-_HP_Banner_Desktop_-_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/shop",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-start sm:justify-center pt-4 pb-3 sm:right-1/2 sm:pl-12 sm:justify-start md:pt-8 lg:pl-20 lg:pt-16 xl:pl-24 2xl:pt-20 2xl:-mr-8"
+      }
+    },
     "image_banner_eQ8pB7": {
       "type": "image-banner",
       "blocks": {
@@ -165,66 +225,6 @@
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:right-1/2 mt-0 sm:mt-0 sm:pl-12"
-      }
-    },
-    "image_banner_QyWDpx": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_GYkeyx": {
-          "type": "heading",
-          "settings": {
-            "heading": "<em>New!</em>",
-            "heading_classes": "text-3xl lg:text-5xl 2xl:text-6xl font-serif text-white tracking-tight xs:tracking-normal lg:mb-2 xl:mb-4"
-          }
-        },
-        "heading_JhdhPw": {
-          "type": "heading",
-          "settings": {
-            "heading": "Dream Lip Mask",
-            "heading_classes": "text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-serif text-white text-shadow-lg/50 text-shadow-white md:mb-2 xl:mb-4"
-          }
-        },
-        "paragraph_YtAiPz": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "with Bio-Retinol",
-            "paragraph_classes": "text-white sm:mb-4 lg:text-xl text-md  font-book leading-tight xl:mb-6 sm:hidden"
-          }
-        },
-        "paragraph_Giqz6B": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Softer, smoother lips while you sleep",
-            "paragraph_classes": "text-white sm:mb-4 lg:text-xl xl:text-2xl 2xl:text-3xl text-md  font-book leading-tight xl:mb-6 hidden sm:block"
-          }
-        },
-        "button_DRxedH": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_aria_label": "Shop now: Shop our new Dream Lip Mask",
-            "button_link": "shopify://collections/shop",
-            "target_blank": false,
-            "button_classes": "bg-dream-navy border-dream-navy text-white mt-auto sm:mt-0 xl:button-lg"
-          }
-        }
-      },
-      "block_order": [
-        "heading_GYkeyx",
-        "heading_JhdhPw",
-        "paragraph_YtAiPz",
-        "paragraph_Giqz6B",
-        "button_DRxedH"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify://shop_images/DLM_Launch_-_HP_Banner_Mobile_-_BLANK.jpg",
-        "image": "shopify://shop_images/DLM_Launch_-_HP_Banner_Desktop_-_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://collections/shop",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-start sm:justify-center pt-4 pb-3 sm:right-1/2 sm:pl-12 sm:justify-start md:pt-8 lg:pl-20 lg:pt-16 xl:pl-24 2xl:pt-20 2xl:-mr-8"
       }
     },
     "image_banner_mQetMC": {
