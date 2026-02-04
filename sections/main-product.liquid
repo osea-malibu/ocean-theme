@@ -10,13 +10,14 @@
 
       background-color: var(--p-surface);
       background-color: oklab(from var(--p-surface) l calc(a * 0.6) calc(b * 0.6));
-      
     }
   </style>
+
   <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0 lg:mb-6">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
+
     {%- if product.media.size > 1 -%}
       <div class="md:w-1/2 lg:w-3/5 relative md:sticky md:top-[88px] overflow-hidden mb-6 md:mb-0 lg:pr-4 xl:pr-10">
         {% comment %} New image-slider snippet {% endcomment %}
@@ -28,7 +29,7 @@
           assign main_image_src = product.media[0] | image_url: width: 300, height: 375, crop: 'center'
           assign main_image_src_2x = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
         -%}
-        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
         <img
           class="mx-auto"
           srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
@@ -38,11 +39,13 @@
           width="{{ product.media[0].width }}"
           height="{{ product.media[0].width | divided_by: 0.8 | round }}"
         >
-        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
       </div>
     {%- endif -%}
+
     <div class="container md:px-0 md:flex-1">
       {%- assign info_block_classes = 'bg-white rounded-xl p-4 lg:p-6 xl:p-8 mb-6' -%}
+
       <div id="ProductInfo-{{ section.id }}" class="{{ info_block_classes }} 2xl:py-10 {{ section.settings.product_info_classes }}">
         {%- liquid
           assign product_form_id = 'product-form-' | append: section.id
@@ -63,25 +66,37 @@
           {%- case block.type -%}
             {%- when '@app' -%}
               {% render block %}
+
             {%- when 'text' -%}
               {%- if block.settings.text != blank -%}
                 <div class="{{ block.settings.text_block_classes }}" {{ block.shopify_attributes }}>
                   {{- block.settings.text -}}
                 </div>
               {%- endif -%}
+
             {%- when 'title' -%}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
-                {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}
+                {{- product.title
+                  | replace: 'Eye Serum', 'Serum'
+                  | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>'
+                  | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>'
+                  | replace: ' v2', ''
+                -}}
               </h1>
+
             {%- when 'tags' -%}
-              {%  render 'product-tags', block: block %}
+              {% render 'product-tags', block: block %}
+
             {%- when 'price' -%}
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
                 {%- render 'price', product: product, use_variant: true -%}
                 {%- if product.metafields.custom.set_value -%}
-                  <span class="self-center px-1.5 py-px ml-2 text-sm font-medium tracking-wide whitespace-nowrap bg-seafoam-200 text-seaweed-700">${{ product.metafields.custom.set_value }} value</span>
+                  <span class="self-center px-1.5 py-px ml-2 text-sm font-medium tracking-wide whitespace-nowrap bg-seafoam-200 text-seaweed-700">
+                    ${{ product.metafields.custom.set_value }} value
+                  </span>
                 {%- endif -%}
               </div>
+
             {%- when 'rating' -%}
               <div class="{{ block.settings.rating_classes }} flex gap-2 items-center">
                 {%- unless excluded_from_site -%}
@@ -89,19 +104,18 @@
                     {% render 'product-rating', product: product %}
                   </a>
                 {%- endunless -%}
-                {% comment %} {%- if product.metafields.custom.faq != nil -%}
-                  <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
-                {%- endif -%} {% endcomment %}
               </div>
+
             {%- when 'info_tabs' -%}
               {% comment %} product tabs snippet {% endcomment %}
               {% render 'product-info-tabs', block: block, product: product %}
+
             {%- when 'free_gift_info' -%}
               {%- liquid
                 assign loyalty_only = settings.is_loyalty_gwp
                 if settings.enable_gwp and settings.gwp_type == 'banner' or settings.gwp_type == 'auto'
                   if loyalty_only and customer
-                    assign free_gifts_active = true 
+                    assign free_gifts_active = true
                   elsif loyalty_only == false
                     assign free_gifts_active = true
                   else
@@ -111,6 +125,7 @@
                   assign free_gifts_active = false
                 endif
               -%}
+
               {%- if free_gifts_active -%}
                 <div class="{{ block.settings.free_gift_info_classes }}">
                   {%- if settings.gwp_tier1_product != blank -%}
@@ -124,16 +139,19 @@
                   {%- endif -%}
                 </div>
               {%- endif -%}
-              
+
             {%- when 'quantity_selector' -%}
               {% comment %} quantity_selector snippet {% endcomment %}
               {% render 'product-quantity-selector', block: block, section_id: section.id, quantity_classes: quantity_classes, product_form_id: product_form_id %}
+
             {%- when 'variant_picker' -%}
               {% comment %} variant_picker snippet {% endcomment %}
               {% render 'product-variant-picker', block: block, section: section, product: product, set_products: set_products, mini_size_array: mini_size_array, jumbo_size_array: jumbo_size_array, product_form_id: product_form_id %}
+
             {%- when 'subscription_picker' -%}
               {% comment %} subscription_picker snippet {% endcomment %}
               {% render 'product-subscription-picker', block: block, section: section, product: product, product_form_id: product_form_id %}
+
             {%- when 'buy_buttons' -%}
               {%- unless excluded_from_site -%}
                 <div class="w-full grow {{ block.settings.atc_classes }}" {{ block.shopify_attributes }}>
@@ -141,25 +159,24 @@
                     {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
                       <input type="hidden" name="properties[_is_subscription]" value="false">
+
                       {% if product.type contains 'Gift Card' %}
                         <input type="hidden" id="sktcgc_to" name="properties[To]" value="" />
                         <input type="hidden" id="sktcgc_from" name="properties[_From]" value="" />
                         <input type="hidden" id="sktcgc_msg" name="properties[_Msg]" value="" />
                       {%- endif -%}
+
                       <div class="grid relative grid-cols-2 gap-2 product-form__buttons" id="AddToCart">
                         {%- liquid
                           if product.selected_or_first_available_variant.available
                             assign atc_label = 'products.product.add_to_cart' | t
-                          else
-                            assign atc_label = 'products.product.sold_out' | t
-                          endif
-
-                          if product.selected_or_first_available_variant.available
                             assign atc_disabled = false
                           else
+                            assign atc_label = 'products.product.sold_out' | t
                             assign atc_disabled = true
                           endif
                         -%}
+
                         {% render 'component-button',
                           classes: 'relative col-span-2 w-full product-form__submit button-neon md:button-primary button-md disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white',
                           label: atc_label,
@@ -174,26 +191,40 @@
                           slashed_price_color: 'md:text-white text-seaweed-800',
                           show_spinner: true
                         %}
+
                         {%- unless product.selected_or_first_available_variant.available -%}
-                          {%- if product.handle == 'ocean-glow-body-trio' %}
-                            <a class="button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11" target="_blank" href="https://www.ulta.com/p/ocean-glow-body-trio-pimprod2051657?sku=2638931">
-                              <span class="text-white">Shop now on ULTA</span>
-                            </a>
-                          {%- elsif product.handle == 'cleanse-glow-body-set' -%}
-                            <a class="cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11" target="_blank" href="https://www.nordstrom.com/s/cleanse-glow-body-set-104-value/8356995">
-                              <span class="text-white">Shop now on Nordstrom</span>
-                            </a>
-                          {%- elsif product.handle == 'ocean-body-glow' -%}
-                            <a class="cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11" target="_blank" href="https://www.nordstrom.com/s/ocean-body-glow-set-nordstrom-exclusive-138-value/8504720">
-                              <span class="text-white">Shop now on Nordstrom</span>
-                            </a>
-                          {%- else -%}
-                            <div  class="z-0 w-full h-11 rounded-md skeleton bg-wave-400 klaviyo-bis-trigger"></div>
-                            <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
-                          {%- endif -%}
+                          <div class="contents" data-oos-actions>
+                            {%- if product.handle == 'ocean-glow-body-trio' -%}
+                              <a class="button button-md gap-4 w-full col-span-2 bg-[#F37830] border-[#F37830] z-20 h-11" target="_blank" href="https://www.ulta.com/p/ocean-glow-body-trio-pimprod2051657?sku=2638931">
+                                <span class="text-white">Shop now on ULTA</span>
+                              </a>
+                            {%- elsif product.handle == 'cleanse-glow-body-set' -%}
+                              <a class="cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11" target="_blank" href="https://www.nordstrom.com/s/cleanse-glow-body-set-104-value/8356995">
+                                <span class="text-white">Shop now on Nordstrom</span>
+                              </a>
+                            {%- elsif product.handle == 'ocean-body-glow' -%}
+                              <a class="cgbs-nordstrom-button button button-md button-black gap-4 w-full col-span-2 z-20 h-11" target="_blank" href="https://www.nordstrom.com/s/ocean-body-glow-set-nordstrom-exclusive-138-value/8504720">
+                                <span class="text-white">Shop now on Nordstrom</span>
+                              </a>
+                            {%- else -%}
+                              {%- comment -%}
+                                IMPORTANT:
+                                This is the explicit mount point Klaviyo support recommended.
+                                Klaviyo will render the “EMAIL ME WHEN AVAILABLE” button *here* instead of guessing.
+                              {%- endcomment -%}
+                              <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400 klaviyo-bis-trigger"></div>
+
+                              {%- comment -%}
+                                Postscript OOS button placeholder (your Postscript script should mount into/near this area).
+                                If Postscript already renders elsewhere, we’ll move it via JS below.
+                              {%- endcomment -%}
+                              <div class="z-0 w-full h-11 rounded-md skeleton bg-wave-400"></div>
+                            {%- endif -%}
+                          </div>
                         {%- endunless -%}
                       </div>
                     {%- endform -%}
+
                     {%- if product.selected_or_first_available_variant.available -%}
                       {%- if product.metafields.custom.limited_availability_badge or product.selected_or_first_available_variant.inventory_quantity <= settings.low_stock_threshold -%}
                         <div class="my-1 font-bold tracking-wide text-center text-p-inverse">Limited stock available!</div>
@@ -211,7 +242,6 @@
                                   <span class="shipping-countdown-text">
                                     Free Shipping{% if settings.shipping_countdown_threshold > 0 %} on Orders {{ settings.shipping_countdown_threshold | times: 100 | money_without_trailing_zeros }}+{% endif %}
                                   </span>
-                                  <!-- real link so no a11y warning -->
                                   <a
                                     href="#pdp-shipcalc"
                                     class="calc-link underline hover:no-underline block 2xs:inline 2xs:ml-0.5"
@@ -222,10 +252,8 @@
                                   </a>
                                 </div>
                               </shipping-countdown>
-                              <shipping-calculator
-                                id="pdp-shipcalc"
-                                data-collapsed="true"
-                              >
+
+                              <shipping-calculator id="pdp-shipcalc" data-collapsed="true">
                                 <div class="flex gap-2 items-end pl-4">
                                   <form class="relative mt-2">
                                     <label for="shippingzip" class="block font-medium mb-1">Estimated shipping time:</label>
@@ -245,6 +273,7 @@
                         </div>
                       {%- endif -%}
                     {%- endif -%}
+
                     <div class="absolute left-0 mt-1 text-sm product-form__error-message-wrapper text-coral-800" role="alert" hidden>
                       {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
                       <span class="leading-4 align-bottom product-form__error-message"></span>
@@ -252,6 +281,7 @@
                   </product-form>
                 </div>
               {%- endunless -%}
+
             {%- when 'upsells' -%}
               {%- if product.metafields.my_fields.save_with_sets != nil or product.metafields.my_fields.pair_with_product != nil -%}
                 {%- liquid
@@ -263,9 +293,11 @@
                     assign upsell_count = product.metafields.my_fields.pair_with_product.value.count
                   endif
                 -%}
+
                 {%- if upsell_count > 1 -%}
                   <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
                 {%- endif -%}
+
                 <div class="{{ block.settings.upsell_classes }}{% if upsell_count > 1 %} max-h-[140px] overflow-hidden peer-checked:max-h-[1000px] motion-safe:transition-max-height{% endif %}" {{ block.shopify_attributes }}>
                   {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
                     <div class="mt-2 upsell-sets">
@@ -275,6 +307,7 @@
                       {%- endfor -%}
                     </div>
                   {%- endif -%}
+
                   {%- if block.settings.upsell_enable_partner and product.metafields.my_fields.pair_with_product != nil -%}
                     <div class="upsell-partner {% if product.metafields.my_fields.save_with_sets != nil %}mt-4{% else %}mt-2{% endif %}">
                       <h2 class="mb-1 font-medium tracking-wide">Pairs Well With</h2>
@@ -283,6 +316,7 @@
                       {%- endfor -%}
                     </div>
                   {%- endif -%}
+
                   {%- if block.settings.upsell_enable_routine and product.metafields.custom.upsell_complete_routine != nil -%}
                     <div class="mt-4 upsell-routine">
                       <h2 class="mb-1 font-medium tracking-wide">Complete Your Routine</h2>
@@ -290,13 +324,19 @@
                         {%- render 'product-upsell', product: step, button_style: 'link', step_number: forloop.index -%}
                       {%- endfor -%}
                     </div>
-                  {% endif %}
+                  {%- endif -%}
                 </div>
+
                 {%- if upsell_count > 1 -%}
-                  <label aria-hidden="true" for="collapsible" class="block col-span-12 mt-1 text-sm link peer-checked:hidden">View more {% render 'icon-arrow', variant: 'short', classes: 'rotate-90 w-4 h-4 inline-block ml-1' %}</label>
-                  <label aria-hidden="true" for="collapsible" class="hidden col-span-12 mt-1 text-sm link peer-checked:block">View less {% render 'icon-arrow', variant: 'short', classes: '-rotate-90 w-4 h-4 inline-block ml-1' %}</label>
+                  <label aria-hidden="true" for="collapsible" class="block col-span-12 mt-1 text-sm link peer-checked:hidden">
+                    View more {% render 'icon-arrow', variant: 'short', classes: 'rotate-90 w-4 h-4 inline-block ml-1' %}
+                  </label>
+                  <label aria-hidden="true" for="collapsible" class="hidden col-span-12 mt-1 text-sm link peer-checked:block">
+                    View less {% render 'icon-arrow', variant: 'short', classes: '-rotate-90 w-4 h-4 inline-block ml-1' %}
+                  </label>
                 {%- endif -%}
               {%- endif -%}
+
             {%- when 'set_includes' -%}
               {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
                 <div class="{{ block.settings.set_includes_classes }}">
@@ -311,6 +351,7 @@
           {%- endcase -%}
         {%- endfor -%}
       </div>
+
       <div class="{{ info_block_classes }} md:mb-0">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
@@ -322,6 +363,7 @@
       </div>
     </div>
   </div>
+
   {%- if excluded_from_site == false and product.type != 'Gift Card' and product.type != 'Subscription Gift' -%}
     <product-sticky-atc class="fixed inset-x-0 bottom-0 invisible z-40 py-2.5 bg-white opacity-0 motion-safe:transition-visibility" style="box-shadow: 0 0 5px rgba(11, 46, 37, 0.15);">
       <div class="container flex flex-row gap-2 px-4 sm:px-6">
@@ -334,7 +376,8 @@
             assign sticky_image_src_2x = product.featured_image | image_url: width: 252
           endif
         -%}
-        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+
+        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
         <img
           srcset="{% render 'imgix', src: sticky_image_src %} 1x, {% render 'imgix', src: sticky_image_src_2x %} 2x"
           src="{% render 'imgix', src: sticky_image_src_2x %}"
@@ -344,7 +387,8 @@
           height="150"
           class="object-cover w-auto h-16 sm:h-12"
         >
-        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+
         <div class="flex flex-col gap-1 justify-between items-center w-full sm:flex-row sm:gap-2">
           <div class="flex flex-col justify-between w-full">
             <h3 class="h-5 text-lg font-medium tracking-wide leading-none truncate">
@@ -354,26 +398,24 @@
               {{- product.metafields.custom_fields.short_description -}}
             </p>
           </div>
+
           <div class="relative w-full sm:w-60 md:w-80 shrink-0">
-            <button
-              type="submit"
-              name="add"
-              class="gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50"
-              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-              form="{{ product_form_id }}"
-            >
+            {%- if product.selected_or_first_available_variant.available -%}
+              <button
+                type="submit"
+                name="add"
+                class="gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50"
+                form="{{ product_form_id }}"
+              >
                 <span class="hidden relative -ml-6 loading-spinner">
                   {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
                 </span>
-                <span>
-                  {%- if product.selected_or_first_available_variant.available -%}
-                    {{ 'products.product.add_to_cart' | t }}
-                  {%- else -%}
-                    {{ 'products.product.sold_out' | t }}
-                  {%- endif -%}
-                </span>
+                <span>{{ 'products.product.add_to_cart' | t }}</span>
                 {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
-            </button>
+              </button>
+            {%- else -%}
+              <div class="grid relative grid-cols-2 gap-2" data-oos-sticky-slot></div>
+            {%- endif -%}
           </div>
         </div>
       </div>
@@ -383,30 +425,116 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const sheet = new CSSStyleSheet;
-    sheet.replaceSync(`.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }`);
     const host = document.querySelector('delivery-promise-wc');
-    host.shadowRoot.adoptedStyleSheets.push(sheet);
-
+    if (host && host.shadowRoot) {
+      const sheet = new CSSStyleSheet();
+      sheet.replaceSync('.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }');
+      host.shadowRoot.adoptedStyleSheets.push(sheet);
+    }
 
     function isIE() {
       const ua = window.navigator.userAgent;
-      const msie = ua.indexOf('MSIE ');
-      const trident = ua.indexOf('Trident/');
-
-      return (msie > 0 || trident > 0);
+      return ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0;
     }
 
     if (!isIE()) return;
+
     const hiddenInput = document.querySelector('#{{ product_form_id }} input[name="id"]');
+    const noscriptWrapper = document.querySelector('.product-form__noscript-wrapper-{{ section.id }}');
+    const variantSwitcher =
+      document.querySelector('variant-radios[data-section="{{ section.id }}"]') ||
+      document.querySelector('variant-selects[data-section="{{ section.id }}"]');
+
+    if (!hiddenInput || !noscriptWrapper || !variantSwitcher) return;
+
     const noScriptInputWrapper = document.createElement('div');
-    const variantSwitcher = document.querySelector('variant-radios[data-section="{{ section.id }}"]') || document.querySelector('variant-selects[data-section="{{ section.id }}"]');
-    noScriptInputWrapper.innerHTML = document.querySelector('.product-form__noscript-wrapper-{{ section.id }}').textContent;
+    noScriptInputWrapper.innerHTML = noscriptWrapper.textContent;
     variantSwitcher.outerHTML = noScriptInputWrapper.outerHTML;
 
-    document.querySelector('#Variants-{{ section.id }}').addEventListener('change', function(event) {
+    const variantsEl = document.querySelector('#Variants-{{ section.id }}');
+    if (!variantsEl) return;
+
+    variantsEl.addEventListener('change', function(event) {
       hiddenInput.value = event.currentTarget.value;
     });
+  });
+</script>
+
+{%- comment -%}
+  Sticky OOS sync:
+  - If PDP is OOS, we already render [data-oos-actions] in the main ATC grid.
+  - When sticky ATC becomes visible, we move [data-oos-actions] into the sticky slot.
+  - If sticky hides again, we move it back.
+  - If Postscript renders a root node (id="ps__bis_container_root") later, we move it alongside.
+{%- endcomment -%}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const stickyAtc = document.querySelector('product-sticky-atc');
+    if (!stickyAtc) return;
+
+    const oosActions = document.querySelector('[data-oos-actions]');
+    const stickySlot = stickyAtc.querySelector('[data-oos-sticky-slot]');
+    if (!oosActions || !stickySlot) return;
+
+    const homeParent = oosActions.parentElement;
+    const homeMarker = document.createComment('oos-actions-home');
+    homeParent.insertBefore(homeMarker, oosActions);
+
+    let psRoot = null;
+    let psHomeParent = null;
+    let psHomeMarker = null;
+
+    function initPostscriptRoot() {
+      if (psRoot) return true;
+
+      psRoot = document.getElementById('ps__bis_container_root');
+      if (!psRoot) return false;
+
+      psHomeParent = psRoot.parentElement;
+      psHomeMarker = document.createComment('ps-bis-home');
+      psHomeParent.insertBefore(psHomeMarker, psRoot);
+      return true;
+    }
+
+    function moveOosToSticky() {
+      if (!stickySlot.contains(oosActions)) stickySlot.appendChild(oosActions);
+    }
+
+    function moveOosHome() {
+      if (!homeParent.contains(oosActions)) homeParent.insertBefore(oosActions, homeMarker.nextSibling);
+    }
+
+    function movePostscript(isStickyVisible) {
+      if (!initPostscriptRoot()) return;
+
+      if (isStickyVisible) {
+        if (!stickySlot.contains(psRoot)) stickySlot.appendChild(psRoot);
+      } else if (psHomeParent && !psHomeParent.contains(psRoot)) {
+        psHomeParent.insertBefore(psRoot, psHomeMarker.nextSibling);
+      }
+    }
+
+    function syncOosActions() {
+      const isStickyVisible = !stickyAtc.classList.contains('invisible');
+      if (isStickyVisible) moveOosToSticky();
+      else moveOosHome();
+
+      movePostscript(isStickyVisible);
+    }
+
+    syncOosActions();
+
+    const observer = new MutationObserver(syncOosActions);
+    observer.observe(stickyAtc, { attributes: true, attributeFilter: ['class'] });
+
+    // If Postscript mounts after load, catch it once.
+    const psObserver = new MutationObserver(function() {
+      if (initPostscriptRoot()) {
+        syncOosActions();
+        psObserver.disconnect();
+      }
+    });
+    psObserver.observe(document.body, { childList: true, subtree: true });
   });
 </script>
 
@@ -452,19 +580,20 @@
     "offers": [
       {%- for variant in product.variants -%}
         {
-          "@type" : "Offer",
+          "@type": "Offer",
           {%- if variant.sku != blank -%}
             "sku": {{ variant.sku | json }},
           {%- endif -%}
-          "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
-          "price" : {{ variant.price | divided_by: 100.00 | json }},
-          "priceCurrency" : {{ cart.currency.iso_code | json }},
-          "url" : {{ shop.url | append: variant.url | json }}
+          "availability": "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price": {{ variant.price | divided_by: 100.00 | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "url": {{ shop.url | append: variant.url | json }}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ]
   }
 </script>
+
 
 {% schema %}
 {
