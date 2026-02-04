@@ -12,6 +12,23 @@
       background-color: oklab(from var(--p-surface) l calc(a * 0.6) calc(b * 0.6));
       
     }
+
+    .pdp .sticky-bis-proxy {
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-normal);
+      line-height: 1.25;
+      padding-block: var(--spacing-1);
+      padding-inline: var(--spacing-2);
+      min-height: var(--spacing-11);
+      height: auto;
+      white-space: normal;
+    }
+
+    @media (max-width: 39.99rem) {
+      .pdp .sticky-bis-proxy {
+        font-size: var(--text-sm);
+      }
+    }
   </style>
   <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0 lg:mb-6">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
@@ -355,25 +372,39 @@
             </p>
           </div>
           <div class="relative w-full sm:w-60 md:w-80 shrink-0">
-            <button
-              type="submit"
-              name="add"
-              class="gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50"
-              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-              form="{{ product_form_id }}"
-            >
-                <span class="hidden relative -ml-6 loading-spinner">
-                  {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
-                </span>
-                <span>
-                  {%- if product.selected_or_first_available_variant.available -%}
+            {%- if product.selected_or_first_available_variant.available -%}
+              <button
+                type="submit"
+                name="add"
+                class="gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50"
+                form="{{ product_form_id }}"
+              >
+                  <span class="hidden relative -ml-6 loading-spinner">
+                    {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
+                  </span>
+                  <span>
                     {{ 'products.product.add_to_cart' | t }}
-                  {%- else -%}
-                    {{ 'products.product.sold_out' | t }}
-                  {%- endif -%}
-                </span>
-                {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
-            </button>
+                  </span>
+                  {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
+              </button>
+            {%- else -%}
+              <div class="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  class="w-full button button-neon sticky-bis-proxy"
+                  data-sticky-bis-proxy="klaviyo"
+                >
+                  Email me when available
+                </button>
+                <button
+                  type="button"
+                  class="w-full button button-neon sticky-bis-proxy"
+                  data-sticky-bis-proxy="postscript"
+                >
+                  Text me when available
+                </button>
+              </div>
+            {%- endif -%}
           </div>
         </div>
       </div>
@@ -408,6 +439,72 @@
       hiddenInput.value = event.currentTarget.value;
     });
   });
+</script>
+
+<script>
+  (function() {
+    const initStickyBisProxies = () => {
+      const proxies = document.querySelectorAll('[data-sticky-bis-proxy]');
+      if (!proxies.length) return;
+
+      const KLAVIYO_SELECTORS = [
+        '#klaviyo-bis-button-container button[type="button"]',
+        '#klaviyo-bis-button-container [data-a11y-identifier^="bis-button-"] button[type="button"]',
+        '[data-a11y-identifier^="bis-button-"] button[type="button"]'
+      ];
+
+      const findKlaviyoButton = () => {
+        for (const selector of KLAVIYO_SELECTORS) {
+          const el = document.querySelector(selector);
+          if (el) return el;
+        }
+        return null;
+      };
+
+      const waitForAndClick = (findButton) => {
+        const tryClick = () => {
+          const btn = findButton();
+          if (!btn) return false;
+          const disabled = btn.disabled || btn.getAttribute('aria-disabled') === 'true';
+          if (disabled) return false;
+          btn.click();
+          return true;
+        };
+
+        if (tryClick()) return;
+
+        const observer = new MutationObserver(() => {
+          if (tryClick()) observer.disconnect();
+        });
+
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+        setTimeout(() => observer.disconnect(), 10000);
+      };
+
+      const handlers = {
+        klaviyo: () => waitForAndClick(findKlaviyoButton),
+        postscript: () => waitForAndClick(() => document.getElementById('ps-bis-widget__button'))
+      };
+
+      proxies.forEach((button) => {
+        if (button.dataset.proxyBound === 'true') return;
+        const target = button.getAttribute('data-sticky-bis-proxy');
+        const handler = handlers[target];
+        if (!handler) return;
+        button.dataset.proxyBound = 'true';
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          handler();
+        });
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initStickyBisProxies);
+    } else {
+      initStickyBisProxies();
+    }
+  })();
 </script>
 
 <script type="application/ld+json">
