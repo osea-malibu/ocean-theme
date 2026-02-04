@@ -29,7 +29,7 @@
           assign main_image_src = product.media[0] | image_url: width: 300, height: 375, crop: 'center'
           assign main_image_src_2x = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
         -%}
-        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           class="mx-auto"
           srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
@@ -39,7 +39,7 @@
           width="{{ product.media[0].width }}"
           height="{{ product.media[0].width | divided_by: 0.8 | round }}"
         >
-        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
       </div>
     {%- endif -%}
 
@@ -76,12 +76,7 @@
 
             {%- when 'title' -%}
               <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
-                {{- product.title
-                  | replace: 'Eye Serum', 'Serum'
-                  | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>'
-                  | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>'
-                  | replace: ' v2', ''
-                -}}
+               {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}
               </h1>
 
             {%- when 'tags' -%}
@@ -91,9 +86,7 @@
               <div class="no-js-hidden main-price flex {{ block.settings.price_classes }}" id="price-{{ section.id }}" role="status">
                 {%- render 'price', product: product, use_variant: true -%}
                 {%- if product.metafields.custom.set_value -%}
-                  <span class="self-center px-1.5 py-px ml-2 text-sm font-medium tracking-wide whitespace-nowrap bg-seafoam-200 text-seaweed-700">
-                    ${{ product.metafields.custom.set_value }} value
-                  </span>
+                  <span class="self-center px-1.5 py-px ml-2 text-sm font-medium tracking-wide whitespace-nowrap bg-seafoam-200 text-seaweed-700">${{ product.metafields.custom.set_value }} value</span>
                 {%- endif -%}
               </div>
 
@@ -104,6 +97,9 @@
                     {% render 'product-rating', product: product %}
                   </a>
                 {%- endunless -%}
+                {% comment %} {%- if product.metafields.custom.faq != nil -%}
+                  <a href="#ProductFaqs" class="text-xs link">Product FAQs</a>
+                {%- endif -%} {% endcomment %}
               </div>
 
             {%- when 'info_tabs' -%}
@@ -167,12 +163,16 @@
                       {%- endif -%}
 
                       <div class="grid relative grid-cols-2 gap-2 product-form__buttons" id="AddToCart">
-                        {%- liquid
+                         {%- liquid
                           if product.selected_or_first_available_variant.available
                             assign atc_label = 'products.product.add_to_cart' | t
-                            assign atc_disabled = false
                           else
                             assign atc_label = 'products.product.sold_out' | t
+                          endif
+
+                          if product.selected_or_first_available_variant.available
+                            assign atc_disabled = false
+                          else
                             assign atc_disabled = true
                           endif
                         -%}
@@ -243,8 +243,10 @@
                                 </div>
                               </shipping-countdown>
 
-                              <shipping-calculator id="pdp-shipcalc" data-collapsed="true">
-                                <div class="flex gap-2 items-end pl-4">
+                              <shipping-calculator
+                                id="pdp-shipcalc"
+                                data-collapsed="true"
+                              >                                <div class="flex gap-2 items-end pl-4">
                                   <form class="relative mt-2">
                                     <label for="shippingzip" class="block font-medium mb-1">Estimated shipping time:</label>
                                     <input class="py-2 w-60 input input-sm" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
@@ -318,12 +320,8 @@
                 </div>
 
                 {%- if upsell_count > 1 -%}
-                  <label aria-hidden="true" for="collapsible" class="block col-span-12 mt-1 text-sm link peer-checked:hidden">
-                    View more {% render 'icon-arrow', variant: 'short', classes: 'rotate-90 w-4 h-4 inline-block ml-1' %}
-                  </label>
-                  <label aria-hidden="true" for="collapsible" class="hidden col-span-12 mt-1 text-sm link peer-checked:block">
-                    View less {% render 'icon-arrow', variant: 'short', classes: '-rotate-90 w-4 h-4 inline-block ml-1' %}
-                  </label>
+                  <label aria-hidden="true" for="collapsible" class="block col-span-12 mt-1 text-sm link peer-checked:hidden">View more {% render 'icon-arrow', variant: 'short', classes: 'rotate-90 w-4 h-4 inline-block ml-1' %}</label>
+                  <label aria-hidden="true" for="collapsible" class="hidden col-span-12 mt-1 text-sm link peer-checked:block">View less {% render 'icon-arrow', variant: 'short', classes: '-rotate-90 w-4 h-4 inline-block ml-1' %}</label>
                 {%- endif -%}
               {%- endif -%}
 
@@ -367,7 +365,7 @@
           endif
         -%}
 
-        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+        {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           srcset="{% render 'imgix', src: sticky_image_src %} 1x, {% render 'imgix', src: sticky_image_src_2x %} 2x"
           src="{% render 'imgix', src: sticky_image_src_2x %}"
@@ -377,7 +375,7 @@
           height="150"
           class="object-cover w-auto h-16 sm:h-12"
         >
-        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+        {% comment %} theme-check-enable RemoteAsset {% endcomment %}
 
         <div class="flex flex-col gap-1 justify-between items-center w-full sm:flex-row sm:gap-2">
           <div class="flex flex-col justify-between w-full">
@@ -415,36 +413,23 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    const sheet = new CSSStyleSheet;
+    sheet.replaceSync(`.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }`);
     const host = document.querySelector('delivery-promise-wc');
-    if (host && host.shadowRoot) {
-      const sheet = new CSSStyleSheet();
-      sheet.replaceSync('.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }');
-      host.shadowRoot.adoptedStyleSheets.push(sheet);
-    }
-
+    host.shadowRoot.adoptedStyleSheets.push(sheet);
     function isIE() {
       const ua = window.navigator.userAgent;
-      return ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0;
+      const msie = ua.indexOf('MSIE ');
+      const trident = ua.indexOf('Trident/');
+      return (msie > 0 || trident > 0);
     }
-
     if (!isIE()) return;
-
     const hiddenInput = document.querySelector('#{{ product_form_id }} input[name="id"]');
-    const noscriptWrapper = document.querySelector('.product-form__noscript-wrapper-{{ section.id }}');
-    const variantSwitcher =
-      document.querySelector('variant-radios[data-section="{{ section.id }}"]') ||
-      document.querySelector('variant-selects[data-section="{{ section.id }}"]');
-
-    if (!hiddenInput || !noscriptWrapper || !variantSwitcher) return;
-
     const noScriptInputWrapper = document.createElement('div');
-    noScriptInputWrapper.innerHTML = noscriptWrapper.textContent;
+    const variantSwitcher = document.querySelector('variant-radios[data-section="{{ section.id }}"]') || document.querySelector('variant-selects[data-section="{{ section.id }}"]');
+    noScriptInputWrapper.innerHTML = document.querySelector('.product-form__noscript-wrapper-{{ section.id }}').textContent;
     variantSwitcher.outerHTML = noScriptInputWrapper.outerHTML;
-
-    const variantsEl = document.querySelector('#Variants-{{ section.id }}');
-    if (!variantsEl) return;
-
-    variantsEl.addEventListener('change', function(event) {
+    document.querySelector('#Variants-{{ section.id }}').addEventListener('change', function(event) {
       hiddenInput.value = event.currentTarget.value;
     });
   });
@@ -524,53 +509,18 @@
 <script type="application/ld+json">
   {
     "@context": "http://schema.org/",
-    "@type": "Product",
-    "name": {{ product.title | json }},
-    "url": {{ shop.url | append: product.url | json }},
-    {%- if product.selected_or_first_available_variant.featured_media -%}
-      {%- assign media_size = product.selected_or_first_available_variant.featured_media.preview_image.width -%}
-      "image": [
-        {%- if product.metafields.my_fields.white_image_bg != blank -%}
-          {{ product.metafields.my_fields.white_image_bg | image_url: width: 1200 | prepend: "https:" | json }}
-        {%- else -%}
-          {{ product.selected_or_first_available_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
-        {%- endif -%}
-      ],
-    {%- endif -%}
-    "description": {{ product.description | strip_html | json }},
-    {%- if product.selected_or_first_available_variant.sku != blank -%}
-      "sku": {{ product.selected_or_first_available_variant.sku | json }},
-    {%- endif -%}
-    {%- if product.metafields.okendo.summaryData.reviewCount > 0 -%}
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "description": "Okendo Reviews",
-        "ratingValue": "{{ product.metafields.okendo.summaryData.reviewAverageValue }}",
-        "ratingCount": "{{ product.metafields.okendo.summaryData.reviewCount }}"
-      },
-    {%- elsif product.metafields.okendo.ReviewCount > 0 -%}
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "description": "Okendo Reviews",
-        "ratingValue": "{{ product.metafields.okendo.ReviewAverageValue }}",
-        "ratingCount": "{{ product.metafields.okendo.ReviewCount }}"
-      },
-    {%- endif -%}
-    "brand": {
-      "@type": "Brand",
-      "name": {{ product.vendor | json }}
-    },
+	@@ -452,20 +563,21 @@
     "offers": [
       {%- for variant in product.variants -%}
         {
-          "@type": "Offer",
+          "@type" : "Offer",
           {%- if variant.sku != blank -%}
             "sku": {{ variant.sku | json }},
           {%- endif -%}
-          "availability": "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
-          "price": {{ variant.price | divided_by: 100.00 | json }},
-          "priceCurrency": {{ cart.currency.iso_code | json }},
-          "url": {{ shop.url | append: variant.url | json }}
+          "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price" : {{ variant.price | divided_by: 100.00 | json }},
+          "priceCurrency" : {{ cart.currency.iso_code | json }},
+          "url" : {{ shop.url | append: variant.url | json }}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ]
