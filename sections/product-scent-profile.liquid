@@ -32,7 +32,7 @@
           <div class="text-lg lg:text-xl">{{ scent_object.description }}</div>
         </div>
         {%- if scent_object.products.value and scent_object.products.value.count > 1 -%}
-          <h3 class="text-xl font-bold mb-4">Shop the Scent</h3>
+          <h3 class="text-xl font-bold mb-4">{{ scent_object.custom_label.value | default: 'Shop the Scent' }}</h3>
           <horizontal-scroll-box class="relative block w-full max-w-full">
             <div class="scroll-box w-full max-w-full flex gap-4 snap-x snap-mandatory overflow-x-auto pb-3">
               {%- for scent_product in scent_object.products.value -%}
