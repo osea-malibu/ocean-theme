@@ -1018,7 +1018,6 @@ class ModalOpener extends HTMLElement {
     button.addEventListener("click", () => {
       const modal = document.querySelector(this.getAttribute("data-modal"));
       if (modal) modal.show(button);
-      console.log("clicked modal opener", modal);
     });
   }
 }
@@ -1338,8 +1337,6 @@ class VariantSelects extends HTMLElement {
 
       /* check if klaviyo BIS trigger is injected into the DOM */
       if (bisTrigger) {
-        console.log("bisTrigger", bisTrigger);
-
         /* if the default variant is in stock, hide the BIS trigger */
         if (this.currentVariant.available) {
           bisTrigger.classList.add("hidden");
@@ -1481,30 +1478,133 @@ class SubscriptionRadios extends HTMLElement {
 customElements.define("subscription-radios", SubscriptionRadios);
 
 class ProductStickyAtc extends HTMLElement {
-  constructor() {
-    super();
+  connectedCallback() {
+    this.stickySlot = this.querySelector("[data-oos-sticky-slot]");
+    this.observeAtc();
+
+    // 🔑 IMPORTANT: sync check first
+    if (this.tryInitOosHandling()) return;
+
+    // fallback: watch for late mounts
+    this.waitForOosActions();
   }
 
-  connectedCallback() {
-    this.atcObserver = new IntersectionObserver((entries) => {
-      const root = document.documentElement;
+  disconnectedCallback() {
+    this.atcObserver?.disconnect();
+    this.psObserver?.disconnect();
+    this.oosObserver?.disconnect();
+  }
 
-      if (entries[0].intersectionRatio <= 0) {
-        const height = this.offsetHeight;
-        root.style.setProperty("--sticky-atc-height", `${height}px`);
+  /* --------------------------------------------
+   * Sticky visibility (always needed)
+   * ------------------------------------------ */
+
+  observeAtc() {
+    const trigger = document.querySelector(".product-form.pdp-product-form");
+    if (!trigger) return;
+
+    this.atcObserver = new IntersectionObserver(([entry]) => {
+      const root = document.documentElement;
+      const showSticky = entry.intersectionRatio <= 0;
+
+      if (showSticky) {
+        root.style.setProperty("--sticky-atc-height", `${this.offsetHeight}px`);
         this.classList.remove("invisible", "opacity-0");
       } else {
         root.style.setProperty("--sticky-atc-height", "0px");
         this.classList.add("invisible", "opacity-0");
       }
+
+      this.sync?.(showSticky);
     });
 
-    this.atcObserver.observe(document.querySelector(".product-form.pdp-product-form"));
+    this.atcObserver.observe(trigger);
   }
 
-  disconnectedCallback() {
-    if (this.atcObserver) {
-      this.atcObserver.disconnect();
+  /* --------------------------------------------
+   * OOS + third-party handling (conditional)
+   * ------------------------------------------ */
+  tryInitOosHandling() {
+    const oos = document.querySelector("[data-oos-actions]");
+    const ps = document.getElementById("ps__bis_container_root");
+
+    if (!oos && !ps) return false;
+
+    this.initOosHandling();
+    return true;
+  }
+
+  waitForOosActions() {
+    this.oosObserver = new MutationObserver(() => {
+      if (this.tryInitOosHandling()) {
+        this.oosObserver.disconnect();
+      }
+    });
+
+    this.oosObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  initOosHandling() {
+    this.oosActions = document.querySelector("[data-oos-actions]");
+    if (!this.oosActions || !this.stickySlot) return;
+
+    this.oosHomeParent = this.oosActions.parentElement;
+    this.oosHomeMarker = document.createComment("oos-home");
+    this.oosHomeParent.insertBefore(this.oosHomeMarker, this.oosActions);
+
+    this.observePostscript();
+    this.sync = this.syncOosAndIntegrations.bind(this);
+
+    // Initial sync
+    this.sync(this.isVisible());
+  }
+
+  observePostscript() {
+    this.psObserver = new MutationObserver(() => {
+      const root = document.getElementById("ps__bis_container_root");
+      if (!root) return;
+
+      this.psRoot = root;
+      this.psHomeParent = root.parentElement;
+      this.psHomeMarker = document.createComment("ps-home");
+      this.psHomeParent.insertBefore(this.psHomeMarker, root);
+
+      this.sync(this.isVisible());
+      this.psObserver.disconnect();
+    });
+
+    this.psObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  /* --------------------------------------------
+   * Sync logic
+   * ------------------------------------------ */
+
+  isVisible() {
+    return !this.classList.contains("invisible");
+  }
+
+  syncOosAndIntegrations(showSticky) {
+    if (this.oosActions) {
+      if (showSticky) {
+        this.stickySlot.appendChild(this.oosActions);
+      } else {
+        this.oosHomeParent.insertBefore(this.oosActions, this.oosHomeMarker.nextSibling);
+      }
+    }
+
+    if (this.psRoot) {
+      if (showSticky) {
+        this.stickySlot.appendChild(this.psRoot);
+      } else {
+        this.psHomeParent.insertBefore(this.psRoot, this.psHomeMarker.nextSibling);
+      }
     }
   }
 }
