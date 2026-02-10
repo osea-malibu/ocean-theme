@@ -1135,8 +1135,10 @@ class VariantSelects extends HTMLElement {
       const variantImageEl = document.querySelector("#Product-VariantImage");
       const newImageSrc = this.currentVariant.featured_image.src;
       if (variantImageEl) {
-        variantImageEl.srcset = `${newImageSrc}&width=800 1x, ${newImageSrc}&width=1600 2x`;
-        variantImageEl.src = newImageSrc;
+        variantImageEl.srcset = `${newImageSrc}&width=360 360w, ${newImageSrc}&width=420 420w, ${newImageSrc}&width=560 560w, ${newImageSrc}&width=720 720w, ${newImageSrc}&width=840 840w, ${newImageSrc}&width=960 960w, ${newImageSrc}&width=1200 1200w, ${newImageSrc}&width=1600 1600w`;
+        variantImageEl.sizes =
+          "(min-width: 1280px) 58vw, (min-width: 1024px) 60vw, (min-width: 768px) 50vw, 100vw";
+        variantImageEl.src = `${newImageSrc}&width=720`;
       }
       // change thumbanil image in product page gallery thumb navigator
       const thumbImageEl = document.querySelector("#Product-ThumbImage");
