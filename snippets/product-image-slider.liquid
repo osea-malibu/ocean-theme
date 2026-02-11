@@ -77,12 +77,16 @@ Accepts:
               {% endif %}
 
               srcset="
-                {% render 'imgix', src: main_master, w: 480 %} 480w,
-                {% render 'imgix', src: main_master, w: 800 %} 800w,
+                {% render 'imgix', src: main_master, w: 360 %} 360w,
+                {% render 'imgix', src: main_master, w: 420 %} 420w,
+                {% render 'imgix', src: main_master, w: 560 %} 560w,
+                {% render 'imgix', src: main_master, w: 720 %} 720w,
+                {% render 'imgix', src: main_master, w: 840 %} 840w,
+                {% render 'imgix', src: main_master, w: 960 %} 960w,
                 {% render 'imgix', src: main_master, w: 1200 %} 1200w,
                 {% render 'imgix', src: main_master, w: 1600 %} 1600w
               "
-              src="{% render 'imgix', src: main_master, w: 800 %}"
+              src="{% render 'imgix', src: main_master, w: 720 %}"
 
               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
               {% if forloop.first %}fetchpriority="high"{% endif %}
@@ -93,7 +97,7 @@ Accepts:
               width="{{ display_width }}"
               height="{{ display_height }}"
 
-              sizes="(min-width: 1024px) 1200px, (min-width: 640px) 800px, 480px"
+              sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 60vw, (min-width: 768px) 50vw, 100vw"
               class="object-cover min-h-full"
             >
             {% comment %} theme-check-enable RemoteAsset {% endcomment %}

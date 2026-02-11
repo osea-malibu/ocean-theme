@@ -20,9 +20,18 @@
               </div>
             </div>
             {%- if block.settings.ingredient_image -%}
+              {%- assign ingredient_master = block.settings.ingredient_image | image_url -%}
+              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img 
-                srcset="{{ block.settings.ingredient_image | image_url: width: 400 }} 1x, {{ block.settings.ingredient_image | image_url: width: 800 }} 2x"
-                src="{{ block.settings.ingredient_image | image_url: width: 800 }}"
+                src="{% render 'imgix', src: ingredient_master, w: 192 %}"
+                srcset="
+                  {% render 'imgix', src: ingredient_master, w: 128 %} 128w,
+                  {% render 'imgix', src: ingredient_master, w: 192 %} 192w,
+                  {% render 'imgix', src: ingredient_master, w: 256 %} 256w,
+                  {% render 'imgix', src: ingredient_master, w: 320 %} 320w,
+                  {% render 'imgix', src: ingredient_master, w: 384 %} 384w
+                "
+                sizes="(min-width: 1024px) 176px, (min-width: 768px) 144px, 112px"
                 alt=""
                 aria-hidden="true"
                 height="{{ block.settings.ingredient_image.height }}"
@@ -30,6 +39,7 @@
                 class="block rounded-full w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 shrink-0"
                 loading="lazy"
               >
+              {% comment %} theme-check-enable RemoteAsset {% endcomment %}
             {%- else -%}
               <div class="block rounded-full w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 shrink-0 bg-p-core"></div>
             {%- endif -%}
