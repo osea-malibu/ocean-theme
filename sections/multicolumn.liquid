@@ -410,21 +410,22 @@
                           <source data-src="{{ source.url }}" type="video/{{ source.format }}">
                         {%- endfor -%}
 
-                        {% comment %} Fallback poster image {% endcomment %}
+                        {% comment %}theme-check-disable RemoteAsset {% endcomment %}
                         <img
-                          src="{% render 'imgix', src: video_poster_master, w: 480 %}"
+                          src="{% render 'imgix', src: video_poster_master, w: 240 %}"
                           srcset="
                             {% render 'imgix', src: video_poster_master, w: 240 %} 240w,
                             {% render 'imgix', src: video_poster_master, w: 480 %} 480w,
                             {% render 'imgix', src: video_poster_master, w: 640 %} 640w,
                             {% render 'imgix', src: video_poster_master, w: 960 %} 960w
                           "
-                          sizes="{{ sizes_attr }}"
+                          sizes="(min-width: 768px) 640px, 100vw"
                           alt=""
                           width="{{ block.settings.video_mp4.preview_image.width }}"
                           height="{{ block.settings.video_mp4.preview_image.height }}"
                           loading="lazy"
                         >
+                        {% comment %}theme-check-enable RemoteAsset {% endcomment %}
                       </video>
                       {% comment %}theme-check-enable RemoteAsset {% endcomment %}
                     {%- endif -%}
