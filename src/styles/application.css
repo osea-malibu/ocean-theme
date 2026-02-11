@@ -598,6 +598,23 @@ div.oke-sr > div {
   width: calc(50% - 4px);
 }
 
+.pdp .sticky-bis-proxy {
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-normal);
+  line-height: 1.25;
+  padding-block: var(--spacing-1);
+  padding-inline: var(--spacing-2);
+  min-height: var(--spacing-11);
+  height: auto;
+  white-space: normal;
+}
+
+@media (max-width: 39.99rem) {
+  .pdp .sticky-bis-proxy {
+    font-size: var(--text-sm);
+  }
+}
+
 /* PLP: container that Klaviyo injects into */
 .plp .klaviyo-product-container .klaviyo-button-container[klaviyo-bis-trigger] {
   position: absolute !important;
