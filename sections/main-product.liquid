@@ -12,23 +12,6 @@
       background-color: oklab(from var(--p-surface) l calc(a * 0.6) calc(b * 0.6));
       
     }
-
-    .pdp .sticky-bis-proxy {
-      font-weight: var(--font-weight-medium);
-      letter-spacing: var(--tracking-normal);
-      line-height: 1.25;
-      padding-block: var(--spacing-1);
-      padding-inline: var(--spacing-2);
-      min-height: var(--spacing-11);
-      height: auto;
-      white-space: normal;
-    }
-
-    @media (max-width: 39.99rem) {
-      .pdp .sticky-bis-proxy {
-        font-size: var(--text-sm);
-      }
-    }
   </style>
   <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0 lg:mb-6">
     <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
