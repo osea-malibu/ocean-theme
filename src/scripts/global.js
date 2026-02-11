@@ -1135,8 +1135,10 @@ class VariantSelects extends HTMLElement {
       const variantImageEl = document.querySelector("#Product-VariantImage");
       const newImageSrc = this.currentVariant.featured_image.src;
       if (variantImageEl) {
-        variantImageEl.srcset = `${newImageSrc}&width=800 1x, ${newImageSrc}&width=1600 2x`;
-        variantImageEl.src = newImageSrc;
+        variantImageEl.srcset = `${newImageSrc}&width=360 360w, ${newImageSrc}&width=420 420w, ${newImageSrc}&width=560 560w, ${newImageSrc}&width=720 720w, ${newImageSrc}&width=840 840w, ${newImageSrc}&width=960 960w, ${newImageSrc}&width=1200 1200w, ${newImageSrc}&width=1600 1600w`;
+        variantImageEl.sizes =
+          "(min-width: 1280px) 58vw, (min-width: 1024px) 60vw, (min-width: 768px) 50vw, 100vw";
+        variantImageEl.src = `${newImageSrc}&width=720`;
       }
       // change thumbanil image in product page gallery thumb navigator
       const thumbImageEl = document.querySelector("#Product-ThumbImage");
@@ -1483,15 +1485,55 @@ customElements.define("subscription-radios", SubscriptionRadios);
 class ProductStickyAtc extends HTMLElement {
   constructor() {
     super();
+    this.syncQueued = false;
+    this.scheduleSync = this.scheduleSync.bind(this);
+
+    this.atcObserver = null;
+    this.proxyObserver = null;
+
+    this.pendingClickObserver = null;
+    this.pendingClickTimeout = null;
   }
 
   connectedCallback() {
-    this.atcObserver = new IntersectionObserver((entries) => {
-      const root = document.documentElement;
+    this.sectionEl = this.closest("section");
 
-      if (entries[0].intersectionRatio <= 0) {
-        const height = this.offsetHeight;
-        root.style.setProperty("--sticky-atc-height", `${height}px`);
+    this.primaryProxyGroup = this.querySelector('[data-sticky-proxy-group="primary"]');
+    this.vendorProxyGroup = this.querySelector('[data-sticky-proxy-group="vendor"]');
+    this.primaryProxyButton = this.querySelector('[data-sticky-proxy-target="add"]');
+
+    this.bindProxyHandlers();
+    this.observeAtcVisibility();
+
+    // Initial sync + observers for later DOM changes (variant swaps, klaviyo mount, etc.)
+    this.setupProxyObservers();
+    this.syncProxyState();
+  }
+
+  disconnectedCallback() {
+    this.atcObserver?.disconnect();
+    this.proxyObserver?.disconnect();
+
+    document.removeEventListener("change", this.scheduleSync, true);
+    window.removeEventListener("load", this.scheduleSync);
+
+    this.clearPendingClickWait();
+  }
+
+  /* --------------------------------------------
+   * Sticky visibility
+   * ------------------------------------------ */
+
+  observeAtcVisibility() {
+    const trigger = document.querySelector(".product-form.pdp-product-form");
+    if (!trigger) return;
+
+    this.atcObserver = new IntersectionObserver(([entry]) => {
+      const root = document.documentElement;
+      const showSticky = entry.intersectionRatio <= 0;
+
+      if (showSticky) {
+        root.style.setProperty("--sticky-atc-height", `${this.offsetHeight}px`);
         this.classList.remove("invisible", "opacity-0");
       } else {
         root.style.setProperty("--sticky-atc-height", "0px");
@@ -1499,15 +1541,220 @@ class ProductStickyAtc extends HTMLElement {
       }
     });
 
-    this.atcObserver.observe(document.querySelector(".product-form.pdp-product-form"));
+    this.atcObserver.observe(trigger);
   }
 
-  disconnectedCallback() {
-    if (this.atcObserver) {
-      this.atcObserver.disconnect();
+  /* --------------------------------------------
+   * Proxy binding
+   * ------------------------------------------ */
+
+  bindProxyHandlers() {
+    this.querySelectorAll("[data-sticky-proxy-target]").forEach((button) => {
+      if (button.dataset.proxyBound === "true") return;
+
+      button.dataset.proxyBound = "true";
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const target = button.dataset.stickyProxyTarget;
+
+        if (target === "add") {
+          this.forwardToAddButton();
+          return;
+        }
+
+        if (target === "klaviyo") {
+          this.waitForAndClick(() => this.findKlaviyoButton(), { timeoutMs: 10000 });
+          return;
+        }
+
+        if (target === "postscript") {
+          this.waitForAndClick(() => document.getElementById("ps-bis-widget__button"), {
+            timeoutMs: 10000,
+          });
+        }
+      });
+    });
+  }
+
+  /* --------------------------------------------
+   * Observers + syncing
+   * ------------------------------------------ */
+
+  setupProxyObservers() {
+    // Observe the PDP ATC area for variant-driven updates
+    this.refreshSourceReferences();
+
+    if (this.sourceButtonsContainer) {
+      this.proxyObserver = new MutationObserver(this.scheduleSync);
+      this.proxyObserver.observe(this.sourceButtonsContainer, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class", "disabled", "aria-disabled"],
+      });
+    }
+
+    // Variant changes often fire change events; load catches late mounts
+    document.addEventListener("change", this.scheduleSync, true);
+    window.addEventListener("load", this.scheduleSync);
+  }
+
+  scheduleSync() {
+    if (this.syncQueued) return;
+
+    this.syncQueued = true;
+    requestAnimationFrame(() => {
+      this.syncQueued = false;
+      this.syncProxyState();
+    });
+  }
+
+  refreshSourceReferences() {
+    const scopedSourceContainer = this.sectionEl?.querySelector(
+      ".product-form.pdp-product-form .product-form__buttons"
+    );
+
+    this.sourceButtonsContainer =
+      scopedSourceContainer ||
+      document.querySelector(".product-form.pdp-product-form .product-form__buttons");
+
+    // This should be your real submit button
+    this.sourceAddButton = this.sourceButtonsContainer?.querySelector(
+      'button[name="add"], button[type="submit"][name="add"]'
+    );
+  }
+
+  syncProxyState() {
+    this.refreshSourceReferences();
+    if (!this.primaryProxyButton || !this.primaryProxyGroup || !this.vendorProxyGroup) return;
+
+    // Mirror styling from the real ATC button (safe subset)
+    if (this.sourceAddButton) {
+      if (this.primaryProxyButton.className !== this.sourceAddButton.className) {
+        this.primaryProxyButton.className = this.sourceAddButton.className;
+      }
+
+      // Optional: mirror label text (avoid innerHTML cloning)
+      const sourceLabel =
+        this.sourceAddButton.querySelector(".label") || this.sourceAddButton.querySelector("span");
+      const proxyLabel =
+        this.primaryProxyButton.querySelector(".label") ||
+        this.primaryProxyButton.querySelector("span");
+      if (sourceLabel && proxyLabel) {
+        const nextText = sourceLabel.textContent?.trim() || "";
+        if (proxyLabel.textContent?.trim() !== nextText) proxyLabel.textContent = nextText;
+      }
+
+      const sourceDisabled =
+        this.sourceAddButton.hasAttribute("disabled") ||
+        this.sourceAddButton.getAttribute("aria-disabled") === "true";
+
+      if (sourceDisabled) {
+        this.primaryProxyButton.setAttribute("disabled", "disabled");
+      } else {
+        this.primaryProxyButton.removeAttribute("disabled");
+      }
+
+      const sourceAriaDisabled = this.sourceAddButton.getAttribute("aria-disabled");
+      if (sourceAriaDisabled !== null) {
+        this.primaryProxyButton.setAttribute("aria-disabled", sourceAriaDisabled);
+      } else {
+        this.primaryProxyButton.removeAttribute("aria-disabled");
+      }
+
+      // Show vendor proxies only when real ATC is disabled AND at least one vendor button exists (or can mount)
+      const vendorExists = this.hasVendorButtons();
+      const showVendorProxies = sourceDisabled && vendorExists;
+
+      this.primaryProxyGroup.classList.toggle("hidden", showVendorProxies);
+      this.vendorProxyGroup.classList.toggle("hidden", !showVendorProxies);
     }
   }
+
+  forwardToAddButton() {
+    this.refreshSourceReferences();
+    if (!this.sourceAddButton) return;
+
+    const isDisabled =
+      this.sourceAddButton.hasAttribute("disabled") ||
+      this.sourceAddButton.getAttribute("aria-disabled") === "true";
+
+    if (isDisabled) return;
+
+    this.sourceAddButton.click();
+  }
+
+  /* --------------------------------------------
+   * Vendor button detection
+   * ------------------------------------------ */
+
+  hasVendorButtons() {
+    return Boolean(this.findKlaviyoButton() || document.getElementById("ps-bis-widget__button"));
+  }
+
+  findKlaviyoButton() {
+    const selectors = [
+      '#klaviyo-bis-button-container button[type="button"]',
+      '#klaviyo-bis-button-container [data-a11y-identifier^="bis-button-"] button[type="button"]',
+      '[data-a11y-identifier^="bis-button-"] button[type="button"]',
+    ];
+
+    for (const selector of selectors) {
+      const scoped = this.sectionEl?.querySelector(selector);
+      if (scoped) return scoped;
+
+      const global = document.querySelector(selector);
+      if (global) return global;
+    }
+
+    return null;
+  }
+
+  /* --------------------------------------------
+   * Click proxy helper (deduped observer)
+   * ------------------------------------------ */
+
+  clearPendingClickWait() {
+    if (this.pendingClickObserver) {
+      this.pendingClickObserver.disconnect();
+      this.pendingClickObserver = null;
+    }
+    if (this.pendingClickTimeout) {
+      clearTimeout(this.pendingClickTimeout);
+      this.pendingClickTimeout = null;
+    }
+  }
+
+  waitForAndClick(findButton, { timeoutMs = 10000 } = {}) {
+    const tryClick = () => {
+      const button = findButton();
+      if (!button) return false;
+
+      const disabled = button.disabled || button.getAttribute("aria-disabled") === "true";
+      if (disabled) return false;
+
+      button.click();
+      return true;
+    };
+
+    // try immediately
+    if (tryClick()) return;
+
+    // Dedup: only one active wait at a time
+    this.clearPendingClickWait();
+
+    this.pendingClickObserver = new MutationObserver(() => {
+      if (tryClick()) this.clearPendingClickWait();
+    });
+
+    // observe body instead of documentElement (slightly cheaper in practice)
+    this.pendingClickObserver.observe(document.body, { childList: true, subtree: true });
+
+    this.pendingClickTimeout = setTimeout(() => this.clearPendingClickWait(), timeoutMs);
+  }
 }
+
 customElements.define("product-sticky-atc", ProductStickyAtc);
 
 class TabController extends HTMLElement {

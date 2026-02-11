@@ -355,25 +355,43 @@
             </p>
           </div>
           <div class="relative w-full sm:w-60 md:w-80 shrink-0">
-            <button
-              type="submit"
-              name="add"
-              class="gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50"
-              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-              form="{{ product_form_id }}"
+            <div
+              data-sticky-proxy-group="primary"
+              class="{% unless product.selected_or_first_available_variant.available %}hidden{% endunless %}"
             >
+              <button
+                type="button"
+                class="gap-3 w-full product-form__submit button button-neon button-md disabled:opacity-50"
+                data-sticky-proxy-target="add"
+              >
                 <span class="hidden relative -ml-6 loading-spinner">
                   {% render 'icon-spinner', classes: 'h-4 w-4 mr-2 text-white' %}
                 </span>
-                <span>
-                  {%- if product.selected_or_first_available_variant.available -%}
-                    {{ 'products.product.add_to_cart' | t }}
-                  {%- else -%}
-                    {{ 'products.product.sold_out' | t }}
-                  {%- endif -%}
+                <span class="label">
+                  {{ 'products.product.add_to_cart' | t }}
                 </span>
                 {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto' -%}
-            </button>
+              </button>
+            </div>
+            <div
+              data-sticky-proxy-group="vendor"
+              class="grid grid-cols-2 gap-2 {% if product.selected_or_first_available_variant.available %}hidden{% endif %}"
+            >
+              <button
+                type="button"
+                class="w-full button button-neon sticky-bis-proxy"
+                data-sticky-proxy-target="klaviyo"
+              >
+                Email me when available
+              </button>
+              <button
+                type="button"
+                class="w-full button button-neon sticky-bis-proxy"
+                data-sticky-proxy-target="postscript"
+              >
+                Text me when available
+              </button>
+            </div>
           </div>
         </div>
       </div>
