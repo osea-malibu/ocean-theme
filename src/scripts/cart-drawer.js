@@ -217,7 +217,7 @@ class CartDrawer extends HTMLElement {
     cartDrawerNote.setAttribute("role", "button");
     cartDrawerNote.setAttribute("aria-expanded", "false");
 
-    if (cartDrawerNote.nextElementSibling?.getAttribute("id")) {
+    if (cartDrawerNote.nextElementSibling.getAttribute("id")) {
       cartDrawerNote.setAttribute("aria-controls", cartDrawerNote.nextElementSibling.id);
     }
 
