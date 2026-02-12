@@ -110,60 +110,67 @@ class CartDrawer extends HTMLElement {
         window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
       let done = false;
-      let fallbackTimer = null;
+      let fallbackTimer1 = null;
+      let fallbackTimer2 = null;
 
       const cleanup = () => {
-        if (fallbackTimer) window.clearTimeout(fallbackTimer);
+        if (fallbackTimer1) window.clearTimeout(fallbackTimer1);
+        if (fallbackTimer2) window.clearTimeout(fallbackTimer2);
       };
 
       const focusDrawerAndTrap = () => {
         if (done) return;
 
-        // Re-sync after render/paint (critical for add-to-cart path)
+        // Re-sync AFTER paint (important when drawer markup was replaced by section render)
         this.syncDrawerElements();
-
         const drawerEl = this.drawer || this.querySelector(".cart-drawer");
-        if (!drawerEl) return; // will retry via fallback
+        if (!drawerEl) return; // try again via fallbacks
 
         done = true;
         cleanup();
 
-        // Ensure focusable (you already have tabindex="-1" in Liquid, but keep this as safety)
+        // Ensure the dialog container is programmatically focusable
         if (!drawerEl.hasAttribute("tabindex")) drawerEl.setAttribute("tabindex", "-1");
 
-        // Force focus to the drawer container (prevents trapFocus fallback to close button)
-        drawerEl.focus({ preventScroll: true });
-
-        // Trap focus inside the drawer; keep initial focus on the drawer container
+        // 1) Trap focus inside the drawer
         trapFocus(drawerEl, drawerEl);
 
-        // Safety: if anything steals focus (some scripts do), snap it back once
+        // 2) Force focus onto the drawer container (your requirement)
+        // Do it after trapFocus because some implementations move focus to first focusable element.
+        drawerEl.focus({ preventScroll: true });
+
+        // 3) Re-assert focus (apps/scripts often steal it slightly later)
         requestAnimationFrame(() => {
           if (document.activeElement !== drawerEl) {
             drawerEl.focus({ preventScroll: true });
           }
         });
+
+        // One more late pass catches "setTimeout(0)" focus stealers
+        setTimeout(() => {
+          if (document.activeElement !== drawerEl) {
+            drawerEl.focus({ preventScroll: true });
+          }
+        }, 50);
       };
 
       if (prefersReducedMotion) {
-        // 2 frames gives time for section swap + layout
         requestAnimationFrame(() => requestAnimationFrame(focusDrawerAndTrap));
         return;
       }
 
-      // Transition-based attempt + fallback timing
-      // (If your transition is on .cart-drawer, this works; if not, fallback still handles it.)
+      // Try on transition end if the transition is on the drawer, otherwise fallbacks handle it
       const transitionEl = this.drawer || this.querySelector(".cart-drawer") || this;
       const onTransitionEnd = (e) => {
         if (e.target !== transitionEl) return;
         focusDrawerAndTrap();
       };
-
       transitionEl.addEventListener("transitionend", onTransitionEnd, { once: true });
 
-      // Robust fallback: after 2 frames, then again after a short timeout
+      // Fallbacks (re-render + paint timing varies on add-to-cart path)
       requestAnimationFrame(() => requestAnimationFrame(focusDrawerAndTrap));
-      fallbackTimer = window.setTimeout(focusDrawerAndTrap, 350);
+      fallbackTimer1 = window.setTimeout(focusDrawerAndTrap, 250);
+      fallbackTimer2 = window.setTimeout(focusDrawerAndTrap, 600);
     });
   }
 
