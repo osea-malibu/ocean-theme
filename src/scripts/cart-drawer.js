@@ -50,6 +50,7 @@ class CartDrawer extends HTMLElement {
     });
 
     document.body.addEventListener("blotout-wallet-cart-restored", async () => {
+      console.log("blotout-wallet-cart-restored");
       const opener = document.activeElement;
 
       try {
@@ -80,7 +81,7 @@ class CartDrawer extends HTMLElement {
     });
 
     cartLink.addEventListener("keydown", (event) => {
-      if (event.code?.toUpperCase() === "SPACE") {
+      if (event.code.toUpperCase() === "SPACE") {
         event.preventDefault();
         this.open(cartLink);
       }
@@ -135,7 +136,7 @@ class CartDrawer extends HTMLElement {
         // 1) Trap focus inside the drawer
         trapFocus(drawerEl, drawerEl);
 
-        // 2) Force focus onto the drawer container (your requirement)
+        // 2) Force focus onto the drawer container
         // Do it after trapFocus because some implementations move focus to first focusable element.
         drawerEl.focus({ preventScroll: true });
 
@@ -208,6 +209,7 @@ class CartDrawer extends HTMLElement {
     document.body.classList.remove("overflow-hidden");
 
     const elements = document.querySelectorAll(".cart-items #bud");
+    // Iterate over each selected element and remove it from the DOM
     elements.forEach((element) => element.remove());
   }
 
