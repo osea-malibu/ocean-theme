@@ -285,7 +285,7 @@
               -%}
 
               <input type="hidden" name="id" value="{{ default_id }}" disabled />
-              <input type="hidden" name="properties[_is_subscription]" value="{% if subscription %}true{% else %}false{% endif %}" />
+              <input type="hidden" name="properties[is_subscription]" value="{% if subscription %}true{% else %}false{% endif %}" />
 
               {%- if card_product.selected_or_first_available_variant.available -%}
                 <button

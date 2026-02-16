@@ -1,22 +1,23 @@
 {% comment %}
-    Renders a list of product's price (regular, sale)
+  Renders a list of product's price (regular, sale)
 
-    Accepts:
-    - product: {Object} Product Liquid object (optional)
-    - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
-    - price_id: {String} Id to be applied to outer span (optional)
-    - price_class: {String} Adds a price class to the price element (optional)
-    - show_price_range: {Boolean} Displays variants as a price range, does not show sale strikeout (optional)
-    - subscription: {Boolean} Displays subscription price with strikeout on compare at price (optional)
-    - bundle: {Boolean} Displays bundle price with strikeout on compare at price (optional)
-    - default_to_mini: {Boolean} Default variant selection to smallest size (optional)
-    - default_to_jumbo: {Boolean} Default variant selection to largest size (optional)
-    - hide_slashed_price: {Boolean} Hides slashed price (optional)
-    - slashed_price_color: {120px} Color of the slashed price (optional)
+  Accepts:
+  - product: {Object} Product Liquid object (optional)
+  - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
+  - price_id: {String} Id to be applied to outer span (optional)
+  - price_class: {String} Adds a price class to the price element (optional)
+  - show_price_range: {Boolean} Displays variants as a price range, does not show sale strikeout (optional)
+  - subscription: {Boolean} Displays subscription price with strikeout on compare at price (optional)
+  - bundle: {Boolean} Displays bundle price with strikeout on compare at price (optional)
+  - default_to_mini: {Boolean} Default variant selection to smallest size (optional)
+  - default_to_jumbo: {Boolean} Default variant selection to largest size (optional)
+  - hide_slashed_price: {Boolean} Hides slashed price (optional)
+  - slashed_price_color: {120px} Color of the slashed price (optional)
 
-    Usage:
-    {% render 'price', product: product %}
+  Usage:
+  {% render 'price', product: product %}
 {% endcomment %}
+
 {%- liquid
   if default_to_mini
     assign mini_index = product.variants.size | minus: 1
@@ -41,42 +42,99 @@
 
   assign compare_at_price = target.compare_at_price
   assign price = target.price | default: 1999
+
   assign money_price = price | money_without_trailing_zeros
   if settings.currency_code_enabled
     assign money_price = price | money_with_currency
   endif
 
   assign slashed_price_color = slashed_price_color | default: 'text-seaweed-800'
+
+  comment
+    Build SR-only label text for each branch.
+  endcomment
+
+  assign sr_text = ''
+
+  if subscription
+    if product.selected_or_first_available_variant.available
+      assign subscription_original = product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros
+      assign subscription_sale = product.selected_or_first_available_selling_plan_allocation.price | money
+      assign sr_text = 'Original price, ' | append: subscription_original | append: '. Sale price, ' | append: subscription_sale | append: '.'
+    else
+      assign subscription_original = product.selected_or_first_available_variant.price | money_without_trailing_zeros
+      assign subscription_sale = product.selected_or_first_available_variant.price | times: 0.9 | money
+      assign sr_text = 'Original price, ' | append: subscription_original | append: '. Sale price, ' | append: subscription_sale | append: '.'
+    endif
+  elsif bundle
+    assign bundle_original = money_price
+    assign bundle_sale = price | times: 0.8 | money
+    assign sr_text = 'Original price, ' | append: bundle_original | append: '. Sale price, ' | append: bundle_sale | append: '.'
+  elsif show_price_range and default_to_mini != true and default_to_jumbo != true
+    if product.price_varies
+      assign range_min = min_price | money_without_trailing_zeros
+      assign range_max = max_price | money_without_trailing_zeros
+      assign sr_text = 'Price range, ' | append: range_min | append: ' to ' | append: range_max | append: '.'
+    else
+      assign sr_text = 'Price, ' | append: money_price | append: '.'
+    endif
+  else
+    if compare_at_price > price
+      assign sr_original = compare_at_price | money_without_trailing_zeros
+      assign sr_sale = money_price
+      assign sr_text = 'Original price, ' | append: sr_original | append: '. Sale price, ' | append: sr_sale | append: '.'
+    else
+      assign sr_text = 'Price, ' | append: money_price | append: '.'
+    endif
+  endif
 -%}
 
-<span class="price whitespace-nowrap flex flex-row{% if price_class %} {{ price_class }}{% endif %}"{% if price_id != blank %} id="{{ price_id }}"{% endif %}>
-  {%- if subscription -%}
-    {%- if product.selected_or_first_available_variant.available -%}
-      <s class="{{ slashed_price_color }} font-medium mr-1">{{ product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros }}</s>
-      <span class="sr-only">&nbsp;</span>
-      <span>{{ product.selected_or_first_available_selling_plan_allocation.price | money }}</span>
-    {%- else -%}
-      <s class="{{ slashed_price_color }} font-medium mr-1">{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</s>
-      <span class="sr-only">&nbsp;</span>
-      <span>{{ product.selected_or_first_available_variant.price | times: 0.9 | money }}</span>
-    {%- endif -%}
-  {%- elsif bundle -%}
-    <s class="{{ slashed_price_color }} font-medium mr-1">{{ money_price }}</s>
-    <span class="sr-only">&nbsp;</span>
-    <span>{{ price | times: 0.8 | money }}</span>
-  {%- elsif show_price_range and default_to_mini != true and default_to_jumbo != true -%}
-    <span>{% if product.price_varies %}{{ min_price | money_without_trailing_zeros }} - {{ max_price | money_without_trailing_zeros }}{% else %}{{ money_price }}{% endif %}</span>
-  {%- else -%}
-    {%- if compare_at_price > price -%}
-      {%- unless product.price_varies == false and product.compare_at_price_varies %}
-        {%- unless hide_slashed_price -%}
-          <s class="{{ slashed_price_color }} font-medium mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
-          <span class="sr-only">&nbsp;</span>
-        {%- endunless -%}
-      {%- endunless -%}
-      <span>{{ money_price }}</span>
-    {%- else -%}
-      <span>{{ money_price }}</span>
-    {%- endif -%}
+<span
+  class="price whitespace-nowrap flex flex-row{% if price_class %} {{ price_class }}{% endif %}"
+  {% if price_id != blank %}id="{{ price_id }}"{% endif %}
+>
+  {%- if sr_text != blank -%}
+    <span class="sr-only">{{ sr_text }}</span>
   {%- endif -%}
+
+  <span aria-hidden="true" class="flex flex-row">
+    {%- if subscription -%}
+      {%- if product.selected_or_first_available_variant.available -%}
+        <s class="{{ slashed_price_color }} font-medium mr-1">
+          {{ product.selected_or_first_available_selling_plan_allocation.compare_at_price | money_without_trailing_zeros }}
+        </s>
+        <span>{{ product.selected_or_first_available_selling_plan_allocation.price | money }}</span>
+      {%- else -%}
+        <s class="{{ slashed_price_color }} font-medium mr-1">
+          {{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}
+        </s>
+        <span>{{ product.selected_or_first_available_variant.price | times: 0.9 | money }}</span>
+      {%- endif -%}
+
+    {%- elsif bundle -%}
+      <s class="{{ slashed_price_color }} font-medium mr-1">{{ money_price }}</s>
+      <span>{{ price | times: 0.8 | money }}</span>
+
+    {%- elsif show_price_range and default_to_mini != true and default_to_jumbo != true -%}
+      <span>
+        {% if product.price_varies %}
+          {{ min_price | money_without_trailing_zeros }} - {{ max_price | money_without_trailing_zeros }}
+        {% else %}
+          {{ money_price }}
+        {% endif %}
+      </span>
+
+    {%- else -%}
+      {%- if compare_at_price > price -%}
+        {%- unless product.price_varies == false and product.compare_at_price_varies -%}
+          {%- unless hide_slashed_price -%}
+            <s class="{{ slashed_price_color }} font-medium mr-1">{{ compare_at_price | money_without_trailing_zeros }}</s>
+          {%- endunless -%}
+        {%- endunless -%}
+        <span>{{ money_price }}</span>
+      {%- else -%}
+        <span>{{ money_price }}</span>
+      {%- endif -%}
+    {%- endif -%}
+  </span>
 </span>
