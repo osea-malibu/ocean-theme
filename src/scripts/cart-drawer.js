@@ -81,7 +81,7 @@ class CartDrawer extends HTMLElement {
     });
 
     cartLink.addEventListener("keydown", (event) => {
-      if (event.code.toUpperCase() === "SPACE") {
+      if (event.code?.toUpperCase() === "SPACE") {
         event.preventDefault();
         this.open(cartLink);
       }
@@ -113,42 +113,41 @@ class CartDrawer extends HTMLElement {
       let done = false;
       let fallbackTimer1 = null;
       let fallbackTimer2 = null;
+      let lateFocusTimer = null;
 
       const cleanup = () => {
         if (fallbackTimer1) window.clearTimeout(fallbackTimer1);
         if (fallbackTimer2) window.clearTimeout(fallbackTimer2);
+        if (lateFocusTimer) window.clearTimeout(lateFocusTimer);
       };
 
       const focusDrawerAndTrap = () => {
         if (done) return;
 
-        // Re-sync AFTER paint (important when drawer markup was replaced by section render)
         this.syncDrawerElements();
         const drawerEl = this.drawer || this.querySelector(".cart-drawer");
-        if (!drawerEl) return; // try again via fallbacks
+        if (!drawerEl) return;
 
         done = true;
         cleanup();
 
-        // Ensure the dialog container is programmatically focusable
-        if (!drawerEl.hasAttribute("tabindex")) drawerEl.setAttribute("tabindex", "-1");
+        if (!drawerEl.hasAttribute("tabindex")) {
+          drawerEl.setAttribute("tabindex", "-1");
+        }
 
-        // 1) Trap focus inside the drawer
+        // Trap focus and force focus to drawer container
         trapFocus(drawerEl, drawerEl);
-
-        // 2) Force focus onto the drawer container
-        // Do it after trapFocus because some implementations move focus to first focusable element.
         drawerEl.focus({ preventScroll: true });
 
-        // 3) Re-assert focus (apps/scripts often steal it slightly later)
+        // Re-assert focus next frame
         requestAnimationFrame(() => {
           if (document.activeElement !== drawerEl) {
             drawerEl.focus({ preventScroll: true });
           }
         });
 
-        // One more late pass catches "setTimeout(0)" focus stealers
-        setTimeout(() => {
+        // Late re-assert for focus stealers
+        lateFocusTimer = window.setTimeout(() => {
           if (document.activeElement !== drawerEl) {
             drawerEl.focus({ preventScroll: true });
           }
@@ -160,15 +159,18 @@ class CartDrawer extends HTMLElement {
         return;
       }
 
-      // Try on transition end if the transition is on the drawer, otherwise fallbacks handle it
       const transitionEl = this.drawer || this.querySelector(".cart-drawer") || this;
-      const onTransitionEnd = (e) => {
-        if (e.target !== transitionEl) return;
-        focusDrawerAndTrap();
-      };
-      transitionEl.addEventListener("transitionend", onTransitionEnd, { once: true });
 
-      // Fallbacks (re-render + paint timing varies on add-to-cart path)
+      transitionEl.addEventListener(
+        "transitionend",
+        (e) => {
+          if (e.target !== transitionEl) return;
+          focusDrawerAndTrap();
+        },
+        { once: true }
+      );
+
+      // Fallbacks (important for add-to-cart re-render path)
       requestAnimationFrame(() => requestAnimationFrame(focusDrawerAndTrap));
       fallbackTimer1 = window.setTimeout(focusDrawerAndTrap, 250);
       fallbackTimer2 = window.setTimeout(focusDrawerAndTrap, 600);
@@ -206,10 +208,14 @@ class CartDrawer extends HTMLElement {
     setTimeout(() => this.classList.add("invisible"), 400);
 
     removeTrapFocus(this.activeElement);
+
+    if (this.activeElement && typeof this.activeElement.focus === "function") {
+      this.activeElement.focus({ preventScroll: true });
+    }
+
     document.body.classList.remove("overflow-hidden");
 
     const elements = document.querySelectorAll(".cart-items #bud");
-    // Iterate over each selected element and remove it from the DOM
     elements.forEach((element) => element.remove());
   }
 
