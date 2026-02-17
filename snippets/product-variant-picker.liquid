@@ -43,9 +43,13 @@ Accepts:
           data-mini-sizes="{{ mini_size_array | join: ',' }}"
         >
           {%- assign small_products = 'dayglow-face-oil, essential-hydrating-oil-1' | split: ', ' -%}
+
           {%- for option in product.options_with_values -%}
             <fieldset class="js group">
-              <legend class="font-medium text-sm mb-1{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">Select {{ option.name | downcase }}:</legend>
+              <legend class="font-medium text-sm mb-1{% if block.settings.hide_label and product.options_with_values.size < 2 %} sr-only{% endif %}">
+                Select {{ option.name | downcase }}:
+              </legend>
+
               <div class="flex flex-wrap items-center mb-2 group-last-of-type:mb-0">
                 {%- for value in option.values -%}
                   {%- liquid
@@ -54,6 +58,7 @@ Accepts:
                     assign duo_variant = false
                     assign normalized_value = value | replace: 'fl ', ''
                     assign is_small_product = false
+
                     if small_products contains product.handle
                       assign is_small_product = true
                     endif
@@ -68,38 +73,60 @@ Accepts:
                       assign duo_variant = true
                     endif
                   -%}
+
+                  {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
+
+                  {%- capture size_label -%}
+                    {%- if option.name == 'Size' -%}
+                      {%- if mini_variant -%}Travel
+                      {%- elsif jumbo_variant -%}Jumbo
+                      {%- elsif duo_variant -%}Duo
+                      {%- else -%}Standard
+                      {%- endif -%}
+                      {{ ' ' }}{{ value }}
+                    {%- else -%}
+                      {{ value }}
+                    {%- endif -%}
+                  {%- endcapture -%}
+
                   <div>
-                    {%- assign normalized_option_value = value | replace: 'fl ', '' -%}
-                    <input type="radio"
+                    <input
+                      type="radio"
                       id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                      class="peer hidden{% if mini_size_array contains normalized_option_value %} travel-input{% endif %}"
+                      class="peer sr-only{% if mini_size_array contains normalized_option_value %} travel-input{% endif %}"
                       name="{{ option.name }}"
                       value="{{ value | escape }}"
                       form="{{ product_form_id }}"
+                      aria-label="{{ size_label | strip | escape }}"
                       {% if option.selected_value == value %}checked{% endif %}
                     >
+
                     <label
-                      class="flex-col gap-0.5 px-4 {% if option.name == 'Size' %}py-1{% else %}py-2.5{% endif %} button button-xs button-secondary rounded-full peer-checked:bg-wave-200 peer-checked:border-seaweed-700 mr-2 mb-1 peer-disabled:opacity-50"
+                      class="flex-col gap-0.5 px-4 {% if option.name == 'Size' %}py-1{% else %}py-2.5{% endif %} button button-xs button-secondary rounded-full peer-checked:bg-wave-200 peer-checked:border-seaweed-700 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 mr-2 mb-1 peer-disabled:opacity-50"
                       for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                     >
                       {%- if option.name == 'Size' -%}
                         {%- if mini_variant -%}
-                          <b class="tracking-normal leading-none capitalize">Travel</b>
+                          <b aria-hidden="true" class="tracking-normal leading-none capitalize">Travel</b>
                         {%- elsif jumbo_variant -%}
-                          <b class="tracking-normal leading-none capitalize">Jumbo</b>
+                          <b aria-hidden="true" class="tracking-normal leading-none capitalize">Jumbo</b>
                         {%- elsif duo_variant -%}
-                          <b class="tracking-normal leading-none capitalize">Duo</b>
+                          <b aria-hidden="true" class="tracking-normal leading-none capitalize">Duo</b>
                         {%- else -%}
-                          <b class="tracking-normal leading-none capitalize">Standard</b>
+                          <b aria-hidden="true" class="tracking-normal leading-none capitalize">Standard</b>
                         {%- endif -%}
                       {%- endif -%}
-                      <span class="leading-none {% if option.name == 'Scent' %}normal-case tracking-normal{% else %}lowercase tracking-wide{% endif %}">{{ value }}</span>
+
+                      <span aria-hidden="true" class="leading-none {% if option.name == 'Scent' %}normal-case tracking-normal{% else %}lowercase tracking-wide{% endif %}">
+                        {{ value }}
+                      </span>
                     </label>
                   </div>
                 {%- endfor -%}
               </div>
             </fieldset>
           {%- endfor -%}
+
           <script type="application/json" class="variant-data">
             {{ product.variants | json }}
           </script>
@@ -124,12 +151,14 @@ Accepts:
               </option>
             {%- endfor -%}
           </select>
+
           {% render 'icon-caret', classes: 'w-4 h-4' %}
         </div>
       </div>
     </noscript>
   </div>
 {%- endunless -%}
+
 
 {% if product.type contains 'Gift Card' %}
   <!-- ShopKeeper Gift Card -->
