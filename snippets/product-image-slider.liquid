@@ -19,6 +19,7 @@ Accepts:
   class="overflow-hidden gap-0 max-w-full glide type-carousel perView-1 lg:flex lg:flex-row-reverse lg:gap-2"
   id="Product-Slider"
   data-breakpoint-limit="none"
+  data-sr-active-slide-only="true"
 >
   {% render 'product-text-badge', product: product, classes: 'z-10 right-2 top-2 bg-p-surface text-p-inverse-d3 lg:text-base' %}
 
@@ -40,7 +41,7 @@ Accepts:
       -%}
 
       {%- for media in slider_images limit: gallery_limit -%}
-        <li class="glide__slide relative" data-media-id="{{ section.id }}-{{ media.id }}">
+        <li class="glide__slide relative" data-media-id="{{ section.id }}-{{ media.id }}" {% unless forloop.first %}aria-hidden="true"{% endunless %}>
 
           {%- if media.media_type == 'image' -%}
 
@@ -148,9 +149,20 @@ Accepts:
     </ul>
   </div>
 
-  <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[596px] xl:h-[760px] 2xl:h-[954px] lg:overflow-y-auto" data-glide-el="controls[nav]">
+  <div class="sr-only focus-within:not-sr-only focus-within:absolute focus-within:top-2 focus-within:left-2 focus-within:z-20 flex gap-2" data-glide-el="controls">
+    <button class="button button-secondary button-sm" data-glide-dir="<" aria-label="{{ 'accessibility.previous_slide' | t }}">
+      {{ 'accessibility.previous_slide' | t }}
+    </button>
+    <button class="button button-secondary button-sm" data-glide-dir=">" aria-label="{{ 'accessibility.next_slide' | t }}">
+      {{ 'accessibility.next_slide' | t }}
+    </button>
+  </div>
+
+  <p class="sr-only" data-glide-status aria-live="polite" aria-atomic="true" data-of-text="{{ 'accessibility.of' | t }}"></p>
+
+  <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[596px] xl:h-[760px] 2xl:h-[954px] lg:overflow-y-auto" data-glide-el="controls[nav]" aria-hidden="true">
     {%- for media in slider_images limit: gallery_limit -%}
-      <button class="relative p-2 glide__bullet md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
+      <button class="relative p-2 glide__bullet md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}" tabindex="-1">
         <span class="sr-only">Go to slide {{ forloop.index }}</span>
 
         {%- liquid
@@ -189,4 +201,3 @@ Accepts:
     {%- endfor -%}
   </div>
 </glide-slider>
-
