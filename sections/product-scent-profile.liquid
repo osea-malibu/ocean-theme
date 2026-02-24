@@ -46,13 +46,9 @@
       <!-- CONTENT COLUMN -->
       <div class="w-full lg:basis-[calc(50%-12px)] relative overflow-hidden h-full p-8 lg:p-12 xl:px-20 xl:pt-24 xl:pb-36 bg-white rounded-xl">
 
-        <div class="flex flex-col items-start justify-center py-2 mx-auto mb-6 lg:mb-8 xl:mb-10">
-          <h2 class="font-serif text-4xl mb-4 underline decoration-wavy decoration-2 decoration-p-core underline-offset-4">
-            {{ scent_object.name }}
-          </h2>
-          <div class="text-lg lg:text-xl">
-            {{ scent_object.description }}
-          </div>
+        <div class="flex flex-col items-start justify-center {% comment %} border-l-4 border-p-surface pl-6 {% endcomment %} py-2 mx-auto mb-6 lg:mb-8 xl:mb-10">
+          <h2 class="font-serif text-4xl mb-4 underline decoration-wavy decoration-2 decoration-p-core underline-offset-4">{{ scent_object.name }}</h2>
+          <div class="text-lg lg:text-xl">{{ scent_object.description }}</div>
         </div>
 
         {%- if scent_object.products.value and scent_object.products.value.count > 1 -%}
