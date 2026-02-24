@@ -61,31 +61,56 @@
         {%- if product.metafields.custom.clinical_images.value.count == 1 -%}
           {%- liquid
             assign first_image = product.metafields.custom.clinical_images.value | first
-            assign image_src = first_image | image_url: width: 750, height: 750, crop: 'center'
-            assign image_src_2x = first_image | image_url: width: 1500, height: 1500, crop: 'center'
+            assign image_master = first_image | image_url
+            assign sizes_attr = '(min-width: 1024px) 50vw, 100vw'
           -%}
-          {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+
+          {% comment %}theme-check-disable RemoteAsset {% endcomment %}
           <img
             class="w-full h-full object-cover"
-            srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
-            src="{% render 'imgix', src: image_src_2x %}"
+            src="{% render 'imgix', src: image_master, w: 640, h: 640, fit: 'crop', crop: 'center' %}"
+            srcset="
+              {% render 'imgix', src: image_master, w: 320, h: 320, fit: 'crop', crop: 'center' %} 320w,
+              {% render 'imgix', src: image_master, w: 480, h: 480, fit: 'crop', crop: 'center' %} 480w,
+              {% render 'imgix', src: image_master, w: 640, h: 640, fit: 'crop', crop: 'center' %} 640w,
+              {% render 'imgix', src: image_master, w: 800, h: 800, fit: 'crop', crop: 'center' %} 800w,
+              {% render 'imgix', src: image_master, w: 960, h: 960, fit: 'crop', crop: 'center' %} 960w,
+              {% render 'imgix', src: image_master, w: 1200, h: 1200, fit: 'crop', crop: 'center' %} 1200w,
+              {% render 'imgix', src: image_master, w: 1500, h: 1500, fit: 'crop', crop: 'center' %} 1500w
+            "
+            sizes="{{ sizes_attr }}"
             loading="lazy"
             alt="{{ first_image.alt | escape }}"
             width="750"
-            height="{{ 750 | divided_by: first_image.aspect_ratio | round }}"
+            height="750"
           >
-          {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+          {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+
         {%- elsif product.handle == 'dream-night-serum' -%}
-          {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+          {%- liquid
+            assign image_master = 'https://cdn.shopify.com/s/files/1/1368/9993/files/dns-lifestyle.jpg?v=1760115264'
+            assign sizes_attr = '(min-width: 1024px) 50vw, 100vw'
+          -%}
+
+          {% comment %}theme-check-disable RemoteAsset {% endcomment %}
           <img
             class="w-full h-full object-cover"
-            src="https://cdn.shopify.com/s/files/1/1368/9993/files/dns-lifestyle.jpg?v=1760115264"
+            src="{% render 'imgix', src: image_master, w: 900 %}"
+            srcset="
+              {% render 'imgix', src: image_master, w: 480 %} 480w,
+              {% render 'imgix', src: image_master, w: 640 %} 640w,
+              {% render 'imgix', src: image_master, w: 900 %} 900w,
+              {% render 'imgix', src: image_master, w: 1200 %} 1200w,
+              {% render 'imgix', src: image_master, w: 1500 %} 1500w
+            "
+            sizes="{{ sizes_attr }}"
             loading="lazy"
             alt="Dream Night Serum being used by women of multiple ages"
             width="1500"
             height="1212"
           >
-          {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+          {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+
         {%- elsif product.metafields.custom.clinical_images.value.count > 1 -%}
           <glide-slider
             class="glide type-carousel gap-0 w-full"
@@ -96,24 +121,33 @@
               <ul class="glide__slides">
                 {%- for image in product.metafields.custom.clinical_images.value -%}
                   {%- liquid
-                    assign image_src = image | image_url: width: 400, height: 400, crop: 'center'
-                    assign image_src_2x = image | image_url: width: 800, height: 800, crop: 'center'
+                    assign image_master = image | image_url
+                    assign sizes_attr = '(min-width: 1024px) 50vw, 100vw'
                   -%}
                   <li class="glide__slide" role="region">
-                    {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                    {% comment %}theme-check-disable RemoteAsset {% endcomment %}
                     <img
-                      class="object-cover"
-                      srcset="{% render 'imgix', src: image_src %} 1x, {% render 'imgix', src: image_src_2x %} 2x"
-                      src="{% render 'imgix', src: image_src_2x %}"
+                      class="object-cover w-full h-full"
+                      src="{% render 'imgix', src: image_master, w: 640, h: 640, fit: 'crop', crop: 'center' %}"
+                      srcset="
+                        {% render 'imgix', src: image_master, w: 320, h: 320, fit: 'crop', crop: 'center' %} 320w,
+                        {% render 'imgix', src: image_master, w: 480, h: 480, fit: 'crop', crop: 'center' %} 480w,
+                        {% render 'imgix', src: image_master, w: 640, h: 640, fit: 'crop', crop: 'center' %} 640w,
+                        {% render 'imgix', src: image_master, w: 800, h: 800, fit: 'crop', crop: 'center' %} 800w,
+                        {% render 'imgix', src: image_master, w: 960, h: 960, fit: 'crop', crop: 'center' %} 960w,
+                        {% render 'imgix', src: image_master, w: 1200, h: 1200, fit: 'crop', crop: 'center' %} 1200w
+                      "
+                      sizes="{{ sizes_attr }}"
                       loading="lazy"
                       alt="{{ image.alt | escape }}"
-                      width="{{ image.width }}"
-                      height="{{ image.height }}"
+                      width="750"
+                      height="750"
                     >
-                    {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+                    {% comment %}theme-check-enable RemoteAsset {% endcomment %}
                   </li>
                 {%- endfor -%}
               </ul>
+
               <div class="glide__arrows" data-glide-el="controls">
                 <button
                   class="glide__arrow glide__arrow--left top-1/2 -translate-y-1/2 -left-5 z-10"
