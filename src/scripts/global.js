@@ -2222,6 +2222,66 @@ class GlideSlider extends HTMLElement {
     });
   }
 
+  toggleSlideInert(slide, isInert) {
+    if ("inert" in slide) {
+      slide.inert = isInert;
+      return;
+    }
+
+    const focusableSelector = [
+      "a[href]",
+      "button",
+      "input",
+      "select",
+      "textarea",
+      "[tabindex]",
+    ].join(", ");
+
+    slide.querySelectorAll(focusableSelector).forEach((element) => {
+      if (isInert) {
+        if (element.dataset.prevTabindex == null) {
+          element.dataset.prevTabindex = element.getAttribute("tabindex") ?? "";
+        }
+        element.setAttribute("tabindex", "-1");
+      } else if (element.dataset.prevTabindex != null) {
+        if (element.dataset.prevTabindex === "") {
+          element.removeAttribute("tabindex");
+        } else {
+          element.setAttribute("tabindex", element.dataset.prevTabindex);
+        }
+        delete element.dataset.prevTabindex;
+      }
+    });
+  }
+
+  updateGlideStatusText(activeSlideNumber, totalSlides) {
+    const statusEl = this.querySelector("[data-glide-status]");
+    if (!statusEl) return;
+
+    const ofText = statusEl.dataset.ofText || "of";
+    statusEl.textContent = `${activeSlideNumber} ${ofText} ${totalSlides}`;
+  }
+
+  updateGlideSlideA11y() {
+    if (this.dataset.srActiveSlideOnly !== "true") return;
+
+    const slides = Array.from(this.querySelectorAll(".glide__slide:not(.glide__slide--clone)"));
+    if (!slides.length) return;
+
+    const activeSlide =
+      this.querySelector(".glide__slide--active:not(.glide__slide--clone)") || slides[0];
+
+    slides.forEach((slide, index) => {
+      const isActive = slide === activeSlide;
+      slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      this.toggleSlideInert(slide, !isActive);
+
+      if (isActive) {
+        this.updateGlideStatusText(index + 1, slides.length);
+      }
+    });
+  }
+
   initSlider() {
     const classes = Array.from(this.classList);
 
@@ -2235,7 +2295,13 @@ class GlideSlider extends HTMLElement {
         this.getOptions(optionClasses);
       }
     }
-    new Glide(`#${this.id}`, this.options).mount();
+
+    this.glide = new Glide(`#${this.id}`, this.options);
+    this.glide.mount();
+    this.updateGlideSlideA11y();
+    this.glide.on(["mount.after", "run.after"], () => {
+      this.updateGlideSlideA11y();
+    });
   }
 }
 customElements.define("glide-slider", GlideSlider);

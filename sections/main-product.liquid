@@ -14,7 +14,7 @@
     }
   </style>
   <div class="flex flex-col product md:flex-row md:container md:mx-auto md:px-6 md:gap-6 md:py-6 md:items-start lg:gap-0 lg:mb-6">
-    <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}">
+    <a class="sr-only button button-secondary button-sm focus:not-sr-only focus:py-1 focus:px-2 focus:border focus:fixed focus:top-4 focus:left-4 focus:z-100" href="#ProductInfo-{{ section.id }}" data-skip-to-product-info>
       {{ "accessibility.skip_to_product_info" | t }}
     </a>
     {%- if product.media.size > 1 -%}
@@ -43,7 +43,7 @@
     {%- endif -%}
     <div class="container md:px-0 md:flex-1">
       {%- assign info_block_classes = 'bg-white rounded-xl p-4 lg:p-6 xl:p-8 mb-6' -%}
-      <div id="ProductInfo-{{ section.id }}" class="{{ info_block_classes }} 2xl:py-10 {{ section.settings.product_info_classes }}">
+      <div id="ProductInfo-{{ section.id }}" tabindex="-1" class="{{ info_block_classes }} 2xl:py-10 {{ section.settings.product_info_classes }}">
         {%- liquid
           assign product_form_id = 'product-form-' | append: section.id
           assign quantity_classes = 'no-js-hidden cursor-pointer flex items-center justify-center 2xs:shrink-0 w-8 h-8 border py-1 -mt-px -mb-px -ml-px box-content border-transparent hover:bg-seafoam-100 hover:border-seaweed-500 motion-safe:transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:bg-transparent'
@@ -401,11 +401,26 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const sheet = new CSSStyleSheet;
-    sheet.replaceSync(`.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }`);
-    const host = document.querySelector('delivery-promise-wc');
-    host.shadowRoot.adoptedStyleSheets.push(sheet);
+    const skipToProductInfoLink = document.querySelector('[data-skip-to-product-info]');
+    const productInfo = document.getElementById('ProductInfo-{{ section.id }}');
 
+    if (skipToProductInfoLink && productInfo) {
+      skipToProductInfoLink.addEventListener('click', function() {
+        requestAnimationFrame(function() {
+          productInfo.focus({ preventScroll: true });
+        });
+      });
+    }
+
+    if ('CSSStyleSheet' in window) {
+      const host = document.querySelector('delivery-promise-wc');
+
+      if (host && host.shadowRoot && host.shadowRoot.adoptedStyleSheets) {
+        const sheet = new CSSStyleSheet;
+        sheet.replaceSync('.ProductPageContainer__Spacer { margin-bottom: 0; margin-top: 12px }');
+        host.shadowRoot.adoptedStyleSheets.push(sheet);
+      }
+    }
 
     function isIE() {
       const ua = window.navigator.userAgent;
