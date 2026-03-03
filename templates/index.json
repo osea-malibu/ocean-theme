@@ -53,6 +53,49 @@
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:left-1/2 mt-0 sm:mt-0 sm:pr-12"
       }
     },
+    "image_banner_MPYXnU": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_k9x7aK": {
+          "type": "heading",
+          "settings": {
+            "heading": "Your Spring<br>Ritual Refresh",
+            "heading_classes": "text-4xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-seaweed tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl"
+          }
+        },
+        "paragraph_UiPWMn": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Revive your glow with radiance-boosting moisture.",
+            "paragraph_classes": "text-seaweed sm:mb-4 lg:text-xl xl:text-2xl 2xl:text-3xl text-md  font-book leading-tight xl:mb-6 hidden sm:block"
+          }
+        },
+        "button_xqfNKh": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop now: Shop our Spring Refresh Essentials",
+            "button_link": "shopify://collections/spring-refresh-essentials",
+            "target_blank": true,
+            "button_classes": "bg-dbbs-surface border-dbbs-surface text-dream-navy mt-2 mb-6"
+          }
+        }
+      },
+      "block_order": [
+        "heading_k9x7aK",
+        "paragraph_UiPWMn",
+        "button_xqfNKh"
+      ],
+      "settings": {
+        "image_mobile": "shopify://shop_images/03.04.26_HP_Banner_Spring_Ready_Skin_-_Mobile_BLANK.jpg",
+        "image": "shopify://shop_images/03.04.26_HP_Banner_Spring_Ready_Skin_-_Desktop_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/spring-refresh-essentials",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "inset-0 text-seaweed-700 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:right-1/2 mt-0 sm:mt-0 sm:pr-12"
+      }
+    },
     "image_banner_F7Md9k": {
       "type": "image-banner",
       "blocks": {
@@ -2108,6 +2151,7 @@
     }
   },
   "order": [
+    "image_banner_MPYXnU",
     "image_banner_eQ8pB7",
     "image_banner_F7Md9k",
     "image_banner_XC9T98",
