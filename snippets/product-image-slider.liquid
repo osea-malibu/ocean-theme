@@ -160,9 +160,9 @@ Accepts:
 
   <p class="sr-only" data-glide-status aria-live="polite" aria-atomic="true" data-of-text="{{ 'accessibility.of' | t }}"></p>
 
-  <div class="glide__bullets flex absolute bottom-0 left-0 z-10 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[596px] xl:h-[760px] 2xl:h-[954px] lg:overflow-y-auto" data-glide-el="controls[nav]">
+  <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[596px] xl:h-[760px] 2xl:h-[954px] lg:overflow-y-auto" data-glide-el="controls[nav]" aria-hidden="true">
     {%- for media in slider_images limit: gallery_limit -%}
-      <button class="relative p-2 glide__bullet md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
+      <button class="relative p-2 glide__bullet md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}" tabindex="-1">
         <span class="sr-only">Go to slide {{ forloop.index }}</span>
 
         {%- if media.media_type == 'image' -%}
