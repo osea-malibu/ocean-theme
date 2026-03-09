@@ -15,53 +15,64 @@
   assign mobile_master = mobile_img | image_url
   assign desktop_master = desktop_img | image_url
 
-  assign promo_sizes = '(min-width: 1024px) 50vw, (min-width: 640px) 75vw, 100vw'
+  # Full-width banner sizing hint for srcset selection
+  assign promo_sizes = '100vw'
 
-  # pick a fallback image object to read width/height from
-  assign dim_img = mobile_img
-  if dim_img == blank
-    assign dim_img = desktop_img
+  # Pick an IMAGE media object for dimensions (avoids video/non-image edge cases)
+  assign dim_media = nil
+  if desktop_media and desktop_media.media_type == 'image'
+    assign dim_media = desktop_media
+  elsif mobile_media and mobile_media.media_type == 'image'
+    assign dim_media = mobile_media
   endif
 
-  assign dim_w = dim_img.width
-  assign dim_ar = dim_img.aspect_ratio
-  if dim_ar == blank or dim_ar == 0
-    assign dim_ar = 1
+  # Use real width/height if available; otherwise compute height from aspect ratio
+  assign dim_w = dim_media.width | default: 1600
+  assign dim_h = dim_media.height
+  if dim_h == blank or dim_h == 0
+    assign dim_ar = dim_media.aspect_ratio | default: 1
+    if dim_ar == 0
+      assign dim_ar = 1
+    endif
+    assign dim_h = dim_w | divided_by: dim_ar | round
   endif
-  assign dim_h = dim_w | divided_by: dim_ar | round
 -%}
 
 {%- if promo_section_url != blank -%}
-<a href="{{ promo_section_url }}" class="block">
+  <a href="{{ promo_section_url }}" class="block">
 {%- endif -%}
 
 {% if has_video %}
-  <div class="relative w-full h-full overflow-hidden">
+  <div class="relative w-full overflow-hidden">
     {% if mobile_media and mobile_media.media_type == 'video' %}
+      {% comment %}theme-check-disable RemoteAsset {% endcomment %}
       {{ mobile_media | video_tag:
         autoplay: true,
         loop: true,
         muted: true,
         controls: false,
         playsinline: true,
-        class: 'block w-full h-full object-cover sm:hidden'
+        class: 'block w-full h-auto object-cover sm:hidden'
       }}
+      {% comment %}theme-check-enable RemoteAsset {% endcomment %}
     {% endif %}
 
     {% if desktop_media and desktop_media.media_type == 'video' %}
+      {% comment %}theme-check-disable RemoteAsset {% endcomment %}
       {{ desktop_media | video_tag:
         autoplay: true,
         loop: true,
         muted: true,
         controls: false,
         playsinline: true,
-        class: 'hidden sm:block w-full h-full object-cover'
+        class: 'hidden sm:block w-full h-auto object-cover'
       }}
+      {% comment %}theme-check-enable RemoteAsset {% endcomment %}
     {% endif %}
   </div>
 {% else %}
   {% comment %}theme-check-disable RemoteAsset {% endcomment %}
-  <picture class="relative z-0">
+  <picture class="relative z-0 block w-full">
     {%- if mobile_img != blank -%}
       <source
         media="(max-width: 639px)"
@@ -74,7 +85,6 @@
             {% render 'imgix', src: mobile_master, w: 640 %} 640w,
             {% render 'imgix', src: mobile_master, w: 750 %} 750w
           "
-          sizes="{{ promo_sizes }}"
         {% endif %}
       >
     {%- endif -%}
@@ -94,7 +104,6 @@
             {% render 'imgix', src: desktop_master, w: 2400 %} 2400w,
             {% render 'imgix', src: desktop_master, w: 2800 %} 2800w
           "
-          sizes="{{ promo_sizes }}"
         {% endif %}
       >
     {%- endif -%}
@@ -110,14 +119,15 @@
       loading="lazy"
       width="{{ dim_w }}"
       height="{{ dim_h }}"
-      class="object-cover block w-full h-full {{ promo_section_image_classes }}"
+      sizes="{{ promo_sizes }}"
+      class="block w-full h-auto object-cover {{ promo_section_image_classes }}"
     >
   </picture>
   {% comment %}theme-check-enable RemoteAsset {% endcomment %}
 {% endif %}
 
 {%- if promo_section_url != blank -%}
-</a>
+  </a>
 {%- endif -%}
 
 <div class="absolute z-10 {{ promo_section_content_classes }}">
