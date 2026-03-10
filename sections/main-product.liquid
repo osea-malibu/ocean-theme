@@ -25,14 +25,18 @@
     {%- else -%}
       <div class="bg-wave-100 mb-6 md:w-1/2 lg:w-2/5 relative md:sticky md:top-[148px] max-w-full">
         {%- liquid
-          assign main_image_src = product.media[0] | image_url: width: 300, height: 375, crop: 'center'
-          assign main_image_src_2x = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
+          assign main_image_master = product.media[0] | image_url: width: 600, height: 750, crop: 'center'
         -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           class="mx-auto"
-          srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
-          src="{% render 'imgix', src: main_image_src_2x %}"
+          src="{% render 'imgix', src: main_image_master, w: 600 %}"
+          srcset="
+            {% render 'imgix', src: main_image_master, w: 300 %} 300w,
+            {% render 'imgix', src: main_image_master, w: 450 %} 450w,
+            {% render 'imgix', src: main_image_master, w: 600 %} 600w
+          "
+          sizes="(min-width: 1024px) 40vw, (min-width: 768px) 50vw, 100vw"
           loading="lazy"
           alt="{{ product.media[0].alt | escape }}"
           width="{{ product.media[0].width }}"
@@ -327,17 +331,20 @@
       <div class="container flex flex-row gap-2 px-4 sm:px-6">
         {%- liquid
           if product.selected_or_first_available_variant.featured_media != blank
-            assign sticky_image_src = product.selected_or_first_available_variant.featured_media | image_url: width: 192
-            assign sticky_image_src_2x = product.selected_or_first_available_variant.featured_media | image_url: width: 252
+            assign sticky_image_master = product.selected_or_first_available_variant.featured_media | image_url: width: 252
           else
-            assign sticky_image_src = product.featured_image | image_url: width: 192
-            assign sticky_image_src_2x = product.featured_image | image_url: width: 252
+            assign sticky_image_master = product.featured_image | image_url: width: 252
           endif
         -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
-          srcset="{% render 'imgix', src: sticky_image_src %} 1x, {% render 'imgix', src: sticky_image_src_2x %} 2x"
-          src="{% render 'imgix', src: sticky_image_src_2x %}"
+          src="{% render 'imgix', src: sticky_image_master, w: 192 %}"
+          srcset="
+            {% render 'imgix', src: sticky_image_master, w: 120 %} 120w,
+            {% render 'imgix', src: sticky_image_master, w: 192 %} 192w,
+            {% render 'imgix', src: sticky_image_master, w: 252 %} 252w
+          "
+          sizes="(min-width: 640px) 120px, 192px"
           loading="lazy"
           alt="{{ product.selected_or_first_available_variant.featured_media.alt | escape }}"
           width="120"
