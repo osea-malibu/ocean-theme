@@ -243,9 +243,7 @@
           }
         }
       },
-      "block_order": [
-        "95142030-9e11-4090-aa41-a3e9d4183397"
-      ],
+      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
       "disabled": true,
       "custom_css": [],
       "settings": {
@@ -270,9 +268,7 @@
           }
         }
       },
-      "block_order": [
-        "key_ingredient_tNNTPC"
-      ],
+      "block_order": ["key_ingredient_tNNTPC"],
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
@@ -286,6 +282,13 @@
         "image": "{{ product.metafields.custom.scent_profile_image.value }}",
         "heading": "Scent Profile",
         "body": "{{ product.metafields.custom.scent_profile.value }}"
+      }
+    },
+    "about_the_brand": {
+      "type": "product-about-the-brand",
+      "settings": {
+        "wrapper_classes": "",
+        "about_the_brand_content": "{{ product.metafields.custom.about_the_brand_content.value }}"
       }
     },
     "founder_quote": {
@@ -361,6 +364,7 @@
     "ingredients_accordion",
     "ingredients_images",
     "scent_profile",
+    "about_the_brand",
     "founder_quote",
     "routine",
     "faqs",
