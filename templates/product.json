@@ -243,7 +243,9 @@
           }
         }
       },
-      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
+      "block_order": [
+        "95142030-9e11-4090-aa41-a3e9d4183397"
+      ],
       "disabled": true,
       "custom_css": [],
       "settings": {
@@ -268,7 +270,9 @@
           }
         }
       },
-      "block_order": ["key_ingredient_tNNTPC"],
+      "block_order": [
+        "key_ingredient_tNNTPC"
+      ],
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
@@ -288,14 +292,14 @@
       "type": "product-about-the-brand",
       "settings": {
         "wrapper_classes": "",
-        "about_the_brand_content": ""
+        "about_the_brand_content": "{{ product.metafields.custom.about_the_brand_content.value }}"
       }
     },
     "founder_quote": {
       "type": "product-founder-quote",
       "settings": {
         "wrapper_classes": "",
-        "founder_body_sku": "{{ product.metafields.custom.founder_quote.value.quote | metafield_tag }}",
+        "founder_body_sku": "<p>{{ product.metafields.custom.founder_quote.value.quote | metafield_tag }}</p>",
         "founder_name_sku": "{{ product.metafields.custom.founder_quote.value.name.value }}",
         "founder_image_sku": "{{ product.metafields.custom.founder_quote.value.image.value }}",
         "founder_body": "<p>Over 30 years ago, I started OSEA to share the healing powers of the sea. Since then, it’s been our mission to create clean, clinically tested skincare, combining pure, potent seaweed with active botanicals for results you can sea. My vision is to create waves of kindness for people and our planet.</p>",
