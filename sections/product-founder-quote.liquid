@@ -7,7 +7,7 @@
   endif
 -%}
 
-{%- if founder_image and founder_body != blank -%}
+{% if product.metafields.custom.about_the_brand_content == blank and founder_image != blank and founder_body != blank %}
   <div class="product-jp-quote container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
     <div class="w-full flex flex-col md:flex-row-reverse gap-y-5 md:gap-x-4 lg:gap-x-6 justify-between md:max-h-[372px] items-stretch">
 
