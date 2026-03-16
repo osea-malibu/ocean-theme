@@ -1155,8 +1155,41 @@ class VariantSelects extends HTMLElement {
       const newImageSrc = this.currentVariant.featured_media.preview_image.src;
 
       if (imageElement) {
-        imageElement.srcset = `${newImageSrc}&width=328 1x, ${newImageSrc}&width=656 2x`;
-        imageElement.src = newImageSrc;
+        const buildCardImageUrl = (source, width) => {
+          const normalizedSource = `${source || ""}`.trim();
+          if (!normalizedSource) return normalizedSource;
+
+          const absoluteSource = normalizedSource.startsWith("//")
+            ? `https:${normalizedSource}`
+            : normalizedSource;
+          const currentCardSrc = imageElement.getAttribute("src") || "";
+
+          if (currentCardSrc.includes(".imgix.net/")) {
+            const imgixMatch = currentCardSrc.match(/^(https?:\/\/[^/]+)(\/files\/.*?)(\?.*)?$/);
+            const shopifyMatch = absoluteSource.match(
+              /^(https?:)?\/\/[^/]+\/cdn\/shop(\/files\/.*?)(\?.*)?$/
+            );
+            const imgixAutoParam = (currentCardSrc.match(/[?&](auto=[^&]+)/) || [])[1];
+
+            if (imgixMatch && shopifyMatch) {
+              const [, imgixOrigin] = imgixMatch;
+              const [, imgixPath, sourceQuery = ""] = shopifyMatch;
+              const extraParams = imgixAutoParam ? `&${imgixAutoParam}` : "";
+
+              return `${imgixOrigin}${imgixPath}${sourceQuery}${extraParams}&w=${width}`;
+            }
+          }
+
+          const separator = absoluteSource.includes("?") ? "&" : "?";
+          return `${absoluteSource}${separator}width=${width}`;
+        };
+
+        const cardWidths = [320, 480, 640, 960, 1200];
+
+        imageElement.srcset = cardWidths
+          .map((width) => `${buildCardImageUrl(newImageSrc, width)} ${width}w`)
+          .join(", ");
+        imageElement.src = buildCardImageUrl(newImageSrc, 480);
       }
     }
   }
