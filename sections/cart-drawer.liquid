@@ -170,13 +170,17 @@
                                     aria-hidden="true"
                                   ></a>
                                   {%- liquid
-                                    assign main_image_src = item.image | image_url: width: 60
-                                    assign main_image_src_2x = item.image | image_url: width: 120
+                                    assign main_image_master = item.image | image_url
                                   -%}
                                   {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                                   <img class="cart-item__image max-w-full"
-                                    srcset="{% render 'imgix', src: main_image_src_2x %} 2x, {% render 'imgix', src: main_image_src %} 1x"
-                                    src="{% render 'imgix', src: main_image_src_2x %}"
+                                    src="{% render 'imgix', src: main_image_master, w: 90 %}"
+                                    srcset="
+                                      {% render 'imgix', src: main_image_master, w: 60 %} 60w,
+                                      {% render 'imgix', src: main_image_master, w: 90 %} 90w,
+                                      {% render 'imgix', src: main_image_master, w: 120 %} 120w
+                                    "
+                                    sizes="60px"
                                     alt="{{ item.image.alt | escape }}"
                                     loading="lazy"
                                     width="60"
