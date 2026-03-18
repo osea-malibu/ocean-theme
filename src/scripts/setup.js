@@ -124,6 +124,11 @@ export function setupManualRedirects() {
       window.location.replace("https://oseamalibu.com/collections/body-care");
     }
   }
+
+  if (pathname === "/products/dream-bio-retinol-body-serum" && utmMedium === "display") {
+    window.location.replace("https://oseamalibu.com/products/dream-bio-retinol-duo");
+    return;
+  }
 }
 
 /**
