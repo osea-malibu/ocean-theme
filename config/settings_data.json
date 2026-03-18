@@ -215,16 +215,6 @@
         "disabled": false,
         "settings": {}
       },
-      "3576686563519644491": {
-        "type": "shopify://apps/vwo/blocks/vwo-smartcode/2ce905b2-3842-4d20-b6b0-8c51fc208426",
-        "disabled": false,
-        "settings": {
-          "vwoAccountId": "336250",
-          "codeType": "ASYNC",
-          "settingsTolerance": 2000,
-          "enableThemeTesting": true
-        }
-      },
       "2153490007123654574": {
         "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
         "disabled": false,
@@ -234,6 +224,17 @@
         "type": "shopify://apps/rivo-loyalty-rewards-referrals/blocks/app-embed/580e9665-b2cd-4dbc-b6ba-6445ac9e6871",
         "disabled": false,
         "settings": {}
+      },
+      "3576686563519644491": {
+        "type": "shopify://apps/vwo/blocks/vwo-smartcode/2ce905b2-3842-4d20-b6b0-8c51fc208426",
+        "disabled": true,
+        "settings": {
+          "vwoAccountId": "336250",
+          "codeType": "ASYNC",
+          "settingsTolerance": 2000,
+          "enableThemeTesting": true,
+          "reverseProxyUrl": ""
+        }
       }
     }
   },
