@@ -9,13 +9,8 @@
   <div class="container px-0 xs:px-6">
     {%- if custom_banner -%}
       {%- liquid
-        assign fallback_banner_image = collection.metafields.custom.banner_image_mobile
-        if fallback_banner_image == blank
-          assign fallback_banner_image = collection.metafields.custom.banner_image_desktop
-        endif
         assign mobile_image_master = collection.metafields.custom.banner_image_mobile | image_url
         assign desktop_image_master = collection.metafields.custom.banner_image_desktop | image_url
-        assign fallback_banner_image_master = fallback_banner_image | image_url
       -%}
       {% comment %}theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
       <picture>
@@ -55,17 +50,17 @@
           >
         {%- endif %}
         <img
-          src="{% render 'imgix', src: fallback_banner_image_master, w: 480 %}"
+          src="{% render 'imgix', src: mobile_image_master, w: 480 %}"
           srcset="
-            {% render 'imgix', src: fallback_banner_image_master, w: 320 %} 320w,
-            {% render 'imgix', src: fallback_banner_image_master, w: 480 %} 480w,
-            {% render 'imgix', src: fallback_banner_image_master, w: 640 %} 640w,
-            {% render 'imgix', src: fallback_banner_image_master, w: 750 %} 750w
+            {% render 'imgix', src: mobile_image_master, w: 320 %} 320w,
+            {% render 'imgix', src: mobile_image_master, w: 480 %} 480w,
+            {% render 'imgix', src: mobile_image_master, w: 640 %} 640w,
+            {% render 'imgix', src: mobile_image_master, w: 750 %} 750w
           "
           sizes="100vw"
-          alt="{{ fallback_banner_image.alt }}"
-          width="{{ fallback_banner_image.width }}"
-          height="{{ fallback_banner_image.height }}"
+          alt="{{ collection.metafields.custom.banner_image_mobile.alt }}"
+          width="{{ collection.metafields.custom.banner_image_mobile.width }}"
+          height="{{ collection.metafields.custom.banner_image_mobile.height }}"
           class="block w-full mb-6"
         >
       </picture>
