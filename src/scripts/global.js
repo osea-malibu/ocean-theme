@@ -1155,8 +1155,59 @@ class VariantSelects extends HTMLElement {
       const newImageSrc = this.currentVariant.featured_media.preview_image.src;
 
       if (imageElement) {
-        imageElement.srcset = `${newImageSrc}&width=328 1x, ${newImageSrc}&width=656 2x`;
-        imageElement.src = newImageSrc;
+        const currentImageSrc = imageElement.currentSrc || imageElement.src;
+        const normalizedCurrentSrc = currentImageSrc.startsWith("//")
+          ? `https:${currentImageSrc}`
+          : currentImageSrc;
+        const normalizedNewImageSrc = newImageSrc.startsWith("//")
+          ? `https:${newImageSrc}`
+          : newImageSrc;
+        const usesImgix = normalizedCurrentSrc.includes(".imgix.net/");
+        const widths = [320, 480, 640, 960, 1200];
+
+        // Preserve IMGIX params when the card was initially rendered through IMGIX.
+        const baseImageSrc = (() => {
+          if (!usesImgix) return normalizedNewImageSrc;
+
+          try {
+            const imgixUrl = new URL(normalizedCurrentSrc);
+            const variantUrl = new URL(normalizedNewImageSrc);
+            const variantVersion = variantUrl.searchParams.get("v");
+
+            imgixUrl.pathname = variantUrl.pathname.replace(/^\/cdn\/shop/, "");
+            imgixUrl.searchParams.delete("w");
+            imgixUrl.searchParams.delete("width");
+
+            if (variantVersion) {
+              imgixUrl.searchParams.set("v", variantVersion);
+            } else {
+              imgixUrl.searchParams.delete("v");
+            }
+
+            return imgixUrl.toString();
+          } catch (error) {
+            console.warn("Unable to rebuild IMGIX product card image URL", error);
+            return normalizedNewImageSrc;
+          }
+        })();
+
+        const buildImageUrl = (src, width) => {
+          const imageUrl = new URL(src);
+
+          if (usesImgix) {
+            imageUrl.searchParams.delete("width");
+            imageUrl.searchParams.set("w", width);
+          } else {
+            imageUrl.searchParams.set("width", width);
+          }
+
+          return imageUrl.toString();
+        };
+
+        imageElement.srcset = widths
+          .map((width) => `${buildImageUrl(baseImageSrc, width)} ${width}w`)
+          .join(", ");
+        imageElement.src = buildImageUrl(baseImageSrc, 480);
       }
     }
   }
