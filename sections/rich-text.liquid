@@ -53,8 +53,12 @@
               {%- liquid
                 assign mobile_image_src = block.settings.image_mobile | image_url: width: 400
                 assign mobile_image_src_2x = block.settings.image_mobile | image_url: width: 800
-                assign desktop_image_src = block.settings.image_desktop | image_url: width: 800
-                assign desktop_image_src_2x = block.settings.image_desktop | image_url: width: 1600
+                assign mobile_image_master = block.settings.image_mobile | image_url
+                assign sizes_attr = '100vw'
+
+                if block.settings.image_desktop != blank
+                  assign desktop_image_master = block.settings.image_desktop | image_url
+                endif
               -%}
               {%- if block.settings.image_mobile contains '.gif' -%}
                 <img
@@ -70,19 +74,37 @@
                 <picture>
                   {%- if block.settings.image_mobile != blank -%}
                     <source
-                      srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
+                      srcset="
+                        {% render 'imgix', src: mobile_image_master, w: 320 %} 320w,
+                        {% render 'imgix', src: mobile_image_master, w: 480 %} 480w,
+                        {% render 'imgix', src: mobile_image_master, w: 640 %} 640w,
+                        {% render 'imgix', src: mobile_image_master, w: 750 %} 750w
+                      "
                       media="(max-width: 639px)"
+                      sizes="{{ sizes_attr }}"
                     >
                   {%- endif %}
                   {%- if block.settings.image_desktop != blank -%}
                     <source
-                      srcset="{% render 'imgix', src: desktop_image_src %} 1x, {% render 'imgix', src: desktop_image_src_2x %} 2x"
+                      srcset="
+                        {% render 'imgix', src: desktop_image_master, w: 640 %} 640w,
+                        {% render 'imgix', src: desktop_image_master, w: 960 %} 960w,
+                        {% render 'imgix', src: desktop_image_master, w: 1200 %} 1200w,
+                        {% render 'imgix', src: desktop_image_master, w: 1600 %} 1600w
+                      "
                       media="(min-width: 640px)"
+                      sizes="{{ sizes_attr }}"
                     >
                   {%- endif %}
                   <img
-                    srcset="{% render 'imgix', src: mobile_image_src %} 1x, {% render 'imgix', src: mobile_image_src_2x %} 2x"
-                    src="{% render 'imgix', src: mobile_image_src_2x %}"
+                    srcset="
+                      {% render 'imgix', src: mobile_image_master, w: 320 %} 320w,
+                      {% render 'imgix', src: mobile_image_master, w: 480 %} 480w,
+                      {% render 'imgix', src: mobile_image_master, w: 640 %} 640w,
+                      {% render 'imgix', src: mobile_image_master, w: 750 %} 750w
+                    "
+                    src="{% render 'imgix', src: mobile_image_master, w: 480 %}"
+                    sizes="{{ sizes_attr }}"
                     {% if block.settings.is_lazy %}loading="lazy"{% endif %}
                     alt="{{ block.settings.image_mobile.alt | escape }}"
                     width="{{ block.settings.image_mobile.width }}"
