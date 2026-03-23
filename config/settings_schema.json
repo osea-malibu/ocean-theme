@@ -437,6 +437,24 @@
       },
       {
         "type": "header",
+        "content": "Bonus points"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cart_bonus_points",
+        "label": "Subscription Bonus Points",
+        "info": "Added when the cart contains a subscription item",
+
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "cart_bonus_points_amount",
+        "label": "Bonus points amount",
+        "default": 500
+      },
+      {
+        "type": "header",
         "content": "Free shipping countdown"
       },
       {
