@@ -3,8 +3,8 @@
     assign remaining_shipping_amount = settings.shipping_countdown_threshold | times: 100 | minus: cart.total_price
     assign cart_subscription_items = cart.items | map: 'properties' | where: '_is_subscription', 'true'
     assign cart_reward_points = cart.total_price | divided_by: 100 | floor
-    if cart_subscription_items.size > 0
-      assign cart_reward_points = cart_reward_points | plus: 500
+    if settings.enable_cart_bonus_points and cart_subscription_items.size > 0
+      assign cart_reward_points = cart_reward_points | plus: settings.cart_bonus_points_amount
     endif
     assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
     assign cart_product_ids = cart.items | map: 'product_id' | join: ', '
