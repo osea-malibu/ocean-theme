@@ -12,18 +12,59 @@
 {%- if badge_text != '' and product.handle != 'gift-card' -%}
   <div class="flex flex-col absolute {{ classes }}">
     {%- for badge in product.metafields.custom.badge_image.value -%}
+      {%- liquid
+        assign badge_image_src = blank
+        assign badge_alt = blank
+        assign badge_classes = blank
+        assign badge_sizes = '150px'
+      -%}
       {%- case badge -%}
         {%- when 'Eczema Approved' -%}
-          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Eczema_Association_Accepted.png" alt="National Eczema Association Accepted" width="150" height="150" class="px-1">
+          {%- liquid
+            assign badge_image_src = settings.shopifyCdnUrl | append: '/files/Eczema_Association_Accepted.png'
+            assign badge_alt = 'National Eczema Association Accepted'
+            assign badge_classes = 'px-1'
+          -%}
         {%- when 'Allure 2025' -%}
-          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Allure_BestofBeauty_2025.png" alt="Allure Best of Beauty 2025" width="150" height="150">
+          {%- liquid
+            assign badge_image_src = settings.shopifyCdnUrl | append: '/files/Allure_BestofBeauty_2025.png'
+            assign badge_alt = 'Allure Best of Beauty 2025'
+          -%}
         {%- when 'Allure 2024' -%}
-          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Allure_BestofBeauty_2024.png" alt="Allure Best of Beauty 2024" width="150" height="150">
+          {%- liquid
+            assign badge_image_src = settings.shopifyCdnUrl | append: '/files/Allure_BestofBeauty_2024.png'
+            assign badge_alt = 'Allure Best of Beauty 2024'
+          -%}
         {%- when 'Allure 2023' -%}
-          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Allure_BestofBeauty_2023.png" alt="Allure Best of Beauty 2023" width="150" height="150">
+          {%- liquid
+            assign badge_image_src = settings.shopifyCdnUrl | append: '/files/Allure_BestofBeauty_2023.png'
+            assign badge_alt = 'Allure Best of Beauty 2023'
+          -%}
         {%- when 'Allure 2022' -%}
-          <img src="https://cdn.shopify.com/s/files/1/1368/9993/files/Allure_BestofBeauty_2022.png" alt="Allure Best of Beauty 2022" width="150" height="150">
+          {%- liquid
+            assign badge_image_src = settings.shopifyCdnUrl | append: '/files/Allure_BestofBeauty_2022.png'
+            assign badge_alt = 'Allure Best of Beauty 2022'
+          -%}
         {%- endcase -%}
+        {%- if badge_image_src != blank -%}
+          {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+          <img
+            srcset="
+              {% render 'imgix', src: badge_image_src, w: 75 %} 75w,
+              {% render 'imgix', src: badge_image_src, w: 100 %} 100w,
+              {% render 'imgix', src: badge_image_src, w: 150 %} 150w,
+              {% render 'imgix', src: badge_image_src, w: 200 %} 200w,
+              {% render 'imgix', src: badge_image_src, w: 300 %} 300w
+            "
+            src="{% render 'imgix', src: badge_image_src, w: 150 %}"
+            sizes="{{ badge_sizes }}"
+            alt="{{ badge_alt }}"
+            width="150"
+            height="150"
+            class="{{ badge_classes }}"
+          >
+          {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+        {%- endif -%}
     {%- endfor -%}
   </div>
 {%- endif -%}
