@@ -516,7 +516,13 @@
         endif
       -%}
 
-      {% render 'product-image-badge', product: card_product, classes: image_badge_class_value %}
+      {% render 'product-image-badge',
+        product: card_product,
+        classes: image_badge_class_value,
+        sizes: '(min-width: 80rem) 64px, 48px',
+        widths: '48,64,80,96,128',
+        fallback_width: 64
+      %}
     {%- endunless -%}
   </div>
 </div>
