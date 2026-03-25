@@ -7,6 +7,9 @@
     - sizes: {String} sizes attribute for badge images (optional)
     - widths: {String} comma-separated width candidates for badge images (optional)
     - fallback_width: {Number} fallback src width for badge images (optional)
+    - padded_sizes: {String} sizes attribute for padded badge images (optional)
+    - padded_widths: {String} comma-separated width candidates for padded badge images (optional)
+    - padded_fallback_width: {Number} fallback src width for padded badge images (optional)
     
     Usage:
     {% render 'product-image-badge', product: product %}
@@ -17,6 +20,10 @@
   assign badge_widths_csv = widths | default: '48,64,80,96,128'
   assign badge_widths = badge_widths_csv | split: ','
   assign badge_fallback_width = fallback_width | default: 64
+  assign padded_badge_sizes = padded_sizes | default: badge_sizes
+  assign padded_badge_widths_csv = padded_widths | default: badge_widths_csv
+  assign padded_badge_widths = padded_badge_widths_csv | split: ','
+  assign padded_badge_fallback_width = padded_fallback_width | default: badge_fallback_width
 -%}
 
 {%- if product.metafields.custom.badge_image.value != blank and product.handle != 'gift-card' -%}
@@ -26,6 +33,9 @@
         assign badge_image_src = blank
         assign badge_alt = blank
         assign badge_classes = blank
+        assign current_badge_sizes = badge_sizes
+        assign current_badge_widths = badge_widths
+        assign current_badge_fallback_width = badge_fallback_width
       -%}
       {%- case badge -%}
         {%- when 'Eczema Approved' -%}
@@ -33,6 +43,9 @@
             assign badge_image_src = settings.shopifyCdnUrl | append: '/files/Eczema_Association_Accepted.png'
             assign badge_alt = 'National Eczema Association Accepted'
             assign badge_classes = 'px-1'
+            assign current_badge_sizes = padded_badge_sizes
+            assign current_badge_widths = padded_badge_widths
+            assign current_badge_fallback_width = padded_badge_fallback_width
           -%}
         {%- when 'Allure 2025' -%}
           {%- liquid
@@ -59,7 +72,7 @@
           {%- liquid
             assign badge_image_srcset = blank
 
-            for badge_width in badge_widths
+            for badge_width in current_badge_widths
               assign badge_width = badge_width | strip
 
               if badge_width == blank
@@ -80,8 +93,8 @@
           {% comment %}theme-check-disable RemoteAsset {% endcomment %}
           <img
             srcset="{{ badge_image_srcset }}"
-            src="{% render 'imgix', src: badge_image_src, w: badge_fallback_width %}"
-            sizes="{{ badge_sizes }}"
+            src="{% render 'imgix', src: badge_image_src, w: current_badge_fallback_width %}"
+            sizes="{{ current_badge_sizes }}"
             alt="{{ badge_alt }}"
             class="{{ badge_classes }}"
           >
