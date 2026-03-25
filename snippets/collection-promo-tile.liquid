@@ -9,19 +9,32 @@
 {% endcomment %}
 
 {%- if promo_tile_image != blank -%}
+  {%- liquid
+    assign promo_tile_image_master = promo_tile_image | image_url
+    assign promo_tile_sizes = '(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw'
+  -%}
   {%- if promo_tile_url != blank -%}
     <a href="{{ promo_tile_url }}" class="block absolute inset-0 plp-tile-clickarea">
   {%- else -%}
     <div>
   {%- endif -%}
+  {% comment %}theme-check-disable RemoteAsset {% endcomment %}
   <img
-    srcset="{{ promo_tile_image | image_url: width: 300 }} 1x, {{ promo_tile_image | image_url: width: 600 }} 2x"
-    src="{{ promo_tile_image | image_url: width: 600 }}"
+    srcset="
+      {% render 'imgix', src: promo_tile_image_master, w: 320 %} 320w,
+      {% render 'imgix', src: promo_tile_image_master, w: 480 %} 480w,
+      {% render 'imgix', src: promo_tile_image_master, w: 640 %} 640w,
+      {% render 'imgix', src: promo_tile_image_master, w: 960 %} 960w,
+      {% render 'imgix', src: promo_tile_image_master, w: 1200 %} 1200w
+    "
+    src="{% render 'imgix', src: promo_tile_image_master, w: 480 %}"
+    sizes="{{ promo_tile_sizes }}"
     alt="{{ promo_tile_image.alt }}"
     width="{{ promo_tile_image.width }}"
     height="{{ promo_tile_image.width | divided_by: promo_tile_image.aspect_ratio | round }}"
     class="absolute inset-0 object-cover object-center h-full w-full"
   >
+  {% comment %}theme-check-enable RemoteAsset {% endcomment %}
   {%- if promo_tile_url != blank -%}
     </a>
   {%- else -%}

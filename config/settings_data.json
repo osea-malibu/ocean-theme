@@ -41,15 +41,15 @@
     "shipping_countdown_text": "You are remaining_amount away from free shipping!",
     "shipping_countdown_text_success": "Congrats! You get free shipping.",
     "cart_recommendations_travel_handles": "reusable-cotton-rounds, anti-aging-body-balm, ocean-cleanser, undaria-algae-body-lotion, undaria-algae-oil, hyaluronic-body-serum, undaria-algae-body-butter, ocean-cleansing-milk, ocean-cleansing-mudd, dayglow-face-oil, sea-minerals-mist, essential-hydrating-oil-1, undaria-algae-body-wash",
-    "enable_gwp": true,
+    "enable_gwp": false,
     "gwp_type": "auto",
     "is_loyalty_gwp": false,
     "enable_annoucement_bar_message": true,
     "enable_product_qualifier_gwp": false,
     "gwp_product_qualifier": "",
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
-    "gwp_tier1_product": "free-gift-ritual-hyacera",
-    "gwp_tier1_threshold": 100,
+    "gwp_tier1_product": "",
+    "gwp_tier1_threshold": 0,
     "gwp_tier1_text": "You're remaining_amount away from a FREE gift_product!",
     "gwp_tier2_product": "",
     "gwp_tier2_threshold": 0,
@@ -66,8 +66,8 @@
     "enableImgix": true,
     "shopifyCdnUrl": "//oseamalibu.com/cdn/shop",
     "enable_global_plp_tile": true,
-    "global_plp_tile_image": "shopify://shop_images/3.12.2026_-_MiniGWP_Promo_Tile_1.jpg",
-    "global_plp_tile_url": "shopify://collections/shop",
+    "global_plp_tile_image": "shopify://shop_images/3.20.2026_-_MiniGWP_Promo_Tile.jpg",
+    "global_plp_tile_url": "shopify://collections/subscription",
     "enable_loop_bundles": false,
     "enable_postscript_teaser": true,
     "postscript_popup_id": "f93ab115-8af6-4467-82f7-263027890f1c",
@@ -88,11 +88,17 @@
               "text": "<p>Ends tonight! Free 2-day shipping on orders $150+</p>"
             }
           },
-          "announcement_3qbKGP": {
+          "announcement_KXUgnX": {
             "type": "announcement",
             "disabled": true,
             "settings": {
-              "text": "<p>$150+ orders arrive by 12/24</p>"
+              "text": "<p>Free shipping on orders over $50</p>"
+            }
+          },
+          "announcement_3qbKGP": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p><a href=\"https://oseamalibu.com/collections/subscription\" title=\"https://oseamalibu.com/collections/subscription\">Subscribe to any product by 3/31 and earn 500 extra loyalty points</a></p>"
             }
           },
           "announcement-bar-0": {
@@ -104,6 +110,7 @@
         },
         "block_order": [
           "announcement_JpDQf6",
+          "announcement_KXUgnX",
           "announcement_3qbKGP",
           "announcement-bar-0"
         ],
@@ -121,11 +128,11 @@
           "hamburger_menu": "sun-hamburger-menu",
           "enable_navbar": true,
           "navbar_menu": "ocean-navbar",
-          "promo_image": "shopify://shop_images/Mega_Menu___Sleep_Hygiene_Experts___2026-02-17.jpg",
-          "promo_heading": "How a Sleep Expert Winds Down at Night",
-          "promo_paragraph": "",
-          "promo_link": "shopify://blogs/wellness-blog/the-art-of-sleep",
-          "promo_button": "Read now"
+          "promo_image": "shopify://shop_images/3.20_GWP_Mega_Menu.jpg",
+          "promo_heading": "Earn 500 Bonus Points",
+          "promo_paragraph": "<p>When you subscribe to any product. Ends 3/31.</p>",
+          "promo_link": "shopify://collections/subscription",
+          "promo_button": "GET STARTED"
         }
       },
       "footer": {
@@ -210,11 +217,6 @@
         "disabled": false,
         "settings": {}
       },
-      "11560147490181472608": {
-        "type": "shopify://apps/rivo-loyalty-rewards-referrals/blocks/app-embed/580e9665-b2cd-4dbc-b6ba-6445ac9e6871",
-        "disabled": false,
-        "settings": {}
-      },
       "855628211100114053": {
         "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
         "disabled": false,
@@ -225,14 +227,20 @@
         "disabled": false,
         "settings": {}
       },
+      "11560147490181472608": {
+        "type": "shopify://apps/rivo-loyalty-rewards-referrals/blocks/app-embed/580e9665-b2cd-4dbc-b6ba-6445ac9e6871",
+        "disabled": false,
+        "settings": {}
+      },
       "3576686563519644491": {
         "type": "shopify://apps/vwo/blocks/vwo-smartcode/2ce905b2-3842-4d20-b6b0-8c51fc208426",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "vwoAccountId": "336250",
           "codeType": "ASYNC",
           "settingsTolerance": 2000,
-          "enableThemeTesting": true
+          "enableThemeTesting": true,
+          "reverseProxyUrl": ""
         }
       }
     }

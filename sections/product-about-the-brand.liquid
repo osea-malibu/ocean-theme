@@ -1,0 +1,40 @@
+{%- if section.settings.about_the_brand_content != blank -%}
+  <div class="product-jp-quote container mb-6 lg:mb-12 {{ section.settings.wrapper_classes }}">
+    <div class="flex-1 md:basis-0 min-w-0 bg-white rounded-xl flex flex-col items-center justify-center overflow-hidden">
+      <div class="text-center p-4 lg:p-10">
+        <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.about_the_brand_title }}</h3>
+        <p class="text-xl lg:text-2xl">{{ section.settings.about_the_brand_content }}</p>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+
+{% schema %}
+{
+  "name": "About the Brand",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "wrapper_classes",
+      "label": "Wrapper classes"
+    },
+    {
+      "type": "header",
+      "content": "About the Brand"
+    },
+    {
+      "type": "text",
+      "id": "about_the_brand_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "about_the_brand_content",
+      "label": "Content"
+    }
+  ]
+}
+{% endschema %}
+
