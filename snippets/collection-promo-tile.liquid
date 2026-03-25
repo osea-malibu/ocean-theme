@@ -11,7 +11,7 @@
 {%- if promo_tile_image != blank -%}
   {%- liquid
     assign promo_tile_image_master = promo_tile_image | image_url
-    assign promo_tile_sizes = '(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw'
+    assign promo_tile_sizes = '(min-width: 1024px) calc((100vw - 6rem) / 4), (min-width: 768px) calc((100vw - 5rem) / 3), (min-width: 640px) calc((100vw - 4rem) / 2), (min-width: 400px) calc((100vw - 3.5rem) / 2), calc((100vw - 2.5rem) / 2)'
   -%}
   {%- if promo_tile_url != blank -%}
     <a href="{{ promo_tile_url }}" class="block absolute inset-0 plp-tile-clickarea">
@@ -21,13 +21,16 @@
   {% comment %}theme-check-disable RemoteAsset {% endcomment %}
   <img
     srcset="
+      {% render 'imgix', src: promo_tile_image_master, w: 240 %} 240w,
       {% render 'imgix', src: promo_tile_image_master, w: 320 %} 320w,
+      {% render 'imgix', src: promo_tile_image_master, w: 352 %} 352w,
       {% render 'imgix', src: promo_tile_image_master, w: 480 %} 480w,
       {% render 'imgix', src: promo_tile_image_master, w: 640 %} 640w,
+      {% render 'imgix', src: promo_tile_image_master, w: 704 %} 704w,
       {% render 'imgix', src: promo_tile_image_master, w: 960 %} 960w,
       {% render 'imgix', src: promo_tile_image_master, w: 1200 %} 1200w
     "
-    src="{% render 'imgix', src: promo_tile_image_master, w: 480 %}"
+    src="{% render 'imgix', src: promo_tile_image_master, w: 352 %}"
     sizes="{{ promo_tile_sizes }}"
     alt="{{ promo_tile_image.alt }}"
     width="{{ promo_tile_image.width }}"
