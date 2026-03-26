@@ -1,5 +1,106 @@
 <script type="text/javascript">
   {% if template != 'cart' %}
-    var lazy_css = [], lazy_js = []; function _debounce(a, b = 300) { let c; return (...d) => { clearTimeout(c), c = setTimeout(() => a.apply(this, d), b) } } window.___mnag = "userA" + (window.___mnag1 || "") + "gent"; window.___plt = "plat" + (window.___mnag1 || "") + "form"; try { var a = navigator[window.___mnag], e = navigator[window.___plt]; window.__isPSA = window.__isPSA = e.indexOf('x86_64') > -1 && (window.outerWidth === window.outerHeight || a.indexOf('power') > -1 || a.indexOf('rix') > -1 || a.indexOf('CrOS') < 0), window.___mnag = "!1", c = null } catch (d) { window.__isPSA = !1; var c = null; window.___mnag = "!1"} window.__isPSA = __isPSA; if(__isPSA)var uLTS=new MutationObserver(e=>{e.forEach(({addedNodes:e})=>{e.forEach(e=>{1===e.nodeType&&"IFRAME"===e.tagName&&(e.setAttribute("loading","lazy"),e.setAttribute("data-src",e.src),e.removeAttribute("src")),1===e.nodeType&&"IMG"===e.tagName&&++imageCount>lazyImages&&e.setAttribute("loading","lazy"),1===e.nodeType&&"LINK"===e.tagName&&lazy_css.length&&lazy_css.forEach(t=>{e.href.includes(t)&&(e.setAttribute("data-href",e.href),e.removeAttribute("href"))}),1===e.nodeType&&"SCRIPT"===e.tagName&&(e.setAttribute("data-src",e.src),e.removeAttribute("src"),e.type="text/lazyload")})})}),imageCount=0,lazyImages=20;else var uLTS = new MutationObserver(mutations => {}); uLTS.observe(document.documentElement, {childList: true, subtree: true}),imageCount=0,lazyImages=20;uLTS.observe(document.documentElement,{childList:!0,subtree:!0});
+    var lazy_css = [],
+      lazy_js = [];
+
+    function _debounce(a, b = 300) {
+      let c;
+      return (...d) => {
+        clearTimeout(c);
+        c = setTimeout(() => a.apply(this, d), b);
+      };
+    }
+
+    function shouldLazyLoadScript(node) {
+      const type = (node.getAttribute("type") || "").toLowerCase();
+      const src = node.getAttribute("src") || "";
+      const signature = [
+        src,
+        node.id || "",
+        typeof node.className === "string" ? node.className : "",
+        node.textContent || "",
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      const isExecutableScript =
+        type === "" ||
+        type === "text/javascript" ||
+        type === "application/javascript" ||
+        type === "module";
+
+      const isCriticalConsentScript =
+        /consentmo|cookie|gdpr|privacy|customerprivacy|tracking-consent/.test(signature);
+
+      return Boolean(src) && isExecutableScript && !isCriticalConsentScript;
+    }
+
+    window.___mnag = "userA" + (window.___mnag1 || "") + "gent";
+    window.___plt = "plat" + (window.___mnag1 || "") + "form";
+    var c = null;
+
+    try {
+      var a = navigator[window.___mnag],
+        e = navigator[window.___plt];
+      window.__isPSA =
+        e.indexOf("x86_64") > -1 &&
+        (window.outerWidth === window.outerHeight ||
+          a.indexOf("power") > -1 ||
+          a.indexOf("rix") > -1 ||
+          a.indexOf("CrOS") < 0);
+      window.___mnag = "!1";
+    } catch (d) {
+      window.__isPSA = !1;
+      c = null;
+      window.___mnag = "!1";
+    }
+
+    window.__isPSA = __isPSA;
+
+    if (__isPSA)
+      var uLTS = new MutationObserver((mutations) => {
+        mutations.forEach(({ addedNodes }) => {
+          addedNodes.forEach((node) => {
+            if (node.nodeType !== 1) return;
+
+            if (node.tagName === "IFRAME") {
+              node.setAttribute("loading", "lazy");
+              node.setAttribute("data-src", node.src);
+              node.removeAttribute("src");
+              return;
+            }
+
+            if (node.tagName === "IMG" && ++imageCount > lazyImages) {
+              node.setAttribute("loading", "lazy");
+              return;
+            }
+
+            if (node.tagName === "LINK" && lazy_css.length) {
+              lazy_css.forEach((hrefPart) => {
+                if (node.href.includes(hrefPart)) {
+                  node.setAttribute("data-href", node.href);
+                  node.removeAttribute("href");
+                }
+              });
+              return;
+            }
+
+            if (node.tagName === "SCRIPT" && shouldLazyLoadScript(node)) {
+              node.setAttribute("data-src", node.src);
+              node.removeAttribute("src");
+              node.type = "text/lazyload";
+            }
+          });
+        });
+      }),
+        imageCount = 0,
+        lazyImages = 20;
+    else var uLTS = new MutationObserver((mutations) => {});
+
+    uLTS.observe(document.documentElement, { childList: true, subtree: true }),
+      (imageCount = 0),
+      (lazyImages = 20);
+    uLTS.observe(document.documentElement, { childList: !0, subtree: !0 });
   {% endif %}
 </script>
+t>
