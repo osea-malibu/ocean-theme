@@ -15,8 +15,8 @@
   assign mobile_master = mobile_img | image_url
   assign desktop_master = desktop_img | image_url
 
-  # Full-width banner sizing hint for srcset selection
-  assign promo_sizes = '100vw'
+  # The collection interrupter sits inside the padded page container on mobile.
+  assign promo_sizes = promo_section_sizes | default: '(min-width: 400px) calc(100vw - 3rem), calc(100vw - 2rem)'
 
   # Pick an IMAGE media object for dimensions (avoids video/non-image edge cases)
   assign dim_media = nil
@@ -76,14 +76,17 @@
     {%- if mobile_img != blank -%}
       <source
         media="(max-width: 639px)"
+        sizes="{{ promo_sizes }}"
         {% if mobile_master contains '.gif' %}
           srcset="{{ mobile_master }}"
         {% else %}
           srcset="
             {% render 'imgix', src: mobile_master, w: 320 %} 320w,
+            {% render 'imgix', src: mobile_master, w: 352 %} 352w,
             {% render 'imgix', src: mobile_master, w: 480 %} 480w,
             {% render 'imgix', src: mobile_master, w: 640 %} 640w,
-            {% render 'imgix', src: mobile_master, w: 750 %} 750w
+            {% render 'imgix', src: mobile_master, w: 704 %} 704w,
+            {% render 'imgix', src: mobile_master, w: 768 %} 768w
           "
         {% endif %}
       >
@@ -92,6 +95,7 @@
     {%- if desktop_img != blank -%}
       <source
         media="(min-width: 640px)"
+        sizes="{{ promo_sizes }}"
         {% if desktop_master contains '.gif' %}
           srcset="{{ desktop_master }}"
         {% else %}
