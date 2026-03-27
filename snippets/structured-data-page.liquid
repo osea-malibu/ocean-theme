@@ -1,0 +1,25 @@
+{%- if request.page_type == 'page' and page -%}
+  {%- liquid
+    assign schema_type = 'WebPage'
+    if page.handle == 'about-us'
+      assign schema_type = 'AboutPage'
+    endif
+
+    assign schema_description = page_description | strip_html | strip_newlines
+    if schema_description == blank
+      assign schema_description = page.content | strip_html | strip_newlines | truncate: 160
+    endif
+  -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": {{ schema_type | json }},
+      "name": {{ page.title | json }},
+      "url": {{ canonical_url | json }},
+      "description": {{ schema_description | json }}{% if page_image %},
+      "image": [
+        {{ page_image | image_url: width: page_image.width | prepend: "https:" | json }}
+      ]{% endif %}
+    }
+  </script>
+{%- endif -%}

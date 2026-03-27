@@ -146,13 +146,13 @@
   {%- endif -%}
 </div>
 
-{%- if collection and collection.products_count > 0 -%}
+{%- if collection -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "name": {{ collection.title | json }},
-      "url": {{ shop.url | append: collection.url | json }},
+      "url": {{ canonical_url | json }},
       {%- liquid
         assign seo_description = collection.metafields.custom.seo_description
         if seo_description != blank
@@ -161,12 +161,10 @@
           assign schema_description = collection.description
         endif
       -%}
-      "description": {{ schema_description | strip_html | truncate: 160 | json }},
-      {% if collection.image %}
+      "description": {{ schema_description | strip_html | strip_newlines | truncate: 160 | json }}{% if collection.image %},
         "image": [
           {{ collection.image | image_url: width: 1200 | prepend: "https:" | json }}
-        ],
-      {% endif %}
+        ]{% endif %}{% if collection.products_count > 0 %},
       "mainEntity": {
         "@type": "ItemList",
         "itemListElement": [
@@ -179,7 +177,7 @@
             }{% unless forloop.last %},{% endunless %}
           {%- endfor -%}
         ]
-      }
+      }{% endif %}
     }
   </script>
 {%- endif -%}
