@@ -37,6 +37,7 @@
     
     {% liquid
       render 'meta-tags'
+      render 'structured-data-page'
       render 'prefetch'
       render 'howl'
       render 'amazon-marketing-cloud'
@@ -186,6 +187,7 @@
       render 'minty'
     -%}
     {% render 'content_for_footer' %}
+    {% render 'vwo-consent-debug' %}
 
         <script>
   // Always define the function so any existing calls won't crash when Loop is disabled

@@ -1,0 +1,165 @@
+<script>
+  (function () {
+    const consentSelector = "csm-cookie-consent";
+    const isTouchDevice =
+      window.matchMedia("(pointer: coarse)").matches ||
+      navigator.maxTouchPoints > 0 ||
+      "ontouchstart" in window;
+
+    if (!isTouchDevice) return;
+
+    let pendingFallbackTimer = null;
+    let pendingTarget = null;
+
+    function log(label, details) {
+      if (details) {
+        console.log("[CONSENTMO-TOUCH-FALLBACK]", label, JSON.stringify(details));
+      } else {
+        console.log("[CONSENTMO-TOUCH-FALLBACK]", label);
+      }
+    }
+
+    function describeTarget(target) {
+      if (!(target instanceof Element)) return null;
+
+      const rect = target.getBoundingClientRect();
+      const style = window.getComputedStyle(target);
+
+      return {
+        tag: target.tagName.toLowerCase(),
+        id: target.id || "",
+        className: typeof target.className === "string" ? target.className : "",
+        width: Math.round(rect.width),
+        height: Math.round(rect.height),
+        top: Math.round(rect.top),
+        left: Math.round(rect.left),
+        zIndex: style.zIndex,
+        pointerEvents: style.pointerEvents,
+      };
+    }
+
+    function getConsentTarget(target) {
+      if (!(target instanceof Element)) return null;
+      return target.closest(consentSelector);
+    }
+
+    function vwoActive() {
+      return (
+        typeof window._vwo_code !== "undefined" ||
+        typeof window._vwo_exp !== "undefined" ||
+        typeof window.VWO !== "undefined"
+      );
+    }
+
+    log("enabled", {
+      userAgent: navigator.userAgent,
+      vwoActive: vwoActive(),
+      viewport: `${window.innerWidth}x${window.innerHeight}`,
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      log("dom_content_loaded", {
+        readyState: document.readyState,
+        vwoActive: vwoActive(),
+      });
+    });
+
+    window.addEventListener("load", function () {
+      log("window_load", {
+        readyState: document.readyState,
+        vwoActive: vwoActive(),
+      });
+    });
+
+    function clearPendingFallback() {
+      if (pendingFallbackTimer) {
+        window.clearTimeout(pendingFallbackTimer);
+        pendingFallbackTimer = null;
+      }
+
+      pendingTarget = null;
+    }
+
+    function dispatchFallbackClick(target) {
+      if (!(target instanceof Element) || !target.isConnected) return;
+
+      log("dispatch_synthetic_click", {
+        target: describeTarget(target),
+      });
+
+      if (typeof target.click === "function") {
+        target.click();
+        return;
+      }
+
+      target.dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+          composed: true,
+          view: window,
+        })
+      );
+    }
+
+    ["touchstart", "touchend", "click"].forEach((eventName) => {
+      document.addEventListener(
+        eventName,
+        function (event) {
+          const consentTarget = getConsentTarget(event.target);
+          if (!consentTarget) return;
+
+          log("consent_event", {
+            phase: "capture",
+            event: event.type,
+            defaultPrevented: event.defaultPrevented,
+            target: describeTarget(consentTarget),
+          });
+
+          if (event.type === "click") {
+            clearPendingFallback();
+          }
+        },
+        true
+      );
+
+      document.addEventListener(
+        eventName,
+        function (event) {
+          const consentTarget = getConsentTarget(event.target);
+          if (!consentTarget) return;
+
+          log("consent_event", {
+            phase: "bubble",
+            event: event.type,
+            defaultPrevented: event.defaultPrevented,
+            target: describeTarget(consentTarget),
+          });
+
+          if (event.type === "touchend") {
+            clearPendingFallback();
+            pendingTarget = consentTarget;
+            pendingFallbackTimer = window.setTimeout(() => {
+              const target = pendingTarget;
+              clearPendingFallback();
+              dispatchFallbackClick(target);
+            }, 180);
+          }
+
+          if (event.type === "click") {
+            clearPendingFallback();
+          }
+        },
+        false
+      );
+    });
+
+    document.addEventListener(
+      "touchcancel",
+      function () {
+        clearPendingFallback();
+      },
+      true
+    );
+  })();
+</script>
