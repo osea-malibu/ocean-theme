@@ -15,6 +15,47 @@ setupLazyVideos();
 setupManualRedirects();
 setupShopifyCommon();
 
+const headerStackHeightVariable = "--header-stack-height";
+const defaultHeaderStackHeight = 72;
+
+function syncHeaderStackHeight() {
+  const headerStack = document.querySelector("#HeaderContent");
+  const headerStackHeight = headerStack
+    ? Math.ceil(headerStack.getBoundingClientRect().height)
+    : defaultHeaderStackHeight;
+
+  document.documentElement.style.setProperty(
+    headerStackHeightVariable,
+    `${headerStackHeight}px`
+  );
+
+  return headerStackHeight;
+}
+
+function setupHeaderStackHeightObserver() {
+  const headerStack = document.querySelector("#HeaderContent");
+  if (!headerStack) return;
+
+  syncHeaderStackHeight();
+  window.addEventListener("load", syncHeaderStackHeight, { once: true });
+  window.addEventListener("resize", syncHeaderStackHeight);
+  document.addEventListener("shopify:section:load", syncHeaderStackHeight);
+  document.addEventListener("cart:updated", syncHeaderStackHeight);
+  document.addEventListener("cart:refresh", syncHeaderStackHeight);
+  window.addEventListener("cart:updated", syncHeaderStackHeight);
+  window.addEventListener("cart:refresh", syncHeaderStackHeight);
+
+  if (!("ResizeObserver" in window)) return;
+
+  const headerStackObserver = new ResizeObserver(() => {
+    syncHeaderStackHeight();
+  });
+
+  headerStackObserver.observe(headerStack);
+}
+
+setupHeaderStackHeightObserver();
+
 class QuantityInput extends HTMLElement {
   constructor() {
     super();
@@ -913,16 +954,7 @@ class MenuDrawer extends HTMLElement {
   }
 
   setMenuTopValue() {
-    const drawer = this.querySelector(".menu-drawer");
-    const scrim = this.querySelector(".menu-scrim");
-
-    const announcementBar = document.querySelector("#AnnouncementBar");
-    const header = document.querySelector("header.header");
-
-    const topValue = announcementBar.offsetHeight + header.offsetHeight;
-
-    drawer.style.top = `${topValue}px`;
-    scrim.style.top = `${topValue}px`;
+    syncHeaderStackHeight();
   }
 }
 customElements.define("menu-drawer", MenuDrawer);
@@ -942,20 +974,15 @@ class DismissableAnnoucement extends HTMLElement {
     let isDismissed = JSON.parse(sessionStorage.getItem("osea.announcementDismissed"));
     if (isDismissed) {
       this.useDefaultMessage();
+      syncHeaderStackHeight();
     } else {
-      const menuDrawer = document.querySelector("menu-drawer");
-      menuDrawer.setMenuTopValue();
+      syncHeaderStackHeight();
     }
   }
 
   onClose() {
-    const drawer = document.querySelector("#HamburgerMenu .menu-drawer");
-    const scrim = document.querySelector("#HamburgerMenu .menu-scrim");
-
-    drawer.style.removeProperty("top");
-    scrim.style.removeProperty("top");
-
     this.useDefaultMessage();
+    syncHeaderStackHeight();
     sessionStorage.setItem("osea.announcementDismissed", true);
   }
 
@@ -2166,6 +2193,7 @@ class GlideSlider extends HTMLElement {
     this.twBreakpoints = JSON.parse(
       '{"2xs":412,"xs":472,"sm":640,"md":768,"lg":1024,"xl":1280,"2xl":1536}'
     );
+    this.syncAnnouncementBarHeightBound = this.syncAnnouncementBarHeight.bind(this);
 
     const { breakpointLimit } = this.dataset;
     const viewportWidth = Math.max(
@@ -2192,6 +2220,58 @@ class GlideSlider extends HTMLElement {
 
         track.replaceWith(...track.childNodes);
       }
+    }
+  }
+
+  connectedCallback() {
+    if (!this.isAnnouncementBarSlider()) return;
+
+    this.syncAnnouncementBarHeight();
+    window.addEventListener("load", this.syncAnnouncementBarHeightBound, { once: true });
+    window.addEventListener("resize", this.syncAnnouncementBarHeightBound);
+  }
+
+  disconnectedCallback() {
+    if (!this.isAnnouncementBarSlider()) return;
+
+    window.removeEventListener("resize", this.syncAnnouncementBarHeightBound);
+  }
+
+  isAnnouncementBarSlider() {
+    return this.id === "slider-announcement-bar";
+  }
+
+  isMobileViewport() {
+    const viewportWidth = Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    );
+
+    return viewportWidth < this.twBreakpoints.sm;
+  }
+
+  getAnnouncementBarSlides() {
+    return Array.from(this.querySelectorAll(".glide__slide:not(.glide__slide--clone)"));
+  }
+
+  syncAnnouncementBarHeight() {
+    if (!this.isAnnouncementBarSlider()) return;
+
+    this.style.removeProperty("--announcement-bar-mobile-slide-height");
+
+    if (!this.isMobileViewport()) return;
+
+    const slides = this.getAnnouncementBarSlides();
+    if (!slides.length) return;
+
+    const slideHeights = slides
+      .map((slide) => slide.querySelector(".announcement-bar__slide-inner"))
+      .filter(Boolean)
+      .map((slideInner) => Math.ceil(slideInner.getBoundingClientRect().height));
+    const maxSlideHeight = Math.max(...slideHeights, 0);
+
+    if (maxSlideHeight > 0) {
+      this.style.setProperty("--announcement-bar-mobile-slide-height", `${maxSlideHeight}px`);
     }
   }
 
@@ -2332,6 +2412,7 @@ class GlideSlider extends HTMLElement {
     this.glide = new Glide(`#${this.id}`, this.options);
     this.glide.mount();
     this.updateGlideSlideA11y();
+    this.syncAnnouncementBarHeight();
     this.glide.on(["mount.after", "run.after"], () => {
       this.updateGlideSlideA11y();
     });

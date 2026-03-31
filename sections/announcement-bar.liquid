@@ -1,9 +1,19 @@
 <div class="bg-seaweed-700 flex justify-center px-2 text-sm a:link" id="AnnouncementBar">
   {% comment %} Dismissable announcement bar {% endcomment %}
   {%- if section.settings.enable_dismissable_announcement -%}
+    {%- liquid
+      assign dismissable_message_mobile = section.settings.dismissable_message_mobile | default: section.settings.dismissable_message
+      assign default_message_mobile = section.settings.default_message_mobile | default: section.settings.default_message
+    -%}
     <dismissable-announcement class="container px-0 text-white text-center leading-none pr-2 2xs:pr-3 md:px-6 py-0.5 md:flex md:items-start">
-      <div id="DismissableMessage" class="sm:max-w-screen-sm mx-auto">{{ section.settings.dismissable_message }}</div>
-      <div id="DismissableDefault" class="hidden tracking-wider font-book py-0.5 sm:max-w-screen-sm mx-auto">{{ section.settings.default_message }}</div>
+      <div id="DismissableMessage" class="sm:max-w-screen-sm mx-auto">
+        <div class="hidden sm:block">{{ section.settings.dismissable_message }}</div>
+        <div class="px-8 leading-tight sm:hidden">{{ dismissable_message_mobile }}</div>
+      </div>
+      <div id="DismissableDefault" class="hidden tracking-wider font-book py-0.5 sm:max-w-screen-sm mx-auto">
+        <div class="hidden sm:block">{{ section.settings.default_message }}</div>
+        <div class="px-8 leading-tight sm:hidden">{{ default_message_mobile }}</div>
+      </div>
       <button id="DismissableClose" type="button" class="absolute top-1 right-0.5 md:relative md:right-0 md:top-0">{% render 'icon-close', classes: 'text-white w-6 h-6', stroke_width: 1.5 %}</button>
     </dismissable-announcement>
   {% comment %} Gift with purchase {% endcomment %}
@@ -55,22 +65,28 @@
         <ul class="glide__slides pb-0">
           {%- for block in section.blocks -%}
             {%- if block.settings.text != blank -%}
-              <li class="glide__slide text-white font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
-                {{ block.settings.text }}
+              {%- liquid
+                assign mobile_text = block.settings.mobile_text | default: block.settings.text
+              -%}
+              <li class="glide__slide text-white font-book text-center tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
+                <div class="announcement-bar__slide-inner py-0.5">
+                  <div class="hidden sm:block">{{ block.settings.text }}</div>
+                  <div class="px-8 leading-tight sm:hidden">{{ mobile_text }}</div>
+                </div>
               </li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
         <div class="glide__arrows" data-glide-el="controls">
           <button
-            class="glide__arrow glide__arrow--left top-0 opacity-50 left-0 z-10"
+            class="glide__arrow glide__arrow--left top-1/2 -translate-y-1/2 opacity-50 left-0 z-10"
             aria-label="Go to previous"
             data-glide-dir="<"
           >
             {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-6 w-6 text-white block' %}
           </button>
           <button
-            class="glide__arrow glide__arrow--right top-0 opacity-50 right-0 z-10"
+            class="glide__arrow glide__arrow--right top-1/2 -translate-y-1/2 opacity-50 right-0 z-10"
             aria-label="Go to next"
             data-glide-dir=">"
           >
@@ -80,8 +96,12 @@
       </div>
     </glide-slider>
   {%- else -%}
+    {%- liquid
+      assign mobile_text = section.blocks[0].settings.mobile_text | default: section.blocks[0].settings.text
+    -%}
     <div class="text-white font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
-      {{- section.blocks[0].settings.text -}}
+      <div class="hidden sm:block">{{ section.blocks[0].settings.text }}</div>
+      <div class="leading-tight sm:hidden">{{ mobile_text }}</div>
     </div>
   {%- endif -%}
 </div>
@@ -129,10 +149,22 @@
     },
     {
       "type": "richtext",
+      "id": "dismissable_message_mobile",
+      "label": "Dismissable announcement message (mobile)",
+      "info": "Optional mobile-only copy. Leave blank to use the desktop message."
+    },
+    {
+      "type": "richtext",
       "id": "default_message",
       "label": "Default announcement message",
       "default": "<p>Free shipping on orders over $50</p>",
       "info": "This is the message that will be appear when the main message is dismissed."
+    },
+    {
+      "type": "richtext",
+      "id": "default_message_mobile",
+      "label": "Default announcement message (mobile)",
+      "info": "Optional mobile-only copy. Leave blank to use the desktop default message."
     }
   ],
   "blocks": [
@@ -145,6 +177,12 @@
           "id": "text",
           "default": "<p>Free shipping on orders over $50</p>",
           "label": "Text"
+        },
+        {
+          "type": "richtext",
+          "id": "mobile_text",
+          "label": "Text (mobile)",
+          "info": "Optional mobile-only copy. Leave blank to use the desktop text."
         }
       ]
     }
