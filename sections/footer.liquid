@@ -34,12 +34,6 @@
           {%- capture guarantee_content -%}
             <p>Not in love with your new OSEA favorites? No worries—we’ve got you. If your product isn’t the perfect match, send it back within 30 days of your ship date for a full refund or an OSEA gift card. Shipping costs aren’t refundable. <a class="link" href="/pages/customer-care?tab=2">Learn more</a></p>
           {%- endcapture -%}
-          {%- capture bonus_summary -%}
-            <div class="flex justify-between items-center"><span>Limited Time Only: Receive 500 Bonus Loyalty Points</span><span class="{{ badge_class }} tracking-tight">500 Bonus points</span></div>
-          {%- endcapture -%}
-          {%- capture bonus_content -%}
-            <p>Subscribe to any product and earn 500 bonus loyalty points. Offer valid through March 31.  <a class="link" href="/pages/subscribe">Get started</a></p>
-          {%- endcapture -%}
 
           <h2 class="font-serif text-3xl">{{ section.settings.perks_heading }}</h2>
           <p class="mb-4">{{ section.settings.perks_description }}</p>
@@ -67,17 +61,9 @@
           -%}
           {% render 'accordion-item',
             id: 'footer-subscription',
-            summary: bonus_summary,
-            content: bonus_content,
-            default_open: subscription_promo_open,
-            summary_classes: 'py-4',
-            content_classes: 'pt-0 pb-4',
-            classes: 'border-b border-seaweed-300'
-          %}
-          {% render 'accordion-item',
-            id: 'footer-subscription',
             summary: subscribe_summary,
             content: subscribe_content,
+            default_open: subscription_promo_open,
             summary_classes: 'py-4',
             content_classes: 'pt-0 pb-4',
             classes: 'border-b border-seaweed-300'
