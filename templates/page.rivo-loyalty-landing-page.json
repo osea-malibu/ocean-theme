@@ -9,51 +9,6 @@
  */
 {
   "sections": {
-    "image_banner_PEUtpQ": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_fQ7bNr": {
-          "type": "heading",
-          "settings": {
-            "heading": "LIMITED EDITION",
-            "heading_classes": "font-bold uppercase bg-neon-green text-seaweed rounded-full px-4 sm:px-3 lg:px-4 text-sm tracking-wider border mb-1"
-          }
-        },
-        "paragraph_LEhtQQ": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Mother's Day Glow-Giving Gifts Are Here",
-            "paragraph_classes": "text-seaweed font-medium text-center sm:text-sm lg:text-xl sm:whitespace-nowrap"
-          }
-        },
-        "button_KFEnB8": {
-          "type": "button",
-          "settings": {
-            "button_label": "SHOP NOW",
-            "button_aria_label": "",
-            "button_link": "shopify://products/dream-bio-retinol-body-serum",
-            "target_blank": false,
-            "button_classes": "button-sm bg-seaweed-700 border-seaweed-700 text-white mt-1 sm:px-3 lg:px-4"
-          }
-        }
-      },
-      "block_order": [
-        "heading_fQ7bNr",
-        "paragraph_LEhtQQ",
-        "button_KFEnB8"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image_mobile": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-09_MOBILE_BLANK.jpg",
-        "image": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-09_7d7a54f7-af04-4a0b-87b9-7082d834dcfb.jpg",
-        "is_lazy": false,
-        "image_link": "",
-        "banner_classes": "container",
-        "image_classes": "h-auto w-full",
-        "text_block_classes": "absolute inset-y-0 left-0 w-2/3 sm:w-3/5 md:w-1/2 lg:w-1/2 text-center flex flex-col items-center justify-center pl-6 pr-2 sm:pl-6 sm:pr-3 md:pl-6 md:pr-4 lg:pl-12 lg:pr-6 text-seaweed lg:gap-2"
-      }
-    },
     "multicolumn_QhAH4f": {
       "type": "multicolumn",
       "blocks": {
@@ -74,7 +29,7 @@
             "heading": "LIMITED EDITION",
             "heading_classes": "font-bold uppercase bg-neon-green text-seaweed rounded-full px-4 sm:px-3 lg:px-4 text-sm tracking-wider border mb-1",
             "paragraph": "Mother's Day Glow-Giving Gifts Are Here",
-            "paragraph_classes": "text-seaweed font-medium text-center leading-tight max-w-2xs mx-auto sm:max-w-none sm:text-sm sm:whitespace-nowrap lg:text-xl",
+            "paragraph_classes": "text-seaweed font-medium text-center leading-tight max-w-2xs mx-auto sm:max-w-none sm:text-sm lg:whitespace-nowrap lg:text-xl",
             "button_label": "SHOP NOW",
             "button_aria_label": "",
             "link": "shopify://products/dream-bio-retinol-body-serum",
@@ -119,6 +74,51 @@
         "arrow_nav_classes": "top-1/2 -translate-y-1/2",
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+      }
+    },
+    "image_banner_PEUtpQ": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_fQ7bNr": {
+          "type": "heading",
+          "settings": {
+            "heading": "LIMITED EDITION",
+            "heading_classes": "font-bold uppercase bg-neon-green text-seaweed rounded-full px-4 sm:px-3 lg:px-4 text-sm tracking-wider border mb-1"
+          }
+        },
+        "paragraph_LEhtQQ": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Mother's Day Glow-Giving Gifts Are Here",
+            "paragraph_classes": "text-seaweed font-medium text-center sm:text-sm lg:text-xl sm:whitespace-nowrap"
+          }
+        },
+        "button_KFEnB8": {
+          "type": "button",
+          "settings": {
+            "button_label": "SHOP NOW",
+            "button_aria_label": "",
+            "button_link": "shopify://products/dream-bio-retinol-body-serum",
+            "target_blank": false,
+            "button_classes": "button-sm bg-seaweed-700 border-seaweed-700 text-white mt-1 sm:px-3 lg:px-4"
+          }
+        }
+      },
+      "block_order": [
+        "heading_fQ7bNr",
+        "paragraph_LEhtQQ",
+        "button_KFEnB8"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_mobile": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-09_MOBILE_BLANK.jpg",
+        "image": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-09_7d7a54f7-af04-4a0b-87b9-7082d834dcfb.jpg",
+        "is_lazy": false,
+        "image_link": "",
+        "banner_classes": "container",
+        "image_classes": "h-auto w-full",
+        "text_block_classes": "absolute inset-y-0 left-0 w-2/3 sm:w-3/5 md:w-1/2 lg:w-1/2 text-center flex flex-col items-center justify-center pl-6 pr-2 sm:pl-6 sm:pr-3 md:pl-6 md:pr-4 lg:pl-12 lg:pr-6 text-seaweed lg:gap-2"
       }
     },
     "rivo-loyalty-landing-page": {
