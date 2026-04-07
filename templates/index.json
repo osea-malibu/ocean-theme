@@ -9,6 +9,90 @@
  */
 {
   "sections": {
+    "image_banner_AXJV7G": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Kt4WaM": {
+          "type": "heading",
+          "name": "Desktop Heading",
+          "settings": {
+            "heading": "Brighter Eyes Start Here",
+            "heading_classes": "hidden lg:block md:block sm:block\n\ntext-4xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-seaweed tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl\nleading-[1.1]"
+          }
+        },
+        "paragraph_8AANJH": {
+          "type": "paragraph",
+          "name": "Desktop Paragraph",
+          "settings": {
+            "paragraph": "Discover anti-aging essentials for smoother, firmer skin.",
+            "paragraph_classes": "hidden lg:block md:block sm:block\ntext-seaweed sm:mb-4 lg:text-xl xl:text-2xl 2xl:text-3xl text-md  font-book leading-tight xl:mb-6 hidden sm:block"
+          }
+        },
+        "button_jnnekL": {
+          "type": "button",
+          "name": "Desktop Button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop now: Shop our Spring Refresh Essentials",
+            "button_link": "shopify://collections/shop",
+            "target_blank": true,
+            "button_classes": "hidden lg:block md:block sm:block\nbutton-primary"
+          }
+        },
+        "heading_dtxrQR": {
+          "type": "heading",
+          "settings": {
+            "heading": "Brighter Eyes<br>Start Here",
+            "heading_classes": "block lg:hidden  md:hidden sm:hidden  text-5xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-white tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl2"
+          }
+        },
+        "paragraph_YeH9Kt": {
+          "type": "paragraph",
+          "disabled": true,
+          "settings": {
+            "paragraph": "when you subscribe to any product",
+            "paragraph_classes": "block lg:hidden  md:hidden sm:hidden   text-seaweed font-medium mb-2 sm:mb-4 xl:mb-6 sm:text-sm md:text-base lg:text-lg xl:text-2xl"
+          }
+        },
+        "button_GBkY4M": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop now: All products",
+            "button_link": "shopify://collections/subscription",
+            "target_blank": false,
+            "button_classes": "text-seaweed border-white bg-white mt-auto sm:mt-0 xl:button-lg\nlg:hidden  md:hidden sm:hidden  mb-2  sm:mb-4 xl:mb-6"
+          }
+        },
+        "paragraph_tMgENM": {
+          "type": "paragraph",
+          "disabled": true,
+          "settings": {
+            "paragraph": "Ends 3/31",
+            "paragraph_classes": "block lg:hidden  md:hidden sm:hidden  italic  font-bold text-seaweedsm:text-sm md:text-base lg:text-lg xl:text-2xl  mt-auto s"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Kt4WaM",
+        "paragraph_8AANJH",
+        "button_jnnekL",
+        "heading_dtxrQR",
+        "paragraph_YeH9Kt",
+        "button_GBkY4M",
+        "paragraph_tMgENM"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify://shop_images/04.08.26_HP_Banner_Ocean_Eyes_Focused_-_Mobile_BLANK.jpg",
+        "image": "shopify://shop_images/04.08.26_HP_Banner_Ocean_Eyes_Focused_-_Desktop_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/spring-skincare-edit",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center sm:right-1/2 sm:pl-12 py-4"
+      }
+    },
     "image_banner_yaL6Jj": {
       "type": "image-banner",
       "blocks": {
@@ -176,90 +260,6 @@
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:right-1/2 mt-0 sm:mt-0 sm:pl-12"
-      }
-    },
-    "image_banner_AXJV7G": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_Kt4WaM": {
-          "type": "heading",
-          "name": "Desktop Heading",
-          "settings": {
-            "heading": "Brighter Eyes Start Here",
-            "heading_classes": "hidden lg:block md:block sm:block\n\ntext-4xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-seaweed tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl\nleading-[1.1]"
-          }
-        },
-        "paragraph_8AANJH": {
-          "type": "paragraph",
-          "name": "Desktop Paragraph",
-          "settings": {
-            "paragraph": "Discover anti-aging essentials for smoother, firmer skin.",
-            "paragraph_classes": "hidden lg:block md:block sm:block\ntext-seaweed sm:mb-4 lg:text-xl xl:text-2xl 2xl:text-3xl text-md  font-book leading-tight xl:mb-6 hidden sm:block"
-          }
-        },
-        "button_jnnekL": {
-          "type": "button",
-          "name": "Desktop Button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_aria_label": "Shop now: Shop our Spring Refresh Essentials",
-            "button_link": "shopify://collections/shop",
-            "target_blank": true,
-            "button_classes": "hidden lg:block md:block sm:block\nbutton-primary"
-          }
-        },
-        "heading_dtxrQR": {
-          "type": "heading",
-          "settings": {
-            "heading": "Brighter Eyes<br>Start Here",
-            "heading_classes": "block lg:hidden  md:hidden sm:hidden  text-5xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-white tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl2"
-          }
-        },
-        "paragraph_YeH9Kt": {
-          "type": "paragraph",
-          "disabled": true,
-          "settings": {
-            "paragraph": "when you subscribe to any product",
-            "paragraph_classes": "block lg:hidden  md:hidden sm:hidden   text-seaweed font-medium mb-2 sm:mb-4 xl:mb-6 sm:text-sm md:text-base lg:text-lg xl:text-2xl"
-          }
-        },
-        "button_GBkY4M": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_aria_label": "Shop now: All products",
-            "button_link": "shopify://collections/subscription",
-            "target_blank": false,
-            "button_classes": "text-seaweed border-white bg-white mt-auto sm:mt-0 xl:button-lg\nlg:hidden  md:hidden sm:hidden  mb-2  sm:mb-4 xl:mb-6"
-          }
-        },
-        "paragraph_tMgENM": {
-          "type": "paragraph",
-          "disabled": true,
-          "settings": {
-            "paragraph": "Ends 3/31",
-            "paragraph_classes": "block lg:hidden  md:hidden sm:hidden  italic  font-bold text-seaweedsm:text-sm md:text-base lg:text-lg xl:text-2xl  mt-auto s"
-          }
-        }
-      },
-      "block_order": [
-        "heading_Kt4WaM",
-        "paragraph_8AANJH",
-        "button_jnnekL",
-        "heading_dtxrQR",
-        "paragraph_YeH9Kt",
-        "button_GBkY4M",
-        "paragraph_tMgENM"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify://shop_images/04.08.26_HP_Banner_Ocean_Eyes_Focused_-_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/04.08.26_HP_Banner_Ocean_Eyes_Focused_-_Desktop_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://collections/spring-skincare-edit",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center sm:right-1/2 sm:pl-12 py-4"
       }
     },
     "image_banner_6A9RMd": {
@@ -2250,10 +2250,10 @@
     }
   },
   "order": [
+    "image_banner_AXJV7G",
     "image_banner_yaL6Jj",
     "image_banner_PBfJPB",
     "image_banner_XC9T98",
-    "image_banner_AXJV7G",
     "image_banner_6A9RMd",
     "image_banner_QyWDpx",
     "image_banner_Ythaji",
