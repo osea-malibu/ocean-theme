@@ -9,12 +9,64 @@
  */
 {
   "sections": {
+    "image_banner_mQetMC": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_TJcEzW": {
+          "type": "heading",
+          "settings": {
+            "heading": "New!",
+            "heading_classes": "font-bold uppercase bg-neon-green text-seaweed rounded-full px-4 md:px-5 lg:px-6 md:py-1 lg:py-2 tracking-wider md:text-xl"
+          }
+        },
+        "heading_hrG9AE": {
+          "type": "heading",
+          "settings": {
+            "heading": "Mother’s Day Gift Sets",
+            "heading_classes": "text-5xl  lg:text-6xl text-seaweed  font-serif lg:whitespace-nowrap"
+          }
+        },
+        "paragraph_hqJXME": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Glow-giving limited-edition gifts for the ones you love.",
+            "paragraph_classes": "text-seaweed sm:mb-4 lg:text-xl text-xl  font-book leading-tight xl:mb-6 hidden lg:block"
+          }
+        },
+        "button_FkNWnN": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop to redeem: Shop all OSEA products",
+            "button_link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "button-primary text-sm md:text-base lg:text-lg"
+          }
+        }
+      },
+      "block_order": [
+        "heading_TJcEzW",
+        "heading_hrG9AE",
+        "paragraph_hqJXME",
+        "button_FkNWnN"
+      ],
+      "settings": {
+        "image_mobile": "shopify://shop_images/Homepage_Banner_1_of_2___Mother_s_Day___2026-04-17_V1_MOBILE_BLANK.jpg",
+        "image": "shopify://shop_images/Homepage_Banner_1_of_2___Mother_s_Day___2026-04-17_DESKTOP_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/shop",
+        "banner_classes": "container",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center gap-4 mt-4 md:mt-5 lg:mt-6"
+      }
+    },
     "image_banner_MPYXnU": {
       "type": "image-banner",
       "blocks": {
         "heading_k9x7aK": {
           "type": "heading",
           "name": "Desktop Heading",
+          "disabled": true,
           "settings": {
             "heading": "Your Spring<br>Ritual Refresh",
             "heading_classes": "hidden lg:block md:block sm:block\n\ntext-4xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-seaweed tracking-tight xs:tracking-normal\n\nsm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl"
@@ -23,6 +75,7 @@
         "paragraph_UiPWMn": {
           "type": "paragraph",
           "name": "Desktop Paragraph",
+          "disabled": true,
           "settings": {
             "paragraph": "Revive your glow with radiance-boosting moisture.",
             "paragraph_classes": "text-seaweed sm:mb-4 lg:text-xl xl:text-2xl 2xl:text-3xl text-md  font-book leading-tight xl:mb-6 hidden sm:block"
@@ -31,6 +84,7 @@
         "button_xqfNKh": {
           "type": "button",
           "name": "Desktop Button",
+          "disabled": true,
           "settings": {
             "button_label": "Shop Now",
             "button_aria_label": "Shop now: Shop our Spring Refresh Essentials",
@@ -41,6 +95,7 @@
         },
         "heading_mXEctc": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "Earn An Extra <br>\n500 Points",
             "heading_classes": "block lg:hidden  md:hidden sm:hidden  text-4xl sm:text-5xl text-seaweed font-medium mt-2"
@@ -48,6 +103,7 @@
         },
         "paragraph_gPDVaf": {
           "type": "paragraph",
+          "disabled": true,
           "settings": {
             "paragraph": "when you subscribe to any product",
             "paragraph_classes": "block lg:hidden  md:hidden sm:hidden   text-seaweed font-medium mb-2 sm:mb-4 xl:mb-6 sm:text-sm md:text-base lg:text-lg xl:text-2xl"
@@ -55,6 +111,7 @@
         },
         "button_j9mwc4": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "button_label": "Shop Now",
             "button_aria_label": "Shop now: All products",
@@ -65,6 +122,7 @@
         },
         "paragraph_ackhNC": {
           "type": "paragraph",
+          "disabled": true,
           "settings": {
             "paragraph": "Ends 3/31",
             "paragraph_classes": "block lg:hidden  md:hidden sm:hidden  italic  font-bold text-seaweedsm:text-sm md:text-base lg:text-lg xl:text-2xl  mt-auto s"
@@ -81,8 +139,8 @@
         "paragraph_ackhNC"
       ],
       "settings": {
-        "image_mobile": "shopify://shop_images/3.20.2026_-_MiniGWP_-_Homepage_Banner_-_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/03.04.26_HP_Banner_Spring_Ready_Skin_-_Desktop_BLANK.jpg",
+        "image_mobile": "shopify://shop_images/MOBILE_697707b2-468e-4e14-8f44-7d12f46a568b.png",
+        "image": "shopify://shop_images/HOEMPAGE_MOTHERS_DAY_BANNER.jpg",
         "is_lazy": false,
         "image_link": "shopify://collections/spring-skincare-edit",
         "banner_classes": "container px-0 xs:px-6",
@@ -123,7 +181,6 @@
         "paragraph_maQMnJ",
         "button_RfCMPR"
       ],
-      "disabled": true,
       "settings": {
         "image_mobile": "shopify://shop_images/3.20.2026_-_MiniGWP_-_Homepage_Banner_-_Mobile_BLANK.jpg",
         "image": "shopify://shop_images/PRESDAY_Homepage_Banner___Early_Access_Desktop_LAYOUT.jpg",
@@ -175,7 +232,6 @@
         "paragraph_yKCfAp",
         "button_jCVRJa"
       ],
-      "disabled": true,
       "settings": {
         "image_mobile": "shopify://shop_images/PRESDAY_Homepage_Banner___Early_Access_Mobile.jpg",
         "image": "shopify://shop_images/PRESDAY_Homepage_Banner___Early_Access_Desktop_LAYOUT.jpg",
@@ -246,7 +302,6 @@
         "paragraph_tNChKE",
         "button_YTbptL"
       ],
-      "disabled": true,
       "settings": {
         "image_mobile": "shopify://shop_images/Homepage_Banner_M_-_01.15.2026.png",
         "image": "shopify://shop_images/DBBS_Launch_-_HP_Banner_Desktop_-_BLANK.jpg",
@@ -290,7 +345,6 @@
         "paragraph_pVdcXP",
         "button_kTMg9W"
       ],
-      "disabled": true,
       "settings": {
         "image_mobile": "shopify://shop_images/1-22-26_HP_Banner_-_Dream_Collection_-_Mobile_BLANK.jpg",
         "image": "shopify://shop_images/1-22-26_HP_Banner_-_Dream_Collection_-_Desktop_BLANK.jpg",
@@ -334,7 +388,6 @@
         "paragraph_jmQAR6",
         "button_zMrNrB"
       ],
-      "disabled": true,
       "settings": {
         "image_mobile": "shopify://shop_images/DBBS_Launch_-_HP_Banner_Mobile_-_BLANK.jpg",
         "image": "shopify://shop_images/DBBS_Launch_-_HP_Banner_Desktop_-_BLANK.jpg",
@@ -386,7 +439,6 @@
         "paragraph_4LQV7D",
         "button_c7CzYX"
       ],
-      "disabled": true,
       "settings": {
         "image_mobile": "shopify://shop_images/PRESDAY_Homepage_Banner___Core_Mobile.jpg",
         "image": "shopify://shop_images/PRESDAY_Homepage_Banner___Core_Ofeer_Desktop.jpg",
@@ -446,7 +498,6 @@
         "paragraph_Giqz6B",
         "button_DRxedH"
       ],
-      "disabled": true,
       "settings": {
         "image_mobile": "shopify://shop_images/DLM_Launch_-_HP_Banner_Mobile_-_BLANK.jpg",
         "image": "shopify://shop_images/DLM_Launch_-_HP_Banner_Desktop_-_BLANK.jpg",
@@ -455,50 +506,6 @@
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-start sm:justify-center pt-4 pb-3 sm:right-1/2 sm:pl-12 sm:justify-start md:pt-8 lg:pl-20 lg:pt-16 xl:pl-24 2xl:pt-20 2xl:-mr-8"
-      }
-    },
-    "image_banner_mQetMC": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_hrG9AE": {
-          "type": "heading",
-          "settings": {
-            "heading": "The Season for Self-Care",
-            "heading_classes": "text-6xl lg:text-7xl xl:text-8xl text-white sm:mt-6 sm:mb-2 sm:text-5xl tracking-tight xs:tracking-normal xl:mb-4 xl:mt-3 font-serif mt-4 max-w-xs sm:max-w-2xl"
-          }
-        },
-        "paragraph_hqJXME": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Nourish your skin and calm your senses with formulas to restore, replenish and renew.",
-            "paragraph_classes": "text-white sm:mb-4 lg:text-xl text-xl  font-book leading-tight xl:mb-6 hidden sm:block"
-          }
-        },
-        "button_FkNWnN": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_aria_label": "Shop to redeem: Shop all OSEA products",
-            "button_link": "shopify://collections/shop",
-            "target_blank": false,
-            "button_classes": "button-white mt-auto text-green sm:mt-2 mb-6"
-          }
-        }
-      },
-      "block_order": [
-        "heading_hrG9AE",
-        "paragraph_hqJXME",
-        "button_FkNWnN"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify://shop_images/12.13.25_HP_Banner_Self_Care_Holiday_V1_-_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/12.13.25_HP_Banner_Self_Care_Holiday_V1_-_Desktop_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://collections/shop",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-start mt-4"
       }
     },
     "165703204544efb73d": {
@@ -2181,6 +2188,7 @@
     }
   },
   "order": [
+    "image_banner_mQetMC",
     "image_banner_MPYXnU",
     "image_banner_BVfAfN",
     "image_banner_YDiG7g",
@@ -2189,7 +2197,6 @@
     "image_banner_eQ8pB7",
     "image_banner_6HVYh3",
     "image_banner_QyWDpx",
-    "image_banner_mQetMC",
     "165703204544efb73d",
     "rich_text_abBMrD",
     "16570286821ae9514b",
