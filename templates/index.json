@@ -42,6 +42,7 @@
         "paragraph_UNK7Rk",
         "button_PGtDHV"
       ],
+      "disabled": true,
       "custom_css": [
         ".bg-dbbs-surface {background: #f5f1fb;}",
         ".border-dbbs-surface {border-color: #f5f1fb;}",
@@ -303,6 +304,13 @@
     "image_banner_miYQ6K": {
       "type": "image-banner",
       "blocks": {
+        "heading_XAtQ49": {
+          "type": "heading",
+          "settings": {
+            "heading": "New!",
+            "heading_classes": "font-bold uppercase bg-neon-green text-seaweed rounded-full px-4 lg:px-6 xl:px-7 lg:py-1 xl:py-1.5 tracking-wider text-base lg:text-lg xl:text-xl mt-2 xl:mt-4 mb-4 sm:mb-2 lg:mb-4 xl:mb-6"
+          }
+        },
         "paragraph_RqjKyp": {
           "type": "paragraph",
           "settings": {
@@ -313,15 +321,15 @@
         "heading_7QfwaL": {
           "type": "heading",
           "settings": {
-            "heading": "Mother's Day<br class=\"block sm:hidden\"> Gift Sets",
-            "heading_classes": "mb-1 text-6xl sm:text-5xl  lg:text-7xl tracking-tighter xl:mb-2  font-book font-serif sm:mt-auto"
+            "heading": "Mother’s Day Gift Sets",
+            "heading_classes": "text-5xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl text-seaweed font-serif lg:whitespace-nowrap px-5 sm:px-7 xl:px-10 mb-4 sm:mb-1"
           }
         },
         "paragraph_JNdYj7": {
           "type": "paragraph",
           "settings": {
-            "paragraph": "Make every day a spa day with our bestselling essentials",
-            "paragraph_classes": "hidden md:block text-xl  font-book tracking-tight md:text-lg lg:text-xl"
+            "paragraph": "Glow-giving limited-edition gifts for the ones you love.",
+            "paragraph_classes": "text-seaweed md:text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-book leading-tight hidden sm:block lg:mt-2 xl:mt-3 max-w-xl xl:max-w-2xl lg:whitespace-nowrap mb-2 lg:mb-4 xl:mb-6"
           }
         },
         "button_6r6Wgw": {
@@ -331,25 +339,25 @@
             "button_aria_label": "Shop now: all gifts and sets",
             "button_link": "https://wholesale.oseamalibu.com/collections/gifts-sets",
             "target_blank": false,
-            "button_classes": "lg:button-lg mt-2 xl:mt-6 button-primary"
+            "button_classes": "button-primary text-sm lg:text-base xl:button-lg 2xl:text-lg"
           }
         }
       },
       "block_order": [
+        "heading_XAtQ49",
         "paragraph_RqjKyp",
         "heading_7QfwaL",
         "paragraph_JNdYj7",
         "button_6r6Wgw"
       ],
-      "disabled": true,
       "settings": {
-        "image_mobile": "shopify://shop_images/Mothers_Day_2024_HP_Banner_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/Mothers_Day_2025_HP_Banner_Desktop_BLANK.jpg",
+        "image_mobile": "shopify://shop_images/Homepage_Banner_1_of_2___Mother_s_Day___2026-04-17_V1_MOBILE_BLANK.jpg",
+        "image": "shopify://shop_images/Homepage_Banner_1_of_2___Mother_s_Day___2026-04-17_DESKTOP_BLANK.jpg",
         "is_lazy": false,
         "image_link": "shopify://collections/shop",
-        "banner_classes": "container px-0 xs:px-6",
+        "banner_classes": "container",
         "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:pl-0 sm:pr-0 text-center flex flex-col items-center pt-4 sm:pt-0 pb-5  sm:pr-0"
+        "text_block_classes": "absolute inset-0 text-center flex flex-col items-center pt-4 md:pt-5 lg:pt-6 xl:pt-10 2xl:pt-12 px-4 sm:px-6 xl:px-8"
       }
     },
     "c4d3f8bc-418e-4184-a588-698c391f3344": {
