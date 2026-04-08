@@ -39,7 +39,7 @@
 -%}
 
 {%- if promo_section_url != blank -%}
-  <a href="{{ promo_section_url }}" class="block">
+  <a href="{{ promo_section_url }}" class="block {{ promo_section_link_classes }}">
 {%- endif -%}
 
 {% if has_video %}
@@ -72,7 +72,7 @@
   </div>
 {% else %}
   {% comment %}theme-check-disable RemoteAsset {% endcomment %}
-  <picture class="relative z-0 block w-full">
+  <picture class="relative z-0 block w-full {{ promo_section_image_wrapper_classes }}">
     {%- if mobile_img != blank -%}
       <source
         media="(max-width: 639px)"
