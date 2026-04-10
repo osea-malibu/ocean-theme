@@ -38,7 +38,7 @@
                                   {% render 'icon-email', classes: 'w-6 h-6', aria_hidden: true %}
                                   <span>Email</span>
                                 </a>
-                                <button onclick="GorgiasChat.open()" class="button button-secondary button-sm button-icon button-icon-left w-full">
+                                <button onclick="if (window.GorgiasChat && typeof GorgiasChat.open === 'function') { GorgiasChat.open(); }" class="button button-secondary button-sm button-icon button-icon-left w-full">
                                   {% render 'icon-chat', classes: 'w-6 h-6', aria_hidden: true %}
                                   <span>Chat</span>
                                 </button>
