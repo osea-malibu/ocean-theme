@@ -22,7 +22,14 @@ Accepts:
   %}
 {% endcomment %}
 
-{%- unless set_products contains product.handle -%}
+{%- liquid
+  assign is_gift_card_product = false
+  if product.type contains 'Gift Card'
+    assign is_gift_card_product = true
+  endif
+-%}
+
+{%- unless set_products contains product.handle and is_gift_card_product == false -%}
   <div class="{{ block.settings.variant_classes }}">
     {%- unless product.has_only_default_variant -%}
       {%- if product.variants.size == 1 -%}
