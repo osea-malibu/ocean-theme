@@ -92,48 +92,148 @@
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center sm:right-1/2 sm:pl-12 py-4"
       }
     },
-    "image_banner_yaL6Jj": {
+    "image_banner_RQFMjN": {
       "type": "image-banner",
       "blocks": {
-        "heading_mmABAi": {
+        "heading_GXKWrB": {
           "type": "heading",
+          "name": "Desktop Heading",
           "settings": {
-            "heading": "Your Spring Skin Routine",
-            "heading_classes": "text-4xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-seaweed tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl\nleading-[1.1]"
+            "heading": "Brighter Eyes Start Here",
+            "heading_classes": "hidden lg:block md:block sm:block\nmd:w-2/3 lg:w-full xl:w-3/4\ntext-4xl lg:text-6xl xl:text-8xl    \n\nfont-serif text-seaweed tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl\nleading-[1.1]"
           }
         },
-        "paragraph_UrejCj": {
+        "paragraph_tmCqqx": {
           "type": "paragraph",
+          "name": "Desktop Paragraph",
           "settings": {
-            "paragraph": "Revive your glow with radiance-boosting moisture.",
-            "paragraph_classes": "text-seaweed sm:mb-4 lg:text-xl xl:text-2xl 2xl:text-3xl text-md  font-book leading-tight xl:mb-6 hidden sm:block"
+            "paragraph": "Discover anti-aging essentials for smoother, firmer skin.",
+            "paragraph_classes": "hidden lg:block md:block sm:block\ntext-seaweed sm:mb-4 lg:text-lg xl:text-2xl text-md  font-book leading-tight lg:whitespace-nowrap xl:mb-6 hidden sm:block"
           }
         },
-        "button_TrGhrP": {
+        "button_dATcAi": {
           "type": "button",
+          "name": "Desktop Button",
           "settings": {
             "button_label": "Shop Now",
             "button_aria_label": "Shop now: Shop our Spring Refresh Essentials",
-            "button_link": "shopify://collections/spring-refresh-essentials",
+            "button_link": "shopify://products/ocean-eyes",
             "target_blank": true,
-            "button_classes": "button-primary"
+            "button_classes": "hidden sm:block \nbutton-primary"
+          }
+        },
+        "heading_zMTabR": {
+          "type": "heading",
+          "settings": {
+            "heading": "A Little <i>Extra Glow</i>, On Us",
+            "heading_classes": "block sm:hidden text-4xl  text-white font-serif w-2/3 mt-4"
+          }
+        },
+        "paragraph_KHQtXH": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Yours FREE for a limited time with orders $90+",
+            "paragraph_classes": "text-white text-lg  font-book block sm:hidden w-2/3 px-6 mt-4"
+          }
+        },
+        "button_nGqjzX": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop to redeem: Shop all OSEA products",
+            "button_link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "button-primary text-sm lg:text-base xl:button-lg 2xl:text-lg mb-8\nblock sm:hidden\nmt-auto sm:mt-0"
           }
         }
       },
       "block_order": [
-        "heading_mmABAi",
-        "paragraph_UrejCj",
-        "button_TrGhrP"
+        "heading_GXKWrB",
+        "paragraph_tmCqqx",
+        "button_dATcAi",
+        "heading_zMTabR",
+        "paragraph_KHQtXH",
+        "button_nGqjzX"
       ],
       "disabled": true,
+      "name": "Brighter Eyes - Little Glow Banner",
       "settings": {
-        "image_mobile": "shopify://shop_images/03.04.26_HP_Banner_Spring_Ready_Skin_-_Desktop_BLANK_1.jpg",
-        "image": "shopify://shop_images/03.04.26_HP_Banner_Spring_Ready_Skin_-_Desktop_BLANK_0d34756e-a738-42f1-aa57-fcb11f301939.jpg",
+        "image_mobile": "shopify://shop_images/Homepage_Banner___Mini_GWP___2026-04-14_BLANK.jpg",
+        "image": "shopify://shop_images/04.08.26_HP_Banner_Ocean_Eyes_Focused_-_Desktop_BLANK.jpg",
         "is_lazy": false,
-        "image_link": "shopify://collections/spring-skincare-edit",
-        "banner_classes": "container px-0 xs:px-6",
+        "image_link": "shopify://products/ocean-eyes",
+        "banner_classes": "container",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center sm:right-1/2 sm:pl-12 py-4"
+      }
+    },
+    "image_banner_67RbHG": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_im8hYE": {
+          "type": "heading",
+          "settings": {
+            "heading": "New!",
+            "heading_classes": "hidden sm:block font-bold uppercase bg-neon-green text-seaweed rounded-full px-4 lg:px-6 xl:px-7 lg:py-1 xl:py-1.5 tracking-wider text-base lg:text-lg xl:text-xl mt-2 xl:mt-4 mb-4 sm:mb-2 lg:mb-4 xl:mb-6"
+          }
+        },
+        "heading_4qTVUU": {
+          "type": "heading",
+          "settings": {
+            "heading": "Mother’s Day Gift Sets",
+            "heading_classes": "hidden sm:block text-5xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl text-seaweed font-serif lg:whitespace-nowrap px-5 sm:px-7 xl:px-10 mb-4 sm:mb-1"
+          }
+        },
+        "paragraph_cHVEqF": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Glow-giving limited-edition gifts for the ones you love.",
+            "paragraph_classes": "text-seaweed md:text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-book leading-tight hidden sm:block lg:mt-2 xl:mt-3 max-w-xl xl:max-w-2xl lg:whitespace-nowrap mb-2 lg:mb-4 xl:mb-6"
+          }
+        },
+        "heading_bVKd7n": {
+          "type": "heading",
+          "settings": {
+            "heading": "A Little <i>Extra Glow</i>, On Us",
+            "heading_classes": "block sm:hidden text-4xl  text-white font-serif w-2/3 mt-4"
+          }
+        },
+        "paragraph_VmBWAb": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Yours FREE for a limited time with orders $90+",
+            "paragraph_classes": "text-white text-lg  font-book block sm:hidden w-2/3 px-6 mt-4"
+          }
+        },
+        "button_aHQNpN": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop to redeem: Shop all OSEA products",
+            "button_link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "button-primary text-sm lg:text-base xl:button-lg 2xl:text-lg mb-8\n\nmt-auto sm:mt-0"
+          }
+        }
+      },
+      "block_order": [
+        "heading_im8hYE",
+        "heading_4qTVUU",
+        "paragraph_cHVEqF",
+        "heading_bVKd7n",
+        "paragraph_VmBWAb",
+        "button_aHQNpN"
+      ],
+      "disabled": true,
+      "name": "Mother's Day HP Banner 1 v2",
+      "settings": {
+        "image_mobile": "shopify://shop_images/Homepage_Banner___Mini_GWP___2026-04-14_BLANK.jpg",
+        "image": "shopify://shop_images/Homepage_Banner_1_of_2___Mother_s_Day___2026-04-17_DESKTOP_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/shop",
+        "banner_classes": "container",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 text-center flex flex-col items-center pt-4 md:pt-5 lg:pt-6 xl:pt-10 2xl:pt-12 px-4 sm:px-6 xl:px-8"
       }
     },
     "image_banner_PBfJPB": {
@@ -523,50 +623,6 @@
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:left-1/2 mt-0 sm:mt-0 sm:pr-12"
-      }
-    },
-    "image_banner_mQetMC": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_hrG9AE": {
-          "type": "heading",
-          "settings": {
-            "heading": "The Season for Self-Care",
-            "heading_classes": "text-6xl lg:text-7xl xl:text-8xl text-white sm:mt-6 sm:mb-2 sm:text-5xl tracking-tight xs:tracking-normal xl:mb-4 xl:mt-3 font-serif mt-4 max-w-xs sm:max-w-2xl"
-          }
-        },
-        "paragraph_hqJXME": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Nourish your skin and calm your senses with formulas to restore, replenish and renew.",
-            "paragraph_classes": "text-white sm:mb-4 lg:text-xl text-xl  font-book leading-tight xl:mb-6 hidden sm:block"
-          }
-        },
-        "button_FkNWnN": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_aria_label": "Shop to redeem: Shop all OSEA products",
-            "button_link": "shopify://collections/shop",
-            "target_blank": false,
-            "button_classes": "button-white mt-auto text-green sm:mt-2 mb-6"
-          }
-        }
-      },
-      "block_order": [
-        "heading_hrG9AE",
-        "paragraph_hqJXME",
-        "button_FkNWnN"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify://shop_images/12.13.25_HP_Banner_Self_Care_Holiday_V1_-_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/12.13.25_HP_Banner_Self_Care_Holiday_V1_-_Desktop_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://collections/shop",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-start mt-4"
       }
     },
     "165703204544efb73d": {
@@ -2251,7 +2307,8 @@
   },
   "order": [
     "image_banner_AXJV7G",
-    "image_banner_yaL6Jj",
+    "image_banner_RQFMjN",
+    "image_banner_67RbHG",
     "image_banner_PBfJPB",
     "image_banner_XC9T98",
     "image_banner_6A9RMd",
@@ -2259,7 +2316,6 @@
     "image_banner_Ythaji",
     "image_banner_eQ8pB7",
     "image_banner_F7Md9k",
-    "image_banner_mQetMC",
     "165703204544efb73d",
     "rich_text_abBMrD",
     "16570286821ae9514b",
