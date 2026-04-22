@@ -18,7 +18,7 @@
     assign badge_text = 'Out of Stock'
   elsif product.metafields.badge.text != blank
     assign badge_text = product.metafields.badge.text
-  elsif set_products contains product.handle
+  elsif set_products contains product.handle and product.compare_at_price != blank and product.compare_at_price > product.price
     assign discount_amount = product.compare_at_price | minus: product.price
     if percent_discount
       assign original_price_float = product.compare_at_price | times: 1.0
