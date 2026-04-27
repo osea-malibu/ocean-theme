@@ -117,6 +117,8 @@
                 remove_linking: remove_linking,
                 remove_lazy_loading: remove_lazy_loading,
                 fetch_priority_high: fetch_priority_high,
+                enable_image_slider: section.settings.enable_product_card_image_slider,
+                image_slider_limit: section.settings.product_card_image_slider_limit,
                 image_element_class: 'aspect-[4/5]'
               -%}
             </li>
@@ -251,6 +253,21 @@
       "type": "checkbox",
       "id": "show_reviews",
       "label": "Show product reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_product_card_image_slider",
+      "default": true,
+      "label": "Enable product card image slider"
+    },
+    {
+      "type": "range",
+      "id": "product_card_image_slider_limit",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Product card image slider limit"
     }
   ]
 }

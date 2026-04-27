@@ -2155,6 +2155,121 @@ class ExpandableSection extends HTMLElement {
 }
 customElements.define("expandable-section", ExpandableSection);
 
+class ProductCardImageSlider extends HTMLElement {
+  constructor() {
+    super();
+
+    this.track = this.querySelector("[data-product-card-slider-track]");
+    this.slides = Array.from(this.querySelectorAll("[data-product-card-slider-slide]"));
+    this.prevButton = this.querySelector("[data-product-card-slider-prev]");
+    this.nextButton = this.querySelector("[data-product-card-slider-next]");
+    this.dots = Array.from(this.querySelectorAll("[data-product-card-slider-dot]"));
+    this.activeIndex = 0;
+    this.scrollFrame = null;
+    this.dotClickHandlers = [];
+
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handlePreviousClick = this.handlePreviousClick.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
+    this.handleResize = debounce(() => this.update(), 100);
+  }
+
+  connectedCallback() {
+    if (!this.track || this.slides.length < 2) return;
+
+    this.prevButton?.addEventListener("click", this.handlePreviousClick);
+    this.nextButton?.addEventListener("click", this.handleNextClick);
+    this.track.addEventListener("scroll", this.handleScroll, { passive: true });
+    this.dotClickHandlers = this.dots.map((dot, index) => {
+      const handler = () => this.scrollToIndex(index);
+      dot.addEventListener("click", handler);
+      return { dot, handler };
+    });
+    window.addEventListener("resize", this.handleResize);
+
+    this.update();
+  }
+
+  disconnectedCallback() {
+    this.prevButton?.removeEventListener("click", this.handlePreviousClick);
+    this.nextButton?.removeEventListener("click", this.handleNextClick);
+    this.track?.removeEventListener("scroll", this.handleScroll);
+    this.dotClickHandlers.forEach(({ dot, handler }) => {
+      dot.removeEventListener("click", handler);
+    });
+    this.dotClickHandlers = [];
+    window.removeEventListener("resize", this.handleResize);
+
+    if (this.scrollFrame) {
+      window.cancelAnimationFrame(this.scrollFrame);
+    }
+  }
+
+  get prefersReducedMotion() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  getSlideLeft(slide) {
+    return slide.offsetLeft - this.track.offsetLeft;
+  }
+
+  getActiveIndex() {
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    this.slides.forEach((slide, index) => {
+      const distance = Math.abs(this.getSlideLeft(slide) - this.track.scrollLeft);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    return closestIndex;
+  }
+
+  scrollToIndex(index) {
+    const targetIndex = Math.max(0, Math.min(this.slides.length - 1, index));
+    const targetSlide = this.slides[targetIndex];
+    if (!targetSlide) return;
+
+    this.track.scrollTo({
+      left: this.getSlideLeft(targetSlide),
+      behavior: this.prefersReducedMotion ? "auto" : "smooth",
+    });
+  }
+
+  handlePreviousClick() {
+    this.scrollToIndex(this.activeIndex - 1);
+  }
+
+  handleNextClick() {
+    this.scrollToIndex(this.activeIndex + 1);
+  }
+
+  handleScroll() {
+    if (this.scrollFrame) return;
+
+    this.scrollFrame = window.requestAnimationFrame(() => {
+      this.scrollFrame = null;
+      this.update();
+    });
+  }
+
+  update() {
+    this.activeIndex = this.getActiveIndex();
+
+    this.prevButton?.toggleAttribute("disabled", this.activeIndex === 0);
+    this.nextButton?.toggleAttribute("disabled", this.activeIndex === this.slides.length - 1);
+
+    this.dots.forEach((dot, index) => {
+      dot.setAttribute("aria-current", index === this.activeIndex ? "true" : "false");
+    });
+  }
+}
+customElements.define("product-card-image-slider", ProductCardImageSlider);
+
 // TODO: replace all sliders with CSS-only solution
 // Glide.js: https://glidejs.com/docs/
 class GlideSlider extends HTMLElement {
