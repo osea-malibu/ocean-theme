@@ -32,6 +32,8 @@
     - remove_lazy_loading: {Boolean} Remove lazy loading from images, default: false (optional)
     - fetch_priority_high: {Boolean} Sets fetchpriority="high" on the default image (optional)
     - plp_card: {Boolean} Renders card in two column layout, makes image smaller default: false (optional)
+    - enable_image_slider: {Boolean} Renders a scroll-snap image slider when multiple product images exist. Default: false (optional)
+    - image_slider_limit: {Number} Maximum image count for the product card image slider. Default: 4 (optional)
     - title_text: {Boolean} Replaces product name with custom title (optional)
     - short_description_text: {Boolean} Replaces short description with custom text (optional)
     - custom_badge_html: {Boolean} Replaces badge with custom HTML (optional)
@@ -331,17 +333,6 @@
 
   <div class="relative block overflow-hidden no-underline rounded mb-2" tabindex="-1">
     {%- if card_product.featured_media -%}
-      {%- if remove_linking -%}
-        <div class="group block bg-wave-100 aspect-4/5{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
-      {%- else -%}
-        <a
-          aria-label="{{ card_product.title | escape }}"
-          href="{{ card_product.url | default: '#' }}"
-          class="group block bg-wave-100 aspect-4/5{% if image_class != blank %} {{ image_class }}{% endif %}"
-          tabindex="-1"
-        >
-      {%- endif -%}
-
       {%- liquid
         if custom_default_image != nil
           assign default_image = custom_default_image
@@ -367,46 +358,254 @@
         assign card_sizes = sizes_attr | default: '(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw'
 
         assign default_w = 480
+
+        assign product_card_slider_limit = image_slider_limit | default: 4 | plus: 0
+        assign product_card_slider_count = 0
+        if enable_image_slider and product_card_slider_limit > 1
+          assign default_image_can_slide = false
+          if default_image.media_type == 'image' or default_image.media_type == blank
+            assign default_image_can_slide = true
+          endif
+
+          if default_image_can_slide
+            assign product_card_slider_count = 1
+            for media in card_product.media
+              if product_card_slider_count >= product_card_slider_limit
+                break
+              endif
+
+              if media.media_type == 'image' and media.id != default_image.id
+                assign product_card_slider_count = product_card_slider_count | plus: 1
+              endif
+            endfor
+          endif
+        endif
+
+        assign render_image_slider = false
+        if product_card_slider_count > 1
+          assign render_image_slider = true
+        endif
       -%}
 
-      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+      {% comment %}theme-check-disable RemoteAsset {% endcomment %}
 
-      {%- if default_master contains '.gif' -%}
-        <img
-          src="{{ default_master }}"
-          alt="{{ default_image.alt | escape }}"
-          sizes="{{ card_sizes }}"
-          width="{{ default_image.width }}"
-          height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
-          id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
-          loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
-          {% if fetch_priority_high %}
-            fetchpriority="high"
-          {% endif %}
-          class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
+      {%- if render_image_slider -%}
+        <product-card-image-slider
+          class="product-card-image-slider bg-wave-100 aspect-4/5{% if image_class != blank %} {{ image_class }}{% endif %}"
         >
+          <div class="product-card-image-slider__track" data-product-card-slider-track>
+            <div class="product-card-image-slider__slide" data-product-card-slider-slide>
+              {%- if remove_linking -%}
+                <div class="block w-full h-full" tabindex="-1">
+              {%- else -%}
+                <a
+                  aria-label="{{ card_product.title | escape }}"
+                  href="{{ card_product.url | default: '#' }}"
+                  class="block w-full h-full"
+                  tabindex="-1"
+                >
+              {%- endif -%}
 
+              {%- if default_master contains '.gif' -%}
+                <img
+                  src="{{ default_master }}"
+                  alt="{{ default_image.alt | escape }}"
+                  sizes="{{ card_sizes }}"
+                  width="{{ default_image.width }}"
+                  height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
+                  id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+                  loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
+                  {% if fetch_priority_high %}
+                    fetchpriority="high"
+                  {% endif %}
+                  class="w-full h-full object-cover{% if image_element_class != blank %} {{ image_element_class }}{% endif %}"
+                >
+              {%- else -%}
+                <img
+                  src="{% render 'imgix', src: default_master, w: default_w %}"
+                  srcset="
+                    {% render 'imgix', src: default_master, w: 320 %} 320w,
+                    {% render 'imgix', src: default_master, w: 480 %} 480w,
+                    {% render 'imgix', src: default_master, w: 640 %} 640w,
+                    {% render 'imgix', src: default_master, w: 960 %} 960w,
+                    {% render 'imgix', src: default_master, w: 1200 %} 1200w
+                  "
+                  sizes="{{ card_sizes }}"
+                  alt="{{ default_image.alt | escape }}"
+                  width="{{ default_image.width }}"
+                  height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
+                  id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+                  loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
+                  {% if fetch_priority_high %}
+                    fetchpriority="high"
+                  {% endif %}
+                  class="w-full h-full object-cover{% if image_element_class != blank %} {{ image_element_class }}{% endif %}"
+                >
+              {%- endif -%}
+
+              {%- if remove_linking -%}</div>{%- else -%}</a>{%- endif -%}
+            </div>
+
+            {%- assign rendered_slider_images = 1 -%}
+            {%- for media in card_product.media -%}
+              {%- if rendered_slider_images >= product_card_slider_limit -%}
+                {%- break -%}
+              {%- endif -%}
+
+              {%- if media.media_type == 'image' and media.id != default_image.id -%}
+                {%- assign slide_master = media | image_url -%}
+                <div class="product-card-image-slider__slide" data-product-card-slider-slide>
+                  {%- if remove_linking -%}
+                    <div class="block w-full h-full" tabindex="-1">
+                  {%- else -%}
+                    <a
+                      aria-label="{{ card_product.title | escape }}"
+                      href="{{ card_product.url | default: '#' }}"
+                      class="block w-full h-full"
+                      tabindex="-1"
+                    >
+                  {%- endif -%}
+
+                  {%- if slide_master contains '.gif' -%}
+                    <img
+                      src="{{ slide_master }}"
+                      alt="{{ media.alt | escape }}"
+                      sizes="{{ card_sizes }}"
+                      width="{{ media.width }}"
+                      height="{{ media.width | divided_by: media.aspect_ratio | round }}"
+                      id="ProductCard-SliderImage-{{ card_product.id }}-{{ media.id }}-{{ section_id }}"
+                      loading="lazy"
+                      class="w-full h-full object-cover{% if image_element_class != blank %} {{ image_element_class }}{% endif %}"
+                    >
+                  {%- else -%}
+                    <img
+                      src="{% render 'imgix', src: slide_master, w: default_w %}"
+                      srcset="
+                        {% render 'imgix', src: slide_master, w: 320 %} 320w,
+                        {% render 'imgix', src: slide_master, w: 480 %} 480w,
+                        {% render 'imgix', src: slide_master, w: 640 %} 640w,
+                        {% render 'imgix', src: slide_master, w: 960 %} 960w,
+                        {% render 'imgix', src: slide_master, w: 1200 %} 1200w
+                      "
+                      sizes="{{ card_sizes }}"
+                      alt="{{ media.alt | escape }}"
+                      width="{{ media.width }}"
+                      height="{{ media.width | divided_by: media.aspect_ratio | round }}"
+                      id="ProductCard-SliderImage-{{ card_product.id }}-{{ media.id }}-{{ section_id }}"
+                      loading="lazy"
+                      class="w-full h-full object-cover{% if image_element_class != blank %} {{ image_element_class }}{% endif %}"
+                    >
+                  {%- endif -%}
+
+                  {%- if remove_linking -%}</div>{%- else -%}</a>{%- endif -%}
+                </div>
+                {%- assign rendered_slider_images = rendered_slider_images | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          <button
+            type="button"
+            class="product-card-image-slider__button product-card-image-slider__button--prev"
+            aria-label="View previous image for {{ card_product.title | escape }}"
+            data-product-card-slider-prev
+            disabled
+          >
+            {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'w-4 h-4' %}
+          </button>
+          <button
+            type="button"
+            class="product-card-image-slider__button product-card-image-slider__button--next"
+            aria-label="View next image for {{ card_product.title | escape }}"
+            data-product-card-slider-next
+          >
+            {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'w-4 h-4 rotate-180' %}
+          </button>
+
+          <div class="product-card-image-slider__dots" aria-label="Product images">
+            {%- for dot in (1..product_card_slider_count) -%}
+              <button
+                type="button"
+                class="product-card-image-slider__dot"
+                aria-label="View image {{ forloop.index }} for {{ card_product.title | escape }}"
+                aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                data-product-card-slider-dot
+              >
+                <span class="sr-only">View image {{ forloop.index }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </product-card-image-slider>
       {%- else -%}
-        {%- if plp_card -%}
-          <picture>
-            <source
-              media="(max-width: 639px)"
-              srcset="
-                {% render 'imgix', src: default_master, w: 320 %} 320w,
-                {% render 'imgix', src: default_master, w: 480 %} 480w,
-                {% render 'imgix', src: default_master, w: 640 %} 640w
-              "
-              sizes="{{ card_sizes }}"
-            >
-            <source
-              media="(min-width: 640px)"
-              srcset="
-                {% render 'imgix', src: default_master, w: 640 %} 640w,
-                {% render 'imgix', src: default_master, w: 960 %} 960w,
-                {% render 'imgix', src: default_master, w: 1200 %} 1200w
-              "
-              sizes="{{ card_sizes }}"
-            >
+        {%- if remove_linking -%}
+          <div class="group block bg-wave-100 aspect-4/5{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
+        {%- else -%}
+          <a
+            aria-label="{{ card_product.title | escape }}"
+            href="{{ card_product.url | default: '#' }}"
+            class="group block bg-wave-100 aspect-4/5{% if image_class != blank %} {{ image_class }}{% endif %}"
+            tabindex="-1"
+          >
+        {%- endif -%}
+
+        {%- if default_master contains '.gif' -%}
+          <img
+            src="{{ default_master }}"
+            alt="{{ default_image.alt | escape }}"
+            sizes="{{ card_sizes }}"
+            width="{{ default_image.width }}"
+            height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
+            id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+            loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
+            {% if fetch_priority_high %}
+              fetchpriority="high"
+            {% endif %}
+            class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
+          >
+
+        {%- else -%}
+          {%- if plp_card -%}
+            <picture>
+              <source
+                media="(max-width: 639px)"
+                srcset="
+                  {% render 'imgix', src: default_master, w: 320 %} 320w,
+                  {% render 'imgix', src: default_master, w: 480 %} 480w,
+                  {% render 'imgix', src: default_master, w: 640 %} 640w
+                "
+                sizes="{{ card_sizes }}"
+              >
+              <source
+                media="(min-width: 640px)"
+                srcset="
+                  {% render 'imgix', src: default_master, w: 640 %} 640w,
+                  {% render 'imgix', src: default_master, w: 960 %} 960w,
+                  {% render 'imgix', src: default_master, w: 1200 %} 1200w
+                "
+                sizes="{{ card_sizes }}"
+              >
+              <img
+                src="{% render 'imgix', src: default_master, w: default_w %}"
+                srcset="
+                  {% render 'imgix', src: default_master, w: 320 %} 320w,
+                  {% render 'imgix', src: default_master, w: 480 %} 480w,
+                  {% render 'imgix', src: default_master, w: 640 %} 640w,
+                  {% render 'imgix', src: default_master, w: 960 %} 960w,
+                  {% render 'imgix', src: default_master, w: 1200 %} 1200w
+                "
+                sizes="{{ card_sizes }}"
+                alt="{{ default_image.alt | escape }}"
+                width="{{ default_image.width }}"
+                height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
+                id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+                loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
+                {% if fetch_priority_high %}
+                  fetchpriority="high"
+                {% endif %}
+                {% if image_element_class != blank %}class="{{ image_element_class }}"{% else %}class="w-full h-full object-cover"{% endif %}
+              >
+            </picture>
+          {%- else -%}
             <img
               src="{% render 'imgix', src: default_master, w: default_w %}"
               srcset="
@@ -425,70 +624,49 @@
               {% if fetch_priority_high %}
                 fetchpriority="high"
               {% endif %}
-              {% if image_element_class != blank %}class="{{ image_element_class }}"{% else %}class="w-full h-full object-cover"{% endif %}
+              class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
             >
-          </picture>
-        {%- else -%}
-          <img
-            src="{% render 'imgix', src: default_master, w: default_w %}"
-            srcset="
-              {% render 'imgix', src: default_master, w: 320 %} 320w,
-              {% render 'imgix', src: default_master, w: 480 %} 480w,
-              {% render 'imgix', src: default_master, w: 640 %} 640w,
-              {% render 'imgix', src: default_master, w: 960 %} 960w,
-              {% render 'imgix', src: default_master, w: 1200 %} 1200w
-            "
-            sizes="{{ card_sizes }}"
-            alt="{{ default_image.alt | escape }}"
-            width="{{ default_image.width }}"
-            height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
-            id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
-            loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
-            {% if fetch_priority_high %}
-              fetchpriority="high"
-            {% endif %}
-            class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
-          >
+          {%- endif -%}
         {%- endif -%}
+
+        {%- if hover_master and show_secondary_image_on_hover -%}
+          {%- assign hover_classes = 'object-cover ' | append: 'absolute min-h-full inset-x-0 top-1/2 -translate-y-1/2 bg-cover bg-center bg-wave-100 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity duration-300' -%}
+
+          {%- if hover_master contains '.gif' -%}
+            <img
+              src="{{ hover_master }}"
+              srcset="{{ hover_master }}"
+              sizes="{{ card_sizes }}"
+              alt="{{ hover_media.alt | escape }}"
+              loading="lazy"
+              class="{{ hover_classes }}"
+              width="{{ hover_media.width }}"
+              height="{{ hover_media.width | divided_by: hover_media.aspect_ratio | round }}"
+            >
+          {%- else -%}
+            <img
+              src="{% render 'imgix', src: hover_master, w: default_w %}"
+              srcset="
+                {% render 'imgix', src: hover_master, w: 320 %} 320w,
+                {% render 'imgix', src: hover_master, w: 480 %} 480w,
+                {% render 'imgix', src: hover_master, w: 640 %} 640w,
+                {% render 'imgix', src: hover_master, w: 960 %} 960w,
+                {% render 'imgix', src: hover_master, w: 1200 %} 1200w
+              "
+              sizes="{{ card_sizes }}"
+              alt="{{ hover_media.alt | escape }}"
+              loading="lazy"
+              class="{{ hover_classes }}"
+              width="{{ hover_media.width }}"
+              height="{{ hover_media.width | divided_by: hover_media.aspect_ratio | round }}"
+            >
+          {%- endif -%}
+        {%- endif -%}
+
+        {% if remove_linking %}</div>{% else %}</a>{% endif %}
       {%- endif -%}
 
-      {%- if hover_master and show_secondary_image_on_hover -%}
-        {%- assign hover_classes = 'object-cover ' | append: 'absolute min-h-full inset-x-0 top-1/2 -translate-y-1/2 bg-cover bg-center bg-wave-100 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity duration-300' -%}
-
-        {%- if hover_master contains '.gif' -%}
-          <img
-            src="{{ hover_master }}"
-            srcset="{{ hover_master }}"
-            sizes="{{ card_sizes }}"
-            alt="{{ hover_media.alt | escape }}"
-            loading="lazy"
-            class="{{ hover_classes }}"
-            width="{{ hover_media.width }}"
-            height="{{ hover_media.width | divided_by: hover_media.aspect_ratio | round }}"
-          >
-        {%- else -%}
-          <img
-            src="{% render 'imgix', src: hover_master, w: default_w %}"
-            srcset="
-              {% render 'imgix', src: hover_master, w: 320 %} 320w,
-              {% render 'imgix', src: hover_master, w: 480 %} 480w,
-              {% render 'imgix', src: hover_master, w: 640 %} 640w,
-              {% render 'imgix', src: hover_master, w: 960 %} 960w,
-              {% render 'imgix', src: hover_master, w: 1200 %} 1200w
-            "
-            sizes="{{ card_sizes }}"
-            alt="{{ hover_media.alt | escape }}"
-            loading="lazy"
-            class="{{ hover_classes }}"
-            width="{{ hover_media.width }}"
-            height="{{ hover_media.width | divided_by: hover_media.aspect_ratio | round }}"
-          >
-        {%- endif -%}
-      {%- endif -%}
-
-      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-
-      {% if remove_linking %}</div>{% else %}</a>{% endif %}
+      {% comment %}theme-check-enable RemoteAsset {% endcomment %}
     {%- else -%}
 
       <h2 class="h3">
