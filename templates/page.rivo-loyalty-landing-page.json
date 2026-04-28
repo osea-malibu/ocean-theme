@@ -110,6 +110,7 @@
         "paragraph_LEhtQQ",
         "button_KFEnB8"
       ],
+      "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image_mobile": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-09_MOBILE_BLANK.jpg",
@@ -119,6 +120,50 @@
         "banner_classes": "container",
         "image_classes": "h-auto w-full",
         "text_block_classes": "absolute inset-y-0 left-0 w-2/3 sm:w-3/5 md:w-1/2 lg:w-1/2 text-center flex flex-col items-center justify-center pl-6 pr-2 sm:pl-6 sm:pr-3 md:pl-6 md:pr-4 lg:pl-12 lg:pr-6 text-seaweed lg:gap-2"
+      }
+    },
+    "image_banner_KK88we": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_H39rnb": {
+          "type": "heading",
+          "settings": {
+            "heading": "New! Seaweed-powered daily mineral SPF 50",
+            "heading_classes": "font-serif text-ms-text px-2"
+          }
+        },
+        "paragraph_MPJVXG": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Earn 1,000 points when you purchase Marine Screen",
+            "paragraph_classes": "text-ms-text sm:font-medium text-xs px-2"
+          }
+        },
+        "button_bKmTLN": {
+          "type": "button",
+          "settings": {
+            "button_label": "SHOP NOW",
+            "button_aria_label": "",
+            "button_link": "shopify://collections/skincare-sets",
+            "target_blank": false,
+            "button_classes": "button-sm bg-ms-text bg-ms-text text-seaweed mt-1 sm:px-3 lg:px-4 border-ms-text"
+          }
+        }
+      },
+      "block_order": [
+        "heading_H39rnb",
+        "paragraph_MPJVXG",
+        "button_bKmTLN"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_mobile": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-08_MOBILE.jpg",
+        "image": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-08_LAYOUT.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/skincare-sets",
+        "banner_classes": "container",
+        "image_classes": "h-auto w-full",
+        "text_block_classes": "absolute inset-y-0 left-0 w-2/3 sm:w-3/5 md:w-1/2 lg:w-full text-center flex flex-col items-center justify-center pl-6 pr-2 sm:pl-6 sm:pr-3 md:pl-6 md:pr-4 lg:pl-12 lg:pr-6 text-seaweed lg:gap-2"
       }
     },
     "rivo-loyalty-landing-page": {
@@ -873,6 +918,7 @@
   "order": [
     "multicolumn_QhAH4f",
     "image_banner_PEUtpQ",
+    "image_banner_KK88we",
     "rivo-loyalty-landing-page",
     "multicolumn_JaUtwB",
     "multicolumn_qWkRfD",
