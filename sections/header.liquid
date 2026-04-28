@@ -22,7 +22,7 @@
                 <nav class="pt-2 pb-12 sm:pt-6">
                   <ul>
                     {%- for link in section.settings.hamburger_menu.links -%}
-                      <li id="NavHamburger{{  link.title | replace: 'Popular: ', '' | replace: '&', '' | replace: '%', '' | replace: ' ', '' }}">
+                      <li id="NavHamburger{{  link.title | replace: 'Popular: ', '' | replace: 'NEW: ', '' | replace: 'New: ', '' | replace: '&', '' | replace: '%', '' | replace: ' ', '' }}">
                         {% comment %} Convert link with title 'Divider' into divider {% endcomment %}
                         {%- if link.title == 'Divider' -%}
                           <hr class="ml-6 sm:ml-8 my-4 w-8 border-seaweed-500" />
@@ -64,11 +64,13 @@
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
                           <a href="{{ link.url }}" class="block {{ menu_link_styles }} {% if link.title contains 'Secondary:' %}text-seaweed-600 text-base{% else %}text-lg{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
-                            {{- link.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'Secondary: ' | escape -}}
+                            {{- link.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'NEW: ', '' | replace: 'New: ', '' | replace: 'Secondary: ' | escape -}}
                             {%- if link.title contains 'Popular:' -%}
                               <span class="{{ menu_link_badge_styles }}">Popular</span>
                             {%- elsif link.title contains 'EndsTonight:' -%}
                               <span class="{{ menu_link_badge_styles }}">Ends tonight</span>
+                            {%- elsif link.title contains 'NEW:' or link.title contains 'New:' -%}
+                              <span class="{{ menu_link_badge_styles }}">NEW!</span>
                             {%- endif -%}
                           </a>
                         {%- endif -%}
