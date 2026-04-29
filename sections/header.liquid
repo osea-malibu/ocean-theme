@@ -22,7 +22,7 @@
                 <nav class="pt-2 pb-12 sm:pt-6">
                   <ul>
                     {%- for link in section.settings.hamburger_menu.links -%}
-                      <li id="NavHamburger{{  link.title | replace: 'Popular: ', '' | replace: '&', '' | replace: '%', '' | replace: ' ', '' }}">
+                      <li id="NavHamburger{{  link.title | replace: 'Popular: ', '' | replace: 'NEW: ', '' | replace: 'New: ', '' | replace: '&', '' | replace: '%', '' | replace: ' ', '' }}">
                         {% comment %} Convert link with title 'Divider' into divider {% endcomment %}
                         {%- if link.title == 'Divider' -%}
                           <hr class="ml-6 sm:ml-8 my-4 w-8 border-seaweed-500" />
@@ -32,8 +32,10 @@
                             <div class="border-seaweed-500 border px-4 py-2 my-4 max-w-md">
                               <h4 class="text-center text-lg font-medium mb-2">Customer Support</h4>
                               <p class="text-center">Monday - Friday 8am - 5pm PT</p>
-                              <a class="block mb-2 text-center tracking-wide" href="tel:+13103610547">Call Us: <b class="font-medium">(310) 361-0547</b></a>
-                              <div class="flex items-center justify-center flex-row gap-2">
+                              {%- if section.settings.show_customer_support_phone -%}
+                                <a class="block mb-2 text-center tracking-wide" href="tel:+13103610547">Call Us: <b class="font-medium">(310) 361-0547</b></a>
+                              {%- endif -%}
+                              <div class="flex items-center justify-center flex-row gap-2{% unless section.settings.show_customer_support_phone %} mt-2{% endunless %}">
                                 <a class="button button-secondary button-sm button-icon button-icon-left w-full" href="/pages/contact-osea">
                                   {% render 'icon-email', classes: 'w-6 h-6', aria_hidden: true %}
                                   <span>Email</span>
@@ -64,11 +66,13 @@
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
                           <a href="{{ link.url }}" class="block {{ menu_link_styles }} {% if link.title contains 'Secondary:' %}text-seaweed-600 text-base{% else %}text-lg{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
-                            {{- link.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'Secondary: ' | escape -}}
+                            {{- link.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'NEW: ', '' | replace: 'New: ', '' | replace: 'Secondary: ' | escape -}}
                             {%- if link.title contains 'Popular:' -%}
                               <span class="{{ menu_link_badge_styles }}">Popular</span>
                             {%- elsif link.title contains 'EndsTonight:' -%}
                               <span class="{{ menu_link_badge_styles }}">Ends tonight</span>
+                            {%- elsif link.title contains 'NEW:' or link.title contains 'New:' -%}
+                              <span class="{{ menu_link_badge_styles }}">NEW!</span>
                             {%- endif -%}
                           </a>
                         {%- endif -%}
@@ -251,6 +255,14 @@
           <span class="sr-only">items</span>
         </div>
       </a>
+      <a
+        href="/pages/contact-osea"
+        class="sr-only button button-secondary button-sm focus:not-sr-only focus:flex focus:h-10 focus:items-center focus:px-3 focus:ml-2"
+        aria-haspopup="dialog"
+        onclick="if (window.GorgiasChat && typeof GorgiasChat.open === 'function') { event.preventDefault(); GorgiasChat.open(); }"
+      >
+        Chat with customer support
+      </a>
     </div>
   </div>
 </header>
@@ -412,6 +424,12 @@
       "id": "hamburger_menu",
       "default": "main-menu",
       "label": "Hamburger Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_customer_support_phone",
+      "default": true,
+      "label": "Show customer support phone link"
     },
     {
       "type": "checkbox",
