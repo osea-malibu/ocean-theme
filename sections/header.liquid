@@ -32,8 +32,10 @@
                             <div class="border-seaweed-500 border px-4 py-2 my-4 max-w-md">
                               <h4 class="text-center text-lg font-medium mb-2">Customer Support</h4>
                               <p class="text-center">Monday - Friday 8am - 5pm PT</p>
-                              <a class="block mb-2 text-center tracking-wide" href="tel:+13103610547">Call Us: <b class="font-medium">(310) 361-0547</b></a>
-                              <div class="flex items-center justify-center flex-row gap-2">
+                              {%- if section.settings.show_customer_support_phone -%}
+                                <a class="block mb-2 text-center tracking-wide" href="tel:+13103610547">Call Us: <b class="font-medium">(310) 361-0547</b></a>
+                              {%- endif -%}
+                              <div class="flex items-center justify-center flex-row gap-2{% unless section.settings.show_customer_support_phone %} mt-2{% endunless %}">
                                 <a class="button button-secondary button-sm button-icon button-icon-left w-full" href="/pages/contact-osea">
                                   {% render 'icon-email', classes: 'w-6 h-6', aria_hidden: true %}
                                   <span>Email</span>
@@ -422,6 +424,12 @@
       "id": "hamburger_menu",
       "default": "main-menu",
       "label": "Hamburger Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_customer_support_phone",
+      "default": true,
+      "label": "Show customer support phone link"
     },
     {
       "type": "checkbox",
