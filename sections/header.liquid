@@ -59,7 +59,18 @@
                             </summary>
                             <ul class="px-8 pb-2">
                               {%- for childlink in link.links -%}
-                                <li><a class="py-2 px-2 block tracking-wide font-book" href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+                                <li>
+                                  <a class="py-2 px-2 block tracking-wide font-book" href="{{ childlink.url }}">
+                                    {{- childlink.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'NEW: ', '' | replace: 'New: ', '' | escape -}}
+                                    {%- if childlink.title contains 'Popular:' -%}
+                                      <span class="{{ menu_link_badge_styles }}">Popular</span>
+                                    {%- elsif childlink.title contains 'EndsTonight:' -%}
+                                      <span class="{{ menu_link_badge_styles }}">Ends tonight</span>
+                                    {%- elsif childlink.title contains 'NEW:' or childlink.title contains 'New:' -%}
+                                      <span class="{{ menu_link_badge_styles }}">NEW!</span>
+                                    {%- endif -%}
+                                  </a>
+                                </li>
                               {%- endfor -%}
                             </ul>
                           </details>
