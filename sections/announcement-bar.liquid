@@ -55,8 +55,14 @@
         <ul class="glide__slides pb-0">
           {%- for block in section.blocks -%}
             {%- if block.settings.text != blank -%}
-              <li class="glide__slide text-white font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ block.settings.text | strip_html }}">
-                {{ block.settings.text }}
+              {%- liquid
+                assign text_classes = block.settings.text_classes | default: 'text-white font-book text-center py-0.5 tracking-wider'
+                capture text_tag
+                  echo '<p class="' | append: text_classes | append: '">'
+                endcapture
+              -%}
+              <li class="glide__slide" role="region" aria-label="{{ block.settings.text | strip_html }}">
+                {{ block.settings.text | replace: '<p>', text_tag }}
               </li>
             {%- endif -%}
           {%- endfor -%}
@@ -80,8 +86,14 @@
       </div>
     </glide-slider>
   {%- else -%}
-    <div class="text-white font-book text-center py-0.5 tracking-wider" role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
-      {{- section.blocks[0].settings.text -}}
+    {%- liquid
+      assign text_classes = section.blocks[0].settings.text_classes | default: 'text-white font-book text-center py-0.5 tracking-wider'
+      capture text_tag
+        echo '<p class="' | append: text_classes | append: '">'
+      endcapture
+    -%}
+    <div role="region" aria-label="{{ section.blocks[0].settings.text | strip_html }}">
+      {{- section.blocks[0].settings.text | replace: '<p>', text_tag -}}
     </div>
   {%- endif -%}
 </div>
@@ -145,6 +157,12 @@
           "id": "text",
           "default": "<p>Free shipping on orders over $50</p>",
           "label": "Text"
+        },
+        {
+          "type": "textarea",
+          "id": "text_classes",
+          "label": "Text classes",
+          "default": "text-white font-book text-center py-0.5 tracking-wider"
         }
       ]
     }
