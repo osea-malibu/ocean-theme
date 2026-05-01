@@ -280,6 +280,7 @@
 
 {% comment %} Navbar menu {% endcomment %}
 {%- if section.settings.enable_navbar and section.settings.navbar_menu != blank -%}
+  {%- assign navbar_menu_badge_styles = 'popular-badge inline-block rounded-md bg-neon-green text-seaweed-700 text-xs font-bold px-1 py-px ml-1 relative -top-px' -%}
   <nav id="SiteNavbar" class="navbar hidden md:block overflow-x-auto sm:overflow-x-hidden scrollbar-hide bg-white -mt-1 transition-gpu motion-safe:transition-all">
     <ul class="flex md:justify-center">
       {%- for link in section.settings.navbar_menu.links -%}
@@ -312,7 +313,14 @@
                             class="block px-3 py-1 -ml-3 rounded-md leading-snug hover:bg-sand-300 motion-safe:transition-colors"
                             {% if childlink.current %} aria-current="page"{% endif %}
                           >
-                            {{- grandchildlink.title | escape -}}
+                            {{- grandchildlink.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'NEW: ', '' | replace: 'New: ', '' | escape -}}
+                            {%- if grandchildlink.title contains 'Popular:' -%}
+                              <span class="{{ navbar_menu_badge_styles }}">Popular</span>
+                            {%- elsif grandchildlink.title contains 'EndsTonight:' -%}
+                              <span class="{{ navbar_menu_badge_styles }}">Ends tonight</span>
+                            {%- elsif grandchildlink.title contains 'NEW:' or grandchildlink.title contains 'New:' -%}
+                              <span class="{{ navbar_menu_badge_styles }}">NEW!</span>
+                            {%- endif -%}
                           </a>
                         </li>
                       {%- endfor -%}
@@ -325,7 +333,14 @@
                       class="block px-4 py-1.5 rounded-md leading-snug hover:bg-sand-300 motion-safe:transition-colors"
                       {% if childlink.current %} aria-current="page"{% endif %}
                     >
-                      {{- childlink.title | escape -}}
+                      {{- childlink.title | replace: 'Popular: ', '' | replace: 'EndsTonight: ', '' | replace: 'NEW: ', '' | replace: 'New: ', '' | escape -}}
+                      {%- if childlink.title contains 'Popular:' -%}
+                        <span class="{{ navbar_menu_badge_styles }}">Popular</span>
+                      {%- elsif childlink.title contains 'EndsTonight:' -%}
+                        <span class="{{ navbar_menu_badge_styles }}">Ends tonight</span>
+                      {%- elsif childlink.title contains 'NEW:' or childlink.title contains 'New:' -%}
+                        <span class="{{ navbar_menu_badge_styles }}">NEW!</span>
+                      {%- endif -%}
                     </a>
                   </li>
                 {%- endif -%}
