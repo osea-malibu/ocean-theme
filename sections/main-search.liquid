@@ -95,19 +95,62 @@
         </div>
       {%- else -%}
         {% paginate search.results by 24 %}
+          {%- liquid
+            assign product_list = null | sort
+            assign article_list = null | sort
+            assign collection_list = null | sort
+            assign page_list = null | sort
+
+            for item in search.results
+              unless item.metafields.settings.hide_from_search or item.metafields.custom.hide_from_search
+                assign result_item = item | sort
+                case item.object_type
+                  when 'product'
+                    assign product_list = product_list | concat: result_item
+                  when 'article'
+                    assign article_list = article_list | concat: result_item
+                  when 'collection'
+                    assign collection_list = collection_list | concat: result_item
+                  when 'page'
+                    assign page_list = page_list | concat: result_item
+                endcase
+              endunless
+            endfor
+
+            assign grouped_results_count = product_list.size | plus: article_list.size | plus: collection_list.size | plus: page_list.size
+            assign header_styles = 'font-sans font-book text-xl tracking-wide mb-4'
+            assign grid_styles = 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4'
+            assign section_styles = 'mb-12'
+          -%}
           <div class="template-search__results collection" id="product-grid" data-id="{{ section.id }}">
-            <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-8 sm:gap-x-4" role="list">
-              {%- for item in search.results -%}
-                {%- unless item.metafields.settings.hide_from_search or item.metafields.custom.hide_from_search -%}
-                  <li class="w-full">
-                    {%- case item.object_type -%}
-                      {%- when 'product' -%}
+            {%- if grouped_results_count > 0 -%}
+              {%- if product_list.size > 0 -%}
+                <section class="{{ section_styles }}" aria-labelledby="search-results-products">
+                  <h2 id="search-results-products" class="{{ header_styles }}">
+                    {{ product_list.size }} product result{% unless product_list.size == 1 %}s{% endunless %}
+                  </h2>
+                  <ul class="{{ grid_styles }}" role="list">
+                    {%- for item in product_list -%}
+                      <li class="w-full">
                         {% render 'product-card',
                           card_product: all_products[item.handle],
                           section_id: section.id,
                           button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
                         %}
-                      {%- when 'article' -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </section>
+              {%- endif -%}
+
+              {%- if article_list.size > 0 -%}
+                <section class="{{ section_styles }}" aria-labelledby="search-results-articles">
+                  <h2 id="search-results-articles" class="{{ header_styles }}">
+                    {{ article_list.size }} journal result{% unless article_list.size == 1 %}s{% endunless %}
+                  </h2>
+                  <ul class="{{ grid_styles }}" role="list">
+                    {%- for item in article_list -%}
+                      <li class="w-full">
                         {%- liquid
                           assign article_title = item.title | truncate: 50
                           assign article_description = item.excerpt | truncate: 75
@@ -119,7 +162,45 @@
                           description: article_description,
                           search_page: true
                         %}
-                      {%- when 'page' -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </section>
+              {%- endif -%}
+
+              {%- if collection_list.size > 0 -%}
+                <section class="{{ section_styles }}" aria-labelledby="search-results-collections">
+                  <h2 id="search-results-collections" class="{{ header_styles }}">
+                    Collections
+                  </h2>
+                  <ul class="{{ grid_styles }}" role="list">
+                    {%- for item in collection_list -%}
+                      <li class="w-full">
+                        {%- liquid
+                          assign collection_title = item.title | truncate: 50
+                          assign collection_description = item.description | strip_html | truncate: 75
+                        -%}
+                        {% render 'search-card',
+                          url: item.url,
+                          image: item.image,
+                          title: collection_title,
+                          description: collection_description,
+                          search_page: true
+                        %}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </section>
+              {%- endif -%}
+
+              {%- if page_list.size > 0 -%}
+                <section class="{{ section_styles }}" aria-labelledby="search-results-pages">
+                  <h2 id="search-results-pages" class="{{ header_styles }}">
+                    Pages
+                  </h2>
+                  <ul class="{{ grid_styles }}" role="list">
+                    {%- for item in page_list -%}
+                      <li class="w-full">
                         {%- liquid
                           assign page_title = item.title | truncate: 50
                           assign page_description = item.content | strip_html | truncate: 75
@@ -131,11 +212,20 @@
                           description: page_description,
                           search_page: true
                         %}
-                    {%- endcase -%}
-                  </li>
-                {%- endunless -%}
-              {%- endfor -%}
-            </ul>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </section>
+              {%- endif -%}
+            {%- else -%}
+              <div class="template-search__results collection collection--empty container">
+                <div class="title-wrapper center">
+                  <h2 class="title title--primary">
+                    {{ 'templates.search.no_results' | t: terms: search.terms }}
+                  </h2>
+                </div>
+              </div>
+            {%- endif -%}
             {%- if paginate.pages > 1 -%}
               {% render 'pagination', paginate: paginate %}
             {%- endif -%}
