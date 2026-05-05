@@ -81,6 +81,8 @@ module.exports = {
       white: "#FFF",
       transparent: "transparent",
       current: "currentColor",
+      "ms-surface": "#4985D3",
+      "ms-text": "#FFFAA1",
       "seaweed-100": "#F6FCFA",
       "seaweed-200": "#E7F1EF",
       "seaweed-300": "#D4E1DE",

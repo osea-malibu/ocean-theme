@@ -42,28 +42,7 @@
     }
   ],
   "blog": [],
-  "brand": [],
   "collection": [
-    {
-      "key": "featured_products",
-      "namespace": "my_fields",
-      "name": "Featured products",
-      "description": "Products will appear at top of collection page",
-      "type": {
-        "name": "list.product_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "subcollections",
-      "namespace": "my_fields",
-      "name": "Subcollections",
-      "description": "",
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
     {
       "key": "default_to_mini",
       "namespace": "my_fields",
@@ -117,17 +96,7 @@
     {
       "key": "promo_tile_video_portrait",
       "namespace": "custom",
-      "name": "Promo tile: Video (vertical)",
-      "description": "",
-      "type": {
-        "name": "file_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "promo_tile_video_landscape",
-      "namespace": "custom",
-      "name": "Promo tile: Video (horizontal)",
+      "name": "Promo tile: Video",
       "description": "",
       "type": {
         "name": "file_reference",
@@ -147,7 +116,7 @@
     {
       "key": "comparison_matrix_products",
       "namespace": "custom",
-      "name": "Comparison matrix products",
+      "name": "Comparison matrix: products",
       "description": "",
       "type": {
         "name": "list.product_reference",
@@ -157,7 +126,7 @@
     {
       "key": "comparison_matrix_dimensions",
       "namespace": "custom",
-      "name": "Comparison matrix dimensions",
+      "name": "Comparison matrix: dimensions",
       "description": "",
       "type": {
         "name": "list.single_line_text_field",
@@ -213,6 +182,56 @@
         "name": "file_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "promo_tile_ignore_global",
+      "namespace": "custom",
+      "name": "Promo tile: Ignore global",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "cartful_quiz_id",
+      "namespace": "custom",
+      "name": "Cartful: Quiz ID",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "cartful_flow_id",
+      "namespace": "custom",
+      "name": "Cartful: Flow ID",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "faq",
+      "namespace": "custom",
+      "name": "FAQ",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "plp_interrupter",
+      "namespace": "custom",
+      "name": "PLP Interrupter",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
     }
   ],
   "company": [],
@@ -235,6 +254,16 @@
       "key": "menu_image",
       "namespace": "custom",
       "name": "Menu image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "search_image",
+      "namespace": "custom",
+      "name": "Search image",
       "description": "",
       "type": {
         "name": "file_reference",
@@ -324,16 +353,6 @@
       }
     },
     {
-      "key": "pair_with_product",
-      "namespace": "my_fields",
-      "name": "Upsell: Pair with product",
-      "description": "Adds a small upsell for an associated product to the PDP",
-      "type": {
-        "name": "product_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
       "key": "save_with_sets",
       "namespace": "my_fields",
       "name": "Upsell: Save with sets",
@@ -356,7 +375,7 @@
     {
       "key": "short_description",
       "namespace": "custom_fields",
-      "name": "Short description",
+      "name": "PLP Short description",
       "description": "Short text description, appears on product card",
       "type": {
         "name": "single_line_text_field",
@@ -376,7 +395,7 @@
     {
       "key": "benefits",
       "namespace": "custom",
-      "name": "Benefits",
+      "name": "Benefits: Tags",
       "description": "",
       "type": {
         "name": "list.single_line_text_field",
@@ -446,7 +465,7 @@
     {
       "key": "how_it_works",
       "namespace": "custom_fields",
-      "name": "How to use",
+      "name": "How to use (plain text)",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -456,7 +475,7 @@
     {
       "key": "description",
       "namespace": "custom_fields",
-      "name": "Description",
+      "name": "PDP Long Description",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -466,7 +485,7 @@
     {
       "key": "ingredients",
       "namespace": "custom_fields",
-      "name": "Ingredients",
+      "name": "Ingredients: Full List",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -496,7 +515,7 @@
     {
       "key": "scent_profile",
       "namespace": "custom",
-      "name": "Scent profile",
+      "name": "Scent Profile: Long",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -526,7 +545,7 @@
     {
       "key": "key_ingredients_list",
       "namespace": "custom",
-      "name": "Key Ingredients: List",
+      "name": "Ingredients: Key Ingredients (list)",
       "description": "",
       "type": {
         "name": "list.metaobject_reference",
@@ -566,7 +585,7 @@
     {
       "key": "how_to_use",
       "namespace": "custom",
-      "name": "How to Use",
+      "name": "How to Use (structured)",
       "description": "",
       "type": {
         "name": "json",
@@ -636,7 +655,7 @@
     {
       "key": "text",
       "namespace": "badge",
-      "name": "Badge text",
+      "name": "Badge: Text",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -646,7 +665,7 @@
     {
       "key": "classes",
       "namespace": "badge",
-      "name": "Badge classes",
+      "name": "Badge: Classes",
       "description": "Tailwind classes for product tile badge",
       "type": {
         "name": "single_line_text_field",
@@ -656,7 +675,7 @@
     {
       "key": "type",
       "namespace": "badge",
-      "name": "Badge type",
+      "name": "Badge: Type",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -746,7 +765,7 @@
     {
       "key": "key_benefits",
       "namespace": "custom",
-      "name": "Key benefits",
+      "name": "Benefits: Text list",
       "description": "",
       "type": {
         "name": "list.single_line_text_field",
@@ -812,8 +831,340 @@
         "name": "list.file_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "limited_availability_badge",
+      "namespace": "custom",
+      "name": "Limited Availability Badge",
+      "description": "Shows a \"Limited Availability\" indicator below ATC, overrides \"Shop Pay Installments\"",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "product_care",
+      "namespace": "custom",
+      "name": "Care",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "clinical_images",
+      "namespace": "custom",
+      "name": "Clinical images",
+      "description": "",
+      "type": {
+        "name": "list.file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "pair_with_product",
+      "namespace": "my_fields",
+      "name": "Upsell: Pair with product",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "pdp_short_description",
+      "namespace": "custom",
+      "name": "PDP Short description",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "award_badges",
+      "namespace": "custom",
+      "name": "Award Badges",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "taxcode",
+      "namespace": "avalara",
+      "name": "Avalara Tax Code",
+      "description": "Used only for Avalara integration.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "age-group",
+      "namespace": "shopify",
+      "name": "Age group",
+      "description": "Defines the target age range for a product, such as adults or kids",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "product-form",
+      "namespace": "shopify",
+      "name": "Product form",
+      "description": "Defines the format or presentation of a product, typically for health and beauty; e.g. lotion, serum",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "package-type",
+      "namespace": "shopify",
+      "name": "Package type",
+      "description": "Defines the type of packaging for a product, e.g. jar, pump",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "suitable-for-skin-type",
+      "namespace": "shopify",
+      "name": "Suitable for skin type",
+      "description": "Specifies products for specific skin conditions, such as dry, aging, or sensitive",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "cosmetic-function",
+      "namespace": "shopify",
+      "name": "Cosmetic function",
+      "description": "Defines the intended benefit or effect of a cosmetic product, e.g. soothing, healing",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "target-gender",
+      "namespace": "shopify",
+      "name": "Target gender",
+      "description": "Identifies the intended gender for a product, such as female, male or unisex",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "badge_image",
+      "namespace": "custom",
+      "name": "Badge: Image",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "surface",
+      "namespace": "theme",
+      "name": "Palette: Surface",
+      "description": "",
+      "type": {
+        "name": "color",
+        "category": "COLOR"
+      }
+    },
+    {
+      "key": "inverse",
+      "namespace": "theme",
+      "name": "Palette: Inverse",
+      "description": "",
+      "type": {
+        "name": "color",
+        "category": "COLOR"
+      }
+    },
+    {
+      "key": "core",
+      "namespace": "theme",
+      "name": "Palette: Core",
+      "description": "",
+      "type": {
+        "name": "color",
+        "category": "COLOR"
+      }
+    },
+    {
+      "key": "seaweed",
+      "namespace": "custom",
+      "name": "Seaweed ingredient",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_profile_image",
+      "namespace": "custom",
+      "name": "Scent Profile: Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "scent_profile_metaobject",
+      "namespace": "custom",
+      "name": "Scent profile: Details",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "scent_profile_testimonials",
+      "namespace": "custom",
+      "name": "Scent profile: Testimonials",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "featured_review",
+      "namespace": "custom",
+      "name": "Featured review",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "remove_atc_button",
+      "namespace": "custom",
+      "name": "Remove ATC button",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "founder_quote",
+      "namespace": "custom",
+      "name": "Founder Quote",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "disable_tsa_badge",
+      "namespace": "custom",
+      "name": "Disable TSA Badge",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "product-certifications-standards",
+      "namespace": "shopify",
+      "name": "Product certifications & standards",
+      "description": "Indicates the certifications or standards a product meets, such as organic or cruelty free",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "dietary-preferences",
+      "namespace": "shopify",
+      "name": "Dietary preferences",
+      "description": "Helps identify products suitable for specific diets, e.g. vegan, nut free",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "detailed-ingredients",
+      "namespace": "shopify",
+      "name": "Detailed ingredients",
+      "description": "Lists specific components used in health and beauty, e.g. Vitamin C, probiotics",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "about_the_brand_content",
+      "namespace": "custom",
+      "name": "About the Brand",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "additional_product_tags",
+      "namespace": "custom",
+      "name": "Additional Product Tags",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
-  "variant": [],
-  "shop": []
+  "variant": [
+    {
+      "key": "taxcode",
+      "namespace": "avalara",
+      "name": "Avalara Tax Code",
+      "description": "Used only for Avalara integration.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "shop": [
+    {
+      "key": "show_store_widget_app_embed_block",
+      "namespace": "mm_google_shopping_extension",
+      "name": "Google: Show Store Widget App Embed Block",
+      "description": "Indicates if the store widget app embed block should be shown.",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "merchant_id",
+      "namespace": "mm_google_shopping_extension",
+      "name": "Google: Merchant ID",
+      "description": "Currently Linked Merchant Center ID",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ]
 }
