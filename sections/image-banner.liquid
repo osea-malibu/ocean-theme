@@ -13,11 +13,6 @@
       assign desktop_master = section.settings.image | image_url
     -%}
 
-    {% assign is_lcp = false %}
-    {% if request.page_type == 'index' and section.index == 1 %}
-      {% assign is_lcp = true %}
-    {% endif %}
-
     {% comment %}theme-check-enable ImgLazyLoading, RemoteAsset {% endcomment %}
     <picture>
       {%- if section.settings.image_mobile != blank -%}
@@ -83,13 +78,7 @@
           "
           sizes="100vw"
         {% endif %}
-        {% comment %} LCP Fallback {% endcomment %}
-          {% if is_lcp %}
-            loading="eager"
-            fetchpriority="high"
-          {% else %}
-            {% if section.settings.is_lazy %}loading="lazy"{% endif %}
-          {% endif %}
+        {% if section.settings.is_lazy %}loading="lazy"{% endif %}
         alt="{{ section.settings.image.alt | default: mobile_image.alt }}"
         width="{{ mobile_image.width }}"
         height="{{ mobile_image.width | divided_by: mobile_image.aspect_ratio | round }}"
