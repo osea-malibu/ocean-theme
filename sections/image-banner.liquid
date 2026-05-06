@@ -8,7 +8,8 @@
       >
     {%- endif -%}
     {%- liquid
-      assign mobile_master = section.settings.image_mobile | image_url
+      assign mobile_image = section.settings.image_mobile | default: section.settings.image
+      assign mobile_master = mobile_image | image_url
       assign desktop_master = section.settings.image | image_url
     -%}
 
@@ -70,7 +71,7 @@
       {%- endif -%}
 
       <img
-        {% if section.settings.image_mobile contains '.gif' %}
+        {% if mobile_image contains '.gif' %}
           src="{{ mobile_master }}"
         {% else %}
           src="{% render 'imgix', src: mobile_master, w: 480 %}"
@@ -89,9 +90,9 @@
           {% else %}
             {% if section.settings.is_lazy %}loading="lazy"{% endif %}
           {% endif %}
-        alt="{{ section.settings.image.alt | default: section.settings.image_mobile.alt }}"
-        width="{{ section.settings.image_mobile.width }}"
-        height="{{ section.settings.image_mobile.width | divided_by: section.settings.image_mobile.aspect_ratio | round }}"
+        alt="{{ section.settings.image.alt | default: mobile_image.alt }}"
+        width="{{ mobile_image.width }}"
+        height="{{ mobile_image.width | divided_by: mobile_image.aspect_ratio | round }}"
         class="{{ section.settings.image_classes }} block"
       >
     </picture>
