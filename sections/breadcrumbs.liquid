@@ -1,0 +1,46 @@
+{%- if request.page_type == 'product' or request.page_type == 'collection' -%}
+  {%- liquid
+    assign breadcrumb_collection = blank
+
+    if request.page_type == 'product'
+      assign breadcrumb_collection = product.metafields.custom.breadcrumb_collection.value
+
+      if breadcrumb_collection == blank and product.collections.first != blank
+        assign breadcrumb_collection = product.collections.first
+      endif
+    endif
+  -%}
+
+  <nav class="container {% if request.page_type == 'collection' %}pb-0 -mb-4 sm:pt-6{% else %}py-2 sm:pt-6{% endif %} text-[0.65rem] md:text-[0.85rem] font-book tracking-wide text-seaweed-600" aria-label="Breadcrumb">
+    <ol class="flex flex-wrap items-center">
+      <li>
+        <a href="{{ routes.root_url }}" class="link hover:text-seaweed-700">Home</a>
+      </li>
+
+      {%- if request.page_type == 'collection' -%}
+        <li class="flex items-center" aria-current="page">
+          <span class="mx-2 text-wave-600" aria-hidden="true">&rsaquo;</span>
+          <span>{{ collection.title | escape }}</span>
+        </li>
+      {%- elsif request.page_type == 'product' -%}
+        {%- if breadcrumb_collection != blank -%}
+          <li class="flex items-center">
+            <span class="mx-2 text-wave-600" aria-hidden="true">&rsaquo;</span>
+            <a href="{{ breadcrumb_collection.url }}" class="link hover:text-seaweed-700">{{ breadcrumb_collection.title | escape }}</a>
+          </li>
+        {%- endif -%}
+        <li class="flex items-center" aria-current="page">
+          <span class="mx-2 text-wave-600" aria-hidden="true">&rsaquo;</span>
+          <span>{{ product.title | escape }}</span>
+        </li>
+      {%- endif -%}
+    </ol>
+  </nav>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Breadcrumbs",
+  "settings": []
+}
+{% endschema %}
