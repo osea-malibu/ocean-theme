@@ -1,6 +1,463 @@
+{% doc %}
+  @prompt
+    recently viewed block from PDP
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-recently-viewed-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding }}px 0;
+  }
+
+  .ai-recently-viewed-container-{{ ai_gen_id }} {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-recently-viewed-header-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.heading_spacing }}px;
+    text-align: {{ block.settings.heading_alignment }};
+  }
+
+  .ai-recently-viewed-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .ai-recently-viewed-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-recently-viewed-grid-{{ ai_gen_id }}.loaded {
+    opacity: 1;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-recently-viewed-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.products_per_row_desktop }}, 1fr);
+    }
+  }
+
+  .ai-recently-viewed-card-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+  }
+
+  .ai-recently-viewed-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+  }
+
+  .ai-recently-viewed-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background-color: {{ block.settings.image_background }};
+    border-radius: {{ block.settings.image_border_radius }}px;
+    margin-bottom: 12px;
+  }
+
+  .ai-recently-viewed-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-recently-viewed-info-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ai-recently-viewed-vendor-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.vendor_color }};
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .ai-recently-viewed-product-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_title_size }}px;
+    color: {{ block.settings.product_title_color }};
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .ai-recently-viewed-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    color: {{ block.settings.price_color }};
+    font-weight: 500;
+  }
+
+  .ai-recently-viewed-empty-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-recently-viewed-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.8 }}px;
+    }
+
+    .ai-recently-viewed-product-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.product_title_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<recently-viewed-products-{{ ai_gen_id }}
+  class="ai-recently-viewed-{{ ai_gen_id }}"
+  data-current-product="{{ product.id }}"
+  data-max-products="{{ block.settings.max_products }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-recently-viewed-container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <div class="ai-recently-viewed-header-{{ ai_gen_id }}">
+        <h2 class="ai-recently-viewed-title-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="ai-recently-viewed-grid-{{ ai_gen_id }}" data-grid></div>
+  </div>
+</recently-viewed-products-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class RecentlyViewedProducts{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.storageKey = 'osea_recently_viewed';
+        this.currentProductId = this.dataset.currentProduct;
+        this.maxProducts = parseInt(this.dataset.maxProducts) || 4;
+        this.grid = this.querySelector('[data-grid]');
+      }
+
+      connectedCallback() {
+        this.saveCurrentProduct();
+        this.loadRecentlyViewed();
+      }
+
+      saveCurrentProduct() {
+        if (!this.currentProductId) return;
+
+        let recentlyViewed = this.getRecentlyViewed();
+        recentlyViewed = recentlyViewed.filter(id => id !== this.currentProductId);
+        recentlyViewed.unshift(this.currentProductId);
+        recentlyViewed = recentlyViewed.slice(0, 20);
+
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(recentlyViewed));
+        } catch (e) {
+          console.error('Failed to save to localStorage:', e);
+        }
+      }
+
+      getRecentlyViewed() {
+        try {
+          const stored = localStorage.getItem(this.storageKey);
+          return stored ? JSON.parse(stored) : [];
+        } catch (e) {
+          console.error('Failed to read from localStorage:', e);
+          return [];
+        }
+      }
+
+      async loadRecentlyViewed() {
+        let recentlyViewed = this.getRecentlyViewed();
+        recentlyViewed = recentlyViewed.filter(id => id !== this.currentProductId);
+        recentlyViewed = recentlyViewed.slice(0, this.maxProducts);
+
+        if (recentlyViewed.length === 0) {
+          this.style.display = 'none';
+          return;
+        }
+
+        try {
+          const products = await this.fetchProducts(recentlyViewed);
+          this.renderProducts(products);
+        } catch (error) {
+          console.error('Failed to load recently viewed products:', error);
+          this.style.display = 'none';
+        }
+      }
+
+      async fetchProducts(productIds) {
+        const handles = await Promise.all(
+          productIds.map(id => this.getProductHandle(id))
+        );
+
+        const validHandles = handles.filter(Boolean);
+        if (validHandles.length === 0) return [];
+
+        const products = await Promise.all(
+          validHandles.map(handle => this.fetchProductByHandle(handle))
+        );
+
+        return products.filter(Boolean);
+      }
+
+      async getProductHandle(productId) {
+        try {
+          const response = await fetch(`/products.json?limit=250`);
+          const data = await response.json();
+          const product = data.products.find(p => p.id.toString() === productId.toString());
+          return product ? product.handle : null;
+        } catch (error) {
+          console.error('Failed to get product handle:', error);
+          return null;
+        }
+      }
+
+      async fetchProductByHandle(handle) {
+        try {
+          const response = await fetch(`/products/${handle}.js`);
+          return await response.json();
+        } catch (error) {
+          console.error(`Failed to fetch product ${handle}:`, error);
+          return null;
+        }
+      }
+
+      renderProducts(products) {
+        if (products.length === 0) {
+          this.style.display = 'none';
+          return;
+        }
+
+        this.grid.innerHTML = products.map(product => this.createProductCard(product)).join('');
+        this.grid.classList.add('loaded');
+      }
+
+      createProductCard(product) {
+        const showVendor = {{ block.settings.show_vendor | json }};
+        const image = product.featured_image || product.images[0];
+        const imageUrl = image ? image.replace('.jpg', '_400x.jpg').replace('.png', '_400x.png') : '';
+        const price = this.formatMoney(product.price);
+
+        return `
+          <a href="/products/${product.handle}" class="ai-recently-viewed-card-{{ ai_gen_id }}">
+            <div class="ai-recently-viewed-image-wrapper-{{ ai_gen_id }}">
+              ${imageUrl ? `<img src="${imageUrl}" alt="${this.escapeHtml(product.title)}" class="ai-recently-viewed-image-{{ ai_gen_id }}" loading="lazy" width="400" height="400">` : ''}
+            </div>
+            <div class="ai-recently-viewed-info-{{ ai_gen_id }}">
+              ${showVendor && product.vendor ? `<div class="ai-recently-viewed-vendor-{{ ai_gen_id }}">${this.escapeHtml(product.vendor)}</div>` : ''}
+              <h3 class="ai-recently-viewed-product-title-{{ ai_gen_id }}">${this.escapeHtml(product.title)}</h3>
+              <div class="ai-recently-viewed-price-{{ ai_gen_id }}">${price}</div>
+            </div>
+          </a>
+        `;
+      }
+
+      formatMoney(cents) {
+        const dollars = (cents / 100).toFixed(2);
+        return `$${dollars}`;
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+    }
+
+    customElements.define('recently-viewed-products-{{ ai_gen_id }}', RecentlyViewedProducts{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Recently viewed",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Recently Viewed"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Maximum products",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row_desktop",
+      "label": "Products per row (desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Heading style"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "label": "Bottom spacing",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Product card style"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "image_background",
+      "label": "Image background",
+      "default": "#F3F3F3"
+    },
+    {
+      "type": "range",
+      "id": "product_title_size",
+      "label": "Title size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "label": "Price size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "vendor_color",
+      "label": "Vendor color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently viewed"
+    }
+  ]
+}
 {% endschema %}
