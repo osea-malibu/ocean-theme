@@ -1,0 +1,41 @@
+{%- liquid
+  assign breadcrumb_collection = blank
+
+  assign breadcrumb_collection = section.settings.breadcrumb_collection
+
+  if breadcrumb_collection == blank and product.collections.first != blank
+    assign breadcrumb_collection = product.collections.first
+  endif
+-%}
+
+<nav class="container py-1 md:pt-2 text-xs font-book tracking-wide text-seaweed-600" aria-label="Breadcrumb">
+  <ol class="flex items-center overflow-hidden whitespace-nowrap">
+    <li>
+      <a href="{{ routes.root_url }}" class="link hover:text-seaweed-700">Home</a>
+    </li>
+
+    {%- if breadcrumb_collection != blank -%}
+      <li class="flex items-center">
+        <span class="mx-2 text-wave-600" aria-hidden="true">&rsaquo;</span>
+        <a href="{{ breadcrumb_collection.url }}" class="link hover:text-seaweed-700">{{ breadcrumb_collection.title | escape }}</a>
+      </li>
+    {%- endif -%}
+    <li class="flex items-center overflow-hidden" aria-current="page">
+      <span class="mx-2 text-wave-600" aria-hidden="true">&rsaquo;</span>
+      <span class="block min-w-0 truncate">{{ product.title | escape }}</span>
+    </li>
+  </ol>
+</nav>
+
+{% schema %}
+{
+  "name": "Breadcrumbs",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "breadcrumb_collection",
+      "label": "Collection"
+    }
+  ]
+}
+{% endschema %}
