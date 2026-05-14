@@ -83,10 +83,6 @@
       {%- if request.path contains 'loop_subscriptions/bundle'-%}
         {% render 'loop_loader' %}
       {%- endif -%}
-
-      {%- if request.page_type == 'product' -%}
-        {% section 'breadcrumbs' %}
-      {%- endif -%}
   
       {{ content_for_layout }}
     </main>

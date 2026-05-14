@@ -9,6 +9,12 @@
  */
 {
   "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {
+        "breadcrumb_collection": "{{ product.metafields.custom.breadcrumb_collection.value }}"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -243,9 +249,7 @@
           }
         }
       },
-      "block_order": [
-        "95142030-9e11-4090-aa41-a3e9d4183397"
-      ],
+      "block_order": ["95142030-9e11-4090-aa41-a3e9d4183397"],
       "disabled": true,
       "custom_css": [],
       "settings": {
@@ -270,9 +274,7 @@
           }
         }
       },
-      "block_order": [
-        "key_ingredient_tNNTPC"
-      ],
+      "block_order": ["key_ingredient_tNNTPC"],
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
@@ -361,6 +363,7 @@
     }
   },
   "order": [
+    "breadcrumbs",
     "main",
     "ugc",
     "set-includes",
