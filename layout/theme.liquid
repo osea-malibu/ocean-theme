@@ -84,7 +84,7 @@
         {% render 'loop_loader' %}
       {%- endif -%}
 
-      {%- if request.page_type == 'product' or request.page_type == 'collection' -%}
+      {%- if request.page_type == 'product' -%}
         {% section 'breadcrumbs' %}
       {%- endif -%}
   
