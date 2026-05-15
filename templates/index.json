@@ -17,7 +17,7 @@
           "name": "Desktop Heading",
           "settings": {
             "heading": "Seaweed Skincare Meets Sun Protection",
-            "heading_classes": "font-serif text-[2.75rem]  leading-none\n\nxs:text-5xl xs:px-8 xs:leading-normal xs:mt-2  text-ms-text\n\nsm:text-4xl sm:tracking-tighter  sm:mt-6\n\nmd:text-5xl\n\nlg:text-6xl lg:w-3/4 lg:tracking-snug lg:leading-none  lg:mt-16 \n\nxl:text-7xl xl:tracking-snug \n\n2xl:text-[5.2rem] 2xl:tracking-normal 2xl:ml-[11.5rem] 2xl:px-12"
+            "heading_classes": "font-serif text-4xl px-4  leading-none\n\nxs:text-4xl xs:px-8 xs:leading-normal xs:mt-2  text-ms-text\n\nsm:text-4xl sm:tracking-tighter  sm:mt-6\n\nmd:text-5xl\n\nlg:text-6xl lg:w-3/4 lg:tracking-snug lg:leading-none  lg:mt-16 \n\nxl:text-7xl xl:tracking-snug \n\n2xl:text-[5.2rem] 2xl:tracking-normal 2xl:ml-[11.5rem] 2xl:px-12"
           }
         },
         "button_NFd8kY": {
@@ -44,6 +44,44 @@
         "banner_classes": "sm:container",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-start pt-4  sm:left-1/4 sm:pt-14 md:pt-20 lg:pt-19 xl:pt-30 2xl:pt-38 sm:ml-10 lg:ml-[6.5rem]"
+      }
+    },
+    "image_banner_RHwG6b": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_6c7VL7": {
+          "type": "heading",
+          "name": "Desktop Heading",
+          "settings": {
+            "heading": "Seaweed Skincare Meets Sun Protection",
+            "heading_classes": "font-serif text-4xl px-4  leading-none\n\nxs:text-5xl xs:px-4 xs:leading-tight xs:mt-2  text-ms-text\n\nsm:text-3xl sm:max-w-xs sm:tracking-tighter  \n\nmd:text-5xl\n\nlg:text-6xl lg:w-3/4 lg:tracking-snug lg:leading-none\nxl:text-7xl xl:tracking-snug \n\n2xl:text-[5.2rem] 2xl:tracking-normal 2xl:ml-[11.5rem] 2xl:px-12"
+          }
+        },
+        "button_7m6GDA": {
+          "type": "button",
+          "name": "Desktop Button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop now: Shop our Spring Refresh Essentials",
+            "button_link": "shopify://products/marine-screen-spf-50-mineral-sunscreen",
+            "target_blank": true,
+            "button_classes": "button button bg-ms-text border-ms-text button-md mt-8 xs:button-lg xs:mt-4 \n\nxs:text-xl xs:px-6 xs:leading-normal xs:mt-8\n\nsm:button-md\n\nmd:button-base md:text-md md:py-2 md:tracking-normal md:mt-4 md:px-4\n\nlg:button-md lg:tracking-wide lg:mt-8  xl:text-xl xl:button-lg xl:mt-8 xl:px-8 xl:py-4  2xl:button-lg 2xl:text-2xl 2xl:mt-12 2xl:ml-[11.5rem]"
+          }
+        }
+      },
+      "block_order": [
+        "heading_6c7VL7",
+        "button_7m6GDA"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify://shop_images/MS_Launch_2_-_HP_Banner_Mobile_-_BLANK.jpg",
+        "image": "shopify://shop_images/MS_Launch_2_-_HP_Banner_Desktop_-_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://products/marine-screen-spf-50-mineral-sunscreen",
+        "banner_classes": "sm:container",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute absolute inset-0 text-center flex flex-col items-center justify-start pt-4  sm:left-1/4 sm:pt-14 md:justify-center md:pt-0  sm:ml-10 lg:ml-[6.5rem]"
       }
     },
     "image_banner_MXCd4t": {
@@ -559,50 +597,6 @@
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center sm:right-1/2 sm:pl-12 py-4"
-      }
-    },
-    "image_banner_XC9T98": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_7mxd9k": {
-          "type": "heading",
-          "settings": {
-            "heading": "Give Your <br>Skin a Rest",
-            "heading_classes": "text-5xl lg:text-6xl xl:text-7xl    \n\nfont-serif text-white tracking-tight xs:tracking-normal\n\nmt-6 mb-2 sm:mt-6 sm:mb-2 xl:mb-4 xl:mt-3 \n\nmax-w-xl sm:max-w-2xl"
-          }
-        },
-        "paragraph_pVdcXP": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Discover the Dream Ritual for Restful Nights.",
-            "paragraph_classes": "text-white sm:mb-4 lg:text-xl text-md  font-book leading-tight xl:mb-6 hidden sm:block"
-          }
-        },
-        "button_kTMg9W": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_aria_label": "Shop now: Shop our Dream Bio-Retinol Body Serum",
-            "button_link": "shopify://pages/the-dream-shop",
-            "target_blank": false,
-            "button_classes": "bg-dbbs-surface border-dbbs-surface text-dream-navy mt-2 mb-6"
-          }
-        }
-      },
-      "block_order": [
-        "heading_7mxd9k",
-        "paragraph_pVdcXP",
-        "button_kTMg9W"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_mobile": "shopify://shop_images/1-22-26_HP_Banner_-_Dream_Collection_-_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/1-22-26_HP_Banner_-_Dream_Collection_-_Desktop_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://collections/shop",
-        "banner_classes": "container px-0 xs:px-6",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:right-1/2 mt-0 sm:mt-0 sm:pl-12"
       }
     },
     "165703204544efb73d": {
@@ -2287,6 +2281,7 @@
   },
   "order": [
     "image_banner_zPJt84",
+    "image_banner_RHwG6b",
     "image_banner_MXCd4t",
     "image_banner_RLK4kP",
     "image_banner_QpWEhT",
@@ -2295,7 +2290,6 @@
     "image_banner_jXkmjC",
     "image_banner_GXRmjC",
     "image_banner_PBfJPB",
-    "image_banner_XC9T98",
     "165703204544efb73d",
     "rich_text_abBMrD",
     "16570286821ae9514b",
