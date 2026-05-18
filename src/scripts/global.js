@@ -2166,6 +2166,8 @@ class ProductCardImageSlider extends HTMLElement {
     this.dots = Array.from(this.querySelectorAll("[data-product-card-slider-dot]"));
     this.activeIndex = 0;
     this.scrollFrame = null;
+    this.requestedIndex = null;
+    this.requestedLeft = null;
     this.dotClickHandlers = [];
 
     this.handleScroll = this.handleScroll.bind(this);
@@ -2181,7 +2183,12 @@ class ProductCardImageSlider extends HTMLElement {
     this.nextButton?.addEventListener("click", this.handleNextClick);
     this.track.addEventListener("scroll", this.handleScroll, { passive: true });
     this.dotClickHandlers = this.dots.map((dot, index) => {
-      const handler = () => this.scrollToIndex(index);
+      const handler = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        this.scrollToIndex(index);
+      };
+
       dot.addEventListener("click", handler);
       return { dot, handler };
     });
@@ -2229,22 +2236,41 @@ class ProductCardImageSlider extends HTMLElement {
     return closestIndex;
   }
 
+  getBoundedIndex(index) {
+    return Math.max(0, Math.min(this.slides.length - 1, index));
+  }
+
   scrollToIndex(index) {
-    const targetIndex = Math.max(0, Math.min(this.slides.length - 1, index));
+    const targetIndex = this.getBoundedIndex(index);
     const targetSlide = this.slides[targetIndex];
     if (!targetSlide) return;
 
+    const targetLeft = this.getSlideLeft(targetSlide);
+    this.requestedIndex = targetIndex;
+    this.requestedLeft = targetLeft;
+    this.update(targetIndex);
+
     this.track.scrollTo({
-      left: this.getSlideLeft(targetSlide),
+      left: targetLeft,
       behavior: this.prefersReducedMotion ? "auto" : "smooth",
     });
   }
 
-  handlePreviousClick() {
+  handlePreviousClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this.activeIndex <= 0) return;
+
     this.scrollToIndex(this.activeIndex - 1);
   }
 
-  handleNextClick() {
+  handleNextClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this.activeIndex >= this.slides.length - 1) return;
+
     this.scrollToIndex(this.activeIndex + 1);
   }
 
@@ -2253,12 +2279,26 @@ class ProductCardImageSlider extends HTMLElement {
 
     this.scrollFrame = window.requestAnimationFrame(() => {
       this.scrollFrame = null;
+
+      if (this.requestedIndex !== null && this.requestedLeft !== null) {
+        const hasReachedRequestedSlide = Math.abs(this.track.scrollLeft - this.requestedLeft) <= 1;
+
+        this.update(this.requestedIndex);
+
+        if (hasReachedRequestedSlide) {
+          this.requestedIndex = null;
+          this.requestedLeft = null;
+        }
+
+        return;
+      }
+
       this.update();
     });
   }
 
-  update() {
-    this.activeIndex = this.getActiveIndex();
+  update(index = this.getActiveIndex()) {
+    this.activeIndex = this.getBoundedIndex(index);
 
     this.prevButton?.toggleAttribute("disabled", this.activeIndex === 0);
     this.nextButton?.toggleAttribute("disabled", this.activeIndex === this.slides.length - 1);

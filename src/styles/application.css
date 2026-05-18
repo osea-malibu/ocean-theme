@@ -356,8 +356,8 @@
     }
   }
   .product-card-image-slider__button[disabled] {
+    cursor: default;
     opacity: 0;
-    pointer-events: none;
   }
   .product-card-image-slider__button--prev {
     left: var(--spacing-2);
@@ -375,6 +375,8 @@
     transform: translateX(-50%);
   }
   .product-card-image-slider__dot {
+    cursor: pointer;
+    display: block;
     width: var(--spacing-2);
     height: var(--spacing-2);
     border: 1px solid var(--color-seaweed-700);

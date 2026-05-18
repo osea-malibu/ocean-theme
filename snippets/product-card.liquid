@@ -454,12 +454,15 @@
 
               {%- if media.media_type == 'image' and media.id != default_image.id -%}
                 {%- assign slide_master = media | image_url -%}
-                <div class="product-card-image-slider__slide" data-product-card-slider-slide>
+                <div
+                  class="product-card-image-slider__slide"
+                  data-product-card-slider-slide
+                  aria-hidden="true"
+                >
                   {%- if remove_linking -%}
                     <div class="block w-full h-full" tabindex="-1">
                   {%- else -%}
                     <a
-                      aria-label="{{ card_product.title | escape }}"
                       href="{{ card_product.url | default: '#' }}"
                       class="block w-full h-full"
                       tabindex="-1"
@@ -469,7 +472,7 @@
                   {%- if slide_master contains '.gif' -%}
                     <img
                       src="{{ slide_master }}"
-                      alt="{{ media.alt | escape }}"
+                      alt=""
                       sizes="{{ card_sizes }}"
                       width="{{ media.width }}"
                       height="{{ media.width | divided_by: media.aspect_ratio | round }}"
@@ -488,7 +491,7 @@
                         {% render 'imgix', src: slide_master, w: 1200 %} 1200w
                       "
                       sizes="{{ card_sizes }}"
-                      alt="{{ media.alt | escape }}"
+                      alt=""
                       width="{{ media.width }}"
                       height="{{ media.width | divided_by: media.aspect_ratio | round }}"
                       id="ProductCard-SliderImage-{{ card_product.id }}-{{ media.id }}-{{ section_id }}"
@@ -508,6 +511,8 @@
             type="button"
             class="product-card-image-slider__button product-card-image-slider__button--prev"
             aria-label="View previous image for {{ card_product.title | escape }}"
+            aria-hidden="true"
+            tabindex="-1"
             data-product-card-slider-prev
             disabled
           >
@@ -517,22 +522,20 @@
             type="button"
             class="product-card-image-slider__button product-card-image-slider__button--next"
             aria-label="View next image for {{ card_product.title | escape }}"
+            aria-hidden="true"
+            tabindex="-1"
             data-product-card-slider-next
           >
             {% render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'w-4 h-4 rotate-180' %}
           </button>
 
-          <div class="product-card-image-slider__dots" aria-label="Product images">
+          <div class="product-card-image-slider__dots" aria-hidden="true">
             {%- for dot in (1..product_card_slider_count) -%}
-              <button
-                type="button"
+              <span
                 class="product-card-image-slider__dot"
-                aria-label="View image {{ forloop.index }} for {{ card_product.title | escape }}"
                 aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
                 data-product-card-slider-dot
-              >
-                <span class="sr-only">View image {{ forloop.index }}</span>
-              </button>
+              ></span>
             {%- endfor -%}
           </div>
         </product-card-image-slider>
