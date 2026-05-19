@@ -1,3 +1,12 @@
+{%- liquid
+  assign show_gwp_announcement = false
+
+  if settings.enable_gwp and settings.enable_annoucement_bar_message and settings.gwp_type == 'auto'
+    if settings.is_loyalty_gwp == false or customer
+      assign show_gwp_announcement = true
+    endif
+  endif
+-%}
 <div class="bg-seaweed-700 flex justify-center px-2 text-sm a:link" id="AnnouncementBar">
   {% comment %} Dismissable announcement bar {% endcomment %}
   {%- if section.settings.enable_dismissable_announcement -%}
@@ -7,7 +16,7 @@
       <button id="DismissableClose" type="button" class="absolute top-1 right-0.5 md:relative md:right-0 md:top-0">{% render 'icon-close', classes: 'text-white w-6 h-6', stroke_width: 1.5 %}</button>
     </dismissable-announcement>
   {% comment %} Gift with purchase {% endcomment %}
-  {%- elsif settings.enable_gwp and settings.enable_annoucement_bar_message and settings.gwp_type == 'auto' -%}
+  {%- elsif show_gwp_announcement -%}
     {%- liquid
       assign cart_ids = cart.items | map: 'product_id'
       assign tier1_product = all_products[settings.gwp_tier1_product]
