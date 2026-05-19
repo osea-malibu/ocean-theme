@@ -1,4 +1,4 @@
-{%- if product.metafields.custom.ugc_videos != blank -%}
+{%- if product.metafields.custom.ugc_videos != blank and product.metafields.custom.ugc_videos.value.count > 0 -%}
 <div class="product-ugc-videos container mb-6 lg:mb-12 {{ section.settings.section_classes }}">
   <div class="bg-white rounded-xl p-6 lg:p-10">
     <div class="text-center mb-5">
