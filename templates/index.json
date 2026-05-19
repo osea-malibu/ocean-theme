@@ -58,7 +58,6 @@
         "paragraph_x78y6L",
         "button_mth7Td"
       ],
-      "disabled": true,
       "name": "Memorial Day Early Access Banner",
       "settings": {
         "image_mobile": "shopify://shop_images/2026-05-19_-_HP_Banner_-_Early_Access_-Mobile_-_BLANK.jpg",
@@ -474,6 +473,44 @@
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     },
+    "image_banner_zPJt84": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_N98Xkc": {
+          "type": "heading",
+          "name": "Desktop Heading",
+          "settings": {
+            "heading": "Seaweed Skincare Meets Sun Protection",
+            "heading_classes": "font-serif text-3xl px-4  leading-none\n\nxs:text-3xl xs:px-8 xs:leading-normal xs:mt-2  text-ms-text\n\nsm:text-3xl sm:max-w-sm sm:tracking-tighter  sm:mt-6\n\nmd:text-4xl\n\nlg:text-5xl lg:max-w-lg lg:tracking-snug lg:leading-none  lg:mt-16 \n\nxl:text-6xl xl:max-w-2xl xl:tracking-snug \n\n2xl:text-7xl 2xl:max-w-3xl 2xl:tracking-normal 2xl:ml-[11.5rem] 2xl:px-12"
+          }
+        },
+        "button_NFd8kY": {
+          "type": "button",
+          "name": "Desktop Button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop now: Shop our Spring Refresh Essentials",
+            "button_link": "shopify://products/marine-screen-spf-50-mineral-sunscreen",
+            "target_blank": true,
+            "button_classes": "button bg-ms-text border-ms-text button-md mt-8 xs:button-lg xs:mt-4 \n\nxs:text-xl xs:px-6 xs:leading-normal xs:mt-8\n\nmd:button-base md:text-md md:py-2 md:tracking-normal md:mt-4 md:px-4\n\nlg:button-md lg:tracking-wide lg:mt-8  xl:text-xl xl:button-lg xl:mt-8 xl:px-8 xl:py-4  2xl:button-lg 2xl:text-2xl 2xl:mt-12 2xl:ml-[11.5rem]"
+          }
+        }
+      },
+      "block_order": [
+        "heading_N98Xkc",
+        "button_NFd8kY"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_mobile": "shopify://shop_images/MS_Launch_2_-_HP_Banner_Mobile_-_BLANK.jpg",
+        "image": "shopify://shop_images/MS_Launch_2_-_HP_Banner_Desktop_-_BLANK.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://products/marine-screen-spf-50-mineral-sunscreen",
+        "banner_classes": "sm:container",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-start pt-4  sm:left-1/4 sm:pt-14 md:pt-20 lg:pt-19 xl:pt-30 2xl:pt-38 sm:ml-10 lg:ml-[6.5rem]"
+      }
+    },
     "image_banner_Xgp7Qf": {
       "type": "image-banner",
       "blocks": {
@@ -640,43 +677,6 @@
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
         "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center sm:right-1/2 sm:pl-12 py-4"
-      }
-    },
-    "image_banner_zPJt84": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_N98Xkc": {
-          "type": "heading",
-          "name": "Desktop Heading",
-          "settings": {
-            "heading": "Seaweed Skincare Meets Sun Protection",
-            "heading_classes": "font-serif text-3xl px-4  leading-none\n\nxs:text-3xl xs:px-8 xs:leading-normal xs:mt-2  text-ms-text\n\nsm:text-3xl sm:max-w-sm sm:tracking-tighter  sm:mt-6\n\nmd:text-4xl\n\nlg:text-5xl lg:max-w-lg lg:tracking-snug lg:leading-none  lg:mt-16 \n\nxl:text-6xl xl:max-w-2xl xl:tracking-snug \n\n2xl:text-7xl 2xl:max-w-3xl 2xl:tracking-normal 2xl:ml-[11.5rem] 2xl:px-12"
-          }
-        },
-        "button_NFd8kY": {
-          "type": "button",
-          "name": "Desktop Button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_aria_label": "Shop now: Shop our Spring Refresh Essentials",
-            "button_link": "shopify://products/marine-screen-spf-50-mineral-sunscreen",
-            "target_blank": true,
-            "button_classes": "button bg-ms-text border-ms-text button-md mt-8 xs:button-lg xs:mt-4 \n\nxs:text-xl xs:px-6 xs:leading-normal xs:mt-8\n\nmd:button-base md:text-md md:py-2 md:tracking-normal md:mt-4 md:px-4\n\nlg:button-md lg:tracking-wide lg:mt-8  xl:text-xl xl:button-lg xl:mt-8 xl:px-8 xl:py-4  2xl:button-lg 2xl:text-2xl 2xl:mt-12 2xl:ml-[11.5rem]"
-          }
-        }
-      },
-      "block_order": [
-        "heading_N98Xkc",
-        "button_NFd8kY"
-      ],
-      "settings": {
-        "image_mobile": "shopify://shop_images/MS_Launch_2_-_HP_Banner_Mobile_-_BLANK.jpg",
-        "image": "shopify://shop_images/MS_Launch_2_-_HP_Banner_Desktop_-_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://products/marine-screen-spf-50-mineral-sunscreen",
-        "banner_classes": "sm:container",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 text-center flex flex-col items-center justify-start pt-4  sm:left-1/4 sm:pt-14 md:pt-20 lg:pt-19 xl:pt-30 2xl:pt-38 sm:ml-10 lg:ml-[6.5rem]"
       }
     },
     "image_banner_MXCd4t": {
