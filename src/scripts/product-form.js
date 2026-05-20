@@ -59,21 +59,6 @@ if (!customElements.get("product-form")) {
 
             this.error = false;
             this.cart.renderContents(response);
-
-            // Fetch cart state and delegate GWP logic to cart.js
-            fetch(window.Shopify.routes.root + "cart.js")
-              .then((res) => res.json())
-              .then((fullCartState) => {
-                const cartComponent =
-                  document.querySelector("cart-drawer-items") ||
-                  document.querySelector("cart-items");
-                if (cartComponent && typeof cartComponent.handleGiftWithPurchase === "function") {
-                  cartComponent.handleGiftWithPurchase(fullCartState);
-                } else {
-                  console.warn("cart-items or handleGiftWithPurchase not available");
-                }
-              })
-              .catch((e) => console.error("Error fetching full cart for GWP:", e));
           })
           .catch((e) => console.error(e))
           .finally(() => {
