@@ -23,6 +23,7 @@
 - **File Naming**: Kebab-case for Liquid files, camelCase for JS
 - **Custom Fonts**: Circular (sans-serif), Canela (serif)
 - **Liquid**: Progressive enhancement, minimal JS, server-rendered HTML
+- **Metafield conditions**: For list/reference metafields, assign and check `.value` instead of checking the metafield object directly, so cleared metafields do not render empty section markup. Example: `{%- assign items = product.metafields.custom.example.value -%}` then `{%- if items != blank -%}`.
 - **Colors**: Extensive brand palette with light/medium variants for product-specific themes
 - **Icons**: SVG icons via snippets (icon-*.liquid)
 - **Integrations**: Klaviyo, Yotpo, Rivo loyalty, Bazaarvoice reviews
