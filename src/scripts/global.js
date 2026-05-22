@@ -2267,6 +2267,7 @@ class GlideSlider extends HTMLElement {
       "input",
       "select",
       "textarea",
+      "video[controls]",
       "[tabindex]",
     ].join(", ");
 
@@ -2297,6 +2298,11 @@ class GlideSlider extends HTMLElement {
 
   updateGlideSlideA11y() {
     if (this.dataset.srActiveSlideOnly !== "true") return;
+
+    this.querySelectorAll(".glide__slide--clone").forEach((slide) => {
+      slide.setAttribute("aria-hidden", "true");
+      this.toggleSlideInert(slide, true);
+    });
 
     const slides = Array.from(this.querySelectorAll(".glide__slide:not(.glide__slide--clone)"));
     if (!slides.length) return;
