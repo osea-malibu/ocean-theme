@@ -141,6 +141,10 @@
     translate: 0;
     visibility: visible;
   }
+  menu-drawer [data-hamburger-submenu-item][data-open="true"]
+    [data-hamburger-submenu-toggle-line] {
+    transform: rotate(90deg);
+  }
   .js details[open]:not(.menu-opening) > .header__icon--menu .icon-close {
     visibility: hidden;
   }
