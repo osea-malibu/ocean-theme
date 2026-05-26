@@ -19,7 +19,10 @@ Accepts:
   class="overflow-hidden gap-0 max-w-full glide type-carousel perView-1 lg:flex lg:flex-row-reverse lg:gap-2"
   id="Product-Slider"
   data-breakpoint-limit="none"
-  aria-hidden="true"
+  data-sr-active-slide-only="true"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ product.title | escape }} media gallery"
 >
   {% render 'product-text-badge', product: product, classes: 'z-10 right-2 top-2 bg-p-surface text-p-inverse-d3 lg:text-base' %}
 
@@ -41,7 +44,7 @@ Accepts:
       -%}
 
       {%- for media in slider_images limit: gallery_limit -%}
-        <li class="glide__slide relative" data-media-id="{{ section.id }}-{{ media.id }}" {% unless forloop.first %}aria-hidden="true"{% endunless %}>
+        <li class="glide__slide relative" data-media-id="{{ section.id }}-{{ media.id }}">
 
           {%- if media.media_type == 'image' -%}
 
@@ -160,9 +163,16 @@ Accepts:
 
   <p class="sr-only" data-glide-status aria-live="polite" aria-atomic="true" data-of-text="{{ 'accessibility.of' | t }}"></p>
 
+  {% comment %}
+    Thumbnail nav: intentionally uses <span> instead of <button> because this
+    container is aria-hidden="true" — it is a visual-only control for mouse/touch
+    users. Keyboard and screen reader navigation is handled by the sr-only
+    prev/next buttons above. Using <span> avoids the ARIA violation of having
+    focusable elements inside aria-hidden content.
+  {% endcomment %}
   <div class="glide__bullets flex absolute bottom-0 left-0 md:relative md:gap-1 lg:flex-col lg:shrink-0 lg:h-[596px] xl:h-[760px] 2xl:h-[954px] lg:overflow-y-auto" data-glide-el="controls[nav]" aria-hidden="true">
     {%- for media in slider_images limit: gallery_limit -%}
-      <button class="relative p-2 glide__bullet md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}" tabindex="-1">
+      <span class="relative block p-2 cursor-pointer glide__bullet md:px-0 lg:py-0" data-glide-dir="={{ forloop.index0 }}">
         <span class="sr-only">Go to slide {{ forloop.index }}</span>
 
         {%- if media.media_type == 'image' -%}
@@ -199,7 +209,7 @@ Accepts:
         >
         {% comment %}theme-check-enable RemoteAsset {% endcomment %}
 
-      </button>
+      </span>
     {%- endfor -%}
   </div>
 </glide-slider>
