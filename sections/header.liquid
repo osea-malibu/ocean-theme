@@ -19,7 +19,7 @@
             {% comment %} L1 Drawer {% endcomment %}
             <div class="menu-drawer fixed z-20 left-0 bottom-0 overflow-x-hidden w-11/12 sm:w-10/12 md:w-md bg-seafoam-200 top-[72px] overyflow-y-auto" tabindex="-1">
               <div class="relative flex flex-col h-full">
-                <nav class="pt-2 pb-12 sm:pt-6">
+                <nav class="pt-2 pb-12 sm:pt-6" aria-label="Main menu">
                   <ul>
                     {%- for link in section.settings.hamburger_menu.links -%}
                       <li id="NavHamburger{{  link.title | replace: 'Popular: ', '' | replace: 'NEW: ', '' | replace: 'New: ', '' | replace: '&', '' | replace: '%', '' | replace: ' ', '' }}">
@@ -49,15 +49,26 @@
                           </div>
                         {% comment %} L1 - Link with sub menu {% endcomment %}
                         {%- elsif link.links != blank -%}
-                          <details class="group-child">
-                            <summary class="flex items-center justify-start text-lg {{ menu_link_styles }}">
-                              <a href="{{ link.url }}" class="mr-2 z-10 relative">{{ link.title }}</a>
-                              <svg aria-hidden="true" focusable="false" class="w-4 h-4 flex items-center justify-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" class="motion-safe:transition-transform group-child-open:rotate-90 origin-center"/>
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </summary>
-                            <ul class="px-8 pb-2">
+                          <div data-hamburger-submenu-item data-open="false">
+                            <div class="flex items-center justify-start text-lg font-book tracking-wide">
+                              <a href="{{ link.url }}" class="py-2 pl-6 sm:pl-8 pr-2"{% if link.current %} aria-current="page"{% endif %}>
+                                {{- link.title | escape -}}
+                              </a>
+                              <button
+                                type="button"
+                                class="cursor-pointer flex min-h-10 w-10 items-center justify-center"
+                                aria-expanded="false"
+                                aria-controls="HamburgerSubmenu-{{ forloop.index }}"
+                                aria-label="Toggle {{ link.title | escape }} submenu"
+                                data-hamburger-submenu-toggle
+                              >
+                                <svg aria-hidden="true" focusable="false" class="w-4 h-4 flex items-center justify-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <line x1="12" y1="5" x2="12" y2="19" class="motion-safe:transition-transform origin-center" data-hamburger-submenu-toggle-line/>
+                                  <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                              </button>
+                            </div>
+                            <ul id="HamburgerSubmenu-{{ forloop.index }}" class="px-8 pb-2" hidden data-hamburger-submenu>
                               {%- for childlink in link.links -%}
                                 <li>
                                   <a class="py-2 px-2 block tracking-wide font-book" href="{{ childlink.url }}">
@@ -73,7 +84,7 @@
                                 </li>
                               {%- endfor -%}
                             </ul>
-                          </details>
+                          </div>
                         {% comment %} L1 - Link without sub menu {% endcomment %}
                         {%- else -%}
                           <a href="{{ link.url }}" class="block {{ menu_link_styles }} {% if link.title contains 'Secondary:' %}text-seaweed-600 text-base{% else %}text-lg{% endif %}"{% if link.current %} aria-current="page"{% endif %}>

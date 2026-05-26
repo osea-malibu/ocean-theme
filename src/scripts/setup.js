@@ -18,7 +18,7 @@ export function setupSummaryAriaAttributes() {
       );
     });
 
-    if (summary.closest("header-drawer")) return;
+    if (summary.closest("header-drawer, #HamburgerMenu")) return;
     summary.parentElement.addEventListener("keyup", (event) => onKeyUpEscape(event));
   });
 }

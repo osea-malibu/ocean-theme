@@ -784,6 +784,7 @@ class MenuDrawer extends HTMLElement {
     this.addEventListener("keyup", this.onKeyUp.bind(this));
     this.addEventListener("focusout", this.onFocusOut.bind(this));
     this.bindEvents();
+    this.mainDetailsToggle.querySelector("summary").setAttribute("aria-expanded", false);
   }
 
   bindEvents() {
@@ -793,6 +794,9 @@ class MenuDrawer extends HTMLElement {
     this.querySelector(".menu-scrim").addEventListener("click", this.onSummaryClick.bind(this));
     this.querySelectorAll(".submenu-close").forEach((button) =>
       button.addEventListener("click", this.onCloseSubmenu.bind(this))
+    );
+    this.querySelectorAll("[data-hamburger-submenu-toggle]").forEach((button) =>
+      button.addEventListener("click", this.onHamburgerSubmenuToggle.bind(this))
     );
     this.querySelectorAll("a, summary").forEach((navLink) =>
       navLink.addEventListener("click", this.onNavLinkClick.bind(this))
@@ -805,12 +809,69 @@ class MenuDrawer extends HTMLElement {
   onKeyUp(event) {
     if (event.code.toUpperCase() !== "ESCAPE") return;
 
+    const openHamburgerSubmenuItem =
+      event.target.closest('[data-hamburger-submenu-item][data-open="true"]') ||
+      this.querySelector('[data-hamburger-submenu-item][data-open="true"]');
+
+    if (openHamburgerSubmenuItem) {
+      event.preventDefault();
+      this.closeHamburgerSubmenu(openHamburgerSubmenuItem, true);
+      return;
+    }
+
     const openDetailsElement = event.target.closest("details[open]");
     if (!openDetailsElement) return;
 
     openDetailsElement === this.mainDetailsToggle
       ? this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector("summary"))
       : this.closeSubmenu(openDetailsElement);
+  }
+
+  getHamburgerSubmenuElements(item) {
+    const button = item.querySelector("[data-hamburger-submenu-toggle]");
+    const submenuId = button && button.getAttribute("aria-controls");
+    const submenu = submenuId ? document.getElementById(submenuId) : null;
+
+    return {
+      button,
+      submenu: submenu && this.contains(submenu) ? submenu : null,
+    };
+  }
+
+  onHamburgerSubmenuToggle(event) {
+    const item = event.currentTarget.closest("[data-hamburger-submenu-item]");
+    if (!item) return;
+
+    const { button } = this.getHamburgerSubmenuElements(item);
+    const isOpen = button && button.getAttribute("aria-expanded") === "true";
+
+    isOpen ? this.closeHamburgerSubmenu(item) : this.openHamburgerSubmenu(item);
+  }
+
+  openHamburgerSubmenu(item) {
+    const { button, submenu } = this.getHamburgerSubmenuElements(item);
+    if (!button || !submenu) return;
+
+    item.setAttribute("data-open", "true");
+    button.setAttribute("aria-expanded", "true");
+    submenu.hidden = false;
+  }
+
+  closeHamburgerSubmenu(item, focusToggle = false) {
+    const { button, submenu } = this.getHamburgerSubmenuElements(item);
+    if (!button || !submenu) return;
+
+    item.setAttribute("data-open", "false");
+    button.setAttribute("aria-expanded", "false");
+    submenu.hidden = true;
+
+    if (focusToggle) button.focus();
+  }
+
+  closeAllHamburgerSubmenus() {
+    this.querySelectorAll('[data-hamburger-submenu-item][data-open="true"]').forEach((item) =>
+      this.closeHamburgerSubmenu(item)
+    );
   }
 
   onSummaryClick(event) {
@@ -858,6 +919,8 @@ class MenuDrawer extends HTMLElement {
         details.removeAttribute("open");
         details.classList.remove("menu-opening");
       });
+      this.mainDetailsToggle.querySelector("summary").setAttribute("aria-expanded", false);
+      this.closeAllHamburgerSubmenus();
       document.body.classList.remove("overflow-hidden");
       removeTrapFocus(elementToFocus);
       this.closeAnimation(this.mainDetailsToggle);
