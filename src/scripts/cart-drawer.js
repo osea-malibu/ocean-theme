@@ -242,6 +242,8 @@ class CartDrawer extends HTMLElement {
     if (this.drawer?.classList.contains("is-empty")) this.drawer.classList.remove("is-empty");
 
     this.productId = parsedState?.id;
+    // ensure ensureGiftWithPurchase re-runs on next open
+    this.hasEnsuredGwp = false;
 
     const applySections = (state) => {
       this.getSectionsToRender().forEach((section) => {

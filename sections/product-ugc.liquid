@@ -1,4 +1,5 @@
-{%- if product.metafields.custom.ugc_videos != blank -%}
+{%- assign ugc_video_entries = product.metafields.custom.ugc_video.value -%}
+{%- if ugc_video_entries != blank -%}
 <div class="product-ugc-videos container mb-6 lg:mb-12 {{ section.settings.section_classes }}">
   <div class="bg-white rounded-xl p-6 lg:p-10">
     <div class="text-center mb-5">
@@ -7,25 +8,54 @@
     </div>
     <horizontal-scroll-box class="relative">
       <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3">
-        {%- for video in product.metafields.custom.ugc_videos.value -%}
+        {%- for ugc_video in ugc_video_entries -%}
+          {%- assign video = ugc_video.video.value -%}
+          {%- if video == blank -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- assign creator_link = ugc_video.creator_url.value -%}
+          {%- assign creator_name = creator_link.text -%}
+          {%- assign creator_url = creator_link.url -%}
+          {%- assign poster_master = video.preview_image | image_url -%}
           <div class="w-64 shrink-0">
-            <video
-              poster="{{ video.preview_image.src | image_url }}"
-              controls
-              playsinline
-              preload="none"
-              loading="lazy"
-              width="100%"
-              class="rounded-lg"
-            >
-              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-              {% for source in video.sources %}
-                <source src="{{ source.url }}" type="{{ source.mime_type }}">
-              {% endfor %}
-              <source src="video1.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-              {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-            </video>
+            <div class="relative" style="cursor: default;">
+              <video
+                poster="{% render 'imgix', src: poster_master, w: 640 %}"
+                controls
+                playsinline
+                preload="none"
+                class="block w-full rounded-lg"
+                onplay="this.nextElementSibling.classList.add('hidden')"
+                onpause="this.nextElementSibling.classList.remove('hidden')"
+                onended="this.nextElementSibling.classList.remove('hidden')"
+              >
+                {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                {% for source in video.sources %}
+                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                {% endfor %}
+                Your browser does not support the video tag.
+                {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+              </video>
+              <button
+                type="button"
+                class="flex absolute top-1/2 left-1/2 z-10 justify-center items-center w-20 h-20 rounded-full scale-100 -translate-x-1/2 -translate-y-1/2 cursor-pointer deferred-media__poster-button bg-white/50 motion-safe:transition-transform hover:scale-110"
+                style="clip-path: circle(50%);"
+                aria-label="Play video"
+                onclick="this.previousElementSibling.play()"
+              >
+                {%- render 'icon-play', classes: 'w-8 h-8 text-white -mr-1 ml-1', aria_hidden: true -%}
+              </button>
+            </div>
+            {%- if creator_name != blank and creator_url != blank -%}
+              <a
+                href="{{ creator_url | escape }}"
+                class="mt-2 block text-center text-sm leading-tight text-seaweed-700 underline underline-offset-2 motion-safe:transition-colors hover:text-seaweed-500"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{- creator_name | escape -}}
+              </a>
+            {%- endif -%}
           </div>
         {%- endfor -%}
       </div>

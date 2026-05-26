@@ -1,5 +1,4 @@
-{%- assign set_products = collections['skincare-sets'].products | map: 'handle' -%}
-{%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
+{%- if product.metafields.custom.set_contains.value.count > 0 -%}
   <div class="mb-12 container">
     <div class="flex-1 w-full rounded-xl bg-white p-4 lg:p-10">
       <h3 class="text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4">{{ section.settings.header }}</h3>

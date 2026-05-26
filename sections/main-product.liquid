@@ -302,7 +302,7 @@
                 {%- endif -%}
               {%- endif -%}
             {%- when 'set_includes' -%}
-              {%- if set_products contains product.handle and product.metafields.custom.set_contains.value.count > 0 -%}
+              {%- if product.metafields.custom.set_contains.value.count > 0 -%}
                 <div class="{{ block.settings.set_includes_classes }}">
                   <h2 class="mb-2 font-medium tracking-wide">Set includes</h2>
                   <ul>
