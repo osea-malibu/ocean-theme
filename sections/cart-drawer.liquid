@@ -303,13 +303,15 @@
                                 <div class="cart-subscibe flex flex-col items-end h-full">
                                   {%- liquid
                                     assign default_option = subscription_group.selling_plans[0].id
-                                    if item.product.metafields.custom.subscription_interval != blank
-                                      for plan in subscription_group.selling_plans
-                                        if plan.name contains item.product.metafields.custom.subscription_interval
-                                          assign default_option = plan.id
-                                        endif
-                                      endfor
+                                    assign interval_value = item.product.metafields.custom.subscription_interval
+                                    if interval_value == blank
+                                      assign interval_value = '2'
                                     endif
+                                    for plan in subscription_group.selling_plans
+                                      if plan.name contains interval_value
+                                        assign default_option = plan.id
+                                      endif
+                                    endfor
                                   -%}
                                   <label for="CartSubscribeCheckbox-{{ item.index | plus: 1 }}" class="cursor-pointer flex-1 flex items-center tracking-wide text-sm relative mb-1">
                                     <input
