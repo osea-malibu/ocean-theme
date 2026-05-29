@@ -7,7 +7,7 @@
       {% if section.settings.subheader != blank %}<p class="relative text-sm leading-tight tracking-wide">{{ section.settings.subheader }}</p>{% endif %}
     </div>
     <horizontal-scroll-box class="relative block w-full max-w-full">
-      <div class="scroll-box flex gap-3 snap-x overflow-x-auto pb-3" style="justify-content: safe center;">
+      <div class="scroll-box flex justify-center-safe gap-3 snap-x overflow-x-auto pb-3">
         {%- for ugc_video in ugc_video_entries -%}
           {%- assign video = ugc_video.video.value -%}
           {%- if video == blank -%}
