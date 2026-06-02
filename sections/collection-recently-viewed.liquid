@@ -38,14 +38,14 @@
         id="fallback-slider-{{ section.id }}"
         data-breakpoint-limit="none"
       >
-        <div class="glide__track -mr-4 2xs:-mr-6 sm:mr-0 w-[calc(100%+1rem)] 2xs:w-[calc(100%+1.5rem)] sm:w-full pb-2" data-glide-el="track">
+        <div class="glide__track pb-2" data-glide-el="track">
           <ul class="glide__slides min-h-full xs:w-full xs:mr-0">
             {%- for product in fallback_coll.products limit: section.settings.limit -%}
-              <li class="glide__slide p-1">
+              <li class="glide__slide">
                 {%- render 'product-card',
                   card_product: product,
                   section_id: section.id,
-                  button_class: 'px-3 xl:px-5 sm:text-sm'
+                  button_class: 'px-3 xl:px-5 sm:text-sm flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal'
                 -%}
               </li>
             {%- endfor -%}
@@ -53,11 +53,11 @@
         </div>
 
         <div class="glide__arrows" data-glide-el="controls">
-          <button class="glide__arrow glide__arrow--left top-1/2" aria-label="Go to previous" data-glide-dir="<">
-            {%- render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white' -%}
+          <button class="glide__arrow glide__arrow--left left-0 top-1/2 -mt-12" aria-label="Go to previous" data-glide-dir="<">
+            {%- render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-white' -%}
           </button>
-          <button class="glide__arrow glide__arrow--right top-1/2" aria-label="Go to next" data-glide-dir=">">
-            {%- render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white rotate-180' -%}
+          <button class="glide__arrow glide__arrow--right right-0 top-1/2 -mt-12" aria-label="Go to next" data-glide-dir=">">
+            {%- render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-white rotate-180' -%}
           </button>
         </div>
 
