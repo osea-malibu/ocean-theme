@@ -11,7 +11,7 @@
     {% render 'icon-arrow', variant: 'short', aria_hidden: true, stroke_width: 2, classes: 'w-4 h-4 mx-auto rotate-90 border border-seaweed-700 bg-wave-200 rounded-full my-2' %}
   </div>
   <div class="overflow-x-scroll w-full">
-    <table class="max-w-screen-lg mx-auto table-fixed">
+    <table class="table-fixed">
       <thead>
         <tr class="border-b border-seaweed-300">
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -78,7 +78,7 @@
       <tbody>
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'What It Is' -%}
           <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">What It Is</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm py-2">What It Is</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -90,7 +90,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Skin Type' -%}
           <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Who It's For</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm py-2">Who It's For</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -102,7 +102,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Price' -%}
           <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Price</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm py-2">Price</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -114,7 +114,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Finish' -%}
           <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Finish</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm py-2">Finish</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -128,7 +128,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Scent Profile' -%}
           <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Scent Profile</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm py-2">Scent Profile</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -144,7 +144,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Benefits' -%}
           <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Benefits</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm py-2">Benefits</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -160,7 +160,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Key Benefits' -%}
           <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Key Benefits</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm py-2">Key Benefits</th>
           </tr>
           <tr class="border-b border-seaweed-300">
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -176,7 +176,7 @@
         {%- endif -%}
         {%- if collection.metafields.custom.comparison_matrix_dimensions.value contains 'Key Ingredients' -%}
           <tr>
-            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm pt-2">Key Ingredients</th>
+            <th colspan="{{ matrix_product_count }}" class="text-left px-2 text-sm py-2">Key Ingredients</th>
           </tr>
           <tr>
             {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
@@ -252,7 +252,7 @@
           </div>
           <div>
             <h4>Benefits</h4>
-            <ul class="icon-list bullet !pl-5">
+            <ul class="icon-list bullet pl-5!">
               {%- for benefit in matrix_product.metafields.custom.benefits.value -%}
                 <li>{{ benefit }}</li>
               {%- endfor -%}
@@ -329,7 +329,7 @@
             <td class="text-left px-1 py-0 align-top text-sm">
               <div class="p-2 {{ matrix_product.metafields.custom.product_color_light }}">
                 <h3 class="font-bold text-left text-sm mb-1{% unless forloop.first %} opacity-0{% endunless %}">Benefits</h3>
-                <ul class="icon-list bullet !pl-5">
+                <ul class="icon-list bullet pl-5!">
                   {%- for benefit in matrix_product.metafields.custom.benefits.value -%}
                     <li>{{ benefit }}</li>
                   {%- endfor -%}
@@ -381,7 +381,7 @@
             <td class="text-left px-1 py-0 align-top text-sm h-1">
               <div class="p-2 rounded-b h-full {{ matrix_product.metafields.custom.product_color_light }}">
                 <h3 class="font-bold text-left text-sm mb-1{% unless forloop.first %} opacity-0{% endunless %}">Key Ingredients</h3>
-                <ul class="icon-list bullet !pl-5">
+                <ul class="icon-list bullet pl-5!">
                   {%- for ingredient in matrix_product.metafields.custom.key_ingredients_list.value -%}
                     <li>{{ ingredient.name | split: '[' | first }}</li>
                   {%- endfor -%}

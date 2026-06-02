@@ -7,3 +7,4 @@ import "./cart-drawer.js";
 import "./predictive-search.js";
 import "./details-disclosure.js";
 import "./details-modal.js";
+import "./collection-recently-viewed.js";

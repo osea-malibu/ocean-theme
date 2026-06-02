@@ -28,6 +28,20 @@
         "show_reviews": false
       }
     },
+    "recently-viewed": {
+      "type": "collection-recently-viewed",
+      "settings": {
+        "heading": "Recently Viewed",
+        "fallback_heading": "Trending",
+        "fallback_collection_handle": "bestsellers",
+        "min_recently_viewed": 4,
+        "limit": 8
+      }
+    },
+    "seo-description": {
+      "type": "collection-seo-description",
+      "settings": {}
+    },
     "faqs": {
       "type": "collection-faqs",
       "settings": {
@@ -84,6 +98,8 @@
   "order": [
     "banner",
     "product-grid",
+    "recently-viewed",
+    "seo-description",
     "faqs",
     "comparison-matrix",
     "quiz"
