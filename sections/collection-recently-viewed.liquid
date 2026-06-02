@@ -1,0 +1,125 @@
+{%- liquid
+  assign fallback_coll = collections[section.settings.fallback_collection_handle]
+
+  assign fallback_count = fallback_coll.products.size
+  if fallback_count > section.settings.limit
+    assign fallback_count = section.settings.limit
+  endif
+  assign fallback_dot_count = fallback_count | divided_by: 2 | round
+  if fallback_dot_count < 1
+    assign fallback_dot_count = 1
+  endif
+-%}
+
+<collection-recently-viewed
+  class="block"
+  data-section-id="{{ section.id }}"
+  data-min-recently-viewed="{{ section.settings.min_recently_viewed }}"
+  data-limit="{{ section.settings.limit }}"
+>
+  <div class="container mb-12">
+    <h2 class="rv-heading font-serif tracking-tight text-3xl lg:text-4xl leading-none mb-6 hidden">
+      {{- section.settings.heading | escape -}}
+    </h2>
+    <h2 class="fallback-heading font-serif tracking-tight text-3xl lg:text-4xl leading-none mb-6">
+      {{- section.settings.fallback_heading | escape -}}
+    </h2>
+
+    {%- comment -%}
+      Recently viewed container — empty on server render.
+      JS makes this visible BEFORE setting innerHTML so Glide can measure widths when it initializes.
+    {%- endcomment -%}
+    <div class="rv-slider-container hidden"></div>
+
+    {%- comment -%} Bestsellers slider — server-rendered, visible by default {%- endcomment -%}
+    <div class="fallback-slider-container">
+      <glide-slider
+        class="glide relative -ml-1 gap-8 perView-4 lg:perView-3 md:perView-2"
+        id="fallback-slider-{{ section.id }}"
+        data-breakpoint-limit="none"
+      >
+        <div class="glide__track -mr-4 2xs:-mr-6 sm:mr-0 w-[calc(100%+1rem)] 2xs:w-[calc(100%+1.5rem)] sm:w-full pb-2" data-glide-el="track">
+          <ul class="glide__slides min-h-full xs:w-full xs:mr-0">
+            {%- for product in fallback_coll.products limit: section.settings.limit -%}
+              <li class="glide__slide p-1">
+                {%- render 'product-card',
+                  card_product: product,
+                  section_id: section.id,
+                  button_class: 'px-3 xl:px-5 sm:text-sm'
+                -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="glide__arrows" data-glide-el="controls">
+          <button class="glide__arrow glide__arrow--left top-1/2" aria-label="Go to previous" data-glide-dir="<">
+            {%- render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white' -%}
+          </button>
+          <button class="glide__arrow glide__arrow--right top-1/2" aria-label="Go to next" data-glide-dir=">">
+            {%- render 'icon-chevron', aria_hidden: true, stroke_width: 2, classes: 'h-10 w-10 text-seaweed-700 bg-white rounded-full block border-y-4 border-r-2 border-l-6 border-white rotate-180' -%}
+          </button>
+        </div>
+
+        <ol class="glide__bullets flex justify-center bottom-0" data-glide-el="controls[nav]">
+          {%- for dot in (1..fallback_dot_count) -%}
+            <li
+              class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
+              data-glide-dir="={{ forloop.index0 }}"
+            >
+              <span class="sr-only">Go to slide {{ forloop.index }}</span>
+              <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
+            </li>
+          {%- endfor -%}
+        </ol>
+      </glide-slider>
+    </div>
+  </div>
+</collection-recently-viewed>
+
+{% schema %}
+{
+  "name": "Recently Viewed",
+  "tag": "section",
+  "class": "collection-recently-viewed hidden",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Recently viewed heading",
+      "default": "Recently Viewed"
+    },
+    {
+      "type": "text",
+      "id": "fallback_heading",
+      "label": "Fallback heading",
+      "default": "Our Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "fallback_collection_handle",
+      "label": "Fallback collection handle",
+      "default": "bestsellers",
+      "info": "Handle of the collection to show when fewer than the minimum recently viewed products exist."
+    },
+    {
+      "type": "range",
+      "id": "min_recently_viewed",
+      "label": "Minimum recently viewed to display",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Maximum products to show",
+      "min": 4,
+      "max": 12,
+      "step": 2,
+      "default": 8
+    }
+  ]
+}
+{% endschema %}

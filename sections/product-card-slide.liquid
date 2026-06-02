@@ -1,0 +1,14 @@
+<li class="glide__slide p-1">
+  {%- render 'product-card',
+    card_product: product,
+    section_id: section.id,
+    button_class: 'px-3 xl:px-5 sm:text-sm'
+  -%}
+</li>
+
+{% schema %}
+{
+  "name": "Product Card Slide",
+  "tag": "section"
+}
+{% endschema %}
