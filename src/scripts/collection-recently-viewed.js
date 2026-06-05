@@ -50,7 +50,7 @@ class CollectionRecentlyViewed extends HTMLElement {
       const arrowNext = `<svg aria-hidden="true" focusable="false" class="h-10 w-10 text-seaweed-700 bg-white rounded-full block border-white rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>`;
 
       const sliderHtml = `<glide-slider
-          class="glide relative type-carousel -ml-1 gap-16 sm:gap-8 perView-4 lg:perView-3 md:perView-2"
+          class="glide relative type-carousel -ml-1 gap-16 sm:gap-8 perView-4 lg:perView-3 md:perView-2 sm:perView-2 xs:perView-2 2xs:perView-2"
           id="rv-slider-${sectionId}"
           data-breakpoint-limit="none"
         >
