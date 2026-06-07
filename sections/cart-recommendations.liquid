@@ -20,12 +20,15 @@
       -%}
       {%- unless cart_ids contains product.id or item_count >= 6 or product_collections_handles contains 'exclude-from-site' or product_collections_handles contains 'exclude-from-recommendations' -%}
         {%- assign item_count = item_count | plus: 1 -%}
-        {%- render 'product-card-mini',
-          card_product: product,
-          button_class: 'button-secondary',
-          default_to_mini: is_travel_product,
-          default_to_jumbo: is_jumbo_product
-        -%}
+        <li>
+          {%- render 'card-product',
+            card_product: product,
+            mini: true,
+            button_class: 'button-secondary',
+            default_to_mini: is_travel_product,
+            default_to_jumbo: is_jumbo_product
+          -%}
+        </li>
       {%- endunless -%}
     {%- endfor -%}
   </ul>

@@ -132,7 +132,7 @@
                   <ul class="{{ grid_styles }}" role="list">
                     {%- for item in product_list -%}
                       <li class="w-full">
-                        {% render 'product-card',
+                        {% render 'card-product',
                           card_product: all_products[item.handle],
                           section_id: section.id,
                           button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',

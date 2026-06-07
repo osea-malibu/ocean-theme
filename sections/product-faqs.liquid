@@ -157,7 +157,7 @@
           -%}
           <div class="{{ list_wrapper_classes }}">
             {%- for article_handle in product.metafields.custom.related_articles.value -%}
-              {%- render 'article-card',
+              {%- render 'card-article',
                 article: articles[article_handle],
                 unique_id: '-pdp_featured',
                 show_image: true,

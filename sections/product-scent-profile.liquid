@@ -59,7 +59,7 @@
             <div class="scroll-box w-full max-w-full flex gap-4 snap-x snap-mandatory overflow-x-auto pb-3">
               {%- for scent_product in scent_object.products.value -%}
                 {%- unless scent_product.handle == product.handle -%}
-                  {% render 'product-card',
+                  {% render 'card-product',
                     card_product: scent_product,
                     section_id: section.id,
                     card_class: 'snap-start flex flex-col relative w-52 shrink-0',

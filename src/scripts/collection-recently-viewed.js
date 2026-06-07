@@ -14,12 +14,12 @@ class CollectionRecentlyViewed extends HTMLElement {
   loadRecentlyViewed(handles) {
     // Fetch each product's card HTML via Shopify's Section Rendering API.
     // /products/{handle}?sections=collection-recently-viewed-item renders the section
-    // in that product's context, returning a fully server-rendered product-card.liquid slide.
+    // in that product's context, returning a fully server-rendered card-product.liquid slide.
     const fetches = handles.map((handle) =>
-      fetch(`/products/${handle}?sections=product-card-slide`)
+      fetch(`/products/${handle}?sections=card-product-section`)
         .then((r) => r.json())
         .then((data) => {
-          const html = data["product-card-slide"];
+          const html = data["card-product-section"];
           if (!html) return null;
           // The response wraps our <li> in a <section> tag — extract the inner HTML
           const tmp = document.createElement("div");

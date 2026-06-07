@@ -20,7 +20,7 @@
     - exceprt_length: {Number} Length to truncate exceprt to, default: 20
 
     Usage:
-    {% render 'article-card', article: article, show_image: section.settings.show_image %}
+    {% render 'card-article', article: article, show_image: section.settings.show_image %}
 {% endcomment %}
 
 <article class="article-card{% if card_classes != blank %} {{ card_classes }}{% endif %}" aria-labelledby="Article-{{ article.id }}{{ unique_id }}">

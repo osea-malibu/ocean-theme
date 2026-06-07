@@ -499,13 +499,16 @@
                   {%- for sample in settings.cart_samples_collection.products limit: 6 -%}
                     {%- if sample.available and sample.price == 0 -%}
                       {%- unless cart_ids contains sample.id -%}
-                        {% render 'product-card-mini',
-                          card_product: sample,
-                          section_id: section.id,
-                          hide_price: true,
-                          button_class: 'button-secondary',
-                          disable_links: true
-                        -%}
+                        <li>
+                          {% render 'card-product',
+                            card_product: sample,
+                            section_id: section.id,
+                            mini: true,
+                            hide_atc: true,
+                            button_class: 'button-secondary',
+                            remove_linking: true
+                          -%}
+                        </li>
                       {%- endunless -%}
                     {%- endif -%}
                   {%- endfor -%}

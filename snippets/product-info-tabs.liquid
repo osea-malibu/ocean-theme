@@ -136,7 +136,7 @@
         {%- when block.settings.info_tab_articles_label -%}
           <div class="articles flex flex-wrap gap-2">
             {%- for article_handle in product.metafields.custom.related_articles.value -%}
-              {%- render 'article-card',
+              {%- render 'card-article',
                 article: articles[article_handle],
                 unique_id: '-pdp_featured',
                 show_image: true,

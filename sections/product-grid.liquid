@@ -1,7 +1,7 @@
 <div class="{{ section.settings.section_classes }}">
   <div class="{{ section.settings.container_classes }}">
     {%- for product in section.settings.collection.products -%}
-      {% render 'product-card',
+      {% render 'card-product',
         card_product: product,
         section_id: section.id,
         image_class: section.settings.card_image_classes,

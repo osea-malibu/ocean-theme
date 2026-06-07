@@ -9,7 +9,7 @@
     {% render 'product-image-badge', product: product %}
 {% endcomment %}
 
-{%- if badge_text != '' and product.handle != 'gift-card' -%}
+{%- if product.metafields.custom.badge_image.value.size > 0 -%}
   <div class="flex flex-col absolute {{ classes }}">
     {%- for badge in product.metafields.custom.badge_image.value -%}
       {%- liquid

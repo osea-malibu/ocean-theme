@@ -42,7 +42,7 @@
           <ul class="glide__slides min-h-full xs:w-full xs:mr-0">
             {%- for product in fallback_coll.products limit: section.settings.limit -%}
               <li class="glide__slide">
-                {%- render 'product-card',
+                {%- render 'card-product',
                   card_product: product,
                   section_id: section.id,
                   button_class: 'px-3 xl:px-5 sm:text-sm flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal'
