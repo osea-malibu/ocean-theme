@@ -39,6 +39,7 @@
     {% render 'card-product', card_product: section.settings.product, section_id: section.id %}
 {% endcomment %}
 
+{%- if card_product != blank -%}
 <div class="{% if card_class == blank %}flex flex-col relative grow h-full{% else %}{{ card_class }}{% endif %}">
   <div class="product-info w-full order-1 grow flex flex-col">
     <div>
@@ -77,8 +78,7 @@
       else
         assign excluded_from_site = false
       endif
-    -%}
-    {%- liquid
+
       assign show_atc = true
       if force_atc != true
         if excluded_from_site
@@ -433,9 +433,9 @@
       {%- else -%}
         {% render 'product-text-badge', product: card_product, classes: badge_class, percent_discount: percent_discount %}
       {%- endif -%}
-    {%- endunless -%}
-    {%- unless mini -%}
+      
       {% render 'product-image-badge', product: card_product, classes: 'z-10 left-1 top-1 w-12 xl:w-16 gap-1' %}
     {%- endunless -%}
   </div>
 </div>
+{%- endif -%}
