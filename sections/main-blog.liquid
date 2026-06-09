@@ -18,7 +18,7 @@
       -%}
       <div class="container lg:max-w-screen-lg py-6 px-0 flex flex-col lg:flex-row">
         <div class="px-6 lg:pr-0 lg:w-3/5">
-          {%- render 'article-card',
+          {%- render 'card-article',
             article: main_featured_article,
             unique_id: '-main_featured',
             show_image: true,
@@ -32,7 +32,7 @@
             author_classes: 'sr-only',
             excerpt_classes: 'text-sm leading-snug mb-4 lg:text-lg lg:max-w-md lg:mx-auto',
             link_classes: 'button button-primary button-sm lg:button-md',
-            exceprt_length: 15
+            excerpt_length: 15
           -%}
         </div>
         {%- liquid
@@ -69,7 +69,7 @@
                   >
                     {%- for featured_article in secondary_featured_articles -%}
                       <li>
-                        {%- render 'article-card',
+                        {%- render 'card-article',
                           article: featured_article,
                           unique_id: '-secondary_featured',
                           show_image: true,
@@ -146,7 +146,7 @@
           {%- unless article.metafields.custom.hide_from_blog -%}
             <li class="article order-{{ forloop.index }}">
               {% assign image_classes = 'mb-1 rounded-md ' | append: article.metafields.custom.tile_image_class %}
-              {%- render 'article-card',
+              {%- render 'card-article',
                 article: article,
                 show_image: true,
                 card_classes: 'flex flex-col whitespace-normal w-full',
@@ -178,7 +178,7 @@
                   >
                     {%- for brand_article in brand_articles -%}
                       <li>
-                        {%- render 'article-card',
+                        {%- render 'card-article',
                           article: brand_article,
                           unique_id: '-brand_featured',
                           show_image: true,
@@ -190,7 +190,7 @@
                           date_classes: 'sr-only',
                           author_classes: 'sr-only',
                           excerpt_classes: 'text-sm leading-tight mb-2',
-                          exceprt_length: 10,
+                          excerpt_length: 10,
                           link_classes: 'link font-bold uppercase tracking-widest text-xs'
                         -%}
                       </li>

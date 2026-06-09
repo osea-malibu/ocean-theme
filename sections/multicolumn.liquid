@@ -444,7 +444,7 @@
                 {%- when 'product' -%}
                   {% comment %} theme-check-disable LiquidTag {% endcomment %}
                   {%- if block.settings.product -%}
-                    {% render 'product-card',
+                    {% render 'card-product',
                       card_product: block.settings.product,
                       section_id: block.id,
                       custom_default_image: block.settings.custom_product_image,
@@ -466,14 +466,13 @@
                       variant_picker_type: block.settings.variant_picker_type,
                       title_text: block.settings.title_text,
                       short_description_text: block.settings.short_description_text,
-                      custom_badge_html: block.settings.custom_badge_html,
-                      custom_badge_classes: block.settings.custom_badge_classes
+                      custom_badge_html: block.settings.custom_badge_html
                     %}
                   {%- endif -%}
                   {% comment %} theme-check-enable LiquidTag {% endcomment %}
 
                 {%- when 'article' -%}
-                  {% render 'article-card'
+                  {% render 'card-article'
                     article: block.settings.article,
                     card_classes: block.settings.card_classes,
                     show_image: block.settings.show_image,
@@ -953,11 +952,6 @@
           "type": "html",
           "id": "custom_badge_html",
           "label": "Custom badge html"
-        },
-        {
-          "type": "textarea",
-          "id": "custom_badge_classes",
-          "label": "Custom badge classes"
         },
         {
           "type": "textarea",

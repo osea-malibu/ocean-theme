@@ -5,10 +5,9 @@
       <ul class="{{ section.settings.wrapper_classes }}" role="list">
         {% for recommendation in recommendations.products limit: section.settings.limit %}
           <li class="{{ section.settings.card_classes }}">
-            {% render 'product-card',
+            {% render 'card-product',
               card_product: recommendation,
               section_id: section.id,
-              show_secondary_image_on_hover: section.settings.show_secondary_image
               button_class: section.settings.button_classes
             %}
           </li>
@@ -97,12 +96,6 @@
       "type": "textarea",
       "id": "button_classes",
       "label": "Product card button classes"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "t:sections.product-recommendations.settings.show_secondary_image.label"
     },
     {
       "type": "number",

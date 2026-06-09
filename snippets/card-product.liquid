@@ -1,0 +1,441 @@
+{% comment %}
+    Renders a product card
+
+    Accepts:
+    - card_product: {Object} Product Liquid object (required)
+    - section_id: {String} Unique id of section that card is in (required)
+    - custom_default_image: {Object} Image object override — replaces default product image (optional)
+    - variant_picker_type: {String} 'button', 'dropdown', or 'none'. Default: 'button' (optional)
+    - variant_picker_classes: {String} Tailwind styling classes (optional)
+    - card_class: {String} Tailwind styling classes (optional)
+    - button_class: {String} Tailwind styling classes (optional)
+    - product_form_class: {String} Tailwind styling classes (optional)
+    - image_class: {String} Tailwind styling classes for image wrapper (optional)
+    - image_element_class: {String} Tailwind styling classes for img element (optional)
+    - name_class: {String} Tailwind styling classes (optional)
+    - description_class: {String} Tailwind styling classes (optional)
+    - badge_class: {String} Tailwind styling classes (optional)
+    - hide_badge: {Boolean} Hide text badge. Default: false (optional)
+    - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
+    - subscription: {Boolean} Default to subscription selection instead of variants (optional)
+    - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
+    - default_to_jumbo: {Boolean} Default variant selection to jumbo-sized (optional)
+    - percent_discount: {Boolean} Show % off instead of $ off in savings badge (optional)
+    - is_pdp_link: {Boolean} Replace ATC button with link to PDP (optional)
+    - pdp_link_label: {String} Button label when is_pdp_link is true (optional)
+    - hide_atc: {Boolean} Hide add to cart button. Default: false (optional)
+    - remove_linking: {Boolean} Remove links from title and image. Default: false (optional)
+    - remove_lazy_loading: {Boolean} Disable lazy loading on image. Default: false (optional)
+    - fetch_priority_high: {Boolean} Sets fetchpriority="high" on image. Default: false (optional)
+    - title_text: {String} Replaces product name with custom text (optional)
+    - short_description_text: {String} Replaces short description with custom text (optional)
+    - custom_badge_html: {String} Replaces badge with custom HTML (optional)
+    - mini: {Boolean} Compact format — small image, no description, no variant picker. Default: false (optional)
+    - sizes_attr: {String} Override default img sizes attribute (optional)
+    - force_atc: {Boolean} Show ATC even if remove_atc_button metafield is set (e.g. cart drawer samples). Default: false (optional)
+    - hide_price: {Boolean} Hide price from ATC button. Default: false (optional)
+
+    Usage:
+    {% render 'card-product', card_product: section.settings.product, section_id: section.id %}
+{% endcomment %}
+
+{%- if card_product != blank -%}
+<div class="{% if card_class == blank %}flex flex-col relative grow h-full{% else %}{{ card_class }}{% endif %}">
+  <div class="product-info w-full order-1 grow flex flex-col">
+    <div>
+      {%- if show_reviews -%}
+        {% render 'product-rating', product: card_product, compact: true, classes: 'product-rating h-4 float-right 2xs:mt-px' %}
+      {%- endif -%}
+      {%- liquid
+        assign title_content = title_text | default: card_product.title
+
+        if mini
+          assign title_classes = 'text-xs font-book tracking-wide text-center leading-tight mb-1'
+        else
+          assign title_classes = 'md:text-lg lg:text-xl font-medium leading-[1.1]! hover:underline mb-1'
+        endif
+
+        if name_class != blank
+          assign title_classes = title_classes | append: ' ' | append: name_class
+        endif
+      -%}
+      {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}">{% endunless %}
+        <h3 class="{{ title_classes }}">
+          {{- title_content | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' | replace: ' - Sample', '' -}}
+        </h3>
+      {% unless remove_linking %}</a>{% endunless %}
+    </div>
+    {%- unless mini -%}
+      <p class="text-sm lg:text-base leading-[1.1]!{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
+        {{- short_description_text | default: card_product.metafields.custom_fields.short_description | escape -}}
+      </p>
+    {%- endunless -%}
+
+    {%- liquid
+      assign product_collections_handles = card_product.collections | map: 'handle'
+      if product_collections_handles contains 'exclude-from-site'
+        assign excluded_from_site = true
+      else
+        assign excluded_from_site = false
+      endif
+
+      assign show_atc = true
+      if force_atc != true
+        if excluded_from_site
+          assign show_atc = false
+        elsif hide_atc == true
+          assign show_atc = false
+        elsif card_product.handle == 'studio-gift-card'
+          assign show_atc = false
+        elsif card_product.metafields.custom.remove_atc_button == true
+          assign show_atc = false
+        endif
+      endif
+    -%}
+    {%- if is_pdp_link -%}
+      <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+        <a class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50" href="{{ card_product.url }}">
+          {{- pdp_link_label -}}
+        </a>
+      </div>
+    {%- elsif show_atc -%}
+      {%- liquid
+        if default_to_mini
+          assign mini_index = card_product.variants.size | minus: 1
+          if card_product.options.size > 1 or card_product.options contains 'Amount:'
+            assign travel_sizes = '1.7 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz, $25' | split: ', '
+            for variant in card_product.variants
+              assign normalized_variant_title = variant.title | replace: 'fl ', ''
+              if travel_sizes contains normalized_variant_title
+                assign mini_index = forloop.index0
+              endif
+            endfor
+          endif
+        endif
+      -%}
+      <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+        {%- liquid
+          assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id
+          assign subscription_group = nil
+          for group in card_product.selling_plan_groups
+            if group.name == 'Subscribe and Save'
+              assign subscription_group = group
+            endif
+          endfor
+        -%}
+        {%- unless mini -%}
+          {%- if subscription and card_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 and subscription_group -%}
+            {%- liquid
+              assign default_option = subscription_group.selling_plans[1].id
+              if card_product.metafields.custom.subscription_interval != blank
+                for plan in subscription_group.selling_plans
+                  if plan.name contains card_product.metafields.custom.subscription_interval
+                    assign default_option = plan.id
+                  endif
+                endfor
+              endif
+            -%}
+            {%- if variant_picker_type == 'button' -%}
+              <fieldset class="js flex">
+                <legend class="sr-only">Ship every:</legend>
+                <div class="overflow-x-auto flex">
+                  {%- for option in subscription_group.selling_plans -%}
+                    <div class="grow{% unless forloop.last %} mr-0.5{% endunless %}">
+                      <input type="radio"
+                        id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
+                        class="peer hidden"
+                        name="selling_plan"
+                        value="{{ option.id }}"
+                        form="{{ product_form_id }}"
+                        {%- if option.id == default_option -%}checked{%- endif -%}
+                      >
+                      <label
+                        class="button button-xs lowercase button-secondary peer-checked:border-seaweed-4 peer-checked:bg-wave-200 px-1 tracking-normal w-full text-left"
+                        for="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
+                        tabindex="0"
+                      >
+                        {{- option.name -}}
+                      </label>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- else -%}
+              <div class="relative block mt-0.5 tracking-wide">
+                <label class="absolute top-px left-2 xs:left-3 z-10 text-xs font-medium block leading-5 tracking-wide pointer-events-none" for="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
+                  Ship every:
+                </label>
+                <select id="SubscriptionOption-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
+                  class="block input input-xs w-full pl-[76px] xs:pl-20 pr-6!"
+                  name="selling_plan"
+                  form="{{ product_form_id }}"
+                >
+                  {%- for option in subscription_group.selling_plans -%}
+                    <option
+                      value="{{ option.id }}"
+                      {%- if option.id == default_option -%}selected{%- endif -%}
+                    >
+                      {{- option.name -}}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endif -%}
+          {%- elsif card_product.variants.size > 1 and variant_picker_type != 'none' -%}
+            {%- if variant_picker_type == 'dropdown' or card_product.handle == 'gift-card' -%}
+              <variant-selects
+                class="no-js-hidden block mt-1"
+                data-section="{{ card_product.id }}-{{ section_id }}"
+                data-url="{{ card_product.url }}"
+                data-update-url="false"
+              >
+                {%- for option in card_product.options_with_values -%}
+                  <div class="relative block">
+                    <label class="absolute top-0 sm:top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}">
+                      {{- option.name -}}
+                    </label>
+                    <select id="Option-{{ card_product.id }}-{{ forloop.index0 }}-{{ section_id }}"
+                      class="block input input-xs rounded-full w-full py-px sm:py-0.5 {% if option.name == 'Size' %}pl-10{% else %}pl-16{% endif %}{% if variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                      name="options[{{ option.name | escape }}]"
+                      form="{{ product_form_id }}"
+                    >
+                      {%- for value in option.values -%}
+                        <option
+                          value="{{ value | escape }}"
+                          {% if default_to_mini and forloop.index0 == mini_index %}
+                            selected="selected"
+                          {% elsif default_to_jumbo and forloop.index0 == 0 %}
+                            selected="selected"
+                          {% elsif default_to_mini != true and default_to_jumbo != true and option.selected_value == value %}
+                            selected="selected"
+                          {% endif %}
+                        >
+                          {{ value }}
+                        </option>
+                      {%- endfor -%}
+                    </select>
+                  </div>
+                {%- endfor -%}
+
+                <script type="application/json" class="variant-data">
+                  {{ card_product.variants | json }}
+                </script>
+              </variant-selects>
+            {%- else -%}
+              <variant-radios
+                class="no-js-hidden block mt-1.5"
+                data-section="{{ card_product.id }}-{{ section_id }}"
+                data-url="{{ card_product.url }}"
+                data-update-url="false"
+              >
+                {%- for option in card_product.options_with_values -%}
+                  <fieldset
+                    class="js flex{% if option.name == 'Scent' %} sr-only{% endif %}"
+                    aria-label="{{ option.name }}"
+                  >
+                    <legend class="sr-only">{{ option.name }}</legend>
+                    {%- for value in option.values -%}
+                      <div>
+                        <input type="radio"
+                          id="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
+                          class="peer sr-only"
+                          name="{{ option.name }}-{{ card_product.id }}-{{ section_id }}"
+                          value="{{ value | escape }}"
+                          form="{{ product_form_id }}"
+                          {% if option.name == 'Scent' and value == 'Scented' %}
+                            checked
+                          {% elsif option.name == 'Size' and default_to_mini and forloop.last %}
+                            checked
+                          {% elsif option.name == 'Size' and default_to_jumbo and forloop.first %}
+                            checked
+                          {% elsif default_to_mini != true and default_to_jumbo != true and option.selected_value == value %}
+                            checked
+                          {% endif %}
+                        >
+                        <label
+                          class="button button-xs block button-secondary rounded-full lowercase tracking-wide peer-checked:bg-wave-200 py-px sm:py-0.5 mr-1 xs:mr-2{% if option.values.size > 2 %} px-1.5 2xs:px-2 xs:px-3{% else%} px-2.5 xs:px-3{% endif %}{% if variant_picker_classes != blank %} {{ variant_picker_classes }}{% endif %}"
+                          for="{{ card_product.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ section_id }}"
+                        >
+                          {{ value | replace: 'fl oz Duo', 'oz Duo' }}
+                        </label>
+                      </div>
+                    {%- endfor -%}
+                  </fieldset>
+                {%- endfor -%}
+
+                <script type="application/json" class="variant-data">
+                  {{ card_product.variants | json }}
+                </script>
+              </variant-radios>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endunless -%}
+        <product-form data-cart-type="{{ settings.cart_type }}" class="relative{% if product_form_class != blank %} {{ product_form_class }}{% endif %}">
+          <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
+            {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
+            <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
+          </div>
+
+          {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            {%- liquid
+              if default_to_mini
+                assign default_id = card_product.variants[mini_index].id
+              elsif default_to_jumbo
+                assign default_id = card_product.variants[0].id
+              else
+                assign default_id = card_product.selected_or_first_available_variant.id
+              endif
+
+              assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
+              assign set_products = collections['skincare-sets'].products | map: 'handle'
+              assign is_set = false
+              assign show_range = true
+              assign price_class = 'tracking-wide'
+              if set_products contains card_product.handle
+                assign is_set = true
+              endif
+              if is_set
+                assign show_range = false
+                assign price_class = 'tracking-wide set-price'
+              endif
+            -%}
+
+            <input type="hidden" name="id" value="{{ default_id }}" disabled />
+            <input type="hidden" name="properties[_is_subscription]" value="{% if subscription %}true{% else %}false{% endif %}" />
+
+            {%- if card_product.selected_or_first_available_variant.available -%}
+              <button
+                id="{{ product_form_id }}-submit"
+                type="submit"
+                name="add"
+                aria-haspopup="dialog"
+                aria-live="polite"
+                class="button w-full motion-safe:transition flex mt-2 disabled:opacity-50 {% if hide_price %}justify-center{% else %}justify-between{% endif %} {% if mini %}button-xs{% else %}button-tertiary{% endif %} {{ button_class }}"
+              >
+                <span class="label">
+                  {%- if mini -%}Add{%- elsif subscription -%}Subscribe{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}&nbsp;
+                </span>
+
+                {%- unless hide_price -%}
+                  {%- render 'price',
+                    product: card_product,
+                    price_id: price_id,
+                    price_class: price_class,
+                    show_price_range: show_range,
+                    use_variant: true,
+                    subscription: subscription,
+                    default_to_mini: default_to_mini,
+                    default_to_jumbo: default_to_jumbo
+                  -%}
+                {%- endunless -%}
+              </button>
+            {%- else -%}
+              {% comment %} Replace SOLD OUT button with Klaviyo BIS button  {% endcomment %}
+              <a
+                data-bis-plp
+                href="{{ card_product.url }}?variant={{ card_product.selected_or_first_available_variant.id }}"
+                class="button button-tertiary w-full motion-safe:transition disabled:opacity-50 h-10 button-sm sm:button-md leading-none sm:leading-normal md:tracking-wider"
+              >
+                Join the waitlist
+              </a>
+            {%- endif -%}
+          {%- endform -%}
+        </product-form>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="relative block overflow-hidden no-underline rounded mb-2" tabindex="-1">
+    {%- if card_product.featured_media -%}
+      {%- if remove_linking -%}
+        <div class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
+      {%- else -%}
+        <a
+          aria-label="{{ card_product.title | escape }}"
+          href="{{ card_product.url | default: '#' }}"
+          class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if image_class != blank %} {{ image_class }}{% endif %}"
+          tabindex="-1"
+        >
+      {%- endif -%}
+
+      {%- liquid
+        assign card_sizes = sizes_attr | default: '(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw'
+        assign default_w = 480
+
+        if mini
+          if card_product.metafields.custom.product_image_transparent != blank
+            assign default_image = card_product.metafields.custom.product_image_transparent
+          else
+            assign default_image = card_product.featured_media
+          endif
+          assign card_sizes = '72px'
+          assign default_w = 72
+        elsif custom_default_image != nil
+          assign default_image = custom_default_image
+        elsif default_to_mini and card_product.variants.size > 1 and is_set == false and card_product.title != 'Digital Gift Card'
+          assign default_image = card_product.variants[mini_index].featured_media
+        elsif card_product.selected_or_first_available_variant.featured_media != nil
+          assign default_image = card_product.selected_or_first_available_variant.featured_media
+        else
+          assign default_image = card_product.featured_media
+        endif
+
+        assign default_master = default_image | image_url
+      -%}
+
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+      {%- if mini -%}
+        <img
+          srcset="{% render 'imgix', src: default_master, w: 144 %} 2x, {% render 'imgix', src: default_master, w: 72 %} 1x"
+          src="{% render 'imgix', src: default_master, w: 144 %}"
+          alt="{{ default_image.alt | escape }}"
+          loading="lazy"
+          width="72"
+          height="72"
+          class="mx-auto{% if image_element_class != blank %} {{ image_element_class }}{% endif %}"
+        >
+      {%- else -%}
+        <img
+          src="{% render 'imgix', src: default_master, w: default_w %}"
+          srcset="
+            {% render 'imgix', src: default_master, w: 320 %} 320w,
+            {% render 'imgix', src: default_master, w: 480 %} 480w,
+            {% render 'imgix', src: default_master, w: 640 %} 640w,
+            {% render 'imgix', src: default_master, w: 960 %} 960w,
+            {% render 'imgix', src: default_master, w: 1200 %} 1200w
+          "
+          sizes="{{ card_sizes }}"
+          alt="{{ default_image.alt | escape }}"
+          width="{{ default_image.width }}"
+          height="{{ default_image.width | divided_by: default_image.aspect_ratio | round }}"
+          id="ProductCard-DefaultImage-{{ card_product.id }}-{{ section_id }}"
+          loading="{% if remove_lazy_loading %}eager{% else %}lazy{% endif %}"
+          {% if fetch_priority_high %}
+            fetchpriority="high"
+          {% endif %}
+          class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
+        >
+      {%- endif -%}
+      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+
+      {% if remove_linking %}</div>{% else %}</a>{% endif %}
+    {%- else -%}
+      <h2 class="h3">
+        <a href="{{ card_product.url | default: '#' }}">
+          {{ card_product.title }}
+        </a>
+      </h2>
+    {%- endif -%}
+
+    {%- unless mini or hide_badge -%}
+      {%- if custom_badge_html != blank -%}
+        {{ custom_badge_html }}
+      {%- else -%}
+        {% render 'product-text-badge', product: card_product, classes: badge_class, percent_discount: percent_discount %}
+      {%- endif -%}
+      
+      {% render 'product-image-badge', product: card_product, classes: 'z-10 left-1 top-1 w-12 xl:w-16 gap-1' %}
+    {%- endunless -%}
+  </div>
+</div>
+{%- endif -%}

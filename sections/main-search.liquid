@@ -132,7 +132,7 @@
                   <ul class="{{ grid_styles }}" role="list">
                     {%- for item in product_list -%}
                       <li class="w-full">
-                        {% render 'product-card',
+                        {% render 'card-product',
                           card_product: all_products[item.handle],
                           section_id: section.id,
                           button_class: 'flex-col h-10 sm:h-auto sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
@@ -155,9 +155,9 @@
                           assign article_title = item.title | truncate: 50
                           assign article_description = item.excerpt | truncate: 75
                         -%}
-                        {% render 'search-card',
+                        {% render 'card-search',
                           url: item.url,
-                          image: item.image.src,
+                          image: item.image,
                           title: article_title,
                           description: article_description,
                           search_page: true
@@ -180,7 +180,7 @@
                           assign collection_title = item.title | truncate: 50
                           assign collection_description = item.description | strip_html | truncate: 75
                         -%}
-                        {% render 'search-card',
+                        {% render 'card-search',
                           url: item.url,
                           image: item.image,
                           title: collection_title,
@@ -205,7 +205,7 @@
                           assign page_title = item.title | truncate: 50
                           assign page_description = item.content | strip_html | truncate: 75
                         -%}
-                        {% render 'search-card',
+                        {% render 'card-search',
                           url: item.url,
                           image: item.metafields.custom.search_image,
                           title: page_title,

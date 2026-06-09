@@ -499,13 +499,17 @@
                   {%- for sample in settings.cart_samples_collection.products limit: 6 -%}
                     {%- if sample.available and sample.price == 0 -%}
                       {%- unless cart_ids contains sample.id -%}
-                        {% render 'product-card-mini',
-                          card_product: sample,
-                          section_id: section.id,
-                          hide_price: true,
-                          button_class: 'button-secondary',
-                          disable_links: true
-                        -%}
+                        <li>
+                          {% render 'card-product',
+                            card_product: sample,
+                            section_id: section.id,
+                            mini: true,
+                            force_atc: true,
+                            hide_price: true,
+                            button_class: 'button-secondary',
+                            remove_linking: true
+                          -%}
+                        </li>
                       {%- endunless -%}
                     {%- endif -%}
                   {%- endfor -%}
@@ -515,17 +519,17 @@
           {%- endif -%}
 
           {% comment %} Shipping calculator {% endcomment %}
-          <shipping-calculator class="flex gap-2 items-end w-full max-w-md mx-auto bg-wave-100 p-4 rounded-sm">
+          <shipping-calculator class="flex gap-2 items-end w-full max-w-md mx-auto bg-wave-100 p-4 rounded-sm" data-collapsed="false">
             <form class="relative">
               <label for="shippingzip" class="tracking-wide font-medium text-sm mb-1">Estimated shipping time</label><br/>
-              <input class="py-2 w-60 input input-sm" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
-              <input class="absolute right-1 bottom-1 px-2 py-0.5 button button-tertiary button-sm" type="submit" value="Submit">
+              <input class="py-3 w-44 sm:w-60 input input-sm" id="shippingzip" name="shippingzip" type="text" placeholder="Zipcode">
+              <input class="absolute right-1 bottom-1 px-2 py-1 button button-tertiary button-sm leading-6" type="submit" value="Submit">
             </form>
             <div
               id="transitTimeOutput"
               data-transition-end="opacity-100 translate-x-0"
               data-transition-start="-translate-x-4 opacity-0"
-              class="inline-flex px-2 mt-2 mb-px font-bold leading-8 rounded-lg opacity-0 duration-300 -translate-x-4 pointer-events-none transition-transform-opacity bg-seaweed-300"></div>
+              class="inline-flex px-2 mt-2 mb-px font-bold leading-10 rounded-lg opacity-0 duration-300 -translate-x-4 pointer-events-none transition-transform-opacity bg-seaweed-200 whitespace-nowrap"></div>
           </shipping-calculator>
         </div>
 

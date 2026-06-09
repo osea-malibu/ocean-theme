@@ -4,7 +4,7 @@
     Accepts:
     - article: {Object} Article object
     - unique_id: {String} Additional unique id for use when multiple of the same article block appear on a page (optional)
-    - show_image: {String} The setting either show the article image or not. If it's not included it will show the image by default
+    - show_image: {Boolean} Show the article image. Default: true (optional)
     - large_image: {Boolean} Show a larger image (for main featured article)
     - date_classes: {String} Tailwind CSS classes
     - author_classes: {String} Tailwind CSS classes
@@ -17,10 +17,10 @@
     - link_classes: {String} Tailwind CSS classes
     - text_wrapper_classes: {String} Tailwind CSS classes
     - image_wrapper_classes: {String} Tailwind CSS classes
-    - exceprt_length: {Number} Length to truncate exceprt to, default: 20
+    - excerpt_length: {Number} Length to truncate excerpt to, default: 20
 
     Usage:
-    {% render 'article-card', article: article, show_image: section.settings.show_image %}
+    {% render 'card-article', article: article, show_image: section.settings.show_image %}
 {% endcomment %}
 
 <article class="article-card{% if card_classes != blank %} {{ card_classes }}{% endif %}" aria-labelledby="Article-{{ article.id }}{{ unique_id }}">
@@ -40,8 +40,8 @@
       -%}
       <img
         srcset="{{ article.image.src | image_url: width: image_1x_size }} 1x, {{ article.image.src | image_url: width: image_2x_size }} 2x"
-src="{{ article.image.src | default: '' | image_url: width: image_2x_size }}"
-        alt="{{ article.image.src.alt | escape }}"
+        src="{{ article.image.src | image_url: width: image_2x_size }}"
+        alt="{{ article.image.alt | escape }}"
         width="{{ article.image.width }}"
         height="{{ article.image.height }}"
         loading="lazy"
@@ -50,35 +50,26 @@ src="{{ article.image.src | default: '' | image_url: width: image_2x_size }}"
     </a>
   {%- endif -%}
 
-    <div class="{{ text_wrapper_classes }}">
-      <header>
-        <strong class="{{ tag_classes }}">
-          {{ article.tags | join: ', ' }}
-        </strong>
-        <h2 class="{{ title_classes }}" id="Article-{{ article.id }}{{ unique_id }}">
-          {{ article.title | escape }}
-        </h2>
-        <span class="{{ date_classes }}">
-          {{- article.published_at | time_tag: format: 'abbreviated_date' -}}
-        </span>
-        <span class="{{ author_classes }}">{{ article.author -}}</span>
-      </header>
-      {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
-        <p class="{{ excerpt_classes }}">
-          {%- liquid
-            if exceprt_length == blank
-              assign truncate_length = 20
-            else
-              assign truncate_length = exceprt_length
-            endif
-          -%}
-          {%- if article.excerpt.size > 0 -%}
-            {{ article.excerpt | strip_html | truncatewords: truncate_length }}
-          {%- else -%}
-            {{ article.content | strip_html | truncatewords: truncate_length }}
-          {%- endif -%}
-        </p>
-      {%- endif -%}
-      <a class="{{ link_classes }}" href="{{ article.url }}" aria-label="Read more of {{ article.title }} blog">Read more</a>
-    </div>
+  <div class="{{ text_wrapper_classes }}">
+    <header>
+      <strong class="{{ tag_classes }}">
+        {{ article.tags | join: ', ' }}
+      </strong>
+      <h2 class="{{ title_classes }}" id="Article-{{ article.id }}{{ unique_id }}">
+        {{ article.title | escape }}
+      </h2>
+      <span class="{{ date_classes }}">
+        {{- article.published_at | time_tag: format: 'abbreviated_date' -}}
+      </span>
+      <span class="{{ author_classes }}">{{ article.author -}}</span>
+    </header>
+    {%- assign excerpt_content = article.excerpt | default: article.content -%}
+    {%- assign word_limit = excerpt_length | default: 20 -%}
+    {%- if excerpt_content != blank -%}
+      <p class="{{ excerpt_classes }}">
+        {{ excerpt_content | strip_html | truncatewords: word_limit }}
+      </p>
+    {%- endif -%}
+    <a class="{{ link_classes }}" href="{{ article.url }}" aria-label="Read more of {{ article.title }} blog">Read more</a>
+  </div>
 </article>

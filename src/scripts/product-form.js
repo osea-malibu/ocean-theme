@@ -12,7 +12,7 @@ if (!customElements.get("product-form")) {
         this.form.addEventListener("submit", this.onSubmitHandler.bind(this));
         this.cart = document.querySelector("cart-drawer");
         this.submitButton = this.querySelector('[type="submit"]');
-        if (document.querySelector("cart-drawer"))
+        if (document.querySelector("cart-drawer") && this.submitButton)
           this.submitButton.setAttribute("aria-haspopup", "dialog");
       }
 

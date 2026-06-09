@@ -33,20 +33,13 @@
               {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
                 <li class="glide__slide p-1" data-media-id="{{ section.id }}-{{ product.id }}">
                   {%- assign section_id = section.id | append: block.id -%}
-                  {%- render 'product-card',
+                  {%- render 'card-product',
                     card_product: product,
                     section_id: section_id,
-                    show_secondary_image_on_hover: false,
                     show_reviews: true,
                     button_class: 'px-3 xl:px-5 sm:text-sm'
                   -%}
                 </li>
-              {%- else -%}
-                {%- for i in (1..4) -%}
-                  <li>
-                    {% render 'product-card-placeholder' %}
-                  </li>
-                {%- endfor -%}
             {%- endfor -%}
             </ul>
           </div>
