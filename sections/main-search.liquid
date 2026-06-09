@@ -155,7 +155,7 @@
                           assign article_title = item.title | truncate: 50
                           assign article_description = item.excerpt | truncate: 75
                         -%}
-                        {% render 'search-card',
+                        {% render 'card-search',
                           url: item.url,
                           image: item.image.src,
                           title: article_title,
@@ -180,7 +180,7 @@
                           assign collection_title = item.title | truncate: 50
                           assign collection_description = item.description | strip_html | truncate: 75
                         -%}
-                        {% render 'search-card',
+                        {% render 'card-search',
                           url: item.url,
                           image: item.image,
                           title: collection_title,
@@ -205,7 +205,7 @@
                           assign page_title = item.title | truncate: 50
                           assign page_description = item.content | strip_html | truncate: 75
                         -%}
-                        {% render 'search-card',
+                        {% render 'card-search',
                           url: item.url,
                           image: item.metafields.custom.search_image,
                           title: page_title,
