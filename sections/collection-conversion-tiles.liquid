@@ -1,0 +1,148 @@
+{% comment %}
+  Renders a row of conversion tiles at the bottom of a collection page.
+  Tiles are driven by the `custom.plp_conversion_tile` list metafield on the collection,
+  which references `plp_conversion_tiles` metaobjects.
+
+  Each metaobject tile resolves to one of three card types:
+  - article field present  → card-article (with optional image override)
+  - collection field present → card-collection (with optional image override)
+  - neither                  → card-image-text (custom tile: quiz, brand content, etc.)
+
+  Metaobject fields: article, collection, image, link, link_label, classes
+{% endcomment %}
+
+{%- assign tiles = collection.metafields.custom.plp_conversion_tile.value -%}
+{%- if tiles != blank and tiles.size > 0 -%}
+  <div class="{{ section.settings.section_classes }}">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    <ul class="{{ section.settings.grid_classes }}" role="list">
+      {%- for tile in tiles -%}
+        {%- liquid
+          assign tile_article = tile.article.value
+          assign tile_collection = tile.collection.value
+          assign tile_image = tile.image.value
+          assign tile_link = tile.link.value
+          assign tile_link_label = tile.link_label.value
+          assign tile_classes = tile.classes.value
+        -%}
+        <li class="{{ tile_classes }}">
+          {%- if tile_article != blank -%}
+            {%- render 'card-article',
+              article: tile_article,
+              custom_image: tile_image,
+              show_image: true,
+              card_classes: section.settings.card_classes,
+              image_wrapper_classes: section.settings.image_wrapper_classes,
+              image_aspect: section.settings.image_aspect,
+              image_classes: section.settings.image_classes,
+              title_classes: section.settings.title_classes,
+              excerpt_classes: section.settings.excerpt_classes,
+              link_classes: section.settings.link_classes,
+              text_wrapper_classes: section.settings.text_wrapper_classes
+            -%}
+          {%- elsif tile_collection != blank -%}
+            {%- render 'card-collection',
+              card_collection: tile_collection,
+              custom_image: tile_image,
+              card_classes: section.settings.card_classes,
+              image_wrapper_classes: section.settings.image_wrapper_classes,
+              image_aspect: section.settings.image_aspect,
+              image_classes: section.settings.image_classes,
+              title_classes: section.settings.title_classes,
+              link_classes: section.settings.link_classes,
+              text_wrapper_classes: section.settings.text_wrapper_classes
+            -%}
+          {%- else -%}
+            {%- render 'card-image-text',
+              image: tile_image,
+              url: tile_link,
+              cta_label: tile_link_label,
+              card_classes: section.settings.card_classes,
+              image_wrapper_classes: section.settings.image_wrapper_classes,
+              image_aspect: section.settings.image_aspect,
+              image_classes: section.settings.image_classes,
+              title_classes: section.settings.title_classes,
+              description_classes: section.settings.excerpt_classes,
+              link_classes: section.settings.link_classes,
+              text_wrapper_classes: section.settings.text_wrapper_classes
+            -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection Conversion Tiles",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_classes",
+      "label": "Heading classes"
+    },
+    {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Section classes",
+      "default": "container py-12"
+    },
+    {
+      "type": "textarea",
+      "id": "grid_classes",
+      "label": "Grid classes",
+      "default": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+    },
+    {
+      "type": "textarea",
+      "id": "card_classes",
+      "label": "Card classes"
+    },
+    {
+      "type": "text",
+      "id": "image_aspect",
+      "label": "Image aspect ratio",
+      "info": "Percent-based in X:X format, e.g. aspect-[4/3]"
+    },
+    {
+      "type": "textarea",
+      "id": "image_wrapper_classes",
+      "label": "Image wrapper classes"
+    },
+    {
+      "type": "textarea",
+      "id": "image_classes",
+      "label": "Image classes"
+    },
+    {
+      "type": "textarea",
+      "id": "title_classes",
+      "label": "Title classes"
+    },
+    {
+      "type": "textarea",
+      "id": "excerpt_classes",
+      "label": "Excerpt / description classes"
+    },
+    {
+      "type": "textarea",
+      "id": "link_classes",
+      "label": "Link / CTA classes"
+    },
+    {
+      "type": "textarea",
+      "id": "text_wrapper_classes",
+      "label": "Text wrapper classes"
+    }
+  ]
+}
+{% endschema %}
