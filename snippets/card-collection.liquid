@@ -1,0 +1,56 @@
+{% comment %}
+    Renders a collection card.
+
+    Accepts:
+    - card_collection: {Object} Collection Liquid object (required)
+    - custom_image: {Object} Image object — overrides collection's featured image (optional)
+    - show_image: {Boolean} Show the collection image. Default: true (optional)
+    - card_classes: {String} Tailwind CSS classes (optional)
+    - image_classes: {String} Tailwind CSS classes for img element (optional)
+    - image_aspect: {String} Percent-based aspect ratio (in X:X format, divide 2nd value by 1st) (optional)
+    - image_wrapper_classes: {String} Tailwind CSS classes (optional)
+    - title_classes: {String} Tailwind CSS classes (optional)
+    - link_classes: {String} Tailwind CSS classes (optional)
+    - text_wrapper_classes: {String} Tailwind CSS classes (optional)
+
+    Usage:
+    {% render 'card-collection', card_collection: collection %}
+{% endcomment %}
+
+{%- if card_collection != blank -%}
+  {%- assign display_image = custom_image | default: card_collection.featured_image -%}
+  <div class="collection-card{% if card_classes != blank %} {{ card_classes }}{% endif %}">
+    {%- if show_image != false and display_image != blank -%}
+      <a
+        href="{{ card_collection.url }}"
+        class="cursor-pointer hover:opacity-80 motion-safe:transition-opacity block{% if image_aspect != blank %} w-full relative {{ image_aspect }}{% endif %}{% if image_wrapper_classes != blank %} {{ image_wrapper_classes }}{% endif %}"
+      >
+        <img
+          srcset="{{ display_image | image_url: width: 400 }} 400w, {{ display_image | image_url: width: 800 }} 800w, {{ display_image | image_url: width: 1200 }} 1200w"
+          src="{{ display_image | image_url: width: 800 }}"
+          alt="{{ display_image.alt | default: card_collection.title | escape }}"
+          width="{{ display_image.width }}"
+          height="{{ display_image.height }}"
+          loading="lazy"
+          class="{{ image_classes }}{% if image_aspect != blank %} absolute inset-0 object-cover{% unless image_classes contains 'object-' %} object-center{% endunless %} min-w-full min-h-full{% endif %}"
+        >
+      </a>
+    {%- elsif show_image != false -%}
+      {%- comment %} No image — render color fallback {% endcomment %}
+      <a
+        href="{{ card_collection.url }}"
+        class="block bg-wave-200{% if image_aspect != blank %} w-full {{ image_aspect }}{% endif %}{% if image_wrapper_classes != blank %} {{ image_wrapper_classes }}{% endif %}"
+        aria-hidden="true"
+        tabindex="-1"
+      ></a>
+    {%- endif -%}
+
+    <div class="{{ text_wrapper_classes }}">
+      <h2 class="{{ title_classes }}">
+        <a href="{{ card_collection.url }}"{% if link_classes != blank %} class="{{ link_classes }}"{% endif %}>
+          {{- card_collection.title | escape -}}
+        </a>
+      </h2>
+    </div>
+  </div>
+{%- endif -%}

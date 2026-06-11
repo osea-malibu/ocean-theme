@@ -75,7 +75,7 @@
           "type": "button",
           "settings": {
             "button_label": "Take the quiz",
-            "button_link": "shopify://pages/quiz-archive",
+            "button_link": "shopify://pages/quiz",
             "button_aria_label": "",
             "target_blank": false,
             "button_icon": "",
@@ -93,6 +93,13 @@
         "section_classes": "container",
         "container_classes": "text-center bg-seafoam-200 py-8 rounded"
       }
+    },
+    "collection-conversion-tiles": {
+      "type": "collection-conversion-tiles",
+      "settings": {
+        "section_classes": "container py-12",
+        "grid_classes": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      }
     }
   },
   "order": [
@@ -102,6 +109,7 @@
     "seo-description",
     "faqs",
     "comparison-matrix",
-    "quiz"
+    "quiz",
+    "collection-conversion-tiles"
   ]
 }
