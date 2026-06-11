@@ -27,7 +27,7 @@
           assign tile_link_label = tile.link_label.value
           assign tile_classes = tile.classes.value
         -%}
-        <li class="{{ tile_classes }}">
+        <li{% if tile_classes != blank %} class="{{ tile_classes }}"{% endif %}>
           {%- if tile_article != blank -%}
             {%- render 'card-article',
               article: tile_article,
