@@ -19,6 +19,7 @@
     - image_wrapper_classes: {String} Tailwind CSS classes
     - excerpt_length: {Number} Length to truncate excerpt to, default: 20
     - custom_image: {Object} Image object — overrides article's default image (optional)
+    - description: {String} Overrides article excerpt when present (optional)
 
     Usage:
     {% render 'card-article', article: article, show_image: section.settings.show_image %}
@@ -65,12 +66,16 @@
       </span>
       <span class="{{ author_classes }}">{{ article.author -}}</span>
     </header>
-    {%- assign excerpt_content = article.excerpt | default: article.content -%}
-    {%- assign word_limit = excerpt_length | default: 20 -%}
-    {%- if excerpt_content != blank -%}
-      <p class="{{ excerpt_classes }}">
-        {{ excerpt_content | strip_html | truncatewords: word_limit }}
-      </p>
+    {%- if description != blank -%}
+      <p class="{{ excerpt_classes }}">{{ description }}</p>
+    {%- else -%}
+      {%- assign excerpt_content = article.excerpt | default: article.content -%}
+      {%- assign word_limit = excerpt_length | default: 20 -%}
+      {%- if excerpt_content != blank -%}
+        <p class="{{ excerpt_classes }}">
+          {{ excerpt_content | strip_html | truncatewords: word_limit }}
+        </p>
+      {%- endif -%}
     {%- endif -%}
     <a class="{{ link_classes }}" href="{{ article.url }}" aria-label="Read more of {{ article.title }} blog">Read more</a>
   </div>

@@ -10,6 +10,9 @@
     - image_aspect: {String} Percent-based aspect ratio (in X:X format, divide 2nd value by 1st) (optional)
     - image_wrapper_classes: {String} Tailwind CSS classes (optional)
     - title_classes: {String} Tailwind CSS classes (optional)
+    - description: {String} Overrides collection description when present (optional)
+    - description_classes: {String} Tailwind CSS classes (optional)
+    - cta_label: {String} CTA link label. Default: 'Shop collection' (optional)
     - link_classes: {String} Tailwind CSS classes (optional)
     - text_wrapper_classes: {String} Tailwind CSS classes (optional)
 
@@ -46,11 +49,18 @@
     {%- endif -%}
 
     <div class="{{ text_wrapper_classes }}">
-      <h2 class="{{ title_classes }}">
-        <a href="{{ card_collection.url }}"{% if link_classes != blank %} class="{{ link_classes }}"{% endif %}>
-          {{- card_collection.title | escape -}}
-        </a>
-      </h2>
+      <h2 class="{{ title_classes }}">{{ card_collection.title | escape }}</h2>
+      {%- assign description_content = description | default: card_collection.description -%}
+      {%- if description_content != blank -%}
+        <p class="{{ description_classes }}">{{ description_content | strip_html }}</p>
+      {%- endif -%}
+      <a
+        href="{{ card_collection.url }}"
+        class="{{ link_classes }}"
+        aria-label="{{ cta_label | default: 'Shop collection' }} - {{ card_collection.title | escape }}"
+      >
+        {{- cta_label | default: 'Shop collection' -}}
+      </a>
     </div>
   </div>
 {%- endif -%}

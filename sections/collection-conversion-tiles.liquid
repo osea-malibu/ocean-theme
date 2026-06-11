@@ -27,6 +27,8 @@
           assign tile_link_label = tile.link_label.value
           assign tile_title = tile.title.value
           assign tile_description = tile.description.value
+          assign tile_title_classes = tile.title_classes.value | default: section.settings.title_classes
+          assign tile_description_classes = tile.description_classes.value | default: section.settings.excerpt_classes
           assign tile_classes = tile.classes.value
         -%}
         <li{% if tile_classes != blank %} class="{{ tile_classes }}"{% endif %}>
@@ -34,25 +36,31 @@
             {%- render 'card-article',
               article: tile_article,
               custom_image: tile_image,
+              description: tile_description,
               show_image: true,
               card_classes: section.settings.card_classes,
               image_wrapper_classes: section.settings.image_wrapper_classes,
               image_aspect: section.settings.image_aspect,
               image_classes: section.settings.image_classes,
-              title_classes: section.settings.title_classes,
-              excerpt_classes: section.settings.excerpt_classes,
+              title_classes: tile_title_classes,
+              excerpt_classes: tile_description_classes,
               link_classes: section.settings.link_classes,
+              tag_classes: 'sr-only',
+              date_classes: 'sr-only',
+              author_classes: 'sr-only',
               text_wrapper_classes: section.settings.text_wrapper_classes
             -%}
           {%- elsif tile_collection != blank -%}
             {%- render 'card-collection',
               card_collection: tile_collection,
               custom_image: tile_image,
+              description: tile_description,
               card_classes: section.settings.card_classes,
               image_wrapper_classes: section.settings.image_wrapper_classes,
               image_aspect: section.settings.image_aspect,
               image_classes: section.settings.image_classes,
-              title_classes: section.settings.title_classes,
+              title_classes: tile_title_classes,
+              description_classes: tile_description_classes,
               link_classes: section.settings.link_classes,
               text_wrapper_classes: section.settings.text_wrapper_classes
             -%}
@@ -67,8 +75,8 @@
               image_wrapper_classes: section.settings.image_wrapper_classes,
               image_aspect: section.settings.image_aspect,
               image_classes: section.settings.image_classes,
-              title_classes: section.settings.title_classes,
-              description_classes: section.settings.excerpt_classes,
+              title_classes: tile_title_classes,
+              description_classes: tile_description_classes,
               link_classes: section.settings.link_classes,
               text_wrapper_classes: section.settings.text_wrapper_classes
             -%}
