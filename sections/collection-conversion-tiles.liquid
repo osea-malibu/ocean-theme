@@ -30,6 +30,10 @@
           assign tile_title_classes = tile.title_classes.value | default: section.settings.title_classes
           assign tile_description_classes = tile.description_classes.value | default: section.settings.excerpt_classes
           assign tile_classes = tile.classes.value
+          assign tile_fill_image = false
+          if tile_article == blank and tile_collection == blank and tile_link_label == blank and tile_description == blank and tile_image != blank
+            assign tile_fill_image = true
+          endif
         -%}
         <li{% if tile_classes != blank %} class="{{ tile_classes }}"{% endif %}>
           {%- if tile_article != blank -%}
@@ -71,6 +75,7 @@
               title: tile_title,
               description: tile_description,
               cta_label: tile_link_label,
+              fill_image: tile_fill_image,
               card_classes: section.settings.card_classes,
               image_wrapper_classes: section.settings.image_wrapper_classes,
               image_aspect: section.settings.image_aspect,
