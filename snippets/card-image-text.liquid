@@ -24,7 +24,11 @@
 
 <figure class="card-image-text{% if fill_image %} relative h-full overflow-hidden{% endif %}{% if card_classes != blank %} {{ card_classes }}{% endif %}">
   {%- if fill_image -%}
-    <div class="absolute inset-0{% if image_wrapper_classes != blank %} {{ image_wrapper_classes }}{% endif %}">
+    {%- if url != blank -%}
+      <a href="{{ url }}" class="absolute inset-0 hover:opacity-80 motion-safe:transition-opacity{% if image_wrapper_classes != blank %} {{ image_wrapper_classes }}{% endif %}">
+    {%- else -%}
+      <div class="absolute inset-0{% if image_wrapper_classes != blank %} {{ image_wrapper_classes }}{% endif %}">
+    {%- endif -%}
       <img
         srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1200 }} 1200w"
         src="{{ image | image_url: width: 800 }}"
@@ -34,7 +38,11 @@
         loading="lazy"
         class="w-full h-full object-cover{% unless image_classes contains 'object-' %} object-center{% endunless %}{% if image_classes != blank %} {{ image_classes }}{% endif %}"
       >
-    </div>
+    {%- if url != blank -%}
+      </a>
+    {%- else -%}
+      </div>
+    {%- endif -%}
   {%- else -%}
     {%- if url != blank -%}
       <a
