@@ -8,7 +8,7 @@
   - collection field present → card-collection (with optional image override)
   - neither                  → card-image-text (custom tile: quiz, brand content, etc.)
 
-  Metaobject fields: article, collection, image, link, link_label, classes
+  Metaobject fields: article, collection, image, link, link_label, title, description, classes
 {% endcomment %}
 
 {%- assign tiles = collection.metafields.custom.plp_conversion_tile.value -%}
@@ -25,6 +25,8 @@
           assign tile_image = tile.image.value
           assign tile_link = tile.link.value
           assign tile_link_label = tile.link_label.value
+          assign tile_title = tile.title.value
+          assign tile_description = tile.description.value
           assign tile_classes = tile.classes.value
         -%}
         <li{% if tile_classes != blank %} class="{{ tile_classes }}"{% endif %}>
@@ -58,6 +60,8 @@
             {%- render 'card-image-text',
               image: tile_image,
               url: tile_link,
+              title: tile_title,
+              description: tile_description,
               cta_label: tile_link_label,
               card_classes: section.settings.card_classes,
               image_wrapper_classes: section.settings.image_wrapper_classes,
