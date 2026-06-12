@@ -17,6 +17,7 @@
     - badge_class: {String} Tailwind styling classes (optional)
     - hide_badge: {Boolean} Hide text badge. Default: false (optional)
     - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
+    - align_reviews_right: {Boolean} Align reviews to the right. Default: false (optional)
     - subscription: {Boolean} Default to subscription selection instead of variants (optional)
     - default_to_mini: {Boolean} Default variant selection to travel-sized (optional)
     - default_to_jumbo: {Boolean} Default variant selection to jumbo-sized (optional)
@@ -44,10 +45,27 @@
 {%- if card_product != blank -%}
 <div class="{% if card_class == blank %}flex flex-col relative grow h-full{% else %}{{ card_class }}{% endif %}">
   <div class="product-info w-full order-1 grow flex flex-col">
-    <div>
-      {%- if show_reviews -%}
-        {% render 'product-rating', product: card_product, compact: true, classes: 'product-rating h-4 float-right 2xs:mt-px' %}
-      {%- endif -%}
+    {%- liquid
+      if align_reviews_right
+        assign title_wrapper_classes = ''
+        assign ratings_classes = ratings_classes | append: 'product-rating h-4 float-right 2xs:mt-px'
+        assign compact_ratings = true
+      else
+        assign title_wrapper_classes = title_wrapper_classes | append: 'flex flex-col-reverse'
+        assign ratings_classes = ratings_classes | append: 'product-rating h-4 child:!ml-0 mb-1'
+        assign compact_ratings = false
+      endif
+
+      if show_reviews
+        assign ratings_classes = ratings_classes | append: ''
+      else
+        assign ratings_classes = ratings_classes | append: ' hidden'
+      endif
+    -%}
+    <div class="{{ title_wrapper_classes }}">
+      {% comment %} {%- if show_reviews -%} {% endcomment %}
+        {% render 'product-rating', product: card_product, compact: compact_ratings, classes: ratings_classes %}
+      {% comment %} {%- endif -%} {% endcomment %}
       {%- liquid
         assign title_content = title_text | default: card_product.title
 
@@ -68,7 +86,7 @@
       {% unless remove_linking %}</a>{% endunless %}
     </div>
     {%- unless mini -%}
-      <p class="text-sm lg:text-base leading-[1.1]!{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
+      <p class="short-description text-sm lg:text-base leading-[1.1]!{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
         {{- short_description_text | default: card_product.metafields.custom_fields.short_description | escape -}}
       </p>
     {%- endunless -%}
