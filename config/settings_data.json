@@ -125,6 +125,7 @@
           },
           "announcement_zQW6Bp": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p><a href=\"/collections/sea-powered-hyaluronic-collection\" title=\"Seaweed-Powered Hyaluronic Collection\">Shop Seaweed-Powered Hyaluronic</a></p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider px-8 sm:px-0"
@@ -141,7 +142,7 @@
           "announcement_pqiMbE": {
             "type": "announcement",
             "settings": {
-              "text": "<p>Limited Time:  Free Shipping on All US Orders</p>",
+              "text": "<p>ENDS TONIGHT: Free Shipping on All US Orders</p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
             }
           }
@@ -279,10 +280,10 @@
         "type": "shopify://apps/vwo/blocks/vwo-smartcode/2ce905b2-3842-4d20-b6b0-8c51fc208426",
         "disabled": false,
         "settings": {
+          "enableThemeTesting": true,
           "vwoAccountId": "336250",
           "codeType": "ASYNC",
           "settingsTolerance": 2000,
-          "enableThemeTesting": true,
           "reverseProxyUrl": ""
         }
       }
