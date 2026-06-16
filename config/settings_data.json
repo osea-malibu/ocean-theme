@@ -39,7 +39,7 @@
     "enable_cart_bonus_points": false,
     "cart_bonus_points_amount": 0,
     "enable_shipping_countdown": true,
-    "shipping_countdown_threshold": 50,
+    "shipping_countdown_threshold": 0,
     "shipping_countdown_text": "You are remaining_amount away from free shipping!",
     "shipping_countdown_text_success": "Congrats! You get free shipping.",
     "cart_recommendations_travel_handles": "reusable-cotton-rounds, anti-aging-body-balm, ocean-cleanser, undaria-algae-body-lotion, undaria-algae-oil, hyaluronic-body-serum, undaria-algae-body-butter, ocean-cleansing-milk, ocean-cleansing-mudd, dayglow-face-oil, sea-minerals-mist, essential-hydrating-oil-1, undaria-algae-body-wash",
@@ -67,7 +67,8 @@
     "gwp_firsttime_product": "",
     "enableImgix": true,
     "shopifyCdnUrl": "//oseamalibu.com/cdn/shop",
-    "enable_global_plp_tile": false,
+    "enable_global_plp_tile": true,
+    "global_plp_tile_image": "shopify://shop_images/JUNE_2026_Free_Shipping_PLP_Tile.jpg",
     "global_plp_tile_url": "shopify://collections/shop",
     "enable_loop_bundles": false,
     "enable_postscript_teaser": true,
@@ -116,6 +117,7 @@
           },
           "announcement_QyD7cB": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p>Free shipping on orders over $50</p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
@@ -138,9 +140,8 @@
           },
           "announcement_pqiMbE": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
-              "text": "<p>ENDS TONIGHT: Free Shipping on All US Orders</p>",
+              "text": "<p>Limited Time:  Free Shipping on All US Orders</p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
             }
           }
@@ -237,35 +238,8 @@
     },
     "content_for_index": [],
     "blocks": {
-      "6251270934270006384": {
-        "type": "shopify://apps/stape-server-gtm/blocks/gtm/7e13c847-7971-409d-8fe0-29ec14d5f048",
-        "disabled": false,
-        "settings": {}
-      },
-      "733389323033596483": {
-        "type": "shopify://apps/okendo/blocks/theme-settings/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
-        "disabled": false,
-        "settings": {
-          "show_preview_data": true
-        }
-      },
-      "12509190167029697241": {
-        "type": "shopify://apps/blotout-edgetag/blocks/app-embed/ae22d985-ba57-41f5-94c5-18d3dd98ea3c",
-        "disabled": false,
-        "settings": {}
-      },
-      "9431293036029666034": {
-        "type": "shopify://apps/veeper-stop-coupon-leaks/blocks/app-embed/701f59c5-5a05-41c0-ad15-29147f0a6331",
-        "disabled": false,
-        "settings": {}
-      },
       "855628211100114053": {
         "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
-        "disabled": false,
-        "settings": {}
-      },
-      "2153490007123654574": {
-        "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
         "disabled": false,
         "settings": {}
       },
@@ -274,15 +248,11 @@
         "disabled": false,
         "settings": {}
       },
-      "3576686563519644491": {
-        "type": "shopify://apps/vwo/blocks/vwo-smartcode/2ce905b2-3842-4d20-b6b0-8c51fc208426",
+      "733389323033596483": {
+        "type": "shopify://apps/okendo/blocks/theme-settings/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
         "disabled": false,
         "settings": {
-          "enableThemeTesting": true,
-          "vwoAccountId": "336250",
-          "codeType": "ASYNC",
-          "settingsTolerance": 2000,
-          "reverseProxyUrl": ""
+          "show_preview_data": true
         }
       }
     }
