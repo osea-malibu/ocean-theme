@@ -1,0 +1,293 @@
+{%- liquid
+  assign show_bag = section.settings.show_bag
+  assign bag_product = section.settings.bag_product
+  assign bag_variant_id = ''
+  if show_bag and bag_product != blank
+    assign bag_variant_id = bag_product.variants.first.id
+  endif
+  assign min_qty = section.settings.min_qty | default: 6
+  assign max_qty = section.settings.max_qty | default: 24
+  assign discount = section.settings.discount_percentage | default: 15
+  assign cart_image_url = ''
+  if section.settings.cart_image != blank
+    assign cart_image_url = section.settings.cart_image | image_url: width: 400
+  endif
+-%}
+
+<style>
+  .bb-card[aria-pressed="true"] {
+    border-color: var(--color-seaweed-700);
+    border-width: 1.5px;
+  }
+  .bb-card[aria-pressed="true"] .bb-card__checkbox,
+  .bb-card--locked .bb-card__checkbox {
+    border-color: transparent;
+  }
+  .bb-card[aria-pressed="true"] .bb-card__checkbox {
+    background-color: var(--color-seaweed-700);
+  }
+  .bb-card--locked .bb-card__checkbox {
+    background-color: var(--color-seaweed-400);
+  }
+  .bb-card[aria-pressed="true"] .bb-card__check,
+  .bb-card--locked .bb-card__check {
+    opacity: 1;
+  }
+</style>
+
+<onetime-bundle-builder
+  class="block"
+  data-min-qty="{{ min_qty }}"
+  data-max-qty="{{ max_qty }}"
+  data-discount="{{ discount }}"
+  {%- if bag_variant_id != blank %} data-bag-variant-id="{{ bag_variant_id }}"{%- endif %}
+  {%- if cart_image_url != blank %} data-cart-image="{{ cart_image_url }}"{%- endif %}
+>
+  <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 items-start">
+
+    <div>
+      <p class="text-xs font-medium tracking-widest text-seaweed-500 uppercase mb-3">Choose your products</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+
+        {%- for block in section.blocks -%}
+          {%- assign product = block.settings.product -%}
+          {%- if product == blank -%}{%- continue -%}{%- endif -%}
+
+          {%- liquid
+            assign target_id = block.settings.variant_id | plus: 0
+            if target_id > 0
+              assign variant = product.variants | where: 'id', target_id | first
+            else
+              assign variant = product.variants.first
+            endif
+            if variant == blank
+              continue
+            endif
+            if variant.image != blank
+              assign card_image = variant.image
+            else
+              assign card_image = product.featured_image
+            endif
+          -%}
+
+          <button
+            type="button"
+            class="bb-card relative flex flex-col rounded-xl border border-seaweed-300 bg-white p-3 cursor-pointer text-left w-full transition-colors hover:border-seaweed-500"
+            aria-pressed="false"
+            data-variant-id="{{ variant.id }}"
+            data-price="{{ variant.price }}"
+            data-name="{{ product.title | escape }}"
+            {{ block.shopify_attributes }}
+          >
+            <span class="bb-card__checkbox absolute top-2.5 right-2.5 flex items-center justify-center w-[18px] h-[18px] rounded border-[1.5px] border-seaweed-300 bg-white pointer-events-none">
+              <span class="bb-card__check opacity-0 transition-opacity">
+                {%- render 'icon-checkmark', classes: 'w-2.5 h-2.5 text-white', stroke_width: 3, aria_hidden: true -%}
+              </span>
+            </span>
+
+            <span class="flex w-full aspect-square bg-seafoam-100 rounded-lg mb-2 overflow-hidden items-center justify-center">
+              {%- if card_image != blank -%}
+                <img
+                  src="{{ card_image | image_url: width: 200 }}"
+                  alt="{{ card_image.alt | default: product.title | escape }}"
+                  width="100"
+                  height="100"
+                  loading="lazy"
+                  class="w-full h-full object-cover"
+                >
+              {%- endif -%}
+            </span>
+
+            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ product.title }}</span>
+            <span class="block text-xs text-seaweed-500">{{ variant.title }}</span>
+          </button>
+        {%- endfor -%}
+
+        {%- if show_bag and bag_product != blank -%}
+          {%- assign bag_image = bag_product.featured_image -%}
+          <div
+            class="bb-card bb-card--locked relative flex flex-col rounded-xl border border-seaweed-500 border-[1.5px] bg-white p-3 opacity-85"
+            aria-disabled="true"
+          >
+            <span class="bb-card__checkbox absolute top-2.5 right-2.5 flex items-center justify-center w-[18px] h-[18px] rounded pointer-events-none">
+              <span class="bb-card__check">
+                {%- render 'icon-checkmark', classes: 'w-2.5 h-2.5 text-white', stroke_width: 3, aria_hidden: true -%}
+              </span>
+            </span>
+
+            <span class="flex w-full aspect-square bg-seafoam-100 rounded-lg mb-2 overflow-hidden items-center justify-center">
+              {%- if bag_image != blank -%}
+                <img
+                  src="{{ bag_image | image_url: width: 200 }}"
+                  alt="{{ bag_image.alt | default: bag_product.title | escape }}"
+                  width="100"
+                  height="100"
+                  loading="lazy"
+                  class="w-full h-full object-cover"
+                >
+              {%- endif -%}
+            </span>
+
+            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ bag_product.title }}</span>
+            <span class="block text-xs text-seaweed-500">Complimentary</span>
+            <span class="block text-[10px] font-medium text-seaweed-400 mt-0.5">Always included</span>
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+
+    <div>
+      <p class="text-xs font-medium tracking-widest text-seaweed-500 uppercase mb-3">Your bundle</p>
+      <div class="bg-seafoam-100 rounded-xl p-5 flex flex-col gap-4">
+
+        <div>
+          <p class="text-xs font-medium text-seaweed-500 mb-2">Selected products</p>
+          <div class="flex flex-wrap gap-1.5 min-h-[26px]" data-pills>
+            <span class="text-sm italic text-seaweed-400">None selected yet</span>
+          </div>
+          {%- if show_bag and bag_product != blank -%}
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-seaweed-200 text-xs text-seaweed-500">
+              {%- render 'icon-gift', classes: 'w-4 h-4 shrink-0', stroke_width: 1.5, aria_hidden: true -%}
+              <span>Each bundle includes a complimentary vegan leather bag</span>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <hr class="border-seaweed-200">
+
+        <div>
+          <p class="text-xs font-medium text-seaweed-500 mb-2">Number of bundles</p>
+          <div class="flex items-center border border-seaweed-400 rounded-lg overflow-hidden w-fit">
+            <button
+              type="button"
+              class="w-9 h-9 flex items-center justify-center bg-white hover:bg-seafoam-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              data-qty-decrement
+              aria-label="Decrease quantity"
+            >
+              {%- render 'icon-minus', classes: 'w-3.5 h-3.5 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
+            </button>
+            <span
+              class="w-10 h-9 flex items-center justify-center text-sm font-medium border-x border-seaweed-400 bg-white text-seaweed-800"
+              data-qty-value
+            >{{ min_qty }}</span>
+            <button
+              type="button"
+              class="w-9 h-9 flex items-center justify-center bg-white hover:bg-seafoam-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              data-qty-increment
+              aria-label="Increase quantity"
+            >
+              {%- render 'icon-plus', classes: 'w-3.5 h-3.5 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
+            </button>
+          </div>
+          <p class="text-xs text-seaweed-400 mt-1.5">Min {{ min_qty }} · Max {{ max_qty }}</p>
+        </div>
+
+        <hr class="border-seaweed-200">
+
+        <div>
+          <p class="text-sm text-seaweed-400 line-through invisible" data-price-original></p>
+          <div class="flex items-baseline gap-2">
+            <p class="text-2xl font-medium text-seaweed-800" data-price-final>—</p>
+            <span class="text-xs font-medium bg-seafoam-300 text-seaweed-700 rounded-full px-2 py-0.5">{{ discount }}% off</span>
+          </div>
+          <p class="text-xs text-seaweed-400 mt-0.5" data-price-note>Select products to see pricing</p>
+        </div>
+
+        <button
+          type="button"
+          class="w-full h-11 bg-seaweed-700 text-white rounded-lg text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-seaweed-800 transition-colors"
+          data-atc
+          disabled
+        >
+          Add to cart
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</onetime-bundle-builder>
+
+<script src="{{ 'onetime-bundle-builder.min.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "One-time bundle builder",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Bundle rules"
+    },
+    {
+      "type": "number",
+      "id": "min_qty",
+      "label": "Minimum bundles",
+      "default": 6
+    },
+    {
+      "type": "number",
+      "id": "max_qty",
+      "label": "Maximum bundles",
+      "default": 24
+    },
+    {
+      "type": "number",
+      "id": "discount_percentage",
+      "label": "Discount percentage",
+      "info": "Applied automatically to all bundle items. Use the same value in the Shopify discount function.",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Complimentary bag"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bag",
+      "label": "Include complimentary bag",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "bag_product",
+      "label": "Bag product",
+      "info": "Use a $0 variant. Only the first variant is used."
+    },
+    {
+      "type": "header",
+      "content": "Cart display"
+    },
+    {
+      "type": "image_picker",
+      "id": "cart_image",
+      "label": "Cart image",
+      "info": "Shown as the bundle image in the cart and cart drawer."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "variant_id",
+          "label": "Variant ID",
+          "info": "Leave blank to use the first variant. Enter a specific variant ID to limit to one variant (e.g. travel size)."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "One-time bundle builder"
+    }
+  ]
+}
+{% endschema %}

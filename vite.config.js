@@ -20,6 +20,7 @@ export default defineConfig({
         share: resolve(__dirname, "src/scripts/share.js"),
         facets: resolve(__dirname, "src/scripts/facets.js"),
         "password-modal": resolve(__dirname, "src/scripts/password-modal.js"),
+        "onetime-bundle-builder": resolve(__dirname, "src/scripts/onetime-bundle-builder.js"),
         // CSS entry point for Tailwind compilation
         application: resolve(__dirname, "src/styles/application.css"),
       },
