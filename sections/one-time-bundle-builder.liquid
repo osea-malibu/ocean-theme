@@ -36,7 +36,7 @@
 </style>
 
 <onetime-bundle-builder
-  class="block"
+  class="block {{ section.settings.section_classes }}"
   data-min-qty="{{ min_qty }}"
   data-max-qty="{{ max_qty }}"
   data-discount="{{ discount }}"
@@ -85,28 +85,29 @@
               </span>
             </span>
 
-            <span class="flex w-full aspect-square bg-seafoam-100 rounded-lg mb-2 overflow-hidden items-center justify-center">
+            <span class="block w-full bg-seafoam-100 rounded-lg mb-2 overflow-hidden">
               {%- if card_image != blank -%}
                 <img
-                  src="{{ card_image | image_url: width: 200 }}"
+                  src="{{ card_image | image_url: width: 400 }}"
                   alt="{{ card_image.alt | default: product.title | escape }}"
-                  width="100"
-                  height="100"
+                  width="400"
+                  height="{{ 400 | divided_by: card_image.aspect_ratio | round }}"
                   loading="lazy"
-                  class="w-full h-full object-cover"
+                  class="w-full h-auto"
                 >
               {%- endif -%}
             </span>
 
-            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ product.title }}</span>
-            <span class="block text-xs text-seaweed-500">{{ variant.title }}</span>
+            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ product.title | replace: ' Free Gift - ', '' }}</span>
+            <span class="block text-xs text-seaweed-500 mb-2">{{ variant.title }}</span>
+            <span class="button button-secondary button-sm w-full mt-auto pointer-events-none" aria-hidden="true">Add to bundle</span>
           </button>
         {%- endfor -%}
 
         {%- if show_bag and bag_product != blank -%}
           {%- assign bag_image = bag_product.featured_image -%}
           <div
-            class="bb-card bb-card--locked relative flex flex-col rounded-xl border border-seaweed-500 border-[1.5px] bg-white p-3 opacity-85"
+            class="bb-card bb-card--locked relative flex flex-col rounded-xl border border-seaweed-500 bg-white p-3 opacity-85"
             aria-disabled="true"
           >
             <span class="bb-card__checkbox absolute top-2.5 right-2.5 flex items-center justify-center w-[18px] h-[18px] rounded pointer-events-none">
@@ -115,22 +116,22 @@
               </span>
             </span>
 
-            <span class="flex w-full aspect-square bg-seafoam-100 rounded-lg mb-2 overflow-hidden items-center justify-center">
+            <span class="block w-full bg-seafoam-100 rounded-lg mb-2 overflow-hidden">
               {%- if bag_image != blank -%}
                 <img
-                  src="{{ bag_image | image_url: width: 200 }}"
+                  src="{{ bag_image | image_url: width: 400 }}"
                   alt="{{ bag_image.alt | default: bag_product.title | escape }}"
-                  width="100"
-                  height="100"
+                  width="400"
+                  height="{{ 400 | divided_by: bag_image.aspect_ratio | round }}"
                   loading="lazy"
-                  class="w-full h-full object-cover"
+                  class="w-full h-auto"
                 >
               {%- endif -%}
             </span>
 
             <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ bag_product.title }}</span>
-            <span class="block text-xs text-seaweed-500">Complimentary</span>
-            <span class="block text-[10px] font-medium text-seaweed-400 mt-0.5">Always included</span>
+            <span class="block text-xs text-seaweed-500 mb-2">Complimentary</span>
+            <span class="button button-secondary button-sm w-full mt-auto opacity-50 pointer-events-none cursor-default" aria-hidden="true">Always included</span>
           </div>
         {%- endif -%}
 
@@ -215,6 +216,12 @@
 {
   "name": "One-time bundle builder",
   "settings": [
+    {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Classes",
+      "info": "Tailwind classes applied to the section wrapper."
+    },
     {
       "type": "header",
       "content": "Bundle rules"
