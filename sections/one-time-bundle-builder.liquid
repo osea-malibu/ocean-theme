@@ -76,7 +76,7 @@
             aria-pressed="false"
             data-variant-id="{{ variant.id }}"
             data-price="{{ variant.price }}"
-            data-name="{{ product.title | replace: ' Free Gift - ', '' | escape }}"
+            data-name="{{ product.title | escape }}"
             {{ block.shopify_attributes }}
           >
             <span class="bb-card__checkbox absolute top-2.5 right-2.5 flex items-center justify-center w-[18px] h-[18px] rounded border-[1.5px] border-seaweed-300 bg-white pointer-events-none">
@@ -98,7 +98,7 @@
               {%- endif -%}
             </span>
 
-            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ product.title | replace: ' Free Gift - ', '' }}</span>
+            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ product.title }}</span>
             <span class="block text-xs text-seaweed-500 mb-2">{{ variant.title }}</span>
             <span class="button button-secondary button-sm w-full mt-auto pointer-events-none" aria-hidden="true">Add to bundle</span>
           </button>
@@ -129,7 +129,7 @@
               {%- endif -%}
             </span>
 
-            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ bag_product.title }}</span>
+            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ bag_product.title | replace: ' Free Gift - ', '' }}</span>
             <span class="block text-xs text-seaweed-500 mb-2">Complimentary</span>
             <span class="button button-secondary button-sm w-full mt-auto opacity-50 pointer-events-none cursor-default" aria-hidden="true">Always included</span>
           </div>
