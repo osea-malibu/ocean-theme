@@ -12,6 +12,13 @@
     "multicolumn_z7TaWT": {
       "type": "multicolumn",
       "blocks": {
+        "code_eWj76L": {
+          "type": "code",
+          "settings": {
+            "column_classes": "",
+            "code": "<div class=\"mobile-gradient\"></div>\n<div class=\"desktop-gradient\"></div>"
+          }
+        },
         "column_6RjzyX": {
           "type": "column",
           "settings": {
@@ -58,13 +65,18 @@
         }
       },
       "block_order": [
+        "code_eWj76L",
         "column_6RjzyX"
+      ],
+      "custom_css": [
+        ".desktop-gradient {background: #5b7d86 center / cover no-repeat; background: linear-gradient( 90deg, rgba(20, 40, 35, 0.42), rgba(20, 40, 35, 0.12) 50%, rgba(20, 40, 35, 0) 75% );}",
+        ".mobile-gradient {background: #5b7d86 center / cover no-repeat; background: radial-gradient( circle, rgba(50, 50, 50, 1) 0%, rgba(29, 77, 65, 0) 60% );}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "section_heading": "",
-        "section_classes": "",
-        "container_classes": "container px-0 xs:px-6 mb-12",
+        "section_classes": "container px-0 xs:px-6 mb-12",
+        "container_classes": "relative",
         "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
