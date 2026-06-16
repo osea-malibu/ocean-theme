@@ -76,7 +76,7 @@
             aria-pressed="false"
             data-variant-id="{{ variant.id }}"
             data-price="{{ variant.price }}"
-            data-name="{{ product.title | escape }}"
+            data-name="{{ product.title | replace: ' Free Gift - ', '' | escape }}"
             {{ block.shopify_attributes }}
           >
             <span class="bb-card__checkbox absolute top-2.5 right-2.5 flex items-center justify-center w-[18px] h-[18px] rounded border-[1.5px] border-seaweed-300 bg-white pointer-events-none">
