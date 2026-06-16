@@ -3,7 +3,9 @@
   <div class="container">
     <div class="rivo-content-wrapper">
       <div class="rivo-lp-content">
-        <img class="rivo-faqs-icon" src="{{ section.settings.faq_icon | img_url: 'master' }}" loading="lazy" alt="FAQs">
+        {% if section.settings.faq_icon != blank %}
+          {{ section.settings.faq_icon | image_url: width: 80 | image_tag: class: 'rivo-faqs-icon', loading: 'lazy', alt: 'FAQs', width: 80, height: 80 }}
+        {% endif %}
         <div class="rivo-lp-section-subheading">{{ section.settings.section_title_subheading }}</div>
         <h2 class="rivo-lp-section-title"> {{ section.settings.section_title }}
         </h2>
