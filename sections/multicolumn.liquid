@@ -25,6 +25,7 @@
             {%- liquid
               assign bg_image_master = block.settings.image | image_url
               assign sizes_attr = "92vw"
+              assign column_class_tokens = block.settings.column_classes | split: ' '
 
               assign is_grid_layout = false
               if section.settings.container_classes contains 'grid'
@@ -43,12 +44,14 @@
                 endcomment
                 if section.settings.is_slider
                   assign sizes_attr = "min(92vw, 320px)"
-                elsif block.settings.column_classes contains 'md:w-2/3'
+                elsif column_class_tokens contains 'md:w-2/3'
                   assign sizes_attr = "(min-width: 768px) 67vw, min(92vw, 640px)"
-                elsif block.settings.column_classes contains 'md:w-1/3'
+                elsif column_class_tokens contains 'md:w-1/3'
                   assign sizes_attr = "(min-width: 768px) 33vw, min(92vw, 360px)"
-                elsif block.settings.column_classes contains 'md:w-1/2'
+                elsif column_class_tokens contains 'md:w-1/2'
                   assign sizes_attr = "(min-width: 768px) 50vw, min(92vw, 480px)"
+                elsif column_class_tokens contains 'w-full'
+                  assign sizes_attr = "100vw"
                 else
                   assign sizes_attr = "min(92vw, 480px)"
                 endif
