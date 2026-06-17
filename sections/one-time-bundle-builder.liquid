@@ -11,6 +11,9 @@
   assign cart_image_url = ''
   if section.settings.cart_image != blank
     assign cart_image_url = section.settings.cart_image | image_url: width: 400
+    unless cart_image_url contains '//'
+      assign cart_image_url = cart_image_url | prepend: '/' | prepend: settings.shopifyCdnUrl
+    endunless
   endif
 -%}
 

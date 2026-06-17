@@ -91,7 +91,10 @@ class OnetimeBundleBuilder extends HTMLElement {
     pillsEl.innerHTML = productPills + bagPill;
 
     const bagCents = this.bagVariantId ? this.bagPrice * this.qty : 0;
-    const totalCents = selected.reduce((sum, c) => sum + parseInt(c.dataset.price) * this.qty, bagCents);
+    const totalCents = selected.reduce(
+      (sum, c) => sum + parseInt(c.dataset.price) * this.qty,
+      bagCents
+    );
     const discountedCents = Math.round(totalCents * (1 - this.discount / 100));
 
     origEl.classList.remove("invisible");

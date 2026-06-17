@@ -167,6 +167,7 @@
                               assign bundle_final_price = bundle_total_price | minus: bundle_discount_amount
                               assign bundle_names_array = bundle_item_names | split: '|||'
                             -%}
+                            <script>console.log("ci", {{ cart.items | json }})</script>
                             <tr
                               id="CartDrawer-OnetimeBundleItem-{{ onetime_bundle_id }}"
                               class="cart-item align-top my-6 grid grid-cols-7 grid-rows-auto [grid-template-areas:'image_name_name_name_name_name_price''image_size_size_size_size_size_price''image_quant_quant_quant_quant_quant_price'] td:border-collapse td:border-spacing-0 td:border-0"
