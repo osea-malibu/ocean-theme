@@ -114,7 +114,6 @@
                               assign bundle_total_price = 0
                               assign bundle_discount = 0
                               assign bundle_display_image = nil
-                              assign bundle_cart_image_url = ''
                               assign bundle_item_names = ''
                               assign bundle_has_bag = false
                               assign bundle_keys_str = ''
@@ -133,9 +132,6 @@
                                 assign bundle_total_price = bundle_total_price | plus: bi.original_line_price
                                 assign bi_is_bag = false
                                 for bp in bi.properties
-                                  if bp.first == '_bundleCartImage' and bundle_cart_image_url == ''
-                                    assign bundle_cart_image_url = bp.last
-                                  endif
                                   if bp.first == '_bundleDiscount'
                                     assign bundle_discount = bp.last | times: 1
                                   endif
@@ -174,8 +170,14 @@
                             >
                               <td class="cart-item__media p-0 [grid-area:image]" role="cell" headers="CartDrawer-ColumnImage">
                                 <div class="flex h-full items-center">
-                                  {%- if bundle_cart_image_url != blank -%}
-                                    <img class="cart-item__image max-w-full" src="{{ bundle_cart_image_url }}" width="60" height="77" alt="Bundle" loading="lazy">
+                                  {%- if settings.bundle_cart_image != blank -%}
+                                    <img class="cart-item__image max-w-full"
+                                      src="{{ settings.bundle_cart_image | image_url: width: 120 }}"
+                                      width="60"
+                                      height="{{ 60 | divided_by: settings.bundle_cart_image.aspect_ratio | ceil }}"
+                                      alt="{{ settings.bundle_cart_image.alt | default: 'Bundle' | escape }}"
+                                      loading="lazy"
+                                    >
                                   {%- elsif bundle_display_image -%}
                                     <img class="cart-item__image max-w-full"
                                       src="{{ bundle_display_image | image_url: width: 120 }}"

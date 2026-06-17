@@ -71,7 +71,6 @@
                     assign bundle_total_price = 0
                     assign bundle_discount = 0
                     assign bundle_display_image = nil
-                    assign bundle_cart_image_url = ''
                     assign bundle_item_names = ''
                     assign bundle_has_bag = false
                     assign bundle_keys_str = ''
@@ -90,9 +89,6 @@
                       assign bundle_total_price = bundle_total_price | plus: bi.original_line_price
                       assign bi_is_bag = false
                       for bp in bi.properties
-                        if bp.first == '_bundleCartImage' and bundle_cart_image_url == ''
-                          assign bundle_cart_image_url = bp.last
-                        endif
                         if bp.first == '_bundleDiscount'
                           assign bundle_discount = bp.last | times: 1
                         endif
@@ -126,8 +122,14 @@
                   -%}
                   <tr class="cart-item td:py-2 relative" id="CartItem-OnetimeBundle-{{ onetime_bundle_id }}">
                     <td class="cart-item__media shrink-0">
-                      {%- if bundle_cart_image_url != blank -%}
-                        <img class="cart-item__image shrink-0" src="{{ bundle_cart_image_url }}" alt="Bundle" loading="lazy" width="60" height="77">
+                      {%- if settings.bundle_cart_image != blank -%}
+                        <img class="cart-item__image shrink-0"
+                          src="{{ settings.bundle_cart_image | image_url: width: 120 }}"
+                          alt="{{ settings.bundle_cart_image.alt | default: 'Bundle' | escape }}"
+                          loading="lazy"
+                          width="60"
+                          height="{{ 60 | divided_by: settings.bundle_cart_image.aspect_ratio | ceil }}"
+                        >
                       {%- elsif bundle_display_image -%}
                         <img class="cart-item__image shrink-0"
                           src="{{ bundle_display_image | image_url: width: 120 }}"

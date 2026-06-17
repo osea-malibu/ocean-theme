@@ -33,10 +33,6 @@ class OnetimeBundleBuilder extends HTMLElement {
     return parseInt(this.dataset.bagPrice) || 0;
   }
 
-  get cartImage() {
-    return this.dataset.cartImage || null;
-  }
-
   toggleCard(card) {
     const pressed = card.getAttribute("aria-pressed") === "true";
     card.setAttribute("aria-pressed", String(!pressed));
@@ -117,7 +113,6 @@ class OnetimeBundleBuilder extends HTMLElement {
       _onetimeBundleId: bundleId,
       _bundleDiscount: this.discount,
       _isOnetimeBundle: true,
-      ...(this.cartImage ? { _bundleCartImage: this.cartImage } : {}),
     });
 
     const items = selected.map((card) => ({

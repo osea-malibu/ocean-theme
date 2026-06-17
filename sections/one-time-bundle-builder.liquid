@@ -9,8 +9,8 @@
   assign max_qty = section.settings.max_qty | default: 24
   assign discount = section.settings.discount_percentage | default: 15
   assign cart_image_url = ''
-  if section.settings.cart_image != blank
-    assign cart_image_url = section.settings.cart_image | image_url: width: 400
+  if settings.bundle_cart_image != blank
+    assign cart_image_url = settings.bundle_cart_image | image_url: width: 400
   endif
 -%}
 
@@ -41,7 +41,6 @@
   data-max-qty="{{ max_qty }}"
   data-discount="{{ discount }}"
   {%- if bag_variant_id != blank %} data-bag-variant-id="{{ bag_variant_id }}" data-bag-price="{{ bag_product.variants.first.price }}"{%- endif %}
-  {%- if cart_image_url != blank %} data-cart-image="{{ cart_image_url }}"{%- endif %}
 >
   <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 items-start">
 
@@ -266,10 +265,8 @@
       "content": "Cart display"
     },
     {
-      "type": "image_picker",
-      "id": "cart_image",
-      "label": "Cart image",
-      "info": "Shown as the bundle image in the cart and cart drawer."
+      "type": "paragraph",
+      "content": "The bundle cart image is configured in Theme Settings → Bundle builder."
     }
   ],
   "blocks": [
