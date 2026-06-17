@@ -40,14 +40,14 @@
   data-min-qty="{{ min_qty }}"
   data-max-qty="{{ max_qty }}"
   data-discount="{{ discount }}"
-  {%- if bag_variant_id != blank %} data-bag-variant-id="{{ bag_variant_id }}"{%- endif %}
+  {%- if bag_variant_id != blank %} data-bag-variant-id="{{ bag_variant_id }}" data-bag-price="{{ bag_product.variants.first.price }}"{%- endif %}
   {%- if cart_image_url != blank %} data-cart-image="{{ cart_image_url }}"{%- endif %}
 >
   <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 items-start">
 
     <div>
-      <p class="text-xs font-medium tracking-widest text-seaweed-500 uppercase mb-3">Choose your products</p>
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <p class="text-xs font-medium tracking-widest text-seaweed-600 uppercase mb-3">Choose your products</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-3">
 
         {%- for block in section.blocks -%}
           {%- assign product = block.settings.product -%}
@@ -72,7 +72,7 @@
 
           <button
             type="button"
-            class="bb-card relative flex flex-col rounded-xl border border-seaweed-300 bg-white p-3 cursor-pointer text-left w-full transition-colors hover:border-seaweed-500"
+            class="bb-card relative flex flex-col rounded-xl border border-seaweed-300 bg-white p-2 md:p-3 lg:p-2 xl:p-4 cursor-pointer text-left w-full transition-colors hover:border-seaweed-500"
             aria-pressed="false"
             data-variant-id="{{ variant.id }}"
             data-price="{{ variant.price }}"
@@ -98,16 +98,16 @@
               {%- endif -%}
             </span>
 
-            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ product.title }}</span>
-            <span class="block text-xs text-seaweed-500 mb-2">{{ variant.title }}</span>
-            <span class="button button-secondary button-sm w-full mt-auto pointer-events-none" aria-hidden="true">Add to bundle</span>
+            <span class="block text-sm lg:text-base font-medium text-seaweed-700 leading-tight mb-0.5 pr-5">{{ product.title }}</span>
+            <span class="block text-sm font-book text-seaweed-600 mb-2">{{ variant.title }}</span>
+            <span class="button button-secondary bg-wave-200 button-sm w-full mt-auto pointer-events-none" aria-hidden="true" data-card-btn-label>Add to bundle</span>
           </button>
         {%- endfor -%}
 
         {%- if show_bag and bag_product != blank -%}
           {%- assign bag_image = bag_product.featured_image -%}
           <div
-            class="bb-card bb-card--locked relative flex flex-col rounded-xl border border-seaweed-500 bg-white p-3 opacity-85"
+            class="bb-card bb-card--locked relative flex flex-col rounded-xl border border-seaweed-500 bg-white p-2 md:p-3 lg:p-2 xl:p-4 opacity-85"
             aria-disabled="true"
           >
             <span class="bb-card__checkbox absolute top-2.5 right-2.5 flex items-center justify-center w-[18px] h-[18px] rounded pointer-events-none">
@@ -129,9 +129,9 @@
               {%- endif -%}
             </span>
 
-            <span class="block text-xs font-medium text-seaweed-800 leading-snug mb-0.5 pr-5">{{ bag_product.title | replace: 'Free Gift - ', '' }}</span>
-            <span class="block text-xs text-seaweed-500 mb-2">Complimentary</span>
-            <span class="button button-secondary button-sm w-full mt-auto opacity-50 pointer-events-none cursor-default" aria-hidden="true">Always included</span>
+            <span class="block text-sm lg:text-base font-medium text-seaweed-700 leading-tight mb-0.5 pr-5">{{ bag_product.title | replace: 'Free Gift - ', '' }}</span>
+            <span class="block text-sm font-book text-seaweed-600 mb-2">Complimentary</span>
+            <span class="button button-secondary bg-wave-200 button-sm w-full mt-auto opacity-50 pointer-events-none cursor-default" aria-hidden="true">Always included</span>
           </div>
         {%- endif -%}
 
@@ -139,16 +139,16 @@
     </div>
 
     <div>
-      <p class="text-xs font-medium tracking-widest text-seaweed-500 uppercase mb-3">Your bundle</p>
+      <p class="text-xs font-medium tracking-widest text-seaweed-600 uppercase mb-3">Your bundle</p>
       <div class="bg-seafoam-100 rounded-xl p-5 flex flex-col gap-4">
 
         <div>
-          <p class="text-xs font-medium text-seaweed-500 mb-2">Selected products</p>
-          <div class="flex flex-wrap gap-1.5 min-h-[26px]" data-pills>
-            <span class="text-sm italic text-seaweed-400">None selected yet</span>
+          <p class="text-xs font-medium text-seaweed-600 mb-2">Selected products</p>
+          <div class="flex flex-wrap gap-1.5 min-h-6" data-pills>
+            <span class="text-sm italic text-seaweed-500">None selected yet</span>
           </div>
           {%- if show_bag and bag_product != blank -%}
-            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-seaweed-200 text-xs text-seaweed-500">
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-seaweed-200 text-xs text-seaweed-600">
               {%- render 'icon-gift', classes: 'w-4 h-4 shrink-0', stroke_width: 1.5, aria_hidden: true -%}
               <span>Each bundle includes a complimentary vegan leather bag</span>
             </div>
@@ -158,7 +158,7 @@
         <hr class="border-seaweed-200">
 
         <div>
-          <p class="text-xs font-medium text-seaweed-500 mb-2">Number of bundles</p>
+          <p class="text-xs font-medium text-seaweed-600 mb-2">Number of bundles</p>
           <div class="flex items-center border border-seaweed-400 rounded-lg overflow-hidden w-fit">
             <button
               type="button"
@@ -169,7 +169,7 @@
               {%- render 'icon-minus', classes: 'w-3.5 h-3.5 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
             </button>
             <span
-              class="w-10 h-9 flex items-center justify-center text-sm font-medium border-x border-seaweed-400 bg-white text-seaweed-800"
+              class="w-10 h-9 flex items-center justify-center text-sm font-medium border-x border-seaweed-400 bg-white text-seaweed-700"
               data-qty-value
             >{{ min_qty }}</span>
             <button
@@ -181,18 +181,18 @@
               {%- render 'icon-plus', classes: 'w-3.5 h-3.5 text-seaweed-700', stroke_width: 2, aria_hidden: true -%}
             </button>
           </div>
-          <p class="text-xs text-seaweed-400 mt-1.5">Min {{ min_qty }} · Max {{ max_qty }}</p>
+          <p class="text-xs text-seaweed-600 mt-1.5">Min {{ min_qty }} · Max {{ max_qty }}</p>
         </div>
 
         <hr class="border-seaweed-200">
 
         <div>
-          <p class="text-sm text-seaweed-400 line-through invisible" data-price-original></p>
-          <div class="flex items-baseline gap-2">
-            <p class="text-2xl font-medium text-seaweed-800" data-price-final>—</p>
-            <span class="text-xs font-medium bg-seafoam-300 text-seaweed-700 rounded-full px-2 py-0.5">{{ discount }}% off</span>
+          <p class="text-sm text-seaweed-600 line-through invisible" data-price-original></p>
+          <div class="flex items-end gap-2">
+            <p class="text-2xl font-medium text-seaweed-700" data-price-final>—</p>
+            <span class="text-sm font-medium bg-seafoam-300 text-seaweed-700 rounded-full px-2 py-0.5 mb-1">{{ discount }}% off</span>
           </div>
-          <p class="text-xs text-seaweed-400 mt-0.5" data-price-note>Select products to see pricing</p>
+          <p class="text-sm text-seaweed-600 mt-0.5" data-price-note>Select products to see pricing</p>
         </div>
 
         <button
