@@ -30,6 +30,7 @@
             </thead>
 
             <tbody class="LOOP_osea-malibu_bundles" >
+              {%- assign rendered_bundle_ids = '' -%}
               {%- for item in cart.items -%}
                 {% comment %}
                     LOOP SUBSCRIPTIONS (https://apps.shopify.com/loop-subscriptions)
@@ -51,6 +52,134 @@
                 {% comment %}
                     LOOP BUNDLE CODE ENDS
                 {% endcomment %}
+                {%- comment -%} ONE-TIME BUNDLE RENDERING {%- endcomment -%}
+                {%- assign onetime_bundle_id = '' -%}
+                {%- for property in item.properties -%}
+                  {%- if property.first == '_onetimeBundleId' -%}
+                    {%- assign onetime_bundle_id = property.last -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if onetime_bundle_id != blank -%}
+                  {%- assign bundle_marker = '|' | append: onetime_bundle_id | append: '|' -%}
+                  {%- if rendered_bundle_ids contains bundle_marker -%}
+                    {%- continue -%}
+                  {%- endif -%}
+                  {%- assign rendered_bundle_ids = rendered_bundle_ids | append: bundle_marker -%}
+                  {%- liquid
+                    assign bundle_qty = 0
+                    assign bundle_total_price = 0
+                    assign bundle_discount = 0
+                    assign bundle_display_image = nil
+                    assign bundle_cart_image_url = ''
+                    assign bundle_item_names = ''
+                    assign bundle_has_bag = false
+                    assign bundle_keys_str = ''
+                    for bi in cart.items
+                      assign bi_bundle_id = ''
+                      for bp in bi.properties
+                        if bp.first == '_onetimeBundleId'
+                          assign bi_bundle_id = bp.last
+                          break
+                        endif
+                      endfor
+                      if bi_bundle_id != onetime_bundle_id
+                        continue
+                      endif
+                      assign bundle_qty = bi.quantity
+                      assign bundle_total_price = bundle_total_price | plus: bi.original_line_price
+                      assign bi_is_bag = false
+                      for bp in bi.properties
+                        if bp.first == '_bundleCartImage' and bundle_cart_image_url == ''
+                          assign bundle_cart_image_url = bp.last
+                        endif
+                        if bp.first == '_bundleDiscount'
+                          assign bundle_discount = bp.last | times: 1
+                        endif
+                        if bp.first == '_isBag'
+                          assign bi_is_bag = true
+                        endif
+                      endfor
+                      if bi_is_bag
+                        assign bundle_has_bag = true
+                      else
+                        if bundle_display_image == nil and bi.image
+                          assign bundle_display_image = bi.image
+                        endif
+                        assign bi_title = bi.product.title
+                        unless bi.product.has_only_default_variant
+                          assign bi_title = bi_title | append: ' – ' | append: bi.variant.title
+                        endunless
+                        unless bundle_item_names == ''
+                          assign bundle_item_names = bundle_item_names | append: '|||'
+                        endunless
+                        assign bundle_item_names = bundle_item_names | append: bi_title
+                      endif
+                      unless bundle_keys_str == ''
+                        assign bundle_keys_str = bundle_keys_str | append: ','
+                      endunless
+                      assign bundle_keys_str = bundle_keys_str | append: bi.key
+                    endfor
+                    assign bundle_discount_amount = bundle_total_price | times: bundle_discount | divided_by: 100 | round
+                    assign bundle_final_price = bundle_total_price | minus: bundle_discount_amount
+                    assign bundle_names_array = bundle_item_names | split: '|||'
+                  -%}
+                  <tr class="cart-item td:py-2 relative" id="CartItem-OnetimeBundle-{{ onetime_bundle_id }}">
+                    <td class="cart-item__media shrink-0">
+                      {%- if bundle_cart_image_url != blank -%}
+                        <img class="cart-item__image shrink-0" src="{{ bundle_cart_image_url }}" alt="Bundle" loading="lazy" width="60" height="77">
+                      {%- elsif bundle_display_image -%}
+                        <img class="cart-item__image shrink-0"
+                          src="{{ bundle_display_image | image_url: width: 120 }}"
+                          alt="{{ bundle_display_image.alt | escape }}"
+                          loading="lazy"
+                          width="60"
+                          height="{{ 60 | divided_by: bundle_display_image.aspect_ratio | ceil }}"
+                        >
+                      {%- endif -%}
+                    </td>
+                    <td class="cart-item__details">
+                      <div class="cart-item__name leading-tight block mb-1">Bachelorette Bundle</div>
+                      <dl>
+                        {%- for name in bundle_names_array -%}
+                          {%- if name != blank -%}
+                            <div class="flex gap-1"><dd>{{ name }}</dd></div>
+                          {%- endif -%}
+                        {%- endfor -%}
+                        {%- if bundle_has_bag -%}
+                          <div class="flex gap-1 text-seaweed-500 italic"><dd>+ Vegan leather bag</dd></div>
+                        {%- endif -%}
+                      </dl>
+                    </td>
+                    <td class="cart-item__quantity align-top">
+                      <div class="flex items-center absolute sm:relative -right-2 top-10 sm:top-0 sm:right-0">
+                        <quantity-input class="quantity inline-flex border border-seaweed-400 rounded-md mr-2">
+                          <input class="quantity__input w-8 h-6 border-0 p-1 text-center" type="number" min="0" value="{{ bundle_qty }}" readonly>
+                        </quantity-input>
+                        <cart-remove-button class="hidden sm:block">
+                          <button
+                            class="block button button-secondary button-sm px-2"
+                            type="button"
+                            data-bundle-keys="{{ bundle_keys_str }}"
+                            onclick="removeOnetimeBundle(this)"
+                            aria-label="Remove bundle from cart"
+                          >
+                            {% render 'icon-remove', classes: 'w-4 h-4 pointer-events-none', stroke_width: 2, aria_hidden: true %}
+                          </button>
+                        </cart-remove-button>
+                      </div>
+                    </td>
+                    <td class="cart-item__totals flex flex-row justify-end items-center text-right relative">
+                      <div class="cart-item__price-wrapper">
+                        {%- if bundle_discount > 0 -%}
+                          <s class="cart-item__old-price price price--end">{{ bundle_total_price | money }}</s>
+                        {%- endif -%}
+                        <span class="price price--end">{{ bundle_final_price | money }}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  {%- continue -%}
+                {%- endif -%}
                 {%- liquid
                   assign item_collections_handles = item.product.collections | map: 'handle'
                   if item_collections_handles contains 'exclude-from-site'

@@ -114,7 +114,7 @@ class OnetimeBundleBuilder extends HTMLElement {
     const bundleId = crypto.randomUUID();
 
     const makeProps = () => ({
-      _bundleId: bundleId,
+      _onetimeBundleId: bundleId,
       _bundleDiscount: this.discount,
       _isOnetimeBundle: true,
       ...(this.cartImage ? { _bundleCartImage: this.cartImage } : {}),
@@ -130,7 +130,7 @@ class OnetimeBundleBuilder extends HTMLElement {
       items.push({
         id: parseInt(this.bagVariantId),
         quantity: this.qty,
-        properties: makeProps(),
+        properties: { ...makeProps(), _isBag: "true" },
       });
     }
 
