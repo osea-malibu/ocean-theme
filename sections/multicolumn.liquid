@@ -385,6 +385,7 @@
                           </product-form>
                         </div>
                       {%- else -%}
+                        {%- if block.settings.button_label != blank or block.settings.button_icon != blank -%}
                         <a
                           class="button {{ block.settings.button_classes }}"
                           {% if block.settings.link == blank %}role="link" aria-disabled="true"
@@ -397,6 +398,7 @@
                             {{- block.settings.button_icon -}}
                           {%- endif -%}
                         </a>
+                        {%- endif -%}
                       {%- endif -%}
                     {%- endif -%}
 

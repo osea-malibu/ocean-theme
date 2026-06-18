@@ -26,6 +26,7 @@
         {%- when 'paragraph' -%}
           <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>{{ block.settings.paragraph_text }}</div>
         {%- when 'button' -%}
+          {%- if block.settings.button_label != blank or block.settings.button_icon != blank -%}
           <a
             {% if block.settings.button_link == blank %}role="link" aria-disabled="true"
             {% else %}href="{{ block.settings.button_link }}"{% endif %}
@@ -40,6 +41,7 @@
               {{- block.settings.button_icon -}}
             {%- endif -%}
           </a>
+          {%- endif -%}
         {%- when 'image' -%}
           {%- if block.settings.image_mobile != blank -%}
             {%- if block.settings.image_link != blank -%}
