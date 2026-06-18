@@ -15,6 +15,13 @@
   assign mobile_master = mobile_img | image_url
   assign desktop_master = desktop_img | image_url
 
+  # Accessible-name fallback: the link's name comes from the image alt; when blank
+  # (or for the video variant) fall back to a passed-in title so the link isn't nameless.
+  assign promo_section_alt = desktop_img.alt
+  if mobile_img != blank
+    assign promo_section_alt = mobile_img.alt
+  endif
+
   # The collection interrupter sits inside the padded page container on mobile.
   assign promo_sizes = promo_section_sizes | default: '(min-width: 400px) calc(100vw - 3rem), calc(100vw - 2rem)'
 
@@ -39,7 +46,7 @@
 -%}
 
 {%- if promo_section_url != blank -%}
-  <a href="{{ promo_section_url }}" class="block {{ promo_section_link_classes }}">
+  <a href="{{ promo_section_url }}" class="block {{ promo_section_link_classes }}"{% if promo_section_alt == blank and promo_section_title != blank %} aria-label="{{ promo_section_title | escape }}"{% endif %}>
 {%- endif -%}
 
 {% if has_video %}

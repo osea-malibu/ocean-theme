@@ -3,6 +3,7 @@
   - promo_tile_image: {ImageDrop} Liquid image object
   - promo_tile_url: {String} Link to promo tile destination (optional)
   - promo_tile_video: {VideoDrop} Liquid video object (optional)
+  - promo_tile_title: {String} Fallback link label used when the image has no alt text (optional)
 
   Usage:
   {% render 'collection-promo-tile', promo_tile_image: collection.metafields.image.url %}
@@ -14,7 +15,7 @@
     assign promo_tile_sizes = '(min-width: 1024px) calc((100vw - 6rem) / 4), (min-width: 768px) calc((100vw - 5rem) / 3), (min-width: 640px) calc((100vw - 4rem) / 2), (min-width: 400px) calc((100vw - 3.5rem) / 2), calc((100vw - 2.5rem) / 2)'
   -%}
   {%- if promo_tile_url != blank -%}
-    <a href="{{ promo_tile_url }}" class="block absolute inset-0 plp-tile-clickarea">
+    <a href="{{ promo_tile_url }}" class="block absolute inset-0 plp-tile-clickarea"{% if promo_tile_image.alt == blank and promo_tile_title != blank %} aria-label="{{ promo_tile_title | escape }}"{% endif %}>
   {%- else -%}
     <div>
   {%- endif -%}
