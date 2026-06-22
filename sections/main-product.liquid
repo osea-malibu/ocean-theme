@@ -90,6 +90,7 @@
               <div class="{{ block.settings.rating_classes }} flex gap-2 items-center">
                 {%- unless excluded_from_site -%}
                   <a href="#reviews">
+                    <span class="sr-only">Read reviews</span>
                     {% render 'product-rating', product: product %}
                   </a>
                 {%- endunless -%}
