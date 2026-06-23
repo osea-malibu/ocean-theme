@@ -114,17 +114,32 @@
                 else
                   assign free_gifts_active = false
                 endif
+
+                # First-time GWP — never shown while the tiered GWP is enabled; otherwise mirror cart drawer gate (guests + first-time buyers only)
+                assign firsttime_gift_active = false
+                unless settings.enable_gwp
+                  if settings.enable_firstime_gwp and settings.gwp_firsttime_product != blank
+                    unless customer and customer.orders_count > 0
+                      assign firsttime_gift_active = true
+                    endunless
+                  endif
+                endunless
               -%}
-              {%- if free_gifts_active -%}
+              {%- if free_gifts_active or firsttime_gift_active -%}
                 <div class="{{ block.settings.free_gift_info_classes }}">
-                  {%- if settings.gwp_tier1_product != blank -%}
-                    {% render 'product-free-gift-info', product: settings.gwp_tier1_product, threshold: settings.gwp_tier1_threshold %}
+                  {%- if free_gifts_active -%}
+                    {%- if settings.gwp_tier1_product != blank -%}
+                      {% render 'product-free-gift-info', product: settings.gwp_tier1_product, threshold: settings.gwp_tier1_threshold %}
+                    {%- endif -%}
+                    {%- if settings.gwp_tier2_product != blank -%}
+                      {% render 'product-free-gift-info', product: settings.gwp_tier2_product, threshold: settings.gwp_tier2_threshold %}
+                    {%- endif -%}
+                    {%- if settings.gwp_tier3_product != blank -%}
+                      {% render 'product-free-gift-info', product: settings.gwp_tier3_product, threshold: settings.gwp_tier3_threshold %}
+                    {%- endif -%}
                   {%- endif -%}
-                  {%- if settings.gwp_tier2_product != blank -%}
-                    {% render 'product-free-gift-info', product: settings.gwp_tier2_product, threshold: settings.gwp_tier2_threshold %}
-                  {%- endif -%}
-                  {%- if settings.gwp_tier3_product != blank -%}
-                    {% render 'product-free-gift-info', product: settings.gwp_tier3_product, threshold: settings.gwp_tier3_threshold %}
+                  {%- if firsttime_gift_active -%}
+                    {% render 'product-free-gift-info', product: settings.gwp_firsttime_product, first_time: true %}
                   {%- endif -%}
                 </div>
               {%- endif -%}
