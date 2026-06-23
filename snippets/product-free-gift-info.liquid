@@ -7,9 +7,11 @@
     assign gift_image_src_2x = product.featured_image | image_url: width: 252
   endif
 
-  assign threshold_total = threshold | times: 100
+  unless first_time
+    assign threshold_total = threshold | times: 100
+  endunless
 -%}
-{%- unless cart.total_price >= threshold_total -%}
+{%- if first_time or cart.total_price < threshold_total -%}
 <div class="w-full bg-wave-200 rounded-lg px-2 py-1 my-2">
   <div class="flex items-center gap-2">
     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
@@ -24,9 +26,14 @@
     >
     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
     <div class="flex flex-col">
-      <p class="text-sm font-bold uppercase tracking-wider">Free Gift with orders {{ threshold | times: 100 | money_without_trailing_zeros }}+</p>
-      <p class="text-sm leading-tight">Spend {{ threshold_total | minus: cart.total_price | money_without_trailing_zeros }} to claim your {{ product.title | replace: 'Free Gift - ', '' }}!</p>
+      {%- if first_time -%}
+        <p class="text-sm font-bold uppercase tracking-wider">Free Gift with your first order</p>
+        <p class="text-sm leading-tight">Claim your {{ product.title | replace: 'Free Gift - ', '' }} on your first order!</p>
+      {%- else -%}
+        <p class="text-sm font-bold uppercase tracking-wider">Free Gift with orders {{ threshold | times: 100 | money_without_trailing_zeros }}+</p>
+        <p class="text-sm leading-tight">Spend {{ threshold_total | minus: cart.total_price | money_without_trailing_zeros }} to claim your {{ product.title | replace: 'Free Gift - ', '' }}!</p>
+      {%- endif -%}
     </div>
   </div>
 </div>
-{%- endunless -%}
+{%- endif -%}
