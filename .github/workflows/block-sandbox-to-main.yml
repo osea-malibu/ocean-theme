@@ -1,0 +1,29 @@
+name: Block sandbox branches targeting main
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - edited
+
+jobs:
+  block-sandbox-to-main:
+    name: Block sandbox to main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reject sandbox source branches
+        run: |
+          head_ref="${{ github.head_ref }}"
+          normalized_head_ref="$(printf '%s' "$head_ref" | tr '[:upper:]' '[:lower:]')"
+
+          if [[ "$normalized_head_ref" == *sandbox* ]]; then
+            echo "::error::Branches containing 'sandbox' must not target main."
+            exit 1
+          fi
+
+          echo "Branch '$head_ref' is allowed to target main."
