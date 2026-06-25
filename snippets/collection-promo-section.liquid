@@ -15,12 +15,10 @@
   assign mobile_master = mobile_img | image_url
   assign desktop_master = desktop_img | image_url
 
-  # Accessible-name fallback: the link's name comes from the image alt; when blank
-  # (or for the video variant) fall back to a passed-in title so the link isn't nameless.
-  assign promo_section_alt = desktop_img.alt
-  if mobile_img != blank
-    assign promo_section_alt = mobile_img.alt
-  endif
+  # Accessible name for the banner. Authors set Image Alt Text per interrupter;
+  # when empty (easy to forget) fall back to the interrupter Title (always set),
+  # then the collection title. Rendered as the image alt so the link is named too.
+  assign promo_section_name = promo_section_alt_text | default: promo_section_title
 
   # The collection interrupter sits inside the padded page container on mobile.
   assign promo_sizes = promo_section_sizes | default: '(min-width: 400px) calc(100vw - 3rem), calc(100vw - 2rem)'
@@ -46,7 +44,7 @@
 -%}
 
 {%- if promo_section_url != blank -%}
-  <a href="{{ promo_section_url }}" class="block {{ promo_section_link_classes }}"{% if promo_section_alt == blank and promo_section_title != blank %} aria-label="{{ promo_section_title | escape }}"{% endif %}>
+  <a href="{{ promo_section_url }}" class="block {{ promo_section_link_classes }}"{% if has_video %} aria-label="{{ promo_section_name | escape }}"{% endif %}>
 {%- endif -%}
 
 {% if has_video %}
@@ -122,10 +120,10 @@
     <img
       {% if mobile_img != blank %}
         src="{% render 'imgix', src: mobile_master, w: 480 %}"
-        alt="{{ mobile_img.alt }}"
+        alt="{{ promo_section_name | escape }}"
       {% else %}
         src="{% render 'imgix', src: desktop_master, w: 960 %}"
-        alt="{{ desktop_img.alt }}"
+        alt="{{ promo_section_name | escape }}"
       {% endif %}
       loading="lazy"
       width="{{ dim_w }}"

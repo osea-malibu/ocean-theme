@@ -93,7 +93,8 @@
                     promo_section_url: interrupter.url,
                     promo_section_image_wrapper_classes: interrupter.image_wrapper_classes,
                     promo_section_link_classes: interrupter.link_classes,
-                    promo_section_title: collection.title
+                    promo_section_alt_text: interrupter.image_alt_text.value,
+                    promo_section_title: interrupter.collection.value | default: collection.title
                   %}
                 </li>
               {%- endfor -%}
