@@ -356,7 +356,6 @@
                                 type="submit"
                                 name="add"
                                 aria-haspopup="dialog"
-                                aria-labelledby="{{ product_form_id }}-submit title-{{ block.id }}-{{ block.settings.atc_button_product.id }}"
                                 aria-live="polite"
                                 class="button w-full transition flex mt-2 disabled:opacity-50 {% if block.settings.atc_button_product.selected_or_first_available_variant.available %}justify-between{% else %}justify-center{% endif %} {{ block.settings.button_classes }}"
                                 {% if block.settings.atc_button_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
@@ -373,7 +372,8 @@
                                         product: block.settings.atc_button_product,
                                         show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
                                         use_variant: true,
-                                        subscription: block.settings.is_subscription
+                                        subscription: block.settings.is_subscription,
+                                        in_button: true
                                       %}
                                     </span>
                                   {%- endunless -%}
