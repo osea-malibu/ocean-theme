@@ -35,7 +35,9 @@
             <p>Not in love with your new OSEA favorites? No worries—we’ve got you. If your product isn’t the perfect match, send it back within 30 days of your ship date for a full refund or an OSEA gift card. Shipping costs aren’t refundable. <a class="link" href="/pages/customer-care?tab=2">Learn more</a></p>
           {%- endcapture -%}
 
-          <h2 class="font-serif text-3xl">{{ section.settings.perks_heading }}</h2>
+          {%- if section.settings.perks_heading != blank -%}
+            <h2 class="font-serif text-3xl">{{ section.settings.perks_heading }}</h2>
+          {%- endif -%}
           <p class="mb-4">{{ section.settings.perks_description }}</p>
 
           {%- if section.settings.perks_promo_heading != blank -%}
@@ -216,7 +218,9 @@
         height="{{ section.settings.secret_image.height }}"
       >
       <div>
-        <h2 class="font-bold md:font-regular md:font-serif md:text-3xl mb-2 md:mb-4">{{ section.settings.secret_heading }}</h2>
+        {%- if section.settings.secret_heading != blank -%}
+          <h2 class="font-bold md:font-regular md:font-serif md:text-3xl mb-2 md:mb-4">{{ section.settings.secret_heading }}</h2>
+        {%- endif -%}
         <div class="p:mb-2 text-sm md:text-base">{{ section.settings.secret_description }}</div>
       </div>
     </div>
