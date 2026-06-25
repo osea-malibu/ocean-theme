@@ -76,7 +76,8 @@
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
                   promo_tile_video: promo_tile_video,
-                  promo_tile_url: promo_tile_url
+                  promo_tile_url: promo_tile_url,
+                  promo_tile_title: collection.title
                 -%}
               </li>
             {%- endif -%}
@@ -91,7 +92,9 @@
                     promo_section_content_classes: interrupter.content_classes,
                     promo_section_url: interrupter.url,
                     promo_section_image_wrapper_classes: interrupter.image_wrapper_classes,
-                    promo_section_link_classes: interrupter.link_classes
+                    promo_section_link_classes: interrupter.link_classes,
+                    promo_section_alt_text: interrupter.image_alt_text.value,
+                    promo_section_title: interrupter.collection.value | default: collection.title
                   %}
                 </li>
               {%- endfor -%}
