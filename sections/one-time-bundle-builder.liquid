@@ -7,6 +7,7 @@
   endif
   assign min_qty = section.settings.min_qty | default: 6
   assign max_qty = section.settings.max_qty | default: 24
+  assign min_products = section.settings.min_products | default: 3
   assign discount = section.settings.discount_percentage | default: 15
   assign cart_image_url = ''
   if section.settings.cart_image != blank
@@ -42,6 +43,7 @@
   class="block {{ section.settings.section_classes }}"
   data-min-qty="{{ min_qty }}"
   data-max-qty="{{ max_qty }}"
+  data-min-products="{{ min_products }}"
   data-discount="{{ discount }}"
   {%- if bag_variant_id != blank %} data-bag-variant-id="{{ bag_variant_id }}" data-bag-price="{{ bag_product.variants.first.price }}"{%- endif %}
   {%- if cart_image_url != blank %} data-cart-image="{{ cart_image_url }}"{%- endif %}
@@ -49,7 +51,7 @@
   <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 items-start">
 
     <div>
-      <p class="text-xs font-medium tracking-widest text-seaweed-600 uppercase mb-3">Choose your products</p>
+      <p class="text-xs font-medium tracking-widest text-seaweed-600 uppercase mb-3">Choose your products<span class="italic normal-case font-normal tracking-normal" data-min-hint> (min {{ min_products }} products)</span></p>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-3">
 
         {%- for block in section.blocks -%}
@@ -110,8 +112,9 @@
         {%- if show_bag and bag_product != blank -%}
           {%- assign bag_image = bag_product.featured_image -%}
           <div
-            class="bb-card bb-card--locked relative flex flex-col rounded-xl border border-seaweed-500 bg-white p-2 md:p-3 lg:p-2 xl:p-4 opacity-85"
+            class="bb-card bb-card--locked relative flex-col rounded-xl border border-seaweed-500 bg-white p-2 md:p-3 lg:p-2 xl:p-4 opacity-85 hidden"
             aria-disabled="true"
+            data-bag-card
           >
             <span class="bb-card__checkbox absolute top-2.5 right-2.5 flex items-center justify-center w-[18px] h-[18px] rounded pointer-events-none">
               <span class="bb-card__check">
@@ -151,7 +154,7 @@
             <span class="text-sm italic text-seaweed-500">None selected yet</span>
           </div>
           {%- if show_bag and bag_product != blank -%}
-            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-seaweed-200 text-xs text-seaweed-600">
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-seaweed-200 text-xs text-seaweed-600" data-bag-note>
               {%- render 'icon-gift', classes: 'w-4 h-4 shrink-0', stroke_width: 1.5, aria_hidden: true -%}
               <span>Each bundle includes a complimentary vegan leather bag</span>
             </div>
@@ -193,7 +196,7 @@
           <p class="text-sm text-seaweed-600 line-through invisible" data-price-original></p>
           <div class="flex items-end gap-2">
             <p class="text-2xl font-medium text-seaweed-700" data-price-final>—</p>
-            <span class="text-sm font-medium bg-seafoam-300 text-seaweed-700 rounded-full px-2 py-0.5 mb-1">{{ discount }}% off</span>
+            <span class="text-sm font-medium bg-seafoam-300 text-seaweed-700 rounded-full px-2 py-0.5 mb-1 hidden" data-discount-tag>{{ discount }}% off</span>
           </div>
           <p class="text-sm text-seaweed-600 mt-0.5" data-price-note>Select products to see pricing</p>
         </div>
@@ -240,6 +243,13 @@
       "id": "max_qty",
       "label": "Maximum bundles",
       "default": 24
+    },
+    {
+      "type": "number",
+      "id": "min_products",
+      "label": "Minimum different products",
+      "info": "Customers must select at least this many different products before the discount applies and they can add to cart.",
+      "default": 3
     },
     {
       "type": "number",

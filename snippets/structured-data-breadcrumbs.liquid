@@ -1,0 +1,71 @@
+{%- liquid
+  assign breadcrumb_current_name = blank
+  assign breadcrumb_current_url = canonical_url
+  assign breadcrumb_parent_name = blank
+  assign breadcrumb_parent_url = blank
+
+  case request.page_type
+    when 'product'
+      assign breadcrumb_current_name = product.title
+      assign breadcrumb_collection = product.metafields.custom.breadcrumb_collection.value
+
+      if breadcrumb_collection == blank and product.collections.first != blank
+        assign breadcrumb_collection = product.collections.first
+      endif
+
+      if breadcrumb_collection != blank
+        assign breadcrumb_parent_name = breadcrumb_collection.title
+        assign breadcrumb_parent_url = shop.url | append: breadcrumb_collection.url
+      endif
+    when 'collection'
+      assign breadcrumb_current_name = collection.title
+    when 'page'
+      assign breadcrumb_current_name = page.title
+    when 'blog'
+      assign breadcrumb_current_name = blog.title
+    when 'article'
+      assign breadcrumb_current_name = article.title
+      assign breadcrumb_parent_name = blog.title
+      assign breadcrumb_parent_url = shop.url | append: blog.url
+  endcase
+-%}
+
+{%- if breadcrumb_current_name != blank and breadcrumb_current_url != blank -%}
+  {%- assign breadcrumb_position = 1 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": {{ breadcrumb_position }},
+          "item": {
+            "@id": {{ shop.url | append: routes.root_url | json }},
+            "name": {{ 'Home' | json }}
+          }
+        },
+        {%- assign breadcrumb_position = breadcrumb_position | plus: 1 -%}
+        {%- if breadcrumb_parent_name != blank and breadcrumb_parent_url != blank -%}
+          {
+            "@type": "ListItem",
+            "position": {{ breadcrumb_position }},
+            "item": {
+              "@id": {{ breadcrumb_parent_url | json }},
+              "name": {{ breadcrumb_parent_name | strip_html | json }}
+            }
+          },
+          {%- assign breadcrumb_position = breadcrumb_position | plus: 1 -%}
+        {%- endif -%}
+        {
+          "@type": "ListItem",
+          "position": {{ breadcrumb_position }},
+          "item": {
+            "@id": {{ breadcrumb_current_url | json }},
+            "name": {{ breadcrumb_current_name | strip_html | json }}
+          }
+        }
+      ]
+    }
+  </script>
+{%- endif -%}

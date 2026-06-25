@@ -33,6 +33,10 @@ class OnetimeBundleBuilder extends HTMLElement {
     return parseInt(this.dataset.bagPrice) || 0;
   }
 
+  get minProducts() {
+    return parseInt(this.dataset.minProducts) || 3;
+  }
+
   get cartImage() {
     return this.dataset.cartImage || null;
   }
@@ -63,6 +67,8 @@ class OnetimeBundleBuilder extends HTMLElement {
     const origEl = this.querySelector("[data-price-original]");
     const finalEl = this.querySelector("[data-price-final]");
     const noteEl = this.querySelector("[data-price-note]");
+    const discountTag = this.querySelector("[data-discount-tag]");
+    const minHint = this.querySelector("[data-min-hint]");
     const atcBtn = this.querySelector("[data-atc]");
     const decrementBtn = this.querySelector("[data-qty-decrement]");
     const incrementBtn = this.querySelector("[data-qty-increment]");
@@ -70,11 +76,18 @@ class OnetimeBundleBuilder extends HTMLElement {
     decrementBtn.disabled = this.qty <= this.minQty;
     incrementBtn.disabled = this.qty >= this.maxQty;
 
+    const hasMinProducts = selected.length >= this.minProducts;
+    const bagCard = this.querySelector("[data-bag-card]");
+    const bagNote = this.querySelector("[data-bag-note]");
+
     if (selected.length === 0) {
       pillsEl.innerHTML = '<span class="text-sm italic text-seaweed-400">None selected yet</span>';
       origEl.classList.add("invisible");
       finalEl.textContent = "—";
       noteEl.textContent = "Select products to see pricing";
+      discountTag.classList.add("hidden");
+      minHint.classList.remove("hidden");
+      if (bagCard) { bagCard.classList.add("hidden"); bagCard.classList.remove("flex"); }
       atcBtn.disabled = true;
       return;
     }
@@ -85,23 +98,36 @@ class OnetimeBundleBuilder extends HTMLElement {
           `<span class="inline-block text-xs bg-seaweed-700 text-white rounded-full px-2.5 py-1 font-medium">${c.dataset.name}</span>`
       )
       .join("");
-    const bagPill = this.bagVariantId
+    const bagPill = (this.bagVariantId && hasMinProducts)
       ? '<span class="inline-block text-xs bg-seaweed-400 text-white rounded-full px-2.5 py-1 font-medium">Vegan leather bag</span>'
       : "";
     pillsEl.innerHTML = productPills + bagPill;
 
-    const bagCents = this.bagVariantId ? this.bagPrice * this.qty : 0;
+    if (bagCard) { bagCard.classList.toggle("hidden", !hasMinProducts); bagCard.classList.toggle("flex", hasMinProducts); }
+
+    const bagCents = (this.bagVariantId && hasMinProducts) ? this.bagPrice * this.qty : 0;
     const totalCents = selected.reduce(
       (sum, c) => sum + parseInt(c.dataset.price) * this.qty,
       bagCents
     );
     const discountedCents = Math.round(totalCents * (1 - this.discount / 100));
 
-    origEl.classList.remove("invisible");
-    origEl.textContent = this.formatMoney(totalCents);
-    finalEl.textContent = this.formatMoney(discountedCents);
-    noteEl.textContent = `${this.qty} bundle${this.qty !== 1 ? "s" : ""} · ${selected.length} product${selected.length !== 1 ? "s" : ""} each${this.bagVariantId ? " + bag" : ""}`;
-    atcBtn.disabled = false;
+    discountTag.classList.toggle("hidden", !hasMinProducts);
+    minHint.classList.toggle("hidden", hasMinProducts);
+
+    if (hasMinProducts) {
+      origEl.classList.remove("invisible");
+      origEl.textContent = this.formatMoney(totalCents);
+      finalEl.textContent = this.formatMoney(discountedCents);
+      noteEl.textContent = `${this.qty} bundle${this.qty !== 1 ? "s" : ""} · ${selected.length} product${selected.length !== 1 ? "s" : ""} each${this.bagVariantId ? " + bag" : ""}`;
+      atcBtn.disabled = false;
+    } else {
+      origEl.classList.add("invisible");
+      finalEl.textContent = this.formatMoney(totalCents);
+      const remaining = this.minProducts - selected.length;
+      noteEl.textContent = `Add at least ${remaining} more product${remaining !== 1 ? "s" : ""} to continue`;
+      atcBtn.disabled = true;
+    }
   }
 
   formatMoney(cents) {
@@ -111,7 +137,7 @@ class OnetimeBundleBuilder extends HTMLElement {
 
   async addToCart() {
     const selected = this.getSelectedCards();
-    if (selected.length === 0) return;
+    if (selected.length < this.minProducts) return;
 
     const atcBtn = this.querySelector("[data-atc]");
     const bundleId = crypto.randomUUID();

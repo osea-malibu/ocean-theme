@@ -63,8 +63,8 @@
     "gwp_urlmodal_body": "Get a free Ocean Wave Cleanser Mini when you spend $75+. No code required. While supplies last. Shop to redeem your offer in cart.",
     "gwp_urlmodal_image_mobile": "shopify://shop_images/Frame_59.png",
     "gwp_urlmodal_image_desktop": "shopify://shop_images/Frame_58_2.png",
-    "enable_firstime_gwp": false,
-    "gwp_firsttime_product": "",
+    "enable_firstime_gwp": true,
+    "gwp_firsttime_product": "free-gift-osea-vegan-leather-bag-archive-free",
     "enableImgix": true,
     "shopifyCdnUrl": "//oseamalibu.com/cdn/shop",
     "enable_global_plp_tile": false,
@@ -100,9 +100,8 @@
           },
           "announcement_3qbKGP": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
-              "text": "<p>LIMITED TIME:<br/><a href=\"https://oseamalibu.com/collections/subscription\" title=\"https://oseamalibu.com/collections/subscription\">Subscribe to any product for 500 extra points</a></p>",
+              "text": "<p>LIMITED TIME: Free gift with every first order</p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
             }
           },
@@ -123,6 +122,7 @@
           },
           "announcement_zQW6Bp": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p><a href=\"/collections/sea-powered-hyaluronic-collection\" title=\"Seaweed-Powered Hyaluronic Collection\">Shop Seaweed-Powered Hyaluronic</a></p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider px-8 sm:px-0"
@@ -140,7 +140,7 @@
             "type": "announcement",
             "disabled": true,
             "settings": {
-              "text": "<p>Limited Time:  Free Shipping on All US Orders</p>",
+              "text": "<p>ENDS TONIGHT: Free Shipping on All US Orders</p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
             }
           }
@@ -222,8 +222,8 @@
           "perks_heading": "Ways to Save, Earn & Enjoy",
           "perks_description": "Discover our programs designed to help you save, earn rewards, and enjoy early access to new launches.",
           "perks_image": "shopify://shop_images/DNS-1_RH_SCAN_1052-V.3_32a96b2e-0465-4280-b3e2-e4d44ca50bb1.jpg",
-          "perks_promo_heading": "",
-          "perks_promo_description": "",
+          "perks_promo_heading": "Limited Time Only: Get a Free OSEA Vegan Leather Bag",
+          "perks_promo_description": "For all first-time customers, see details <a href=\"https://oseamalibu.com/pages/discounts\">here</a>.",
           "perks_exclusions": "quiz",
           "secret_heading": "",
           "secret_description": "<p>Our story began over 100 years ago with our great-grandmother Elsa. Bedridden from an injury, she had a dream: <em>“The ocean will heal you.”</em> She swam in the sea daily—and within months, she was healed.</p>\n<p>In 1996, we founded OSEA to bring her legacy and her belief in the healing power of the sea to life. Every formula we create is rooted in nature and guided by intention—crafted with clean, carefully chosen ingredients that honor your well-being and our planet.</p>\n<img class=\"w-52 mt-4\" alt=\"Signatures of OSEA founders Melissa and Jen\" src=\"https://cdn.shopify.com/s/files/1/1368/9993/files/melissa_jen_signature.png?v=1749241527\">   Mother &amp; Daughter Founders",
@@ -237,8 +237,28 @@
     },
     "content_for_index": [],
     "blocks": {
+      "6251270934270006384": {
+        "type": "shopify://apps/stape-server-gtm/blocks/gtm/7e13c847-7971-409d-8fe0-29ec14d5f048",
+        "disabled": false,
+        "settings": {}
+      },
+      "12509190167029697241": {
+        "type": "shopify://apps/blotout-edgetag/blocks/app-embed/ae22d985-ba57-41f5-94c5-18d3dd98ea3c",
+        "disabled": false,
+        "settings": {}
+      },
+      "9431293036029666034": {
+        "type": "shopify://apps/veeper-stop-coupon-leaks/blocks/app-embed/701f59c5-5a05-41c0-ad15-29147f0a6331",
+        "disabled": false,
+        "settings": {}
+      },
       "855628211100114053": {
         "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "2153490007123654574": {
+        "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
         "disabled": false,
         "settings": {}
       },
@@ -246,6 +266,17 @@
         "type": "shopify://apps/rivo-loyalty-rewards-referrals/blocks/app-embed/580e9665-b2cd-4dbc-b6ba-6445ac9e6871",
         "disabled": false,
         "settings": {}
+      },
+      "3576686563519644491": {
+        "type": "shopify://apps/vwo/blocks/vwo-smartcode/2ce905b2-3842-4d20-b6b0-8c51fc208426",
+        "disabled": false,
+        "settings": {
+          "enableThemeTesting": true,
+          "vwoAccountId": "336250",
+          "codeType": "ASYNC",
+          "settingsTolerance": 2000,
+          "reverseProxyUrl": ""
+        }
       },
       "733389323033596483": {
         "type": "shopify://apps/okendo/blocks/theme-settings/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
