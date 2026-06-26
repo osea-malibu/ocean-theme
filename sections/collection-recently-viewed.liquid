@@ -11,6 +11,7 @@
   endif
 -%}
 
+{% if collection.metafields.custom.hide_recently_viewed != true %}
 <collection-recently-viewed
   class="block"
   data-section-id="{{ section.id }}"
@@ -76,6 +77,7 @@
     </div>
   </div>
 </collection-recently-viewed>
+{% endif %}
 
 {% schema %}
 {
