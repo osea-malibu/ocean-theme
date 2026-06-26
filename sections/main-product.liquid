@@ -322,7 +322,7 @@
                   <h2 class="mb-2 font-medium tracking-wide">Set includes</h2>
                   <ul>
                     {%- for product_in_set in product.metafields.custom.set_contains.value -%}
-                      <li>{%- render 'product-in-set', product: product_in_set -%}</li>
+                      <li class="mb-4 last:mb-0">{%- render 'product-in-set', product: product_in_set -%}</li>
                     {%- endfor -%}
                   </ul>
                 </div>
