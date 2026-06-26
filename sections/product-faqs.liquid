@@ -119,13 +119,13 @@
                     <table>
                       {%- if product.metafields.custom.recycling.value.packaging != nil -%}
                         <tr class="align-top">
-                          <td><b class="mr-1 whitespace-nowrap">Packaging:</b></td>
+                          <th scope="row" class="text-left"><b class="mr-1 whitespace-nowrap">Packaging:</b></th>
                           <td>{{ product.metafields.custom.recycling.value.packaging }}</td>
                         </tr>
                       {%- endif -%}
                       {%- if product.metafields.custom.recycling.value.recycling != nil -%}
                         <tr class="align-top">
-                          <td><b class="mr-1 whitespace-nowrap">Recycling:</b></td>
+                          <th scope="row" class="text-left"><b class="mr-1 whitespace-nowrap">Recycling:</b></th>
                           <td>{{ product.metafields.custom.recycling.value.recycling }}</td>
                         </tr>
                       {%- endif -%}
