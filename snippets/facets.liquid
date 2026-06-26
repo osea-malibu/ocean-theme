@@ -104,7 +104,7 @@
                                   {%- endcapture -%}
 
                                   <li>
-                                    <label for="{{ input_id }}" class="flex gap-2 py-1 items-center{% if is_disabled %} pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
+                                    <label class="flex gap-2 py-1 items-center{% if is_disabled %} pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
                                       <input
                                         type="checkbox"
                                         name="{{ value.param_name }}"
@@ -363,7 +363,7 @@
                                 {%- endcapture -%}
 
                                 <li class="relative">
-                                  <label for="{{ input_id }}" class="flex{% if is_disabled %} pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
+                                  <label class="flex{% if is_disabled %} pointer-events-none opacity-50{% endif %}{% if value.active %} active{% endif %}">
                                     <input
                                       class="mobile-facets__checkbox"
                                       type="checkbox"
