@@ -50,24 +50,24 @@
                         {% comment %} L1 - Link with sub menu {% endcomment %}
                         {%- elsif link.links != blank -%}
                           <div data-hamburger-submenu-item data-open="false">
-                            <div class="flex items-center justify-start text-lg font-book tracking-wide">
-                              <a href="{{ link.url }}" class="py-2 pl-6 sm:pl-8 pr-2"{% if link.current %} aria-current="page"{% endif %}>
+                            <button
+                              type="button"
+                              class="flex items-center justify-start text-lg font-book tracking-wide w-full"
+                              aria-expanded="false"
+                              aria-controls="HamburgerSubmenu-{{ forloop.index }}"
+                              aria-label="Toggle {{ link.title | escape }} submenu"
+                              data-hamburger-submenu-toggle
+                            >
+                              <span class="py-2 pl-6 sm:pl-8 pr-2"{% if link.current %} aria-current="page"{% endif %}>
                                 {{- link.title | escape -}}
-                              </a>
-                              <button
-                                type="button"
-                                class="cursor-pointer flex min-h-10 w-10 items-center justify-center"
-                                aria-expanded="false"
-                                aria-controls="HamburgerSubmenu-{{ forloop.index }}"
-                                aria-label="Toggle {{ link.title | escape }} submenu"
-                                data-hamburger-submenu-toggle
-                              >
+                              </span>
+                              <div class="cursor-pointer flex min-h-10 w-10 items-center justify-center">
                                 <svg aria-hidden="true" focusable="false" class="w-4 h-4 flex items-center justify-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                   <line x1="12" y1="5" x2="12" y2="19" class="motion-safe:transition-transform origin-center" data-hamburger-submenu-toggle-line/>
                                   <line x1="5" y1="12" x2="19" y2="12" />
                                 </svg>
-                              </button>
-                            </div>
+                              </div>
+                            </button>
                             <ul id="HamburgerSubmenu-{{ forloop.index }}" class="px-8 pb-2" hidden data-hamburger-submenu>
                               {%- for childlink in link.links -%}
                                 <li>
