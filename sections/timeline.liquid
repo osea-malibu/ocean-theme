@@ -18,6 +18,10 @@
 
   .timeline-track.scrollbar-hide::before { display: none; }
 
+  @media (min-width: 40rem) {
+    .timeline-card { margin-top: var(--card-offset, 0px); }
+  }
+
   .timeline-card--animated {
     opacity: 0;
     transform: scale(0.88);
@@ -40,26 +44,30 @@
 
   .timeline-card--flippable {
     perspective: 1000px;
+  }
+
+  .timeline-card--flippable .timeline-card__inner {
     position: relative;
-    min-height: 14rem;
   }
 
   .timeline-card__front,
   .timeline-card__back {
-    position: absolute;
-    inset: 0;
-    padding: inherit;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     transition: transform 0.55s ease;
     overflow: hidden;
   }
 
-  .timeline-card__front { transform: rotateY(0deg); }
+  .timeline-card__front {
+    transform: rotateY(0deg);
+  }
 
   .timeline-card__back {
+    position: absolute;
+    inset: 0;
     transform: rotateY(180deg);
     background: inherit;
+    padding: inherit;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -117,6 +125,7 @@
       {%- for block in section.blocks -%}
         <div
           {{ block.shopify_attributes }}
+          {%- if block.settings.top_offset != blank %} style="--card-offset: {{ block.settings.top_offset }}px"{%- endif -%}
           class="
             timeline-card
             {{ block.settings.card_classes }}
@@ -314,6 +323,12 @@
           "id": "card_classes",
           "label": "Card classes",
           "type": "textarea"
+        },
+        {
+          "type": "number",
+          "id": "top_offset",
+          "label": "Top offset (px)",
+          "info": "Vertical offset applied at the sm breakpoint and above. Use negative values to pull the card up."
         },
         {
           "content": "Image settings",
