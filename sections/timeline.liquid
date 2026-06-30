@@ -19,7 +19,7 @@
   .timeline-track.scrollbar-hide::before { display: none; }
 
   @media (min-width: 40rem) {
-    .timeline-card { margin-top: var(--card-offset, 0px); }
+    .timeline-track:not(.scrollbar-hide) .timeline-card { margin-top: var(--card-offset, 0px); }
   }
 
   .timeline-card--animated {
@@ -175,6 +175,7 @@
               {%- if block.settings.date != blank -%}
                 <p class="mt-4 text-3xl font-serif">{{ block.settings.date }}</p>
               {%- endif -%}
+              <p class="badge absolute bottom-6 right-4 text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
             </div>
 
             {% comment %}Back face — date + paragraph{% endcomment %}
@@ -185,6 +186,7 @@
               {%- if block.settings.paragraph != blank -%}
                 <p class="tracking-wide">{{ block.settings.paragraph }}</p>
               {%- endif -%}
+              <p class="badge mt-4 self-start text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
             </div>
 
           {%- else -%}
