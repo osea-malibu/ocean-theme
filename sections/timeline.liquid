@@ -108,7 +108,7 @@
           class="
             timeline-card
             {{ block.settings.card_classes }}
-            rounded bg-white p-4
+            rounded-lg bg-white p-4
             {%- if section.settings.horizontal %}
               snap-start flex-none w-72
             {%- else %}
@@ -164,7 +164,7 @@
             {% comment %}Back face — date + text{% endcomment %}
             <div class="timeline-card__back">
               {%- if block.settings.date != blank -%}
-                <h3 class="mt-3 mb-2 text-2xl font-serif">{{ block.settings.date }}</h3>
+                <h3 class="mt-3 mb-2 text-3xl font-serif antialiased">{{ block.settings.date }}</h3>
               {%- endif -%}
               {%- if block.settings.paragraph != blank -%}
                 <p class="tracking-wide">{{ block.settings.paragraph }}</p>
@@ -210,7 +210,7 @@
                 <div class="dot w-4 h-4 rounded-full bg-seaweed-100 border-[6px] border-seaweed-700"></div>
               </div>
               {%- if block.settings.date != blank -%}
-                <h3 class="mt-3 mb-2 text-2xl font-serif">{{ block.settings.date }}</h3>
+                <h3 class="mt-3 mb-2 text-3xl font-serif antialiased">{{ block.settings.date }}</h3>
               {%- endif -%}
               {%- if block.settings.paragraph != blank -%}
                 <p class="tracking-wide">{{ block.settings.paragraph }}</p>
