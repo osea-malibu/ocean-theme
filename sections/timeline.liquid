@@ -44,37 +44,37 @@
 
   .timeline-card--flippable {
     perspective: 1000px;
+    background: transparent !important;
+    padding: 0 !important;
   }
 
   .timeline-card--flippable .timeline-card__inner {
     position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s ease;
+  }
+
+  .timeline-card--flipped .timeline-card__inner {
+    transform: rotateY(180deg);
   }
 
   .timeline-card__front,
   .timeline-card__back {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transition: transform 0.55s ease;
     overflow: hidden;
-  }
-
-  .timeline-card__front {
-    transform: rotateY(0deg);
+    border-radius: 0.5rem;
   }
 
   .timeline-card__back {
     position: absolute;
     inset: 0;
     transform: rotateY(180deg);
-    background: inherit;
-    padding: inherit;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 1rem;
   }
-
-  .timeline-card--flipped .timeline-card__front { transform: rotateY(-180deg); }
-  .timeline-card--flipped .timeline-card__back  { transform: rotateY(0deg); }
 
   .timeline-track.scrollbar-hide {
     -ms-overflow-style: none;
@@ -129,7 +129,7 @@
           class="
             timeline-card
             {{ block.settings.card_classes }}
-            rounded-lg bg-white p-4
+            {%- unless section.settings.flippable %} rounded-lg bg-white p-4{%- endunless %}
             {%- if section.settings.horizontal %}
               snap-start flex-none w-72
             {%- else %}
@@ -142,8 +142,8 @@
           <div class="timeline-card__inner">
 
           {%- if section.settings.flippable -%}
-            {% comment %}Front face — image/video only{% endcomment %}
-            <div class="timeline-card__front">
+            {% comment %}Front face — image/video + date{% endcomment %}
+            <div class="timeline-card__front bg-white p-4">
               {%- if block.settings.image != blank -%}
                 <img
                   srcset="{{ block.settings.image | image_url: width: 400 }} 1x,
@@ -171,27 +171,20 @@
                   >
                   {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                 </video>
-              {%- else -%}
-                <div class="timeline-card__front-placeholder flex items-center justify-center h-40 bg-wave-100 text-seaweed-400 text-sm tracking-wide">
-                  {{- block.settings.date | default: "Tap to read" -}}
-                </div>
               {%- endif -%}
-              <div class="timeline-card__flip-hint absolute bottom-2 right-2 text-xs text-seaweed-400 tracking-wide pointer-events-none">
-                tap to flip ↺
-              </div>
+              {%- if block.settings.date != blank -%}
+                <p class="mt-2 text-sm tracking-widest uppercase text-seaweed-700">{{ block.settings.date }}</p>
+              {%- endif -%}
             </div>
 
-            {% comment %}Back face — date + text{% endcomment %}
-            <div class="timeline-card__back">
+            {% comment %}Back face — date + paragraph{% endcomment %}
+            <div class="timeline-card__back bg-white">
               {%- if block.settings.date != blank -%}
-                <h3 class="mt-3 mb-2 text-3xl font-serif">{{ block.settings.date }}</h3>
+                <h3 class="mb-2 text-3xl font-serif">{{ block.settings.date }}</h3>
               {%- endif -%}
               {%- if block.settings.paragraph != blank -%}
                 <p class="tracking-wide">{{ block.settings.paragraph }}</p>
               {%- endif -%}
-              <div class="timeline-card__flip-hint absolute bottom-2 right-2 text-xs text-seaweed-400 tracking-wide pointer-events-none">
-                tap to flip ↺
-              </div>
             </div>
 
           {%- else -%}
