@@ -12,8 +12,8 @@ class TimelineSection extends HTMLElement {
     if (this.animateOnScroll) this._initScrollAnimation();
     if (this.flippable) this._initFlip();
     if (this.horizontal) this._initHorizontal();
-    if (this.showProgress) this._initProgress();
-    if (!this.horizontal) this._initLineProgress();
+    if (this.showProgress && this.horizontal) this._initProgress();
+    if (!this.horizontal && this.showProgress) this._initLineProgress();
   }
 
   disconnectedCallback() {
@@ -129,8 +129,8 @@ class TimelineSection extends HTMLElement {
     const update = () => {
       const rect = this.getBoundingClientRect();
       const total = this.offsetHeight - window.innerHeight;
-      const progress = Math.min(1, Math.max(0, -rect.top / total)) * 100;
-      this.track.style.setProperty("--line-progress", progress);
+      const progress = Math.min(1, Math.max(0, -rect.top / total));
+      this.track.style.setProperty("--line-progress-px", `${progress * this.track.offsetHeight}px`);
     };
     window.addEventListener("scroll", update, { passive: true });
     update();

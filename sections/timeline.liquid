@@ -10,11 +10,13 @@
 
   .timeline-track::before {
     bottom: 0;
-    background-color: var(--color-seaweed-200);
+    background-color: var(--color-seaweed-300);
   }
 
   .timeline-track::after {
-    height: calc(var(--line-progress, 0) * 1%);
+    position: absolute;
+    bottom: auto;
+    height: var(--line-progress-px, 0px);
     background-color: var(--color-seaweed-600);
     transition: height 0.1s linear;
   }
@@ -126,9 +128,11 @@
       {{- section.settings.title -}}
     </h2>
 
-    {%- if section.settings.show_progress -%}
-      <div class="timeline-progress-track relative h-0.5 bg-seaweed-200 mt-6 overflow-hidden">
-        <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-700 transition-[width] duration-100 ease-linear" style="width:0%"></div>
+    {%- if section.settings.horizontal -%}
+      <div class="timeline-progress-track relative h-0.5 bg-seaweed-300 mt-6 overflow-hidden">
+        {%- if section.settings.show_progress -%}
+          <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
@@ -308,8 +312,8 @@
     {
       "type": "checkbox",
       "id": "show_progress",
-      "label": "Show progress bar",
-      "info": "Displays a thin bar that tracks scroll progress through the timeline.",
+      "label": "Animate progress indicator",
+      "info": "Fills the vertical line (or horizontal track) as you scroll through the timeline. The track itself is always visible.",
       "default": false
     },
     {
