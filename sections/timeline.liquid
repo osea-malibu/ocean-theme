@@ -59,6 +59,13 @@
   .timeline-progress-bar { border-radius: 9999px; }
 
   .timeline-progress-bar { will-change: width; }
+
+  .timeline-card::before { z-index: 0; }
+
+  .timeline-card__inner {
+    position: relative;
+    z-index: 1;
+  }
 {% endstyle %}
 
 <timeline-section
@@ -158,7 +165,7 @@
             {% comment %}Back face — date + text{% endcomment %}
             <div class="timeline-card__back">
               {%- if block.settings.date != blank -%}
-                <h3 class="mt-3 mb-2 text-2xl tracking-wide font-book">{{ block.settings.date }}</h3>
+                <h3 class="mt-3 mb-2 text-2xl font-serif">{{ block.settings.date }}</h3>
               {%- endif -%}
               {%- if block.settings.paragraph != blank -%}
                 <p class="tracking-wide">{{ block.settings.paragraph }}</p>
