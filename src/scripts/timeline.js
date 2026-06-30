@@ -13,6 +13,7 @@ class TimelineSection extends HTMLElement {
     if (this.flippable) this._initFlip();
     if (this.horizontal) this._initHorizontal();
     if (this.showProgress) this._initProgress();
+    if (!this.horizontal) this._initLineProgress();
   }
 
   disconnectedCallback() {
@@ -120,6 +121,19 @@ class TimelineSection extends HTMLElement {
   _isTimelineActive() {
     const rect = this.getBoundingClientRect();
     return rect.top <= 0 && rect.bottom >= window.innerHeight;
+  }
+
+  // --- Vertical line progress ---
+
+  _initLineProgress() {
+    const update = () => {
+      const rect = this.getBoundingClientRect();
+      const total = this.offsetHeight - window.innerHeight;
+      const progress = Math.min(1, Math.max(0, -rect.top / total)) * 100;
+      this.track.style.setProperty("--line-progress", progress);
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    update();
   }
 
   // --- Progress indicator ---
