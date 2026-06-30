@@ -19,7 +19,15 @@
   .timeline-track.scrollbar-hide::before { display: none; }
 
   @media (min-width: 40rem) {
-    .timeline-track:not(.scrollbar-hide) .timeline-card { margin-top: var(--card-offset, 0px); }
+    timeline-section:not([data-horizontal="true"]):not([data-flippable="true"]) .timeline-card {
+      margin-top: var(--card-offset, 0px);
+    }
+    timeline-section:not([data-horizontal="true"])[data-flippable="true"] .timeline-card {
+      margin-top: var(--card-offset-flippable, 0px);
+    }
+    timeline-section[data-horizontal="true"] .timeline-card {
+      margin-top: var(--card-offset-horizontal, 0px);
+    }
   }
 
   .timeline-card--animated {
@@ -114,7 +122,7 @@
 
     <div id="events" class="
       timeline-track relative py-6
-      {%- if section.settings.horizontal %} flex flex-row gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-10{%- endif -%}
+      {%- if section.settings.horizontal %} flex flex-row items-start gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-10{%- endif -%}
     ">
 
       {%- unless section.settings.horizontal -%}
@@ -125,7 +133,7 @@
       {%- for block in section.blocks -%}
         <div
           {{ block.shopify_attributes }}
-          {%- if block.settings.top_offset != blank %} style="--card-offset: {{ block.settings.top_offset }}px"{%- endif -%}
+          style="--card-offset: {{ block.settings.top_offset | default: 0 }}px; --card-offset-flippable: {{ block.settings.top_offset_flippable | default: 0 }}px; --card-offset-horizontal: {{ block.settings.top_offset_horizontal | default: 0 }}px;"
           class="
             timeline-card
             {{ block.settings.card_classes }}
@@ -322,8 +330,20 @@
         {
           "type": "number",
           "id": "top_offset",
-          "label": "Top offset (px)",
-          "info": "Vertical offset applied at the sm breakpoint and above. Use negative values to pull the card up."
+          "label": "Top offset — vertical (px)",
+          "info": "Applied in vertical layout with flippable cards off. Negative pulls the card up."
+        },
+        {
+          "type": "number",
+          "id": "top_offset_flippable",
+          "label": "Top offset — vertical flippable (px)",
+          "info": "Applied in vertical layout with flippable cards on. Negative pulls the card up."
+        },
+        {
+          "type": "number",
+          "id": "top_offset_horizontal",
+          "label": "Top offset — horizontal (px)",
+          "info": "Applied in horizontal scroll layout. Negative pulls the card up."
         },
         {
           "content": "Image settings",
