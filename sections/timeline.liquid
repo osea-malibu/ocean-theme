@@ -103,17 +103,16 @@
       {%- endunless -%}
 
       {%- for block in section.blocks -%}
-        {%- assign is_odd = forloop.index | modulo: 2 -%}
-
         <div
           {{ block.shopify_attributes }}
           class="
             timeline-card
             {{ block.settings.card_classes }}
+            rounded bg-white p-4
             {%- if section.settings.horizontal %}
-              snap-start flex-none w-72 bg-white p-4
+              snap-start flex-none w-72
             {%- else %}
-              mx-6 bg-white p-4 mb-8 sm:w-[calc(50%-1.5rem)] sm:mx-0 sm:even:ml-auto group
+              mx-6 mb-8 sm:w-[calc(50%-1.5rem)] sm:mx-0 sm:even:ml-auto group
               before:absolute before:-left-px sm:before:left-1/2 before:-top-0.5 before:-bottom-10 before:w-0.5 before:bg-seaweed-400 sm:before:-ml-px
             {%- endif -%}
             {%- if section.settings.animate_on_scroll %} timeline-card--animated{%- endif -%}
