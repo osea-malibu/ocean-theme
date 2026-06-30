@@ -1,6 +1,7 @@
 class TimelineSection extends HTMLElement {
   connectedCallback() {
     this.animateOnScroll = this.dataset.animateOnScroll === "true";
+    this.animateDelay = parseInt(this.dataset.animateDelay, 10) || 0;
     this.flippable = this.dataset.flippable === "true";
     this.horizontal = this.dataset.horizontal === "true";
     this.hijackScroll = this.dataset.hijackScroll === "true";
@@ -27,8 +28,9 @@ class TimelineSection extends HTMLElement {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("timeline-card--visible");
-            this._scrollObserver.unobserve(entry.target);
+            const card = entry.target;
+            this._scrollObserver.unobserve(card);
+            setTimeout(() => card.classList.add("timeline-card--visible"), this.animateDelay);
           }
         });
       },

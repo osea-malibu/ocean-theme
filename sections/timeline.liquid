@@ -1,20 +1,20 @@
 {% style %}
-  .timeline-card--animated {
+  .timeline-card--animated .timeline-card__inner {
     opacity: 0;
     transform: scale(0.88);
     transition: opacity 0.55s ease, transform 0.55s ease;
   }
 
   @media (min-width: 40rem) {
-    .timeline-card--animated:nth-child(odd) {
+    .timeline-card--animated:nth-child(odd) .timeline-card__inner {
       transform: scale(0.88) translateX(-24px);
     }
-    .timeline-card--animated:nth-child(even) {
+    .timeline-card--animated:nth-child(even) .timeline-card__inner {
       transform: scale(0.88) translateX(24px);
     }
   }
 
-  .timeline-card--animated.timeline-card--visible {
+  .timeline-card--animated.timeline-card--visible .timeline-card__inner {
     opacity: 1;
     transform: scale(1) translateX(0);
   }
@@ -64,6 +64,7 @@
 <timeline-section
   class="block {{ section.settings.section_classes }}"
   data-animate-on-scroll="{{ section.settings.animate_on_scroll }}"
+  data-animate-delay="{{ section.settings.animate_delay }}"
   data-flippable="{{ section.settings.flippable }}"
   data-horizontal="{{ section.settings.horizontal }}"
   data-hijack-scroll="{{ section.settings.hijack_scroll }}"
@@ -112,6 +113,7 @@
             {%- if section.settings.flippable %} timeline-card--flippable cursor-pointer select-none{%- endif -%}
           "
         >
+          <div class="timeline-card__inner">
 
           {%- if section.settings.flippable -%}
             {% comment %}Front face — image/video only{% endcomment %}
@@ -210,6 +212,7 @@
             </div>
           {%- endif -%}
 
+          </div>{% comment %}timeline-card__inner{% endcomment %}
         </div>
       {%- endfor -%}
     </div>
@@ -239,6 +242,13 @@
       "label": "Animate cards on scroll",
       "info": "Cards scale in as they enter the viewport.",
       "default": true
+    },
+    {
+      "type": "number",
+      "id": "animate_delay",
+      "label": "Animation delay (ms)",
+      "info": "How long to wait after a card enters the viewport before animating it in.",
+      "default": 150
     },
     {
       "type": "checkbox",
