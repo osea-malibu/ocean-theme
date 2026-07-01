@@ -10,7 +10,7 @@
 
   .timeline-track::before {
     bottom: 0;
-    background-color: var(--color-seaweed-300);
+    background-color: var(--color-seaweed-400);
   }
 
   .timeline-track::after {
@@ -57,7 +57,7 @@
     top: 50%;
     height: 0;
     width: 0;
-    border-left: 2px dotted var(--color-seaweed-300);
+    border-left: 2px dotted var(--color-seaweed-400);
     transform: translateX(-50%);
     pointer-events: none;
     transition: height 0.35s ease;
@@ -174,7 +174,7 @@
       </h2>
 
       {%- if section.settings.horizontal -%}
-        <div class="timeline-progress-track relative h-0.5 bg-seaweed-300 mt-6">
+        <div class="timeline-progress-track relative h-0.5 bg-seaweed-400 mt-6">
           {%- if section.settings.show_progress -%}
             <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
           {%- endif -%}

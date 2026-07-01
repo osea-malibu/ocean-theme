@@ -144,10 +144,10 @@ class TimelineSection extends HTMLElement {
             entry.line.style.height = `${entry.targetHeight}px`;
           }, 300);
 
-          // Step 3: card scales in
+          // Step 3: card scales in — starts as line finishes (300ms delay + 350ms line transition)
           setTimeout(() => {
             entry.card.classList.add("is-visible");
-          }, 580);
+          }, 300);
         });
       },
       { root: this.track, threshold: 0.5 }
