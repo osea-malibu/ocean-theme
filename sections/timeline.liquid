@@ -151,14 +151,22 @@
 
   timeline-section[data-horizontal="true"] h2::after { display: none; }
 
+  .timeline-scroll-label {
+    transition: opacity 0.5s ease;
+  }
+  .timeline-scroll-label.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .timeline-dot-label {
     position: absolute;
     bottom: calc(100% + 0.5rem);
     left: 50%;
     transform: translateX(-50%) translateY(6px);
     font-size: 0.6rem;
+    font-weight: 500;
     letter-spacing: 0.08em;
-    text-transform: uppercase;
     white-space: nowrap;
     color: var(--color-seaweed-700);
     opacity: 0;
@@ -189,11 +197,16 @@
   data-horizontal="{{ section.settings.horizontal }}"
   data-show-progress="{{ section.settings.show_progress }}"
   data-show-date-labels="{{ section.settings.show_date_labels }}"
+  data-scroll-nudges="{{ section.settings.scroll_nudges }}"
 >
   <div class="{{ section.settings.container_classes }}">
     <div class="overflow-hidden">
+      {%- assign h2_pb = 'pb-4' -%}
+      {%- if section.settings.show_date_labels and section.settings.horizontal -%}
+        {%- assign h2_pb = 'pb-8' -%}
+      {%- endif -%}
       <h2 class="
-        relative z-10 text-center pb-4 uppercase tracking-widest font-medium
+        relative z-10 text-center {{ h2_pb }} uppercase tracking-widest font-medium
         before:absolute before:w-1/2 before:h-0.5 before:bg-seaweed-400 before:bottom-0 before:left-0 sm:before:hidden
         after:absolute after:w-1.5 after:h-1.5 after:rounded-full after:bg-seaweed-700 after:-bottom-0.5 after:left-1/2 after:-ml-[3px]
       ">
@@ -201,6 +214,11 @@
       </h2>
 
       {%- if section.settings.horizontal -%}
+        {%- if section.settings.scroll_nudges -%}
+          <div class="timeline-scroll-hint flex justify-end mb-1">
+            <span class="timeline-scroll-label text-seaweed-500 uppercase tracking-widest" style="font-size: 0.6rem;">Scroll to explore &rarr;</span>
+          </div>
+        {%- endif -%}
         <div class="timeline-progress-track relative h-0.5 w-full bg-seaweed-400">
           {%- if section.settings.show_progress -%}
             <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
@@ -392,6 +410,13 @@
       "label": "Show date labels on dots",
       "info": "Shows a small date above each dot on the horizontal progress track.",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "scroll_nudges",
+      "label": "Horizontal scroll nudges",
+      "info": "Shows a 'Scroll to explore' hint and briefly nudges the track when it comes into view.",
+      "default": true
     },
     {
       "type": "header",

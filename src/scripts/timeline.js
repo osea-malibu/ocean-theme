@@ -5,6 +5,7 @@ class TimelineSection extends HTMLElement {
     this.horizontal = this.dataset.horizontal === "true";
     this.showProgress = this.dataset.showProgress === "true";
     this.showDateLabels = this.dataset.showDateLabels === "true";
+    this.scrollNudges = this.dataset.scrollNudges === "true";
 
     this.cards = Array.from(this.querySelectorAll(".timeline-card"));
     this.track = this.querySelector(".timeline-track");
@@ -14,6 +15,7 @@ class TimelineSection extends HTMLElement {
     if (this.horizontal) this._initHorizontal();
     if (this.showProgress && this.horizontal) this._initProgress();
     if (!this.horizontal && this.showProgress) this._initLineProgress();
+    if (this.horizontal && this.scrollNudges) this._initScrollNudges();
   }
 
   disconnectedCallback() {
@@ -222,6 +224,38 @@ class TimelineSection extends HTMLElement {
       rafId = requestAnimationFrame(update);
     }, { passive: true });
     update();
+  }
+
+  // --- Scroll nudges (auto-nudge on view + label fade) ---
+
+  _initScrollNudges() {
+    const label = this.querySelector(".timeline-scroll-label");
+
+    const dismiss = () => {
+      if (label) label.classList.add("is-hidden");
+      this.track.removeEventListener("scroll", dismiss);
+    };
+
+    this.track.addEventListener("scroll", dismiss, { passive: true, once: true });
+
+    // Nudge the track when the section enters the viewport
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          io.disconnect();
+          // Wait a beat so the user has a moment to register the section
+          setTimeout(() => {
+            this.track.scrollBy({ left: 80, behavior: "smooth" });
+            setTimeout(() => {
+              this.track.scrollBy({ left: -80, behavior: "smooth" });
+            }, 500);
+          }, 600);
+        });
+      },
+      { threshold: 0.5 }
+    );
+    io.observe(this);
   }
 
   // --- Horizontal progress bar ---
