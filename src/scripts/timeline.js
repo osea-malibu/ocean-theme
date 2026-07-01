@@ -190,9 +190,8 @@ class TimelineSection extends HTMLElement {
   // --- Vertical line progress ---
 
   _initLineProgress() {
-    const sidebar = this.querySelector(".timeline-sidebar-progress");
     const fill = this.querySelector(".timeline-sidebar-fill");
-    if (!sidebar || !fill) return;
+    if (!fill) return;
 
     let rafId = null;
     const update = () => {
@@ -202,17 +201,6 @@ class TimelineSection extends HTMLElement {
       fill.style.height = `${progress * fill.parentElement.offsetHeight}px`;
       rafId = null;
     };
-
-    // Show sidebar only while the section is in the viewport
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          sidebar.classList.toggle("hidden", !entry.isIntersecting);
-        });
-      },
-      { threshold: 0 }
-    );
-    io.observe(this);
 
     window.addEventListener("scroll", () => {
       if (rafId) return;
