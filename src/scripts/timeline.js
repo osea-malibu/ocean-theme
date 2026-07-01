@@ -68,11 +68,48 @@ class TimelineSection extends HTMLElement {
   _initHorizontal() {
     if (!this.track) return;
 
-    if (this.hijackScroll) {
-      this._bindHijack();
-    }
-
+    if (this.hijackScroll) this._bindHijack();
     this._bindKeyboard();
+    this._initHorizontalDots();
+  }
+
+  _initHorizontalDots() {
+    const progressTrack = this.querySelector(".timeline-progress-track");
+    if (!progressTrack) return;
+
+    const dots = this.cards.map(() => {
+      const line = document.createElement("div");
+      line.className = "timeline-progress-line";
+      progressTrack.appendChild(line);
+
+      const dot = document.createElement("div");
+      dot.className = "timeline-progress-dot";
+      progressTrack.appendChild(dot);
+
+      return { dot, line };
+    });
+
+    const update = () => {
+      const progressRect = progressTrack.getBoundingClientRect();
+      this.cards.forEach((card, i) => {
+        const cardRect = card.getBoundingClientRect();
+        const centerX = cardRect.left + cardRect.width / 2 - progressRect.left;
+        const lineHeight = cardRect.top - progressRect.top - progressRect.height / 2;
+
+        dots[i].dot.style.left = `${centerX}px`;
+        dots[i].line.style.left = `${centerX}px`;
+        dots[i].line.style.height = `${Math.max(0, lineHeight)}px`;
+      });
+    };
+
+    this.track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+
+    const ro = new ResizeObserver(() => {
+      update();
+      ro.disconnect();
+    });
+    ro.observe(this.track);
   }
 
   _bindHijack() {
@@ -143,22 +180,11 @@ class TimelineSection extends HTMLElement {
     if (!bar) return;
 
     const update = () => {
-      if (this.horizontal && this.track) {
-        const { scrollLeft, scrollWidth, clientWidth } = this.track;
-        bar.style.width = `${(scrollLeft / (scrollWidth - clientWidth)) * 100}%`;
-        this.track.addEventListener("scroll", update, { passive: true });
-      } else {
-        const rect = this.getBoundingClientRect();
-        const total = this.offsetHeight - window.innerHeight;
-        const progress = Math.min(1, Math.max(0, -rect.top / total));
-        bar.style.width = `${progress * 100}%`;
-      }
+      const { scrollLeft, scrollWidth, clientWidth } = this.track;
+      bar.style.width = `${(scrollLeft / (scrollWidth - clientWidth)) * 100}%`;
     };
 
-    if (!this.horizontal) {
-      window.addEventListener("scroll", update, { passive: true });
-    }
-
+    this.track.addEventListener("scroll", update, { passive: true });
     update();
   }
 }

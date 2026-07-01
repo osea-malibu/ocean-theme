@@ -32,6 +32,30 @@
   .timeline-track.scrollbar-hide::before,
   .timeline-track.scrollbar-hide::after { display: none; }
 
+  .timeline-track.scrollbar-hide .dot,
+  .timeline-track.scrollbar-hide .caret { display: none; }
+
+  .timeline-progress-dot {
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    border-radius: 9999px;
+    background-color: var(--color-seaweed-100);
+    border: 6px solid var(--color-seaweed-700);
+    pointer-events: none;
+  }
+
+  .timeline-progress-line {
+    position: absolute;
+    top: 50%;
+    width: 0;
+    border-left: 2px dotted var(--color-seaweed-300);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
   @media (min-width: 40rem) {
     timeline-section:not([data-horizontal="true"]):not([data-flippable="true"]) .timeline-card {
       margin-top: var(--card-offset, 0px);
@@ -129,7 +153,7 @@
     </h2>
 
     {%- if section.settings.horizontal -%}
-      <div class="timeline-progress-track relative h-0.5 bg-seaweed-300 mt-6 overflow-hidden">
+      <div class="timeline-progress-track relative h-0.5 bg-seaweed-300 mt-6">
         {%- if section.settings.show_progress -%}
           <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
         {%- endif -%}
@@ -159,7 +183,7 @@
             {%- else %}
               mx-6 mb-8 sm:w-[calc(50%-1.5rem)] sm:mx-0 sm:even:ml-auto group
             {%- endif -%}
-            {%- if section.settings.animate_on_scroll %} timeline-card--animated{%- endif -%}
+            {%- if section.settings.animate_on_scroll and section.settings.horizontal == false %} timeline-card--animated{%- endif -%}
             {%- if section.settings.flippable %} timeline-card--flippable cursor-pointer select-none{%- endif -%}
           "
         >
