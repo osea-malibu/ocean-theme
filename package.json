@@ -9,7 +9,8 @@
     "build": "vite build",
     "dev": "vite build --watch",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "check:a11y:level-a": "node scripts/check-sortsite-level-a.mjs"
   },
   "repository": {
     "type": "git",

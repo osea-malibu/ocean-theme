@@ -102,10 +102,22 @@
            {%- for product in collection.products -%}
             {% assign remove_lazy_loading = false %}
             {% assign fetch_priority_high = false %}
+            {% assign duplicate_product_title_count = 0 %}
+            {% assign product_link_label_suffix = "" %}
 
             {%- if forloop.index == 1 -%}
               {%- assign remove_lazy_loading = true -%}
               {%- assign fetch_priority_high = true -%}
+            {%- endif -%}
+
+            {%- for title_match_product in collection.products -%}
+              {%- if title_match_product.title == product.title -%}
+                {%- assign duplicate_product_title_count = duplicate_product_title_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if duplicate_product_title_count > 1 -%}
+              {%- assign product_link_label_suffix = product.selected_or_first_available_variant.sku | default: product.handle -%}
             {%- endif -%}
 
             <li style="order: {{ forloop.index }}">
@@ -120,7 +132,8 @@
                 remove_linking: remove_linking,
                 remove_lazy_loading: remove_lazy_loading,
                 fetch_priority_high: fetch_priority_high,
-                image_element_class: 'aspect-[4/5]'
+                image_element_class: 'aspect-[4/5]',
+                product_link_label_suffix: product_link_label_suffix
               -%}
             </li>
           {%- endfor -%}

@@ -37,6 +37,7 @@
     - hide_price: {Boolean} Hide price from ATC button. Default: false (optional)
     - hide_slashed_price: {Boolean} Hide compare-at slashed price from ATC button. Default: false (optional)
     - show_price_range: {Boolean} Show variant price range. Default: true (optional)
+    - product_link_label_suffix: {String} Extra context for product links when a collection page has duplicate product titles (optional)
 
     Usage:
     {% render 'card-product', card_product: section.settings.product, section_id: section.id %}
@@ -68,6 +69,10 @@
       {% comment %} {%- endif -%} {% endcomment %}
       {%- liquid
         assign title_content = title_text | default: card_product.title
+        assign title_accessible_text = title_content | strip_html
+        if product_link_label_suffix != blank
+          assign title_accessible_text = title_accessible_text | append: ' - ' | append: product_link_label_suffix
+        endif
 
         if mini
           assign title_classes = 'text-xs font-book tracking-wide text-center leading-tight mb-1'
@@ -79,7 +84,7 @@
           assign title_classes = title_classes | append: ' ' | append: name_class
         endif
       -%}
-      {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}">{% endunless %}
+      {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}" aria-label="{{ title_accessible_text | escape }} product page">{% endunless %}
         <h3 class="{{ title_classes }}">
           {{- title_content | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' | replace: ' - Sample', '' -}}
         </h3>
@@ -359,6 +364,7 @@
               <a
                 data-bis-plp
                 href="{{ card_product.url }}?variant={{ card_product.selected_or_first_available_variant.id }}"
+                aria-label="Join the waitlist for {{ title_accessible_text | escape }}"
                 class="button button-tertiary w-full motion-safe:transition disabled:opacity-50 h-10 button-sm sm:button-md leading-none sm:leading-normal md:tracking-wider"
               >
                 Join the waitlist
@@ -376,7 +382,7 @@
         <div class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
       {%- else -%}
         <a
-          aria-label="{{ card_product.title | escape }}"
+          aria-label="{{ title_accessible_text | escape }} product page"
           href="{{ card_product.url | default: '#' }}"
           class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if image_class != blank %} {{ image_class }}{% endif %}"
           tabindex="-1"
