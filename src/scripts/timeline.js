@@ -77,7 +77,7 @@ class TimelineSection extends HTMLElement {
     const progressTrack = this.querySelector(".timeline-progress-track");
     if (!progressTrack) return;
 
-    const dots = this.cards.map(() => {
+    const entries = this.cards.map((card) => {
       const line = document.createElement("div");
       line.className = "timeline-progress-line";
       progressTrack.appendChild(line);
@@ -86,27 +86,94 @@ class TimelineSection extends HTMLElement {
       dot.className = "timeline-progress-dot";
       progressTrack.appendChild(dot);
 
-      return { dot, line };
+      return { card, dot, line, targetHeight: 0, revealed: false };
     });
 
     const update = () => {
       const progressRect = progressTrack.getBoundingClientRect();
-      this.cards.forEach((card, i) => {
-        const cardRect = card.getBoundingClientRect();
+      entries.forEach((entry) => {
+        const cardRect = entry.card.getBoundingClientRect();
         const centerX = cardRect.left + cardRect.width / 2 - progressRect.left;
-        const lineHeight = cardRect.top - progressRect.top - progressRect.height / 2;
+        const h = Math.max(0, cardRect.top - progressRect.top - progressRect.height / 2);
 
-        dots[i].dot.style.left = `${centerX}px`;
-        dots[i].line.style.left = `${centerX}px`;
-        dots[i].line.style.height = `${Math.max(0, lineHeight)}px`;
+        entry.targetHeight = h;
+        entry.dot.style.left = `${centerX}px`;
+        entry.line.style.left = `${centerX}px`;
+
+        if (entry.revealed) {
+          entry.line.style.height = `${h}px`;
+        }
       });
     };
+
+    // Determine which cards are visible in the scroll container on load
+    const trackRect = this.track.getBoundingClientRect();
+    const initiallyVisible = new Set(
+      this.cards.filter((card) => {
+        const r = card.getBoundingClientRect();
+        return r.left < trackRect.right && r.right > trackRect.left;
+      })
+    );
+
+    // Reveal initially visible entries without animation
+    entries.forEach((entry) => {
+      if (initiallyVisible.has(entry.card)) {
+        entry.revealed = true;
+        entry.dot.classList.add("is-visible");
+      } else {
+        entry.card.classList.add("timeline-card--h-animated");
+      }
+    });
+
+    // Orchestrated animation for cards that scroll into view
+    const io = new IntersectionObserver(
+      (observations) => {
+        observations.forEach((obs) => {
+          if (!obs.isIntersecting) return;
+          const entry = entries.find((e) => e.card === obs.target);
+          if (!entry || entry.revealed) return;
+
+          entry.revealed = true;
+          io.unobserve(obs.target);
+
+          // Step 1: dot grows
+          entry.dot.classList.add("is-visible");
+
+          // Step 2: line extends down
+          setTimeout(() => {
+            entry.line.style.height = `${entry.targetHeight}px`;
+          }, 300);
+
+          // Step 3: card scales in
+          setTimeout(() => {
+            entry.card.classList.add("is-visible");
+          }, 580);
+        });
+      },
+      { root: this.track, threshold: 0.5 }
+    );
+
+    entries.forEach((entry) => {
+      if (!initiallyVisible.has(entry.card)) {
+        io.observe(entry.card);
+      }
+    });
 
     this.track.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update, { passive: true });
 
     const ro = new ResizeObserver(() => {
       update();
+      // Set heights for initially visible entries without triggering transition
+      entries.forEach((entry) => {
+        if (entry.revealed && !initiallyVisible.has(entry.card)) return;
+        if (entry.revealed) {
+          entry.line.style.transition = "none";
+          entry.line.style.height = `${entry.targetHeight}px`;
+          entry.line.getBoundingClientRect(); // force reflow
+          entry.line.style.transition = "";
+        }
+      });
       ro.disconnect();
     });
     ro.observe(this.track);
