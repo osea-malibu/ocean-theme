@@ -68,8 +68,22 @@ function runStaticChecks() {
     "product card links can receive duplicate-title context",
     cardProduct.includes("product_link_label_suffix") &&
       cardProduct.includes("title_accessible_text") &&
-      cardProduct.includes("product page"),
-    "Expected card-product to support a product_link_label_suffix in accessible link names."
+      cardProduct.includes(
+        '<span class="sr-only"> {{ product_link_label_suffix | escape }}</span>'
+      ),
+    "Expected card-product to support product_link_label_suffix as hidden accessible link context."
+  );
+  pass(
+    "product card title links use native link text",
+    cardProduct.includes(
+      "{% unless remove_linking %}<a href=\"{{ card_product.url | default: '#' }}\">{% endunless %}"
+    ),
+    "Expected product-card title links to use native link text instead of broad product-page aria-labels."
+  );
+  pass(
+    "product card accessible names mirror visible trademark symbols",
+    cardProduct.includes("replace: '™', ' ™'") && cardProduct.includes("replace: '®', ' ®'"),
+    "Expected product-card accessible names to preserve the visible spacing before trademark symbols."
   );
 
   const mainCollection = readRel("sections/main-collection.liquid");
@@ -211,6 +225,7 @@ function runRenderedChecks(path, html) {
   ) {
     checkWaitlistLinks(path, html);
     checkDuplicateProductTitleLinks(path, html);
+    checkProductCardLabelInName(path, html);
   }
 
   if (normalizedPath === "/pages/clinical-results-face-moisturizers") {
@@ -310,6 +325,30 @@ function checkDuplicateProductTitleLinks(label, html) {
         )}.`
       );
     }
+  }
+}
+
+function checkProductCardLabelInName(label, html) {
+  for (const anchor of findElements("a", html)) {
+    const href = getAttr(anchor.attrs, "href") || "";
+    const ariaLabel = getAttr(anchor.attrs, "aria-label") || "";
+    const tabindex = getAttr(anchor.attrs, "tabindex") || "";
+
+    if (!href.includes("/products/") || !ariaLabel.includes("product page") || tabindex === "-1") {
+      continue;
+    }
+
+    const visible = visibleText(anchor.body);
+
+    if (!/[™®]/.test(visible)) {
+      continue;
+    }
+
+    pass(
+      `${label} product card aria-label contains visible product label`,
+      ariaLabel.includes(visible),
+      `Expected aria-label "${ariaLabel}" to include visible label "${visible}".`
+    );
   }
 }
 

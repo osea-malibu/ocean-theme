@@ -70,6 +70,7 @@
       {%- liquid
         assign title_content = title_text | default: card_product.title
         assign title_accessible_text = title_content | strip_html
+        assign title_accessible_text = title_accessible_text | replace: ' ™', '™' | replace: ' ®', '®' | replace: '™', ' ™' | replace: '®', ' ®'
         if product_link_label_suffix != blank
           assign title_accessible_text = title_accessible_text | append: ' - ' | append: product_link_label_suffix
         endif
@@ -84,9 +85,12 @@
           assign title_classes = title_classes | append: ' ' | append: name_class
         endif
       -%}
-      {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}" aria-label="{{ title_accessible_text | escape }} product page">{% endunless %}
+      {% unless remove_linking %}<a href="{{ card_product.url | default: '#' }}">{% endunless %}
         <h3 class="{{ title_classes }}">
           {{- title_content | replace: '™', '<sup class="-top-0.5 -mr-0.5 -left-px">™</sup>' | replace: '®', '<sup class="-top-1 -mr-px">®</sup>' | replace: ' - Sample', '' -}}
+          {%- if product_link_label_suffix != blank -%}
+            <span class="sr-only"> {{ product_link_label_suffix | escape }}</span>
+          {%- endif -%}
         </h3>
       {% unless remove_linking %}</a>{% endunless %}
     </div>
@@ -448,6 +452,10 @@
         >
       {%- endif -%}
       {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+
+      {%- if product_link_label_suffix != blank -%}
+        <span class="sr-only"> {{ product_link_label_suffix | escape }}</span>
+      {%- endif -%}
 
       {% if remove_linking %}</div>{% else %}</a>{% endif %}
     {%- else -%}
