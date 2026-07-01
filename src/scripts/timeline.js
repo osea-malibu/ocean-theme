@@ -3,7 +3,6 @@ class TimelineSection extends HTMLElement {
     this.animateOnScroll = this.dataset.animateOnScroll === "true";
     this.flippable = this.dataset.flippable === "true";
     this.horizontal = this.dataset.horizontal === "true";
-    this.hijackScroll = this.dataset.hijackScroll === "true";
     this.showProgress = this.dataset.showProgress === "true";
 
     this.cards = Array.from(this.querySelectorAll(".timeline-card"));
@@ -18,7 +17,6 @@ class TimelineSection extends HTMLElement {
 
   disconnectedCallback() {
     this._scrollObserver?.disconnect();
-    this._removeHorizontalListeners?.();
   }
 
   // --- Scroll-in animation ---
@@ -63,12 +61,11 @@ class TimelineSection extends HTMLElement {
     card.setAttribute("aria-label", isFlipped ? "Flip card back" : "Flip card to read more");
   }
 
-  // --- Horizontal scroll + optional hijack + keyboard nav ---
+  // --- Horizontal scroll + keyboard nav ---
 
   _initHorizontal() {
     if (!this.track) return;
 
-    if (this.hijackScroll) this._bindHijack();
     this._bindKeyboard();
     this._initHorizontalDots();
   }
@@ -139,13 +136,9 @@ class TimelineSection extends HTMLElement {
           // Step 1: dot grows
           entry.dot.classList.add("is-visible");
 
-          // Step 2: line extends down
+          // Step 2: line extends down + Step 3: card scales in — simultaneous
           setTimeout(() => {
             entry.line.style.height = `${entry.targetHeight}px`;
-          }, 300);
-
-          // Step 3: card scales in — starts as line finishes (300ms delay + 350ms line transition)
-          setTimeout(() => {
             entry.card.classList.add("is-visible");
           }, 300);
         });
@@ -179,39 +172,11 @@ class TimelineSection extends HTMLElement {
     ro.observe(this.track);
   }
 
-  _bindHijack() {
-    let isScrolling = false;
-
-    const onWheel = (e) => {
-      if (!this._isTimelineActive()) return;
-
-      const track = this.track;
-      const atStart = track.scrollLeft === 0 && e.deltaY < 0;
-      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2 && e.deltaY > 0;
-
-      if (atStart || atEnd) return;
-
-      e.preventDefault();
-
-      if (!isScrolling) {
-        isScrolling = true;
-        requestAnimationFrame(() => {
-          track.scrollLeft += e.deltaY;
-          isScrolling = false;
-        });
-      }
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: false });
-
-    this._removeHorizontalListeners = () => {
-      window.removeEventListener("wheel", onWheel);
-    };
-  }
-
   _bindKeyboard() {
     window.addEventListener("keydown", (e) => {
-      if (!this._isTimelineActive()) return;
+      const rect = this.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!isVisible) return;
       if (e.key === "ArrowRight") {
         e.preventDefault();
         this.track.scrollBy({ left: 320, behavior: "smooth" });
@@ -222,25 +187,41 @@ class TimelineSection extends HTMLElement {
     });
   }
 
-  _isTimelineActive() {
-    const rect = this.getBoundingClientRect();
-    return rect.top <= 0 && rect.bottom >= window.innerHeight;
-  }
-
   // --- Vertical line progress ---
 
   _initLineProgress() {
+    const sidebar = this.querySelector(".timeline-sidebar-progress");
+    const fill = this.querySelector(".timeline-sidebar-fill");
+    if (!sidebar || !fill) return;
+
+    let rafId = null;
     const update = () => {
       const rect = this.getBoundingClientRect();
       const total = this.offsetHeight - window.innerHeight;
       const progress = Math.min(1, Math.max(0, -rect.top / total));
-      this.track.style.setProperty("--line-progress-px", `${progress * this.track.offsetHeight}px`);
+      fill.style.height = `${progress * fill.parentElement.offsetHeight}px`;
+      rafId = null;
     };
-    window.addEventListener("scroll", update, { passive: true });
+
+    // Show sidebar only while the section is in the viewport
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          sidebar.classList.toggle("hidden", !entry.isIntersecting);
+        });
+      },
+      { threshold: 0 }
+    );
+    io.observe(this);
+
+    window.addEventListener("scroll", () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(update);
+    }, { passive: true });
     update();
   }
 
-  // --- Progress indicator ---
+  // --- Horizontal progress bar ---
 
   _initProgress() {
     const bar = this.querySelector(".timeline-progress-bar");

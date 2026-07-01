@@ -1,32 +1,30 @@
 {% style %}
-  .timeline-track::before,
-  .timeline-track::after {
+  .timeline-track::before {
     content: '';
     position: absolute;
     left: -1px;
     top: 0;
-    width: 2px;
-  }
-
-  .timeline-track::before {
     bottom: 0;
+    width: 2px;
     background-color: var(--color-seaweed-400);
   }
 
-  .timeline-track::after {
-    position: absolute;
-    bottom: auto;
-    height: var(--line-progress-px, 0px);
-    background-color: var(--color-seaweed-600);
-    transition: height 0.1s linear;
-  }
-
   @media (min-width: 40rem) {
-    .timeline-track::before,
-    .timeline-track::after {
+    .timeline-track::before {
       left: 50%;
       margin-left: -1px;
     }
+  }
+
+  .timeline-sidebar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    background-color: var(--color-seaweed-700);
+    border-radius: 9999px;
+    transition: height 0.1s linear;
   }
 
   .timeline-track.scrollbar-hide::before,
@@ -160,13 +158,11 @@
   data-animate-on-scroll="{{ section.settings.animate_on_scroll }}"
   data-flippable="{{ section.settings.flippable }}"
   data-horizontal="{{ section.settings.horizontal }}"
-  data-hijack-scroll="{{ section.settings.hijack_scroll }}"
   data-show-progress="{{ section.settings.show_progress }}"
 >
   <div class="{{ section.settings.container_classes }}">
-    <div class="overflow-hidden">
       <h2 class="
-        relative z-10 text-center pb-4 uppercase tracking-widest font-medium
+        overflow-hidden relative z-10 text-center pb-4 uppercase tracking-widest font-medium
         before:absolute before:w-1/2 before:h-0.5 before:bg-seaweed-400 before:bottom-0 before:left-0 sm:before:hidden
         after:absolute after:w-1.5 after:h-1.5 after:rounded-full after:bg-seaweed-700 after:-bottom-0.5 after:left-1/2 after:-ml-[3px]
       ">
@@ -178,6 +174,14 @@
           {%- if section.settings.show_progress -%}
             <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
           {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_progress and section.settings.horizontal == false -%}
+        <div class="timeline-sidebar-progress hidden fixed left-4 z-10" style="top: 5rem; bottom: 2rem; width: 3px;">
+          <div class="relative w-full h-full bg-seaweed-400 rounded-full overflow-hidden">
+            <div class="timeline-sidebar-fill"></div>
+          </div>
         </div>
       {%- endif -%}
 
@@ -305,8 +309,8 @@
             </div>{% comment %}timeline-card__inner{% endcomment %}
           </div>
         {%- endfor -%}
-      </div>
-    </div>
+      </div>{% comment %}timeline-track{% endcomment %}
+
   </div>
 </timeline-section>
 
@@ -346,13 +350,6 @@
       "id": "horizontal",
       "label": "Horizontal scroll layout",
       "info": "Arranges cards in a horizontal row instead of a vertical timeline.",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "hijack_scroll",
-      "label": "Convert vertical scroll to horizontal",
-      "info": "While the timeline is in view, vertical scrolling will drive horizontal movement through the cards. Only applies when horizontal layout is enabled.",
       "default": false
     },
     {
