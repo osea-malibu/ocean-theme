@@ -178,13 +178,13 @@
       {%- endif -%}
 
       {%- if section.settings.show_progress and section.settings.horizontal == false -%}
-        <div class="flex items-start gap-6 mt-6">
-          <div class="timeline-sidebar-progress flex-none self-start sticky" style="top: 5rem; width: 3px; height: calc(100vh - 8rem);">
+        <div class="timeline-sidebar-progress absolute inset-y-0" style="left: 0; width: 3px;">
+          <div class="sticky" style="top: 5rem; height: calc(100vh - 8rem);">
             <div class="relative w-full h-full bg-seaweed-400 rounded-full overflow-hidden">
               <div class="timeline-sidebar-fill"></div>
             </div>
           </div>
-          <div class="flex-1 min-w-0">
+        </div>
       {%- endif -%}
 
       <div id="events" class="
@@ -312,11 +312,6 @@
           </div>
         {%- endfor -%}
       </div>{% comment %}timeline-track{% endcomment %}
-
-      {%- if section.settings.show_progress and section.settings.horizontal == false -%}
-          </div>{% comment %}flex-1{% endcomment %}
-        </div>{% comment %}flex sidebar wrapper{% endcomment %}
-      {%- endif -%}
 
   </div>
 </timeline-section>
