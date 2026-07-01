@@ -161,6 +161,7 @@
   data-show-progress="{{ section.settings.show_progress }}"
 >
   <div class="{{ section.settings.container_classes }}">
+    <div class="overflow-hidden">
       <h2 class="
         relative z-10 text-center pb-4 uppercase tracking-widest font-medium
         before:absolute before:w-1/2 before:h-0.5 before:bg-seaweed-400 before:bottom-0 before:left-0 sm:before:hidden
@@ -170,7 +171,7 @@
       </h2>
 
       {%- if section.settings.horizontal -%}
-        <div class="timeline-progress-track relative h-0.5 bg-seaweed-400 mt-6">
+        <div class="timeline-progress-track relative h-0.5 w-full bg-seaweed-400">
           {%- if section.settings.show_progress -%}
             <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
           {%- endif -%}
@@ -192,11 +193,6 @@
         {%- if section.settings.horizontal %} flex flex-row items-start gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-10{%- endif -%}
       ">
 
-        {%- unless section.settings.horizontal -%}
-          {{- "" -}}
-          {% comment %}Vertical centre line — rendered as a pseudo-element on the track{% endcomment %}
-        {%- endunless -%}
-
         {%- for block in section.blocks -%}
           <div
             {{ block.shopify_attributes }}
@@ -215,10 +211,56 @@
             "
           >
             <div class="timeline-card__inner">
+              {%- if section.settings.flippable -%}
+                {% comment %}Front face — image/video + date{% endcomment %}
+                <div class="timeline-card__front bg-white p-4">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      srcset="{{ block.settings.image | image_url: width: 400 }} 1x,
+                        {{ block.settings.image | image_url: width: 800 }} 2x"
+                      src="{{ block.settings.image | image_url: width: 800 }}"
+                      loading="lazy"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                      class="object-cover w-full {{ block.settings.image_classes }}"
+                    >
+                  {%- elsif block.settings.video_mp4 != blank -%}
+                    {%- assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: 480 -%}
+                    <video autoplay loop muted playsinline poster="{% render 'imgix', src: video_poster_url %}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
+                      {%- for source in block.settings.video_mp4.sources -%}
+                        <source src="{{ source.url }}" type="video/{{ source.format }}">
+                      {%- endfor -%}
+                      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                      <img
+                        src="{% render 'imgix', src: video_poster_url %}"
+                        alt=""
+                        width="{{ block.settings.video_mp4.preview_image.width }}"
+                        height="{{ block.settings.video_mp4.preview_image.height }}"
+                        loading="lazy"
+                      >
+                      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+                    </video>
+                  {%- endif -%}
+                  {%- if block.settings.date != blank -%}
+                    <p class="mt-4 text-3xl font-serif">{{ block.settings.date }}</p>
+                  {%- endif -%}
+                  <p class="badge absolute bottom-6 right-4 text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
+                </div>
 
-            {%- if section.settings.flippable -%}
-              {% comment %}Front face — image/video + date{% endcomment %}
-              <div class="timeline-card__front bg-white p-4">
+                {% comment %}Back face — date + paragraph{% endcomment %}
+                <div class="timeline-card__back bg-white">
+                  {%- if block.settings.date != blank -%}
+                    <h3 class="mb-2 text-3xl font-serif">{{ block.settings.date }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.paragraph != blank -%}
+                    <p class="tracking-wide">{{ block.settings.paragraph }}</p>
+                  {%- endif -%}
+                  <p class="badge mt-4 self-start text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
+                </div>
+
+              {%- else -%}
+                {% comment %}Default (non-flippable) layout — image + text together{% endcomment %}
                 {%- if block.settings.image != blank -%}
                   <img
                     srcset="{{ block.settings.image | image_url: width: 400 }} 1x,
@@ -232,7 +274,7 @@
                   >
                 {%- elsif block.settings.video_mp4 != blank -%}
                   {%- assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: 480 -%}
-                  <video autoplay loop muted playsinline poster="{% render 'imgix', src: video_poster_url %}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
+                  <video autoplay controls loop muted playsinline poster="{% render 'imgix', src: video_poster_url %}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
                     {%- for source in block.settings.video_mp4.sources -%}
                       <source src="{{ source.url }}" type="video/{{ source.format }}">
                     {%- endfor -%}
@@ -247,72 +289,24 @@
                     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
                   </video>
                 {%- endif -%}
-                {%- if block.settings.date != blank -%}
-                  <p class="mt-4 text-3xl font-serif">{{ block.settings.date }}</p>
-                {%- endif -%}
-                <p class="badge absolute bottom-6 right-4 text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
-              </div>
-
-              {% comment %}Back face — date + paragraph{% endcomment %}
-              <div class="timeline-card__back bg-white">
-                {%- if block.settings.date != blank -%}
-                  <h3 class="mb-2 text-3xl font-serif">{{ block.settings.date }}</h3>
-                {%- endif -%}
-                {%- if block.settings.paragraph != blank -%}
-                  <p class="tracking-wide">{{ block.settings.paragraph }}</p>
-                {%- endif -%}
-                <p class="badge mt-4 self-start text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
-              </div>
-
-            {%- else -%}
-              {% comment %}Default (non-flippable) layout — image + text together{% endcomment %}
-              {%- if block.settings.image != blank -%}
-                <img
-                  srcset="{{ block.settings.image | image_url: width: 400 }} 1x,
-                    {{ block.settings.image | image_url: width: 800 }} 2x"
-                  src="{{ block.settings.image | image_url: width: 800 }}"
-                  loading="lazy"
-                  alt="{{ block.settings.image.alt | escape }}"
-                  width="{{ block.settings.image.width }}"
-                  height="{{ block.settings.image.height }}"
-                  class="object-cover w-full {{ block.settings.image_classes }}"
-                >
-              {%- elsif block.settings.video_mp4 != blank -%}
-                {%- assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: 480 -%}
-                <video autoplay controls loop muted playsinline poster="{% render 'imgix', src: video_poster_url %}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
-                  {%- for source in block.settings.video_mp4.sources -%}
-                    <source src="{{ source.url }}" type="video/{{ source.format }}">
-                  {%- endfor -%}
-                  {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-                  <img
-                    src="{% render 'imgix', src: video_poster_url %}"
-                    alt=""
-                    width="{{ block.settings.video_mp4.preview_image.width }}"
-                    height="{{ block.settings.video_mp4.preview_image.height }}"
-                    loading="lazy"
-                  >
-                  {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-                </video>
-              {%- endif -%}
-              <div class="relative">
-                <div aria-hidden="true" class="absolute z-10 -left-12 mt-2 flex flex-row-reverse items-center gap-2 sm:group-odd:left-auto sm:group-odd:-right-12 sm:group-odd:flex-row">
-                  <div class="caret w-5 h-5 bg-white rotate-45"></div>
-                  <div class="dot w-4 h-4 rounded-full bg-seaweed-100 border-[6px] border-seaweed-700"></div>
+                <div class="relative">
+                  <div aria-hidden="true" class="absolute z-10 -left-12 mt-2 flex flex-row-reverse items-center gap-2 sm:group-odd:left-auto sm:group-odd:-right-12 sm:group-odd:flex-row">
+                    <div class="caret w-5 h-5 bg-white rotate-45"></div>
+                    <div class="dot w-4 h-4 rounded-full bg-seaweed-100 border-[6px] border-seaweed-700"></div>
+                  </div>
+                  {%- if block.settings.date != blank -%}
+                    <h3 class="mt-3 mb-2 text-3xl font-serif">{{ block.settings.date }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.paragraph != blank -%}
+                    <p class="tracking-wide">{{ block.settings.paragraph }}</p>
+                  {%- endif -%}
                 </div>
-                {%- if block.settings.date != blank -%}
-                  <h3 class="mt-3 mb-2 text-3xl font-serif">{{ block.settings.date }}</h3>
-                {%- endif -%}
-                {%- if block.settings.paragraph != blank -%}
-                  <p class="tracking-wide">{{ block.settings.paragraph }}</p>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-
+              {%- endif -%}
             </div>{% comment %}timeline-card__inner{% endcomment %}
           </div>
         {%- endfor -%}
       </div>{% comment %}timeline-track{% endcomment %}
-
+    </div>
   </div>
 </timeline-section>
 
