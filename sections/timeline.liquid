@@ -214,15 +214,19 @@
       </h2>
 
       {%- if section.settings.horizontal -%}
-        {%- if section.settings.scroll_nudges -%}
-          <div class="timeline-scroll-hint flex justify-end mb-1">
-            <span class="timeline-scroll-label text-seaweed-500 uppercase tracking-widest" style="font-size: 0.6rem;">Scroll to explore &rarr;</span>
-          </div>
-        {%- endif -%}
-        <div class="timeline-progress-track relative h-0.5 w-full bg-seaweed-400">
-          {%- if section.settings.show_progress -%}
-            <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
+        <div class="relative">
+          {%- if section.settings.scroll_nudges -%}
+            {%- assign hint_bottom = 'calc(100% + 0.5rem)' -%}
+            {%- if section.settings.show_date_labels -%}
+              {%- assign hint_bottom = 'calc(100% + 2rem)' -%}
+            {%- endif -%}
+            <span class="timeline-scroll-label absolute right-0 text-seaweed-500 uppercase tracking-widest" style="font-size: 0.6rem; bottom: {{ hint_bottom }};">Scroll to explore &rarr;</span>
           {%- endif -%}
+          <div class="timeline-progress-track relative h-0.5 w-full bg-seaweed-400">
+            {%- if section.settings.show_progress -%}
+              <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
+            {%- endif -%}
+          </div>
         </div>
       {%- endif -%}
 

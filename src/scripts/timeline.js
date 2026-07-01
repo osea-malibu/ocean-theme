@@ -231,18 +231,46 @@ class TimelineSection extends HTMLElement {
   _initScrollNudges() {
     const label = this.querySelector(".timeline-scroll-label");
 
-    // Dismiss only on genuine user interaction, not programmatic scroll
+    let nudgeDone = false;
+
     const dismiss = () => {
       if (label) label.classList.add("is-hidden");
       this.track.removeEventListener("pointerdown", dismiss);
       this.track.removeEventListener("touchstart", dismiss);
+      this.track.removeEventListener("wheel", onWheel);
     };
+
+    // Wheel fires on trackpad/mouse scroll — safe to use for dismiss since
+    // our nudge uses scrollLeft directly, not wheel events
+    const onWheel = () => { if (nudgeDone) dismiss(); };
+
     this.track.addEventListener("pointerdown", dismiss, { passive: true, once: true });
     this.track.addEventListener("touchstart", dismiss, { passive: true, once: true });
+    this.track.addEventListener("wheel", onWheel, { passive: true });
 
     const nudge = () => {
-      this.track.scrollBy({ left: 36, behavior: "smooth" });
-      setTimeout(() => this.track.scrollBy({ left: -36, behavior: "smooth" }), 280);
+      const start = this.track.scrollLeft;
+      const ease = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+      this.track.style.scrollSnapType = "none";
+
+      const peek = (distance, duration) => new Promise((resolve) => {
+        let startTime = null;
+        const animate = (timestamp) => {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          const wave = progress < 0.5 ? ease(progress * 2) : ease((1 - progress) * 2);
+          this.track.scrollLeft = start + wave * distance;
+          if (progress < 1) requestAnimationFrame(animate);
+          else resolve();
+        };
+        requestAnimationFrame(animate);
+      });
+
+      peek(22, 520).then(() => peek(6, 280)).then(() => {
+        this.track.style.scrollSnapType = "";
+        nudgeDone = true;
+      });
     };
 
     const io = new IntersectionObserver(
