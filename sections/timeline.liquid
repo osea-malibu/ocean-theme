@@ -151,6 +151,35 @@
 
   timeline-section[data-horizontal="true"] h2::after { display: none; }
 
+  .timeline-dot-label {
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--color-seaweed-700);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .timeline-dot-label.is-visible {
+    animation: dot-label-spring 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes dot-label-spring {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
 {% endstyle %}
 
 <timeline-section
@@ -159,6 +188,7 @@
   data-flippable="{{ section.settings.flippable }}"
   data-horizontal="{{ section.settings.horizontal }}"
   data-show-progress="{{ section.settings.show_progress }}"
+  data-show-date-labels="{{ section.settings.show_date_labels }}"
 >
   <div class="{{ section.settings.container_classes }}">
     <div class="overflow-hidden">
@@ -196,6 +226,7 @@
         {%- for block in section.blocks -%}
           <div
             {{ block.shopify_attributes }}
+            data-date="{{ block.settings.date | escape }}"
             style="--card-offset: {{ block.settings.top_offset | default: 0 }}px; --card-offset-flippable: {{ block.settings.top_offset_flippable | default: 0 }}px; --card-offset-horizontal: {{ block.settings.top_offset_horizontal | default: 0 }}px;"
             class="
               timeline-card
@@ -353,6 +384,13 @@
       "id": "show_progress",
       "label": "Animate progress indicator",
       "info": "Fills the vertical line (or horizontal track) as you scroll through the timeline. The track itself is always visible.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date_labels",
+      "label": "Show date labels on dots",
+      "info": "Shows a small date above each dot on the horizontal progress track.",
       "default": false
     },
     {

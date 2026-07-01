@@ -4,6 +4,7 @@ class TimelineSection extends HTMLElement {
     this.flippable = this.dataset.flippable === "true";
     this.horizontal = this.dataset.horizontal === "true";
     this.showProgress = this.dataset.showProgress === "true";
+    this.showDateLabels = this.dataset.showDateLabels === "true";
 
     this.cards = Array.from(this.querySelectorAll(".timeline-card"));
     this.track = this.querySelector(".timeline-track");
@@ -81,6 +82,14 @@ class TimelineSection extends HTMLElement {
 
       const dot = document.createElement("div");
       dot.className = "timeline-progress-dot";
+
+      if (this.showDateLabels && card.dataset.date) {
+        const label = document.createElement("span");
+        label.className = "timeline-dot-label";
+        label.textContent = card.dataset.date;
+        dot.appendChild(label);
+      }
+
       progressTrack.appendChild(dot);
 
       return { card, dot, line, targetHeight: 0, revealed: false };
@@ -113,10 +122,14 @@ class TimelineSection extends HTMLElement {
     );
 
     // Reveal initially visible entries without animation
-    entries.forEach((entry) => {
+    entries.forEach((entry, i) => {
       if (initiallyVisible.has(entry.card)) {
         entry.revealed = true;
         entry.dot.classList.add("is-visible");
+        const label = entry.dot.querySelector(".timeline-dot-label");
+        if (label) {
+          setTimeout(() => label.classList.add("is-visible"), i * 80);
+        }
       } else {
         entry.card.classList.add("timeline-card--h-animated");
       }
@@ -133,8 +146,10 @@ class TimelineSection extends HTMLElement {
           entry.revealed = true;
           io.unobserve(obs.target);
 
-          // Step 1: dot grows
+          // Step 1: dot grows + label pops in shortly after
           entry.dot.classList.add("is-visible");
+          const label = entry.dot.querySelector(".timeline-dot-label");
+          if (label) setTimeout(() => label.classList.add("is-visible"), 150);
 
           // Step 2: line extends down + Step 3: card scales in — simultaneous
           setTimeout(() => {
