@@ -60,6 +60,12 @@
     <script src="{{ 'main.min.js' | asset_url }}" type="module"></script>
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+    <script>
+    {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+      ("function"===typeof window.CartfulQuiz?window.CartfulQuiz:undefined);(function(c,a,r,t,f,u,l){l=document.createElement(r),l.id=a+"scr",l.src=f,l.setAttribute("quizId",c),l.setAttribute("flowId",a),l.setAttribute("target",u),document[t].appendChild(l)})("0196d497-2404-7669-a07c-183285aa444e","019ddb81-2829-7ee5-9099-d741784ab87a","script","body","https://studio-assets.cartfulsolutions.com/embed/studio.js","page");
+    {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+    </script>
   </head>
 
   <body class="antialiased{% if template.name == 'product' %} pdp pdp-{{ product.handle }}{% elsif template.name == 'collection' %} plp plp-{{ collection.handle }}{% endif %}{% if customer %} logged-in{% endif %}">
@@ -225,10 +231,5 @@
 
     {% comment %} End PostPilot SiteMatch {% endcomment %}
 
-    <script>
-    {% comment %}theme-check-disable RemoteAsset {% endcomment %}
-      ("function"===typeof window.CartfulQuiz?window.CartfulQuiz:undefined);(function(c,a,r,t,f,u,l){l=document.createElement(r),l.id=a+"scr",l.src=f,l.setAttribute("quizId",c),l.setAttribute("flowId",a),l.setAttribute("target",u),document[t].appendChild(l)})("0196d497-2404-7669-a07c-183285aa444e","019ddb81-2829-7ee5-9099-d741784ab87a","script","body","https://studio-assets.cartfulsolutions.com/embed/studio.js","page");
-    {% comment %}theme-check-enable RemoteAsset {% endcomment %}
-    </script>
   </body>
 </html>
