@@ -230,30 +230,19 @@ class TimelineSection extends HTMLElement {
 
   _initScrollNudges() {
     const label = this.querySelector(".timeline-scroll-label");
-    let nudging = false;
 
+    // Dismiss only on genuine user interaction, not programmatic scroll
     const dismiss = () => {
-      if (nudging) return;
       if (label) label.classList.add("is-hidden");
-      this.track.removeEventListener("scroll", dismiss);
+      this.track.removeEventListener("pointerdown", dismiss);
+      this.track.removeEventListener("touchstart", dismiss);
     };
-
-    this.track.addEventListener("scroll", dismiss, { passive: true });
+    this.track.addEventListener("pointerdown", dismiss, { passive: true, once: true });
+    this.track.addEventListener("touchstart", dismiss, { passive: true, once: true });
 
     const nudge = () => {
-      nudging = true;
-      const steps = [
-        [40, 350],
-        [-40, 350],
-        [28, 300],
-        [-28, 0],
-      ];
-      let delay = 0;
-      steps.forEach(([left, wait]) => {
-        setTimeout(() => this.track.scrollBy({ left, behavior: "smooth" }), delay);
-        delay += wait;
-      });
-      setTimeout(() => { nudging = false; }, delay + 400);
+      this.track.scrollBy({ left: 36, behavior: "smooth" });
+      setTimeout(() => this.track.scrollBy({ left: -36, behavior: "smooth" }), 280);
     };
 
     const io = new IntersectionObserver(
