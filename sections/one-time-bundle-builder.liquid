@@ -104,7 +104,7 @@
             </span>
 
             <span class="block text-sm lg:text-base font-medium text-seaweed-700 leading-tight mb-0.5 pr-5">{{ product.title }}</span>
-            <span class="block text-sm font-book text-seaweed-600 mb-2">{{ variant.title }}</span>
+            {%- if variant.title != 'Default Title' -%}<span class="block text-sm font-book text-seaweed-600 mb-2">{{ variant.title }}</span>{%- endif -%}
             <span class="button button-secondary bg-wave-200 button-sm w-full mt-auto pointer-events-none" aria-hidden="true" data-card-btn-label>Add to bundle</span>
           </button>
         {%- endfor -%}

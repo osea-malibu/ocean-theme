@@ -633,39 +633,35 @@
 
             <!-- Subtotals-->
             {%- liquid
-              assign total_bundle_discount = 0
-              for bundle_sub_item in cart.items
-                assign bsi_bundle_id = ''
-                assign bsi_discount_pct = 0
-                for bsi_prop in bundle_sub_item.properties
-                  if bsi_prop.first == '_onetimeBundleId'
-                    assign bsi_bundle_id = bsi_prop.last
-                  endif
-                  if bsi_prop.first == '_bundleDiscount'
-                    assign bsi_discount_pct = bsi_prop.last | times: 1
+              assign original_cart_total = 0
+              assign has_bundle_items = false
+              for item in cart.items
+                assign original_cart_total = original_cart_total | plus: item.original_line_price
+                for prop in item.properties
+                  if prop.first == '_onetimeBundleId' and prop.last != blank
+                    assign has_bundle_items = true
                   endif
                 endfor
-                if bsi_bundle_id != blank and bsi_discount_pct > 0
-                  assign bsi_item_discount = bundle_sub_item.original_line_price | times: bsi_discount_pct | divided_by: 100 | round
-                  assign total_bundle_discount = total_bundle_discount | plus: bsi_item_discount
-                endif
               endfor
-              assign adjusted_cart_total = cart.total_price | minus: total_bundle_discount
+              assign bundle_savings = original_cart_total | minus: cart.total_price
+              if bundle_savings < 0
+                assign bundle_savings = 0
+              endif
             -%}
             <div>
               <div class="flex justify-between items-center w-full" role="status">
                 <h3>{{ 'sections.cart.subtotal' | t }}</h3>
-                <p id="CartDrawer-Total" data-total="{{ adjusted_cart_total }}">
-                  {%- if total_bundle_discount > 0 -%}
-                    <s class="text-wave-600 mr-1 text-sm">{{ cart.total_price | money }}</s>
+                <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">
+                  {%- if has_bundle_items and bundle_savings > 0 -%}
+                    <s class="text-wave-600 mr-1 text-sm">{{ original_cart_total | money }}</s>
                   {%- endif -%}
-                  {{ adjusted_cart_total | money }}
+                  {{ cart.total_price | money }}
                 </p>
               </div>
-              {%- if total_bundle_discount > 0 -%}
+              {%- if has_bundle_items and bundle_savings > 0 -%}
                 <div class="flex items-center justify-end gap-1 text-sm text-seaweed-700 -mt-0.5 mb-1">
                   {%- render 'icon-discount', aria_hidden: true, classes: 'w-3 h-3' -%}
-                  <span>Bundle discount: -{{ total_bundle_discount | money }}</span>
+                  <span>Bundle discount: -{{ bundle_savings | money }}</span>
                 </div>
               {%- endif -%}
               <div>
