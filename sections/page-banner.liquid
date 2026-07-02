@@ -67,13 +67,19 @@
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when 'heading' -%}
-          <h1 class="{% if section.settings.is_text_only %}font-serif tracking-tight text-3xl sm:text-4xl{% else %}{{ block.settings.heading_classes }}{% endif %}" {{ block.shopify_attributes }}>
-            {%- if block.settings.heading == blank -%}
-              {{- page.title -}}
-            {%- else -%}
+          {%- if block.settings.heading contains '<h' -%}
+            <div class="{% if section.settings.is_text_only %}font-serif tracking-tight text-3xl sm:text-4xl{% else %}{{ block.settings.heading_classes }}{% endif %}" {{ block.shopify_attributes }}>
               {{- block.settings.heading -}}
-            {%- endif -%}
-          </h1>
+            </div>
+          {%- else -%}
+            <h1 class="{% if section.settings.is_text_only %}font-serif tracking-tight text-3xl sm:text-4xl{% else %}{{ block.settings.heading_classes }}{% endif %}" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading == blank -%}
+                {{- page.title -}}
+              {%- else -%}
+                {{- block.settings.heading -}}
+              {%- endif -%}
+            </h1>
+          {%- endif -%}
         {%- when 'paragraph' -%}
           <div class="{{ block.settings.paragraph_classes }}" {{ block.shopify_attributes }}>
             {{- block.settings.paragraph -}}
