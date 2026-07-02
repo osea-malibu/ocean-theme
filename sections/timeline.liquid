@@ -151,6 +151,7 @@
 
   timeline-section[data-horizontal="true"] h2::after { display: none; }
 
+
   .timeline-scroll-label {
     transition: opacity 0.5s ease;
   }
@@ -207,7 +208,6 @@
       {%- endif -%}
       <h2 class="
         relative z-10 text-center {{ h2_pb }} uppercase tracking-widest font-medium
-        before:absolute before:w-1/2 before:h-0.5 before:bg-seaweed-400 before:bottom-0 before:left-0 sm:before:hidden
         after:absolute after:w-1.5 after:h-1.5 after:rounded-full after:bg-seaweed-700 after:-bottom-0.5 after:left-1/2 after:-ml-[3px]
       ">
         {{- section.settings.title -}}
@@ -220,7 +220,7 @@
             {%- if section.settings.show_date_labels -%}
               {%- assign hint_bottom = 'calc(100% + 2rem)' -%}
             {%- endif -%}
-            <span class="timeline-scroll-label absolute right-0 text-seaweed-500 uppercase tracking-widest" style="font-size: 0.6rem; bottom: {{ hint_bottom }};">Scroll to explore &rarr;</span>
+            <span class="timeline-scroll-label hidden sm:block absolute right-0 text-seaweed-500 uppercase tracking-widest" style="font-size: 0.6rem; bottom: {{ hint_bottom }};">Scroll to explore &rarr;</span>
           {%- endif -%}
           <div class="timeline-progress-track relative h-0.5 w-full bg-seaweed-400">
             {%- if section.settings.show_progress -%}
@@ -255,7 +255,7 @@
               {{ block.settings.card_classes }}
               {%- unless section.settings.flippable %} rounded-lg bg-white p-4{%- endunless %}
               {%- if section.settings.horizontal %}
-                snap-start flex-none w-72
+                snap-start flex-none w-60 sm:w-72
               {%- else %}
                 mx-6 mb-8 sm:w-[calc(50%-1.5rem)] sm:mx-0 sm:even:ml-auto group
               {%- endif -%}

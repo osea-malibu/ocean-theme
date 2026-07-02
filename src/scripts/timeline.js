@@ -15,7 +15,7 @@ class TimelineSection extends HTMLElement {
     if (this.horizontal) this._initHorizontal();
     if (this.showProgress && this.horizontal) this._initProgress();
     if (!this.horizontal && this.showProgress) this._initLineProgress();
-    if (this.horizontal && this.scrollNudges) this._initScrollNudges();
+    if (this.horizontal && this.scrollNudges && !window.matchMedia("(hover: none)").matches) this._initScrollNudges();
   }
 
   disconnectedCallback() {
@@ -76,6 +76,9 @@ class TimelineSection extends HTMLElement {
   _initHorizontalDots() {
     const progressTrack = this.querySelector(".timeline-progress-track");
     if (!progressTrack) return;
+
+    // On touch devices, skip card animations — invisible cards create gaps when snap scrolls to them
+    const isTouch = window.matchMedia("(hover: none)").matches;
 
     const entries = this.cards.map((card) => {
       const line = document.createElement("div");
