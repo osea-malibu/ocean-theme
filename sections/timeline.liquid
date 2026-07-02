@@ -1,60 +1,369 @@
-<div class="{{ section.settings.section_classes }}">
+{% style %}
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--color-seaweed-400);
+  }
+
+  @media (min-width: 40rem) {
+    .timeline-track::before {
+      left: 50%;
+      margin-left: -1px;
+    }
+  }
+
+  .timeline-sidebar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    background-color: var(--color-seaweed-700);
+    border-radius: 9999px;
+    transition: height 0.1s linear;
+  }
+
+  .timeline-track.scrollbar-hide::before,
+  .timeline-track.scrollbar-hide::after { display: none; }
+
+  .timeline-track.scrollbar-hide .dot,
+  .timeline-track.scrollbar-hide .caret { display: none; }
+
+  .timeline-progress-dot {
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) scale(0);
+    transition: transform 0.3s ease;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 9999px;
+    background-color: var(--color-seaweed-100);
+    border: 6px solid var(--color-seaweed-700);
+    pointer-events: none;
+  }
+
+  .timeline-progress-dot.is-visible {
+    transform: translateX(-50%) translateY(-50%) scale(1);
+  }
+
+  .timeline-progress-line {
+    position: absolute;
+    top: 50%;
+    height: 0;
+    width: 0;
+    border-left: 2px dotted var(--color-seaweed-400);
+    transform: translateX(-50%);
+    pointer-events: none;
+    transition: height 0.35s ease;
+  }
+
+  .timeline-card--h-animated {
+    transform: scale(0.88);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .timeline-card--h-animated.is-visible {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  @media (min-width: 40rem) {
+    timeline-section:not([data-horizontal="true"]):not([data-flippable="true"]) .timeline-card {
+      margin-top: var(--card-offset, 0px);
+    }
+    timeline-section:not([data-horizontal="true"])[data-flippable="true"] .timeline-card {
+      margin-top: var(--card-offset-flippable, 0px);
+    }
+    timeline-section[data-horizontal="true"] .timeline-card {
+      margin-top: var(--card-offset-horizontal, 0px);
+    }
+  }
+
+  .timeline-card--animated {
+    opacity: 0;
+    transform: scale(0.88);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  @media (min-width: 40rem) {
+    .timeline-card--animated:nth-child(odd) {
+      transform: scale(0.88) translateX(-24px);
+    }
+    .timeline-card--animated:nth-child(even) {
+      transform: scale(0.88) translateX(24px);
+    }
+  }
+
+  .timeline-card--animated.timeline-card--visible {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+
+  .timeline-card--flippable {
+    perspective: 1000px;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .timeline-card--flippable .timeline-card__inner {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s ease;
+  }
+
+  .timeline-card--flipped .timeline-card__inner {
+    transform: rotateY(180deg);
+  }
+
+  .timeline-card__front,
+  .timeline-card__back {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+
+  .timeline-card__back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .timeline-track.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .timeline-track.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  .timeline-progress-track,
+  .timeline-progress-bar { border-radius: 9999px; }
+
+  .timeline-progress-bar { will-change: width; }
+
+  timeline-section[data-horizontal="true"] h2::after { display: none; }
+
+
+  .timeline-scroll-label {
+    transition: opacity 0.5s ease;
+  }
+  .timeline-scroll-label.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .timeline-dot-label {
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    color: var(--color-seaweed-700);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .timeline-dot-label.is-visible {
+    animation: dot-label-spring 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes dot-label-spring {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+{% endstyle %}
+
+<timeline-section
+  class="block {{ section.settings.section_classes }}"
+  data-animate-on-scroll="{{ section.settings.animate_on_scroll }}"
+  data-flippable="{{ section.settings.flippable }}"
+  data-horizontal="{{ section.settings.horizontal }}"
+  data-show-progress="{{ section.settings.show_progress }}"
+  data-show-date-labels="{{ section.settings.show_date_labels }}"
+  data-scroll-nudges="{{ section.settings.scroll_nudges }}"
+>
   <div class="{{ section.settings.container_classes }}">
-    <h2 class="
-      relative z-10 text-center pb-4 uppercase tracking-widest font-medium
-      before:absolute before:w-1/2 before:h-0.5 before:bg-seaweed-400 before:bottom-0 before:left-0 sm:before:hidden
-      after:absolute after:w-1.5 after:h-1.5 after:rounded-full after:bg-seaweed-700 after:-bottom-0.5 after:left-1/2 after:-ml-[3px]
-    ">
-      {{- section.settings.title -}}
-    </h2>
-    <div id="events" class="relative py-6">
-      {%- for block in section.blocks -%}
-        <div class="
-          {{ block.settings.card_classes }}
-          mx-6 bg-white p-4 mb-8 sm:w-[calc(50%-1.5rem)] sm:mx-0 sm:even:ml-auto group
-          before:absolute before:-left-px sm:before:left-1/2 before:-top-0.5 before:-bottom-10 before:w-0.5 before:bg-seaweed-400 sm:before:-ml-px
-        ">
-          {%- if block.settings.image != blank -%}
-            <img
-              srcset="{{ block.settings.image | image_url: width: 400 }} 1x,
-                {{ block.settings.image | image_url: width: 800 }} 2x"
-              src="{{ block.settings.image | image_url: width: 800 }}"
-              loading="lazy"
-              alt="{{ block.settings.image.alt | escape }}"
-              width="{{ block.settings.image.width }}"
-              height="{{ block.settings.image.height }}"
-              class="object-cover w-full {{ block.settings.image_classes }}"
-            >
-          {%- elsif block.settings.video_mp4 != blank -%}
-            {% assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: 480 %}
-            <video autoplay controls loop muted playsinline poster="{% render 'imgix', src: video_poster_url %}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
-              {%- for source in block.settings.video_mp4.sources -%}
-                <source src="{{ source.url }}" type="video/{{ source.format }}">
-              {%- endfor -%}
-              {% comment %} theme-check-disable RemoteAsset {% endcomment %}
-              <img
-                src="{% render 'imgix', src: video_poster_url %}"
-                alt=""
-                width="{{ block.settings.video_mp4.preview_image.width }}"
-                height="{{ block.settings.video_mp4.preview_image.height }}"
-                loading="lazy"
-              >
-              {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-            </video>
+    <div class="overflow-hidden">
+      {%- assign h2_pb = 'pb-4' -%}
+      {%- if section.settings.show_date_labels and section.settings.horizontal -%}
+        {%- assign h2_pb = 'pb-8' -%}
+      {%- endif -%}
+      <h2 class="
+        relative z-10 text-center {{ h2_pb }} uppercase tracking-widest font-medium
+        after:absolute after:w-1.5 after:h-1.5 after:rounded-full after:bg-seaweed-700 after:-bottom-0.5 after:left-1/2 after:-ml-[3px]
+      ">
+        {{- section.settings.title -}}
+      </h2>
+
+      {%- if section.settings.horizontal -%}
+        <div class="relative">
+          {%- if section.settings.scroll_nudges -%}
+            {%- assign hint_bottom = 'calc(100% + 0.5rem)' -%}
+            {%- if section.settings.show_date_labels -%}
+              {%- assign hint_bottom = 'calc(100% + 2rem)' -%}
+            {%- endif -%}
+            <span class="timeline-scroll-label hidden sm:block absolute right-0 text-seaweed-500 uppercase tracking-widest" style="font-size: 0.6rem; bottom: {{ hint_bottom }};">Scroll to explore &rarr;</span>
           {%- endif -%}
-          <div class="relative">
-            <div aria-hidden="true" class="absolute z-10 -left-12 mt-2 flex flex-row-reverse items-center gap-2 sm:group-odd:left-auto sm:group-odd:-right-12 sm:group-odd:flex-row">
-              <div class="caret w-5 h-5 bg-white rotate-45"></div>
-              <div class="dot w-4 h-4 rounded-full bg-seaweed-100 border-[6px] border-seaweed-700"></div>
-            </div>
-            {%- if block.settings.date != blank -%}<h3 class="mt-3 mb-2 text-2xl tracking-wide font-book">{{ block.settings.date }}</h3>{%- endif -%}
-            {%- if block.settings.paragraph != blank -%}<p class="tracking-wide">{{ block.settings.paragraph }}</p>{%- endif -%}
+          <div class="timeline-progress-track relative h-0.5 w-full bg-seaweed-400">
+            {%- if section.settings.show_progress -%}
+              <div class="timeline-progress-bar absolute left-0 top-0 h-full bg-seaweed-600 transition-[width] duration-100 ease-linear" style="width:0%"></div>
+            {%- endif -%}
           </div>
         </div>
-    {%- endfor -%}
+      {%- endif -%}
+
+      {%- if section.settings.show_progress and section.settings.horizontal == false -%}
+        <div class="timeline-sidebar-progress absolute inset-y-0" style="left: 0; width: 3px;">
+          <div class="sticky" style="top: 5rem; height: calc(100vh - 8rem);">
+            <div class="relative w-full h-full bg-seaweed-400 rounded-full overflow-hidden">
+              <div class="timeline-sidebar-fill"></div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div id="events" class="
+        timeline-track relative py-6
+        {%- if section.settings.horizontal %} flex flex-row items-start gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-10{%- endif -%}
+      ">
+
+        {%- for block in section.blocks -%}
+          <div
+            {{ block.shopify_attributes }}
+            data-date="{{ block.settings.date | escape }}"
+            style="--card-offset: {{ block.settings.top_offset | default: 0 }}px; --card-offset-flippable: {{ block.settings.top_offset_flippable | default: 0 }}px; --card-offset-horizontal: {{ block.settings.top_offset_horizontal | default: 0 }}px;"
+            class="
+              timeline-card
+              {{ block.settings.card_classes }}
+              {%- unless section.settings.flippable %} rounded-lg bg-white p-4{%- endunless %}
+              {%- if section.settings.horizontal %}
+                snap-start flex-none w-60 sm:w-72
+              {%- else %}
+                mx-6 mb-8 sm:w-[calc(50%-1.5rem)] sm:mx-0 sm:even:ml-auto group
+              {%- endif -%}
+              {%- if section.settings.animate_on_scroll and section.settings.horizontal == false %} timeline-card--animated{%- endif -%}
+              {%- if section.settings.flippable %} timeline-card--flippable cursor-pointer select-none{%- endif -%}
+            "
+          >
+            <div class="timeline-card__inner">
+              {%- if section.settings.flippable -%}
+                {% comment %}Front face — image/video + date{% endcomment %}
+                <div class="timeline-card__front bg-white p-4">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      srcset="{{ block.settings.image | image_url: width: 400 }} 1x,
+                        {{ block.settings.image | image_url: width: 800 }} 2x"
+                      src="{{ block.settings.image | image_url: width: 800 }}"
+                      loading="lazy"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                      class="object-cover w-full {{ block.settings.image_classes }}"
+                    >
+                  {%- elsif block.settings.video_mp4 != blank -%}
+                    {%- assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: 480 -%}
+                    <video autoplay loop muted playsinline poster="{% render 'imgix', src: video_poster_url %}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
+                      {%- for source in block.settings.video_mp4.sources -%}
+                        <source src="{{ source.url }}" type="video/{{ source.format }}">
+                      {%- endfor -%}
+                      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                      <img
+                        src="{% render 'imgix', src: video_poster_url %}"
+                        alt=""
+                        width="{{ block.settings.video_mp4.preview_image.width }}"
+                        height="{{ block.settings.video_mp4.preview_image.height }}"
+                        loading="lazy"
+                      >
+                      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+                    </video>
+                  {%- endif -%}
+                  {%- if block.settings.date != blank -%}
+                    <p class="mt-4 text-3xl font-serif">{{ block.settings.date }}</p>
+                  {%- endif -%}
+                  <p class="badge absolute bottom-6 right-4 text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
+                </div>
+
+                {% comment %}Back face — date + paragraph{% endcomment %}
+                <div class="timeline-card__back bg-white">
+                  {%- if block.settings.date != blank -%}
+                    <h3 class="mb-2 text-3xl font-serif">{{ block.settings.date }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.paragraph != blank -%}
+                    <p class="tracking-wide">{{ block.settings.paragraph }}</p>
+                  {%- endif -%}
+                  <p class="badge mt-4 self-start text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
+                </div>
+
+              {%- else -%}
+                {% comment %}Default (non-flippable) layout — image + text together{% endcomment %}
+                {%- if block.settings.image != blank -%}
+                  <img
+                    srcset="{{ block.settings.image | image_url: width: 400 }} 1x,
+                      {{ block.settings.image | image_url: width: 800 }} 2x"
+                    src="{{ block.settings.image | image_url: width: 800 }}"
+                    loading="lazy"
+                    alt="{{ block.settings.image.alt | escape }}"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    class="object-cover w-full {{ block.settings.image_classes }}"
+                  >
+                {%- elsif block.settings.video_mp4 != blank -%}
+                  {%- assign video_poster_url = block.settings.video_mp4.preview_image | image_url: width: 480 -%}
+                  <video autoplay controls loop muted playsinline poster="{% render 'imgix', src: video_poster_url %}" class="bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}">
+                    {%- for source in block.settings.video_mp4.sources -%}
+                      <source src="{{ source.url }}" type="video/{{ source.format }}">
+                    {%- endfor -%}
+                    {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+                    <img
+                      src="{% render 'imgix', src: video_poster_url %}"
+                      alt=""
+                      width="{{ block.settings.video_mp4.preview_image.width }}"
+                      height="{{ block.settings.video_mp4.preview_image.height }}"
+                      loading="lazy"
+                    >
+                    {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+                  </video>
+                {%- endif -%}
+                <div class="relative">
+                  <div aria-hidden="true" class="absolute z-10 -left-12 mt-2 flex flex-row-reverse items-center gap-2 sm:group-odd:left-auto sm:group-odd:-right-12 sm:group-odd:flex-row">
+                    <div class="caret w-5 h-5 bg-white rotate-45"></div>
+                    <div class="dot w-4 h-4 rounded-full bg-seaweed-100 border-[6px] border-seaweed-700"></div>
+                  </div>
+                  {%- if block.settings.date != blank -%}
+                    <h3 class="mt-3 mb-2 text-3xl font-serif">{{ block.settings.date }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.paragraph != blank -%}
+                    <p class="tracking-wide">{{ block.settings.paragraph }}</p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>{% comment %}timeline-card__inner{% endcomment %}
+          </div>
+        {%- endfor -%}
+      </div>{% comment %}timeline-track{% endcomment %}
     </div>
   </div>
-</div>
+</timeline-section>
+
+<script src="{{ 'timeline.min.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -66,6 +375,56 @@
       "id": "title",
       "label": "Title",
       "type": "text"
+    },
+    {
+      "type": "header",
+      "content": "Interactive features"
+    },
+    {
+      "type": "checkbox",
+      "id": "animate_on_scroll",
+      "label": "Animate cards on scroll",
+      "info": "Cards scale in as they enter the viewport.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "flippable",
+      "label": "Flippable cards",
+      "info": "Show the image on the front; tap to flip and reveal the date and text.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "horizontal",
+      "label": "Horizontal scroll layout",
+      "info": "Arranges cards in a horizontal row instead of a vertical timeline.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_progress",
+      "label": "Animate progress indicator",
+      "info": "Fills the vertical line (or horizontal track) as you scroll through the timeline. The track itself is always visible.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date_labels",
+      "label": "Show date labels on dots",
+      "info": "Shows a small date above each dot on the horizontal progress track.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "scroll_nudges",
+      "label": "Horizontal scroll nudges",
+      "info": "Shows a 'Scroll to explore' hint and briefly nudges the track when it comes into view.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
     },
     {
       "id": "section_classes",
@@ -89,6 +448,24 @@
           "id": "card_classes",
           "label": "Card classes",
           "type": "textarea"
+        },
+        {
+          "type": "number",
+          "id": "top_offset",
+          "label": "Top offset — vertical (px)",
+          "info": "Applied in vertical layout with flippable cards off. Negative pulls the card up."
+        },
+        {
+          "type": "number",
+          "id": "top_offset_flippable",
+          "label": "Top offset — vertical flippable (px)",
+          "info": "Applied in vertical layout with flippable cards on. Negative pulls the card up."
+        },
+        {
+          "type": "number",
+          "id": "top_offset_horizontal",
+          "label": "Top offset — horizontal (px)",
+          "info": "Applied in horizontal scroll layout. Negative pulls the card up."
         },
         {
           "content": "Image settings",
