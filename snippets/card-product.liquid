@@ -64,7 +64,9 @@
     -%}
     <div class="{{ title_wrapper_classes }}">
       {% comment %} {%- if show_reviews -%} {% endcomment %}
+      {%- unless mini -%}
         {% render 'product-rating', product: card_product, compact: compact_ratings, classes: ratings_classes %}
+      {%- endunless -%}
       {% comment %} {%- endif -%} {% endcomment %}
       {%- liquid
         assign title_content = title_text | default: card_product.title
