@@ -207,6 +207,7 @@
     <div id="footer-sentinel" class="h-px"></div>
   </div>
 
+  {%- if section.settings.enable_secret_footer -%}
   <div class="footer-secret sticky z-0 bottom-0 translate-y-24 -mt-8 bg-seafoam-100">
     <div class="container md:max-w-screen-md pb-16 flex gap-8 flex-col md:flex-row">
       <img
@@ -225,6 +226,7 @@
       </div>
     </div>
   </div>
+  {%- endif -%}
 </footer>
 
 {% schema %}
@@ -361,6 +363,12 @@
     {
       "type": "header",
       "content": "Secret footer section"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_secret_footer",
+      "label": "Enable secret footer",
+      "default": true
     },
     {
       "type": "text",
