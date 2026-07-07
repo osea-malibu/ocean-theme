@@ -1,3 +1,4 @@
+import { getCartAnalyticsData, pushCartDrawerAnalyticsEvent } from "./cart-analytics.js";
 import { debounce, fetchConfig, trapFocus } from "./utils.js";
 
 class CartRemoveButton extends HTMLElement {
@@ -34,6 +35,7 @@ export class CartItems extends HTMLElement {
       this.onChange(event);
     }, 300);
 
+    this.addEventListener("change", this.onAnalyticsChange.bind(this));
     this.addEventListener("change", this.debouncedOnChange.bind(this));
 
     // Add event listener for customer login and run handleGiftWithPurchase
@@ -57,6 +59,17 @@ export class CartItems extends HTMLElement {
       event.target.getAttribute("name"),
       event.target
     );
+  }
+
+  onAnalyticsChange(event) {
+    const target = event.target;
+    if (target?.name !== "subscribe" || !target.dataset.analyticsEvent) return;
+
+    const analyticsData = getCartAnalyticsData(target, {
+      checked: target.checked,
+    });
+
+    pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
   }
 
   updateCatchCalloutPrice(price) {
@@ -504,7 +517,8 @@ class SaveWithSets extends HTMLElement {
     this.button?.addEventListener("click", this.onButtonClick.bind(this));
   }
 
-  onButtonClick() {
+  onButtonClick(event) {
+    event?.preventDefault();
     this.enableLoading(this.dataset.itemToRemove);
 
     const removeBody = JSON.stringify({
@@ -521,14 +535,25 @@ class SaveWithSets extends HTMLElement {
             },
           ],
         });
-        fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body: addBody } })
+        return fetch(`${routes.cart_add_url}`, { ...fetchConfig(), ...{ body: addBody } })
           .then((res) => res.json())
-          .then((res) => this.cart.renderContents(res))
-          .catch((error) => console.error(error));
+          .then((res) => {
+            if (!res.status) {
+              const analyticsData = getCartAnalyticsData(this, {
+                event: this.dataset.analyticsEvent || "oseam_cart_upgrade_to_set_click",
+                source: this.dataset.analyticsSource || "cart_drawer",
+                module: this.dataset.analyticsModule || "upgrade_to_set",
+                cartAddResponse: res,
+              });
+              pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
+            }
 
-        this.disableLoading();
+            this.cart.renderContents(res);
+          })
+          .catch((error) => console.error(error));
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
+      .finally(() => this.disableLoading());
   }
 
   enableLoading(line) {

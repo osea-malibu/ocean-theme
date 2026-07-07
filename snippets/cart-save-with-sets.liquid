@@ -98,6 +98,9 @@
     <save-with-sets
       data-item-to-add="{{ first_set.selected_or_first_available_variant.id }}"
       data-item-to-remove="{{ item_with_set_line }}"
+      data-analytics-event="oseam_cart_upgrade_to_set_click"
+      data-analytics-source="cart_drawer"
+      data-analytics-module="upgrade_to_set"
     >
       <div class="relative rounded-lg bg-wave-200 mx-auto max-w-md px-4 py-1 flex gap-4 items-center mt-2">
         {%- liquid
@@ -122,7 +125,7 @@
         <div>
           <h3 class="leading-tight font-medium text-sm">Save{{ set_save_amount }} with {{ first_set.title }}</h3>
           <p class="text-sm leading-tight">An item in your cart comes in a set!</p>
-          <button class="button button-xs button-secondary">Upgrade to set</button>
+          <button type="button" class="button button-xs button-secondary">Upgrade to set</button>
         </div>
       </div>
     </save-with-sets>
