@@ -12,6 +12,13 @@
     "page_banner_Mt8LgE": {
       "type": "page-banner",
       "blocks": {
+        "paragraph_bEYt3R": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "<div id=\"family\" class=\"anchor\" style=\"top:-128px;\"></div>",
+            "paragraph_classes": "mb-2  font-book tracking-wide"
+          }
+        },
         "heading_ApwL9G": {
           "type": "heading",
           "settings": {
@@ -21,6 +28,7 @@
         }
       },
       "block_order": [
+        "paragraph_bEYt3R",
         "heading_ApwL9G"
       ],
       "settings": {
@@ -50,7 +58,7 @@
             "remove_text_wrapper": false,
             "heading": "",
             "heading_classes": "",
-            "paragraph": "<a class=\"block py-2 px-2 sm:px-3 lg:px-4 whitespace-nowrap link\" href=\"/pages/our-family\">Our Family</a>",
+            "paragraph": "<a class=\"block py-2 px-2 sm:px-3 lg:px-4 whitespace-nowrap link\" href=\"#family\">Our Family</a>",
             "paragraph_classes": "",
             "button_label": "",
             "button_aria_label": "",
