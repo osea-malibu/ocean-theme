@@ -38,6 +38,9 @@
     - hide_slashed_price: {Boolean} Hide compare-at slashed price from ATC button. Default: false (optional)
     - show_price_range: {Boolean} Show variant price range. Default: true (optional)
     - product_link_label_suffix: {String} Extra context for product links when a collection page has duplicate product titles (optional)
+    - analytics_event: {String} dataLayer event name for cart drawer ATC tracking (optional)
+    - analytics_source: {String} dataLayer source value. Default: 'cart_drawer' when analytics_event is provided (optional)
+    - analytics_module: {String} dataLayer module/list name for cart drawer ATC tracking (optional)
 
     Usage:
     {% render 'card-product', card_product: section.settings.product, section_id: section.id %}
@@ -301,7 +304,25 @@
             {%- endif -%}
           {%- endif -%}
         {%- endunless -%}
-        <product-form data-cart-type="{{ settings.cart_type }}" class="relative{% if product_form_class != blank %} {{ product_form_class }}{% endif %}">
+        {%- liquid
+          if default_to_mini
+            assign default_variant = card_product.variants[mini_index]
+          elsif default_to_jumbo
+            assign default_variant = card_product.variants[0]
+          else
+            assign default_variant = card_product.selected_or_first_available_variant
+          endif
+          assign default_id = default_variant.id
+        -%}
+        <product-form
+          data-cart-type="{{ settings.cart_type }}"
+          class="relative{% if product_form_class != blank %} {{ product_form_class }}{% endif %}"
+          {% if analytics_event != blank %}
+            data-analytics-event="{{ analytics_event | escape }}"
+            data-analytics-source="{{ analytics_source | default: 'cart_drawer' | escape }}"
+            data-analytics-module="{{ analytics_module | escape }}"
+          {% endif %}
+        >
           <div class="product-form__error-message-wrapper hidden items-center mb-1" role="alert">
             {% render 'icon-error-circle', classes: 'w-4 h-4 mr-1 text-coral-800', aria_hidden: true, stroke_width: 2 %}
             <span class="product-form__error-message text-coral-800 tracking-wide text-sm font-book"></span>
@@ -309,14 +330,6 @@
 
           {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
             {%- liquid
-              if default_to_mini
-                assign default_id = card_product.variants[mini_index].id
-              elsif default_to_jumbo
-                assign default_id = card_product.variants[0].id
-              else
-                assign default_id = card_product.selected_or_first_available_variant.id
-              endif
-
               assign price_id = 'price-' | append: card_product.id | append: '-' | append: section_id
               assign set_products = collections['skincare-sets'].products | map: 'handle'
               assign is_set = false
