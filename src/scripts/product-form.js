@@ -105,11 +105,15 @@ if (!customElements.get("product-form")) {
       trackCartDrawerAnalytics(cartAddResponse) {
         if (!this.dataset.analyticsEvent) return;
 
-        const analyticsData = getCartAnalyticsData(this, {
-          cartAddResponse,
-        });
+        try {
+          const analyticsData = getCartAnalyticsData(this, {
+            cartAddResponse,
+          });
 
-        pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
+          pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
+        } catch (error) {
+          console.error("Cart drawer analytics error", error);
+        }
       }
 
       handleErrorMessage(errorMessage = false) {

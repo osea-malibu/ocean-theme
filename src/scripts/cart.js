@@ -65,11 +65,16 @@ export class CartItems extends HTMLElement {
     const target = event.target;
     if (target?.name !== "subscribe" || !target.dataset.analyticsEvent) return;
 
-    const analyticsData = getCartAnalyticsData(target, {
-      checked: target.checked,
-    });
+    try {
+      const analyticsData = getCartAnalyticsData(target, {
+        checked: target.checked,
+        includeEcommerce: false,
+      });
 
-    pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
+      pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
+    } catch (error) {
+      console.error("Cart drawer analytics error", error);
+    }
   }
 
   updateCatchCalloutPrice(price) {
@@ -539,13 +544,17 @@ class SaveWithSets extends HTMLElement {
           .then((res) => res.json())
           .then((res) => {
             if (!res.status) {
-              const analyticsData = getCartAnalyticsData(this, {
-                event: this.dataset.analyticsEvent || "oseam_cart_upgrade_to_set_click",
-                source: this.dataset.analyticsSource || "cart_drawer",
-                module: this.dataset.analyticsModule || "upgrade_to_set",
-                cartAddResponse: res,
-              });
-              pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
+              try {
+                const analyticsData = getCartAnalyticsData(this, {
+                  event: this.dataset.analyticsEvent || "oseam_cart_upgrade_to_set_click",
+                  source: this.dataset.analyticsSource || "cart_drawer",
+                  module: this.dataset.analyticsModule || "upgrade_to_set",
+                  cartAddResponse: res,
+                });
+                pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
+              } catch (error) {
+                console.error("Cart drawer analytics error", error);
+              }
             }
 
             this.cart.renderContents(res);

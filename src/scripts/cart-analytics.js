@@ -51,6 +51,7 @@ export function getCartAnalyticsData(element, overrides = {}) {
     itemCategory: overrides.itemCategory ?? cartItem.itemCategory ?? dataset.analyticsItemCategory,
     quantity: overrides.quantity ?? cartItem.quantity ?? dataset.analyticsQuantity ?? 1,
     checked: overrides.checked,
+    includeEcommerce: overrides.includeEcommerce,
     currency: overrides.currency ?? dataset.analyticsCurrency,
   };
 }
@@ -61,19 +62,9 @@ export function pushCartDrawerAnalyticsEvent(eventName, data = {}) {
   const price = parseNumber(data.price);
   const quantity = parseNumber(data.quantity) || 1;
   const moduleName = data.module;
+  const includeEcommerce = data.includeEcommerce !== false;
 
-  const item = compactObject({
-    item_name: data.productTitle,
-    item_id: data.productId,
-    item_variant: data.variantId,
-    price,
-    quantity,
-    item_brand: data.itemBrand,
-    item_category: data.itemCategory,
-    item_list_name: moduleName,
-  });
-
-  const payload = compactObject({
+  const payload = {
     event: eventName,
     source: data.source || "cart_drawer",
     module: moduleName,
@@ -82,13 +73,29 @@ export function pushCartDrawerAnalyticsEvent(eventName, data = {}) {
     product_title: data.productTitle,
     price,
     checked: data.checked,
-    ecommerce: {
-      currency: data.currency || getCurrency(),
-      items: [item],
-    },
-  });
+  };
 
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ ecommerce: null });
-  window.dataLayer.push(payload);
+
+  if (includeEcommerce) {
+    const item = compactObject({
+      item_name: data.productTitle,
+      item_id: data.productId,
+      item_variant: data.variantId,
+      price,
+      quantity,
+      item_brand: data.itemBrand,
+      item_category: data.itemCategory,
+      item_list_name: moduleName,
+    });
+
+    payload.ecommerce = {
+      currency: data.currency || getCurrency(),
+      items: [item],
+    };
+
+    window.dataLayer.push({ ecommerce: null });
+  }
+
+  window.dataLayer.push(compactObject(payload));
 }
