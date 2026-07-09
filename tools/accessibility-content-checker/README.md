@@ -24,7 +24,10 @@ Required GitHub secrets:
 - `SHOPIFY_SHOP_DOMAIN`
 - `SHOPIFY_ADMIN_TOKEN`
 - `SHOPIFY_STOREFRONT_DOMAIN`
-- `SHOPIFY_API_VERSION`
+
+Optional GitHub secret:
+
+- `SHOPIFY_API_VERSION` defaults to `2026-07` when omitted.
 
 The Shopify app should be read-only and include these Admin API scopes:
 
