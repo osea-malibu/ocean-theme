@@ -8,7 +8,7 @@ The first version is read-only and report-only. It does not edit Shopify content
 
 - Vague link/button labels such as `here`, `click here`, `read more`, and `learn more`.
 - Empty links or buttons.
-- `aria-label` values that do not include the visible link/button text.
+- Accessible names that do not include the visible link/button text.
 - Missing or empty image `alt` text.
 - Image `alt` text that looks like a file name.
 - Empty headings.

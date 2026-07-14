@@ -4,7 +4,7 @@ import path from "node:path";
 const DEFAULT_API_VERSION = "2026-07";
 const DEFAULT_LOOKBACK_HOURS = 48;
 const DEFAULT_LIMIT = 25;
-const DEFAULT_OUTPUT = ".accessibility-content-report.md";
+const DEFAULT_OUTPUT = "accessibility-content-report.md";
 
 const VAGUE_LABELS = new Set(["here", "click here", "read more", "learn more"]);
 
@@ -129,10 +129,16 @@ async function main() {
       }
     }
 
+    if (!source.html && looksLikeShopifyPasswordPage(html)) {
+      warnings.push(
+        `Fetched a storefront password page for ${source.url}. Rendered HTML checks may not reflect the actual content.`
+      );
+    }
+
     const htmlFindings = scanHtml(html, source);
     findings.push(...htmlFindings);
     findings.push(
-      ...scanApiImages(source.apiImages || [], source, reportedImageUrls(htmlFindings))
+      ...scanApiImages(source.apiImages || [], source, renderedImageUrls(html, source.url))
     );
   }
 
@@ -159,6 +165,12 @@ async function main() {
   console.log(`Findings: ${findings.length}`);
   console.log(`Report: ${options.output}`);
 
+  if (options.expectFindings !== null && findings.length !== options.expectFindings) {
+    console.error(`Expected ${options.expectFindings} findings, but found ${findings.length}.`);
+    process.exitCode = 1;
+    return;
+  }
+
   if (options.failOnFindings && findings.length > 0) {
     process.exitCode = 1;
   }
@@ -171,6 +183,7 @@ function parseArgs(args) {
     output: DEFAULT_OUTPUT,
     lookbackHours: numberFromEnv("LOOKBACK_HOURS", DEFAULT_LOOKBACK_HOURS),
     limit: numberFromEnv("CONTENT_CHECK_LIMIT", DEFAULT_LIMIT),
+    expectFindings: null,
     failOnFindings: false,
     help: false,
   };
@@ -188,6 +201,8 @@ function parseArgs(args) {
       options.lookbackHours = Number(args[++index]);
     } else if (arg === "--limit") {
       options.limit = Number(args[++index]);
+    } else if (arg === "--expect-findings") {
+      options.expectFindings = Number(args[++index]);
     } else if (arg === "--fail-on-findings") {
       options.failOnFindings = true;
     } else if (arg === "--help" || arg === "-h") {
@@ -203,6 +218,13 @@ function parseArgs(args) {
 
   if (!Number.isFinite(options.limit) || options.limit <= 0) {
     throw new Error("limit must be a positive number");
+  }
+
+  if (
+    options.expectFindings !== null &&
+    (!Number.isInteger(options.expectFindings) || options.expectFindings < 0)
+  ) {
+    throw new Error("expected findings must be a non-negative integer");
   }
 
   return options;
@@ -224,6 +246,7 @@ Options:
   --output <path>           Write markdown report. Defaults to ${DEFAULT_OUTPUT}.
   --lookback-hours <hours>  Shopify updated content window. Defaults to ${DEFAULT_LOOKBACK_HOURS}.
   --limit <count>           Max items per Shopify resource. Defaults to ${DEFAULT_LIMIT}.
+  --expect-findings <count> Exit non-zero unless the finding count matches.
   --fail-on-findings        Exit non-zero when findings are present.
 `);
 }
@@ -403,10 +426,18 @@ async function fetchHtml(url) {
   return response.text();
 }
 
+function looksLikeShopifyPasswordPage(html) {
+  return (
+    /<form\b[^>]*\baction=["']\/password["']/i.test(html) || /shopify-section-password/i.test(html)
+  );
+}
+
 function scanHtml(html, source) {
   const normalizedHtml = stripIgnoredHtml(html);
+  const labelsById = textById(normalizedHtml);
+
   return [
-    ...scanLinksAndButtons(normalizedHtml, source),
+    ...scanLinksAndButtons(normalizedHtml, source, labelsById),
     ...scanImages(normalizedHtml, source),
     ...scanHeadings(normalizedHtml, source),
   ];
@@ -419,7 +450,7 @@ function stripIgnoredHtml(html) {
     .replace(/<style\b[\s\S]*?<\/style>/gi, "");
 }
 
-function scanLinksAndButtons(html, source) {
+function scanLinksAndButtons(html, source, labelsById = new Map()) {
   const findings = [];
   const pattern = /<(a|button)\b([^>]*)>([\s\S]*?)<\/\1>/gi;
   let match;
@@ -429,7 +460,8 @@ function scanLinksAndButtons(html, source) {
     const attrs = parseAttributes(match[2]);
     const visibleText = normalizeText(textFromHtml(match[3]));
     const ariaLabel = normalizeText(attrs["aria-label"] || "");
-    const accessibleName = ariaLabel || visibleText;
+    const labelledByName = accessibleNameFromLabelledBy(attrs["aria-labelledby"], labelsById);
+    const accessibleName = labelledByName || ariaLabel || accessibleNameFromContent(match[3]);
 
     if (!accessibleName) {
       findings.push(
@@ -437,7 +469,7 @@ function scanLinksAndButtons(html, source) {
           source,
           "Empty link or button name",
           tagSnippet(match[0]),
-          `${tag} has no visible text or aria-label.`
+          `${tag} has no visible text or accessible name.`
         )
       );
       continue;
@@ -456,15 +488,15 @@ function scanLinksAndButtons(html, source) {
 
     if (
       visibleText &&
-      ariaLabel &&
-      !normalizeForCompare(ariaLabel).includes(normalizeForCompare(visibleText))
+      (ariaLabel || labelledByName) &&
+      !normalizeForCompare(accessibleName).includes(normalizeForCompare(visibleText))
     ) {
       findings.push(
         finding(
           source,
-          "Visible label missing from aria-label",
+          "Visible label missing from accessible name",
           tagSnippet(match[0]),
-          `Visible text "${visibleText}" is not included in aria-label "${ariaLabel}".`
+          `Visible text "${visibleText}" is not included in accessible name "${accessibleName}".`
         )
       );
     }
@@ -484,6 +516,10 @@ function scanImages(html, source) {
       attrs.src || attrs["data-src"] || attrs.srcset || attrs["data-srcset"] || "unknown image";
     const alt = attrs.alt;
     const imageUrl = normalizeImageUrl(src, source.url);
+
+    if (isDecorativeImage(attrs)) {
+      continue;
+    }
 
     if (alt === undefined || normalizeText(alt) === "") {
       findings.push(
@@ -627,6 +663,31 @@ function mediaImagesFromProduct(product) {
     }));
 }
 
+function renderedImageUrls(html, baseUrl) {
+  const urls = new Set();
+  const normalizedHtml = stripIgnoredHtml(html);
+  const pattern = /<img\b([^>]*)>/gi;
+  let match;
+
+  while ((match = pattern.exec(normalizedHtml))) {
+    const attrs = parseAttributes(match[1]);
+
+    for (const value of imageSourceValues(attrs)) {
+      const imageUrl = normalizeImageUrl(value, baseUrl);
+
+      if (imageUrl) {
+        urls.add(imageUrl);
+      }
+    }
+  }
+
+  return urls;
+}
+
+function imageSourceValues(attrs) {
+  return [attrs.src, attrs["data-src"], attrs.srcset, attrs["data-srcset"]].filter(Boolean);
+}
+
 function parseAttributes(attributeString) {
   const attrs = {};
   const pattern = /([\w:-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>`=]+)))?/g;
@@ -637,6 +698,46 @@ function parseAttributes(attributeString) {
   }
 
   return attrs;
+}
+
+function textById(html) {
+  const labels = new Map();
+  const pattern = /<([a-z][\w:-]*)\b([^>]*\bid\s*=[^>]*)>([\s\S]*?)<\/\1>/gi;
+  let match;
+
+  while ((match = pattern.exec(html))) {
+    const attrs = parseAttributes(match[2]);
+
+    if (attrs.id) {
+      labels.set(attrs.id, normalizeText(textFromHtmlWithAlt(match[3])));
+    }
+  }
+
+  return labels;
+}
+
+function accessibleNameFromLabelledBy(value, labelsById) {
+  return normalizeText(
+    String(value || "")
+      .split(/\s+/)
+      .map((id) => labelsById.get(id) || "")
+      .join(" ")
+  );
+}
+
+function accessibleNameFromContent(html) {
+  return normalizeText(textFromHtmlWithAlt(html));
+}
+
+function textFromHtmlWithAlt(html) {
+  return textFromHtml(
+    html
+      .replace(/<img\b([^>]*)>/gi, (_tag, attrsText) => {
+        const attrs = parseAttributes(attrsText);
+        return attrs.alt ? ` ${attrs.alt} ` : " ";
+      })
+      .replace(/<svg\b[\s\S]*?<title\b[^>]*>([\s\S]*?)<\/title>[\s\S]*?<\/svg>/gi, " $1 ")
+  );
 }
 
 function textFromHtml(html) {
@@ -673,8 +774,11 @@ function looksLikeFileName(value) {
   );
 }
 
-function reportedImageUrls(findings) {
-  return new Set(findings.map((item) => item.imageUrl).filter(Boolean));
+function isDecorativeImage(attrs) {
+  const role = normalizeForCompare(attrs.role || "");
+  const ariaHidden = normalizeForCompare(attrs["aria-hidden"] || "");
+
+  return role === "presentation" || role === "none" || ariaHidden === "true";
 }
 
 function normalizeImageUrl(value, baseUrl) {
@@ -688,9 +792,9 @@ function normalizeImageUrl(value, baseUrl) {
     const url = new URL(candidate, baseUrl);
     url.hash = "";
     url.search = "";
-    return url.href.replace(/^https?:/, "");
+    return `//${url.hostname.toLowerCase()}${normalizeImagePath(url.pathname)}`;
   } catch {
-    return candidate.split("?")[0].replace(/^https?:/, "");
+    return normalizeImagePath(candidate.split("?")[0]).replace(/^https?:/, "");
   }
 }
 
@@ -702,6 +806,23 @@ function firstImageCandidate(value) {
   }
 
   return normalized.split(",")[0].trim().split(/\s+/)[0];
+}
+
+function normalizeImagePath(pathname) {
+  return safeDecodeURIComponent(pathname)
+    .replace(
+      /_(?:pico|icon|thumb|small|compact|medium|large|grande|original|master)(?=\.[a-z]+$)/i,
+      ""
+    )
+    .replace(/_\d+x\d*(?:_crop_[a-z]+)?(?=\.[a-z]+$)/i, "");
+}
+
+function safeDecodeURIComponent(value) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
 }
 
 function fileNameFromUrl(url) {
