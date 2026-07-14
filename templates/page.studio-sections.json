@@ -188,6 +188,7 @@
       "blocks": {
         "38e5a918-e032-464b-9176-b2f517c182dd": {
           "type": "column",
+          "disabled": true,
           "settings": {
             "column_classes": "relative md:order-1",
             "image": "shopify://shop_images/Screenshot_2026-04-15_at_3.08.34_PM.png",
@@ -243,9 +244,9 @@
             "image_static_size": "",
             "text_classes": "",
             "remove_text_wrapper": false,
-            "heading": "80 minutes",
-            "heading_classes": "font-medium tracking-wide text-xl mb-2",
-            "paragraph": "<b class=\"badge uppercase tracking-wider text-sm\">Limited Time Only</b>\n<p class=\"mt-2\">Our Limited-Edition Dream Firming Facial combines gentle sound frequencies, a nourishing seaweed cleanse and a dual-layer bio-retinol infusion enhanced with nano oxygen technology. Finished with a targeted serum and tightening moisturizer, this rejuvenating ritual helps reduce the look of fine lines, wrinkles and even deeper wrinkles while improving the look of firmness and elasticity for skin that appears smoother and more radiant.</p>",
+            "heading": "<h3 class=\"text-5xl mb-2 text-center text-white font-serif drop-shadow-sm tracking-tight\">Dream <br>Firming Facial</h3>\n<a class=\"button button-white button-sm mt-2 mx-2\" href=\"https://booking.mangomint.com/734979\">Book Appointment</a>",
+            "heading_classes": "bg-seaweed-700 text-center p-4 min-h-32",
+            "paragraph": "<p class=\"font-medium tracking-wide text-xl mb-2\">80 minutes</p>\n<b class=\"badge uppercase tracking-wider text-sm\">Limited Time Only</b>\n<p class=\"mt-2\">Our Limited-Edition Dream Firming Facial combines gentle sound frequencies, a nourishing seaweed cleanse and a dual-layer bio-retinol infusion enhanced with nano oxygen technology. Finished with a targeted serum and tightening moisturizer, this rejuvenating ritual helps reduce the look of fine lines, wrinkles and even deeper wrinkles while improving the look of firmness and elasticity for skin that appears smoother and more radiant.</p>",
             "paragraph_classes": "mb-4",
             "button_label": "",
             "button_aria_label": "",
@@ -278,11 +279,10 @@
         "38e5a918-e032-464b-9176-b2f517c182dd",
         "68e6726b-e45f-4c9d-b7da-d82c083db009"
       ],
-      "disabled": true,
       "settings": {
         "section_heading": "Types of Facials",
         "section_classes": "lg:max-w-screen-lg mx-auto px-6 mb-12",
-        "container_classes": "grid grid-cols-1 md:grid-cols-3 gap-x-2 lg:gap-x-6 gap-y-4 max-w-sm mx-auto md:max-w-full",
+        "container_classes": "",
         "logged_in_only": false,
         "is_slider": false,
         "slider_indicator_count": 3,
