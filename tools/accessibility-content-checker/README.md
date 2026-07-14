@@ -17,7 +17,7 @@ The first version is read-only and report-only. It does not edit Shopify content
 
 The workflow is `.github/workflows/accessibility-content-check.yml`.
 
-It runs on a weekday schedule and can also be run manually from the GitHub Actions tab.
+It is manual-only for the first phase and can be run from the GitHub Actions tab.
 
 Required GitHub secrets:
 

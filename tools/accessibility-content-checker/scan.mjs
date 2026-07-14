@@ -129,8 +129,11 @@ async function main() {
       }
     }
 
-    findings.push(...scanHtml(html, source));
-    findings.push(...scanApiImages(source.apiImages || [], source));
+    const htmlFindings = scanHtml(html, source);
+    findings.push(...htmlFindings);
+    findings.push(
+      ...scanApiImages(source.apiImages || [], source, reportedImageUrls(htmlFindings))
+    );
   }
 
   findings.push(...scanStandaloneImages(standaloneImages));
@@ -232,7 +235,7 @@ async function getShopifySources(options, warnings) {
   const apiVersion = process.env.SHOPIFY_API_VERSION || DEFAULT_API_VERSION;
   const endpoint = `https://${shopDomain}/admin/api/${apiVersion}/graphql.json`;
   const since = new Date(Date.now() - options.lookbackHours * 60 * 60 * 1000).toISOString();
-  const query = `updated_at:>=${since}`;
+  const query = `updated_at:>='${since}'`;
   const variables = { first: options.limit, query };
   const sources = [];
   const standaloneImages = [];
@@ -427,7 +430,6 @@ function scanLinksAndButtons(html, source) {
     const visibleText = normalizeText(textFromHtml(match[3]));
     const ariaLabel = normalizeText(attrs["aria-label"] || "");
     const accessibleName = ariaLabel || visibleText;
-    const labelForVagueCheck = visibleText || accessibleName;
 
     if (!accessibleName) {
       findings.push(
@@ -441,13 +443,13 @@ function scanLinksAndButtons(html, source) {
       continue;
     }
 
-    if (labelForVagueCheck && VAGUE_LABELS.has(normalizeForCompare(labelForVagueCheck))) {
+    if (accessibleName && VAGUE_LABELS.has(normalizeForCompare(accessibleName))) {
       findings.push(
         finding(
           source,
           "Vague link or button label",
-          labelForVagueCheck,
-          `Label "${labelForVagueCheck}" may not explain the destination or action on its own.`
+          accessibleName,
+          `Label "${accessibleName}" may not explain the destination or action on its own.`
         )
       );
     }
@@ -481,6 +483,7 @@ function scanImages(html, source) {
     const src =
       attrs.src || attrs["data-src"] || attrs.srcset || attrs["data-srcset"] || "unknown image";
     const alt = attrs.alt;
+    const imageUrl = normalizeImageUrl(src, source.url);
 
     if (alt === undefined || normalizeText(alt) === "") {
       findings.push(
@@ -488,7 +491,8 @@ function scanImages(html, source) {
           source,
           "Missing or empty image alt text",
           src,
-          "Image has no alt text or an empty alt attribute."
+          "Image has no alt text or an empty alt attribute.",
+          { imageUrl }
         )
       );
       continue;
@@ -500,7 +504,8 @@ function scanImages(html, source) {
           source,
           "Image alt text looks like a file name",
           alt,
-          "Alt text should describe the image instead of repeating a file name."
+          "Alt text should describe the image instead of repeating a file name.",
+          { imageUrl }
         )
       );
     }
@@ -535,12 +540,17 @@ function scanHeadings(html, source) {
   return findings;
 }
 
-function scanApiImages(images, source) {
+function scanApiImages(images, source, seenImageUrls = new Set()) {
   const findings = [];
 
   for (const image of images) {
     const alt = normalizeText(image.alt || "");
     const label = image.url || image.title || "API image";
+    const imageUrl = normalizeImageUrl(image.url);
+
+    if (imageUrl && seenImageUrls.has(imageUrl)) {
+      continue;
+    }
 
     if (!alt) {
       findings.push(
@@ -548,7 +558,8 @@ function scanApiImages(images, source) {
           source,
           "Missing product media alt text",
           label,
-          "Product media from Shopify Admin API is missing alt text."
+          "Product media from Shopify Admin API is missing alt text.",
+          { imageUrl }
         )
       );
     } else if (looksLikeFileName(alt)) {
@@ -557,7 +568,8 @@ function scanApiImages(images, source) {
           source,
           "Product media alt text looks like a file name",
           alt,
-          "Product media alt text should describe the image."
+          "Product media alt text should describe the image.",
+          { imageUrl }
         )
       );
     }
@@ -577,6 +589,7 @@ function scanStandaloneImages(images) {
       updatedAt: image.updatedAt || null,
     };
     const alt = normalizeText(image.alt || "");
+    const imageUrl = normalizeImageUrl(image.url);
 
     if (!alt) {
       findings.push(
@@ -584,7 +597,8 @@ function scanStandaloneImages(images) {
           source,
           "Missing uploaded image alt text",
           image.url,
-          "Recently updated Shopify file is missing alt text."
+          "Recently updated Shopify file is missing alt text.",
+          { imageUrl }
         )
       );
     } else if (looksLikeFileName(alt)) {
@@ -593,7 +607,8 @@ function scanStandaloneImages(images) {
           source,
           "Uploaded image alt text looks like a file name",
           alt,
-          "Uploaded image alt text should describe the image."
+          "Uploaded image alt text should describe the image.",
+          { imageUrl }
         )
       );
     }
@@ -658,6 +673,37 @@ function looksLikeFileName(value) {
   );
 }
 
+function reportedImageUrls(findings) {
+  return new Set(findings.map((item) => item.imageUrl).filter(Boolean));
+}
+
+function normalizeImageUrl(value, baseUrl) {
+  const candidate = firstImageCandidate(value);
+
+  if (!candidate) {
+    return "";
+  }
+
+  try {
+    const url = new URL(candidate, baseUrl);
+    url.hash = "";
+    url.search = "";
+    return url.href.replace(/^https?:/, "");
+  } catch {
+    return candidate.split("?")[0].replace(/^https?:/, "");
+  }
+}
+
+function firstImageCandidate(value) {
+  const normalized = normalizeText(value);
+
+  if (!normalized || normalized === "unknown image") {
+    return "";
+  }
+
+  return normalized.split(",")[0].trim().split(/\s+/)[0];
+}
+
 function fileNameFromUrl(url) {
   try {
     return path.basename(new URL(url).pathname);
@@ -670,7 +716,7 @@ function tagSnippet(tag) {
   return normalizeText(tag).slice(0, 220);
 }
 
-function finding(source, issue, found, reason) {
+function finding(source, issue, found, reason, details = {}) {
   return {
     sourceType: source.type,
     title: source.title,
@@ -679,6 +725,7 @@ function finding(source, issue, found, reason) {
     issue,
     found,
     reason,
+    ...details,
   };
 }
 
