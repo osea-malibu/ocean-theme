@@ -405,6 +405,16 @@
                                       name="subscribe"
                                       data-index="{{ item.index | plus: 1 }}"
                                       data-default="{{ default_option }}"
+                                      data-analytics-event="oseam_cart_subscribe_save_toggle"
+                                      data-analytics-source="cart_drawer"
+                                      data-analytics-module="subscribe_save"
+                                      data-analytics-product-id="{{ item.product_id }}"
+                                      data-analytics-variant-id="{{ item.id }}"
+                                      data-analytics-product-title="{{ item.title | escape }}"
+                                      data-analytics-price="{{ item.final_price | divided_by: 100.0 }}"
+                                      data-analytics-item-brand="{{ item.product.vendor | escape }}"
+                                      data-analytics-item-category="{{ item.product.type | escape }}"
+                                      data-analytics-quantity="{{ item.quantity }}"
                                       {% if item.selling_plan_allocation %}checked{% endif %}
                                     >
                                     <span id="CartSubscribeCheckbox-label" class="whitespace-nowrap">{% if item.selling_plan_allocation != nil %}Subscribed{% else %}Subscribe & Save 10%{% endif %}</span>
@@ -591,7 +601,10 @@
                             force_atc: true,
                             hide_price: true,
                             button_class: 'button-secondary',
-                            remove_linking: true
+                            remove_linking: true,
+                            analytics_event: 'oseam_cart_sample_atc',
+                            analytics_source: 'cart_drawer',
+                            analytics_module: 'free_samples'
                           -%}
                         </li>
                       {%- endunless -%}

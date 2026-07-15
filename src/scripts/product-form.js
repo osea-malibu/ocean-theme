@@ -1,3 +1,4 @@
+import { getCartAnalyticsData, pushCartDrawerAnalyticsEvent } from "./cart-analytics.js";
 import { fetchConfig } from "./utils.js";
 
 if (!customElements.get("product-form")) {
@@ -58,6 +59,7 @@ if (!customElements.get("product-form")) {
             }
 
             this.error = false;
+            this.trackCartDrawerAnalytics(response);
             this.cart.renderContents(response);
           })
           .catch((e) => console.error(e))
@@ -97,6 +99,20 @@ if (!customElements.get("product-form")) {
           });
         } else {
           this.addProductToCart();
+        }
+      }
+
+      trackCartDrawerAnalytics(cartAddResponse) {
+        if (!this.dataset.analyticsEvent) return;
+
+        try {
+          const analyticsData = getCartAnalyticsData(this, {
+            cartAddResponse,
+          });
+
+          pushCartDrawerAnalyticsEvent(analyticsData.event, analyticsData);
+        } catch (error) {
+          console.error("Cart drawer analytics error", error);
         }
       }
 

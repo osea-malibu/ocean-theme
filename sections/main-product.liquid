@@ -91,6 +91,7 @@
                 {%- unless excluded_from_site -%}
                   <a href="#reviews">
                     {% render 'product-rating', product: product %}
+                    <span class="sr-only"> Read reviews for {{ product.title | escape }}</span>
                   </a>
                 {%- endunless -%}
                 {% comment %} {%- if product.metafields.custom.faq != nil -%}

@@ -28,7 +28,10 @@
             default_to_mini: is_travel_product,
             default_to_jumbo: is_jumbo_product,
             hide_slashed_price: true,
-            show_price_range: false
+            show_price_range: false,
+            analytics_event: 'oseam_cart_you_may_also_like_atc',
+            analytics_source: 'cart_drawer',
+            analytics_module: 'you_may_also_like'
           -%}
         </li>
       {%- endunless -%}

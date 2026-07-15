@@ -40,7 +40,11 @@
                                   {% render 'icon-email', classes: 'w-6 h-6', aria_hidden: true %}
                                   <span>Email</span>
                                 </a>
-                                <button onclick="GorgiasChat.open()" class="button button-secondary button-sm button-icon button-icon-left w-full">
+                                <button
+                                  type="button"
+                                  onclick="if (window.GorgiasChat && typeof GorgiasChat.open === 'function') { GorgiasChat.open(); } else { window.location.href = '/pages/contact-osea'; }"
+                                  class="button button-secondary button-sm button-icon button-icon-left w-full"
+                                >
                                   {% render 'icon-chat', classes: 'w-6 h-6', aria_hidden: true %}
                                   <span>Chat</span>
                                 </button>
@@ -277,14 +281,14 @@
           <span class="sr-only">items</span>
         </div>
       </a>
-      <a
-        href="/pages/contact-osea"
+      <button
+        type="button"
         class="sr-only button button-secondary button-sm focus:not-sr-only focus:flex focus:h-10 focus:items-center focus:px-3 focus:ml-2"
         aria-haspopup="dialog"
-        onclick="if (window.GorgiasChat && typeof GorgiasChat.open === 'function') { event.preventDefault(); GorgiasChat.open(); }"
+        onclick="if (window.GorgiasChat && typeof GorgiasChat.open === 'function') { GorgiasChat.open(); } else { window.location.href = '/pages/contact-osea'; }"
       >
         Chat with customer support
-      </a>
+      </button>
     </div>
   </div>
 </header>

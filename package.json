@@ -9,7 +9,9 @@
     "build": "vite build",
     "dev": "vite build --watch",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "accessibility:content": "node tools/accessibility-content-checker/scan.mjs",
+    "accessibility:content:fixture": "node tools/accessibility-content-checker/scan.mjs --fixture tools/accessibility-content-checker/fixtures/sample-page.html --output accessibility-content-report.md --expect-findings 9"
   },
   "repository": {
     "type": "git",
