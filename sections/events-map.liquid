@@ -1,0 +1,228 @@
+{% comment %}
+  Events Map — dedicated page section.
+  Interactive Mapbox GL JS map + synced, clickable event list.
+  Data source: `event` metaobject (Content → Metaobjects → Events in admin).
+  Requires a Mapbox public token in Theme settings → General → Maps.
+{% endcomment %}
+
+{% comment %} Mapbox GL JS loaded from CDN only on this section (heavy lib, event pages only).
+   The <events-map> custom element itself is registered globally via main.js, so it works
+   under the theme editor / theme dev section re-renders. {% endcomment %}
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.9.0/mapbox-gl.css" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.9.0/mapbox-gl.js" defer></script>
+
+{%- liquid
+  assign events = shop.metaobjects.event.values
+  assign token = settings.mapbox_token
+-%}
+
+<div class="{{ section.settings.section_classes }}">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  {%- if section.settings.subheading != blank -%}
+    <p class="mt-2 mb-8 max-w-xl {{ section.settings.subheading_classes }}">{{ section.settings.subheading }}</p>
+  {%- endif -%}
+
+  {%- if token == blank -%}
+    <p class="text-coral-500">Add a Mapbox token in Theme settings → General → Maps to enable this map.</p>
+  {%- elsif events == blank -%}
+    <p>{{ section.settings.empty_text | default: 'No events scheduled right now — check back soon.' }}</p>
+  {%- else -%}
+    <events-map
+      class="grid gap-6 lg:grid-cols-[1fr_1.4fr]"
+      data-token="{{ token }}"
+      data-style="{{ section.settings.map_style }}"
+      data-zoom="{{ section.settings.default_zoom }}"
+      data-center-lat="{{ section.settings.center_lat }}"
+      data-center-lng="{{ section.settings.center_lng }}"
+      data-pin-color="{{ section.settings.pin_color }}"
+    >
+      <ol data-event-list class="flex flex-col divide-y divide-sand-300 lg:max-h-[600px] lg:overflow-y-auto">
+        {%- for event in events -%}
+          {%- liquid
+            assign has_coords = false
+            if event.latitude.value != blank and event.longitude.value != blank
+              assign has_coords = true
+            endif
+            assign date_out = ''
+            if event.start_at.value != blank
+              assign date_out = event.start_at.value | date: '%b %-d, %Y'
+              if event.end_at.value != blank and event.end_at.value != event.start_at.value
+                assign end_out = event.end_at.value | date: '%b %-d, %Y'
+                assign date_out = date_out | append: ' – ' | append: end_out
+              endif
+            endif
+          -%}
+          <li
+            class="events-map__item cursor-pointer py-4 px-1 transition-colors hover:bg-sand-100"
+            {% if has_coords %}data-event-id="{{ event.system.id }}"{% endif %}
+          >
+            {%- if date_out != blank -%}
+              <p class="text-xs uppercase tracking-widest text-seaweed-600 mb-1">{{ date_out }}</p>
+            {%- endif -%}
+            <p class="font-bold text-base">{{ event.title.value | default: event.system.handle }}</p>
+            {%- if event.venue_name.value != blank -%}
+              <p class="text-sm">{{ event.venue_name.value }}</p>
+            {%- endif -%}
+            {%- if event.city.value != blank -%}
+              <p class="text-sm text-seaweed-700">{{ event.city.value }}{% if event.region.value != blank %}, {{ event.region.value }}{% endif %}</p>
+            {%- endif -%}
+            {%- if event.rsvp_url.value != blank -%}
+              <a href="{{ event.rsvp_url.value }}" class="mt-2 inline-block text-xs font-bold underline">RSVP / Details</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+
+      <div
+        data-map
+        class="w-full rounded-lg overflow-hidden bg-sand-200 h-[420px] lg:h-[600px]"
+        style="min-height: 320px;"
+      ></div>
+
+      {%- comment -%} Coordinates from empty metaobject fields serialize to null and are dropped client-side. {%- endcomment -%}
+      <script type="application/json" data-events>
+        [
+          {%- for event in events -%}
+            {
+              "id": {{ event.system.id | json }},
+              "title": {{ event.title.value | json }},
+              "date": {{ event.start_at.value | date: '%b %-d, %Y' | json }},
+              "venue": {{ event.venue_name.value | json }},
+              "lat": {{ event.latitude.value | json }},
+              "lng": {{ event.longitude.value | json }},
+              "url": {{ event.rsvp_url.value | json }}
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      </script>
+    </events-map>
+  {%- endif -%}
+</div>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .events-map__item.is-active {
+    background-color: var(--color-sand-100, #f5f1ea);
+    box-shadow: inset 3px 0 0 var(--color-seaweed-600, #2f4f4f);
+  }
+  #shopify-section-{{ section.id }} .em-popup {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 220px;
+    font-family: inherit;
+  }
+  #shopify-section-{{ section.id }} .em-popup__date {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  #shopify-section-{{ section.id }} .em-popup__title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  #shopify-section-{{ section.id }} .em-popup__venue {
+    font-size: 13px;
+  }
+  #shopify-section-{{ section.id }} .em-popup__link {
+    font-size: 12px;
+    text-decoration: underline;
+    margin-top: 4px;
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Events Map",
+  "tag": "section",
+  "class": "section-events-map",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Events"
+    },
+    {
+      "type": "text",
+      "id": "heading_classes",
+      "label": "Heading CSS classes",
+      "default": "font-bold uppercase tracking-widest text-2xl lg:text-3xl"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Find an OSEA event near you."
+    },
+    {
+      "type": "text",
+      "id": "subheading_classes",
+      "label": "Subheading CSS classes",
+      "default": "text-base text-seaweed-700"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state text",
+      "default": "No events scheduled right now — check back soon."
+    },
+    {
+      "type": "header",
+      "content": "Map"
+    },
+    {
+      "type": "text",
+      "id": "map_style",
+      "label": "Mapbox style URL",
+      "info": "GL JS format, e.g. mapbox://styles/mapbox/light-v11",
+      "default": "mapbox://styles/mapbox/light-v11"
+    },
+    {
+      "type": "text",
+      "id": "pin_color",
+      "label": "Pin color (hex)",
+      "default": "#2f4f4f"
+    },
+    {
+      "type": "text",
+      "id": "center_lat",
+      "label": "Default center latitude",
+      "info": "Used before pins load / if only one event.",
+      "default": "39.8"
+    },
+    {
+      "type": "text",
+      "id": "center_lng",
+      "label": "Default center longitude",
+      "default": "-98.5"
+    },
+    {
+      "type": "range",
+      "id": "default_zoom",
+      "label": "Default zoom",
+      "min": 1,
+      "max": 15,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "text",
+      "id": "section_classes",
+      "label": "Section wrapper CSS classes",
+      "default": "container px-6 py-12"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Events Map"
+    }
+  ]
+}
+{% endschema %}

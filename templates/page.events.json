@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "OSEA Events",
+            "heading_classes": "tracking-widest font-bold uppercase text-xl lg:text-2xl"
+          }
+        }
+      },
+      "block_order": ["heading"],
+      "settings": {
+        "is_text_only": true,
+        "is_lazy": false,
+        "section_classes": "relative container px-0 xs:px-6",
+        "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
+      }
+    },
+    "events_map": {
+      "type": "events-map",
+      "settings": {
+        "heading": "Upcoming Events",
+        "subheading": "Find an OSEA event near you.",
+        "section_classes": "container px-6 py-12"
+      }
+    }
+  },
+  "order": ["banner", "events_map"]
+}
