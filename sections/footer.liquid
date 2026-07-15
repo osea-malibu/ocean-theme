@@ -1,7 +1,6 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 <footer class="bg-seafoam-100">
-  {%- assign perks_exclusions = section.settings.perks_exclusions | split: ',' -%}
-  {%- unless perks_exclusions contains page.handle -%}
+  {%- unless page.metafields.custom.hide_perks_footer -%}
     <div class="bg-white relative z-10">
       <div class="container flex flex-col sm:flex-row gap-12 py-12 bg-white">
         <div class="flex-1">
@@ -353,12 +352,6 @@
       "type": "textarea",
       "id": "perks_promo_description",
       "label": "Promo description"
-    },
-    {
-      "type": "textarea",
-      "id": "perks_exclusions",
-      "label": "Exclude on pages",
-      "info": "Enter page handles separated by commas. Leave blank to show on all pages."
     },
     {
       "type": "header",
