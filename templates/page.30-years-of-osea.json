@@ -11,8 +11,43 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {}
+    },
+    "rich_text_LANG8z": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Bc4mAV": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "30 Years",
+            "heading_classes": "text-center border-t border-b border-seaweed-700 font-serif uppercase text-7xl",
+            "subheading_text": "",
+            "subheading_classes": ""
+          }
+        },
+        "paragraph_miwr7b": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph_text": "",
+            "paragraph_classes": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_Bc4mAV",
+        "paragraph_miwr7b"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_heading": "",
+        "section_classes": "",
+        "container_classes": "container"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "rich_text_LANG8z"
+  ]
 }
