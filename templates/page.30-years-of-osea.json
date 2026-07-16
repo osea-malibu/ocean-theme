@@ -672,7 +672,7 @@
         "column_iWxmid": {
           "type": "column",
           "settings": {
-            "column_classes": "left",
+            "column_classes": "left mb-2",
             "image": "shopify://shop_images/anniversary-5.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -759,7 +759,7 @@
         "column_FWMYA4": {
           "type": "column",
           "settings": {
-            "column_classes": "col-a flex flex-col",
+            "column_classes": "col-a flex flex-col mb-2",
             "image": "shopify://shop_images/anniversary-6.jpg",
             "is_bg_image": false,
             "image_link": "",
@@ -768,10 +768,10 @@
             "image_wrapper_classes": "order-2",
             "image_link_classes": "",
             "image_static_size": "",
-            "text_classes": "order-1",
+            "text_classes": "order-1 mb-4",
             "remove_text_wrapper": false,
-            "heading": "<p><em>Murrieta Hot Springs Resort</em></p>",
-            "heading_classes": "font-serif text-lg",
+            "heading": "<em>Murrieta Hot Springs Resort</em>",
+            "heading_classes": "font-serif text-2xl",
             "paragraph": "<p>Southern California's mineral-rich OSEA lore. It was here, while serving as Spa Director in the 1980s, that founder Jenefer Palmer began developing the early formulations that would become OSEA. Today, the resort is a restorative wellness escape with hot spring soaking, spa rituals and OSEA treatments.</p>",
             "paragraph_classes": "",
             "button_label": "",
@@ -804,7 +804,7 @@
           "type": "column",
           "settings": {
             "column_classes": "col-b flex flex-col",
-            "image": "shopify://shop_images/anniversary-6.jpg",
+            "image": "shopify://shop_images/anniversary-7.jpg",
             "is_bg_image": false,
             "image_link": "",
             "image_aria_label": "",
@@ -814,9 +814,9 @@
             "image_static_size": "",
             "text_classes": "order-1",
             "remove_text_wrapper": false,
-            "heading": "<p><em>Murrieta Hot Springs Resort</em></p>",
-            "heading_classes": "font-serif text-lg",
-            "paragraph": "<p>Southern California's mineral-rich OSEA lore. It was here, while serving as Spa Director in the 1980s, that founder Jenefer Palmer began developing the early formulations that would become OSEA. Today, the resort is a restorative wellness escape with hot spring soaking, spa rituals and OSEA treatments.</p>",
+            "heading": "<em>Venice Skincare Studio</em>",
+            "heading_classes": "font-serif text-2xl",
+            "paragraph": "<p>At OSEA's first and only skincare studio, the focus is simple: seaweed-powered facials from the experts who created it all. Blending OSEA's signature formulas with gua sha and cranial touch delivers an extraordinary experience.</p>",
             "paragraph_classes": "",
             "button_label": "",
             "button_aria_label": "",
@@ -852,12 +852,12 @@
         "column_9PWnUc"
       ],
       "custom_css": [
-        ".spa-roots {display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; grid-template-areas: \"left title title\" \"left col-a col-b\"; gap: 12px;}",
+        ".spa-roots {display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; grid-template-areas: \"left title title\" \"left col-a col-b\"; gap: 16px;}",
         ".left {grid-area: left;}",
         ".title {grid-area: title;}",
         ".col-a {grid-area: col-a;}",
         ".col-b {grid-area: col-b;}",
-        "@media (max-width: 700px) {.spa-roots {grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); grid-template-areas: \"left\" \"title\" \"col-a\" \"col-b\"; }}"
+        "@media (max-width: 700px) {.spa-roots {grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); grid-template-areas: \"title\" \"left\" \"col-a\" \"col-b\"; }}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
