@@ -856,7 +856,7 @@
         ".title {grid-area: title;}",
         ".col-a {grid-area: col-a;}",
         ".col-b {grid-area: col-b;}",
-        ".spa-roots {display: grid; gap: 16px; grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); grid-template-areas: \"title\" \"left\" \"col-a\" \"col-b\"; }",
+        ".spa-roots {display: grid; gap: 16px; grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); grid-template-areas: \"title\" \"left\" \"col-a\" \"col-b\";}",
         "@media (min-width: 700px) {.spa-roots {grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; grid-template-areas: \"left title title\" \"left col-a col-b\"; }}"
       ],
       "name": "t:sections.multicolumn.presets.name",
