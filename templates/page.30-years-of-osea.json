@@ -853,10 +853,11 @@
       ],
       "custom_css": [
         ".spa-roots {display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; grid-template-areas: \"left title title\" \"left col-a col-b\"; gap: 12px;}",
-        ".left {grid-area: left; }",
-        ".title {grid-area: title; }",
-        ".col-a {grid-area: col-a; }",
-        ".col-b {grid-area: col-b; }"
+        ".left {grid-area: left;}",
+        ".title {grid-area: title;}",
+        ".col-a {grid-area: col-a;}",
+        ".col-b {grid-area: col-b;}",
+        "@media (max-width: 700px) {.spa-roots {grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); grid-template-areas: \"left\" \"title\" \"col-a\" \"col-b\"; }}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
