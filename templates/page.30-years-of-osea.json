@@ -854,7 +854,7 @@
       "custom_css": [
         ".spa-roots {grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); grid-template-areas: \"title\" \"left\" \"col-a\" \"col-b\";}",
         "@media (min-width: 640px) {.spa-roots {grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, auto); grid-template-areas: \"left left\" \"title title\" \"col-a col-b\"; }}",
-        "@media (min-width: 768px) {.spa-roots {grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; grid-template-areas: \"left title title\" \"left col-a col-b\"; }}"
+        "@media (min-width: 1024px) {.spa-roots {grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; grid-template-areas: \"left title title\" \"left col-a col-b\"; }}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
