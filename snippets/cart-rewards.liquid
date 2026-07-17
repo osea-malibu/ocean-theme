@@ -84,49 +84,49 @@
         {%- endif -%}
       {%- endif -%}
     </div>
-    <h3 class="flex flex-wrap justify-center items-center">
-      {%- assign cart_total = cart.total_price | divided_by: 100.0 -%}
-      <span class="mr-3 text-sm sm:text-base leading-tight sm:leading-tight">
-        {%- if cart_total < settings.shipping_countdown_threshold -%}
-          {%- assign formatted_remaining_amount = remaining_shipping_amount | money_without_trailing_zeros %}
-          {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
-        {%- else -%}
-          {%- if free_gifts_active -%}
-            {%- if settings.gwp_tier3_product != blank and cart_total >= settings.gwp_tier3_threshold -%}
-              {{ settings.gwp_success_text }}
-            {%- elsif settings.gwp_tier2_product != blank and cart_total >= settings.gwp_tier2_threshold -%}
-              {%- if settings.gwp_tier3_product != blank -%}
-                {%- assign gwp_threshold = settings.gwp_tier3_threshold | times: 100 -%}
-                {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
-                {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_three_product.title | replace: 'Free Gift - ' }}
-              {%- else -%}
-                  {{ settings.gwp_success_text }}
-              {%- endif -%}
-            {%- elsif settings.gwp_tier1_product != blank and cart_total >= settings.gwp_tier1_threshold -%}  
-              {%- if settings.gwp_tier2_product != blank -%}
-                {%- assign gwp_threshold = settings.gwp_tier2_threshold | times: 100 -%}
-                {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
-                {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_two_product.title | replace: 'Free Gift - ' }}
-              {%- else -%}
-                {{ settings.gwp_success_text }}
-              {%- endif -%}
+    <details class="group">
+      <summary class="flex flex-wrap justify-center items-center cursor-pointer">
+        <h3>
+          {%- assign cart_total = cart.total_price | divided_by: 100.0 -%}
+          <span class="mr-3 text-sm sm:text-base leading-tight sm:leading-tight">
+            {%- if cart_total < settings.shipping_countdown_threshold -%}
+              {%- assign formatted_remaining_amount = remaining_shipping_amount | money_without_trailing_zeros %}
+              {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
             {%- else -%}
-              {%- assign gwp_threshold = settings.gwp_tier1_threshold | times: 100 -%}
-              {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
-              {{ settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_one_product.title | replace: 'Free Gift - ' }}
+              {%- if free_gifts_active -%}
+                {%- if settings.gwp_tier3_product != blank and cart_total >= settings.gwp_tier3_threshold -%}
+                  {{ settings.gwp_success_text }}
+                {%- elsif settings.gwp_tier2_product != blank and cart_total >= settings.gwp_tier2_threshold -%}
+                  {%- if settings.gwp_tier3_product != blank -%}
+                    {%- assign gwp_threshold = settings.gwp_tier3_threshold | times: 100 -%}
+                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                    {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_three_product.title | replace: 'Free Gift - ' }}
+                  {%- else -%}
+                    {{ settings.gwp_success_text }}
+                  {%- endif -%}
+                {%- elsif settings.gwp_tier1_product != blank and cart_total >= settings.gwp_tier1_threshold -%}
+                  {%- if settings.gwp_tier2_product != blank -%}
+                    {%- assign gwp_threshold = settings.gwp_tier2_threshold | times: 100 -%}
+                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                    {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_two_product.title | replace: 'Free Gift - ' }}
+                  {%- else -%}
+                    {{ settings.gwp_success_text }}
+                  {%- endif -%}
+                {%- else -%}
+                  {%- assign gwp_threshold = settings.gwp_tier1_threshold | times: 100 -%}
+                  {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                  {{ settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_one_product.title | replace: 'Free Gift - ' }}
+                {%- endif -%}
+              {%- else -%}
+                {{ settings.shipping_countdown_text_success }}
+              {%- endif -%}
             {%- endif -%}
-          {%- else -%}
-            {{ settings.shipping_countdown_text_success }}
-          {%- endif -%}
-        {%- endif -%}
-      </span>
-      <input type="checkbox" id="AllRewards" class="peer hidden">
-      <label for="AllRewards" class="mr-0.5 link text-sm">Show all</label>
-      <label for="AllRewards" class="-rotate-90 peer-checked:rotate-90 transition-transform">
-        {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4', stroke_width: 2 %}
-        <span class="sr-only">Expand and collapse arrow</span>
-      </label>
-      <div class="w-full peer-checked:max-h-80 max-h-0 transition-max-height overflow-hidden">
+          </span>
+        </h3>
+        <span class="mr-0.5 link text-sm">Show all</span>
+        {% render 'icon-chevron', aria_hidden: true, classes: 'w-4 h-4 -rotate-90 group-open:rotate-90 transition-transform', stroke_width: 2 %}
+      </summary>
+      <div class="w-full overflow-hidden">
         <ul class="max-w-md mx-auto text-sm text-left pt-4 pb-2 li:mb-1">
           <li class="flex items-center gap-1 leading-tight">
             {% render 'icon-checkmark', classes: 'w-3 h-3 shrink-0', stroke_width: 2.5 %}
@@ -179,15 +179,15 @@
         </ul>
         <cite class="block text-xs leading-tight text-left px-4 pb-4">*Return items within 30 days of your ship date for a refund or OSEA gift card. Visit our <a class="link" href="https://returns.oseamalibu.com">Returns Center</a> & <a class="link" href="/pages/customer-care">FAQ</a> for more details!</cite>
       </div>
-      {%- unless customer or cart == empty -%}
-        <div class="flex gap-1 justify-center items-center border border-sand-400 rounded-lg bg-sand-200 text-sm p-1 w-full max-w-xs mt-2">
-          {% render 'icon-sparkle', classes: 'w-6 h-6 text-sand-600 -ml-4' %}
-          <div>
-            <p>Earn {{ cart_reward_points }} points with this order</p>
-            <p><a href="#rivo" class="link">Sign in</a> or <a href="#rivo" class="link">Join Sea Rewards</a></p>
-          </div>
+    </details>
+    {%- unless customer or cart == empty -%}
+      <div class="flex gap-1 justify-center items-center border border-sand-400 rounded-lg bg-sand-200 text-sm p-1 w-full max-w-xs mx-auto mt-2">
+        {% render 'icon-sparkle', classes: 'w-6 h-6 text-sand-600 -ml-4' %}
+        <div>
+          <p>Earn {{ cart_reward_points }} points with this order</p>
+          <p><a href="#rivo" class="link">Sign in</a> or <a href="#rivo" class="link">Join Sea Rewards</a></p>
         </div>
-      {%- endunless -%}
-    </h3>
+      </div>
+    {%- endunless -%}
   </reward-countdown>
 </div>
