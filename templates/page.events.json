@@ -20,11 +20,15 @@
           }
         }
       },
-      "block_order": ["heading"],
+      "block_order": [
+        "heading"
+      ],
+      "disabled": true,
       "settings": {
         "is_text_only": true,
         "is_lazy": false,
         "section_classes": "relative container px-0 xs:px-6",
+        "image_classes": "block object-cover object-top h-[460px] overflow-hidden min-w-full",
         "text_block_classes": "absolute top-6 inset-x-0 px-6 text-center"
       }
     },
@@ -32,10 +36,21 @@
       "type": "events-map",
       "settings": {
         "heading": "Upcoming Events",
+        "heading_classes": "font-bold uppercase tracking-widest text-2xl lg:text-3xl",
         "subheading": "Find an OSEA event near you.",
+        "subheading_classes": "text-base text-seaweed-700",
+        "empty_text": "No events scheduled right now — check back soon.",
+        "map_style": "mapbox://styles/mapbox/light-v11",
+        "pin_color": "#2f4f4f",
+        "center_lat": "39.8",
+        "center_lng": "-98.5",
+        "default_zoom": 3,
         "section_classes": "container px-6 py-12"
       }
     }
   },
-  "order": ["banner", "events_map"]
+  "order": [
+    "banner",
+    "events_map"
+  ]
 }
