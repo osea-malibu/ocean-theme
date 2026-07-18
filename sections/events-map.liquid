@@ -56,7 +56,7 @@
             endif
           -%}
           <li
-            class="events-map__item cursor-pointer p-4 transition-colors hover:bg-seaweed-300"
+            class="events-map__item cursor-pointer p-4 rounded-lg transition-colors hover:bg-seaweed-200"
             {% if has_coords %}data-event-id="{{ event.system.id }}"{% endif %}
           >
             {%- if date_out != blank -%}
