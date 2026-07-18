@@ -56,7 +56,7 @@
             endif
           -%}
           <li
-            class="events-map__item cursor-pointer p-4 rounded-lg transition-colors hover:bg-seaweed-200"
+            class="events-map__item cursor-pointer p-4 rounded-lg transition-colors hover:bg-wave-200"
             {% if has_coords %}data-event-id="{{ event.system.id }}"{% endif %}
           >
             {%- if date_out != blank -%}
@@ -104,7 +104,7 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} .events-map__item.is-active {
-    background-color: var(--color-sand-100, #f5f1ea);
+    background-color: var(--color-sand-200, #f5f1ea);
     box-shadow: inset 3px 0 0 var(--color-seaweed-600, #2f4f4f);
   }
   #shopify-section-{{ section.id }} .em-popup {
