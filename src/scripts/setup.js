@@ -84,12 +84,18 @@ export function setupLazyVideos() {
   let observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((video) => {
       if (video.isIntersecting) {
-        for (var source in video.target.children) {
-          var videoSource = video.target.children[source];
-          if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
-            videoSource.src = videoSource.dataset.src;
-          }
-        }
+        const sources = JSON.parse(video.target.dataset.sources || "[]");
+        const sourceFragment = document.createDocumentFragment();
+
+        sources.forEach((sourceData) => {
+          const source = document.createElement("source");
+          source.src = sourceData.src;
+          source.type = sourceData.type;
+          sourceFragment.appendChild(source);
+        });
+
+        video.target.prepend(sourceFragment);
+        delete video.target.dataset.sources;
 
         video.target.load();
         video.target.classList.remove("lazy");

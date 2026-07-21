@@ -414,6 +414,21 @@
                   {%- if block.settings.video_mp4 != blank and block.settings.video_mp4.preview_image != blank -%}
                     {%- liquid
                       assign video_poster_master = block.settings.video_mp4.preview_image | image_url
+                      capture video_sources
+                        echo '['
+                        for source in block.settings.video_mp4.sources
+                          assign source_type = source.format | prepend: 'video/'
+                          echo '{"src":'
+                          echo source.url | json
+                          echo ',"type":'
+                          echo source_type | json
+                          echo '}'
+                          unless forloop.last
+                            echo ','
+                          endunless
+                        endfor
+                        echo ']'
+                      endcapture
                     -%}
 
                     {% comment %}theme-check-disable RemoteAsset {% endcomment %}
@@ -424,12 +439,9 @@
                       {% if block.settings.video_muted %}muted{% endif %}
                       playsinline
                       poster="{% render 'imgix', src: video_poster_master, w: 320 %}"
+                      data-sources="{{ video_sources | escape }}"
                       class="lazy bg-wave-200 border-0{% if block.settings.video_classes %} {{ block.settings.video_classes }}{% endif %}"
                     >
-                      {%- for source in block.settings.video_mp4.sources -%}
-                        <source data-src="{{ source.url }}" type="video/{{ source.format }}">
-                      {%- endfor -%}
-
                       {% comment %}theme-check-disable RemoteAsset {% endcomment %}
                       <img
                         src="{% render 'imgix', src: video_poster_master, w: 240 %}"
