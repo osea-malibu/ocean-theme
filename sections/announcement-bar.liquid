@@ -59,6 +59,9 @@
       class="glide type-carousel gap-0 autoplay-{{ section.settings.slide_interval | times: 1000 }} max-w-xl mx-auto"
       id="slider-announcement-bar"
       data-breakpoint-limit="none"
+      data-sr-active-slide-only="true"
+      role="region"
+      aria-label="Announcements"
     >
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides pb-0">
@@ -70,7 +73,7 @@
                   echo '<p class="' | append: text_classes | append: '">'
                 endcapture
               -%}
-              <li class="glide__slide" role="region" aria-label="{{ block.settings.text | strip_html }}">
+              <li class="glide__slide">
                 {{ block.settings.text | replace: '<p>', text_tag }}
               </li>
             {%- endif -%}

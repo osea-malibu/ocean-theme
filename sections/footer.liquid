@@ -15,20 +15,24 @@
         </div>
         <div class="flex-1 py-4">
           {%- assign badge_class = 'text-xs uppercase font-bold rounded bg-neon-green leading-none px-2 py-1 mr-4' -%}
+          {%- assign footer_promo_id = 'footer-perks-' | append: section.id | append: '-promo' -%}
+          {%- assign footer_subscribe_id = 'footer-perks-' | append: section.id | append: '-subscribe' -%}
+          {%- assign footer_rewards_id = 'footer-perks-' | append: section.id | append: '-rewards' -%}
+          {%- assign footer_guarantee_id = 'footer-perks-' | append: section.id | append: '-guarantee' -%}
           {%- capture subscribe_summary -%}
-            <div class="flex justify-between items-center"><span>Subscribe & Save</span><span class="{{ badge_class }}">Get 10% off</span></div>
+            <span class="flex justify-between items-center"><span>Subscribe & Save</span><span class="{{ badge_class }}">Get 10% off</span></span>
           {%- endcapture -%}
           {%- capture subscribe_content -%}
             <p>Enjoy 10% off, free shipping on recurring orders, early access to new products, and exclusive access to deluxe samples when you subscribe to your favorite products. Skip, edit or cancel anytime. <a class="link" href="/pages/subscribe">Learn more<span class="sr-only"> about subscriptions</span></a></p>
           {%- endcapture -%}
           {%- capture rewards_summary -%}
-            <div class="flex justify-between items-center"><span>Join the Sea Rewards Program</span><span class="{{ badge_class }}">Rewards</span></div>
+            <span class="flex justify-between items-center"><span>Join the Sea Rewards Program</span><span class="{{ badge_class }}">Rewards</span></span>
           {%- endcapture -%}
           {%- capture rewards_content -%}
             <p>Earn points every time you shop, share a review, celebrate your birthday, and more. Members get early access to promotions and product launches, exclusive access to deluxe samples, and special rewards just for being part of our community. <a class="link" href="/pages/sea-rewards">Learn more<span class="sr-only"> about sea rewards</span></a></p>
           {%- endcapture -%}
           {%- capture guarantee_summary -%}
-            <div class="flex justify-between items-center"><span>Results You Can Sea®</span><span class="{{ badge_class }} tracking-tight">30-Day Guarantee</span></div>
+            <span class="flex justify-between items-center"><span>Results You Can Sea®</span><span class="{{ badge_class }} tracking-tight">30-Day Guarantee</span></span>
           {%- endcapture -%}
           {%- capture guarantee_content -%}
             <p>Not in love with your new OSEA favorites? No worries—we’ve got you. If your product isn’t the perfect match, send it back within 30 days of your ship date for a full refund or an OSEA gift card. Shipping costs aren’t refundable. <a class="link" href="/pages/customer-care?tab=2">Learn more<span class="sr-only"> about returns</span></a></p>
@@ -41,10 +45,10 @@
 
           {%- if section.settings.perks_promo_heading != blank -%}
             {%- capture promo_summary -%}
-              <div class="flex justify-between items-center"><span>{{ section.settings.perks_promo_heading }}</span><span class="{{ badge_class }}">Free Gift</span></div>
+              <span class="flex justify-between items-center"><span>{{ section.settings.perks_promo_heading }}</span><span class="{{ badge_class }}">Free Gift</span></span>
             {%- endcapture -%}
             {% render 'accordion-item',
-              id: 'footer-subscription',
+              id: footer_promo_id,
               summary: promo_summary,
               content: section.settings.perks_promo_description,
               default_open: true,
@@ -61,7 +65,7 @@
             endif
           -%}
           {% render 'accordion-item',
-            id: 'footer-subscription',
+            id: footer_subscribe_id,
             summary: subscribe_summary,
             content: subscribe_content,
             default_open: subscription_promo_open,
@@ -70,7 +74,7 @@
             classes: 'border-b border-seaweed-300'
           %}
           {% render 'accordion-item',
-            id: 'footer-subscription',
+            id: footer_rewards_id,
             summary: rewards_summary,
             content: rewards_content,
             summary_classes: 'py-4',
@@ -78,7 +82,7 @@
             classes: 'border-b border-seaweed-300'
           %}
           {% render 'accordion-item',
-            id: 'footer-subscription',
+            id: footer_guarantee_id,
             summary: guarantee_summary,
             content: guarantee_content,
             summary_classes: 'py-4',
@@ -192,7 +196,7 @@
               <li>
                 <button onclick="showPreferences(this);" class="isense-reopen-widget-link whitespace-nowrap inline-flex items-center gap-1" aria-haspopup="dialog">
                   <span class="link">Your Privacy Choices</span>
-                  <img aria-hidden="true" src="https://cdn.shopify.com/s/files/1/1368/9993/files/privacyoptions.svg?v=1719329608" width="24" height="12">
+                  <img aria-hidden="true" src="https://cdn.shopify.com/s/files/1/1368/9993/files/privacyoptions.svg?v=1719329608" alt="" width="24" height="12">
                 </button>
               </li>
             {%- else -%}
