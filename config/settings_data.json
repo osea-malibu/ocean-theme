@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "mapbox_token": "pk.eyJ1Ijoib3NlYS1lcmluIiwiYSI6ImNtcmpwbGgwZzA3Y3YyeW9ucjFoc3BjY3AifQ.tuNq93qiZ8wFsoh-e0ny0w",
     "travel_sizes": "1.7 oz, 1.5 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz",
     "enable_menu_item_images": false,
     "low_stock_threshold": 500,
@@ -46,7 +47,7 @@
     "enable_gwp": false,
     "gwp_type": "auto",
     "is_loyalty_gwp": false,
-    "enable_annoucement_bar_message": true,
+    "enable_annoucement_bar_message": false,
     "enable_product_qualifier_gwp": false,
     "gwp_product_qualifier": "",
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
@@ -225,6 +226,7 @@
           "perks_promo_heading": "",
           "perks_promo_description": "",
           "perks_exclusions": "quiz",
+          "enable_secret_footer": false,
           "secret_heading": "",
           "secret_description": "<p>Our story began over 100 years ago with our great-grandmother Elsa. Bedridden from an injury, she had a dream: <em>“The ocean will heal you.”</em> She swam in the sea daily—and within months, she was healed.</p>\n<p>In 1996, we founded OSEA to bring her legacy and her belief in the healing power of the sea to life. Every formula we create is rooted in nature and guided by intention—crafted with clean, carefully chosen ingredients that honor your well-being and our planet.</p>\n<img class=\"w-52 mt-4\" alt=\"Signatures of OSEA founders Melissa and Jen\" src=\"https://cdn.shopify.com/s/files/1/1368/9993/files/melissa_jen_signature.png?v=1749241527\">   Mother &amp; Daughter Founders",
           "secret_image": "shopify://shop_images/OSEA_PRSHOOT-ROBIN-1213.jpg"
@@ -331,7 +333,8 @@
       ".cartoon-card s {display: none;}",
       "@media (min-width: 480px) {.cartoon-card s {display: inline; }}",
       "@media (min-width: 640px) {.sm\\:bg-dream-navy {background: #1d284d; }}",
-      ".text-number {font-size: 110%;}"
+      ".text-number {font-size: 110%;}",
+      "#_pxPixel4 {position: absolute; bottom: 0;}"
     ]
   }
 }

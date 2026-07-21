@@ -298,7 +298,10 @@
                   {%- if block.settings.date != blank -%}
                     <p class="mt-4 text-3xl font-serif">{{ block.settings.date }}</p>
                   {%- endif -%}
-                  <p class="badge absolute bottom-6 right-4 text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">tap to flip ↺</p>
+                  {%- if block.settings.front_text != blank -%}
+                    <p class="leading-tight text-sm mb-2">{{ block.settings.front_text }}</p>
+                  {%- endif -%}
+                  <p class="badge text-xs rounded-full bg-sand-400 text-sand-900 font-medium tracking-wide px-2">Read more ↺</p>
                 </div>
 
                 {% comment %}Back face — date + paragraph{% endcomment %}
@@ -503,6 +506,12 @@
         {
           "id": "date",
           "label": "Date",
+          "type": "text"
+        },
+        {
+          "id": "front_text",
+          "label": "Front text (flippable only)",
+          "info": "Short line shown under the date on the front of flippable cards. Ignored on non-flippable cards.",
           "type": "text"
         },
         {
