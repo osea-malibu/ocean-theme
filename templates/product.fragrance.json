@@ -241,9 +241,7 @@
           }
         }
       },
-      "block_order": [
-        "key_ingredient_tNNTPC"
-      ],
+      "block_order": ["key_ingredient_tNNTPC"],
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
@@ -271,32 +269,6 @@
         "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-6 lg:mb-12"
       }
     },
-    "ingredients_accordion": {
-      "type": "product-ingredients",
-      "blocks": {
-        "95142030-9e11-4090-aa41-a3e9d4183397": {
-          "type": "key_ingredient",
-          "repeater": "{{ product.metafields.custom.key_ingredients_list.value }}",
-          "settings": {
-            "ingredient_name": "{{ block.repeater.name.value }}",
-            "ingredient_scientific_name": "{{ block.repeater.scientific_name.value }}",
-            "ingredient_description": "{{ block.repeater.description.value }}",
-            "ingredient_citation": "{{ block.repeater.citation.value }}"
-          }
-        }
-      },
-      "block_order": [
-        "95142030-9e11-4090-aa41-a3e9d4183397"
-      ],
-      "disabled": true,
-      "custom_css": [],
-      "settings": {
-        "image_mobile": "{{ product.metafields.custom.key_ingredients_image.value }}",
-        "image_desktop": "{{ product.metafields.custom.key_ingredients_image_desktop.value }}",
-        "header": "Formulated With",
-        "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
-      }
-    },
     "scent_profile": {
       "type": "product-scent-profile",
       "settings": {
@@ -312,18 +284,6 @@
         "wrapper_classes": "",
         "about_the_brand_title": "About the Brand",
         "about_the_brand_content": "{{ product.metafields.custom.about_the_brand_content.value }}"
-      }
-    },
-    "routine": {
-      "type": "product-routine",
-      "disabled": true,
-      "settings": {
-        "section_classes": "hidden",
-        "container_classes": "mb-12 container lg:max-w-screen-lg",
-        "heading": "Complete Your Routine",
-        "heading_classes": "text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4",
-        "wrapper_classes": "grid grid-cols-2 md:grid-cols-4 gap-4",
-        "card_classes": "relative"
       }
     },
     "faqs": {
@@ -374,10 +334,8 @@
     "ingredients_images",
     "clinicals",
     "video",
-    "ingredients_accordion",
     "scent_profile",
     "about_the_brand",
-    "routine",
     "faqs",
     "reviews",
     "recently-viewed",
