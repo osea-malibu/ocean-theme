@@ -9,6 +9,39 @@
  */
 {
   "sections": {
+    "image_banner_PRBhzJ": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Qejftm": {
+          "type": "heading",
+          "settings": {
+            "heading": "Celebrate 30 Years With OSEA",
+            "heading_classes": ""
+          }
+        },
+        "paragraph_DzC8qN": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Explore upcoming events, discover exclusive experiences and join us as we celebrate three decades of skincare from the sea<sup>®</sup>",
+            "paragraph_classes": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_Qejftm",
+        "paragraph_DzC8qN"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_mobile": "shopify://shop_images/2026_OSEA_GROUP_MP-6197.jpg",
+        "is_lazy": false,
+        "image_link": "",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "max-w-md top-1/3"
+      }
+    },
     "banner": {
       "type": "page-banner",
       "blocks": {
@@ -62,6 +95,7 @@
     }
   },
   "order": [
+    "image_banner_PRBhzJ",
     "banner",
     "events_map"
   ]
