@@ -137,42 +137,6 @@
             "default_open": false
           }
         },
-        "collapsible_tab_xFbwdC": {
-          "type": "collapsible_tab",
-          "name": "Skin types",
-          "disabled": true,
-          "settings": {
-            "heading": "Skin types",
-            "content": "{{ product.metafields.custom.skin_types_list | metafield_text }}",
-            "fallback_content": "",
-            "tab_classes": "col-span-12 border-b border-seaweed-300",
-            "default_open": false
-          }
-        },
-        "collapsible_tab_QBCMfF": {
-          "type": "collapsible_tab",
-          "name": "Recycling",
-          "disabled": true,
-          "settings": {
-            "heading": "Recycling",
-            "content": "",
-            "fallback_content": "",
-            "tab_classes": "col-span-12",
-            "default_open": false
-          }
-        },
-        "collapsible_tab_h7h39z": {
-          "type": "collapsible_tab",
-          "name": "Blogs",
-          "disabled": true,
-          "settings": {
-            "heading": "Related blogs",
-            "content": "{{ product.metafields.custom.related_articles | metafield_text }}",
-            "fallback_content": "",
-            "tab_classes": "col-span-12",
-            "default_open": false
-          }
-        },
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6": {
           "type": "set_includes",
           "settings": {
@@ -195,9 +159,6 @@
         "collapsible_tab_7MxGMU",
         "collapsible_tab_q8BQDB",
         "collapsible_tab_MQbqTH",
-        "collapsible_tab_xFbwdC",
-        "collapsible_tab_QBCMfF",
-        "collapsible_tab_h7h39z",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
       ],
       "settings": {
@@ -212,6 +173,12 @@
         "section_classes": "",
         "header": "What Our Customers Are Saying",
         "subheader": ""
+      }
+    },
+    "set-includes": {
+      "type": "product-set-includes",
+      "settings": {
+        "header": "Set Includes"
       }
     },
     "founder_quote": {
@@ -241,17 +208,13 @@
           }
         }
       },
-      "block_order": ["key_ingredient_tNNTPC"],
+      "block_order": [
+        "key_ingredient_tNNTPC"
+      ],
       "name": "Ingredients with Images",
       "settings": {
         "header": "Clean Ingredients",
         "full_ingredients": "{{ product.metafields.custom_fields.ingredients.value }}"
-      }
-    },
-    "set-includes": {
-      "type": "product-set-includes",
-      "settings": {
-        "header": "Set Includes"
       }
     },
     "clinicals": {
