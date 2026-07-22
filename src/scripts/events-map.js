@@ -374,7 +374,10 @@ class EventsMap extends HTMLElement {
   }
 
   setStatus(text) {
-    if (this.statusEl) this.statusEl.textContent = text;
+    if (!this.statusEl) return;
+    this.statusEl.textContent = text || "";
+    // Collapse the element entirely when empty so it takes no grid space.
+    this.statusEl.classList.toggle("hidden", !text);
   }
 }
 

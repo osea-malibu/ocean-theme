@@ -42,7 +42,7 @@
     >
       {%- if section.settings.enable_location_search -%}
         <form data-geo-search class="md:col-span-3 flex flex-wrap items-end gap-3">
-          <div class="flex-1 min-w-[220px]">
+          <div class="flex-1 min-w-55">
             <label for="geo-input-{{ section.id }}" class="block text-xs uppercase tracking-widest text-seaweed-600 mb-1">{{ section.settings.search_label }}</label>
             <input
               id="geo-input-{{ section.id }}"
@@ -65,7 +65,7 @@
           <button type="submit" class="rounded-lg bg-seaweed-700 px-5 py-2 font-bold text-white transition-colors hover:bg-seaweed-800">Search</button>
           <button type="button" data-geo-reset class="hidden rounded-lg border border-sand-300 px-4 py-2 font-bold transition-colors hover:bg-sand-100">Clear</button>
         </form>
-        <p data-geo-status class="md:col-span-3 min-h-5 text-sm text-seaweed-700" aria-live="polite"></p>
+        <p data-geo-status class="md:col-span-3 hidden text-sm text-seaweed-700" aria-live="polite"></p>
       {%- endif -%}
 
       <ol data-event-list class="flex flex-col divide-y divide-sand-300 lg:max-h-[600px] lg:overflow-y-auto">
