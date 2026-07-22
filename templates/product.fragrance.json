@@ -93,17 +93,6 @@
             "default_open": true
           }
         },
-        "collapsible_tab_YPUDfU": {
-          "type": "collapsible_tab",
-          "name": "More info",
-          "settings": {
-            "heading": "Why you'll love it",
-            "content": "{{ product.metafields.custom_fields.description.value }}",
-            "fallback_content": "",
-            "tab_classes": "col-span-12 border-b border-seaweed-300",
-            "default_open": false
-          }
-        },
         "collapsible_tab_7MxGMU": {
           "type": "collapsible_tab",
           "name": "Scent profile",
@@ -111,6 +100,17 @@
             "heading": "Scent profile",
             "content": "{{ product.metafields.custom.scent_profile.value }}",
             "fallback_content": "{{ product.metafields.custom.scent_profile_short.value }}",
+            "tab_classes": "col-span-12 border-b border-seaweed-300",
+            "default_open": false
+          }
+        },
+        "collapsible_tab_YPUDfU": {
+          "type": "collapsible_tab",
+          "name": "More info",
+          "settings": {
+            "heading": "Why you'll love it",
+            "content": "{{ product.metafields.custom_fields.description.value }}",
+            "fallback_content": "",
             "tab_classes": "col-span-12 border-b border-seaweed-300",
             "default_open": false
           }
@@ -155,8 +155,8 @@
         "buy_buttons",
         "f8ca449b-3a83-411f-ac44-40e011b825f3",
         "collapsible_tab_JxagAC",
-        "collapsible_tab_YPUDfU",
         "collapsible_tab_7MxGMU",
+        "collapsible_tab_YPUDfU",
         "collapsible_tab_q8BQDB",
         "collapsible_tab_MQbqTH",
         "6aecdc9a-dbbb-47e0-ba0e-9f2b15f60ad6"
