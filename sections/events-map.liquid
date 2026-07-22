@@ -30,6 +30,7 @@
   {%- elsif events == blank -%}
     <p>{{ section.settings.empty_text | default: 'No events scheduled right now — check back soon.' }}</p>
   {%- else -%}
+    {%- paginate events by 250 -%}
     <events-map
       class="grid gap-6 md:grid-cols-3"
       data-token="{{ token }}"
@@ -39,6 +40,34 @@
       data-center-lng="{{ section.settings.center_lng }}"
       data-pin-color="{{ section.settings.pin_color }}"
     >
+      {%- if section.settings.enable_location_search -%}
+        <form data-geo-search class="md:col-span-3 flex flex-wrap items-end gap-3">
+          <div class="flex-1 min-w-[220px]">
+            <label for="geo-input-{{ section.id }}" class="block text-xs uppercase tracking-widest text-seaweed-600 mb-1">{{ section.settings.search_label }}</label>
+            <input
+              id="geo-input-{{ section.id }}"
+              data-geo-input
+              type="text"
+              autocomplete="postal-code"
+              placeholder="{{ section.settings.search_placeholder | escape }}"
+              class="w-full border border-sand-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:border-seaweed-600"
+            />
+          </div>
+          <div>
+            <label for="geo-radius-{{ section.id }}" class="block text-xs uppercase tracking-widest text-seaweed-600 mb-1">Within</label>
+            <select id="geo-radius-{{ section.id }}" data-geo-radius class="border border-sand-300 rounded-lg px-3 py-2 text-base bg-white">
+              <option value="5">5 miles</option>
+              <option value="10">10 miles</option>
+              <option value="50" selected>50 miles</option>
+              <option value="">Any distance</option>
+            </select>
+          </div>
+          <button type="submit" class="rounded-lg bg-seaweed-700 px-5 py-2 font-bold text-white transition-colors hover:bg-seaweed-800">Search</button>
+          <button type="button" data-geo-reset class="hidden rounded-lg border border-sand-300 px-4 py-2 font-bold transition-colors hover:bg-sand-100">Clear</button>
+        </form>
+        <p data-geo-status class="md:col-span-3 min-h-5 text-sm text-seaweed-700" aria-live="polite"></p>
+      {%- endif -%}
+
       <ol data-event-list class="flex flex-col divide-y divide-sand-300 lg:max-h-[600px] lg:overflow-y-auto">
         {%- for event in events -%}
           {%- liquid
@@ -99,6 +128,7 @@
         ]
       </script>
     </events-map>
+    {%- endpaginate -%}
   {%- endif -%}
 </div>
 
@@ -130,6 +160,15 @@
     font-size: 12px;
     text-decoration: underline;
     margin-top: 4px;
+  }
+  #shopify-section-{{ section.id }} .events-map__dist {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-coral-600, #ff6f61);
   }
 {%- endstyle -%}
 
@@ -168,6 +207,28 @@
       "id": "empty_text",
       "label": "Empty state text",
       "default": "No events scheduled right now — check back soon."
+    },
+    {
+      "type": "header",
+      "content": "Location search"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_location_search",
+      "label": "Enable address / ZIP search + radius filter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Search field label",
+      "default": "Find events near you"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search field placeholder",
+      "default": "Enter an address or ZIP code"
     },
     {
       "type": "header",
