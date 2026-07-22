@@ -184,6 +184,49 @@
     "multicolumn_HQae8Y": {
       "type": "multicolumn",
       "blocks": {
+        "column_P9cADA": {
+          "type": "column",
+          "settings": {
+            "column_classes": "",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_aria_label": "",
+            "image_classes": "",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "hide_atc_button_price": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
         "column_6xtmgc": {
           "type": "column",
           "settings": {
@@ -230,12 +273,13 @@
         }
       },
       "block_order": [
+        "column_P9cADA",
         "column_6xtmgc"
       ],
       "name": "Key Notes",
       "settings": {
         "section_heading": "",
-        "section_classes": "container",
+        "section_classes": "container mb-12",
         "container_classes": "grid",
         "logged_in_only": false,
         "is_slider": false,
@@ -252,7 +296,7 @@
       "type": "product-founder-quote",
       "settings": {
         "wrapper_classes": "",
-        "founder_body_sku": "<p>{{ product.metafields.custom.founder_quote.value.quote | metafield_tag }}</p>",
+        "founder_body_sku": "{{ product.metafields.custom.founder_quote.value.quote | metafield_tag }}",
         "founder_name_sku": "{{ product.metafields.custom.founder_quote.value.name.value }}",
         "founder_image_sku": "{{ product.metafields.custom.founder_quote.value.image.value }}",
         "founder_body": "<p>Over 30 years ago, I started OSEA to share the healing powers of the sea. Since then, it’s been our mission to create clean, clinically tested skincare, combining pure, potent seaweed with active botanicals for results you can sea. My vision is to create waves of kindness for people and our planet.</p>",
