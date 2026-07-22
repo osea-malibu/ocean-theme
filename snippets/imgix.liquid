@@ -7,17 +7,11 @@
 {% comment %} theme-check-disable LiquidTag {% endcomment %}
 {%- capture imgIx -%}
   {%- if settings.enableImgix -%}
-    {%- for i in (1..1) -%}
+    {%- assign outputSrc = src -%}
+    {%- assign cdnUrl = settings.shopifyCdnUrl | strip -%}
+    {%- assign imgixUrl = settings.imgixUrl | strip -%}
 
-      {%- comment -%}
-      Check to make sure the src exists, and that imgix url theme settings is not blank.
-      If blank, stop!
-      {%- endcomment -%}
-      {%- unless src or settings.imgixUrl != blank -%}
-        {{- src -}}
-        {%- break -%}
-      {%- endunless -%}
-
+    {%- if src != blank and cdnUrl != blank and imgixUrl != blank and src contains cdnUrl -%}
       {%- assign hasImageSize = false -%}
       {%- assign imageSize = '' -%}
 
@@ -40,17 +34,6 @@
         {%- endif -%}
       {% endunless %}
 
-      {%- comment -%}
-      Check to make sure the src has the Shopify CDN url in it.
-      If it doesn't, this does not need to run any further.
-      {%- endcomment -%}
-      {%- assign cdnUrl = settings.shopifyCdnUrl -%}
-      {%- unless src contains cdnUrl -%}
-        {{- src -}}
-        {%- break -%}
-      {%- endunless -%}
-
-      {%- assign imgixUrl = settings.imgixUrl | strip -%}
       {%- assign imgParam = settings.imgFormatParam -%}
       {%- assign imageUrl = src | remove: cdnUrl -%}
 
@@ -62,24 +45,25 @@
       {%- assign imageUrl = imageUrl | remove: 'https:' -%}
       {%- assign newSrc = imageUrl | strip | prepend: imgixUrl | append: imgParam -%}
 
-    {%- endfor -%}
+      {%- comment -%}
+      WIDTH PRIORITY (IMPORTANT):
+      1. Explicit width passed to snippet (w: or width:)
+      2. Filename-based Shopify size (_400x)
+      3. No width constraint
+      {%- endcomment -%}
 
-    {%- comment -%}
-    WIDTH PRIORITY (IMPORTANT):
-    1. Explicit width passed to snippet (w: or width:)
-    2. Filename-based Shopify size (_400x)
-    3. No width constraint
-    {%- endcomment -%}
+      {%- assign requested_w = w | default: width -%}
 
-    {%- assign requested_w = w | default: width -%}
+      {%- if requested_w -%}
+        {%- assign outputSrc = newSrc | append: '&w=' | append: requested_w -%}
+      {%- elsif hasImageSize -%}
+        {%- assign outputSrc = newSrc | append: '&w=' | append: imageSize -%}
+      {%- else -%}
+        {%- assign outputSrc = newSrc -%}
+      {%- endif -%}
+    {%- endif -%}
 
-    {% if requested_w %}
-      {{- newSrc | default: src | append: '&w=' | append: requested_w -}}
-    {% elsif hasImageSize %}
-      {{- newSrc | default: src | append: '&w=' | append: imageSize -}}
-    {% else %}
-      {{- newSrc | default: src -}}
-    {% endif %}
+    {{- outputSrc -}}
 
   {%- else -%}
     {{- src -}}
