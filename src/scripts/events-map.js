@@ -51,6 +51,7 @@ class EventsMap extends HTMLElement {
 
     this.bindList();
     this.setupSearch();
+    this.setupMobileSheet();
 
     // Lazy init: spin up Mapbox only when the map nears the viewport.
     if ("IntersectionObserver" in window) {
@@ -173,7 +174,20 @@ class EventsMap extends HTMLElement {
     this.map.flyTo({ center: marker.getLngLat(), zoom: 12, essential: true });
     if (!marker.getPopup().isOpen()) marker.togglePopup();
     this.highlightListItem(id);
+    // On mobile, close the list sheet so the selected pin is visible.
+    this.classList.remove("list-open");
     this.mapEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  /* ---------- Mobile list bottom-sheet ---------- */
+
+  setupMobileSheet() {
+    this.querySelector("[data-list-toggle]")?.addEventListener("click", () => {
+      this.classList.add("list-open");
+    });
+    this.querySelectorAll("[data-list-close]").forEach((btn) => {
+      btn.addEventListener("click", () => this.classList.remove("list-open"));
+    });
   }
 
   highlightListItem(id) {
@@ -221,7 +235,11 @@ class EventsMap extends HTMLElement {
   }
 
   currentRadius() {
-    const v = parseFloat(this.radiusEl?.value);
+    // When the radius control is hidden (mobile, below sm), treat the search as
+    // "any distance" so it always surfaces the nearest events sorted by proximity
+    // instead of a "no events within X mi" dead end the visitor can't widen.
+    if (!this.radiusEl || this.radiusEl.offsetParent === null) return NaN;
+    const v = parseFloat(this.radiusEl.value);
     return Number.isFinite(v) ? v : NaN; // NaN = "any distance"
   }
 
