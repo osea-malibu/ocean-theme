@@ -45,7 +45,7 @@
 
           {%- if section.settings.perks_promo_heading != blank -%}
             {%- capture promo_summary -%}
-              <span class="flex justify-between items-center"><span>{{ section.settings.perks_promo_heading }}</span><span class="{{ badge_class }}">Free Gift</span></span>
+              <span class="flex justify-between items-center"><span>{{ section.settings.perks_promo_heading }}</span><span class="{{ badge_class }}">{{ section.settings.perks_promo_badge }}</span></span>
             {%- endcapture -%}
             {% render 'accordion-item',
               id: footer_promo_id,
@@ -356,6 +356,12 @@
       "type": "textarea",
       "id": "perks_promo_description",
       "label": "Promo description"
+    },
+    {
+      "type": "text",
+      "id": "perks_promo_badge",
+      "label": "Promo badge",
+      "default": "Free Gift"
     },
     {
       "type": "header",
