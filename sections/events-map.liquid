@@ -17,13 +17,15 @@
 -%}
 
 <div class="{{ section.settings.section_classes }}">
-  {%- if section.settings.heading != blank -%}
-    <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading }}</h2>
-  {%- endif -%}
+  <div class="">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading }}</h2>
+    {%- endif -%}
 
-  {%- if section.settings.subheading != blank -%}
-    <p class="mt-2 mb-8 max-w-xl {{ section.settings.subheading_classes }}">{{ section.settings.subheading }}</p>
-  {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="mt-2 mb-8 max-w-xl {{ section.settings.subheading_classes }}">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+  </div>
 
   {%- if token == blank -%}
     <p class="text-coral-500">Add a Mapbox token in Theme settings → General → Maps to enable this map.</p>
@@ -41,7 +43,7 @@
       data-pin-color="{{ section.settings.pin_color }}"
     >
       {%- if section.settings.enable_location_search -%}
-        <form data-geo-search class="md:col-span-3 flex flex-wrap items-end gap-1 sm:gap-2 xl:max-w-2xl xl:w-full mx-auto">
+        <form data-geo-search class="md:col-span-3 flex flex-wrap items-end gap-1 sm:gap-2 xl:max-w-2xl xl:w-full xl:mx-auto">
           <div class="flex-1 min-w-0 sm:min-w-55">
             <label for="geo-input-{{ section.id }}" class="sr-only sm:not-sr-only sm:block text-sm font-medium mb-1">{{ section.settings.search_label }}</label>
             <input
