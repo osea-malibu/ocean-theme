@@ -113,7 +113,7 @@
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "section_heading": "",
-        "section_classes": "container mb-12",
+        "section_classes": "container",
         "container_classes": "flex flex-row",
         "logged_in_only": false,
         "is_slider": false,
@@ -125,10 +125,70 @@
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
+    },
+    "text_marquee_8C7E4q": {
+      "type": "text-marquee",
+      "blocks": {
+        "text_AX8nt7": {
+          "type": "text",
+          "settings": {
+            "text": "Clean Beauty Since 1996",
+            "link": ""
+          }
+        },
+        "text_zTpbm6": {
+          "type": "text",
+          "settings": {
+            "text": "Vegan & Cruelty-Free",
+            "link": ""
+          }
+        },
+        "text_ryadbd": {
+          "type": "text",
+          "settings": {
+            "text": "Ocean + Climate Responsible",
+            "link": ""
+          }
+        },
+        "text_ikVzUB": {
+          "type": "text",
+          "settings": {
+            "text": "Born in California",
+            "link": ""
+          }
+        },
+        "text_w9YXpn": {
+          "type": "text",
+          "settings": {
+            "text": "Mother & Daughter Founded",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_AX8nt7",
+        "text_zTpbm6",
+        "text_ryadbd",
+        "text_ikVzUB",
+        "text_w9YXpn"
+      ],
+      "name": "Text marquee",
+      "settings": {
+        "section_heading": "",
+        "speed": 0.5,
+        "separator": "•",
+        "section_classes": "relative container overflow-hidden",
+        "container_classes": "bg-seafoam-100 relative z-10 py-4 lg:py-6",
+        "marquee_classes": "marquee relative overflow-hidden w-full flex flex-row h-6 lg:h-8",
+        "track_classes": "inline-flex items-center gap-8 whitespace-nowrap",
+        "text_classes": "font-serif text-sm lg:text-lg leading-tight whitespace-nowrap",
+        "separator_classes": "font-serif text-sm lg:text-lg leading-tight opacity-60"
+      }
     }
   },
   "order": [
     "main",
-    "multicolumn_6zFPnc"
+    "multicolumn_6zFPnc",
+    "text_marquee_8C7E4q"
   ]
 }
