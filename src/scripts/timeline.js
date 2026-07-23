@@ -135,7 +135,7 @@ class TimelineSection extends HTMLElement {
         if (label) {
           setTimeout(() => label.classList.add("is-visible"), i * 80);
         }
-      } else {
+      } else if (!isTouch) {
         entry.card.classList.add("timeline-card--h-animated");
       }
     });
