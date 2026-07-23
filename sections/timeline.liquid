@@ -242,7 +242,7 @@
 
       <div id="events" class="
         timeline-track relative py-6
-        {%- if section.settings.horizontal %} flex flex-row items-start gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-10{%- endif -%}
+        {%- if section.settings.horizontal %} flex flex-row items-start gap-8 overflow-x-auto snap-x snap-mandatory scroll-pl-3 sm:scroll-pl-0 scrollbar-hide pb-10{%- endif -%}
       ">
 
         {%- for block in section.blocks -%}
@@ -255,7 +255,7 @@
               {{ block.settings.card_classes }}
               {%- unless section.settings.flippable %} rounded-lg bg-white p-4{%- endunless %}
               {%- if section.settings.horizontal %}
-                snap-start flex-none w-60 sm:w-72
+                snap-start flex-none w-60 sm:w-72 first:ml-3 sm:first:ml-0
               {%- else %}
                 mx-6 mb-8 sm:w-[calc(50%-1.5rem)] sm:mx-0 sm:even:ml-auto group
               {%- endif -%}
