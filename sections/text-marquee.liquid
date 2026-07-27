@@ -1,0 +1,132 @@
+{% if section.settings.section_heading != blank %}<h2 class="sr-only">{{ section.settings.section_heading }}</h2>{% endif %}
+<div class="{{ section.settings.section_classes }}">
+  <div class="{{ section.settings.container_classes }}">
+    {%- if section.blocks.size > 0 -%}
+      <icon-marquee
+        speed="{{ section.settings.speed }}"
+        class="{{ section.settings.marquee_classes }}"
+      >
+        <div class="{{ section.settings.track_classes }}">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.text != blank -%}
+              {%- if block.settings.link != blank -%}
+                <a
+                  href="{{ block.settings.link }}"
+                  class="{{ section.settings.text_classes }}"
+                  {{ block.shopify_attributes }}
+                >{{ block.settings.text }}</a>
+              {%- else -%}
+                <span class="{{ section.settings.text_classes }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+              {%- endif -%}
+              {%- if section.settings.separator != blank -%}
+                <span class="{{ section.settings.separator_classes }}" aria-hidden="true">{{ section.settings.separator }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </icon-marquee>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text marquee",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading",
+      "info": "Screen-reader only. Describes the marquee for accessibility."
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed",
+      "min": 0.1,
+      "max": 3,
+      "step": 0.1,
+      "default": 0.5,
+      "info": "Pixels per frame. Lower is slower."
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator",
+      "default": "•",
+      "info": "Shown between each phrase. Leave blank for none."
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Section classes",
+      "default": "relative overflow-hidden bg-seafoam-100 py-4 lg:py-6"
+    },
+    {
+      "type": "textarea",
+      "id": "container_classes",
+      "label": "Container classes",
+      "default": "relative z-10"
+    },
+    {
+      "type": "textarea",
+      "id": "marquee_classes",
+      "label": "Marquee classes",
+      "default": "marquee relative overflow-hidden w-full flex flex-row h-6 lg:h-8"
+    },
+    {
+      "type": "textarea",
+      "id": "track_classes",
+      "label": "Track classes",
+      "info": "Wraps all phrases. Keep on one line (no wrapping).",
+      "default": "inline-flex items-center gap-8 whitespace-nowrap"
+    },
+    {
+      "type": "textarea",
+      "id": "text_classes",
+      "label": "Text classes",
+      "default": "font-serif text-sm lg:text-lg leading-tight whitespace-nowrap"
+    },
+    {
+      "type": "textarea",
+      "id": "separator_classes",
+      "label": "Separator classes",
+      "default": "font-serif text-sm lg:text-lg leading-tight opacity-60"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Phrase",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Clean Beauty Since 1996"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text marquee",
+      "blocks": [
+        { "type": "text", "settings": { "text": "Free shipping on orders over $60" } },
+        { "type": "text", "settings": { "text": "Clean Beauty Since 1996" } },
+        { "type": "text", "settings": { "text": "Vegan & Cruelty-Free" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
