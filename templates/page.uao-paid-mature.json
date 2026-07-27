@@ -28,7 +28,7 @@
             "image_wrapper_classes": "block sm:pr-4 md:pr-6 lg:pr-12",
             "image_link_classes": "",
             "image_static_size": "",
-            "text_classes": "absolute left-0 bottom-0 right-0 sm:right-4 md:right-6 lg:right-12 px-4 pb-4 pt-16 text-white bg-linear-to-t to-transparent from-[rgba(67,89,97,0.75)]",
+            "text_classes": "absolute left-0 bottom-0 right-0 sm:right-4 md:right-6 lg:right-12 px-4 pb-4 pt-16 text-white bg-linear-to-t to-transparent from-[rgba(67,89,97,0.75)] from-[rgba(54,71,78,0.75)] from-[rgba(47,62,68,0.75)] from-[rgba(40,53,58,0.75)]",
             "remove_text_wrapper": false,
             "heading": "<h1 class=\"font-medium mb-1 uppercase tracking-wider text-lg\">Undaria Algae™ Body Oil</h1>\n<h2 class=\"font-serif text-4xl\">Holy Grail For Mature Skin</h2>",
             "heading_classes": "mb-2",
@@ -948,6 +948,68 @@
         "show_dot_nav": false,
         "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
+    },
+    "accordion_bJrxEn": {
+      "type": "accordion",
+      "blocks": {
+        "item_Mk97cp": {
+          "type": "item",
+          "settings": {
+            "summary": "Benefits",
+            "summary_classes": "py-3",
+            "content": "",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_gwccW3": {
+          "type": "item",
+          "settings": {
+            "summary": "Why You'll Love It",
+            "summary_classes": "py-3",
+            "content": "",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_QPbLpa": {
+          "type": "item",
+          "settings": {
+            "summary": "Scent Profile",
+            "summary_classes": "py-3",
+            "content": "",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_REYwda": {
+          "type": "item",
+          "settings": {
+            "summary": "How To Use",
+            "summary_classes": "py-3",
+            "content": "",
+            "content_classes": "pb-6"
+          }
+        },
+        "item_tCRmCk": {
+          "type": "item",
+          "settings": {
+            "summary": "FAQs",
+            "summary_classes": "py-3",
+            "content": "",
+            "content_classes": "pb-6"
+          }
+        }
+      },
+      "block_order": [
+        "item_Mk97cp",
+        "item_gwccW3",
+        "item_QPbLpa",
+        "item_REYwda",
+        "item_tCRmCk"
+      ],
+      "name": "Accordion",
+      "settings": {
+        "section_classes": "container md:max-w-screen-md mb-12",
+        "container_classes": "border-y border-seaweed-400"
+      }
     }
   },
   "order": [
@@ -959,6 +1021,7 @@
     "multicolumn_AKrTx3",
     "multicolumn_L4yQnA",
     "multicolumn_66UXdX",
-    "multicolumn_hjdB4y"
+    "multicolumn_hjdB4y",
+    "accordion_bJrxEn"
   ]
 }
