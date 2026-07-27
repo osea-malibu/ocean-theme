@@ -4,6 +4,7 @@
   Accepts:
   - product: {Object} Product Liquid object (optional)
   - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
+  - selected_variant: {Object} A specific variant to price. Takes precedence over use_variant. Use to price a pinned/default variant (optional)
   - price_id: {String} Id to be applied to outer span (optional)
   - price_class: {String} Adds a price class to the price element (optional)
   - show_price_range: {Boolean} Displays variants as a price range, does not show sale strikeout (optional)
@@ -32,6 +33,8 @@
       endfor
     endif
     assign target = product.variants[mini_index]
+  elsif selected_variant != blank
+    assign target = selected_variant
   elsif use_variant
     assign target = product.selected_or_first_available_variant
   else
