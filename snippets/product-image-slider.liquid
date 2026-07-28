@@ -178,9 +178,9 @@ Accepts:
         {%- if media.media_type == 'image' -%}
           <span class="block w-2 h-2 rounded-full glide__bullet-icon bg-seaweed-700 md:hidden"></span>
         {%- elsif media.media_type == 'video' -%}
-          <div class="absolute top-1/2 left-1/2 z-10 w-5 h-5 bg-transparent rounded-full -translate-x-1/2 -translate-y-1/2 glide__bullet-icon md:w-8 md:h-8 md:bg-white/50">
+          <span class="absolute top-1/2 left-1/2 z-10 w-5 h-5 bg-transparent rounded-full -translate-x-1/2 -translate-y-1/2 glide__bullet-icon md:w-8 md:h-8 md:bg-white/50">
             {%- render 'icon-play', classes: 'absolute inset-0 scale-75 md:text-white md:ml-0.5' -%}
-          </div>
+          </span>
         {%- endif -%}
 
         {%- liquid
