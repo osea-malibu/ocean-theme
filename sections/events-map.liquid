@@ -1,0 +1,347 @@
+{% comment %}
+  Events Map — dedicated page section.
+  Interactive Mapbox GL JS map + synced, clickable event list.
+  Data source: `event` metaobject (Content → Metaobjects → Events in admin).
+  Requires a Mapbox public token in Theme settings → General → Maps.
+{% endcomment %}
+
+{% comment %} Mapbox GL JS loaded from CDN only on this section (heavy lib, event pages only).
+   The <events-map> custom element itself is registered globally via main.js, so it works
+   under the theme editor / theme dev section re-renders. {% endcomment %}
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.9.0/mapbox-gl.css" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.9.0/mapbox-gl.js" defer></script>
+
+{%- liquid
+  assign events = shop.metaobjects.event.values
+  assign token = settings.mapbox_token
+-%}
+
+<div class="{{ section.settings.section_classes }}">
+  <div class="">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="mt-2 mb-8 max-w-xl {{ section.settings.subheading_classes }}">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- if token == blank -%}
+    <p class="text-coral-500">Add a Mapbox token in Theme settings → General → Maps to enable this map.</p>
+  {%- elsif events == blank -%}
+    <p>{{ section.settings.empty_text | default: 'No events scheduled right now — check back soon.' }}</p>
+  {%- else -%}
+    {%- paginate events by 250 -%}
+    <events-map
+      class="relative grid gap-6 md:grid-cols-3"
+      data-token="{{ token }}"
+      data-style="{{ section.settings.map_style }}"
+      data-zoom="{{ section.settings.default_zoom }}"
+      data-center-lat="{{ section.settings.center_lat }}"
+      data-center-lng="{{ section.settings.center_lng }}"
+      data-pin-color="{{ section.settings.pin_color }}"
+    >
+      {%- if section.settings.enable_location_search -%}
+        <form data-geo-search class="md:col-span-3 flex flex-wrap items-end gap-1 sm:gap-2 xl:max-w-2xl xl:w-full xl:mx-auto">
+          <div class="flex-1 min-w-0 sm:min-w-55">
+            <label for="geo-input-{{ section.id }}" class="sr-only sm:not-sr-only sm:block text-sm font-medium mb-1">{{ section.settings.search_label }}</label>
+            <input
+              id="geo-input-{{ section.id }}"
+              data-geo-input
+              type="text"
+              autocomplete="postal-code"
+              placeholder="{{ section.settings.search_placeholder | escape }}"
+              class="w-full border border-seaweed-500 rounded-lg px-3 py-2 text-base focus:outline-none focus:border-seaweed-600"
+            />
+          </div>
+          <div class="hidden sm:block">
+            <label for="geo-radius-{{ section.id }}" class="block text-sm font-medium mb-1">Within</label>
+            <select id="geo-radius-{{ section.id }}" data-geo-radius class="border border-seaweed-500 rounded-lg px-3 py-2 text-base bg-white">
+              <option value="5">5 miles</option>
+              <option value="10">10 miles</option>
+              <option value="50" selected>50 miles</option>
+              <option value="">Any distance</option>
+            </select>
+          </div>
+          <button type="submit" class="rounded-lg bg-seaweed-700 px-5 py-2 font-bold text-white transition-colors hover:bg-seaweed-800">Search</button>
+          <button type="button" data-geo-reset class="hidden rounded-lg border border-seaweed-400 px-4 py-2 font-bold transition-colors hover:border-seaweed-700">Clear</button>
+        </form>
+        <p data-geo-status class="text-xs font-book text-seaweed-700 absolute top-12 right-0 sm:top-18" aria-live="polite"></p>
+      {%- endif -%}
+
+      <div data-list-sheet class="contents">
+        <div data-list-sheet-header class="md:hidden shrink-0 border-b border-sand-300">
+          <div class="mx-auto mt-2 h-1 w-10 rounded-full bg-sand-300"></div>
+          <div class="flex items-center justify-between px-4 py-3">
+            <span class="text-sm font-bold uppercase tracking-widest text-seaweed-700">Events</span>
+            <button type="button" data-list-close class="flex items-center gap-1 text-sm font-bold text-seaweed-700">Map &times;</button>
+          </div>
+        </div>
+        <ol data-event-list class="flex flex-col divide-y divide-sand-300 lg:max-h-[600px] lg:overflow-y-auto">
+        {%- for event in events -%}
+          {%- liquid
+            assign has_coords = false
+            if event.latitude.value != blank and event.longitude.value != blank
+              assign has_coords = true
+            endif
+            assign date_out = ''
+            if event.start_at.value != blank
+              assign date_out = event.start_at.value | date: '%b %-d, %Y'
+              if event.end_at.value != blank and event.end_at.value != event.start_at.value
+                assign end_out = event.end_at.value | date: '%b %-d, %Y'
+                assign date_out = date_out | append: ' – ' | append: end_out
+              endif
+            endif
+          -%}
+          <li
+            class="events-map__item cursor-pointer p-4 rounded-lg transition-colors hover:bg-wave-200"
+            {% if has_coords %}data-event-id="{{ event.system.id }}"{% endif %}
+          >
+            {%- if date_out != blank -%}
+              <p class="text-xs uppercase tracking-widest text-seaweed-600 mb-1">{{ date_out }}</p>
+            {%- endif -%}
+            <p class="font-bold text-base">{{ event.title.value | default: event.system.handle }}</p>
+            {%- if event.venue_name.value != blank -%}
+              <p class="text-sm">{{ event.venue_name.value }}</p>
+            {%- endif -%}
+            {%- if event.city.value != blank -%}
+              <p class="text-sm text-seaweed-700">{{ event.city.value }}{% if event.region.value != blank %}, {{ event.region.value }}{% endif %}</p>
+            {%- endif -%}
+            {%- if event.rsvp_url.value != blank -%}
+              <a href="{{ event.rsvp_url.value }}" class="mt-2 inline-block text-xs font-bold underline">RSVP / Details</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+      </div>
+
+      <div data-map-wrap class="relative md:col-span-2">
+        <div
+          data-map
+          class="w-full rounded-lg overflow-hidden bg-sand-200 h-105 lg:h-150"
+          style="min-height: 320px;"
+        ></div>
+        <button
+          type="button"
+          data-list-toggle
+          class="md:hidden absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-seaweed-700 shadow-lg"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          List
+        </button>
+      </div>
+
+      {%- comment -%} Coordinates from empty metaobject fields serialize to null and are dropped client-side. {%- endcomment -%}
+      <script type="application/json" data-events>
+        [
+          {%- for event in events -%}
+            {
+              "id": {{ event.system.id | json }},
+              "title": {{ event.title.value | json }},
+              "date": {{ event.start_at.value | date: '%b %-d, %Y' | json }},
+              "venue": {{ event.venue_name.value | json }},
+              "lat": {{ event.latitude.value | json }},
+              "lng": {{ event.longitude.value | json }},
+              "url": {{ event.rsvp_url.value | json }}
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      </script>
+    </events-map>
+    {%- endpaginate -%}
+  {%- endif -%}
+</div>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .events-map__item.is-active {
+    background-color: var(--color-sand-200, #f5f1ea);
+    box-shadow: inset 3px 0 0 var(--color-seaweed-600, #2f4f4f);
+  }
+  #shopify-section-{{ section.id }} .em-popup {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 220px;
+    font-family: inherit;
+  }
+  #shopify-section-{{ section.id }} .em-popup__date {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  #shopify-section-{{ section.id }} .em-popup__title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  #shopify-section-{{ section.id }} .em-popup__venue {
+    font-size: 13px;
+  }
+  #shopify-section-{{ section.id }} .em-popup__link {
+    font-size: 12px;
+    text-decoration: underline;
+    margin-top: 4px;
+  }
+  #shopify-section-{{ section.id }} .events-map__dist {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-coral-600, #ff6f61);
+  }
+
+  /* Mobile (below md / 48rem): map is the hero; the list becomes a slide-up
+     bottom sheet toggled by the "List" pill. Desktop is untouched — the sheet
+     wrapper is display:contents there, so the <ol> is the grid item as before. */
+  @media (max-width: 47.98rem) {
+    #shopify-section-{{ section.id }} [data-map] {
+      height: 70vh;
+    }
+    #shopify-section-{{ section.id }} [data-list-sheet] {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 85vh;
+      z-index: 60;
+      background: #fff;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.18);
+      transform: translateY(100%);
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #shopify-section-{{ section.id }} events-map.list-open [data-list-sheet] {
+      transform: translateY(0);
+    }
+    #shopify-section-{{ section.id }} [data-list-sheet] [data-event-list] {
+      flex: 1 1 auto;
+      min-height: 0;
+      max-height: none;
+      overflow-y: auto;
+      padding-bottom: 1rem;
+    }
+    #shopify-section-{{ section.id }} events-map.list-open [data-list-toggle] {
+      display: none;
+    }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Events Map",
+  "tag": "section",
+  "class": "section-events-map",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Events"
+    },
+    {
+      "type": "text",
+      "id": "heading_classes",
+      "label": "Heading CSS classes",
+      "default": "font-bold uppercase tracking-widest text-2xl lg:text-3xl"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Find an OSEA event near you."
+    },
+    {
+      "type": "text",
+      "id": "subheading_classes",
+      "label": "Subheading CSS classes",
+      "default": "text-base text-seaweed-700"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state text",
+      "default": "No events scheduled right now — check back soon."
+    },
+    {
+      "type": "header",
+      "content": "Location search"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_location_search",
+      "label": "Enable address / ZIP search + radius filter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Search field label",
+      "default": "Find events near you"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search field placeholder",
+      "default": "Enter an address or ZIP code"
+    },
+    {
+      "type": "header",
+      "content": "Map"
+    },
+    {
+      "type": "text",
+      "id": "map_style",
+      "label": "Mapbox style URL",
+      "info": "GL JS format, e.g. mapbox://styles/mapbox/streets-v12",
+      "default": "mapbox://styles/mapbox/streets-v12"
+    },
+    {
+      "type": "text",
+      "id": "pin_color",
+      "label": "Pin color (hex)",
+      "default": "#ff6f61"
+    },
+    {
+      "type": "text",
+      "id": "center_lat",
+      "label": "Default center latitude",
+      "info": "Used before pins load / if only one event.",
+      "default": "39.8"
+    },
+    {
+      "type": "text",
+      "id": "center_lng",
+      "label": "Default center longitude",
+      "default": "-98.5"
+    },
+    {
+      "type": "range",
+      "id": "default_zoom",
+      "label": "Default zoom",
+      "min": 1,
+      "max": 15,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "text",
+      "id": "section_classes",
+      "label": "Section wrapper CSS classes",
+      "default": "container px-6 py-12"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Events Map"
+    }
+  ]
+}
+{% endschema %}
