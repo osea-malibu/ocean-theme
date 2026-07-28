@@ -125,6 +125,27 @@
     }
   }
 
+  /* Cart rewards "Show all" disclosure — animate native <details> open/close.
+     interpolate-size is scoped to the element so `block-size: auto` can animate.
+     Browsers without ::details-content support fall back to an instant toggle. */
+  details.rewards-disclosure {
+    interpolate-size: allow-keywords;
+  }
+  details.rewards-disclosure::details-content {
+    block-size: 0;
+    overflow: hidden;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: block-size, content-visibility;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 0.35s;
+      transition-behavior: allow-discrete;
+    }
+  }
+  details.rewards-disclosure[open]::details-content {
+    block-size: auto;
+  }
+
   menu-drawer .menu-drawer,
   menu-drawer .menu-submenu {
     translate: -100%;
