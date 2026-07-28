@@ -218,6 +218,30 @@
                                 assign subscription_group = group
                               endif
                             endfor
+
+                            comment
+                              Resolve the default (pre-selected) variant. Falls back to the first
+                              available variant when no valid default variant ID is set.
+                            endcomment
+                            assign default_variant = block.settings.atc_button_product.selected_or_first_available_variant
+                            assign has_default_variant = false
+                            assign default_variant_id = block.settings.default_variant_id | plus: 0
+                            if default_variant_id > 0
+                              assign matched_variant = block.settings.atc_button_product.variants | where: 'id', default_variant_id | first
+                              if matched_variant != blank
+                                assign default_variant = matched_variant
+                                assign has_default_variant = true
+                              endif
+                            endif
+
+                            comment
+                              Show a price range only when the picker is shown, the product has
+                              multiple variants, and no specific default variant is pinned.
+                            endcomment
+                            assign show_variant_price_range = false
+                            if block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false and has_default_variant == false
+                              assign show_variant_price_range = true
+                            endif
                           -%}
                           {%- if block.settings.is_subscription and block.settings.atc_button_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 and subscription_group -%}
                             {%- liquid
@@ -283,6 +307,7 @@
                                 data-updateUrl="false"
                               >
                                 {%- for option in block.settings.atc_button_product.options_with_values -%}
+                                  {%- assign default_option_value = default_variant.options[forloop.index0] -%}
                                   <div class="relative block{% if block.settings.variant_classes != blank %} {{ block.settings.variant_classes }}{% endif %}">
                                     <label class="absolute top-px left-3 z-10 text-xs font-medium block leading-5" for="Option-{{ block.settings.atc_button_product.id }}-{{ forloop.index0 }}-{{ block.id }}">
                                       {{- option.name -}}
@@ -293,7 +318,7 @@
                                       form="{{ product_form_id }}"
                                     >
                                       {%- for value in option.values -%}
-                                        <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                                        <option value="{{ value | escape }}" {% if default_option_value == value %}selected="selected"{% endif %}>
                                           {{ value }}
                                         </option>
                                       {%- endfor -%}
@@ -313,6 +338,7 @@
                                 data-update-url="false"
                               >
                                 {%- for option in block.settings.atc_button_product.options_with_values -%}
+                                  {%- assign default_option_value = default_variant.options[forloop.index0] -%}
                                   <fieldset class="js flex{% if block.settings.variant_classes != blank %} {{ block.settings.variant_classes }}{% endif %}">
                                     <legend class="sr-only">{{ option.name }}</legend>
                                     {%- for value in option.values -%}
@@ -323,7 +349,7 @@
                                           name="{{ option.name }}"
                                           value="{{ value | escape }}"
                                           form="{{ product_form_id }}"
-                                          {% if option.selected_value == value %}checked{% endif %}
+                                          {% if default_option_value == value %}checked{% endif %}
                                         >
                                         <label
                                           class="button button-xs rounded-full lowercase button-secondary peer-checked:border-seaweed-400 peer-checked:bg-wave-200 mr-1 xs:mr-2{% if option.values.size > 2 %} px-2 2xs:px-2.5 xs:px-3{% else %} px-2.5 xs:px-3{% endif %}{% if block.settings.variant_button_classes != blank %} {{ block.settings.variant_button_classes }}{% endif %}"
@@ -355,7 +381,7 @@
                             </div>
 
                             {%- form 'product', block.settings.atc_button_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                              <input type="hidden" name="id" value="{{ block.settings.atc_button_product.selected_or_first_available_variant.id }}" disabled>
+                              <input type="hidden" name="id" value="{{ default_variant.id }}" disabled>
                               <input type="hidden" name="properties[_is_subscription]" value="false">
                               <button
                                 id="{{ product_form_id }}-submit"
@@ -376,7 +402,8 @@
                                     <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
                                       {% render 'price',
                                         product: block.settings.atc_button_product,
-                                        show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
+                                        selected_variant: default_variant,
+                                        show_price_range: show_variant_price_range,
                                         use_variant: true,
                                         subscription: block.settings.is_subscription,
                                         in_button: true
@@ -844,6 +871,12 @@
           "type": "checkbox",
           "id": "show_variants",
           "label": "Show variant selector"
+        },
+        {
+          "type": "text",
+          "id": "default_variant_id",
+          "label": "Default variant ID",
+          "info": "Optional. The variant pre-selected in the picker, and added to cart when the selector is hidden. In Admin, open the variant and copy the number at the end of the URL (…/variants/1234567890). Leave blank to use the first available variant."
         },
         {
           "type": "select",

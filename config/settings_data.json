@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "mapbox_token": "pk.eyJ1Ijoib3NlYS1lcmluIiwiYSI6ImNtcmpwbGgwZzA3Y3YyeW9ucjFoc3BjY3AifQ.tuNq93qiZ8wFsoh-e0ny0w",
     "travel_sizes": "1.7 oz, 1.5 oz, 1 oz, 0.6 oz, 0.22 oz, Scented / 1 oz",
     "enable_menu_item_images": false,
     "low_stock_threshold": 500,
@@ -46,7 +47,7 @@
     "enable_gwp": false,
     "gwp_type": "auto",
     "is_loyalty_gwp": false,
-    "enable_annoucement_bar_message": true,
+    "enable_annoucement_bar_message": false,
     "enable_product_qualifier_gwp": false,
     "gwp_product_qualifier": "",
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
@@ -123,8 +124,9 @@
           },
           "announcement_zQW6Bp": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
-              "text": "<p><a href=\"/collections/summer-essentials\" title=\"Summer Essentials\">Shop Seaweed-Powered Essentials</a></p>",
+              "text": "<p><a href=\"/pages/subscribe\" title=\"Subscribe & Save 10%\">Limited Time: Subscribe & Get Rewarded</a></p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider px-8 sm:px-0"
             }
           },
@@ -170,11 +172,11 @@
           "show_customer_support_phone": false,
           "enable_navbar": true,
           "navbar_menu": "ocean-navbar",
-          "promo_image": "shopify://shop_images/image_64ea7a6c-6c5b-4a82-84ed-f9d80b4c6464.webp",
-          "promo_heading": "Meet Your Body Moisturizer Match",
-          "promo_paragraph": "",
-          "promo_link": "https://oseamalibu.com/blogs/wellness-blog/how-to-choose-the-best-body-moisturizer-for-your-skin",
-          "promo_button": "FIND YOUR MATCH"
+          "promo_image": "shopify://shop_images/Digital_30th_High_Tide___Web_Mega_Menu___2026.07.21.jpg",
+          "promo_heading": "30 Years of OSEA",
+          "promo_paragraph": "<p>Explore the people, products and moments that have defined three decades of OSEA.</p>",
+          "promo_link": "shopify://pages/30-years-of-osea",
+          "promo_button": "DIVE IN"
         }
       },
       "footer": {
@@ -222,9 +224,10 @@
           "perks_heading": "Ways to Save, Earn & Enjoy",
           "perks_description": "Discover our programs designed to help you save, earn rewards, and enjoy early access to new launches.",
           "perks_image": "shopify://shop_images/DNS-1_RH_SCAN_1052-V.3_32a96b2e-0465-4280-b3e2-e4d44ca50bb1.jpg",
-          "perks_promo_heading": "",
-          "perks_promo_description": "",
-          "perks_exclusions": "quiz",
+          "perks_promo_heading": "Golden Ticket to Glow Giveaway",
+          "perks_promo_description": "Eligible orders placed through September 30 have a chance to win up to a year's supply of Undaria Algae™ Body Oil. Full details <a class=\"link\" href=\"https://oseamalibu.com/pages/discounts\">here</a>.",
+          "perks_promo_badge": "Free Gift",
+          "enable_secret_footer": false,
           "secret_heading": "",
           "secret_description": "<p>Our story began over 100 years ago with our great-grandmother Elsa. Bedridden from an injury, she had a dream: <em>“The ocean will heal you.”</em> She swam in the sea daily—and within months, she was healed.</p>\n<p>In 1996, we founded OSEA to bring her legacy and her belief in the healing power of the sea to life. Every formula we create is rooted in nature and guided by intention—crafted with clean, carefully chosen ingredients that honor your well-being and our planet.</p>\n<img class=\"w-52 mt-4\" alt=\"Signatures of OSEA founders Melissa and Jen\" src=\"https://cdn.shopify.com/s/files/1/1368/9993/files/melissa_jen_signature.png?v=1749241527\">   Mother &amp; Daughter Founders",
           "secret_image": "shopify://shop_images/OSEA_PRSHOOT-ROBIN-1213.jpg"
@@ -331,7 +334,8 @@
       ".cartoon-card s {display: none;}",
       "@media (min-width: 480px) {.cartoon-card s {display: inline; }}",
       "@media (min-width: 640px) {.sm\\:bg-dream-navy {background: #1d284d; }}",
-      ".text-number {font-size: 110%;}"
+      ".text-number {font-size: 110%;}",
+      "#_pxPixel4 {position: absolute; bottom: 0;}"
     ]
   }
 }

@@ -1,0 +1,208 @@
+{% comment %}
+  Events Map (Mini) — embeddable teaser for high-traffic pages (e.g. homepage).
+  Renders a STATIC image linking through to the full events page. No Mapbox GL JS
+  loads here, so it never incurs interactive map-load billing.
+
+  Image source, in priority order:
+    1. Uploaded image (`mini_image`) — hosted on Shopify's CDN, ZERO ongoing Mapbox cost. Preferred.
+    2. Live Mapbox Static Images API URL — auto-updates with event pins, but each
+       view is a Static Images request (50k/mo free, then billed). Fallback only.
+{% endcomment %}
+
+{%- liquid
+  assign events = shop.metaobjects.event.values
+  assign token = settings.mapbox_token
+  assign style = section.settings.map_style
+  assign pin_color = section.settings.pin_color | remove: '#'
+  assign max_pins = section.settings.max_pins
+  assign width = 640
+  assign height = section.settings.image_height
+-%}
+
+{%- comment -%} Build comma-separated pin overlays for the static fallback image. {%- endcomment -%}
+{%- assign overlays = '' -%}
+{%- assign pin_count = 0 -%}
+{%- for event in events -%}
+  {%- if event.latitude.value != blank and event.longitude.value != blank and pin_count < max_pins -%}
+    {%- capture pin -%}pin-s+{{ pin_color }}({{ event.longitude.value }},{{ event.latitude.value }}){%- endcapture -%}
+    {%- if overlays == blank -%}
+      {%- assign overlays = pin -%}
+    {%- else -%}
+      {%- assign overlays = overlays | append: ',' | append: pin -%}
+    {%- endif -%}
+    {%- assign pin_count = pin_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} Resolve the image src: uploaded image wins, else live Mapbox static URL. {%- endcomment -%}
+{%- assign map_src = '' -%}
+{%- if section.settings.mini_image != blank -%}
+  {%- assign map_src = section.settings.mini_image | image_url: width: 1280 -%}
+{%- elsif token != blank -%}
+  {%- if overlays != blank -%}
+    {%- capture map_src -%}https://api.mapbox.com/styles/v1/{{ style }}/static/{{ overlays }}/auto/{{ width }}x{{ height }}@2x?access_token={{ token }}&attribution=false&logo=false&padding=48{%- endcapture -%}
+  {%- else -%}
+    {%- capture map_src -%}https://api.mapbox.com/styles/v1/{{ style }}/static/{{ section.settings.center_lng }},{{ section.settings.center_lat }},{{ section.settings.default_zoom }}/{{ width }}x{{ height }}@2x?access_token={{ token }}&attribution=false&logo=false{%- endcapture -%}
+  {%- endif -%}
+{%- endif -%}
+
+<div class="{{ section.settings.section_classes }}">
+  <a href="{{ section.settings.link }}" class="group relative block overflow-hidden rounded-lg" aria-label="{{ section.settings.heading | default: 'View events' | escape }}">
+    {%- if map_src != blank -%}
+      <img
+        src="{{ map_src }}"
+        width="{{ width }}"
+        height="{{ height }}"
+        loading="lazy"
+        alt="{{ section.settings.image_alt | escape }}"
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        style="aspect-ratio: {{ width }} / {{ height }};"
+      />
+    {%- else -%}
+      <div class="w-full bg-sand-200" style="aspect-ratio: {{ width }} / {{ height }};"></div>
+    {%- endif -%}
+
+    <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center text-white" style="background-color: rgba(0,0,0,0.25);">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="max-w-md">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.cta_text != blank -%}
+        <span class="mt-2 inline-block font-bold underline underline-offset-4">{{ section.settings.cta_text }}</span>
+      {%- endif -%}
+    </div>
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "Events Map (Mini)",
+  "tag": "section",
+  "class": "section-events-map-mini",
+  "settings": [
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Events page link",
+      "info": "Where the map clicks through to (e.g. /pages/events)."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "OSEA Events"
+    },
+    {
+      "type": "text",
+      "id": "heading_classes",
+      "label": "Heading CSS classes",
+      "default": "font-bold uppercase tracking-widest text-xl lg:text-2xl"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "See where we'll be next."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Call to action text",
+      "default": "View all events"
+    },
+    {
+      "type": "header",
+      "content": "Map image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mini_image",
+      "label": "Map image (recommended)",
+      "info": "Upload a pre-rendered map screenshot to avoid all Mapbox request costs. Leave empty to auto-generate a live Mapbox image with event pins."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Map of upcoming OSEA events"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Image height (px)",
+      "min": 240,
+      "max": 640,
+      "step": 20,
+      "default": 420
+    },
+    {
+      "type": "header",
+      "content": "Live fallback settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "Only used when no image is uploaded above."
+    },
+    {
+      "type": "text",
+      "id": "map_style",
+      "label": "Mapbox style path",
+      "info": "Static API format, e.g. mapbox/streets-v12",
+      "default": "mapbox/streets-v12"
+    },
+    {
+      "type": "text",
+      "id": "pin_color",
+      "label": "Pin color (hex)",
+      "default": "ff6f61"
+    },
+    {
+      "type": "range",
+      "id": "max_pins",
+      "label": "Max pins on fallback image",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "default": 25
+    },
+    {
+      "type": "text",
+      "id": "center_lat",
+      "label": "Fallback center latitude",
+      "default": "39.8"
+    },
+    {
+      "type": "text",
+      "id": "center_lng",
+      "label": "Fallback center longitude",
+      "default": "-98.5"
+    },
+    {
+      "type": "range",
+      "id": "default_zoom",
+      "label": "Fallback zoom",
+      "min": 1,
+      "max": 15,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "text",
+      "id": "section_classes",
+      "label": "Section wrapper CSS classes",
+      "default": "container px-6 py-8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Events Map (Mini)"
+    }
+  ]
+}
+{% endschema %}
