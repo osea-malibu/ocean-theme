@@ -24,8 +24,20 @@
     assign has_product = true
   endif
 
+  comment
+    Resolve the variant to add to cart. A pinned "Default variant ID" wins; otherwise fall
+    back to the product's first available variant. Mirrors multicolumn.liquid.
+  endcomment
   assign variant = product.selected_or_first_available_variant
-  assign card_image = section.settings.custom_image | default: product.featured_image
+  assign default_variant_id = section.settings.default_variant_id | plus: 0
+  if default_variant_id > 0
+    assign matched_variant = product.variants | where: 'id', default_variant_id | first
+    if matched_variant != blank
+      assign variant = matched_variant
+    endif
+  endif
+
+  assign card_image = section.settings.custom_image | default: variant.image | default: product.featured_image
   assign card_title = section.settings.custom_title | default: product.title
   assign selector = section.settings.observer_selector | strip
   assign form_id = 'sticky-product-card-form-' | append: section.id
@@ -75,13 +87,16 @@
     <div class="flex-1 min-w-0">
       <span class="block text-sm font-medium text-seaweed-800 truncate">{{ card_title }}</span>
       {%- if section.settings.show_price and variant != blank -%}
-        <span class="block text-xs text-wave-700">
+        <span class="block text-xs text-wave-600">
           {%- if variant.compare_at_price > variant.price -%}
             <s class="text-wave-500">{{ variant.compare_at_price | money }}</s>
-            <span class="text-coral-700">{{ variant.price | money }}</span>
+            <span class="text-seaweed-700">{{ variant.price | money }}</span>
           {%- else -%}
-            {{ variant.price | money }}
+            <span class="text-seaweed-700">{{ variant.price | money }}</span>
           {%- endif -%}
+          {%- unless product.has_only_default_variant -%}
+            <span class="text-wave-600"> · {{ variant.title }}</span>
+          {%- endunless -%}
         </span>
       {%- endif -%}
     </div>
@@ -209,8 +224,13 @@
     {
       "type": "product",
       "id": "product",
-      "label": "Product",
-      "info": "Adds this product's default (first available) variant to the cart."
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "default_variant_id",
+      "label": "Default variant ID",
+      "info": "Optional. The specific variant added to the cart. In Admin, open the variant and copy the number at the end of the URL (…/variants/1234567890). Leave blank to use the first available variant."
     },
     {
       "type": "header",
