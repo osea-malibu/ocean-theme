@@ -48,6 +48,7 @@
   <sticky-product-card
     id="StickyProductCard-{{ section.id }}"
     data-observer-target="{{ selector | escape }}"
+    inert
     class="
       fixed inset-x-0 bottom-0 z-40
       flex items-center gap-3
@@ -129,6 +130,11 @@
       "sticky-product-card",
       class StickyProductCard extends HTMLElement {
         connectedCallback() {
+          // Only manage the shared --sticky-atc-height var (which the theme uses to lift the
+          // Gorgias chat widget above sticky bars) when the PDP's own <product-sticky-atc> is
+          // absent, so the two never fight over the same variable on a product page.
+          this.managesChatOffset = !document.querySelector("product-sticky-atc");
+
           const selector = (this.dataset.observerTarget || "").trim();
 
           // No observer target, or no IntersectionObserver support: always show the card.
@@ -166,14 +172,28 @@
 
         disconnectedCallback() {
           this.observer?.disconnect();
+          this.setChatOffset(0);
         }
 
         show() {
           this.dataset.visible = "true";
+          this.inert = false;
+          // offsetHeight ignores the transform/opacity used for the animation, so it reports
+          // the card's true laid-out height even mid-transition.
+          this.setChatOffset(this.offsetHeight);
         }
 
         hide() {
           this.dataset.visible = "false";
+          this.inert = true;
+          this.setChatOffset(0);
+        }
+
+        // Lift the Gorgias chat button/window above the card via the theme's shared
+        // --sticky-atc-height variable (see the Gorgias rules in application.css).
+        setChatOffset(px) {
+          if (!this.managesChatOffset) return;
+          document.documentElement.style.setProperty("--sticky-atc-height", `${px}px`);
         }
       }
     );
