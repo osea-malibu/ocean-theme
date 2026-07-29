@@ -1,0 +1,252 @@
+{% comment %}
+  Sticky Product Card
+  -------------------
+  A floating add-to-cart card that can be dropped onto any page/template. It pins to the
+  bottom of the viewport (full-width bar on mobile, floating card bottom-left/right on desktop)
+  and adds a chosen product to the cart.
+
+  Cart behaviour is delegated to the theme's global <product-form> Web Component
+  (src/scripts/product-form.js) — same as main-product and collection-comparison-matrix — so
+  it opens the cart drawer, fires cart analytics, and honours the subscription guard for free.
+
+  Visibility is driven by the <sticky-product-card> custom element defined in the
+  {% raw %}{% javascript %}{% endraw %} block below. When an "observer" selector is set, the card
+  stays HIDDEN while that element (usually a hero containing its own ATC) is in view, and slides
+  in once it scrolls out of view. Leave the selector blank to always show the card.
+
+  The JS can't read Liquid, so per-instance config is passed via data-* attributes.
+{% endcomment %}
+
+{%- liquid
+  assign product = section.settings.product
+  assign has_product = false
+  if product != blank
+    assign has_product = true
+  endif
+
+  assign variant = product.selected_or_first_available_variant
+  assign card_image = section.settings.custom_image | default: product.featured_image
+  assign card_title = section.settings.custom_title | default: product.title
+  assign selector = section.settings.observer_selector | strip
+  assign form_id = 'sticky-product-card-form-' | append: section.id
+
+  comment
+    Desktop positioning. Mobile is always a full-width bottom bar. Translate/opacity/pointer
+    classes are shared so they never depend on the position branch.
+  endcomment
+  case section.settings.desktop_position
+    when 'left'
+      assign position_classes = 'md:inset-x-auto md:right-auto md:left-6 md:bottom-6 md:w-auto md:max-w-sm md:rounded-2xl'
+    when 'full'
+      assign position_classes = 'md:mx-auto md:max-w-3xl md:rounded-2xl md:mb-4'
+    else
+      assign position_classes = 'md:inset-x-auto md:left-auto md:right-6 md:bottom-6 md:w-auto md:max-w-sm md:rounded-2xl'
+  endcase
+-%}
+
+{%- if has_product -%}
+  <sticky-product-card
+    id="StickyProductCard-{{ section.id }}"
+    data-observer-target="{{ selector | escape }}"
+    class="
+      fixed inset-x-0 bottom-0 z-40
+      flex items-center gap-3
+      bg-white border-t border-shell-300 md:border md:shadow-[0_10px_32px_rgba(0,0,0,0.14)]
+      px-4 py-3 md:px-4 md:py-3
+      translate-y-[120%] opacity-0 pointer-events-none
+      transition duration-300 ease-out will-change-transform
+      data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100 data-[visible=true]:pointer-events-auto
+      {{ position_classes }}
+    "
+    {{ section.shopify_attributes }}
+  >
+    {%- if card_image != blank -%}
+      <img
+        src="{{ card_image | image_url: width: 160 }}"
+        alt="{{ card_image.alt | default: card_title | escape }}"
+        width="48"
+        height="48"
+        loading="lazy"
+        class="w-12 h-12 rounded-lg object-cover shrink-0"
+      >
+    {%- endif -%}
+
+    <div class="flex-1 min-w-0">
+      <span class="block text-sm font-medium text-seaweed-800 truncate">{{ card_title }}</span>
+      {%- if section.settings.show_price and variant != blank -%}
+        <span class="block text-xs text-wave-700">
+          {%- if variant.compare_at_price > variant.price -%}
+            <s class="text-wave-500">{{ variant.compare_at_price | money }}</s>
+            <span class="text-coral-700">{{ variant.price | money }}</span>
+          {%- else -%}
+            {{ variant.price | money }}
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <product-form class="product-form sticky-product-card-form shrink-0" data-cart-type="{{ settings.cart_type }}">
+      {%- form 'product', product, id: form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" value="{{ variant.id }}" disabled>
+        <input type="hidden" name="properties[_is_subscription]" value="false">
+        <div class="product-form__buttons relative" id="AddToCart-{{ section.id }}">
+          <button
+            type="submit"
+            name="add"
+            class="product-form__submit button button-primary button-md whitespace-nowrap disabled:opacity-50 disabled:bg-wave-700 disabled:border-wave-700 disabled:text-white"
+            {% unless variant.available %}disabled{% endunless %}
+          >
+            <span class="loading-spinner absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
+              {% render 'icon-spinner', classes: 'h-4 w-4 text-white' %}
+            </span>
+            <span class="label">
+              {%- if variant.available -%}
+                {{ section.settings.button_label | default: 'Add to bag' }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </span>
+          </button>
+        </div>
+      {%- endform -%}
+      <div class="product-form__error-message-wrapper absolute left-4 right-4 bottom-full mb-1 text-sm" role="alert" hidden>
+        <mark class="bg-white text-coral-800">
+          {% render 'icon-error-circle', classes: 'icon icon-error w-4 h-4 inline mr-1', aria_hidden: true, stroke_width: 2 %}
+          <span class="product-form__error-message leading-4 align-bottom"></span>
+        </mark>
+      </div>
+    </product-form>
+  </sticky-product-card>
+{%- elsif request.design_mode -%}
+  <div class="p-4 m-4 text-sm text-center border border-dashed rounded-lg border-wave-400 text-wave-700">
+    Sticky Product Card — select a product in the section settings to preview it.
+  </div>
+{%- endif -%}
+
+{% javascript %}
+  if (!customElements.get("sticky-product-card")) {
+    customElements.define(
+      "sticky-product-card",
+      class StickyProductCard extends HTMLElement {
+        connectedCallback() {
+          const selector = (this.dataset.observerTarget || "").trim();
+
+          // No observer target, or no IntersectionObserver support: always show the card.
+          if (!selector || !("IntersectionObserver" in window)) {
+            this.show();
+            return;
+          }
+
+          const target = document.querySelector(selector);
+          if (!target) {
+            // Fail open: if the target can't be found, show the card so ATC still works.
+            console.warn(
+              `[sticky-product-card] Observer target "${selector}" not found on page; showing card.`
+            );
+            this.show();
+            return;
+          }
+
+          this.observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                // Hide the card while the target (e.g. the hero ATC) is in view;
+                // reveal it once the target scrolls out of view.
+                if (entry.isIntersecting) {
+                  this.hide();
+                } else {
+                  this.show();
+                }
+              });
+            },
+            { threshold: 0 }
+          );
+          this.observer.observe(target);
+        }
+
+        disconnectedCallback() {
+          this.observer?.disconnect();
+        }
+
+        show() {
+          this.dataset.visible = "true";
+        }
+
+        hide() {
+          this.dataset.visible = "false";
+        }
+      }
+    );
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Sticky Product Card",
+  "tag": "section",
+  "class": "sticky-product-card-section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Adds this product's default (first available) variant to the cart."
+    },
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "text",
+      "id": "observer_selector",
+      "label": "Hide while this element is in view",
+      "info": "CSS selector for an element — usually a hero with its own Add to Cart. While it is on screen the card stays hidden, then slides in once it scrolls out of view. Examples: #AddToCart or .hero-atc-wrapper. Leave blank to always show the card."
+    },
+    {
+      "type": "header",
+      "content": "Display"
+    },
+    {
+      "type": "text",
+      "id": "custom_title",
+      "label": "Title override",
+      "info": "Defaults to the product title."
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image",
+      "label": "Image override",
+      "info": "Defaults to the product's featured image."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Add to bag"
+    },
+    {
+      "type": "select",
+      "id": "desktop_position",
+      "label": "Desktop position",
+      "info": "Mobile is always a full-width bottom bar.",
+      "options": [
+        { "value": "right", "label": "Bottom right" },
+        { "value": "left", "label": "Bottom left" },
+        { "value": "full", "label": "Full-width bar" }
+      ],
+      "default": "right"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky Product Card"
+    }
+  ]
+}
+{% endschema %}
