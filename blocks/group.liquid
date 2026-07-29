@@ -1,0 +1,77 @@
+<div
+  class="theme-block-group theme-block-group--{{ block.settings.direction }}"
+  style="--theme-block-group-gap: {{ block.settings.gap }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% stylesheet %}
+  .theme-block-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--theme-block-group-gap);
+    width: 100%;
+  }
+
+  .theme-block-group--horizontal {
+    flex-direction: row;
+  }
+
+  .theme-block-group--horizontal > * {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  @media (max-width: 39.999rem) {
+    .theme-block-group--horizontal {
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Group",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "info": "Horizontal groups stack vertically on mobile.",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Group"
+    }
+  ]
+}
+{% endschema %}
