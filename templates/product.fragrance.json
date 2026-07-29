@@ -444,6 +444,13 @@
         "founder_image": "shopify://shop_images/012624_OSEA_PRSHOOT-ROBIN-938.jpg"
       }
     },
+    "video": {
+      "type": "product-video",
+      "settings": {
+        "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
+        "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-6 lg:mb-12"
+      }
+    },
     "ingredients_images": {
       "type": "product-ingredients-images",
       "blocks": {
@@ -474,13 +481,6 @@
         "section_classes": "",
         "header": "Results You Can Sea®",
         "subheader": ""
-      }
-    },
-    "video": {
-      "type": "product-video",
-      "settings": {
-        "description": "Product video: {{ product.metafields.custom_fields.short_description.value }}",
-        "wrapper_classes": "container mx-auto px-4 2xs:px-6 mb-6 lg:mb-12"
       }
     },
     "scent_profile": {
@@ -546,9 +546,9 @@
     "set-includes",
     "multicolumn_HQae8Y",
     "founder_quote",
+    "video",
     "ingredients_images",
     "clinicals",
-    "video",
     "scent_profile",
     "about_the_brand",
     "faqs",
