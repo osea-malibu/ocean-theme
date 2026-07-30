@@ -62,12 +62,17 @@
     opacity: 0;
     pointer-events: none;
   }
+}
 
-  /* Paid-only visibility gate (see src/scripts/paid-only.js).
-     Hidden by default; JS adds `.is-paid` for visitors from paid traffic. */
-  paid-only:not(.is-paid) {
-    display: none;
-  }
+/* Paid-only visibility gate (see src/scripts/paid-only.js).
+   Unlayered on purpose: it must beat the Tailwind display utility (e.g. `block`)
+   on the wrapped element. Those utilities live in `@layer utilities`, and layer
+   order beats specificity — a rule inside `@layer base` loses to `.block`.
+   Unlayered declarations win over every layer, so the gate holds regardless of
+   the display utility; `.is-paid` (added by JS) then lets that utility drive the
+   revealed state. */
+paid-only:not(.is-paid) {
+  display: none;
 }
 
 @layer components {
