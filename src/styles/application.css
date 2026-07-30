@@ -62,6 +62,12 @@
     opacity: 0;
     pointer-events: none;
   }
+
+  /* Paid-only visibility gate (see src/scripts/paid-only.js).
+     Hidden by default; JS adds `.is-paid` for visitors from paid traffic. */
+  paid-only:not(.is-paid) {
+    display: none;
+  }
 }
 
 @layer components {
@@ -162,8 +168,7 @@
     translate: 0;
     visibility: visible;
   }
-  menu-drawer [data-hamburger-submenu-item][data-open="true"]
-    [data-hamburger-submenu-toggle-line] {
+  menu-drawer [data-hamburger-submenu-item][data-open="true"] [data-hamburger-submenu-toggle-line] {
     transform: rotate(90deg);
   }
   .js details[open]:not(.menu-opening) > .header__icon--menu .icon-close {

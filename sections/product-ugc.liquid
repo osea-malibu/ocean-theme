@@ -1,5 +1,6 @@
 {%- assign ugc_video_entries = product.metafields.custom.ugc_video.value -%}
 {%- if ugc_video_entries != blank -%}
+{%- if section.settings.paid_only -%}<paid-only class="block">{%- endif -%}
 <div class="product-ugc-videos container mb-6 lg:mb-12 {{ section.settings.section_classes }}">
   <div class="bg-white rounded-xl p-6 lg:p-10">
     <div class="text-center mb-5">
@@ -70,6 +71,7 @@
     </horizontal-scroll-box>
   </div>
 </div>
+{%- if section.settings.paid_only -%}</paid-only>{%- endif -%}
 {%- endif -%}
 
 {% schema %}
@@ -93,6 +95,13 @@
       "id": "subheader",
       "label": "Subheader",
       "default": "Check out these reviews from real OSEA customers"
+    },
+    {
+      "type": "checkbox",
+      "id": "paid_only",
+      "label": "Show to paid traffic only",
+      "info": "When enabled, this section is only visible to visitors from paid sources (affiliate, CPC, Facebook ad, or TikTok ad). Detected via UTM params and persisted for the session.",
+      "default": false
     }
   ],
   "presets": [

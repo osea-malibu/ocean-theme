@@ -9,3 +9,4 @@ import "./details-disclosure.js";
 import "./details-modal.js";
 import "./collection-recently-viewed.js";
 import "./events-map.js";
+import "./paid-only.js";
