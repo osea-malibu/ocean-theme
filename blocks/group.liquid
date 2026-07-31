@@ -1,0 +1,87 @@
+{%- liquid
+  case block.settings.direction
+    when 'horizontal'
+      assign direction_class = 'flex-col sm:flex-row sm:[&>*]:min-w-0 sm:[&>*]:flex-1'
+    else
+      assign direction_class = 'flex-col'
+  endcase
+
+  case block.settings.gap
+    when 'small'
+      assign gap_class = 'gap-2'
+    when 'medium'
+      assign gap_class = 'gap-4'
+    when 'large'
+      assign gap_class = 'gap-8'
+    else
+      assign gap_class = 'gap-0'
+  endcase
+-%}
+
+<div
+  class="flex w-full {{ direction_class }} {{ gap_class }}"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Group",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "info": "Horizontal groups stack vertically on mobile.",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "select",
+      "id": "gap",
+      "label": "Gap",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "none"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Group",
+      "category": "Layout"
+    }
+  ]
+}
+{% endschema %}

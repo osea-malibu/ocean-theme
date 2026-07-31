@@ -1,0 +1,39 @@
+<div class="{% if section.settings.width == 'page' %}container{% else %}w-full{% endif %}">
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Theme block container",
+  "tag": "section",
+  "class": "section-theme-block-container",
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Container width",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page width"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "page"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Theme block container"
+    }
+  ]
+}
+{% endschema %}
