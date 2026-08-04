@@ -1,0 +1,116 @@
+{% render 'heading',
+  heading: block.settings.heading,
+  heading_level: block.settings.heading_level,
+  style_preset: block.settings.style_preset,
+  mobile_size: block.settings.mobile_size,
+  desktop_size: block.settings.desktop_size,
+  alignment: block.settings.alignment,
+  text_wrap: block.settings.text_wrap,
+  max_width: block.settings.max_width,
+  color: block.settings.color,
+  attributes: block.shopify_attributes
+%}
+
+{% schema %}
+{
+  "name": "Heading",
+  "tag": null,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_level",
+      "label": "Heading level",
+      "info": "Choose the level based on the page structure, not the visual size.",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "style_preset",
+      "label": "Style",
+      "options": [
+        { "value": "display", "label": "Display" },
+        { "value": "body", "label": "Body" },
+        { "value": "eyebrow", "label": "Eyebrow" }
+      ],
+      "default": "display"
+    },
+    {
+      "type": "select",
+      "id": "mobile_size",
+      "label": "Mobile size",
+      "options": [
+        { "value": "small", "label": "Small (20px)" },
+        { "value": "medium", "label": "Medium (30px)" },
+        { "value": "large", "label": "Large (36px)" },
+        { "value": "extra_large", "label": "Extra large (48px)" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "desktop_size",
+      "label": "Desktop size",
+      "options": [
+        { "value": "small", "label": "Small (24px)" },
+        { "value": "medium", "label": "Medium (30px)" },
+        { "value": "large", "label": "Large (36px)" },
+        { "value": "extra_large", "label": "Extra large (60px)" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_wrap",
+      "label": "Text wrapping",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "balance", "label": "Balanced" }
+      ],
+      "default": "balance"
+    },
+    {
+      "type": "select",
+      "id": "max_width",
+      "label": "Maximum width",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Color",
+      "default": "#1d4d41"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Heading"
+    }
+  ]
+}
+{% endschema %}

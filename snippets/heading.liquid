@@ -1,0 +1,115 @@
+{% comment %}
+  Renders a reusable heading.
+
+  Accepts:
+  - heading: {String} Heading content
+  - heading_level: {String} Semantic heading level (h1-h6)
+  - style_preset: {String} Typography preset (display, body, eyebrow)
+  - mobile_size: {String} Mobile text size (small, medium, large, extra_large)
+  - desktop_size: {String} Desktop text size (small, medium, large, extra_large)
+  - alignment: {String} Text alignment (left, center, right)
+  - text_wrap: {String} Text wrapping (normal, balance)
+  - max_width: {String} Maximum width (none, small, medium, large)
+  - color: {String} Optional CSS color value
+  - class: {String} Optional additional classes
+  - attributes: {String} Optional HTML attributes
+
+  Usage:
+  {% render 'heading', heading: 'Our story', heading_level: 'h2', style_preset: 'display', mobile_size: 'medium', desktop_size: 'large' %}
+{% endcomment %}
+
+{%- if heading != blank -%}
+{%- liquid
+  case heading_level
+    when 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+      assign heading_tag = heading_level
+    else
+      assign heading_tag = 'h2'
+  endcase
+
+  case style_preset
+    when 'body'
+      assign style_classes = 'font-sans tracking-wide'
+    when 'eyebrow'
+      assign style_classes = 'font-sans font-bold uppercase tracking-widest'
+    else
+      assign style_classes = 'font-serif tracking-tight'
+  endcase
+
+  case mobile_size
+    when 'small'
+      assign mobile_size_class = 'text-xl'
+    when 'large'
+      assign mobile_size_class = 'text-4xl'
+    when 'extra_large'
+      assign mobile_size_class = 'text-5xl'
+    else
+      assign mobile_size_class = 'text-3xl'
+  endcase
+
+  case desktop_size
+    when 'small'
+      assign desktop_size_class = 'sm:text-2xl'
+    when 'medium'
+      assign desktop_size_class = 'sm:text-3xl'
+    when 'extra_large'
+      assign desktop_size_class = 'sm:text-6xl'
+    else
+      assign desktop_size_class = 'sm:text-4xl'
+  endcase
+
+  case alignment
+    when 'center'
+      assign alignment_class = 'text-center'
+    when 'right'
+      assign alignment_class = 'text-right'
+    else
+      assign alignment_class = 'text-left'
+  endcase
+
+  if text_wrap == 'balance'
+    assign wrap_class = 'text-balance'
+  else
+    assign wrap_class = 'text-wrap'
+  endif
+
+  case max_width
+    when 'small'
+      assign max_width_class = 'max-w-md'
+    when 'medium'
+      assign max_width_class = 'max-w-2xl'
+    when 'large'
+      assign max_width_class = 'max-w-4xl'
+    else
+      assign max_width_class = ''
+  endcase
+
+  assign position_class = ''
+  if max_width_class != blank
+    case alignment
+      when 'center'
+        assign position_class = 'mx-auto'
+      when 'right'
+        assign position_class = 'ml-auto'
+    endcase
+  endif
+
+  assign heading_classes = style_classes | append: ' ' | append: mobile_size_class | append: ' ' | append: desktop_size_class | append: ' ' | append: alignment_class | append: ' ' | append: wrap_class | append: ' ' | append: max_width_class
+
+  if position_class != blank
+    assign heading_classes = heading_classes | append: ' ' | append: position_class
+  endif
+
+  if class != blank
+    assign heading_classes = heading_classes | append: ' ' | append: class
+  endif
+-%}
+
+<{{ heading_tag }}
+  class="{{ heading_classes }}"
+  {% if color != blank %}style="color: {{ color }};"{% endif %}
+  {% if attributes != blank %}{{ attributes }}{% endif %}
+>
+  {{- heading -}}
+</{{ heading_tag }}>
+{%- endif -%}
