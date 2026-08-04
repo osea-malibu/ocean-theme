@@ -13,10 +13,15 @@
     sizes_mobile         — sizes string for mobile source (optional)
     sizes_desktop        — sizes string for desktop source (optional)
 
-    widths               — CSV list of widths to generate (e.g. "320,480,640,800")
-    widths_preset        — 'plp' | 'banner' | 'generic' (ignored if widths given)
+    widths               — ascending CSV list of widths (e.g. "320,480,640,800")
+    widths_mobile        — mobile CSV override for art-directed images (optional)
+    widths_desktop       — desktop CSV override for art-directed images (optional)
+    widths_preset        — 'banner' | 'half' | 'plp' | 'generic' (ignored if widths given)
+    fallback_width       — fallback src width for single-source images (optional)
+    fallback_width_mobile — fallback src width for art-directed images (optional)
 
     alt                  — override alt text (falls back to asset alt)
+    decorative           — true for intentionally decorative images (optional)
     loading              — 'lazy' | 'eager' (default 'lazy', forced to 'eager' when fetchpriority=='high')
     fetchpriority        — 'high' | 'low' | 'auto' (optional)
     decoding             — 'async' | 'auto' (default 'async')
@@ -27,9 +32,22 @@
     desktop_min          — breakpoint for desktop source (default '640px')
 
   Notes:
-    • Always runs through imgix via {% render 'imgix' %}; GIFs bypass imgix.
+    • Uses imgix only for matching configured Shopify CDN URLs; GIFs and unmatched URLs bypass it.
     • Uses width descriptors + sizes so DPR is automatic (no explicit 2x/3x).
-    • Keep your width ladders modest (≈8–12 candidates) to avoid HTML bloat.
+    • Candidate widths larger than the source image are not rendered.
+    • Keep custom width ladders ascending and modest (≈8–12 candidates).
+
+  Basic usage:
+    {% render 'media-image', image: section.settings.image, widths_preset: 'half', class: 'block w-full' %}
+
+  Mobile/desktop usage:
+    {% render 'media-image',
+      image_mobile: section.settings.image_mobile,
+      image_desktop: section.settings.image_desktop,
+      widths_preset: 'banner',
+      fetchpriority: 'high',
+      class: 'block w-full'
+    %}
 {% endcomment %}
 
 {%- liquid
@@ -38,61 +56,60 @@
     assign mode = 'art'
   endif
 
-  # Width ladder
-  if widths != blank
-    assign widths_list = widths
-  else
-    case widths_preset
-      when 'banner' 
-        # Full-bleed/hero across breakpoints (rem-aware)
-        assign widths_list = '800,1200,1600,2000,2400,2880'
-      when 'mobile-full-desktop-half'
-        # 100vw on mobile, ~50vw on desktop (>= lg)
-        assign widths_list = '400,640,800,960,1200,1440,1600'
-      when 'mobile-half-desktop-fifth'
-        # 50vw on mobile, ~20vw on desktop (>= lg)
-        assign widths_list = '175,208,232,288,328,400,464,576,720,960'
-      else          
-        # Generic ladder
-        assign widths_list = '320,480,640,800,1024,1280,1600,1920,2400'
-    endcase
-  endif
+  # Presets define both the width candidates and their matching sizes value.
+  case widths_preset
+    when 'banner'
+      assign preset_widths = '320,480,640,750,960,1200,1600,2000,2400,2880'
+      assign preset_widths_mobile = '320,480,640,750'
+      assign preset_widths_desktop = '640,800,960,1200,1600,2000,2400,2880'
+      assign preset_sizes = '100vw'
+      assign preset_sizes_mobile = '100vw'
+      assign preset_sizes_desktop = '100vw'
+      assign preset_fallback_width = 1200
+      assign preset_fallback_width_mobile = 480
+    when 'half', 'mobile-full-desktop-half'
+      assign preset_widths = '320,480,640,800,960,1200,1440,1600'
+      assign preset_widths_mobile = preset_widths
+      assign preset_widths_desktop = preset_widths
+      assign preset_sizes = '(min-width: 64rem) 50vw, 100vw'
+      assign preset_sizes_mobile = '100vw'
+      assign preset_sizes_desktop = '50vw'
+      assign preset_fallback_width = 960
+      assign preset_fallback_width_mobile = 480
+    when 'plp', 'mobile-half-desktop-fifth'
+      assign preset_widths = '175,208,232,288,328,400,464,576,720,960'
+      assign preset_widths_mobile = preset_widths
+      assign preset_widths_desktop = preset_widths
+      assign preset_sizes = '(min-width: 64rem) 20vw, 50vw'
+      assign preset_sizes_mobile = '50vw'
+      assign preset_sizes_desktop = '20vw'
+      assign preset_fallback_width = 576
+      assign preset_fallback_width_mobile = 328
+    else
+      assign preset_widths = '320,480,640,800,1024,1280,1600,1920,2400'
+      assign preset_widths_mobile = preset_widths
+      assign preset_widths_desktop = preset_widths
+      assign preset_sizes = '100vw'
+      assign preset_sizes_mobile = '100vw'
+      assign preset_sizes_desktop = '100vw'
+      assign preset_fallback_width = 800
+      assign preset_fallback_width_mobile = 480
+  endcase
+
+  assign widths_list = widths | default: preset_widths
+  assign widths_mobile_list = widths_mobile | default: widths | default: preset_widths_mobile
+  assign widths_desktop_list = widths_desktop | default: widths | default: preset_widths_desktop
   assign widths_arr = widths_list | split: ','
+  assign widths_mobile_arr = widths_mobile_list | split: ','
+  assign widths_desktop_arr = widths_desktop_list | split: ','
 
-  # Sizes
-  assign sizes_single  = sizes | default: '100vw'
-  assign sizes_mobile  = sizes_mobile | default: sizes | default: '100vw'
-  assign sizes_desktop = sizes_desktop | default: sizes | default: '100vw'
-  assign desktop_min   = desktop_min | default: '40rem'
-
-  # If sizes aren't provided, infer sensible defaults from widths_preset
-  if mode == 'single' and sizes == blank and widths_preset != blank
-    case widths_preset
-      when 'banner'
-        assign sizes_single = '100vw'
-      when 'mobile-full-desktop-half'
-        assign sizes_single = '(min-width: 64rem) 50vw, 100vw'
-      when 'mobile-half-desktop-fifth'
-        assign sizes_single = '(min-width: 64rem) 20vw, 50vw'
-    endcase
-  endif
-
-  # rem-based auto-sizes for art direction presets
-  if mode == 'art' and widths_preset != blank
-    if sizes_mobile == blank or sizes_desktop == blank
-      case widths_preset
-        when 'banner'
-          assign sizes_mobile  = '100vw'
-          assign sizes_desktop = '100vw'
-        when 'mobile-full-desktop-half'
-          assign sizes_mobile  = '100vw'
-          assign sizes_desktop = '50vw'
-        when 'mobile-half-desktop-fifth'
-          assign sizes_mobile  = '50vw'
-          assign sizes_desktop = '20vw'
-      endcase
-    endif
-  endif
+  assign sizes_single = sizes | default: preset_sizes
+  assign sizes_mobile = sizes_mobile | default: sizes | default: preset_sizes_mobile
+  assign sizes_desktop = sizes_desktop | default: sizes | default: preset_sizes_desktop
+  assign requested_fallback_width = fallback_width
+  assign fallback_width = fallback_width | default: preset_fallback_width
+  assign fallback_width_mobile = fallback_width_mobile | default: requested_fallback_width | default: preset_fallback_width_mobile
+  assign desktop_min = desktop_min | default: '40rem'
 
   # Fit classes
   assign fit_class = ''
@@ -103,67 +120,97 @@
   endif
 
   # Loading defaults
-  if loading == blank
-    if fetchpriority == 'high'
-      assign loading = 'eager'
-    else
-      assign loading = 'lazy'
-    endif
+  if fetchpriority == 'high'
+    assign loading = 'eager'
+  elsif loading == blank
+    assign loading = 'lazy'
   endif
+  unless loading == 'lazy' or loading == 'eager'
+    assign loading = 'lazy'
+  endunless
+
+  unless fetchpriority == blank or fetchpriority == 'high' or fetchpriority == 'low' or fetchpriority == 'auto'
+    assign fetchpriority = blank
+  endunless
+
   assign decoding = decoding | default: 'async'
+  unless decoding == 'async' or decoding == 'sync' or decoding == 'auto'
+    assign decoding = 'async'
+  endunless
 -%}
 
 {%- if mode == 'single' and image != blank -%}
   {%- liquid
     # Build srcset for single image
     assign srcset_parts = ''
+    assign last_candidate_width = 0
     for w in widths_arr
-      assign w = w | strip
-      if w == ''
+      assign candidate_width = w | strip | plus: 0
+      if candidate_width <= 0
         continue
       endif
-      assign raw_url = image | image_url: width: w
-      if image contains '.gif'
+
+      if candidate_width > image.width
+        assign candidate_width = image.width
+      endif
+      if candidate_width <= last_candidate_width
+        continue
+      endif
+
+      assign raw_url = image | image_url: width: candidate_width
+      if raw_url contains '.gif'
         assign optimized = raw_url
-      else
+      elsif settings.enableImgix and settings.shopifyCdnUrl != blank and settings.imgixUrl != blank and raw_url contains settings.shopifyCdnUrl
         capture optimized
-          render 'imgix', src: raw_url
+          render 'imgix', src: raw_url, w: candidate_width
         endcapture
+      else
+        assign optimized = raw_url
       endif
       if srcset_parts == ''
-        assign srcset_parts = optimized | append: ' ' | append: w | append: 'w'
+        assign srcset_parts = optimized | append: ' ' | append: candidate_width | append: 'w'
       else
-        assign srcset_parts = srcset_parts | append: '||' | append: optimized | append: ' ' | append: w | append: 'w'
+        assign srcset_parts = srcset_parts | append: '||' | append: optimized | append: ' ' | append: candidate_width | append: 'w'
+      endif
+      assign last_candidate_width = candidate_width
+      if candidate_width >= image.width
+        break
       endif
     endfor
     assign srcset_attr = srcset_parts | split: '||' | join: ', '
 
-    # Fallback src (use the smallest width provided)
-    assign first_w = widths_arr | first | strip
-    assign raw_src = image | image_url: width: first_w
-    if image contains '.gif'
+    # Use a useful fallback size without requesting pixels larger than the source.
+    assign fallback_src_width = fallback_width | plus: 0 | at_most: image.width
+    if fallback_src_width <= 0
+      assign fallback_src_width = image.width
+    endif
+    assign raw_src = image | image_url: width: fallback_src_width
+    if raw_src contains '.gif'
       assign src_attr = raw_src
-    else
+    elsif settings.enableImgix and settings.shopifyCdnUrl != blank and settings.imgixUrl != blank and raw_src contains settings.shopifyCdnUrl
       capture src_attr
-        render 'imgix', src: raw_src
+        render 'imgix', src: raw_src, w: fallback_src_width
       endcapture
+    else
+      assign src_attr = raw_src
     endif
 
     # Alt text
-    assign alt_text = alt
-    if alt_text == blank and image.alt
-      assign alt_text = image.alt | escape
-    endif
+    assign alt_text = blank
+    unless decorative
+      assign alt_text = alt | default: image.alt
+    endunless
   -%}
 
   {% comment %} theme-check-disable RemoteAsset {% endcomment %}
   <img
-    {% if id %}id="{{ id }}"{% endif %}
-    class="{{ class }} {{ fit_class }}"
-    srcset="{{ srcset_attr }}"
-    sizes="{{ sizes_single }}"
-    src="{{ src_attr }}"
-    {% if alt_text != blank %}alt="{{ alt_text }}"{% else %}alt="" aria-hidden="true"{% endif %}
+    {% if id %}id="{{ id | escape }}"{% endif %}
+    {% if class != blank or fit_class != blank %}class="{{ class | escape }}{% if fit_class != blank %} {{ fit_class }}{% endif %}"{% endif %}
+    srcset="{{ srcset_attr | escape }}"
+    sizes="{{ sizes_single | escape }}"
+    src="{{ src_attr | escape }}"
+    alt="{{ alt_text | escape }}"
+    {% if decorative %}aria-hidden="true"{% endif %}
     loading="{{ loading }}"
     {% if fetchpriority %}fetchpriority="{{ fetchpriority }}"{% endif %}
     decoding="{{ decoding }}"
@@ -176,80 +223,113 @@
   {%- liquid
     # Build srcset for MOBILE
     assign m_parts = ''
-    for w in widths_arr
-      assign w = w | strip
-      if w == ''
+    assign last_mobile_candidate_width = 0
+    for w in widths_mobile_arr
+      assign candidate_width = w | strip | plus: 0
+      if candidate_width <= 0
         continue
       endif
-      assign m_raw = image_mobile | image_url: width: w
-      if image_mobile contains '.gif'
+
+      if candidate_width > image_mobile.width
+        assign candidate_width = image_mobile.width
+      endif
+      if candidate_width <= last_mobile_candidate_width
+        continue
+      endif
+
+      assign m_raw = image_mobile | image_url: width: candidate_width
+      if m_raw contains '.gif'
         assign m_opt = m_raw
-      else
+      elsif settings.enableImgix and settings.shopifyCdnUrl != blank and settings.imgixUrl != blank and m_raw contains settings.shopifyCdnUrl
         capture m_opt
-          render 'imgix', src: m_raw
+          render 'imgix', src: m_raw, w: candidate_width
         endcapture
+      else
+        assign m_opt = m_raw
       endif
       if m_parts == ''
-        assign m_parts = m_opt | append: ' ' | append: w | append: 'w'
+        assign m_parts = m_opt | append: ' ' | append: candidate_width | append: 'w'
       else
-        assign m_parts = m_parts | append: '||' | append: m_opt | append: ' ' | append: w | append: 'w'
+        assign m_parts = m_parts | append: '||' | append: m_opt | append: ' ' | append: candidate_width | append: 'w'
+      endif
+      assign last_mobile_candidate_width = candidate_width
+      if candidate_width >= image_mobile.width
+        break
       endif
     endfor
     assign m_srcset = m_parts | split: '||' | join: ', '
-    assign m_first_w = widths_arr | first | strip
-    assign m_raw_src = image_mobile | image_url: width: m_first_w
-    if image_mobile contains '.gif'
+    assign mobile_fallback_src_width = fallback_width_mobile | plus: 0 | at_most: image_mobile.width
+    if mobile_fallback_src_width <= 0
+      assign mobile_fallback_src_width = image_mobile.width
+    endif
+    assign m_raw_src = image_mobile | image_url: width: mobile_fallback_src_width
+    if m_raw_src contains '.gif'
       assign m_src = m_raw_src
-    else
+    elsif settings.enableImgix and settings.shopifyCdnUrl != blank and settings.imgixUrl != blank and m_raw_src contains settings.shopifyCdnUrl
       capture m_src
-        render 'imgix', src: m_raw_src
+        render 'imgix', src: m_raw_src, w: mobile_fallback_src_width
       endcapture
+    else
+      assign m_src = m_raw_src
     endif
 
     # Build srcset for DESKTOP
     assign d_parts = ''
-    for w in widths_arr
-      assign w = w | strip
-      if w == ''
+    assign last_desktop_candidate_width = 0
+    for w in widths_desktop_arr
+      assign candidate_width = w | strip | plus: 0
+      if candidate_width <= 0
         continue
       endif
-      assign d_raw = image_desktop | image_url: width: w
-      if image_desktop contains '.gif'
+
+      if candidate_width > image_desktop.width
+        assign candidate_width = image_desktop.width
+      endif
+      if candidate_width <= last_desktop_candidate_width
+        continue
+      endif
+
+      assign d_raw = image_desktop | image_url: width: candidate_width
+      if d_raw contains '.gif'
         assign d_opt = d_raw
-      else
+      elsif settings.enableImgix and settings.shopifyCdnUrl != blank and settings.imgixUrl != blank and d_raw contains settings.shopifyCdnUrl
         capture d_opt
-          render 'imgix', src: d_raw
+          render 'imgix', src: d_raw, w: candidate_width
         endcapture
+      else
+        assign d_opt = d_raw
       endif
       if d_parts == ''
-        assign d_parts = d_opt | append: ' ' | append: w | append: 'w'
+        assign d_parts = d_opt | append: ' ' | append: candidate_width | append: 'w'
       else
-        assign d_parts = d_parts | append: '||' | append: d_opt | append: ' ' | append: w | append: 'w'
+        assign d_parts = d_parts | append: '||' | append: d_opt | append: ' ' | append: candidate_width | append: 'w'
+      endif
+      assign last_desktop_candidate_width = candidate_width
+      if candidate_width >= image_desktop.width
+        break
       endif
     endfor
     assign d_srcset = d_parts | split: '||' | join: ', '
 
     # Alt text preference: explicit alt > mobile alt > desktop alt
-    assign alt_text = alt
-    if alt_text == blank and image_mobile.alt
-      assign alt_text = image_mobile.alt | escape
-    endif
-    if alt_text == blank and image_desktop.alt
-      assign alt_text = image_desktop.alt | escape
-    endif
+    assign alt_text = blank
+    unless decorative
+      assign alt_text = alt | default: image_mobile.alt | default: image_desktop.alt
+    endunless
   -%}
 
   {% comment %} theme-check-disable ImgLazyLoading, RemoteAsset {% endcomment %}
   <picture>
-    <source srcset="{{ d_srcset }}" sizes="{{ sizes_desktop }}" media="(min-width: {{ desktop_min }})">
-    <source srcset="{{ m_srcset }}" sizes="{{ sizes_mobile }}" media="(max-width: calc({{ desktop_min }} - 1px))">
+    <source srcset="{{ d_srcset | escape }}" sizes="{{ sizes_desktop | escape }}" media="(min-width: {{ desktop_min | escape }})">
+    <source srcset="{{ m_srcset | escape }}" sizes="{{ sizes_mobile | escape }}" media="(max-width: calc({{ desktop_min | escape }} - 1px))">
     <img
-      {% if id %}id="{{ id }}"{% endif %}
-      class="{{ class }} {{ fit_class }}"
-      srcset="{{ m_srcset }}"
-      sizes="{{ sizes_mobile }}"
-      src="{{ m_src }}"
-      {% if alt_text != blank %}alt="{{ alt_text }}"{% else %}alt="" aria-hidden="true"{% endif %}
+      {% if id %}id="{{ id | escape }}"{% endif %}
+      {% if class != blank or fit_class != blank %}class="{{ class | escape }}{% if fit_class != blank %} {{ fit_class }}{% endif %}"{% endif %}
+      srcset="{{ m_srcset | escape }}"
+      sizes="{{ sizes_mobile | escape }}"
+      src="{{ m_src | escape }}"
+      alt="{{ alt_text | escape }}"
+      {% if decorative %}aria-hidden="true"{% endif %}
       loading="{{ loading }}"
       {% if fetchpriority %}fetchpriority="{{ fetchpriority }}"{% endif %}
       decoding="{{ decoding }}"

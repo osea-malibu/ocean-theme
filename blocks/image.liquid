@@ -1,0 +1,342 @@
+{%- liquid
+  assign image_desktop = block.settings.image
+  assign image_mobile = block.settings.image_mobile
+  assign display_image = image_desktop | default: image_mobile
+  assign display_image_mobile = image_mobile | default: image_desktop
+  assign display_image_desktop = image_desktop | default: image_mobile
+  assign natural_width = display_image.width | default: block.settings.custom_width
+  assign focal_point_mobile = display_image_mobile.presentation.focal_point | default: '50% 50%'
+  assign focal_point_desktop = display_image_desktop.presentation.focal_point | default: '50% 50%'
+
+  assign natural_aspect_ratio_mobile = 'auto'
+  if display_image_mobile != blank
+    capture natural_aspect_ratio_mobile
+      echo display_image_mobile.width
+      echo ' / '
+      echo display_image_mobile.height
+    endcapture
+  endif
+
+  assign natural_aspect_ratio_desktop = 'auto'
+  if display_image_desktop != blank
+    capture natural_aspect_ratio_desktop
+      echo display_image_desktop.width
+      echo ' / '
+      echo display_image_desktop.height
+    endcapture
+  endif
+
+  case block.settings.aspect_ratio
+    when 'square'
+      assign aspect_ratio = '1 / 1'
+    when 'portrait'
+      assign aspect_ratio = '4 / 5'
+    when 'landscape'
+      assign aspect_ratio = '16 / 9'
+    else
+      assign aspect_ratio = 'auto'
+  endcase
+
+  assign widths_preset = 'generic'
+  assign sizes = '100vw'
+  if block.settings.width == 'fill'
+    assign widths_preset = 'banner'
+  elsif block.settings.width == 'custom'
+    capture sizes
+      echo '(min-width: '
+      echo block.settings.custom_width
+      echo 'px) '
+      echo block.settings.custom_width
+      echo 'px, 100vw'
+    endcapture
+  elsif display_image != blank
+    capture sizes
+      echo '(min-width: '
+      echo display_image.width
+      echo 'px) '
+      echo display_image.width
+      echo 'px, 100vw'
+    endcapture
+  endif
+
+  assign loading = 'lazy'
+  assign fetchpriority = blank
+  if block.settings.prioritize_loading
+    assign loading = 'eager'
+    assign fetchpriority = 'high'
+  endif
+-%}
+
+<div
+  class="theme-image-block theme-image-block--{{ block.settings.alignment }} theme-image-block--ratio-{{ block.settings.aspect_ratio }}"
+  style="
+    --theme-image-aspect-ratio: {{ aspect_ratio }};
+    --theme-image-custom-width: {{ block.settings.custom_width }}px;
+    --theme-image-fit: {{ block.settings.image_fit }};
+    --theme-image-natural-width: {{ natural_width }}px;
+    --theme-image-natural-ratio-mobile: {{ natural_aspect_ratio_mobile }};
+    --theme-image-natural-ratio-desktop: {{ natural_aspect_ratio_desktop }};
+    --theme-image-position-mobile: {{ focal_point_mobile }};
+    --theme-image-position-desktop: {{ focal_point_desktop }};
+  "
+  {{ block.shopify_attributes }}
+>
+  <div class="theme-image-block__media theme-image-block__media--{{ block.settings.width }}">
+    {%- if display_image != blank -%}
+      {% render 'media-image',
+        image: display_image,
+        image_mobile: image_mobile,
+        image_desktop: image_desktop,
+        sizes: sizes,
+        widths_preset: widths_preset,
+        alt: block.settings.alt,
+        decorative: block.settings.decorative,
+        loading: loading,
+        fetchpriority: fetchpriority,
+        class: 'theme-image-block__image'
+      %}
+    {%- elsif request.design_mode -%}
+      {{ 'image' | placeholder_svg_tag: 'theme-image-block__placeholder' }}
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .theme-image-block {
+    display: flex;
+    width: 100%;
+  }
+
+  .theme-image-block--left {
+    justify-content: flex-start;
+  }
+
+  .theme-image-block--center {
+    justify-content: center;
+  }
+
+  .theme-image-block--right {
+    justify-content: flex-end;
+  }
+
+  .theme-image-block__media {
+    max-width: 100%;
+  }
+
+  .theme-image-block__media--fill {
+    width: 100%;
+  }
+
+  .theme-image-block__media--fit {
+    width: min(100%, var(--theme-image-natural-width));
+  }
+
+  .theme-image-block__media--custom {
+    width: min(100%, var(--theme-image-custom-width));
+  }
+
+  .theme-image-block__media:not(.theme-image-block__media--fill) {
+    flex-shrink: 0;
+  }
+
+  .theme-image-block__media picture {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  .theme-image-block__image,
+  .theme-image-block__placeholder {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .theme-image-block__image {
+    object-fit: var(--theme-image-fit);
+    object-position: var(--theme-image-position-mobile);
+  }
+
+  .theme-image-block--ratio-adapt .theme-image-block__media {
+    aspect-ratio: var(--theme-image-natural-ratio-mobile);
+  }
+
+  .theme-image-block--ratio-adapt .theme-image-block__image {
+    height: 100%;
+  }
+
+  .theme-image-block--ratio-square .theme-image-block__media,
+  .theme-image-block--ratio-portrait .theme-image-block__media,
+  .theme-image-block--ratio-landscape .theme-image-block__media {
+    aspect-ratio: var(--theme-image-aspect-ratio);
+    overflow: hidden;
+  }
+
+  .theme-image-block--ratio-square .theme-image-block__image,
+  .theme-image-block--ratio-square .theme-image-block__placeholder,
+  .theme-image-block--ratio-portrait .theme-image-block__image,
+  .theme-image-block--ratio-portrait .theme-image-block__placeholder,
+  .theme-image-block--ratio-landscape .theme-image-block__image,
+  .theme-image-block--ratio-landscape .theme-image-block__placeholder {
+    height: 100%;
+  }
+
+  @media (min-width: 40rem) {
+    .theme-image-block--ratio-adapt .theme-image-block__media {
+      aspect-ratio: var(--theme-image-natural-ratio-desktop);
+    }
+
+    .theme-image-block__image {
+      object-position: var(--theme-image-position-desktop);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image",
+      "info": "Optional. Uses the main image when blank."
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Alt text override",
+      "info": "Leave blank to use the image's alt text.",
+      "visible_if": "{{ block.settings.decorative == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "decorative",
+      "label": "Decorative image",
+      "info": "Enable only when the image adds no meaning. Hides it from screen readers.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Original"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "fill",
+          "label": "Fill available space"
+        },
+        {
+          "value": "fit",
+          "label": "Fit image"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "Custom maximum width",
+      "info": "Used when Width is set to Custom.",
+      "visible_if": "{{ block.settings.width == 'custom' }}",
+      "min": 100,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 800
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ block.settings.width != 'fill' }}"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ block.settings.aspect_ratio != 'adapt' }}"
+    },
+    {
+      "type": "header",
+      "content": "Performance"
+    },
+    {
+      "type": "checkbox",
+      "id": "prioritize_loading",
+      "label": "Prioritize image loading",
+      "info": "Enable only when this image is visible when the page first loads.",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image"
+    }
+  ]
+}
+{% endschema %}
