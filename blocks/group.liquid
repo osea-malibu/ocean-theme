@@ -7,12 +7,26 @@
   endcase
 
   case block.settings.gap
-    when 'small'
+    when 1
+      assign gap_class = 'gap-1'
+    when 2
       assign gap_class = 'gap-2'
-    when 'medium'
+    when 3
+      assign gap_class = 'gap-3'
+    when 4
       assign gap_class = 'gap-4'
-    when 'large'
+    when 5
+      assign gap_class = 'gap-5'
+    when 6
+      assign gap_class = 'gap-6'
+    when 7
+      assign gap_class = 'gap-7'
+    when 8
       assign gap_class = 'gap-8'
+    when 9
+      assign gap_class = 'gap-9'
+    when 10
+      assign gap_class = 'gap-10'
     else
       assign gap_class = 'gap-0'
   endcase
@@ -53,28 +67,14 @@
       "default": "vertical"
     },
     {
-      "type": "select",
+      "type": "range",
       "id": "gap",
       "label": "Gap",
-      "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "small",
-          "label": "Small"
-        },
-        {
-          "value": "medium",
-          "label": "Medium"
-        },
-        {
-          "value": "large",
-          "label": "Large"
-        }
-      ],
-      "default": "none"
+      "info": "Each step equals 4px.",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
     }
   ],
   "presets": [
