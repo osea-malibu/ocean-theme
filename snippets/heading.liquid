@@ -4,9 +4,11 @@
   Accepts:
   - heading: {String} Heading content
   - heading_level: {String} Semantic heading level (h1-h6)
-  - style_preset: {String} Typography preset (display, body, eyebrow)
+  - font_style: {String} OSEA font family and weight preset
   - mobile_size: {String} Mobile text size (small, medium, large, extra_large)
   - desktop_size: {String} Desktop text size (small, medium, large, extra_large)
+  - line_height: {String} Line-height preset
+  - letter_spacing: {String} Letter-spacing preset
   - alignment: {String} Text alignment (left, center, right)
   - text_wrap: {String} Text wrapping (normal, balance)
   - max_width: {String} Maximum width (none, small, medium, large)
@@ -15,7 +17,7 @@
   - attributes: {String} Optional HTML attributes
 
   Usage:
-  {% render 'heading', heading: 'Our story', heading_level: 'h2', style_preset: 'display', mobile_size: 'medium', desktop_size: 'large' %}
+  {% render 'heading', heading: 'Our story', heading_level: 'h2', font_style: 'canela', mobile_size: 'medium', desktop_size: 'large' %}
 {% endcomment %}
 
 {%- if heading != blank -%}
@@ -27,13 +29,72 @@
       assign heading_tag = 'h2'
   endcase
 
-  case style_preset
-    when 'body'
-      assign style_classes = 'font-sans tracking-wide'
-    when 'eyebrow'
-      assign style_classes = 'font-sans font-bold uppercase tracking-widest'
+  assign selected_font_style = font_style | default: style_preset
+  assign default_tracking_class = 'tracking-tight'
+
+  case selected_font_style
+    when 'canela_italic'
+      assign font_classes = 'font-serif font-regular italic'
+    when 'circular_light'
+      assign font_classes = 'font-sans font-light'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_regular', 'body'
+      assign font_classes = 'font-sans font-regular'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_book'
+      assign font_classes = 'font-sans font-book'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_medium'
+      assign font_classes = 'font-sans font-medium'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_bold'
+      assign font_classes = 'font-sans font-bold'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_extra_bold'
+      assign font_classes = 'font-sans font-extrabold'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_black'
+      assign font_classes = 'font-sans font-black'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_eyebrow', 'eyebrow'
+      assign font_classes = 'font-sans font-bold uppercase'
+      assign default_tracking_class = 'tracking-widest'
     else
-      assign style_classes = 'font-serif tracking-tight'
+      assign font_classes = 'font-serif font-regular'
+  endcase
+
+  case line_height
+    when 'none'
+      assign line_height_class = 'leading-none'
+    when 'compact'
+      assign line_height_class = 'leading-[1.1]'
+    when 'tight'
+      assign line_height_class = 'leading-tight'
+    when 'snug'
+      assign line_height_class = 'leading-snug'
+    when 'normal'
+      assign line_height_class = 'leading-normal'
+    when 'relaxed'
+      assign line_height_class = 'leading-relaxed'
+    else
+      assign line_height_class = ''
+  endcase
+
+  case letter_spacing
+    when 'tightest'
+      assign tracking_class = 'tracking-[-0.075em]'
+    when 'tight'
+      assign tracking_class = 'tracking-[-0.02em]'
+    when 'normal'
+      assign tracking_class = 'tracking-normal'
+    when 'wide'
+      assign tracking_class = 'tracking-wide'
+    when 'wider'
+      assign tracking_class = 'tracking-wider'
+    when 'widest'
+      assign tracking_class = 'tracking-widest'
+    else
+      assign tracking_class = default_tracking_class
   endcase
 
   case mobile_size
@@ -94,7 +155,7 @@
     endcase
   endif
 
-  assign heading_classes = style_classes | append: ' ' | append: mobile_size_class | append: ' ' | append: desktop_size_class | append: ' ' | append: alignment_class | append: ' ' | append: wrap_class | append: ' ' | append: max_width_class
+  assign heading_classes = font_classes | append: ' ' | append: tracking_class | append: ' ' | append: mobile_size_class | append: ' ' | append: desktop_size_class | append: ' ' | append: line_height_class | append: ' ' | append: alignment_class | append: ' ' | append: wrap_class | append: ' ' | append: max_width_class
 
   if position_class != blank
     assign heading_classes = heading_classes | append: ' ' | append: position_class
