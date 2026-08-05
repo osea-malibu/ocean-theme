@@ -1,0 +1,87 @@
+{%- liquid
+  case block.settings.direction
+    when 'horizontal'
+      assign direction_class = 'flex-col sm:flex-row sm:[&>*]:min-w-0 sm:[&>*]:flex-1'
+    else
+      assign direction_class = 'flex-col'
+  endcase
+
+  case block.settings.gap
+    when 1
+      assign gap_class = 'gap-1'
+    when 2
+      assign gap_class = 'gap-2'
+    when 3
+      assign gap_class = 'gap-3'
+    when 4
+      assign gap_class = 'gap-4'
+    when 5
+      assign gap_class = 'gap-5'
+    when 6
+      assign gap_class = 'gap-6'
+    when 7
+      assign gap_class = 'gap-7'
+    when 8
+      assign gap_class = 'gap-8'
+    when 9
+      assign gap_class = 'gap-9'
+    when 10
+      assign gap_class = 'gap-10'
+    else
+      assign gap_class = 'gap-0'
+  endcase
+-%}
+
+<div
+  class="flex w-full {{ direction_class }} {{ gap_class }}"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Group",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "info": "Horizontal groups stack vertically on mobile.",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "info": "Each step equals 4px.",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Group",
+      "category": "Layout"
+    }
+  ]
+}
+{% endschema %}

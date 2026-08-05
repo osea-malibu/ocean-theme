@@ -1,0 +1,163 @@
+{% render 'heading',
+  heading: block.settings.heading,
+  heading_level: block.settings.heading_level,
+  font_style: block.settings.font_style,
+  mobile_size: block.settings.mobile_size,
+  desktop_size: block.settings.desktop_size,
+  line_height: block.settings.line_height,
+  letter_spacing: block.settings.letter_spacing,
+  alignment: block.settings.alignment,
+  text_wrap: block.settings.text_wrap,
+  max_width: block.settings.max_width,
+  color: block.settings.color,
+  attributes: block.shopify_attributes
+%}
+
+{% schema %}
+{
+  "name": "Heading",
+  "tag": null,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_level",
+      "label": "Heading level",
+      "info": "Choose the level based on the page structure, not the visual size.",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_style",
+      "label": "Font style",
+      "options": [
+        { "value": "canela", "label": "Canela" },
+        { "value": "canela_italic", "label": "Canela Italic" },
+        { "value": "circular_light", "label": "Circular Light" },
+        { "value": "circular_regular", "label": "Circular Regular" },
+        { "value": "circular_book", "label": "Circular Book" },
+        { "value": "circular_medium", "label": "Circular Medium" },
+        { "value": "circular_bold", "label": "Circular Bold" },
+        { "value": "circular_extra_bold", "label": "Circular Extra Bold" },
+        { "value": "circular_black", "label": "Circular Black" },
+        { "value": "circular_eyebrow", "label": "Circular Eyebrow" }
+      ],
+      "default": "canela"
+    },
+    {
+      "type": "select",
+      "id": "mobile_size",
+      "label": "Mobile size",
+      "options": [
+        { "value": "small", "label": "Small (20px)" },
+        { "value": "medium", "label": "Medium (30px)" },
+        { "value": "large", "label": "Large (36px)" },
+        { "value": "extra_large", "label": "Extra large (48px)" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "desktop_size",
+      "label": "Desktop size",
+      "options": [
+        { "value": "small", "label": "Small (24px)" },
+        { "value": "medium", "label": "Medium (30px)" },
+        { "value": "large", "label": "Large (36px)" },
+        { "value": "extra_large", "label": "Extra large (60px)" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "Line height",
+      "options": [
+        { "value": "automatic", "label": "Automatic" },
+        { "value": "none", "label": "None (1)" },
+        { "value": "compact", "label": "Compact (1.1)" },
+        { "value": "tight", "label": "Tight (1.25)" },
+        { "value": "snug", "label": "Snug (1.375)" },
+        { "value": "normal", "label": "Normal (1.5)" },
+        { "value": "relaxed", "label": "Relaxed (1.625)" }
+      ],
+      "default": "automatic"
+    },
+    {
+      "type": "select",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "options": [
+        { "value": "automatic", "label": "Automatic" },
+        { "value": "tightest", "label": "Tightest (-0.075em)" },
+        { "value": "tight", "label": "Tight (-0.02em)" },
+        { "value": "normal", "label": "Normal" },
+        { "value": "wide", "label": "Wide (0.025em)" },
+        { "value": "wider", "label": "Wider (0.05em)" },
+        { "value": "widest", "label": "Widest (0.1em)" }
+      ],
+      "default": "automatic"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_wrap",
+      "label": "Text wrapping",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "balance", "label": "Balanced" }
+      ],
+      "default": "balance"
+    },
+    {
+      "type": "select",
+      "id": "max_width",
+      "label": "Maximum width",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Color",
+      "default": "#1d4d41"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Heading"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,176 @@
+{% comment %}
+  Renders a reusable heading.
+
+  Accepts:
+  - heading: {String} Heading content
+  - heading_level: {String} Semantic heading level (h1-h6)
+  - font_style: {String} OSEA font family and weight preset
+  - mobile_size: {String} Mobile text size (small, medium, large, extra_large)
+  - desktop_size: {String} Desktop text size (small, medium, large, extra_large)
+  - line_height: {String} Line-height preset
+  - letter_spacing: {String} Letter-spacing preset
+  - alignment: {String} Text alignment (left, center, right)
+  - text_wrap: {String} Text wrapping (normal, balance)
+  - max_width: {String} Maximum width (none, small, medium, large)
+  - color: {String} Optional CSS color value
+  - class: {String} Optional additional classes
+  - attributes: {String} Optional HTML attributes
+
+  Usage:
+  {% render 'heading', heading: 'Our story', heading_level: 'h2', font_style: 'canela', mobile_size: 'medium', desktop_size: 'large' %}
+{% endcomment %}
+
+{%- if heading != blank -%}
+{%- liquid
+  case heading_level
+    when 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+      assign heading_tag = heading_level
+    else
+      assign heading_tag = 'h2'
+  endcase
+
+  assign selected_font_style = font_style | default: style_preset
+  assign default_tracking_class = 'tracking-tight'
+
+  case selected_font_style
+    when 'canela_italic'
+      assign font_classes = 'font-serif font-regular italic'
+    when 'circular_light'
+      assign font_classes = 'font-sans font-light'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_regular', 'body'
+      assign font_classes = 'font-sans font-regular'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_book'
+      assign font_classes = 'font-sans font-book'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_medium'
+      assign font_classes = 'font-sans font-medium'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_bold'
+      assign font_classes = 'font-sans font-bold'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_extra_bold'
+      assign font_classes = 'font-sans font-extrabold'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_black'
+      assign font_classes = 'font-sans font-black'
+      assign default_tracking_class = 'tracking-wide'
+    when 'circular_eyebrow', 'eyebrow'
+      assign font_classes = 'font-sans font-bold uppercase'
+      assign default_tracking_class = 'tracking-widest'
+    else
+      assign font_classes = 'font-serif font-regular'
+  endcase
+
+  case line_height
+    when 'none'
+      assign line_height_class = 'leading-none'
+    when 'compact'
+      assign line_height_class = 'leading-[1.1]'
+    when 'tight'
+      assign line_height_class = 'leading-tight'
+    when 'snug'
+      assign line_height_class = 'leading-snug'
+    when 'normal'
+      assign line_height_class = 'leading-normal'
+    when 'relaxed'
+      assign line_height_class = 'leading-relaxed'
+    else
+      assign line_height_class = ''
+  endcase
+
+  case letter_spacing
+    when 'tightest'
+      assign tracking_class = 'tracking-[-0.075em]'
+    when 'tight'
+      assign tracking_class = 'tracking-[-0.02em]'
+    when 'normal'
+      assign tracking_class = 'tracking-normal'
+    when 'wide'
+      assign tracking_class = 'tracking-wide'
+    when 'wider'
+      assign tracking_class = 'tracking-wider'
+    when 'widest'
+      assign tracking_class = 'tracking-widest'
+    else
+      assign tracking_class = default_tracking_class
+  endcase
+
+  case mobile_size
+    when 'small'
+      assign mobile_size_class = 'text-xl'
+    when 'large'
+      assign mobile_size_class = 'text-4xl'
+    when 'extra_large'
+      assign mobile_size_class = 'text-5xl'
+    else
+      assign mobile_size_class = 'text-3xl'
+  endcase
+
+  case desktop_size
+    when 'small'
+      assign desktop_size_class = 'sm:text-2xl'
+    when 'medium'
+      assign desktop_size_class = 'sm:text-3xl'
+    when 'extra_large'
+      assign desktop_size_class = 'sm:text-6xl'
+    else
+      assign desktop_size_class = 'sm:text-4xl'
+  endcase
+
+  case alignment
+    when 'center'
+      assign alignment_class = 'text-center'
+    when 'right'
+      assign alignment_class = 'text-right'
+    else
+      assign alignment_class = 'text-left'
+  endcase
+
+  if text_wrap == 'balance'
+    assign wrap_class = 'text-balance'
+  else
+    assign wrap_class = 'text-wrap'
+  endif
+
+  case max_width
+    when 'small'
+      assign max_width_class = 'max-w-md'
+    when 'medium'
+      assign max_width_class = 'max-w-2xl'
+    when 'large'
+      assign max_width_class = 'max-w-4xl'
+    else
+      assign max_width_class = ''
+  endcase
+
+  assign position_class = ''
+  if max_width_class != blank
+    case alignment
+      when 'center'
+        assign position_class = 'mx-auto'
+      when 'right'
+        assign position_class = 'ml-auto'
+    endcase
+  endif
+
+  assign heading_classes = font_classes | append: ' ' | append: tracking_class | append: ' ' | append: mobile_size_class | append: ' ' | append: desktop_size_class | append: ' ' | append: line_height_class | append: ' ' | append: alignment_class | append: ' ' | append: wrap_class | append: ' ' | append: max_width_class
+
+  if position_class != blank
+    assign heading_classes = heading_classes | append: ' ' | append: position_class
+  endif
+
+  if class != blank
+    assign heading_classes = heading_classes | append: ' ' | append: class
+  endif
+-%}
+
+<{{ heading_tag }}
+  class="{{ heading_classes }}"
+  {% if color != blank %}style="color: {{ color }};"{% endif %}
+  {% if attributes != blank %}{{ attributes }}{% endif %}
+>
+  {{- heading -}}
+</{{ heading_tag }}>
+{%- endif -%}
