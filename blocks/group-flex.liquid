@@ -1,10 +1,48 @@
 {%- liquid
   case block.settings.direction
     when 'horizontal'
-      assign direction_class = 'flex-col sm:flex-row sm:[&>*]:min-w-0 sm:[&>*]:flex-1'
+      assign direction_class = 'flex-col sm:flex-row sm:[&>*]:min-w-0'
+
+      if block.settings.equal_width
+        assign child_width_class = 'sm:[&>*]:flex-1'
+      endif
     else
       assign direction_class = 'flex-col'
   endcase
+
+  case block.settings.justify_content
+    when 'center'
+      assign justify_class = 'justify-center'
+    when 'end'
+      assign justify_class = 'justify-end'
+    when 'between'
+      assign justify_class = 'justify-between'
+    when 'around'
+      assign justify_class = 'justify-around'
+    when 'evenly'
+      assign justify_class = 'justify-evenly'
+    else
+      assign justify_class = 'justify-start'
+  endcase
+
+  case block.settings.align_items
+    when 'start'
+      assign align_class = 'items-start'
+    when 'center'
+      assign align_class = 'items-center'
+    when 'end'
+      assign align_class = 'items-end'
+    when 'baseline'
+      assign align_class = 'items-baseline'
+    else
+      assign align_class = 'items-stretch'
+  endcase
+
+  if block.settings.wrap
+    assign wrap_class = 'flex-wrap'
+  else
+    assign wrap_class = 'flex-nowrap'
+  endif
 
   case block.settings.gap
     when 1
@@ -33,7 +71,7 @@
 -%}
 
 <div
-  class="flex w-full {{ direction_class }} {{ gap_class }}"
+  class="flex w-full {{ direction_class }} {{ child_width_class }} {{ justify_class }} {{ align_class }} {{ wrap_class }} {{ gap_class }}"
   {{ block.shopify_attributes }}
 >
   {% content_for 'blocks' %}
@@ -50,6 +88,10 @@
   ],
   "settings": [
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
       "type": "select",
       "id": "direction",
       "label": "Direction",
@@ -65,6 +107,87 @@
         }
       ],
       "default": "vertical"
+    },
+    {
+      "type": "checkbox",
+      "id": "equal_width",
+      "label": "Equal-width items",
+      "info": "Applies to horizontal layouts.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "wrap",
+      "label": "Allow items to wrap",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Alignment"
+    },
+    {
+      "type": "select",
+      "id": "justify_content",
+      "label": "Content distribution",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        },
+        {
+          "value": "between",
+          "label": "Space between"
+        },
+        {
+          "value": "around",
+          "label": "Space around"
+        },
+        {
+          "value": "evenly",
+          "label": "Space evenly"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "select",
+      "id": "align_items",
+      "label": "Item alignment",
+      "options": [
+        {
+          "value": "stretch",
+          "label": "Stretch"
+        },
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        },
+        {
+          "value": "baseline",
+          "label": "Baseline"
+        }
+      ],
+      "default": "stretch"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",
