@@ -89,10 +89,10 @@
       {%- if section.settings.show_price and variant != blank -%}
         <span class="block text-xs text-wave-600">
           {%- if variant.compare_at_price > variant.price -%}
-            <s class="text-wave-500">{{ variant.compare_at_price | money }}</s>
-            <span class="text-seaweed-700">{{ variant.price | money }}</span>
+            <s class="text-wave-500">{{ variant.compare_at_price | money_without_trailing_zeros }}</s>
+            <span class="text-seaweed-700">{{ variant.price | money_without_trailing_zeros }}</span>
           {%- else -%}
-            <span class="text-seaweed-700">{{ variant.price | money }}</span>
+            <span class="text-seaweed-700">{{ variant.price | money_without_trailing_zeros }}</span>
           {%- endif -%}
           {%- unless product.has_only_default_variant -%}
             <span class="text-wave-600"> · {{ variant.title }}</span>
