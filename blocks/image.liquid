@@ -1,0 +1,367 @@
+{%- liquid
+  assign block_settings = block.settings
+
+  case block_settings.width_mobile
+    when 'three_quarters'
+      assign width_mobile_class = 'w-3/4'
+      assign sizes_mobile = '75vw'
+    when 'two_thirds'
+      assign width_mobile_class = 'w-2/3'
+      assign sizes_mobile = '67vw'
+    when 'half'
+      assign width_mobile_class = 'w-1/2'
+      assign sizes_mobile = '50vw'
+    else
+      assign width_mobile_class = 'w-full'
+      assign sizes_mobile = '100vw'
+  endcase
+
+  case block_settings.width_desktop
+    when 'three_quarters'
+      assign width_desktop_class = 'sm:w-3/4'
+      assign sizes_desktop = '75vw'
+    when 'two_thirds'
+      assign width_desktop_class = 'sm:w-2/3'
+      assign sizes_desktop = '67vw'
+    when 'half'
+      assign width_desktop_class = 'sm:w-1/2'
+      assign sizes_desktop = '50vw'
+    when 'third'
+      assign width_desktop_class = 'sm:w-1/3'
+      assign sizes_desktop = '33vw'
+    when 'quarter'
+      assign width_desktop_class = 'sm:w-1/4'
+      assign sizes_desktop = '25vw'
+    else
+      assign width_desktop_class = 'sm:w-full'
+      assign sizes_desktop = '100vw'
+  endcase
+
+  case block_settings.alignment
+    when 'center'
+      assign alignment_class = 'justify-center'
+    when 'right'
+      assign alignment_class = 'justify-end'
+    else
+      assign alignment_class = 'justify-start'
+  endcase
+
+  case block_settings.aspect_ratio
+    when 'square'
+      assign aspect_ratio_class = 'aspect-square object-cover'
+    when 'portrait'
+      assign aspect_ratio_class = 'aspect-[4/5] object-cover'
+    when 'landscape'
+      assign aspect_ratio_class = 'aspect-video object-cover'
+    else
+      assign aspect_ratio_class = ''
+  endcase
+
+  case block_settings.border_radius
+    when 'small'
+      assign border_radius_class = 'rounded-sm'
+    when 'medium'
+      assign border_radius_class = 'rounded-md'
+    when 'large'
+      assign border_radius_class = 'rounded-lg'
+    when 'extra_large'
+      assign border_radius_class = 'rounded-xl'
+    when 'full'
+      assign border_radius_class = 'rounded-full'
+    else
+      assign border_radius_class = ''
+  endcase
+
+  assign image_class = 'w-full'
+  if aspect_ratio_class != blank
+    assign image_class = image_class | append: ' ' | append: aspect_ratio_class
+  endif
+  if border_radius_class != blank
+    assign image_class = image_class | append: ' ' | append: border_radius_class
+  endif
+
+  assign content_class = width_mobile_class | append: ' ' | append: width_desktop_class
+  if border_radius_class != blank
+    assign content_class = content_class | append: ' ' | append: border_radius_class | append: ' overflow-hidden'
+  endif
+
+  assign image_available = false
+  if block_settings.image != blank or block_settings.image_mobile != blank
+    assign image_available = true
+  endif
+-%}
+
+<div
+  class="flex w-full {{ alignment_class }}"
+  {{ block.shopify_attributes }}
+>
+  {%- capture image_content -%}
+    {%- if image_available -%}
+      {% render 'media-image',
+        image: block_settings.image,
+        image_mobile: block_settings.image_mobile,
+        widths_preset: block_settings.widths_preset,
+        sizes_mobile: sizes_mobile,
+        sizes_desktop: sizes_desktop,
+        alt: block_settings.alt,
+        decorative: block_settings.decorative,
+        loading: block_settings.loading,
+        fetchpriority: block_settings.fetchpriority,
+        class: image_class
+      %}
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'block h-auto w-full bg-wave-200 text-wave-500' }}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if block_settings.link != blank -%}
+    <a
+      href="{{ block_settings.link }}"
+      class="{{ content_class }}"
+      {% if block_settings.link_label != blank %}
+        aria-label="{{ block_settings.link_label | escape }}"
+      {% endif %}
+    >
+      {{- image_content -}}
+    </a>
+  {%- else -%}
+    <div class="{{ content_class }}">
+      {{- image_content -}}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image"
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Alt text",
+      "info": "Leave blank to use the image's alt text."
+    },
+    {
+      "type": "checkbox",
+      "id": "decorative",
+      "label": "Decorative image",
+      "info": "Hides the image from screen readers.",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "info": "Required when a linked image is decorative."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "Mobile width",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full"
+        },
+        {
+          "value": "three_quarters",
+          "label": "Three quarters"
+        },
+        {
+          "value": "two_thirds",
+          "label": "Two thirds"
+        },
+        {
+          "value": "half",
+          "label": "Half"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "width_desktop",
+      "label": "Desktop width",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full"
+        },
+        {
+          "value": "three_quarters",
+          "label": "Three quarters"
+        },
+        {
+          "value": "two_thirds",
+          "label": "Two thirds"
+        },
+        {
+          "value": "half",
+          "label": "Half"
+        },
+        {
+          "value": "third",
+          "label": "One third"
+        },
+        {
+          "value": "quarter",
+          "label": "One quarter"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "value": "natural",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        }
+      ],
+      "default": "natural"
+    },
+    {
+      "type": "select",
+      "id": "border_radius",
+      "label": "Corner radius",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "extra_large",
+          "label": "Extra large"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Image delivery"
+    },
+    {
+      "type": "select",
+      "id": "widths_preset",
+      "label": "Responsive size preset",
+      "options": [
+        {
+          "value": "generic",
+          "label": "Generic"
+        },
+        {
+          "value": "banner",
+          "label": "Banner"
+        },
+        {
+          "value": "card",
+          "label": "Card"
+        },
+        {
+          "value": "thumbnail",
+          "label": "Thumbnail"
+        }
+      ],
+      "default": "generic"
+    },
+    {
+      "type": "select",
+      "id": "loading",
+      "label": "Loading",
+      "options": [
+        {
+          "value": "lazy",
+          "label": "Lazy"
+        },
+        {
+          "value": "eager",
+          "label": "Eager"
+        }
+      ],
+      "default": "lazy"
+    },
+    {
+      "type": "select",
+      "id": "fetchpriority",
+      "label": "Fetch priority",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "high",
+          "label": "High"
+        },
+        {
+          "value": "low",
+          "label": "Low"
+        }
+      ],
+      "default": "auto"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}
