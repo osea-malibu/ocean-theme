@@ -10,6 +10,11 @@
 {% endcomment %}
 
 {%- liquid
+  assign disable_product_links = false
+  if product.id == 8683931631799 or product.handle == '30th-anniversary-lip-oil-keychain'
+    assign disable_product_links = true
+  endif
+
   if product.metafields.custom.parent_product != blank
     assign product_url = product.metafields.custom.parent_product.value.url
     assign short_description = product.metafields.custom.parent_product.value.metafields.custom_fields.short_description
@@ -18,17 +23,24 @@
     assign short_description = product.metafields.custom_fields.short_description
   endif
 -%}
-{%- unless product.id == 8683931631799 or product.handle == '30th-anniversary-lip-oil-keychain' -%}
 <div class="relative bg-white items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
   <div class="flex flex-row gap-4 items-center">
     <div class="w-full order-1 grow flex flex-col items-start py-2">
-      <a href="{{ product_url | default: '#' }}" class="group text-sm tracking-wide leading-tight no-underline">
+      {%- if disable_product_links -%}
+        <div class="text-sm tracking-wide leading-tight">
+      {%- else -%}
+        <a href="{{ product_url | default: '#' }}" class="group text-sm tracking-wide leading-tight no-underline">
+      {%- endif -%}
         <h4 class="font-medium group-hover:underline mb-0.5">
           {{ product.title | replace: 'Deluxe Sample ', '' | escape }}
         </h4>
         <p class="group-hover:underline mb-0.5">{{ short_description }}</p>
         <p class="group-hover:underline mb-1">{{ product.metafields.my_fields.size }}</p>
-      </a>
+      {%- if disable_product_links -%}
+        </div>
+      {%- else -%}
+        </a>
+      {%- endif -%}
     </div>
 
     {%- liquid
@@ -41,12 +53,16 @@
       assign main_image_src_2x = image_object | image_url: width: 160, height: 160, crop: 'center'
     -%}
     {%- if image_object -%}
-      <a
-        aria-label="{{ product.title | escape }}"
-        href="{{ product_url | default: '#' }}"
-        class="group relative block mx-auto no-underline shrink-0 w-24 bg-wave-100 rounded-l-lg"
-        tabindex="-1"
-      >
+      {%- if disable_product_links -%}
+        <div class="relative block mx-auto shrink-0 w-24 bg-wave-100 rounded-l-lg">
+      {%- else -%}
+        <a
+          aria-label="{{ product.title | escape }}"
+          href="{{ product_url | default: '#' }}"
+          class="group relative block mx-auto no-underline shrink-0 w-24 bg-wave-100 rounded-l-lg"
+          tabindex="-1"
+        >
+      {%- endif -%}
         {% comment %} theme-check-disable RemoteAsset {% endcomment %}
         <img
           srcset="{% render 'imgix', src: main_image_src %} 1x, {% render 'imgix', src: main_image_src_2x %} 2x"
@@ -58,8 +74,11 @@
           class="mx-auto"
         >
         {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-      </a>
+      {%- if disable_product_links -%}
+        </div>
+      {%- else -%}
+        </a>
+      {%- endif -%}
     {%- endif -%}
   </div>
 </div>
-{%- endunless -%}
