@@ -57,10 +57,14 @@
                     </div>
                   {%- endif -%}
 
-                  <a class="link text-sm font-book" href="{{ product_url }}">
-                    <span>View full product details</span>
-                    {% render 'icon-arrow', variant: 'short', classes: 'w-4 h-4 inline-block ml-0.5', stroke_width: 2 %}
-                  </a>
+                  {%- unless product_in_set.id == 8683931631799
+                    or product_in_set.handle == '30th-anniversary-lip-oil-keychain'
+                  -%}
+                    <a class="link text-sm font-book" href="{{ product_url }}">
+                      <span>View full product details</span>
+                      {% render 'icon-arrow', variant: 'short', classes: 'w-4 h-4 inline-block ml-0.5', stroke_width: 2 %}
+                    </a>
+                  {%- endunless -%}
                 </div>
 
                 {%- liquid
