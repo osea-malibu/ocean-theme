@@ -1,0 +1,195 @@
+{%- liquid
+  case block.settings.columns_mobile
+    when 2
+      assign mobile_columns_class = 'grid-cols-2'
+    when 3
+      assign mobile_columns_class = 'grid-cols-3'
+    when 4
+      assign mobile_columns_class = 'grid-cols-4'
+    else
+      assign mobile_columns_class = 'grid-cols-1'
+  endcase
+
+  case block.settings.columns_desktop
+    when 1
+      assign desktop_columns_class = 'sm:grid-cols-1'
+    when 3
+      assign desktop_columns_class = 'sm:grid-cols-3'
+    when 4
+      assign desktop_columns_class = 'sm:grid-cols-4'
+    when 5
+      assign desktop_columns_class = 'sm:grid-cols-5'
+    when 6
+      assign desktop_columns_class = 'sm:grid-cols-6'
+    else
+      assign desktop_columns_class = 'sm:grid-cols-2'
+  endcase
+
+  case block.settings.justify_items
+    when 'start'
+      assign justify_items_class = 'justify-items-start'
+    when 'center'
+      assign justify_items_class = 'justify-items-center'
+    when 'end'
+      assign justify_items_class = 'justify-items-end'
+    else
+      assign justify_items_class = 'justify-items-stretch'
+  endcase
+
+  case block.settings.align_items
+    when 'start'
+      assign align_items_class = 'items-start'
+    when 'center'
+      assign align_items_class = 'items-center'
+    when 'end'
+      assign align_items_class = 'items-end'
+    when 'baseline'
+      assign align_items_class = 'items-baseline'
+    else
+      assign align_items_class = 'items-stretch'
+  endcase
+
+  case block.settings.gap
+    when 1
+      assign gap_class = 'gap-1'
+    when 2
+      assign gap_class = 'gap-2'
+    when 3
+      assign gap_class = 'gap-3'
+    when 4
+      assign gap_class = 'gap-4'
+    when 5
+      assign gap_class = 'gap-5'
+    when 6
+      assign gap_class = 'gap-6'
+    when 7
+      assign gap_class = 'gap-7'
+    when 8
+      assign gap_class = 'gap-8'
+    when 9
+      assign gap_class = 'gap-9'
+    when 10
+      assign gap_class = 'gap-10'
+    else
+      assign gap_class = 'gap-0'
+  endcase
+-%}
+
+<div
+  class="grid w-full {{ mobile_columns_class }} {{ desktop_columns_class }} {{ justify_items_class }} {{ align_items_class }} {{ gap_class }}"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Grid group",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Alignment"
+    },
+    {
+      "type": "select",
+      "id": "justify_items",
+      "label": "Horizontal item alignment",
+      "options": [
+        {
+          "value": "stretch",
+          "label": "Stretch"
+        },
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ],
+      "default": "stretch"
+    },
+    {
+      "type": "select",
+      "id": "align_items",
+      "label": "Vertical item alignment",
+      "options": [
+        {
+          "value": "stretch",
+          "label": "Stretch"
+        },
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        },
+        {
+          "value": "baseline",
+          "label": "Baseline"
+        }
+      ],
+      "default": "stretch"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "info": "Each step equals 4px.",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grid group",
+      "category": "Layout"
+    }
+  ]
+}
+{% endschema %}
