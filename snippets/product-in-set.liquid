@@ -18,6 +18,7 @@
     assign short_description = product.metafields.custom_fields.short_description
   endif
 -%}
+{%- unless product.id == 8683931631799 or product.handle == '30th-anniversary-lip-oil-keychain' -%}
 <div class="relative bg-white items-center mb-4 last:mb-0 border border-seaweed-300 rounded-lg {{ classes }}">
   <div class="flex flex-row gap-4 items-center">
     <div class="w-full order-1 grow flex flex-col items-start py-2">
@@ -61,3 +62,4 @@
     {%- endif -%}
   </div>
 </div>
+{%- endunless -%}
