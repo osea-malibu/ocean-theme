@@ -274,13 +274,24 @@
       {%- endif -%}
 
       {% comment %} Cart menu {% endcomment %}
-      <a href="{{ routes.cart_url }}" class="header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center 2xs:ml-1 md:ml-2 -mr-1" id="cart-icon-bubble">
+      <a href="{{ routes.cart_url }}" class="header__icon--cart relative cursor-pointer flex w-10 h-10 justify-center items-center 2xs:ml-1 md:ml-2 -mr-1" id="cart-icon-bubble">
         <span class="sr-only">Cart</span>
-        <div class="w-7 h-7 bg-seafoam-300 rounded-full flex justify-center items-center">
+        <div class="cart-icon-bubble w-7 h-7 bg-seafoam-300 rounded-full flex justify-center items-center">
           <span class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
           <span class="sr-only">items</span>
         </div>
+        <div class="cart-icon-bag hidden">
+          {%- render 'icon-bag', classes: 'h-6 w-6 hover:text-seaweed-500', aria_hidden: true, stroke_width: 1.75 -%}
+          {%- if cart.item_count > 0 -%}
+          <div class="absolute top-1 right-0 w-auto h-4 min-w-4 px-0.5 bg-seafoam-300 rounded-full flex justify-center items-center border border-seaweed-700/50">
+              <span class="-mt-px font-medium text-sm">{{ cart.item_count }}</span>
+              <span class="sr-only">items</span>
+            </div>
+          {%- endif -%}
+        </div>
       </a>
+
+      {% comment %} Accessible chat button {% endcomment %}
       <button
         type="button"
         class="sr-only button button-secondary button-sm focus:not-sr-only focus:flex focus:h-10 focus:items-center focus:px-3 focus:ml-2"
