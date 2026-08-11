@@ -485,7 +485,8 @@
       {%- if custom_badge_html != blank -%}
         {{ custom_badge_html }}
       {%- else -%}
-        {% render 'product-text-badge', product: card_product, classes: badge_class, percent_discount: percent_discount %}
+        {% assign positioned_badge = 'absolute top-1 right-1 mb-1 ' | append: badge_class %}
+        {% render 'product-text-badge', product: card_product, classes: positioned_badge, percent_discount: percent_discount %}
       {%- endif -%}
       
       {% render 'product-image-badge', product: card_product, classes: 'z-10 left-1 top-1 w-12 xl:w-16 gap-1' %}
