@@ -9,6 +9,66 @@
  */
 {
   "sections": {
+    "image_banner_JKyGBX": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_nHhEJb": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Glow",
+            "heading_classes": "block sm:hidden  text-[#fbf9c8] font-serif text-4xl mt-8 xs:text-[2.8rem] font-book mb-0 xs:mt-10 tracking-tight leading-none"
+          }
+        },
+        "heading_HdyJnx": {
+          "type": "heading",
+          "settings": {
+            "heading": "That Keeps You Coming Back",
+            "heading_classes": "block sm:hidden text-[#fbf9c8] font-serif text-4xl xs:text-[2.8rem] font-book max-w-xs px-2 tracking-tight leading-none"
+          }
+        },
+        "heading_LgHYLi": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Glow That Keeps You Coming Back",
+            "heading_classes": "hidden sm:block font-serif font-book text-[#fbf9c8] sm:text-3xl sm:mt-4 md:text-4xl md:mt-6 lg:text-5xl lg:mt-12 lg:tracking-wide xl:text-6xl 2xl:text-7xl 2xl:mt-14"
+          }
+        },
+        "paragraph_CUJ4ij": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Powered by nutrient-rich Undaria seaweed, our bestselling collection delivers lasting hydration, visible firming and all-over radiance.",
+            "paragraph_classes": "hidden sm:block text-[#fbf9c8] font-book text-lg mb-3 sm:text-sm sm:max-w-md mt-4 sm:mb-0 md:text-base md:max-w-xl md:px-4 lg:text-2xl lg:max-w-3xl lg:px-0 lg:mt-6 xl:text-[1.75rem] xl:max-w-4xl xl:font-regular xl:mt-8 2xl:text-4xl 2xl:max-w-none 2xl:px-40 2xl:mt-12"
+          }
+        },
+        "button_YEc9kp": {
+          "type": "button",
+          "settings": {
+            "button_label": "SHOP UNDARIA",
+            "button_aria_label": "",
+            "button_link": "shopify://collections/undaria-seaweed-collection",
+            "target_blank": false,
+            "button_classes": "button border-[#fbf9c8] bg-[#fbf9c8] button-sm px-6 py-2 mt-8  xs:button-lg xs:mt-10 sm:button-sm sm:mt-2 md:mt-4 lg:button-base lg:px-10 lg:py-3 xl:mt-8 xl:button-lg 2xl:button-xl 2xl:mt-10"
+          }
+        }
+      },
+      "block_order": [
+        "heading_nHhEJb",
+        "heading_HdyJnx",
+        "heading_LgHYLi",
+        "paragraph_CUJ4ij",
+        "button_YEc9kp"
+      ],
+      "name": "Undaria Collection HP",
+      "settings": {
+        "image_mobile": "shopify://shop_images/Undaria_Collection_Spotlight_Homepage_Hero_2026.08.10__Mobile_BLANK.jpg",
+        "image": "shopify://shop_images/Undaria_Collection_Spotlight_Homepage_Hero_2026.08.10__Desktop_BLANK.jpg",
+        "is_lazy": true,
+        "image_link": "https://oseamalibu.com/collections/undaria-seaweed-collection",
+        "banner_classes": "container mb-2",
+        "image_classes": "w-full h-full object-cover rounded",
+        "text_block_classes": "absolute inset-0 flex flex-col items-center justify-start text-center"
+      }
+    },
     "image_banner_ALJkpQ": {
       "type": "image-banner",
       "blocks": {
@@ -63,6 +123,7 @@
         "button_EVrrfm",
         "button_hVUUpp"
       ],
+      "disabled": true,
       "name": "30th Anniversary Heritage Hero",
       "settings": {
         "image_mobile": "shopify://shop_images/Brand_Heritage_Homepage_Hero_2026.07.21__MOBILE_LAYOUT_08fc306d-7564-4771-86ec-f87665f85015.jpg",
@@ -2603,6 +2664,7 @@
     }
   },
   "order": [
+    "image_banner_JKyGBX",
     "image_banner_ALJkpQ",
     "image_banner_mNVmJ6",
     "multicolumn_RfhKiM",
