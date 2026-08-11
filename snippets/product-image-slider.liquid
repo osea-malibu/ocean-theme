@@ -26,7 +26,13 @@ Accepts:
 >
   <div class="flex flex-col gap-1 z-10 right-2 top-2 absolute">
     {% render 'product-text-badge', product: product, classes: 'bg-p-surface text-p-inverse-d3 lg:text-base' %}
-    <div class="favorite-button-wrapper"></div>
+    <div class="favorite-button-wrapper opacity-0">
+      <rivo-favorite-button data-product-id="{{ product.id }}" rivo-ax-data="" rivo-ax-html="$store.icons.heart" rivo-ax-show="$store.rivo_aw_settings?.favorites_enabled &amp;&amp; (!$store.rivo_profile_customer || $store.loading_states.global_favorite_buttons)" data-rivo-favorite-loaded="true" role="button" tabindex="0" aria-pressed="false" aria-label="Add to favorites" aria-haspopup="dialog">
+        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <path d="M 15 7 C 8.9424416 7 4 11.942442 4 18 C 4 22.096154 7.0876448 25.952899 10.851562 29.908203 C 14.615481 33.863507 19.248379 37.869472 22.939453 41.560547 A 1.50015 1.50015 0 0 0 25.060547 41.560547 C 28.751621 37.869472 33.384518 33.863507 37.148438 29.908203 C 40.912356 25.952899 44 22.096154 44 18 C 44 11.942442 39.057558 7 33 7 C 29.523564 7 26.496821 8.8664883 24 12.037109 C 21.503179 8.8664883 18.476436 7 15 7 z"></path>
+        </svg>
+      </rivo-favorite-button>
+    </div>
   </div>
 
   <div class="glide__track md:rounded-xl" data-glide-el="track">
