@@ -1,3 +1,9 @@
+{%- liquid
+  assign reviews_paid_only = false
+  if section.settings.show_reviews and section.settings.review_traffic == 'paid'
+    assign reviews_paid_only = true
+  endif
+-%}
 <div class="{{ section.settings.section_classes }}">
   <div class="{{ section.settings.container_classes }}">
     {%- for product in section.settings.collection.products -%}
@@ -10,7 +16,9 @@
         variant_picker_type: section.settings.variant_picker_type,
         variant_picker_classes: section.settings.variant_picker_classes,
         is_pdp_link: section.settings.is_pdp_link,
-        pdp_link_label: section.settings.pdp_link_label
+        pdp_link_label: section.settings.pdp_link_label,
+        show_reviews: section.settings.show_reviews,
+        reviews_paid_only: reviews_paid_only
       %}
     {%- endfor -%}
   </div>
@@ -43,6 +51,35 @@
       "id": "is_subscription",
       "label": "Subscription card",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show product reviews",
+      "info": "Show star rating and review count on each card.",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "review_traffic",
+      "label": "Show reviews to",
+      "info": "\"Paid traffic only\" gates reviews behind the paid-only component — visible only to visitors from paid campaigns.",
+      "default": "all",
+      "visible_if": "{{ section.settings.show_reviews }}",
+      "options": [
+        {
+          "value": "all",
+          "label": "All traffic"
+        },
+        {
+          "value": "paid",
+          "label": "Paid traffic only"
+        }
+      ]
     },
     {
       "type": "textarea",
