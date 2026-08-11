@@ -95,7 +95,10 @@ export class CartItems extends HTMLElement {
       {
         id: "cart-icon-bubble",
         section: "cart-icon-bubble",
-        selector: ".shopify-section",
+        // Must target #cart-icon-bubble (not .shopify-section): the section renders an
+        // <a id="cart-icon-bubble"> whose innerHTML is injected into the live header
+        // anchor. Using .shopify-section injects the whole anchor and nests it in itself.
+        selector: "#cart-icon-bubble",
       },
       {
         id: "cart-live-region-text",

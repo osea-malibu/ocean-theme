@@ -362,7 +362,9 @@ class CartDrawerItems extends CartItems {
   getSectionsToRender() {
     return [
       { id: "CartDrawer", section: "cart-drawer", selector: ".cart-drawer" },
-      { id: "cart-icon-bubble", section: "cart-icon-bubble", selector: ".shopify-section" },
+      // #cart-icon-bubble (not .shopify-section): inject the anchor's inner content into
+      // the live header anchor. .shopify-section would nest the whole anchor in itself.
+      { id: "cart-icon-bubble", section: "cart-icon-bubble", selector: "#cart-icon-bubble" },
       {
         id: "shopify-section-announcement-bar",
         section: "announcement-bar",
