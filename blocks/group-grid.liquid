@@ -76,7 +76,7 @@
 -%}
 
 <div
-  class="grid w-full {{ mobile_columns_class }} {{ desktop_columns_class }} {{ justify_items_class }} {{ align_items_class }} {{ gap_class }}"
+  class="grid w-full {{ mobile_columns_class }} {{ desktop_columns_class }} {{ justify_items_class }} {{ align_items_class }} {{ gap_class }}{% if block.settings.classnames != blank %} {{ block.settings.classnames | escape }}{% endif %}"
   {{ block.shopify_attributes }}
 >
   {% content_for 'blocks' %}
@@ -183,6 +183,15 @@
       "max": 10,
       "step": 1,
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "classnames",
+      "label": "classnames"
     }
   ],
   "presets": [

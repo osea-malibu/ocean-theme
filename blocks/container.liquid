@@ -1,0 +1,74 @@
+{%- liquid
+  assign block_settings = block.settings
+  assign background_image = block_settings.image_desktop | default: block_settings.image_mobile
+-%}
+
+<div
+  class="relative w-full{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+  {% if block_settings.background_color != blank %}
+    style="background: {{ block_settings.background_color }};"
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {%- if background_image != blank -%}
+    <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      {% render 'media-image',
+        image_mobile: block_settings.image_mobile,
+        image_desktop: block_settings.image_desktop,
+        widths_preset: 'banner',
+        sizes: '100vw',
+        decorative: true,
+        class: 'h-full w-full max-w-none object-cover',
+        picture_class: 'h-full w-full'
+      %}
+    </div>
+  {%- endif -%}
+
+  <div class="relative z-10">
+    {% content_for 'blocks' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Container",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop image"
+    },
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "classnames",
+      "label": "classnames"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Container",
+      "category": "Layout"
+    }
+  ]
+}
+{% endschema %}
