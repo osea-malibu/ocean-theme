@@ -1,7 +1,10 @@
-<a href="{{ routes.cart_url }}" class="header__icon header__icon--cart cursor-pointer flex w-10 h-10 justify-center items-center ml-1 md:ml-4 -mr-1" id="cart-icon-bubble">
-  <span class="hidden">Cart</span>
-  <div class="w-8 h-8 bg-seafoam-300 rounded-full flex justify-center items-center">
-    <span aria-hidden="true" class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
-    <span class="hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-  </div>
+{%- comment -%}
+  Re-rendered via the Section Rendering API on cart update. The cart scripts read
+  the INNER content of #cart-icon-bubble from this response and inject it into the
+  live header anchor (sections/header.liquid). The anchor wrapper below exists only
+  so the scripts can locate #cart-icon-bubble in the response — it is never displayed.
+  Inner markup is shared via the cart-icon-bubble-content snippet to prevent drift.
+{%- endcomment -%}
+<a href="{{ routes.cart_url }}" class="header__icon--cart relative cursor-pointer flex w-10 h-10 justify-center items-center 2xs:ml-1 md:ml-2 -mr-1" id="cart-icon-bubble">
+  {%- render 'cart-icon-bubble-content' -%}
 </a>

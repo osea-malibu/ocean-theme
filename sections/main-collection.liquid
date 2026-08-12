@@ -120,6 +120,13 @@
               {%- assign product_link_label_suffix = product.selected_or_first_available_variant.sku | default: product.handle -%}
             {%- endif -%}
 
+            {%- liquid
+              assign reviews_paid_only = false
+              if section.settings.show_reviews and section.settings.review_traffic == 'paid'
+                assign reviews_paid_only = true
+              endif
+            -%}
+
             <li style="order: {{ forloop.index }}">
               {%- render 'card-product',
                 card_product: product,
@@ -128,6 +135,7 @@
                 default_to_mini: collection.metafields.my_fields.default_to_mini,
                 subscription: collection.metafields.custom.default_to_subscription,
                 show_reviews: section.settings.show_reviews,
+                reviews_paid_only: reviews_paid_only,
                 hide_atc: hide_atc,
                 remove_linking: remove_linking,
                 remove_lazy_loading: remove_lazy_loading,
@@ -253,6 +261,24 @@
       "type": "checkbox",
       "id": "show_reviews",
       "label": "Show product reviews"
+    },
+    {
+      "type": "select",
+      "id": "review_traffic",
+      "label": "Show reviews to",
+      "info": "'Paid traffic only' gates reviews behind the paid-only component — visible only to visitors from paid campaigns.",
+      "default": "all",
+      "visible_if": "{{ section.settings.show_reviews }}",
+      "options": [
+        {
+          "value": "all",
+          "label": "All traffic"
+        },
+        {
+          "value": "paid",
+          "label": "Paid traffic only"
+        }
+      ]
     }
   ]
 }

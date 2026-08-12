@@ -6,6 +6,11 @@
         <ul class="scroll-box flex gap-2 sm:gap-4 lg:gap-6 snap-x snap-mandatory overflow-x-auto">
           {%- for product_in_set in product.metafields.custom.set_contains.value -%}
             {%- liquid
+              assign disable_product_links = false
+              if product_in_set.id == 8683931631799 or product_in_set.handle == '30th-anniversary-lip-oil-keychain'
+                assign disable_product_links = true
+              endif
+
               if product_in_set.metafields.custom.parent_product != blank
                 assign product_url = product_in_set.metafields.custom.parent_product.value.url
                 assign description = product_in_set.metafields.custom.parent_product.value.metafields.custom_fields.description
@@ -26,11 +31,19 @@
             <li class="snap-start flex-1 rounded-lg bg-p-surface p-4 lg:p-6 xl:p-8 min-w-[288px] xs:min-w-[320px] sm:min-w-[480px] md:min-w-[620px]" style="--p-surface: {{ product_in_set.metafields.theme.surface | default: '#f1f5f4' }}">
               <div class="flex flex-col md:flex-row gap-4 mb-4">
                 <div class="w-full order-1 grow flex flex-col items-start">
-                  <a href="{{ product_url | default: '#' }}" class="block no-underline">
+                  {%- if disable_product_links -%}
+                    <div class="block">
+                  {%- else -%}
+                    <a href="{{ product_url | default: '#' }}" class="block no-underline">
+                  {%- endif -%}
                     <h4 class="text-lg leading-tight font-bold">
                       {{ product_in_set.title | replace: 'Deluxe Sample ', '' | escape }}
                     </h4>
-                  </a>
+                  {%- if disable_product_links -%}
+                    </div>
+                  {%- else -%}
+                    </a>
+                  {%- endif -%}
                   <p class="text-sm">{{ short_description }}</p>
                   <p class="text-sm mb-3">{{ product_in_set.metafields.my_fields.size }}</p>
 
@@ -57,10 +70,12 @@
                     </div>
                   {%- endif -%}
 
-                  <a class="link text-sm font-book" href="{{ product_url }}">
-                    <span>View full product details</span>
-                    {% render 'icon-arrow', variant: 'short', classes: 'w-4 h-4 inline-block ml-0.5', stroke_width: 2 %}
-                  </a>
+                  {%- unless disable_product_links -%}
+                    <a class="link text-sm font-book" href="{{ product_url }}">
+                      <span>View full product details</span>
+                      {% render 'icon-arrow', variant: 'short', classes: 'w-4 h-4 inline-block ml-0.5', stroke_width: 2 %}
+                    </a>
+                  {%- endunless -%}
                 </div>
 
                 {%- liquid
@@ -86,12 +101,16 @@
                 -%}
 
                 {%- if image_object -%}
-                  <a
-                    aria-label="{{ product_in_set.title | escape }}"
-                    href="{{ product_url | default: '#' }}"
-                    class="group relative block mx-auto no-underline shrink-0 max-w-full w-72 h-84 bg-wave-100 rounded-l-lg"
-                    tabindex="-1"
-                  >
+                  {%- if disable_product_links -%}
+                    <div class="relative block mx-auto shrink-0 max-w-full w-72 h-84 bg-wave-100 rounded-l-lg">
+                  {%- else -%}
+                    <a
+                      aria-label="{{ product_in_set.title | escape }}"
+                      href="{{ product_url | default: '#' }}"
+                      class="group relative block mx-auto no-underline shrink-0 max-w-full w-72 h-84 bg-wave-100 rounded-l-lg"
+                      tabindex="-1"
+                    >
+                  {%- endif -%}
                     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
                     <img
                       src="{% render 'imgix', src: main_master, w: 800 %}"
@@ -109,7 +128,11 @@
                       class="w-full h-full object-cover rounded-lg"
                     >
                     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
-                  </a>
+                  {%- if disable_product_links -%}
+                    </div>
+                  {%- else -%}
+                    </a>
+                  {%- endif -%}
                 {%- endif -%}
               </div>
 
