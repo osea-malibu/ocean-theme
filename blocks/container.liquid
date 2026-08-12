@@ -6,7 +6,7 @@
 <div
   class="relative w-full{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
   {% if block_settings.background_color != blank %}
-    style="background: {{ block_settings.background_color }};"
+    style="background-color: {{ block_settings.background_color }};"
   {% endif %}
   {{ block.shopify_attributes }}
 >
@@ -50,7 +50,7 @@
       "label": "Desktop image"
     },
     {
-      "type": "color_background",
+      "type": "color",
       "id": "background_color",
       "label": "Background color"
     },
