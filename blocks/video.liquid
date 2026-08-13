@@ -99,6 +99,13 @@
   endif
 
   assign poster_image = desktop_video.preview_image | default: mobile_video.preview_image
+  if poster_image != blank
+    assign poster_master = poster_image | image_url
+    capture poster_url
+      render 'imgix', src: poster_master, w: 1600
+    endcapture
+    assign poster_url = poster_url | strip
+  endif
 -%}
 
 <div
@@ -121,7 +128,7 @@
         playsinline
         preload="{% if block_settings.autoplay %}auto{% else %}metadata{% endif %}"
         aria-label="{{ video_label | escape }}"
-        {% if poster_image != blank %}poster="{{ poster_image | image_url: width: 1600 | escape }}"{% endif %}
+        {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
         {% if poster_image != blank %}
           width="{{ poster_image.width }}"
           height="{{ poster_image.height }}"
