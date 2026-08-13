@@ -102,7 +102,7 @@
   if poster_image != blank
     assign poster_master = poster_image | image_url
     capture poster_url
-      render 'imgix', src: poster_master, w: 1600
+      render 'imgix', src: poster_master, w: 640
     endcapture
     assign poster_url = poster_url | strip
   endif
