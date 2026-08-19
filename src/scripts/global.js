@@ -1108,6 +1108,102 @@ class DeferredMedia extends HTMLElement {
 }
 customElements.define("deferred-media", DeferredMedia);
 
+class ResponsiveVideo extends HTMLElement {
+  connectedCallback() {
+    this.video = this.querySelector("[data-responsive-video]");
+    if (!this.video) return;
+
+    this.toggle = this.querySelector("[data-responsive-video-toggle]");
+    this.playIcon = this.querySelector("[data-responsive-video-play]");
+    this.pauseIcon = this.querySelector("[data-responsive-video-pause]");
+    this.autoplayRequested = this.dataset.autoplay === "true";
+    this.hideControls = this.dataset.hideControls === "true";
+    this.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    this.desktopMedia = window.matchMedia("(min-width: 40rem)");
+
+    this.onToggle = this.handleToggle.bind(this);
+    this.onPlay = () => this.updateToggle(true);
+    this.onPause = () => this.updateToggle(false);
+    this.onMotionChange = this.handleMotionChange.bind(this);
+    this.onBreakpointChange = this.handleBreakpointChange.bind(this);
+
+    this.toggle?.addEventListener("click", this.onToggle);
+    this.video.addEventListener("play", this.onPlay);
+    this.video.addEventListener("pause", this.onPause);
+    this.reducedMotion.addEventListener("change", this.onMotionChange);
+    this.desktopMedia.addEventListener("change", this.onBreakpointChange);
+
+    this.applyPlaybackPreference();
+  }
+
+  disconnectedCallback() {
+    this.toggle?.removeEventListener("click", this.onToggle);
+    this.video?.removeEventListener("play", this.onPlay);
+    this.video?.removeEventListener("pause", this.onPause);
+    this.reducedMotion?.removeEventListener("change", this.onMotionChange);
+    this.desktopMedia?.removeEventListener("change", this.onBreakpointChange);
+  }
+
+  async applyPlaybackPreference() {
+    if (!this.autoplayRequested || this.reducedMotion.matches) {
+      this.video.pause();
+      this.showNativeControls();
+      return;
+    }
+
+    this.video.muted = true;
+
+    try {
+      await this.video.play();
+      if (this.hideControls) {
+        this.video.removeAttribute("controls");
+        this.toggle?.removeAttribute("hidden");
+      }
+    } catch (_error) {
+      this.showNativeControls();
+    }
+  }
+
+  showNativeControls() {
+    this.video.setAttribute("controls", "");
+    this.toggle?.setAttribute("hidden", "");
+  }
+
+  handleToggle() {
+    if (this.video.paused) {
+      this.video.play().catch(() => this.showNativeControls());
+    } else {
+      this.video.pause();
+    }
+  }
+
+  handleMotionChange() {
+    this.applyPlaybackPreference();
+  }
+
+  handleBreakpointChange() {
+    const wasPlaying = !this.video.paused;
+    this.video.load();
+
+    if (wasPlaying && !this.autoplayRequested) {
+      this.video.play().catch(() => this.showNativeControls());
+      return;
+    }
+
+    if (this.autoplayRequested) this.applyPlaybackPreference();
+  }
+
+  updateToggle(isPlaying) {
+    if (!this.toggle) return;
+
+    this.toggle.setAttribute("aria-label", isPlaying ? "Pause video" : "Play video");
+    this.playIcon?.toggleAttribute("hidden", isPlaying);
+    this.pauseIcon?.toggleAttribute("hidden", !isPlaying);
+  }
+}
+
+customElements.define("responsive-video", ResponsiveVideo);
+
 class VariantSelects extends HTMLElement {
   constructor() {
     super();

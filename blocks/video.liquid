@@ -1,0 +1,320 @@
+{%- liquid
+  assign block_settings = block.settings
+  assign fallback_video = block_settings.video_desktop | default: block_settings.video_mobile
+  assign mobile_video = block_settings.video_mobile | default: fallback_video
+  assign desktop_video = block_settings.video_desktop | default: fallback_video
+
+  assign art_directed = false
+  if block_settings.video_mobile != blank and block_settings.video_desktop != blank
+    assign art_directed = true
+  endif
+
+  case block_settings.width_mobile
+    when 'three_quarters'
+      assign width_mobile_class = 'w-3/4'
+    when 'two_thirds'
+      assign width_mobile_class = 'w-2/3'
+    when 'half'
+      assign width_mobile_class = 'w-1/2'
+    else
+      assign width_mobile_class = 'w-full'
+  endcase
+
+  case block_settings.width_desktop
+    when 'three_quarters'
+      assign width_desktop_class = 'sm:w-3/4'
+    when 'two_thirds'
+      assign width_desktop_class = 'sm:w-2/3'
+    when 'half'
+      assign width_desktop_class = 'sm:w-1/2'
+    when 'third'
+      assign width_desktop_class = 'sm:w-1/3'
+    when 'quarter'
+      assign width_desktop_class = 'sm:w-1/4'
+    else
+      assign width_desktop_class = 'sm:w-full'
+  endcase
+
+  case block_settings.alignment
+    when 'center'
+      assign alignment_class = 'justify-center'
+    when 'right'
+      assign alignment_class = 'justify-end'
+    else
+      assign alignment_class = 'justify-start'
+  endcase
+
+  case block_settings.aspect_ratio
+    when 'square'
+      assign aspect_ratio_class = 'aspect-square object-cover'
+    when 'portrait'
+      assign aspect_ratio_class = 'aspect-[4/5] object-cover'
+    when 'landscape'
+      assign aspect_ratio_class = 'aspect-video object-cover'
+    else
+      assign aspect_ratio_class = ''
+  endcase
+
+  case block_settings.border_radius
+    when 'small'
+      assign border_radius_class = 'rounded-sm'
+    when 'medium'
+      assign border_radius_class = 'rounded-md'
+    when 'large'
+      assign border_radius_class = 'rounded-lg'
+    when 'extra_large'
+      assign border_radius_class = 'rounded-xl'
+    when 'full'
+      assign border_radius_class = 'rounded-full'
+    else
+      assign border_radius_class = ''
+  endcase
+
+  assign video_class = 'block h-auto w-full max-w-full'
+  if aspect_ratio_class != blank
+    assign video_class = video_class | append: ' ' | append: aspect_ratio_class
+  endif
+  if border_radius_class != blank
+    assign video_class = video_class | append: ' ' | append: border_radius_class
+  endif
+
+  assign content_class = 'relative block ' | append: width_mobile_class | append: ' ' | append: width_desktop_class
+  if border_radius_class != blank
+    assign content_class = content_class | append: ' ' | append: border_radius_class | append: ' overflow-hidden'
+  endif
+  assign video_label = block_settings.video_label
+  if video_label == blank and mobile_video.alt != blank
+    assign video_label = mobile_video.alt
+  endif
+  if video_label == blank and desktop_video.alt != blank
+    assign video_label = desktop_video.alt
+  endif
+  if video_label == blank
+    assign video_label = 'Video'
+  endif
+
+  assign muted = block_settings.muted
+  if block_settings.autoplay
+    assign muted = true
+  endif
+
+  assign poster_image = desktop_video.preview_image | default: mobile_video.preview_image
+  if poster_image != blank
+    assign poster_master = poster_image | image_url
+    capture poster_url
+      render 'imgix', src: poster_master, w: 640
+    endcapture
+    assign poster_url = poster_url | strip
+  endif
+-%}
+
+<div
+  class="flex w-full {{ alignment_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  <responsive-video
+    class="{{ content_class | escape }}"
+    data-autoplay="{{ block_settings.autoplay }}"
+    data-hide-controls="{{ block_settings.hide_controls }}"
+  >
+    {%- if fallback_video != blank -%}
+      {% comment %} Native controls remain available until enhanced JavaScript starts autoplay. {% endcomment %}
+      {% comment %} theme-check-disable RemoteAsset {% endcomment %}
+      <video
+        class="{{ video_class }}"
+        controls
+        {% if block_settings.loop %}loop{% endif %}
+        {% if muted %}muted{% endif %}
+        playsinline
+        preload="{% if block_settings.autoplay %}auto{% else %}metadata{% endif %}"
+        aria-label="{{ video_label | escape }}"
+        {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
+        {% if poster_image != blank %}
+          width="{{ poster_image.width }}"
+          height="{{ poster_image.height }}"
+        {% endif %}
+        data-responsive-video
+      >
+        {%- if art_directed -%}
+          {%- for source in mobile_video.sources -%}
+            {%- unless block_settings.loop and source.format == 'm3u8' -%}
+              <source
+                src="{{ source.url | escape }}"
+                type="{{ source.mime_type | escape }}"
+                media="(max-width: 39.999rem)"
+              >
+            {%- endunless -%}
+          {%- endfor -%}
+          {%- for source in desktop_video.sources -%}
+            {%- unless block_settings.loop and source.format == 'm3u8' -%}
+              <source
+                src="{{ source.url | escape }}"
+                type="{{ source.mime_type | escape }}"
+                media="(min-width: 40rem)"
+              >
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for source in fallback_video.sources -%}
+            {%- unless block_settings.loop and source.format == 'm3u8' -%}
+              <source src="{{ source.url | escape }}" type="{{ source.mime_type | escape }}">
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </video>
+      {% comment %} theme-check-enable RemoteAsset {% endcomment %}
+
+      {%- if block_settings.autoplay and block_settings.hide_controls -%}
+        <button
+          type="button"
+          class="absolute right-4 bottom-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-seaweed-700"
+          aria-label="Pause video"
+          data-responsive-video-toggle
+          hidden
+        >
+          <span data-responsive-video-play hidden>
+            {% render 'icon-play', classes: 'h-5 w-5', aria_hidden: true %}
+          </span>
+          <span data-responsive-video-pause>
+            {% render 'icon-pause', classes: 'h-5 w-5', aria_hidden: true %}
+          </span>
+        </button>
+      {%- endif -%}
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'block h-auto w-full bg-wave-200 text-wave-500' }}
+    {%- endif -%}
+  </responsive-video>
+</div>
+
+{% schema %}
+{
+  "name": "Video",
+  "tag": null,
+  "settings": [
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video"
+    },
+    {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Desktop video"
+    },
+    {
+      "type": "text",
+      "id": "video_label",
+      "label": "Video label",
+      "info": "Briefly describes the video for screen-reader users. Videos with dialogue also require captions in the uploaded file."
+    },
+    {
+      "type": "header",
+      "content": "Playback"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "info": "Autoplay is muted and disabled for visitors who prefer reduced motion.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop video",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "muted",
+      "label": "Mute video",
+      "info": "Autoplay videos are always muted.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_controls",
+      "label": "Hide full video controls",
+      "info": "Applies only to autoplay videos. A play/pause button remains available.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "Mobile width",
+      "options": [
+        { "value": "full", "label": "Full" },
+        { "value": "three_quarters", "label": "Three quarters" },
+        { "value": "two_thirds", "label": "Two thirds" },
+        { "value": "half", "label": "Half" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "width_desktop",
+      "label": "Desktop width",
+      "options": [
+        { "value": "full", "label": "Full" },
+        { "value": "three_quarters", "label": "Three quarters" },
+        { "value": "two_thirds", "label": "Two thirds" },
+        { "value": "half", "label": "Half" },
+        { "value": "third", "label": "One third" },
+        { "value": "quarter", "label": "One quarter" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        { "value": "natural", "label": "Adapt to video" },
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "landscape", "label": "Landscape" }
+      ],
+      "default": "natural"
+    },
+    {
+      "type": "select",
+      "id": "border_radius",
+      "label": "Corner radius",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "extra_large", "label": "Extra large" },
+        { "value": "full", "label": "Full" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "classnames",
+      "label": "classnames"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}
