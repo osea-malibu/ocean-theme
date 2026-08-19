@@ -101,7 +101,7 @@
             {%- if date_out != blank or event.event_time.value != blank -%}
               <p class="text-xs uppercase tracking-widest text-seaweed-600 mb-1">{{ date_out }}{% if date_out != blank and event.event_time.value != blank %} · {% endif %}{{ event.event_time.value }}</p>
             {%- endif -%}
-            <p class="font-bold text-base">{{ event.title.value | default: event.system.handle }}</p>
+            <p class="font-bold text-base mb-1">{{ event.title.value | default: event.system.handle }}</p>
             {%- if event.venue_name.value != blank -%}
               <p class="text-sm font-book">{{ event.venue_name.value }}</p>
             {%- endif -%}
@@ -110,6 +110,14 @@
             {%- endif -%}
             {%- if event.city.value != blank -%}
               <p class="text-sm text-seaweed-700">{{ event.city.value }}{% if event.region.value != blank %}, {{ event.region.value }}{% endif %}</p>
+            {%- endif -%}
+            {%- if event.description.value != blank -%}
+              <div class="mt-1">
+                <input aria-hidden="true" id="desc-{{ event.system.id }}" class="hidden peer" type="checkbox" />
+                <div class="overflow-hidden max-h-12 peer-checked:max-h-screen transition-max-height text-sm leading-6">{{ event.description.value | escape }}</div>
+                <label aria-hidden="true" for="desc-{{ event.system.id }}" class="text-xs link mt-1 block peer-checked:hidden">Read more</label>
+                <label aria-hidden="true" for="desc-{{ event.system.id }}" class="text-xs link mt-1 hidden peer-checked:block">Read less</label>
+              </div>
             {%- endif -%}
             {%- if event.rsvp_url.value != blank -%}
               <a href="{{ event.rsvp_url.value }}" class="mt-2 inline-block text-xs font-bold underline">RSVP / Details</a>
