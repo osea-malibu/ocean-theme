@@ -98,12 +98,15 @@
             class="events-map__item cursor-pointer p-4 rounded-lg transition-colors hover:bg-wave-200"
             {% if has_coords %}data-event-id="{{ event.system.id }}"{% endif %}
           >
-            {%- if date_out != blank -%}
-              <p class="text-xs uppercase tracking-widest text-seaweed-600 mb-1">{{ date_out }}</p>
+            {%- if date_out != blank or event.event_time.value != blank -%}
+              <p class="text-xs uppercase tracking-widest text-seaweed-600 mb-1">{{ date_out }}{% if date_out != blank and event.event_time.value != blank %} · {% endif %}{{ event.event_time.value }}</p>
             {%- endif -%}
             <p class="font-bold text-base">{{ event.title.value | default: event.system.handle }}</p>
             {%- if event.venue_name.value != blank -%}
-              <p class="text-sm">{{ event.venue_name.value }}</p>
+              <p class="text-sm font-book">{{ event.venue_name.value }}</p>
+            {%- endif -%}
+            {%- if event.address.value != blank -%}
+              <p class="text-sm text-seaweed-700">{{ event.address.value }}</p>
             {%- endif -%}
             {%- if event.city.value != blank -%}
               <p class="text-sm text-seaweed-700">{{ event.city.value }}{% if event.region.value != blank %}, {{ event.region.value }}{% endif %}</p>
