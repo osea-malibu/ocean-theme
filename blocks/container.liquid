@@ -4,19 +4,19 @@
 
   case block_settings.max_width
     when '2xl'
-      assign max_width_class = 'max-w-2xl'
+      assign max_width_class = 'max-w-(--breakpoint-2xl)'
     when 'xl'
-      assign max_width_class = 'max-w-xl'
+      assign max_width_class = 'max-w-(--breakpoint-xl)'
     when 'lg'
-      assign max_width_class = 'max-w-lg'
+      assign max_width_class = 'max-w-(--breakpoint-lg)'
     when 'md'
-      assign max_width_class = 'max-w-md'
+      assign max_width_class = 'max-w-(--breakpoint-md)'
     when 'sm'
-      assign max_width_class = 'max-w-sm'
+      assign max_width_class = 'max-w-(--breakpoint-sm)'
     when 'xs'
-      assign max_width_class = 'max-w-xs'
+      assign max_width_class = 'max-w-(--breakpoint-xs)'
     when '2xs'
-      assign max_width_class = 'max-w-2xs'
+      assign max_width_class = 'max-w-(--breakpoint-2xs)'
     else
       assign max_width_class = ''
   endcase
