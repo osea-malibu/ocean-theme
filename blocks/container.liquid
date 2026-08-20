@@ -22,6 +22,10 @@
   endcase
 -%}
 
+{%- capture block_content -%}
+  {% content_for 'blocks' %}
+{%- endcapture -%}
+
 <div
   class="container relative w-full {{ max_width_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
   {% if block_settings.background_color != blank %}
@@ -43,9 +47,13 @@
     </div>
   {%- endif -%}
 
-  <div class="relative z-10">
-    {% content_for 'blocks' %}
-  </div>
+  {%- if background_image != blank -%}
+    <div class="relative z-10">
+      {{ block_content }}
+    </div>
+  {%- else -%}
+    {{ block_content }}
+  {%- endif -%}
 </div>
 
 {% schema %}
