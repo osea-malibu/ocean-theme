@@ -157,8 +157,8 @@ class EventsMap extends HTMLElement {
     this.listEl.addEventListener("click", (event) => {
       const item = event.target.closest("[data-event-id]");
       if (!item || !this.listEl.contains(item)) return;
-      // Let real links (RSVP, etc.) behave normally.
-      if (event.target.closest("a")) return;
+      // Let real links (RSVP) and the read-more toggle (label/checkbox) behave normally.
+      if (event.target.closest("a, label, input")) return;
       this.focusEvent(item.dataset.eventId);
     });
   }
