@@ -96,6 +96,7 @@
           -%}
           <li
             class="events-map__item cursor-pointer p-4 rounded-lg transition-colors hover:bg-wave-200"
+            data-start="{{ event.start_at.value | date: '%Y-%m-%d' }}"
             {% if has_coords %}data-event-id="{{ event.system.id }}"{% endif %}
           >
             {%- if date_out != blank or event.event_time.value != blank -%}

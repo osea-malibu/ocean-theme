@@ -49,6 +49,7 @@ class EventsMap extends HTMLElement {
 
     if (!this.token || !this.mapEl || !this.events.length) return;
 
+    this.sortListChronologically();
     this.bindList();
     this.setupSearch();
     this.setupMobileSheet();
@@ -205,6 +206,20 @@ class EventsMap extends HTMLElement {
     if (ev.url) parts.push(`<a class="em-popup__link" href="${ev.url}">Details &rarr;</a>`);
     parts.push("</div>");
     return parts.join("");
+  }
+
+  /* ---------- Chronological ordering ---------- */
+
+  sortListChronologically() {
+    if (!this.listEl) return;
+    Array.from(this.listEl.querySelectorAll("li"))
+      .sort((a, b) => {
+        // ISO dates (YYYY-MM-DD) sort lexically = chronologically; undated go last.
+        const da = a.dataset.start || "9999-99-99";
+        const db = b.dataset.start || "9999-99-99";
+        return da < db ? -1 : da > db ? 1 : 0;
+      })
+      .forEach((li) => this.listEl.appendChild(li));
   }
 
   /* ---------- Location search ---------- */
