@@ -216,14 +216,21 @@
         window.bootstrapCartProductsSection = bootstrapCartProductsSection;
       </script>
     {% endif %}
-        {% comment %} Start PostPilot SiteMatch {% endcomment %}
+
+    {% comment %} Start PostPilot SiteMatch {% endcomment %}
     <script>
       var script = document.createElement('script');
       script.src = 'https://xp2023-pix.s3.amazonaws.com/px_FshFG.js';
       document.head.appendChild(script);
     </script>
-
     {% comment %} End PostPilot SiteMatch {% endcomment %}
 
+    {% comment %} Start Rivo Wave Tier Hotfix {% endcomment %}
+    <style>
+      {% if customer.tags contains "Rivo VIP Tier: Wave" %}
+        .rivo-aw-vip-tier-progress-container { display: none !important; }
+      {% endif %}
+    </style>
+    {% comment %} End Rivo Wave Tier Hotfix {% endcomment %}
   </body>
 </html>
