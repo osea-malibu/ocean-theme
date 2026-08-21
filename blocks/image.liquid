@@ -92,7 +92,7 @@
 -%}
 
 <div
-  class="flex w-full {{ alignment_class }}"
+  class="flex w-full {{ alignment_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
   {{ block.shopify_attributes }}
 >
   {%- capture image_content -%}
@@ -355,6 +355,15 @@
         }
       ],
       "default": "auto"
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "classnames",
+      "label": "classnames"
     }
   ],
   "presets": [

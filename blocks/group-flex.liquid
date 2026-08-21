@@ -1,0 +1,219 @@
+{%- liquid
+  case block.settings.direction
+    when 'horizontal'
+      assign direction_class = 'flex-col sm:flex-row sm:[&>*]:min-w-0'
+
+      if block.settings.equal_width
+        assign child_width_class = 'sm:[&>*]:flex-1'
+      endif
+    else
+      assign direction_class = 'flex-col'
+  endcase
+
+  case block.settings.justify_content
+    when 'center'
+      assign justify_class = 'justify-center'
+    when 'end'
+      assign justify_class = 'justify-end'
+    when 'between'
+      assign justify_class = 'justify-between'
+    when 'around'
+      assign justify_class = 'justify-around'
+    when 'evenly'
+      assign justify_class = 'justify-evenly'
+    else
+      assign justify_class = 'justify-start'
+  endcase
+
+  case block.settings.align_items
+    when 'start'
+      assign align_class = 'items-start'
+    when 'center'
+      assign align_class = 'items-center'
+    when 'end'
+      assign align_class = 'items-end'
+    when 'baseline'
+      assign align_class = 'items-baseline'
+    else
+      assign align_class = 'items-stretch'
+  endcase
+
+  if block.settings.wrap
+    assign wrap_class = 'flex-wrap'
+  else
+    assign wrap_class = 'flex-nowrap'
+  endif
+
+  case block.settings.gap
+    when 1
+      assign gap_class = 'gap-1'
+    when 2
+      assign gap_class = 'gap-2'
+    when 3
+      assign gap_class = 'gap-3'
+    when 4
+      assign gap_class = 'gap-4'
+    when 5
+      assign gap_class = 'gap-5'
+    when 6
+      assign gap_class = 'gap-6'
+    when 7
+      assign gap_class = 'gap-7'
+    when 8
+      assign gap_class = 'gap-8'
+    when 9
+      assign gap_class = 'gap-9'
+    when 10
+      assign gap_class = 'gap-10'
+    else
+      assign gap_class = 'gap-0'
+  endcase
+-%}
+
+<div
+  class="flex w-full {{ direction_class }} {{ child_width_class }} {{ justify_class }} {{ align_class }} {{ wrap_class }} {{ gap_class }}{% if block.settings.classnames != blank %} {{ block.settings.classnames | escape }}{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Flex group",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "info": "Horizontal groups stack vertically on mobile.",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "checkbox",
+      "id": "equal_width",
+      "label": "Equal-width items",
+      "info": "Applies to horizontal layouts.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "wrap",
+      "label": "Allow items to wrap",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Alignment"
+    },
+    {
+      "type": "select",
+      "id": "justify_content",
+      "label": "Content distribution",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        },
+        {
+          "value": "between",
+          "label": "Space between"
+        },
+        {
+          "value": "around",
+          "label": "Space around"
+        },
+        {
+          "value": "evenly",
+          "label": "Space evenly"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "select",
+      "id": "align_items",
+      "label": "Item alignment",
+      "options": [
+        {
+          "value": "stretch",
+          "label": "Stretch"
+        },
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        },
+        {
+          "value": "baseline",
+          "label": "Baseline"
+        }
+      ],
+      "default": "stretch"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "info": "Each step equals 4px.",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "classnames",
+      "label": "classnames"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flex group",
+      "category": "Layout"
+    }
+  ]
+}
+{% endschema %}
