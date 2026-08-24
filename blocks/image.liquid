@@ -68,7 +68,7 @@
 -%}
 
 <div
-  class="theme-image-block theme-image-block--{{ block.settings.alignment }} theme-image-block--ratio-{{ block.settings.aspect_ratio }}"
+  class="theme-image-block theme-image-block--{{ block.settings.alignment }} theme-image-block--width-{{ block.settings.width }} theme-image-block--ratio-{{ block.settings.aspect_ratio }}"
   style="
     --theme-image-aspect-ratio: {{ aspect_ratio }};
     --theme-image-custom-width: {{ block.settings.custom_width }}px;
@@ -81,7 +81,7 @@
   "
   {{ block.shopify_attributes }}
 >
-  <div class="theme-image-block__media theme-image-block__media--{{ block.settings.width }}">
+  <div class="theme-image-block__media">
     {%- if display_image != blank -%}
       {% render 'media-image',
         image: display_image,
@@ -104,39 +104,37 @@
 {% stylesheet %}
   .theme-image-block {
     display: flex;
+    max-width: 100%;
     width: 100%;
   }
 
   .theme-image-block--left {
-    justify-content: flex-start;
+    margin-right: auto;
   }
 
   .theme-image-block--center {
-    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .theme-image-block--right {
-    justify-content: flex-end;
+    margin-left: auto;
   }
 
-  .theme-image-block__media {
-    max-width: 100%;
-  }
-
-  .theme-image-block__media--fill {
+  .theme-image-block--width-fill {
     width: 100%;
   }
 
-  .theme-image-block__media--fit {
+  .theme-image-block--width-fit {
     width: min(100%, var(--theme-image-natural-width));
   }
 
-  .theme-image-block__media--custom {
+  .theme-image-block--width-custom {
     width: min(100%, var(--theme-image-custom-width));
   }
 
-  .theme-image-block__media:not(.theme-image-block__media--fill) {
-    flex-shrink: 0;
+  .theme-image-block__media {
+    width: 100%;
   }
 
   .theme-image-block__media picture {
