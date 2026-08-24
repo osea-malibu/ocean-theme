@@ -27,7 +27,7 @@
 {%- endcapture -%}
 
 <div
-  class="container relative w-full {{ max_width_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+  class="relative mx-auto w-full {{ max_width_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
   {% if block_settings.background_color != blank %}
     style="background-color: {{ block_settings.background_color }};"
   {% endif %}
@@ -70,38 +70,39 @@
       "type": "select",
       "id": "max_width",
       "label": "Max width",
+      "info": "Choose Fill available width for most layouts. Smaller widths center the content.",
       "options": [
         {
           "value": "full",
-          "label": "Full"
+          "label": "Fill available width"
         },
         {
           "value": "2xl",
-          "label": "2XL"
+          "label": "Extra wide - 1536px max"
         },
         {
           "value": "xl",
-          "label": "XL"
+          "label": "Wide - 1280px max"
         },
         {
           "value": "lg",
-          "label": "LG"
+          "label": "Large - 1024px max"
         },
         {
           "value": "md",
-          "label": "MD"
+          "label": "Medium - 768px max"
         },
         {
           "value": "sm",
-          "label": "SM"
+          "label": "Compact - 640px max"
         },
         {
           "value": "xs",
-          "label": "XS"
+          "label": "Small - 480px max"
         },
         {
           "value": "2xs",
-          "label": "2XS"
+          "label": "Extra small - 400px max"
         }
       ],
       "default": "full"
@@ -128,7 +129,7 @@
     {
       "type": "textarea",
       "id": "classnames",
-      "label": "classnames"
+      "label": "Custom classes (advanced)"
     }
   ],
   "presets": [

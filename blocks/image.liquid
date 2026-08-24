@@ -39,11 +39,11 @@
 
   case block_settings.alignment
     when 'center'
-      assign alignment_class = 'justify-center'
+      assign alignment_class = 'mx-auto'
     when 'right'
-      assign alignment_class = 'justify-end'
+      assign alignment_class = 'ml-auto'
     else
-      assign alignment_class = 'justify-start'
+      assign alignment_class = 'mr-auto'
   endcase
 
   case block_settings.aspect_ratio
@@ -80,7 +80,7 @@
     assign image_class = image_class | append: ' ' | append: border_radius_class
   endif
 
-  assign content_class = width_mobile_class | append: ' ' | append: width_desktop_class
+  assign content_class = 'w-full'
   if border_radius_class != blank
     assign content_class = content_class | append: ' ' | append: border_radius_class | append: ' overflow-hidden'
   endif
@@ -92,7 +92,7 @@
 -%}
 
 <div
-  class="flex w-full {{ alignment_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+  class="theme-image-block flex max-w-full {{ width_mobile_class }} {{ width_desktop_class }} {{ alignment_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
   {{ block.shopify_attributes }}
 >
   {%- capture image_content -%}
