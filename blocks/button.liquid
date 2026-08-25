@@ -32,6 +32,15 @@
     endcase
   endif
 
+  case block_settings.alignment
+    when 'center'
+      assign alignment_class = 'self-center justify-self-center'
+    when 'right'
+      assign alignment_class = 'self-end justify-self-end'
+    else
+      assign alignment_class = 'self-start justify-self-start'
+  endcase
+
   case block_settings.visibility
     when 'mobile_only'
       assign visibility_class = 'sm:hidden'
@@ -61,7 +70,7 @@
     {% if block_settings.accessibility_label != blank %}
       aria-label="{{ block_settings.accessibility_label | escape }}"
     {% endif %}
-    class="{{ style_class }} {{ size_class }}{% if visibility_class != blank %} {{ visibility_class }}{% endif %}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+    class="{{ style_class }} {{ size_class }} {{ alignment_class }}{% if visibility_class != blank %} {{ visibility_class }}{% endif %}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
     {{ block.shopify_attributes }}
   >
     {{- block_settings.label | escape -}}
@@ -143,6 +152,12 @@
         }
       ],
       "default": "regular"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "left"
     },
     {
       "type": "header",
