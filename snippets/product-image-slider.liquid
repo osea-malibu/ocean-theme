@@ -24,9 +24,9 @@ Accepts:
   aria-roledescription="carousel"
   aria-label="{{ product.title | escape }} media gallery"
 >
-  <div class="flex flex-col gap-1 z-10 right-2 top-2 absolute">
+  <div class="flex flex-col items-end gap-1 z-10 right-2 top-2 absolute">
     {% render 'product-text-badge', product: product, classes: 'bg-p-surface text-p-inverse-d3 lg:text-base' %}
-    <div class="favorite-button-wrapper"></div>
+    {% render 'rivo-wishlist-heart' %}
   </div>
 
   <div class="glide__track md:rounded-xl" data-glide-el="track">
