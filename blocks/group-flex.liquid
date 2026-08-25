@@ -1,0 +1,71 @@
+{%- liquid
+  case block.settings.layout
+    when 'split_50_50'
+      assign layout_class = 'flex w-full flex-col gap-4 md:flex-row md:flex-wrap md:gap-6 md:[&>.theme-image-block]:mx-0 md:[&>*]:min-w-0 md:[&>*]:shrink-0 md:[&>*]:basis-[calc(50%-0.75rem)] lg:gap-8 lg:[&>*]:basis-[calc(50%-1rem)]'
+    when 'wrap'
+      assign layout_class = 'flex flex-row flex-wrap -m-2 w-[calc(100%+1rem)] [&>*]:p-2 [&>.theme-image-block]:mx-0 md:-m-3 md:w-[calc(100%+1.5rem)] md:[&>*]:p-3 lg:-m-4 lg:w-[calc(100%+2rem)] lg:[&>*]:p-4'
+    else
+      assign layout_class = 'flex w-full flex-col gap-4 md:gap-6 lg:gap-8'
+  endcase
+-%}
+
+<div
+  class="{{ layout_class }}{% if block.settings.classnames != blank %} {{ block.settings.classnames | escape }}{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Flex group",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "info": "The two-column layout stacks on mobile. Flex wrap keeps each block's own width.",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Vertical stack"
+        },
+        {
+          "value": "split_50_50",
+          "label": "Two equal columns (stacks on mobile)"
+        },
+        {
+          "value": "wrap",
+          "label": "Flex wrap (uses each block's width)"
+        }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "classnames",
+      "label": "Custom classes (advanced)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flex group",
+      "category": "Layout"
+    }
+  ]
+}
+{% endschema %}
