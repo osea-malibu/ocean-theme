@@ -15,25 +15,25 @@
         "column_qjqK6a": {
           "type": "column",
           "settings": {
-            "column_classes": "absolute inset-0 flex flex-col items-center justify-center p-6 sm:right-1/2",
+            "column_classes": "absolute inset-0 flex flex-col items-center justify-center p-6 sm:right-1/2 gap-4 sm:gap-2 lg:gap-4 xl:gap-5",
             "image": "shopify://shop_images/ld26-text.png",
             "is_bg_image": false,
             "image_link": "",
-            "image_classes": "max-w-xs xl:max-w-sm",
-            "image_wrapper_classes": "order-2 mb-4",
+            "image_classes": "max-w-xs sm:max-w-2xs sm:px-8 md:px-0 lg:max-w-xs xl:max-w-sm",
+            "image_wrapper_classes": "order-2",
             "image_link_classes": "",
             "image_static_size": "",
             "text_classes": "",
             "remove_text_wrapper": true,
-            "heading": "<div class=\"badge border-2 rounded-full uppercase px-4 bg-neon-green\" style=\"box-shadow: 3px 3px 0px 0px #1D4D41;\">Get early access</div>",
-            "heading_classes": "order-1 mb-4",
-            "paragraph": "Join our Sea Rewards loyalty program and unlock up to 3 free gifts before anyone else!",
-            "paragraph_classes": "order-3 font-bold text-center mb-4 max-w-sm",
+            "heading": "<div class=\"badge border-2 rounded-full uppercase px-4 bg-neon-green xl:text-lg\" style=\"box-shadow: 3px 3px 0px 0px #1D4D41;\">Get early access</div>",
+            "heading_classes": "order-1",
+            "paragraph": "Join our Sea Rewards loyalty program and <br class=\"hidden lg:block\">unlock up to 3 free gifts before anyone else!",
+            "paragraph_classes": "order-3 font-bold text-center max-w-sm xl:max-w-md xl:text-lg",
             "button_label": "Join Now",
             "button_aria_label": "Join Now: Sea Rewards Loyalty Program",
             "link": "shopify://pages/sea-rewards",
             "target_blank": false,
-            "button_classes": "order-4 button-primary sm:button-lg",
+            "button_classes": "order-4 button-primary md:button-lg",
             "button_icon": "",
             "product_form_classes": "",
             "is_atc_button": false,
@@ -62,7 +62,7 @@
             "image": "shopify://shop_images/Labor_Day___Homepage_Hero_Early_Access___2026.09.01_-_Mobile_-_Blank.jpg",
             "image_desktop": "shopify://shop_images/Labor_Day___Homepage_Hero_Early_Access___2026.09.01_-_Desktop_-_Blank.jpg",
             "is_bg_image": false,
-            "image_link": "",
+            "image_link": "shopify://pages/sea-rewards",
             "image_classes": "w-full",
             "image_wrapper_classes": "",
             "image_link_classes": "",
@@ -104,7 +104,229 @@
         "column_qjqK6a",
         "column_XHmHeA"
       ],
-      "name": "t:sections.multicolumn.presets.name",
+      "name": "LD26: Early Access",
+      "settings": {
+        "section_heading": "",
+        "section_classes": "container px-0 xs:px-6",
+        "container_classes": "relative",
+        "logged_in_only": false,
+        "is_slider": false,
+        "slider_indicator_count": 3,
+        "slider_breakpoint_limit": "none",
+        "slider_classes": "",
+        "show_arrow_nav": true,
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "show_dot_nav": false,
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+      }
+    },
+    "multicolumn_w3nBgB": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_ULcGDz": {
+          "type": "column",
+          "settings": {
+            "column_classes": "absolute inset-x-0 bottom-0 top-1/2 flex flex-col items-center justify-center p-2 sx:p-6 sm:right-1/2 sm:top-0",
+            "image": "shopify://shop_images/ld26-text.png",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "w-40 md:mb-2 lg:w-60 lg:mb-4 xl:w-72",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "text-center",
+            "remove_text_wrapper": false,
+            "heading": "Free gift",
+            "heading_classes": "uppercase font-bold text-6xl whitespace-nowrap md:mb-2 lg:text-7xl xl:text-8xl xl:mb-4",
+            "paragraph": "<b>Get a full-size Ocean Eyes</b> when you spend $125+. Visibly improves lines, dark circles &amp; puffiness.",
+            "paragraph_classes": "font-medium text-center max-w-sm xl:max-w-md xl:text-lg text-sm xs:text-base mb-2 md:mb-4 lg:mb-6",
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop Now: All products",
+            "link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "button-primary md:button-lg",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "hide_atc_button_price": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
+        "column_fwDUzi": {
+          "type": "column",
+          "settings": {
+            "column_classes": "w-full",
+            "image": "shopify://shop_images/Labor_Day___Homepage_Hero_Banner_1___Tier_1___Ocean_Eyes___2026.09.02_-_Mobile_-_Blank.jpg",
+            "image_desktop": "shopify://shop_images/Labor_Day___Homepage_Hero_Banner_1___Tier_1___Ocean_Eyes___2026.09.02_-_Desktop_-_Blank.jpg",
+            "is_bg_image": false,
+            "image_link": "shopify://pages/sea-rewards",
+            "image_classes": "w-full",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "hide_atc_button_price": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_ULcGDz",
+        "column_fwDUzi"
+      ],
+      "name": "LD26: Tier 1",
+      "settings": {
+        "section_heading": "",
+        "section_classes": "container px-0 xs:px-6",
+        "container_classes": "relative",
+        "logged_in_only": false,
+        "is_slider": false,
+        "slider_indicator_count": 3,
+        "slider_breakpoint_limit": "none",
+        "slider_classes": "",
+        "show_arrow_nav": true,
+        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
+        "show_dot_nav": false,
+        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
+      }
+    },
+    "multicolumn_acJmgt": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_7LBhCf": {
+          "type": "column",
+          "settings": {
+            "column_classes": "absolute inset-0 flex flex-col items-center justify-center pb-6 pt-4 xs:pt-6 sm:right-1/2 gap-4 sm:gap-2 lg:gap-4 xl:gap-5 sm:pr-8 sm:pl-2 2xl:pr-12",
+            "image": "shopify://shop_images/ld26-text.png",
+            "is_bg_image": false,
+            "image_link": "",
+            "image_classes": "max-w-2xs sm:px-8 md:px-0 lg:max-w-xs xl:max-w-sm",
+            "image_wrapper_classes": "order-2",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "",
+            "remove_text_wrapper": true,
+            "heading": "<div class=\"badge border-2 rounded-full uppercase px-4 bg-white xl:text-lg\" style=\"box-shadow: 3px 3px 0px 0px #1D4D41;\">Get up to 3 free gifts</div>",
+            "heading_classes": "order-1 hidden sm:block",
+            "paragraph": "Kick off the long weekend with up to 3 free gifts <br class=\"hidden lg:block\">for brighter eyes and smoother skin.",
+            "paragraph_classes": "order-3 font-bold text-center max-w-sm xl:max-w-md xl:text-lg hidden sm:block 2xl:text-xl",
+            "button_label": "Shop Now",
+            "button_aria_label": "Shop Now: All Products",
+            "link": "shopify://collections/shop",
+            "target_blank": false,
+            "button_classes": "order-4 button-white sm:button-primary md:button-lg mt-auto sm:mt-0",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "hide_atc_button_price": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        },
+        "column_AGAFtX": {
+          "type": "column",
+          "settings": {
+            "column_classes": "w-full",
+            "image": "shopify://shop_images/Labor_Day___Homepage_Hero_Banner_2___Full_Offer___2026.09.05_-_Mobile_-_Layout.jpg",
+            "image_desktop": "shopify://shop_images/Labor_Day___Homepage_Hero_Banner_2___Full_Offer___2026.09.05_-_Desktop_-_Layout.jpg",
+            "is_bg_image": false,
+            "image_link": "shopify://pages/sea-rewards",
+            "image_classes": "w-full",
+            "image_wrapper_classes": "",
+            "image_link_classes": "",
+            "image_static_size": "",
+            "text_classes": "",
+            "remove_text_wrapper": false,
+            "heading": "",
+            "heading_classes": "",
+            "paragraph": "",
+            "paragraph_classes": "",
+            "button_label": "",
+            "button_aria_label": "",
+            "link": "",
+            "target_blank": false,
+            "button_classes": "",
+            "button_icon": "",
+            "product_form_classes": "",
+            "is_atc_button": false,
+            "hide_atc_button_price": false,
+            "is_subscription": false,
+            "atc_button_product": "",
+            "show_variants": false,
+            "variant_picker_type": "button",
+            "variant_classes": "",
+            "variant_button_classes": "",
+            "variant_button_nofl": false,
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_hide_controls": false,
+            "video_muted": false,
+            "video_classes": "",
+            "video_poster_size": "",
+            "prod_slider_handles": "",
+            "prod_slider_classes": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_7LBhCf",
+        "column_AGAFtX"
+      ],
+      "name": "LD26: Full Offer",
       "settings": {
         "section_heading": "",
         "section_classes": "container px-0 xs:px-6",
@@ -179,289 +401,6 @@
         "banner_classes": "container mb-2",
         "image_classes": "w-full h-full object-cover rounded",
         "text_block_classes": "absolute inset-0 flex flex-col items-center justify-start text-center"
-      }
-    },
-    "image_banner_YwkVRr": {
-      "type": "image-banner",
-      "blocks": {
-        "paragraph_iVnNYJ": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "NEW! LIMITED EDITION",
-            "paragraph_classes": "badge rounded-full bg-anniversary-orange px-4 uppercase  text-lg mt-2 xs:text-2xl xs:mt-4 sm:mb-0 sm:text-xs sm:mt-4 sm:px-2 sm:py-0 md:mt-8 md:py-1 md:px-4 lg:text-base lg:mt-2  xl:text-xl xl:mt-4 xl:px-6 2xl:text-2xl 2xl:mt-4"
-          }
-        },
-        "heading_THr7Pq": {
-          "type": "heading",
-          "settings": {
-            "heading": "30 Years, 1 Collection.",
-            "heading_classes": "text-[2.25rem] tracking-normal leading-tight max-w-sm font-serif text-white mt-2\n\nxs:tracking-3 xs:text-[2.5rem] xs:mt-3 xs:max-w-xl\n\nsm:text-xl sm:leading-tighter sm:mt-0\n\n md:text-[1.5rem] md:tracking-wide md:mt-2\n\nlg:text-4xl lg:tracking-normal lg:mt-2\n\n xl:text-[2.75rem] xl:max-w-2xl xl:mt-2\n\n 2xl:text-[3.25rem] 2xl:max-w-full 2xl:tracking-normal 2xl:px-4 2xl:mt-4"
-          }
-        },
-        "paragraph_GwU7RM": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Five of our bestselling products in one set, to celebrate 30 years of seaweed-powered skincare.",
-            "paragraph_classes": "text-white px-4  font-book text-base mt-4\n\nxs:text-xl leading-tight xs:tracking-tight xs:mt-4\n\nsm:px-0 sm:mt-2 sm:text-xs sm:font-base sm:tracking-tight\n\nmd:text-sm md:px-2 \nlg:text-lg lg:px-2 lg:mt-4 lg:text-md  \n\nxl:text-xl xl:px-0 xl:font-medium xl:tracking-normal\n\n2xl:text-2xl 2xl:px-4 2xl:mt-6"
-          }
-        },
-        "button_YRgwc3": {
-          "type": "button",
-          "settings": {
-            "button_label": "SHOP NOW",
-            "button_aria_label": "Shop now: Shop our Summer Essentials",
-            "button_link": "#",
-            "target_blank": false,
-            "button_classes": "button-lg mb-2 mt-auto sm:mt4 bg-white border-white  text-seaweed-700\n\nxs:button-2xl\n\nsm:button-sm  sm:mt-2\n\nmd:button-sm md:py-2 md:mt-4\nlg:button-md lg:mt-4\n\n xl:mt-8  xl:px-6 xl:py-4 xl:px-10 2xl:button-xl 2xl:px-12"
-          }
-        }
-      },
-      "block_order": [
-        "paragraph_iVnNYJ",
-        "heading_THr7Pq",
-        "paragraph_GwU7RM",
-        "button_YRgwc3"
-      ],
-      "disabled": true,
-      "name": "30 Year Anniv Collection",
-      "settings": {
-        "image_mobile": "shopify://shop_images/Icons_Set_LTO_Homepage_Module_30th_Anniversary_2026.08.02_Mobile_BLANK.jpg",
-        "image": "shopify://shop_images/Icons_Set_LTO_Homepage_Module_30th_Anniversary_2026.08.02_Desktop_BLANK.jpg",
-        "is_lazy": false,
-        "image_link": "shopify://collections/summer-essentials",
-        "banner_classes": "sm:container",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start sm:justify-center 2xs:pt-2 pb-5 sm:right-1/2 mt-2 sm:mt-10 sm:ml-10 sm:mb-10 sm:ml-2 md:mb-14 lg:mt-12  lg:ml-16 xl:mt-14   xl:ml-28 2xl:mt-10"
-      }
-    },
-    "image_banner_JRLLkJ": {
-      "type": "image-banner",
-      "blocks": {
-        "paragraph_G76Xg3": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "EST. 1996  |  MALIBU, CA",
-            "paragraph_classes": "tracking-wide font-book text-lg mt-6 xs:text-xl xs:mt-12 sm:mt-3 sm:text-xs sm:font-book md:text-sm lg:text-lg lg:mt-4 xl:mt-6 xl:text-2xl 2xl:mt-10 2xl:tracking-normal"
-          }
-        },
-        "heading_rgR8PG": {
-          "type": "heading",
-          "settings": {
-            "heading": "30 Years of Skincare from the Sea",
-            "heading_classes": "font-serif text-5xl leading-[1.1] tracking-tight mt-5 max-w-2xs px-2 xs:text-5xl sm:text-3xl sm:max-w-full sm:mt-2 md:mt-4 md:text-4xl lg:text-5xl lg:tracking-normal xl:text-6xl xl:mt-6 2xl:text-7xl"
-          }
-        },
-        "paragraph_ft4xPR": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Clean, seaweed-powered formulas since 1996.",
-            "paragraph_classes": "hidden sm:block font-book text-base sm:text-lg lg:text-xl mt-2 sm:text-sm sm:mt-0 md:text-base md:mt-0 xl:text-2xl xl:mt-2 2xl:text-3xl"
-          }
-        },
-        "button_pxCAnq": {
-          "type": "button",
-          "name": "Mobile Button",
-          "settings": {
-            "button_label": "READ OUR STORY",
-            "button_aria_label": "Read the OSEA family story",
-            "button_link": "shopify://pages/30-years-of-osea",
-            "target_blank": false,
-            "button_classes": "button button button-primary button-base xs:button-lg  mt-5 sm:hidden"
-          }
-        },
-        "button_FaazeC": {
-          "type": "button",
-          "name": "Desktop Button",
-          "settings": {
-            "button_label": "EXPLORE OUR STORY",
-            "button_aria_label": "Explore the OSEA family story",
-            "button_link": "shopify://pages/30-years-of-osea",
-            "target_blank": false,
-            "button_classes": "button button-primary button-xs hidden sm:block sm:mt-4 lg:mt-6 lg:button-md xl:button-lg 2xl:button-xl 2xl:mt-8"
-          }
-        }
-      },
-      "block_order": [
-        "paragraph_G76Xg3",
-        "heading_rgR8PG",
-        "paragraph_ft4xPR",
-        "button_pxCAnq",
-        "button_FaazeC"
-      ],
-      "disabled": true,
-      "name": "30th Anniversary Heritage Hero",
-      "settings": {
-        "image_mobile": "shopify://shop_images/Brand_Heritage_Homepage_Hero_2026.07.21__MOBILE_BLANK.jpg",
-        "image": "shopify://shop_images/Brand_Heritage_Homepage_Hero_2026.07.21__DESKTOP_BLANK_WHITE.jpg",
-        "is_lazy": false,
-        "image_link": "",
-        "banner_classes": "sm:container mb-2",
-        "image_classes": "w-full",
-        "text_block_classes": "absolute inset-x-0 top-0 h-80 sm:h-[24vw] px-6 flex flex-col items-center  text-center"
-      }
-    },
-    "image_banner_eFUrTd": {
-      "type": "image-banner",
-      "blocks": {
-        "paragraph_FbfrMa": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Limited-time Only",
-            "paragraph_classes": "badge rounded-full bg-neon-green px-4 uppercase mb-3 sm:mb-0 sm:text-sm sm:py-0 md:mb-2 lg:text-base lg:mb-3 xl:mb-4 xl:py-1 2xl:mb-6"
-          }
-        },
-        "heading_Tpcjqc": {
-          "type": "heading",
-          "settings": {
-            "heading": "Subscribe &amp; Get Rewarded",
-            "heading_classes": "text-white text-4xl font-medium mb-2 sm:mb-0 sm:leading-none sm:text-3xl md:text-4xl lg:mb-2 xl:text-5xl"
-          }
-        },
-        "paragraph_WeQj38": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph": "Get 10% off + 500 points when you subscribe to any product.",
-            "paragraph_classes": "text-white font-book text-lg mb-3 sm:leading-tight sm:mb-0 md:mb-2 lg:mb-3 xl:text-2xl xl:mb-4 2xl:mb-6"
-          }
-        },
-        "button_xCPaw3": {
-          "type": "button",
-          "settings": {
-            "button_label": "Subscribe now",
-            "button_aria_label": "",
-            "button_link": "shopify://collections/subscription",
-            "target_blank": false,
-            "button_classes": "button-white border-seaweed-700 sm:button-sm lg:button-md xl:button-lg"
-          }
-        }
-      },
-      "block_order": [
-        "paragraph_FbfrMa",
-        "heading_Tpcjqc",
-        "paragraph_WeQj38",
-        "button_xCPaw3"
-      ],
-      "disabled": true,
-      "name": "30th Anniversary Thin Promo",
-      "settings": {
-        "image_mobile": "shopify://shop_images/Homepage_Thin_Banner___Loyalty_Promo___500_Bonus_Points___2026-07-23_Mobile_BLANK_8aa8f810-d6d6-4764-9951-a5f19201545f.jpg",
-        "image": "shopify://shop_images/Homepage_Thin_Banner___Loyalty_Promo___500_Bonus_Points___2026-07-23_Desktop_BLANK.jpg",
-        "is_lazy": true,
-        "image_link": "",
-        "banner_classes": "container text-seaweed-800 mb-2",
-        "image_classes": "w-full h-full object-cover rounded",
-        "text_block_classes": "absolute inset-0 flex flex-col items-center justify-center text-center max-w-3xs mx-auto xl:max-w-full"
-      }
-    },
-    "multicolumn_q6bHPV": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_XcDXgr": {
-          "type": "column",
-          "settings": {
-            "column_classes": "relative aspect-square overflow-hidden rounded-md bg-seaweed-700 text-white md:flex-1",
-            "image": "shopify://shop_images/Screenshot_2026-07-20_at_11.10.43_AM.png",
-            "is_bg_image": false,
-            "image_link": "",
-            "image_classes": "",
-            "image_wrapper_classes": "",
-            "image_link_classes": "",
-            "image_static_size": "732, 488",
-            "text_classes": "absolute inset-x-0 top-0 z-10 flex flex-col items-center md:justify-center text-center",
-            "remove_text_wrapper": false,
-            "heading": "Clean Beauty Since 1996",
-            "heading_classes": "font-serif text-2xl leading-tight mt-4 xs:text-3xl sm:text-4xl sm:mt-8 md:text-2xl md:mt-4 lg:text-4xl lg:mt-6 xl:text-5xl xl:mt-8",
-            "paragraph": "From our first formulas to today’s icons,<br>explore 30 years of Skincare from the Sea.",
-            "paragraph_classes": "mt-2 max-w-sm font-book text-xs leading-snug xs:text-sm xs:mt-8 sm:text-xl md:text-xs md:mt-3 lg:text-base lg:mt-4 xl:text-xl xl:mt-6 2xl:text-2xl xl:max-w-2xl 2xl:mt-8",
-            "button_label": "READ OUR STORY",
-            "button_aria_label": "Read the OSEA family story",
-            "link": "shopify://pages/about-us",
-            "target_blank": false,
-            "button_classes": "button button-white button-sm mt-4 sm:mt-5  sm:button-lg md:button-sm lg:button-md lg:mt-6 xl:button-lg xl:mt-8 2xl:button-xl 2xl:mt-12",
-            "button_icon": "",
-            "product_form_classes": "",
-            "is_atc_button": false,
-            "hide_atc_button_price": false,
-            "is_subscription": false,
-            "atc_button_product": "",
-            "show_variants": false,
-            "variant_picker_type": "button",
-            "variant_classes": "",
-            "variant_button_classes": "",
-            "variant_button_nofl": false,
-            "video_autoplay": false,
-            "video_loop": false,
-            "video_hide_controls": false,
-            "video_muted": false,
-            "video_classes": "",
-            "video_poster_size": "",
-            "prod_slider_handles": "",
-            "prod_slider_classes": ""
-          }
-        },
-        "column_LYwwEz": {
-          "type": "column",
-          "settings": {
-            "column_classes": "relative aspect-square overflow-hidden rounded-md bg-sand-300 text-seaweed-700 md:flex-1",
-            "image": "shopify://shop_images/Screenshot_2026-07-20_at_11.11.17_AM.png",
-            "is_bg_image": false,
-            "image_link": "",
-            "image_classes": "w-full h-full object-cover",
-            "image_wrapper_classes": "absolute inset-0",
-            "image_link_classes": "",
-            "image_static_size": "732, 488",
-            "text_classes": "absolute inset-x-0 top-0 z-10 flex flex-col items-start ml-4 sm:ml-8 md:ml-6 xl:ml-8 2xl:ml-10",
-            "remove_text_wrapper": false,
-            "heading": "Celebrate With Us",
-            "heading_classes": "font-serif text-2xl leading-tight mt-4 xs:text-3xl sm:text-4xl sm:mt-6 md:text-2xl md:mt-4 lg:text-4xl lg:mt-6 xl:text-5xl xl:mt-8",
-            "paragraph": "We’re celebrating coast to coast.<br>Find upcoming pop-ups and<br>special events near you.",
-            "paragraph_classes": "mt-1 max-w-sm font-book text-sm leading-snug xs:mt-4 sm:text-xl sm:mt-6 md:text-xs md:mt-2 lg:mt-1 lg:text-base xl:text-xl xl:mt-2 2xl:text-2xl 2xl:mt-4",
-            "button_label": "FIND AN EVENT",
-            "button_aria_label": "Find an OSEA event",
-            "link": "shopify://pages/events",
-            "target_blank": false,
-            "button_classes": "button button-primary button-sm mt-4 xs:mt-8 sm:button-lg sm:mt-10 md:button-sm md:mt-3 lg:mt-5 lg:text-base lg:button-md xl:button-lg xl:mt-6 2xl:button-xl 2xl:mt-8",
-            "button_icon": "",
-            "product_form_classes": "",
-            "is_atc_button": false,
-            "hide_atc_button_price": false,
-            "is_subscription": false,
-            "atc_button_product": "",
-            "show_variants": false,
-            "variant_picker_type": "button",
-            "variant_classes": "",
-            "variant_button_classes": "",
-            "variant_button_nofl": false,
-            "video_autoplay": false,
-            "video_loop": false,
-            "video_hide_controls": false,
-            "video_muted": false,
-            "video_classes": "",
-            "video_poster_size": "",
-            "prod_slider_handles": "",
-            "prod_slider_classes": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_XcDXgr",
-        "column_LYwwEz"
-      ],
-      "disabled": true,
-      "name": "30th Anniversary Feature Cards",
-      "settings": {
-        "section_heading": "30th Anniversary Highlights",
-        "section_classes": "container mb-4",
-        "container_classes": "flex-col md:flex-row gap-2",
-        "logged_in_only": false,
-        "is_slider": false,
-        "slider_indicator_count": 3,
-        "slider_breakpoint_limit": "none",
-        "slider_classes": "",
-        "show_arrow_nav": true,
-        "arrow_nav_classes": "top-1/2 -translate-y-1/2",
-        "show_dot_nav": false,
-        "dot_nav_classes": "absolute bottom-1 left-1/2 -translate-x-1/2"
       }
     },
     "image_banner_Aaqkjf": {
@@ -2427,11 +2366,9 @@
   },
   "order": [
     "multicolumn_hFiGjm",
+    "multicolumn_w3nBgB",
+    "multicolumn_acJmgt",
     "image_banner_EAKyqD",
-    "image_banner_YwkVRr",
-    "image_banner_JRLLkJ",
-    "image_banner_eFUrTd",
-    "multicolumn_q6bHPV",
     "image_banner_Aaqkjf",
     "multicolumn_dkc6Rq",
     "image_banner_FK6e8K",
