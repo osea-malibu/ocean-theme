@@ -34,11 +34,11 @@
 
   case block_settings.alignment
     when 'center'
-      assign alignment_class = 'self-center justify-self-center'
+      assign alignment_class = 'mx-auto self-center justify-self-center'
     when 'right'
-      assign alignment_class = 'self-end justify-self-end'
+      assign alignment_class = 'ml-auto self-end justify-self-end'
     else
-      assign alignment_class = 'self-start justify-self-start'
+      assign alignment_class = 'mr-auto self-start justify-self-start'
   endcase
 
   case block_settings.visibility
@@ -56,25 +56,29 @@
 -%}
 
 {%- if block_settings.label != blank -%}
-  <a
-    {% if block_settings.link != blank %}
-      href="{{ block_settings.link }}"
-    {% else %}
-      role="link"
-      aria-disabled="true"
-    {% endif %}
-    {% if block_settings.open_in_new_tab and block_settings.link != blank %}
-      target="_blank"
-      rel="noopener noreferrer"
-    {% endif %}
-    {% if block_settings.accessibility_label != blank %}
-      aria-label="{{ block_settings.accessibility_label | escape }}"
-    {% endif %}
-    class="{{ style_class }} {{ size_class }} {{ alignment_class }}{% if visibility_class != blank %} {{ visibility_class }}{% endif %}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+  <div
+    class="w-fit {{ alignment_class }}{% if visibility_class != blank %} {{ visibility_class }}{% endif %}"
     {{ block.shopify_attributes }}
   >
-    {{- block_settings.label | escape -}}
-  </a>
+    <a
+      {% if block_settings.link != blank %}
+        href="{{ block_settings.link }}"
+      {% else %}
+        role="link"
+        aria-disabled="true"
+      {% endif %}
+      {% if block_settings.open_in_new_tab and block_settings.link != blank %}
+        target="_blank"
+        rel="noopener noreferrer"
+      {% endif %}
+      {% if block_settings.accessibility_label != blank %}
+        aria-label="{{ block_settings.accessibility_label | escape }}"
+      {% endif %}
+      class="{{ style_class }} {{ size_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+    >
+      {{- block_settings.label | escape -}}
+    </a>
+  </div>
 {%- endif -%}
 
 {% schema %}
