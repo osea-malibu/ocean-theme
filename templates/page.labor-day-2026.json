@@ -17,15 +17,15 @@
     "multicolumn_CWWfXk": {
       "type": "multicolumn",
       "blocks": {
-        "countdown_G3w474": {
+        "countdown_WdJ4DB": {
           "type": "countdown",
           "settings": {
             "column_classes": "absolute inset-x-0 top-0",
-            "text_classes": "",
+            "text_classes": "max-w-sm mx-auto text-seaweed-700 grid grid-cols-4 gap-1 child:rounded-xl child:bg-white mt-4 sm:mt-6",
             "countdown_date": "09/02/2026",
-            "countdown_time": "00:00",
-            "count_classes": "",
-            "label_classes": "",
+            "countdown_time": "23:59",
+            "count_classes": "text-3xl sm:text-5xl leading-10 pt-2 font-book",
+            "label_classes": "tracking-wide font-medium pb-2",
             "short_labels": false
           }
         },
@@ -121,7 +121,7 @@
         }
       },
       "block_order": [
-        "countdown_G3w474",
+        "countdown_WdJ4DB",
         "column_jh4tK3",
         "column_g7GHy3"
       ],
@@ -144,19 +144,6 @@
     "multicolumn_nyyytt": {
       "type": "multicolumn",
       "blocks": {
-        "countdown_84RcpN": {
-          "type": "countdown",
-          "disabled": true,
-          "settings": {
-            "column_classes": "container w-full",
-            "text_classes": "max-w-sm mx-auto text-seaweed-800 grid grid-cols-4 gap-1 child:rounded-xl child:bg-white mt-4 sm:mt-6",
-            "countdown_date": "05/19/2026",
-            "countdown_time": "23:59",
-            "count_classes": "text-3xl sm:text-5xl leading-10 pt-2 font-book",
-            "label_classes": "tracking-wide font-medium pb-2",
-            "short_labels": false
-          }
-        },
         "column_4zNML9": {
           "type": "column",
           "settings": {
@@ -514,7 +501,6 @@
         }
       },
       "block_order": [
-        "countdown_84RcpN",
         "column_4zNML9",
         "column_kadMGb",
         "column_TfLYYa",
