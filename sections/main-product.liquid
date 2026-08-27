@@ -284,7 +284,7 @@
                   endif
                 -%}
                 {%- if upsell_count > 1 -%}
-                  <input aria-hidden="true" id="collapsible" class="hidden peer" type="checkbox" />
+                  <input aria-hidden="true" id="ProductUpsellsCollapsible-{{ section.id }}-{{ block.id }}" class="hidden peer" type="checkbox" />
                 {%- endif -%}
                 <div class="{{ block.settings.upsell_classes }}{% if upsell_count > 1 %} max-h-[140px] overflow-hidden peer-checked:max-h-[1000px] motion-safe:transition-max-height{% endif %}" {{ block.shopify_attributes }}>
                   {%- if block.settings.upsell_enable_sets and product.metafields.my_fields.save_with_sets != nil -%}
@@ -313,8 +313,8 @@
                   {% endif %}
                 </div>
                 {%- if upsell_count > 1 -%}
-                  <label aria-hidden="true" for="collapsible" class="block col-span-12 mt-1 text-sm link peer-checked:hidden">View more {% render 'icon-arrow', variant: 'short', classes: 'rotate-90 w-4 h-4 inline-block ml-1' %}</label>
-                  <label aria-hidden="true" for="collapsible" class="hidden col-span-12 mt-1 text-sm link peer-checked:block">View less {% render 'icon-arrow', variant: 'short', classes: '-rotate-90 w-4 h-4 inline-block ml-1' %}</label>
+                  <label aria-hidden="true" for="ProductUpsellsCollapsible-{{ section.id }}-{{ block.id }}" class="block col-span-12 mt-1 text-sm link peer-checked:hidden">View more {% render 'icon-arrow', variant: 'short', classes: 'rotate-90 w-4 h-4 inline-block ml-1' %}</label>
+                  <label aria-hidden="true" for="ProductUpsellsCollapsible-{{ section.id }}-{{ block.id }}" class="hidden col-span-12 mt-1 text-sm link peer-checked:block">View less {% render 'icon-arrow', variant: 'short', classes: '-rotate-90 w-4 h-4 inline-block ml-1' %}</label>
                 {%- endif -%}
               {%- endif -%}
             {%- when 'set_includes' -%}
