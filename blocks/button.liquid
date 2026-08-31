@@ -74,6 +74,9 @@
       {% if block_settings.accessibility_label != blank %}
         aria-label="{{ block_settings.accessibility_label | escape }}"
       {% endif %}
+      {% if block_settings.enable_custom_colors and block_settings.background_color != blank or block_settings.enable_custom_colors and block_settings.text_color != blank %}
+        style="{% if block_settings.background_color != blank %}background-color: {{ block_settings.background_color }};{% endif %}{% if block_settings.text_color != blank %} color: {{ block_settings.text_color }};{% endif %}"
+      {% endif %}
       class="{{ style_class }} {{ size_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
     >
       {{- block_settings.label | escape -}}
@@ -136,6 +139,25 @@
         }
       ],
       "default": "primary"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_custom_colors",
+      "label": "Enable custom colors",
+      "info": "Overrides the colors from the selected button style.",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "visible_if": "{{ block.settings.enable_custom_colors }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "visible_if": "{{ block.settings.enable_custom_colors }}"
     },
     {
       "type": "select",
