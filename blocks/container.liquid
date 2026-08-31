@@ -1,6 +1,8 @@
 {%- liquid
   assign block_settings = block.settings
   assign background_image = block_settings.image_desktop | default: block_settings.image_mobile
+  assign background_image_mobile = block_settings.image_mobile | default: block_settings.image_desktop
+  assign background_image_desktop = block_settings.image_desktop | default: block_settings.image_mobile
 
   case block_settings.max_width
     when '2xl'
@@ -20,6 +22,27 @@
     else
       assign max_width_class = 'max-w-full'
   endcase
+
+  if background_image != blank
+    assign container_layout_class = 'aspect-[var(--background-image-aspect-mobile)] sm:aspect-[var(--background-image-aspect-desktop)]'
+  else
+    assign container_layout_class = ''
+  endif
+
+  case block_settings.background_position
+    when 'top'
+      assign background_position_class = 'object-top'
+    when 'bottom'
+      assign background_position_class = 'object-bottom'
+    else
+      assign background_position_class = 'object-center'
+  endcase
+
+  assign background_image_class = 'h-full w-full max-w-none object-cover ' | append: background_position_class
+  if block_settings.background_image_classnames != blank
+    assign escaped_background_image_classnames = block_settings.background_image_classnames | escape
+    assign background_image_class = background_image_class | append: ' ' | append: escaped_background_image_classnames
+  endif
 -%}
 
 {%- capture block_content -%}
@@ -27,9 +50,9 @@
 {%- endcapture -%}
 
 <div
-  class="relative mx-auto w-full {{ max_width_class }}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
-  {% if block_settings.background_color != blank %}
-    style="background-color: {{ block_settings.background_color }};"
+  class="relative mx-auto grid w-full {{ max_width_class }}{% if container_layout_class != blank %} {{ container_layout_class }}{% endif %}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+  {% if block_settings.background_color != blank or background_image != blank %}
+    style="{% if block_settings.background_color != blank %}background-color: {{ block_settings.background_color }};{% endif %}{% if background_image != blank %} --background-image-aspect-mobile: {{ background_image_mobile.aspect_ratio | default: 1 }}; --background-image-aspect-desktop: {{ background_image_desktop.aspect_ratio | default: 2 }};{% endif %}"
   {% endif %}
   {{ block.shopify_attributes }}
 >
@@ -41,19 +64,15 @@
         widths_preset: 'banner',
         sizes: '100vw',
         decorative: true,
-        class: 'h-full w-full max-w-none object-cover',
+        class: background_image_class,
         picture_class: 'h-full w-full'
       %}
     </div>
   {%- endif -%}
 
-  {%- if background_image != blank -%}
-    <div class="relative z-10">
-      {{ block_content }}
-    </div>
-  {%- else -%}
+  <div class="relative z-10 grid w-full">
     {{ block_content }}
-  {%- endif -%}
+  </div>
 </div>
 
 {% schema %}
@@ -108,6 +127,10 @@
       "default": "full"
     },
     {
+      "type": "header",
+      "content": "Background"
+    },
+    {
       "type": "image_picker",
       "id": "image_mobile",
       "label": "Mobile image"
@@ -116,6 +139,26 @@
       "type": "image_picker",
       "id": "image_desktop",
       "label": "Desktop image"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
     },
     {
       "type": "color",
@@ -130,6 +173,11 @@
       "type": "textarea",
       "id": "classnames",
       "label": "Custom classes (advanced)"
+    },
+    {
+      "type": "textarea",
+      "id": "background_image_classnames",
+      "label": "Custom background image classes (advanced)"
     }
   ],
   "presets": [
