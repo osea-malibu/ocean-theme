@@ -21,11 +21,11 @@
 
   case block.settings.layout
     when 'split_50_50'
-      assign layout_class = 'flex w-full flex-col gap-4 md:flex-row md:flex-wrap md:[&>.theme-image-block]:mx-0 md:[&>*]:min-w-0 md:[&>*]:shrink-0 md:[&>*]:basis-[calc(50%-0.5rem)]'
+      assign layout_class = 'flex w-full flex-col gap-2 md:flex-row md:flex-wrap md:[&>.theme-image-block]:mx-0 md:[&>*]:min-w-0 md:[&>*]:shrink-0 md:[&>*]:basis-[calc(50%-0.25rem)]'
     when 'wrap'
-      assign layout_class = 'flex flex-row flex-wrap -m-2 w-[calc(100%+1rem)] [&>*]:p-2 [&>.theme-image-block]:mx-0'
+      assign layout_class = 'flex flex-row flex-wrap -m-1 w-[calc(100%+0.5rem)] [&>*]:p-1 [&>.theme-image-block]:mx-0'
     else
-      assign layout_class = 'flex w-full flex-col gap-4'
+      assign layout_class = 'flex w-full flex-col gap-2'
   endcase
 -%}
 
