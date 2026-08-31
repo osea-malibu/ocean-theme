@@ -463,7 +463,8 @@
             "ingredient_scientific_name": "{{ block.repeater.scientific_name.value }}",
             "ingredient_description": "{{ block.repeater.description.value }}",
             "ingredient_citation": "{{ block.repeater.citation.value }}",
-            "ingredient_image": "{{ block.repeater.image.value }}"
+            "ingredient_image": "{{ block.repeater.image.value }}",
+            "ingredient_image_override": "{{ block.repeater.image_override.value }}"
           }
         }
       },
