@@ -10,11 +10,7 @@
   getSectionsToRender(). Do not duplicate this markup back into either anchor wrapper.
 {%- endcomment -%}
 <span class="sr-only">Cart</span>
-<div class="cart-icon-bubble w-7 h-7 bg-seafoam-300 rounded-full flex justify-center items-center">
-  <span class="leading-8 font-book text-lg">{{ cart.item_count }}</span>
-  <span class="sr-only">items</span>
-</div>
-<div class="cart-icon-bag hidden">
+<div class="cart-icon-bag">
   {%- render 'icon-bag', classes: 'h-6 w-6 hover:text-seaweed-500', aria_hidden: true, stroke_width: 1.75 -%}
   {%- if cart.item_count > 0 -%}
     <div class="absolute top-1 right-0 w-auto h-4 min-w-4 px-0.5 bg-seafoam-300 rounded-full flex justify-center items-center border border-seaweed-700/50">
