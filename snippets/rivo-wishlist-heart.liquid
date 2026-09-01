@@ -1,0 +1,114 @@
+<div class="favorite-button-wrapper bg-white/75 rounded-full p-1">
+  <rivo-favorite-button
+    data-product-id="{{ product.id }}"
+    rivo-ax-data
+    rivo-ax-cloak
+    rivo-ax-html="$store.icons.heart"
+    rivo-ax-show="$store.rivo_aw_settings?.favorites_enabled && (!$store.rivo_profile_customer || $store.loading_states.global_favorite_buttons)"
+  ></rivo-favorite-button>
+</div>
+<script>
+  (() => {
+    // Guard: only initialize once, even if this snippet renders once per product card
+    if (window.__rivoWishlistInitialized) return;
+    window.__rivoWishlistInitialized = true;
+    const reInitWishlistBtns = (source = 'manual') => {
+      try {
+        const rivoAccountWidget = document.getElementById('rivo-account-slideout');
+        if (window.RivoProfileAlpine && rivoAccountWidget) {
+          console.log(`[Wishlist Debug] Reinitializing wishlist buttons (${source})`);
+          window.RivoProfileAlpine.$data(rivoAccountWidget).initializeFavoriteButtons();
+        }
+      } catch (err) {
+        console.log('[Wishlist Debug] Error initializing wishlist buttons', err);
+      }
+    };
+    const setupGridWatcher = () => {
+      const grid = document.querySelector('[data-infinite-scroll-results]');
+      if (!grid) {
+        console.log('[Wishlist Debug] No infinite-scroll grid found.');
+        return;
+      }
+      let lastCount = grid.querySelectorAll('.product-block').length;
+      console.log('[Wishlist Debug] Initial product-block count:', lastCount);
+      const observer = new MutationObserver(() => {
+        const currentCount = grid.querySelectorAll('.product-block').length;
+        if (currentCount !== lastCount) {
+          console.log(`[Wishlist Debug] Product-block count changed ${lastCount} → ${currentCount}`);
+          lastCount = currentCount;
+          reInitWishlistBtns('grid-change');
+        }
+      });
+      observer.observe(grid, { childList: true, subtree: true });
+      console.log('[Wishlist Debug] Watching grid for size changes');
+    };
+    reInitWishlistBtns('initial');
+    setupGridWatcher();
+  })();
+</script>
+<style>
+  :root {
+    --rivo-aw-favorite-button-active-color: #000000 !important;
+  }
+  .favorite-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    z-index: 10;
+  }
+  rivo-favorite-button svg {
+    position: static !important;
+    stroke: #1d4d41 !important;
+    stroke-width: 4px !important;
+    height: 20px !important;
+    margin: 0;
+    z-index: 10 !important;
+  }
+  .favorite-button-wrapper rivo-favorite-button {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+{% if template.name == 'product' %}
+  <style>
+    .product-block__inner .favorite-button-wrapper:not(:first-child) {
+      display: none !important;
+    }
+    .favorite-button-wrapper {
+      position: static !important;
+      right: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+    }
+    .favorite-button-wrapper > rivo-favorite-button {
+      display: inline-flex;
+      align-items: center;
+      width: auto;
+      height: auto;
+    }
+    .favorite-button-wrapper > rivo-favorite-button::after {
+      {% comment %} content: "Add to Favorites"; {% endcomment %}
+      margin-left: 8px;
+      font-weight: 400;
+      font-size: 14px;
+      color: #1d4d41;
+    }
+    {% comment %} .favorite-button-wrapper > rivo-favorite-button.rivo-favorite-active::after {
+      content: "In Your Favorites";
+    } {% endcomment %}
+    .product-list.swiper-container .favorite-button-wrapper,
+    .product-list[data-products-in-view] .favorite-button-wrapper,
+    .product-recommendations .favorite-button-wrapper,
+    .related-products .favorite-button-wrapper,
+    .recently-viewed .favorite-button-wrapper,
+    .shopify-section--recommendations .favorite-button-wrapper {
+      display: none !important;
+    }
+  </style>
+{% endif %}
