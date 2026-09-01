@@ -12,6 +12,31 @@
     // Guard: only initialize once, even if this snippet renders once per product card
     if (window.__rivoWishlistInitialized) return;
     window.__rivoWishlistInitialized = true;
+    // GTM: emit a Google dataLayer event when the wishlist heart is clicked.
+    // The heart is a toggle, so we read the resulting state and emit
+    // add_to_wishlist / remove_from_wishlist accordingly.
+    const trackWishlistClick = (btn) => {
+      try {
+        var productId = btn.getAttribute('data-product-id') || undefined;
+        // Read state after Rivo toggles the active class on the button.
+        setTimeout(function () {
+          var isActive = btn.classList.contains('rivo-favorite-active');
+          window.dataLayer = window.dataLayer || [];
+          dataLayer.push({
+            'event': isActive ? 'add_to_wishlist' : 'remove_from_wishlist',
+            'source': 'rivo_wishlist_heart',
+            'product_id': productId,
+          });
+        }, 150);
+      } catch (err) {
+        console.log('[Wishlist Debug] Error tracking wishlist click', err);
+      }
+    };
+    // Delegated so it also covers buttons Rivo re-initializes dynamically.
+    document.addEventListener('click', function (event) {
+      var btn = event.target.closest && event.target.closest('rivo-favorite-button');
+      if (btn) trackWishlistClick(btn);
+    });
     const reInitWishlistBtns = (source = 'manual') => {
       try {
         const rivoAccountWidget = document.getElementById('rivo-account-slideout');
