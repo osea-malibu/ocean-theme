@@ -136,6 +136,76 @@ paid-only:not(.is-paid) {
     }
   }
 
+  /* Compact status-dot pulse for the cart quantity badge. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cart-quantity-badge {
+      isolation: isolate;
+      overflow: visible;
+    }
+
+    .cart-quantity-value {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cart-quantity-pulse-effect {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .cart-quantity-pulse-effect::before,
+    .cart-quantity-pulse-effect::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background-color: var(--color-seaweed-500);
+      pointer-events: none;
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+
+    .cart-quantity-pulse-effect::before {
+      animation: cart-quantity-pulse-mini 1.5s ease-out infinite;
+    }
+
+    .cart-quantity-pulse-effect::after {
+      animation: cart-quantity-pulse-big 1.5s ease-out infinite;
+    }
+  }
+
+  @keyframes cart-quantity-pulse-mini {
+    0% {
+      opacity: 0.8;
+      transform: scale(0.9);
+    }
+    40%,
+    100% {
+      opacity: 0;
+      transform: scale(2.6);
+    }
+  }
+
+  @keyframes cart-quantity-pulse-big {
+    0%,
+    22% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    28% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    85%,
+    100% {
+      opacity: 0;
+      transform: scale(3.2);
+    }
+  }
+
   /* Cart rewards "Show all" disclosure — animate native <details> open/close.
      interpolate-size is scoped to the element so `block-size: auto` can animate.
      Browsers without ::details-content support fall back to an instant toggle. */
