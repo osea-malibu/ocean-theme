@@ -74,9 +74,14 @@
                 </div>
               {%- endif -%}
             {%- when 'title' -%}
-              <h1 class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
+              <div class="{{ block.settings.title_classes }}" {{ block.shopify_attributes }}>
+                <span class="float-right">
+                  {% render 'rivo-wishlist-heart', product: product %}
+                </span>
+                <h1>
                 {{- product.title | replace: 'Eye Serum', 'Serum' | replace: '™', '<sup class="text-[60%] -mr-1 -left-0.5">™</sup>' | replace: '®', '<sup class="text-[60%] -mr-1 -left-0.5">®</sup>' | replace: ' v2', '' -}}
-              </h1>
+                </h1>
+              </div>
             {%- when 'tags' -%}
               {%  render 'product-tags', block: block %}
             {%- when 'price' -%}
