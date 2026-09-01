@@ -23,20 +23,20 @@
               {%- assign ingredient_override_master = block.settings.ingredient_image_override | image_url -%}
               {% comment %} theme-check-disable RemoteAsset {% endcomment %}
               <img
-                src="{% render 'imgix', src: ingredient_override_master, w: 192 %}"
+                src="{% render 'imgix', src: ingredient_override_master, w: 640 %}"
                 srcset="
-                  {% render 'imgix', src: ingredient_override_master, w: 128 %} 128w,
-                  {% render 'imgix', src: ingredient_override_master, w: 192 %} 192w,
-                  {% render 'imgix', src: ingredient_override_master, w: 256 %} 256w,
                   {% render 'imgix', src: ingredient_override_master, w: 320 %} 320w,
-                  {% render 'imgix', src: ingredient_override_master, w: 384 %} 384w
+                  {% render 'imgix', src: ingredient_override_master, w: 480 %} 480w,
+                  {% render 'imgix', src: ingredient_override_master, w: 640 %} 640w,
+                  {% render 'imgix', src: ingredient_override_master, w: 768 %} 768w,
+                  {% render 'imgix', src: ingredient_override_master, w: 976 %} 976w
                 "
-                sizes="(min-width: 1024px) 176px, (min-width: 768px) 144px, 112px"
+                sizes="(min-width: 768px) 672px, 100vw"
                 alt=""
                 aria-hidden="true"
                 height="{{ block.settings.ingredient_image_override.height }}"
                 width="{{ block.settings.ingredient_image_override.width }}"
-                class="block shrink-0"
+                class="block w-full shrink-0"
                 loading="lazy"
               >
               {% comment %} theme-check-enable RemoteAsset {% endcomment %}
