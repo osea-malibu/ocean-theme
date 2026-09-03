@@ -21,29 +21,37 @@
       assign cart_ids = cart.items | map: 'product_id'
       assign tier1_product = all_products[settings.gwp_tier1_product]
       assign tier2_product = all_products[settings.gwp_tier2_product]
-      assign tier3_product = all_products[settings.gwp_tier2_product]
+      assign tier3_product = all_products[settings.gwp_tier3_product]
 
+      comment
+        Resolve which tier the cart is working toward before doing any money math.
+        The gift for the highest tier already in the cart moves the goalpost to the next tier.
+      endcomment
       assign gwp_threshold = settings.gwp_tier1_threshold | times: 100
-      assign remaining_amount = gwp_threshold | minus: cart.total_price
-      assign remaining_amount_money = remaining_amount | money_without_trailing_zeros
-      assign countdown_text = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier1_product.title | replace: 'Free Gift - '
-      assign countdown_text_mobile = settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', 'gift' | replace: 'Free Gift - '
+      assign gwp_text = settings.gwp_tier1_text
+      assign gwp_product_title = tier1_product.title
 
-      if cart_ids contains tier2_product.id
-        if settings.gwp_tier3_product != nil
-          assign tier3_product = all_products[settings.gwp_tier3_product]
+      if tier2_product != blank and cart_ids contains tier2_product.id
+        if tier3_product != blank
           assign gwp_threshold = settings.gwp_tier3_threshold | times: 100
-          assign countdown_text = settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier3_product.title | replace: 'Free Gift - '
+          assign gwp_text = settings.gwp_tier3_text
+          assign gwp_product_title = tier3_product.title
         endif
-      elsif cart_ids contains tier1_product.id
-        if settings.gwp_tier2_product != nil
+      elsif tier1_product != blank and cart_ids contains tier1_product.id
+        if tier2_product != blank
           assign gwp_threshold = settings.gwp_tier2_threshold | times: 100
-          assign countdown_text = settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier2_product.title | replace: 'Free Gift - '
+          assign gwp_text = settings.gwp_tier2_text
+          assign gwp_product_title = tier2_product.title
         endif
       endif
+
+      assign remaining_amount = gwp_threshold | minus: cart.total_price
+      assign remaining_amount_money = remaining_amount | money_without_trailing_zeros
+      assign countdown_text = gwp_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', gwp_product_title | replace: 'Free Gift - '
+      assign countdown_text_mobile = gwp_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', 'gift' | replace: 'Free Gift - '
     -%}
 
-    {%- unless settings.gwp_tier1_product == nil -%}
+    {%- if tier1_product != blank -%}
       <p class="text-white font-book text-center py-0.5 tracking-wide">
         {%- if remaining_amount > 0 -%}
           <span class="hidden sm:block">{{ countdown_text }}</span>
@@ -52,7 +60,7 @@
           {{ settings.gwp_success_text }}
         {%- endif -%}
       </p>
-    {%- endunless -%}
+    {%- endif -%}
   {% comment %} Slider announcement bar {% endcomment %}
   {%- elsif section.blocks.size > 1 -%}
     <glide-slider
