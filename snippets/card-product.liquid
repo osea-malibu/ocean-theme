@@ -33,6 +33,9 @@
     - short_description_text: {String} Replaces short description with custom text (optional)
     - custom_badge_html: {String} Replaces badge with custom HTML (optional)
     - mini: {Boolean} Compact format — small image, no description, no variant picker. Default: false (optional)
+      When no picker is rendered (mini, or variant_picker_type: 'none') and default_to_mini /
+      default_to_jumbo are unset, the card pins the largest size — the variant with the highest
+      number in its title — instead of the first available variant.
     - sizes_attr: {String} Override default img sizes attribute (optional)
     - force_atc: {Boolean} Show ATC even if remove_atc_button metafield is set (e.g. cart drawer samples). Default: false (optional)
     - hide_price: {Boolean} Hide price from ATC button. Default: false (optional)
@@ -308,10 +311,49 @@
           {%- endif -%}
         {%- endunless -%}
         {%- liquid
+          comment
+            When no variant picker is rendered the customer can't choose a size, so pin the largest
+            one instead of falling back to Shopify's default (usually the travel size). Size can't be
+            read positionally — the last variant is often a duo or a special edition — so score each
+            variant by the largest number in its title and take the highest. Titles with no number
+            ("Duo") score 0 and are skipped; if nothing scores, we fall back. A tie keeps the earlier
+            variant, which puts a plain size ahead of a duo of the same size.
+          endcomment
+          assign pin_largest_variant = false
+          if default_to_mini != true and default_to_jumbo != true and card_product.variants.size > 1
+            if mini or variant_picker_type == 'none'
+              assign pin_largest_variant = true
+            endif
+          endif
+
+          assign pinned_variant = nil
           if default_to_mini
             assign default_variant = card_product.variants[mini_index]
           elsif default_to_jumbo
             assign default_variant = card_product.variants[0]
+          elsif pin_largest_variant
+            assign largest_size = 0
+            for variant in card_product.variants
+              if variant.available
+                assign variant_size = 0
+                assign size_tokens = variant.title | split: ' '
+                for token in size_tokens
+                  assign token_size = token | plus: 0
+                  if token_size > variant_size
+                    assign variant_size = token_size
+                  endif
+                endfor
+                if variant_size > largest_size
+                  assign largest_size = variant_size
+                  assign default_variant = variant
+                endif
+              endif
+            endfor
+            if largest_size == 0
+              assign default_variant = card_product.selected_or_first_available_variant
+            else
+              assign pinned_variant = default_variant
+            endif
           else
             assign default_variant = card_product.selected_or_first_available_variant
           endif
@@ -348,6 +390,12 @@
                 assign show_range = false
                 assign price_class = 'tracking-wide set-price'
               endif
+              if pinned_variant != nil
+                comment
+                  A pinned variant is what the ATC adds, so price that variant rather than a range.
+                endcomment
+                assign show_range = false
+              endif
             -%}
 
             <input type="hidden" name="id" value="{{ default_id }}" disabled />
@@ -373,6 +421,7 @@
                     price_class: price_class,
                     show_price_range: show_range,
                     use_variant: true,
+                    selected_variant: pinned_variant,
                     subscription: subscription,
                     default_to_mini: default_to_mini,
                     default_to_jumbo: default_to_jumbo,
