@@ -1,0 +1,34 @@
+{%- comment -%}
+  Outputs the cart value that counts toward gift-with-purchase thresholds, in cents.
+
+  Gift cards are excluded. Their value is deferred revenue — nothing is recognized
+  until the card is redeemed — so counting it awards a gift twice against the same
+  dollar: once when the card is bought, again when the recipient spends it. It also
+  keeps the theme from promising a gift on a gift-card-only cart that the
+  checkout-validation function then refuses at checkout.
+
+  Free shipping is a separate promotion and still uses cart.total_price.
+
+  Mirrors getGwpEligibleTotal() in src/scripts/utils.js — change both together.
+
+  Usage — the snippet echoes a raw number, so capture it and coerce it back to one:
+
+    {%- capture gwp_eligible_total -%}{%- render 'gwp-eligible-total' -%}{%- endcapture -%}
+    {%- assign gwp_eligible_total = gwp_eligible_total | plus: 0 -%}
+{%- endcomment -%}
+{%- liquid
+  assign eligible_total = cart.total_price
+
+  for item in cart.items
+    # gift_card? is the native flag; product type is the fallback if it's ever absent.
+    if item.product.gift_card? or item.product.type == 'Gift Card'
+      assign eligible_total = eligible_total | minus: item.final_line_price
+    endif
+  endfor
+
+  if eligible_total < 0
+    assign eligible_total = 0
+  endif
+
+  echo eligible_total
+-%}

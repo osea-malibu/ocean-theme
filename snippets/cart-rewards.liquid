@@ -43,6 +43,12 @@
       assign tier_three_product = all_products[settings.gwp_tier3_product]
     endif
   -%}
+  {%- comment -%}
+    Gift thresholds are measured against the cart minus gift cards; free shipping and
+    reward points above still use the full cart total.
+  {%- endcomment -%}
+  {%- capture gwp_eligible_total -%}{%- render 'gwp-eligible-total' -%}{%- endcapture -%}
+  {%- assign gwp_eligible_total = gwp_eligible_total | plus: 0 -%}
   <reward-countdown
     class="text-center relative block max-w-md mx-auto"
     data-shipping-threshold="{{ settings.shipping_countdown_threshold }}"
@@ -88,33 +94,34 @@
       <summary class="flex flex-wrap justify-center items-center cursor-pointer">
         <h3>
           {%- assign cart_total = cart.total_price | divided_by: 100.0 -%}
+          {%- assign gwp_cart_total = gwp_eligible_total | divided_by: 100.0 -%}
           <span class="mr-3 text-sm sm:text-base leading-tight sm:leading-tight">
             {%- if cart_total < settings.shipping_countdown_threshold -%}
               {%- assign formatted_remaining_amount = remaining_shipping_amount | money_without_trailing_zeros %}
               {{ settings.shipping_countdown_text | replace: 'remaining_amount', formatted_remaining_amount }}
             {%- else -%}
               {%- if free_gifts_active -%}
-                {%- if settings.gwp_tier3_product != blank and cart_total >= settings.gwp_tier3_threshold -%}
+                {%- if settings.gwp_tier3_product != blank and gwp_cart_total >= settings.gwp_tier3_threshold -%}
                   {{ settings.gwp_success_text }}
-                {%- elsif settings.gwp_tier2_product != blank and cart_total >= settings.gwp_tier2_threshold -%}
+                {%- elsif settings.gwp_tier2_product != blank and gwp_cart_total >= settings.gwp_tier2_threshold -%}
                   {%- if settings.gwp_tier3_product != blank -%}
                     {%- assign gwp_threshold = settings.gwp_tier3_threshold | times: 100 -%}
-                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                    {%- assign remaining_amount_money = gwp_threshold | minus: gwp_eligible_total | money_without_trailing_zeros -%}
                     {{ settings.gwp_tier3_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_three_product.title | replace: 'Free Gift - ' }}
                   {%- else -%}
                     {{ settings.gwp_success_text }}
                   {%- endif -%}
-                {%- elsif settings.gwp_tier1_product != blank and cart_total >= settings.gwp_tier1_threshold -%}
+                {%- elsif settings.gwp_tier1_product != blank and gwp_cart_total >= settings.gwp_tier1_threshold -%}
                   {%- if settings.gwp_tier2_product != blank -%}
                     {%- assign gwp_threshold = settings.gwp_tier2_threshold | times: 100 -%}
-                    {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                    {%- assign remaining_amount_money = gwp_threshold | minus: gwp_eligible_total | money_without_trailing_zeros -%}
                     {{ settings.gwp_tier2_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_two_product.title | replace: 'Free Gift - ' }}
                   {%- else -%}
                     {{ settings.gwp_success_text }}
                   {%- endif -%}
                 {%- else -%}
                   {%- assign gwp_threshold = settings.gwp_tier1_threshold | times: 100 -%}
-                  {%- assign remaining_amount_money = gwp_threshold | minus: cart.total_price | money_without_trailing_zeros -%}
+                  {%- assign remaining_amount_money = gwp_threshold | minus: gwp_eligible_total | money_without_trailing_zeros -%}
                   {{ settings.gwp_tier1_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', tier_one_product.title | replace: 'Free Gift - ' }}
                 {%- endif -%}
               {%- else -%}

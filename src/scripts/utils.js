@@ -26,6 +26,43 @@ export function pauseAllMedia() {
 }
 
 /**
+ * Whether a cart line is a gift card.
+ *
+ * `/cart.js` exposes a native `gift_card` boolean per line. `product_type` is a
+ * fallback so the line still classifies correctly if that field is ever absent.
+ */
+export function isGiftCardLine(item) {
+  return item?.gift_card === true || item?.product_type === "Gift Card";
+}
+
+/**
+ * The cart value that counts toward gift-with-purchase thresholds, in cents.
+ *
+ * Gift cards are excluded. Their value is deferred revenue — nothing is recognized
+ * until the card is redeemed — so counting it awards a gift twice against the same
+ * dollar: once when the card is bought, again when the recipient spends it. It also
+ * keeps the theme from adding a gift to a gift-card-only cart that the
+ * checkout-validation function then refuses at checkout.
+ *
+ * Derived by subtracting gift-card lines from `total_price` so it keeps whatever
+ * discount semantics `total_price` already has.
+ *
+ * Mirrored by snippets/gwp-eligible-total.liquid — change both together.
+ */
+export function getGwpEligibleTotal(cartState) {
+  const total = cartState?.total_price ?? 0;
+  if (!Array.isArray(cartState?.items)) return total;
+
+  const eligible = cartState.items.reduce(
+    (runningTotal, item) =>
+      isGiftCardLine(item) ? runningTotal - (item.final_line_price ?? 0) : runningTotal,
+    total
+  );
+
+  return Math.max(0, eligible);
+}
+
+/**
  * Returns common POST fetch config
  */
 export function fetchConfig(type = "json") {

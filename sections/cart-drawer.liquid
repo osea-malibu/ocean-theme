@@ -664,7 +664,17 @@
             <div>
               <div class="flex justify-between items-center w-full" role="status">
                 <h3>{{ 'sections.cart.subtotal' | t }}</h3>
-                <p id="CartDrawer-Total" data-total="{{ cart.total_price }}">
+                {%- comment -%}
+                  data-gwp-total drives the gift tiers on the reward progress bar and
+                  excludes gift cards; data-total (free shipping) is the full cart.
+                {%- endcomment -%}
+                {%- capture gwp_eligible_total -%}{%- render 'gwp-eligible-total' -%}{%- endcapture -%}
+                {%- assign gwp_eligible_total = gwp_eligible_total | plus: 0 -%}
+                <p
+                  id="CartDrawer-Total"
+                  data-total="{{ cart.total_price }}"
+                  data-gwp-total="{{ gwp_eligible_total }}"
+                >
                   {%- if has_bundle_items and bundle_savings > 0 -%}
                     <s class="text-wave-600 mr-1 text-sm">{{ original_cart_total | money }}</s>
                   {%- endif -%}
