@@ -45,7 +45,15 @@
         endif
       endif
 
-      assign remaining_amount = gwp_threshold | minus: cart.total_price
+      comment
+        Gift cards don't count toward a gift threshold, so the countdown measures the
+        cart minus any gift-card lines. See snippets/gwp-eligible-total.liquid.
+      endcomment
+    -%}
+    {%- capture gwp_eligible_total -%}{%- render 'gwp-eligible-total' -%}{%- endcapture -%}
+    {%- liquid
+      assign gwp_eligible_total = gwp_eligible_total | plus: 0
+      assign remaining_amount = gwp_threshold | minus: gwp_eligible_total
       assign remaining_amount_money = remaining_amount | money_without_trailing_zeros
       assign countdown_text = gwp_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', gwp_product_title | replace: 'Free Gift - '
       assign countdown_text_mobile = gwp_text | replace: 'remaining_amount', remaining_amount_money | replace: 'gift_product', 'gift' | replace: 'Free Gift - '

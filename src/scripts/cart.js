@@ -1,5 +1,5 @@
 import { getCartAnalyticsData, pushCartDrawerAnalyticsEvent } from "./cart-analytics.js";
-import { debounce, fetchConfig, trapFocus } from "./utils.js";
+import { debounce, fetchConfig, getGwpEligibleTotal, trapFocus } from "./utils.js";
 
 class CartRemoveButton extends HTMLElement {
   constructor() {
@@ -129,6 +129,9 @@ export class CartItems extends HTMLElement {
     // Use cart state to get current product IDs
     const cartIdArray = parsedState.items.map((item) => item.product_id);
 
+    // Gift cards never count toward a gift threshold — see getGwpEligibleTotal.
+    const qualifyingTotal = getGwpEligibleTotal(parsedState);
+
     // Loyalty check (early return only if GWP is restricted and user is not logged in)
     if (loyaltyOnly && !isLoggedIn) return;
 
@@ -147,7 +150,7 @@ export class CartItems extends HTMLElement {
       // REMOVE logic: if gift is in cart AND (below threshold OR qualifier missing)
       const shouldRemoveGift =
         cartIdArray.includes(tierProductInt) &&
-        (parsedState.total_price < tier.threshold || qualifierMissing);
+        (qualifyingTotal < tier.threshold || qualifierMissing);
 
       if (shouldRemoveGift) {
         const line = cartIdArray.findIndex((i) => i === tierProductInt) + 1;
@@ -159,7 +162,7 @@ export class CartItems extends HTMLElement {
         if (
           type === "auto" &&
           !cartIdArray.includes(tierProductInt) &&
-          parsedState.total_price >= tier.threshold
+          qualifyingTotal >= tier.threshold
         ) {
           giftsToAdd.push(tier.variant);
         }
@@ -424,6 +427,12 @@ class RewardCountdown extends HTMLElement {
     this.totalEl = document.getElementById("CartDrawer-Total");
     this.total = this.totalEl ? parseFloat(this.totalEl.dataset.total) : 0;
 
+    // Gift cards count toward free shipping but not toward gift tiers, so the two
+    // kinds of threshold are measured against different totals.
+    this.gwpTotal = this.totalEl?.dataset.gwpTotal
+      ? parseFloat(this.totalEl.dataset.gwpTotal)
+      : this.total;
+
     // Get thresholds from data attributes and convert to numbers
     if (this.dataset.subscriptionsInCart.length > 0) {
       this.shippingThreshold = 0;
@@ -440,15 +449,17 @@ class RewardCountdown extends HTMLElement {
     const isGwpActive = this.dataset.isGwpActive === "true";
     const isLoyaltyOnly = this.dataset.isLoyaltyOnly === "true";
 
-    // Create an array of active thresholds
-    this.thresholds = [this.shippingThreshold];
+    // Create an array of active thresholds, each paired with the total it's measured against
+    this.thresholds = [{ amount: this.shippingThreshold, total: this.total }];
     if (
       (isGwpActive && !isLoyaltyOnly) ||
       (isGwpActive && isLoyaltyOnly && window.customerLoggedIn)
     ) {
-      if (this.tier1Threshold && hasTier1Product) this.thresholds.push(this.tier1Threshold);
-      if (this.tier2Threshold && hasTier2Product) this.thresholds.push(this.tier2Threshold);
-      if (this.tier3Threshold && hasTier3Product) this.thresholds.push(this.tier3Threshold);
+      const gift = (amount) => ({ amount, total: this.gwpTotal });
+
+      if (this.tier1Threshold && hasTier1Product) this.thresholds.push(gift(this.tier1Threshold));
+      if (this.tier2Threshold && hasTier2Product) this.thresholds.push(gift(this.tier2Threshold));
+      if (this.tier3Threshold && hasTier3Product) this.thresholds.push(gift(this.tier3Threshold));
     }
 
     this.progressBar = this.querySelector("progress");
@@ -463,16 +474,16 @@ class RewardCountdown extends HTMLElement {
     let progressPercent = 0;
 
     for (let i = 0; i < this.thresholds.length; i++) {
-      const currentThreshold = this.thresholds[i];
-      const previousThreshold = i === 0 ? 0 : this.thresholds[i - 1];
+      const { amount: currentThreshold, total } = this.thresholds[i];
+      const previousThreshold = i === 0 ? 0 : this.thresholds[i - 1].amount;
 
-      if (this.total >= currentThreshold) {
+      if (total >= currentThreshold) {
         // If the total is above the current threshold, set progress to the next level
         progressPercent = ((i + 1) / this.thresholds.length) * 100;
-      } else if (this.total > previousThreshold && this.total < currentThreshold) {
+      } else if (total > previousThreshold && total < currentThreshold) {
         // Calculate progress within the range
         const range = currentThreshold - previousThreshold;
-        const withinRange = this.total - previousThreshold;
+        const withinRange = total - previousThreshold;
         progressPercent =
           (i / this.thresholds.length) * 100 +
           (withinRange / range) * (100 / this.thresholds.length);

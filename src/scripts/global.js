@@ -1,4 +1,10 @@
-import { debounce, pauseAllMedia, trapFocus, removeTrapFocus } from "./utils.js";
+import {
+  debounce,
+  getGwpEligibleTotal,
+  pauseAllMedia,
+  trapFocus,
+  removeTrapFocus,
+} from "./utils.js";
 import {
   setupSummaryAriaAttributes,
   setupFocusVisiblePolyfill,
@@ -2440,7 +2446,8 @@ class GiftWithPurchaseUrl extends HTMLElement {
               localStorage.setItem("osea.gwpUrlVariantId", variantId);
             }
 
-            if (data.total_price >= threshold) {
+            // Gift cards never count toward a gift threshold — see getGwpEligibleTotal.
+            if (getGwpEligibleTotal(data) >= threshold) {
               this.cart.addFreeGift([variantId]);
             }
           }
