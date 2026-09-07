@@ -135,12 +135,8 @@ export class CartItems extends HTMLElement {
     // Loyalty check (early return only if GWP is restricted and user is not logged in)
     if (loyaltyOnly && !isLoggedIn) return;
 
-    // Any ONE of the configured qualifier products satisfies the qualifier. Note that
-    // turning the qualifier on without selecting any products qualifies nothing, so no
-    // gift is ever added — same as before, when the single product setting was empty.
-    // Array.isArray guard, not `?? []`: an unselected product_list setting serializes
-    // as null (and would be "" if the Liquid ever changed), and calling .map on that
-    // would throw here and take every gift down with it.
+    // Any one qualifier product satisfies the qualifier. isArray, not `?? []`: an empty
+    // product_list can serialize as null, and .map on that would throw and kill all gifts.
     const qualifierIds = Array.isArray(productQualifierIds) ? productQualifierIds.map(Number) : [];
 
     // Don’t exit if qualifier is missing — just track it

@@ -8,10 +8,8 @@
     endif
     assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
     comment
-      The qualifier is satisfied when ANY ONE of the configured products is in the cart.
-      Compared with == on product ids rather than `contains` on a joined string: Shopify's
-      `contains` does a substring match, so id 123 used to match a cart holding 8123456.
-      Mirrors the qualifierIds check in src/scripts/cart.js.
+      Any one qualifier product satisfies the qualifier. Uses == not `contains` —
+      `contains` substring-matches, so id 123 matched a cart holding 8123456.
     endcomment
     assign qualifier_enabled = settings.enable_product_qualifier_gwp
     assign qualifier_in_cart = false
