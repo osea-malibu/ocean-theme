@@ -134,7 +134,8 @@
         type: '{{ settings.gwp_type }}',
         loyaltyOnly: {{ settings.is_loyalty_gwp }},
         productQualifierEnabled: {{ settings.enable_product_qualifier_gwp }},
-        productQualifierId: '{{ settings.gwp_product_qualifier.id }}',
+        {%- comment -%} Any one of these products in the cart satisfies the qualifier. {%- endcomment -%}
+        productQualifierIds: {{ settings.gwp_product_qualifiers | map: 'id' | json }},
         tiers: [
           {
             id: "tier3",

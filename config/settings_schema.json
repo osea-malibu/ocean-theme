@@ -562,10 +562,11 @@
         "label": "Enable product qualifier"
       },
       {
-        "type": "product",
-        "id": "gwp_product_qualifier",
-        "label": "Product qualifier",
-        "info": "Product that must be in cart to qualify for GWP"
+        "type": "product_list",
+        "id": "gwp_product_qualifiers",
+        "limit": 50,
+        "label": "Product qualifiers",
+        "info": "Cart must contain at least ONE of these products to qualify for the GWP. Leave the qualifier checkbox off to let any cart qualify — if the checkbox is on and no products are selected here, no gift will ever be added."
       },
       {
         "type": "textarea",

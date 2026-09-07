@@ -123,7 +123,7 @@ export class CartItems extends HTMLElement {
     const { enabled } = window.gwpSettings;
     if (!enabled) return;
 
-    const { loyaltyOnly, productQualifierEnabled, productQualifierId, tiers, type } =
+    const { loyaltyOnly, productQualifierEnabled, productQualifierIds, tiers, type } =
       window.gwpSettings;
 
     // Use cart state to get current product IDs
@@ -135,9 +135,17 @@ export class CartItems extends HTMLElement {
     // Loyalty check (early return only if GWP is restricted and user is not logged in)
     if (loyaltyOnly && !isLoggedIn) return;
 
+    // Any ONE of the configured qualifier products satisfies the qualifier. Note that
+    // turning the qualifier on without selecting any products qualifies nothing, so no
+    // gift is ever added — same as before, when the single product setting was empty.
+    // Array.isArray guard, not `?? []`: an unselected product_list setting serializes
+    // as null (and would be "" if the Liquid ever changed), and calling .map on that
+    // would throw here and take every gift down with it.
+    const qualifierIds = Array.isArray(productQualifierIds) ? productQualifierIds.map(Number) : [];
+
     // Don’t exit if qualifier is missing — just track it
     const qualifierMissing =
-      productQualifierEnabled && !cartIdArray.includes(parseInt(productQualifierId));
+      productQualifierEnabled && !qualifierIds.some((id) => cartIdArray.includes(id));
 
     let giftsToAdd = [];
     let giftsToRemove = [];
