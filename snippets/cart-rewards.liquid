@@ -8,8 +8,8 @@
     endif
     assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
     comment
-      Any one qualifier product satisfies the qualifier. Uses == not `contains` —
-      `contains` substring-matches, so id 123 matched a cart holding 8123456.
+      Qualifies the cart when any one of the qualifier products is present. Ids are
+      compared with == because `contains` substring-matches.
     endcomment
     assign qualifier_enabled = settings.enable_product_qualifier_gwp
     assign qualifier_in_cart = false

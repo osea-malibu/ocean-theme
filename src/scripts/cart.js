@@ -135,8 +135,8 @@ export class CartItems extends HTMLElement {
     // Loyalty check (early return only if GWP is restricted and user is not logged in)
     if (loyaltyOnly && !isLoggedIn) return;
 
-    // Any one qualifier product satisfies the qualifier. isArray, not `?? []`: an empty
-    // product_list can serialize as null, and .map on that would throw and kill all gifts.
+    // Any one of these product ids in the cart qualifies the customer. Guarded with
+    // isArray because an empty product list serializes as null, which would throw on .map.
     const qualifierIds = Array.isArray(productQualifierIds) ? productQualifierIds.map(Number) : [];
 
     // Don’t exit if qualifier is missing — just track it

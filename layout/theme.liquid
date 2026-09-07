@@ -135,8 +135,8 @@
         loyaltyOnly: {{ settings.is_loyalty_gwp }},
         productQualifierEnabled: {{ settings.enable_product_qualifier_gwp }},
         {%- comment -%}
-          Any one of these products in the cart satisfies the qualifier. Looped rather
-          than `map: 'id'` — a product_list stores handles, and map won't yield ids.
+          Product ids from the qualifier product list. Any one of them in the cart
+          qualifies the customer for the gift with purchase.
         {%- endcomment -%}
         {%- capture gwp_qualifier_ids -%}
           {%- for qualifier_product in settings.gwp_product_qualifiers -%}
