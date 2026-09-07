@@ -134,8 +134,21 @@
         type: '{{ settings.gwp_type }}',
         loyaltyOnly: {{ settings.is_loyalty_gwp }},
         productQualifierEnabled: {{ settings.enable_product_qualifier_gwp }},
-        {%- comment -%} Any one of these products in the cart satisfies the qualifier. {%- endcomment -%}
-        productQualifierIds: {{ settings.gwp_product_qualifiers | map: 'id' | json }},
+        {%- comment -%}
+          Any one of these products in the cart satisfies the qualifier.
+
+          Built with an explicit loop rather than `| map: 'id' | json`. A product_list
+          setting is stored as product HANDLES and exposed as a paginatable drop, so
+          `map` is not guaranteed to yield numeric ids — and a nil result would render
+          `null` (or nothing, breaking this script tag). This form always emits a valid
+          array literal: [] when nothing is selected, [123,456] otherwise.
+        {%- endcomment -%}
+        {%- capture gwp_qualifier_ids -%}
+          {%- for qualifier_product in settings.gwp_product_qualifiers -%}
+            {%- unless forloop.first -%},{%- endunless -%}{{ qualifier_product.id }}
+          {%- endfor -%}
+        {%- endcapture -%}
+        productQualifierIds: [{{ gwp_qualifier_ids }}],
         tiers: [
           {
             id: "tier3",
