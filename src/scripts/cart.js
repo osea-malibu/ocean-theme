@@ -123,7 +123,7 @@ export class CartItems extends HTMLElement {
     const { enabled } = window.gwpSettings;
     if (!enabled) return;
 
-    const { loyaltyOnly, productQualifierEnabled, productQualifierId, tiers, type } =
+    const { loyaltyOnly, productQualifierEnabled, productQualifierIds, tiers, type } =
       window.gwpSettings;
 
     // Use cart state to get current product IDs
@@ -135,9 +135,13 @@ export class CartItems extends HTMLElement {
     // Loyalty check (early return only if GWP is restricted and user is not logged in)
     if (loyaltyOnly && !isLoggedIn) return;
 
+    // Any one of these product ids in the cart qualifies the customer. Guarded with
+    // isArray because an empty product list serializes as null, which would throw on .map.
+    const qualifierIds = Array.isArray(productQualifierIds) ? productQualifierIds.map(Number) : [];
+
     // Don’t exit if qualifier is missing — just track it
     const qualifierMissing =
-      productQualifierEnabled && !cartIdArray.includes(parseInt(productQualifierId));
+      productQualifierEnabled && !qualifierIds.some((id) => cartIdArray.includes(id));
 
     let giftsToAdd = [];
     let giftsToRemove = [];

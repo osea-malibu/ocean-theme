@@ -134,7 +134,16 @@
         type: '{{ settings.gwp_type }}',
         loyaltyOnly: {{ settings.is_loyalty_gwp }},
         productQualifierEnabled: {{ settings.enable_product_qualifier_gwp }},
-        productQualifierId: '{{ settings.gwp_product_qualifier.id }}',
+        {%- comment -%}
+          Product ids from the qualifier product list. Any one of them in the cart
+          qualifies the customer for the gift with purchase.
+        {%- endcomment -%}
+        {%- capture gwp_qualifier_ids -%}
+          {%- for qualifier_product in settings.gwp_product_qualifiers -%}
+            {%- unless forloop.first -%},{%- endunless -%}{{ qualifier_product.id }}
+          {%- endfor -%}
+        {%- endcapture -%}
+        productQualifierIds: [{{ gwp_qualifier_ids }}],
         tiers: [
           {
             id: "tier3",

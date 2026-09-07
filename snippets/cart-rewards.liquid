@@ -7,14 +7,25 @@
       assign cart_reward_points = cart_reward_points | plus: settings.cart_bonus_points_amount
     endif
     assign reward_icon_classes = 'w-6 h-6 rounded-full flex items-center justify-center shadow-sm shadow-seaweed-700/25'
-    assign cart_product_ids = cart.items | map: 'product_id' | join: ', '
-
+    comment
+      Qualifies the cart when any one of the qualifier products is present. Ids are
+      compared with == because `contains` substring-matches.
+    endcomment
     assign qualifier_enabled = settings.enable_product_qualifier_gwp
-    assign qualifier_id = settings.gwp_product_qualifier.id | append: ''
-    if qualifier_enabled and cart_product_ids contains qualifier_id
-      assign qualifier_in_cart = true
-    else
-      assign qualifier_in_cart = false
+    assign qualifier_in_cart = false
+
+    if qualifier_enabled
+      for item in cart.items
+        for qualifier_product in settings.gwp_product_qualifiers
+          if item.product_id == qualifier_product.id
+            assign qualifier_in_cart = true
+            break
+          endif
+        endfor
+        if qualifier_in_cart
+          break
+        endif
+      endfor
     endif
 
     assign loyalty_only = settings.is_loyalty_gwp
