@@ -399,25 +399,75 @@
 
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": {{ shop.url | append: '/#organization' | json }},
     "name": {{ shop.name | json }},
     {%- if section.settings.logo -%}
       {%- assign image_size = section.settings.logo.width -%}
       "logo": {{ section.settings.logo | image_url: width: image_size | prepend: "https:" | json }},
     {%- endif -%}
     "sameAs": [
-      {{ settings.social_twitter_link | json }},
-      {{ settings.social_facebook_link | json }},
-      {{ settings.social_pinterest_link | json }},
-      {{ settings.social_instagram_link | json }},
-      {{ settings.social_tiktok_link | json }},
-      {{ settings.social_tumblr_link | json }},
-      {{ settings.social_snapchat_link | json }},
-      {{ settings.social_youtube_link | json }},
-      {{ settings.social_vimeo_link | json }}
+      {%- assign social_keys = 'social_twitter_link,social_facebook_link,social_pinterest_link,social_instagram_link,social_tiktok_link,social_tumblr_link,social_snapchat_link,social_youtube_link,social_vimeo_link' | split: ',' -%}
+      {%- assign social_separator = '' -%}
+      {%- for social_key in social_keys -%}
+        {%- assign social_url = settings[social_key] -%}
+        {%- if social_url != blank -%}
+          {{ social_separator }}{{ social_url | json }}
+          {%- assign social_separator = ',' -%}
+        {%- endif -%}
+      {%- endfor -%}
     ],
-    "url": {{ shop.url | append: page.url | json }}
+    "url": {{ shop.url | json }}
+    {% if request.page_type == 'page' and page.handle == 'customer-care' %}
+      ,"hasShippingService": {
+        "@type": "ShippingService",
+        "name": "US standard shipping",
+        "description": "Standard domestic shipping costs $7.95 for orders under $50 and is free for orders of $50 or more.",
+        "fulfillmentType": "https://schema.org/FulfillmentTypeDelivery",
+        "shippingConditions": [
+          {
+            "@type": "ShippingConditions",
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "addressCountry": "US"
+            },
+            "orderValue": {
+              "@type": "MonetaryAmount",
+              "minValue": 0,
+              "maxValue": 49.99,
+              "currency": "USD"
+            },
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": 7.95,
+              "currency": "USD"
+            }
+          },
+          {
+            "@type": "ShippingConditions",
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "addressCountry": "US"
+            },
+            "orderValue": {
+              "@type": "MonetaryAmount",
+              "minValue": 50,
+              "currency": "USD"
+            },
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": 0,
+              "currency": "USD"
+            }
+          }
+        ]
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "merchantReturnLink": {{ shop.url | append: '/pages/customer-care' | json }}
+      }
+    {% endif %}
   }
 </script>
 
