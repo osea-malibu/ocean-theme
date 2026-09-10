@@ -5,9 +5,17 @@
   else
     assign excluded_from_site = false
   endif
+
+  # The widget below reads reviews from a remapped Okendo product on v2, so count from that product too
+  assign reviews_product = product
+  if product.handle == 'undaria-algae-body-oil-v2'
+    assign reviews_product = all_products['undaria-algae-oil']
+  endif
+
+  assign review_count = reviews_product.metafields.okendo.summaryData.reviewCount | default: reviews_product.metafields.okendo.ReviewCount | default: 0
 -%}
 
-{%- unless excluded_from_site -%}
+{%- unless excluded_from_site or review_count < 3 -%}
   <div class="{{ section.settings.wrapper_classes }}">
     <span class="block relative -top-32 invisible" id="reviews"></span>
     <div class="container xl:max-w-screen-lg">
