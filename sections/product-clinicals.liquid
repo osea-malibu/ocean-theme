@@ -27,13 +27,11 @@
             </ul>
             {%- if clinical_result.citations != blank -%}
               {%- assign citations_array = clinical_result.citations | split: '<br />' -%}
-              <cite class="block mt-4 lg:mt-6 text-xs pr-4 sm:pr-6">
-                <ul class="leading-tight">
-                  {%- for citation in citations_array -%}
-                    <li>{{ citation }}</li>
-                  {%- endfor -%}
-                </ul>
-              </cite>
+              <ul class="mt-4 lg:mt-6 text-xs pr-4 sm:pr-6 leading-tight">
+                {%- for citation in citations_array -%}
+                  <li><cite>{{ citation }}</cite></li>
+                {%- endfor -%}
+              </ul>
             {%- endif -%}
           </div>
         {%- endfor -%}
