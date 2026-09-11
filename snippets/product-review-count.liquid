@@ -1,0 +1,27 @@
+{%- comment -%}
+  Outputs a product's Okendo review count as a raw number, 0 when never synced.
+
+  Reads okendo.summaryData.reviewCount and falls back to the legacy okendo.ReviewCount
+  key, matching the aggregateRating markup in sections/main-product.liquid.
+
+  The reviews section remaps the undaria-algae-body-oil-v2 widget to a different Okendo
+  product id, so the count is read from that product too — its own metafield is unrelated.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+
+  Usage — the snippet echoes a raw number, so capture it and coerce it back to one:
+
+    {%- capture review_count -%}{%- render 'product-review-count', product: product -%}{%- endcapture -%}
+    {%- assign review_count = review_count | plus: 0 -%}
+{%- endcomment -%}
+{%- liquid
+  assign reviews_product = product
+  if product.handle == 'undaria-algae-body-oil-v2'
+    assign reviews_product = all_products['undaria-algae-oil']
+  endif
+
+  assign review_count = reviews_product.metafields.okendo.summaryData.reviewCount | default: reviews_product.metafields.okendo.ReviewCount | default: 0
+
+  echo review_count
+-%}
