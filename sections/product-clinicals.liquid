@@ -52,7 +52,12 @@
         <p class="lg:text-lg font-serif">
           <span>"{{ product.metafields.custom.featured_review.value.quote }}"</span> <span class="whitespace-nowrap">— {{ product.metafields.custom.featured_review.value.name }}</span>
         </p>
-        <a href="#reviews" class="block mt-4"><span class="link">Read more reviews</span> →</a>
+        {%- comment -%} The reviews section hides itself below 3 reviews, so #reviews links must match {%- endcomment -%}
+        {%- capture review_count -%}{%- render 'product-review-count', product: product -%}{%- endcapture -%}
+        {%- assign review_count = review_count | plus: 0 -%}
+        {%- if review_count >= 3 -%}
+          <a href="#reviews" class="block mt-4"><span class="link">Read more reviews</span> →</a>
+        {%- endif -%}
       </div>
       {%- endif -%}
     </div>

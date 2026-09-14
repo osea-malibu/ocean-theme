@@ -108,10 +108,15 @@
               </div>
             {%- endfor -%}
 
-            <a href="#reviews" class="flex mt-4 gap-1 items-center justify-center">
-              <span class="link">Read more reviews</span>
-              {% render 'icon-arrow', variant: 'short', classes: 'w-5 h-5 rotate-90', stroke_width: 1.5 %}
-            </a>
+            {%- comment -%} The reviews section hides itself below 3 reviews, so #reviews links must match {%- endcomment -%}
+            {%- capture review_count -%}{%- render 'product-review-count', product: product -%}{%- endcapture -%}
+            {%- assign review_count = review_count | plus: 0 -%}
+            {%- if review_count >= 3 -%}
+              <a href="#reviews" class="flex mt-4 gap-1 items-center justify-center">
+                <span class="link">Read more reviews</span>
+                {% render 'icon-arrow', variant: 'short', classes: 'w-5 h-5 rotate-90', stroke_width: 1.5 %}
+              </a>
+            {%- endif -%}
           </div>
 
         {%- endif -%}
