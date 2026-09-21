@@ -14,6 +14,14 @@
 {%- liquid
   assign events = shop.metaobjects.event.values
   assign token = settings.mapbox_token
+  assign hide_past = section.settings.hide_past_events
+
+  comment
+    Past-event cutoff. Both sides of the comparison are normalised to midnight
+    (%Y-%m-%d then %s) so an event stays listed for the whole of its final day
+    instead of dropping off at its own start time.
+  endcomment
+  assign today_stamp = 'now' | date: '%Y-%m-%d' | date: '%s' | times: 1
 -%}
 
 <div class="{{ section.settings.section_classes }}">
@@ -33,6 +41,26 @@
     <p>{{ section.settings.empty_text | default: 'No events scheduled right now — check back soon.' }}</p>
   {%- else -%}
     {%- paginate events by 250 -%}
+    {%- comment -%} Pre-pass. events-map.js bails on an empty dataset, so when the filter
+       removes everything the component must not render at all — otherwise it leaves a dead
+       map box and an inert mobile "List" toggle behind the empty-state copy. {%- endcomment -%}
+    {%- assign upcoming_count = 0 -%}
+    {%- for event in events -%}
+      {%- liquid
+        assign cutoff = event.end_at.value | default: event.start_at.value
+        if hide_past and cutoff != blank
+          assign event_stamp = cutoff | date: '%Y-%m-%d' | date: '%s' | times: 1
+          if event_stamp < today_stamp
+            continue
+          endif
+        endif
+        assign upcoming_count = upcoming_count | plus: 1
+      -%}
+    {%- endfor -%}
+
+    {%- if upcoming_count == 0 -%}
+      <p>{{ section.settings.empty_text | default: 'No events scheduled right now — check back soon.' }}</p>
+    {%- else -%}
     <events-map
       class="relative grid gap-6 md:grid-cols-3"
       data-token="{{ token }}"
@@ -81,6 +109,14 @@
         <ol data-event-list class="flex flex-col divide-y divide-sand-300 lg:max-h-[600px] lg:overflow-y-auto">
         {%- for event in events -%}
           {%- liquid
+            assign cutoff = event.end_at.value | default: event.start_at.value
+            if hide_past and cutoff != blank
+              assign event_stamp = cutoff | date: '%Y-%m-%d' | date: '%s' | times: 1
+              if event_stamp < today_stamp
+                continue
+              endif
+            endif
+
             assign has_coords = false
             if event.latitude.value != blank and event.longitude.value != blank
               assign has_coords = true
@@ -147,7 +183,20 @@
       {%- comment -%} Coordinates from empty metaobject fields serialize to null and are dropped client-side. {%- endcomment -%}
       <script type="application/json" data-events>
         [
+          {%- assign json_count = 0 -%}
           {%- for event in events -%}
+            {%- liquid
+              assign cutoff = event.end_at.value | default: event.start_at.value
+              if hide_past and cutoff != blank
+                assign event_stamp = cutoff | date: '%Y-%m-%d' | date: '%s' | times: 1
+                if event_stamp < today_stamp
+                  continue
+                endif
+              endif
+            -%}
+            {%- comment -%} Separator leads each entry: `forloop.last` is unreliable once past events are skipped. {%- endcomment -%}
+            {%- if json_count > 0 -%},{%- endif -%}
+            {%- assign json_count = json_count | plus: 1 -%}
             {
               "id": {{ event.system.id | json }},
               "title": {{ event.title.value | json }},
@@ -156,11 +205,12 @@
               "lat": {{ event.latitude.value | json }},
               "lng": {{ event.longitude.value | json }},
               "url": {{ event.rsvp_url.value | json }}
-            }{%- unless forloop.last -%},{%- endunless -%}
+            }
           {%- endfor -%}
         ]
       </script>
     </events-map>
+    {%- endif -%}
     {%- endpaginate -%}
   {%- endif -%}
 </div>
@@ -277,6 +327,13 @@
       "id": "empty_text",
       "label": "Empty state text",
       "default": "No events scheduled right now — check back soon."
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_past_events",
+      "label": "Automatically hide past events",
+      "info": "An event stays listed through the end of its end date (or start date, if no end date is set). Events with no dates always show.",
+      "default": true
     },
     {
       "type": "header",
