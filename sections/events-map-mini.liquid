@@ -17,22 +17,37 @@
   assign max_pins = section.settings.max_pins
   assign width = 640
   assign height = section.settings.image_height
+  assign hide_past = section.settings.hide_past_events
+  assign today_stamp = 'now' | date: '%Y-%m-%d' | date: '%s' | times: 1
 -%}
 
-{%- comment -%} Build comma-separated pin overlays for the static fallback image. {%- endcomment -%}
+{%- comment -%} Build comma-separated pin overlays for the static fallback image.
+   Paginated because a bare Liquid `for` caps at 50 iterations — without it the
+   past-event filter below could exhaust the first 50 and leave zero pins. {%- endcomment -%}
 {%- assign overlays = '' -%}
 {%- assign pin_count = 0 -%}
-{%- for event in events -%}
-  {%- if event.latitude.value != blank and event.longitude.value != blank and pin_count < max_pins -%}
-    {%- capture pin -%}pin-s+{{ pin_color }}({{ event.longitude.value }},{{ event.latitude.value }}){%- endcapture -%}
-    {%- if overlays == blank -%}
-      {%- assign overlays = pin -%}
-    {%- else -%}
-      {%- assign overlays = overlays | append: ',' | append: pin -%}
+{%- paginate events by 250 -%}
+  {%- for event in events -%}
+    {%- liquid
+      assign cutoff = event.end_at.value | default: event.start_at.value
+      if hide_past and cutoff != blank
+        assign event_stamp = cutoff | date: '%Y-%m-%d' | date: '%s' | times: 1
+        if event_stamp < today_stamp
+          continue
+        endif
+      endif
+    -%}
+    {%- if event.latitude.value != blank and event.longitude.value != blank and pin_count < max_pins -%}
+      {%- capture pin -%}pin-s+{{ pin_color }}({{ event.longitude.value }},{{ event.latitude.value }}){%- endcapture -%}
+      {%- if overlays == blank -%}
+        {%- assign overlays = pin -%}
+      {%- else -%}
+        {%- assign overlays = overlays | append: ',' | append: pin -%}
+      {%- endif -%}
+      {%- assign pin_count = pin_count | plus: 1 -%}
     {%- endif -%}
-    {%- assign pin_count = pin_count | plus: 1 -%}
-  {%- endif -%}
-{%- endfor -%}
+  {%- endfor -%}
+{%- endpaginate -%}
 
 {%- comment -%} Resolve the image src: uploaded image wins, else live Mapbox static URL. {%- endcomment -%}
 {%- assign map_src = '' -%}
@@ -111,6 +126,13 @@
       "id": "cta_text",
       "label": "Call to action text",
       "default": "View all events"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_past_events",
+      "label": "Automatically hide past events",
+      "info": "Keeps stale pins off the auto-generated fallback image. Has no effect when a map image is uploaded below.",
+      "default": true
     },
     {
       "type": "header",
