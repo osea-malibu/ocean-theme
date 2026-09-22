@@ -1,3 +1,13 @@
+{%- liquid
+  assign audience = section.settings.visibility_audience | default: 'all'
+  assign show_section = true
+  if audience == 'logged_in' and customer == blank
+    assign show_section = false
+  elsif audience == 'logged_out' and customer
+    assign show_section = false
+  endif
+-%}
+{%- if show_section -%}
 <div id="Banner-{{ section.id }}" class="relative {{ section.settings.banner_classes }}">
   {%- if section.settings.image != blank -%}
     {%- if section.settings.image_link != blank -%}
@@ -132,6 +142,7 @@
     {%- endfor -%}
   </div>
 </div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -158,6 +169,17 @@
       "type": "checkbox",
       "id": "is_lazy",
       "label": "Lazy load image"
+    },
+    {
+      "type": "select",
+      "id": "visibility_audience",
+      "label": "Show banner to",
+      "default": "all",
+      "options": [
+        { "value": "all", "label": "Everyone" },
+        { "value": "logged_in", "label": "Logged-in customers only" },
+        { "value": "logged_out", "label": "Logged-out visitors only" }
+      ]
     },
     {
       "type": "url",

@@ -11,7 +11,7 @@
     assign threshold_total = threshold | times: 100
   endunless
 -%}
-{%- if first_time or cart.total_price < threshold_total -%}
+{%- if qualifying_product.id != blank or first_time or cart.total_price < threshold_total -%}
 <div class="w-full bg-wave-200 rounded-lg px-2 py-1 my-2">
   <div class="flex items-center gap-2">
     {% comment %} theme-check-disable RemoteAsset {% endcomment %}
@@ -26,7 +26,10 @@
     >
     {% comment %} theme-check-enable RemoteAsset {% endcomment %}
     <div class="flex flex-col">
-      {%- if first_time -%}
+      {%- if qualifying_product.id != blank -%}
+        <p class="text-sm font-bold uppercase tracking-wider">Free {{ product.title | replace: 'Free Gift - ', '' | escape }}</p>
+        <p class="text-sm leading-tight">With any {{ qualifying_product.title | escape }} purchase, while supplies last.</p>
+      {%- elsif first_time -%}
         <p class="text-sm font-bold uppercase tracking-wider">Free Gift with your first order</p>
         <p class="text-sm leading-tight">Claim your {{ product.title | replace: 'Free Gift - ', '' }} on your first order!</p>
       {%- else -%}

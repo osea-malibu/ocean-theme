@@ -39,25 +39,35 @@
     "cart_disclaimer": "By checking out, I accept the <a href=\"/pages/terms-of-use\">Terms of Use</a> and acknowledge that my information will be used in accordance with the <a href=\"/pages/privacy-policy\">Privacy Policy</a>.",
     "enable_cart_bonus_points": false,
     "cart_bonus_points_amount": 0,
-    "enable_shipping_countdown": true,
+    "enable_shipping_countdown": false,
     "shipping_countdown_threshold": 50,
     "shipping_countdown_text": "You are remaining_amount away from free shipping!",
-    "shipping_countdown_text_success": "Congrats! You get free shipping.",
+    "shipping_countdown_text_success": "Congrats! You get free US shipping.",
     "cart_recommendations_travel_handles": "reusable-cotton-rounds",
     "enable_gwp": true,
     "gwp_type": "auto",
     "is_loyalty_gwp": false,
-    "enable_annoucement_bar_message": true,
-    "enable_product_qualifier_gwp": false,
+    "enable_annoucement_bar_message": false,
+    "enable_product_qualifier_gwp": true,
+    "gwp_product_qualifiers": [
+      "dream-bio-retinol-body-serum",
+      "dream-bio-retinol-duo",
+      "dream-bio-retinol-trio",
+      "dream-lip-mask",
+      "dream-night-cream",
+      "dream-night-serum-mini",
+      "dream-night-serum",
+      "dream-bio-retinol-body-serum-1-oz"
+    ],
     "gwp_success_text": "Congrats! You've unlocked our FREE gift!",
-    "gwp_tier1_product": "free-gift-ocean-eyes-age-defying-eye-serum",
-    "gwp_tier1_threshold": 125,
+    "gwp_tier1_product": "free-gift-sweet-dreams-duo",
+    "gwp_tier1_threshold": 24,
     "gwp_tier1_text": "You're remaining_amount away from a FREE gift_product!",
-    "gwp_tier2_product": "mini-anti-aging-body-balm",
-    "gwp_tier2_threshold": 170,
+    "gwp_tier2_product": "",
+    "gwp_tier2_threshold": 0,
     "gwp_tier2_text": "You're remaining_amount away from a gift_product!",
-    "gwp_tier3_product": "free-gift-dream-night-serum-with-bio-retinol",
-    "gwp_tier3_threshold": 225,
+    "gwp_tier3_product": "",
+    "gwp_tier3_threshold": 0,
     "gwp_tier3_text": "You're remaining_amount away from a gift_product!",
     "gwp_urlmodal_title": "Free Gift!",
     "gwp_urlmodal_body": "Get a free Ocean Wave Cleanser Mini when you spend $75+. No code required. While supplies last. Shop to redeem your offer in cart.",
@@ -101,6 +111,7 @@
           },
           "announcement_QqK4bE": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p>Free shipping on orders over $50</p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
@@ -108,6 +119,7 @@
           },
           "announcement_EtrnQN": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p><a href=\"https://oseamalibu.com/pages/quiz\" title=\"https://oseamalibu.com/pages/quiz\"><strong>A personalized  routine for your skin</strong></a></p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
@@ -115,6 +127,7 @@
           },
           "announcement_MKtJ63": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p><a href=\"https://oseamalibu.com/pages/events\" title=\"https://oseamalibu.com/pages/events\"><strong>Celebrate 30 Years of OSEA with us</strong></a></p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
@@ -132,8 +145,8 @@
             "type": "announcement",
             "disabled": true,
             "settings": {
-              "text": "<p>Free shipping on orders over $50</p>",
-              "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
+              "text": "<p>Limited Time: Free Shipping on US Orders</p>",
+              "text_classes": "text-white font-book text-center py-0.5 tracking-wider px-8 sm:px-0"
             }
           },
           "announcement_zQW6Bp": {
@@ -146,7 +159,6 @@
           },
           "announcement-bar-0": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
               "text": "<p>Free shipping on US orders of $50+</p>",
               "text_classes": "text-white font-book text-center py-0.5 tracking-wider"
