@@ -9,6 +9,59 @@
  */
 {
   "sections": {
+    "image_banner_9t6Gpf": {
+      "type": "image-banner",
+      "blocks": {
+        "paragraph_C7GBnX": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "LIMITED-TIME SEA REWARDS OFFER",
+            "paragraph_classes": "badge rounded-full bg-neon-green px-4 uppercase  text-sm mt-4 \n\nxs:text-base xs:mt-6 xs:tracking-wide sm:text-[.55rem] md:mt-8 md:px-4 md:text-xs lg:text-sm lg:mt-12  xl:text-xl xl:mt-6 xl:px-6 2xl:text-2xl 2xl:mt-8"
+          }
+        },
+        "heading_zxqFcU": {
+          "type": "heading",
+          "settings": {
+            "heading": "Sand Dollar\nDays",
+            "heading_classes": "text-4xl tracking-wide font-serif text-white mt-4 max-w-full w-full\n\nxs:tracking-normal xs:text-5xl xs:mt-4\n\n  sm:text-3xl sm:max-w-2xs sm:w-2/3 sm:leading-tighter\n\nmd:text-[2.5rem] md:tracking-wide md:mt-4\n\nlg:text-6xl lg:mt-10 lg:max-w-lg lg:font-regular  \nxl:text-7xl xl:max-w-lg xl:mt-14\n\n2xl:text-8xl 2xl:font-regular 2xl:max-w-full 2xl:tracking-normal"
+          }
+        },
+        "paragraph_HJtKRX": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "Sign in to Sea Rewards to get 1,000 points (a $10 reward) to use by September 28.",
+            "paragraph_classes": "text-white max-w-2xs px-4 leading-5 mt-4  text-lg  font-book leading-tight\n\nxs:text-2xl xs:mt-4 xs:px-8 xs:tracking-tight xs:max-w-sm \n\nsm:text-xs sm:max-w-2xs sm:px-6 sm:w-2/3 sm:mt-0 sm:text-sm sm:mt-2\n\nmd:text-sm md:mt-2 md:leading-tight md:px-8\n\nlg:text-xl lg:max-w-lg lg:px-8 lg:mt-4  \n\nxl:text-2xl xl:max-w-sm xl:px-6 xl:mt-4\n\n2xl:text-3xl 2xl:max-w-md 2xl:px-4"
+          }
+        },
+        "button_JMLKD8": {
+          "type": "button",
+          "settings": {
+            "button_label": "SIGN IN TO GET 1,000 POINTS",
+            "button_aria_label": "Shop now",
+            "button_link": "shopify://collections/summer-essentials",
+            "target_blank": false,
+            "button_classes": "button-sm mt-6 sm:mt4 py-2 bg-neon-green border-neon-green  text-seaweed-700\n\nxs:button-xl xs:text-lg xs:tracking-wide\n\nsm:button-xs sm:text-[.55rem] sm:px-4 sm:py-1 sm:tracking-wider  sm:mt-6\n\nmd:button-sm md:text-xs md:py-2  md:mt-8\nlg:button-md lg:mt-6\n\n  xl:mt-10 xl:text-lg  2xl:button-xl"
+          }
+        }
+      },
+      "block_order": [
+        "paragraph_C7GBnX",
+        "heading_zxqFcU",
+        "paragraph_HJtKRX",
+        "button_JMLKD8"
+      ],
+      "disabled": true,
+      "name": "Sand Dollar Day",
+      "settings": {
+        "image_mobile": "shopify://shop_images/mobile_BLANK.jpg",
+        "image": "shopify://shop_images/LOYALTY_POINT_DROP_-_HOMEPAGE_BANNER_-_09.24.2026_desktop_waves_text_V2.jpg",
+        "is_lazy": false,
+        "image_link": "shopify://collections/summer-essentials",
+        "banner_classes": "sm:container",
+        "image_classes": "w-full",
+        "text_block_classes": "absolute absolute absolute inset-0 sm:p-0 text-center flex flex-col items-center justify-start 2xs:pt-2 pb-5 sm:right-1/2 mt-0 sm:mt-6 sm:mb-4 md:mb-8 lg:mb-12 xl:ml-2 xl:mt-16  2xl:mt-20"
+      }
+    },
     "rivo-loyalty-landing-page": {
       "type": "rivo-loyalty-landing-page",
       "custom_css": [],
@@ -1013,6 +1066,7 @@
         "image_mobile": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-09_MOBILE_BLANK.jpg",
         "image": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-09_7d7a54f7-af04-4a0b-87b9-7082d834dcfb.jpg",
         "is_lazy": false,
+        "visibility_audience": "all",
         "image_link": "shopify://collections/skincare-sets",
         "banner_classes": "container",
         "image_classes": "h-auto w-full",
@@ -1058,6 +1112,7 @@
         "image_mobile": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-08_MOBILE.jpg",
         "image": "shopify://shop_images/Landing_Page_Update___Sea_Rewards_LP_Update___2026-04-08_DESKTOP_67363f47-f8ac-4b28-80ef-09588fff250f.jpg",
         "is_lazy": false,
+        "visibility_audience": "all",
         "image_link": "shopify://products/marine-screen-spf-50-mineral-sunscreen",
         "banner_classes": "container",
         "image_classes": "h-auto w-full",
@@ -1984,6 +2039,7 @@
     }
   },
   "order": [
+    "image_banner_9t6Gpf",
     "rivo-loyalty-landing-page",
     "multicolumn_DPj39x",
     "multicolumn_yYyfty",
