@@ -35,6 +35,7 @@
         },
         "button_AHFctW": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "button_label": "Log IN",
             "button_aria_label": "Shop now",
@@ -45,10 +46,9 @@
         },
         "paragraph_cBCXnY": {
           "type": "paragraph",
-          "disabled": true,
           "settings": {
-            "paragraph": "<a class=\"button bg-neon-green border-neon-green button-sm sm:button-md\">Log in</a>\n<a class=\"button bg-neon-green border-neon-green button-sm sm:button-md\">Join now</a>",
-            "paragraph_classes": "flex justify-center items-center gap-2"
+            "paragraph": "<a href=\"#rivo\" class=\"button bg-neon-green border-neon-green button-sm sm:button-md\">Log in</a>\n<a href=\"#rivo\" class=\"button bg-neon-green border-neon-green button-sm sm:button-md\">Join now</a>",
+            "paragraph_classes": "flex justify-center items-center gap-2 mt-4"
           }
         }
       },
