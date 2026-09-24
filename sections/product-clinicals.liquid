@@ -61,8 +61,15 @@
       </div>
       {%- endif -%}
     </div>
-    <div class="w-full lg:block lg:basis-[calc(50%-12px)] overflow-hidden rounded-xl h-max top-20 sticky">
-      <div class="relative w-full lg:h-[calc(100vh-180px)]">
+    {%- liquid
+      if product.metafields.custom.clinical_results.value.size < 2 and product.metafields.custom.featured_review == blank
+        assign full_height_image = false
+      else
+        assign full_height_image = true
+      endif
+    -%}
+    <div class="w-full lg:block lg:basis-[calc(50%-12px)] overflow-hidden rounded-xl{% if full_height_image %} h-max top-20 sticky{% endif %}">
+      <div class="relative w-full {% if full_height_image %}lg:h-[calc(100vh-180px)]{% else %}lg:h-auto{% endif %}">
         {%- if product.metafields.custom.clinical_images.value.count == 1 -%}
           {%- liquid
             assign first_image = product.metafields.custom.clinical_images.value | first
