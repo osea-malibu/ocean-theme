@@ -482,6 +482,13 @@
       },
       {
         "type": "text",
+        "id": "standard_shipping_rate",
+        "info": "Enter a number without a currency symbol. Keep this synchronized with the standard US shipping rate configured in Shopify Admin",
+        "label": "Standard US shipping rate",
+        "default": "7.95"
+      },
+      {
+        "type": "text",
         "id": "shipping_countdown_text",
         "info": "Variables: remaining_amount",
         "label": "Free shipping countdown message",
