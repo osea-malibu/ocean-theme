@@ -154,7 +154,8 @@
       ],
       "custom_css": [
         ".bg-sandy {background: #f7f3e7;}",
-        ".bg-sandy-50 {background: rgba(247, 243, 231, 0.75);}"
+        ".bg-sandy-50 {background: rgba(247, 243, 231, 0.75);}",
+        "@media (min-width: 1024px) {.bg-sandy-50 {background: transparent; }}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
