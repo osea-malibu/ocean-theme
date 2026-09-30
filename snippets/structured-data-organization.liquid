@@ -23,10 +23,34 @@
     "url": {{ shop.url | json }}
     {%- if request.page_type == 'page' and page.handle == 'customer-care' -%}
       {%- assign free_ship_min = settings.shipping_countdown_threshold -%}
+      {%- comment -%}
+        Validate the text setting before numeric coercion so malformed input cannot
+        become a zero-cost shipping claim. Accept unsigned amounts with up to two decimals.
+      {%- endcomment -%}
+      {%- assign shipping_rate_text = settings.standard_shipping_rate | strip -%}
+      {%- assign shipping_rate_invalid_chars = shipping_rate_text | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9' | remove: '.' -%}
+      {%- assign shipping_rate_parts = shipping_rate_text | split: '.' -%}
+      {%- assign shipping_rate_without_dots = shipping_rate_text | remove: '.' -%}
+      {%- assign shipping_rate_dot_count = shipping_rate_text.size | minus: shipping_rate_without_dots.size -%}
+      {%- assign shipping_rate_first = shipping_rate_text | slice: 0 -%}
+      {%- assign shipping_rate_last = shipping_rate_text | slice: -1 -%}
+      {%- assign shipping_rate_valid = false -%}
+      {%- if shipping_rate_text != blank and shipping_rate_invalid_chars == empty and shipping_rate_dot_count <= 1 -%}
+        {%- unless shipping_rate_first == '.' or shipping_rate_last == '.' -%}
+          {%- if shipping_rate_dot_count == 0 or shipping_rate_parts.last.size <= 2 -%}
+            {%- assign shipping_rate_valid = true -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endif -%}
+      {%- if shipping_rate_valid and free_ship_min != nil and free_ship_min >= 0 -%}
       {%- assign paid_ship_max = free_ship_min | minus: 0.01 -%}
-      {%- assign standard_shipping_rate = settings.standard_shipping_rate | times: 1.0 -%}
+      {%- assign standard_shipping_rate = shipping_rate_text | times: 1.0 -%}
       {%- capture shipping_description -%}
+        {%- if free_ship_min == 0 -%}
+          Standard domestic shipping is free on all US orders.
+        {%- else -%}
         Standard domestic shipping costs ${{ standard_shipping_rate }} for orders under ${{ free_ship_min }} and is free for orders of ${{ free_ship_min }} or more.
+        {%- endif -%}
       {%- endcapture -%}
       ,"hasShippingService": {
         "@type": "ShippingService",
@@ -34,6 +58,7 @@
         "description": {{ shipping_description | strip | json }},
         "fulfillmentType": "https://schema.org/FulfillmentTypeDelivery",
         "shippingConditions": [
+          {%- if free_ship_min > 0 -%}
           {
             "@type": "ShippingConditions",
             "shippingDestination": {
@@ -52,6 +77,7 @@
               "currency": "USD"
             }
           },
+          {%- endif -%}
           {
             "@type": "ShippingConditions",
             "shippingDestination": {
@@ -70,11 +96,12 @@
             }
           }
         ]
-      },
-      "hasMerchantReturnPolicy": {
+      }
+      {%- endif -%}
+      ,"hasMerchantReturnPolicy": {
         "@type": "MerchantReturnPolicy",
         "merchantReturnLink": {{ shop.url | append: '/pages/customer-care' | json }}
       }
-    {%- endif %}
+    {%- endif -%}
   }
 </script>
