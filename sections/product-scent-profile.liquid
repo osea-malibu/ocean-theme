@@ -16,10 +16,28 @@
             endif
 
             assign image_master = image_obj | image_url
+            assign image_desktop_obj = scent_object.image_desktop.value
             assign sizes_attr = '(min-width: 1024px) 50vw, 100vw'
           -%}
 
           {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+          {%- if image_desktop_obj != blank -%}
+            {%- assign image_desktop_master = image_desktop_obj | image_url -%}
+            <picture>
+              <source
+                media="(min-width: 640px)"
+                srcset="
+                  {% render 'imgix', src: image_desktop_master, w: 320, h: 320, fit: 'crop', crop: 'center' %} 320w,
+                  {% render 'imgix', src: image_desktop_master, w: 480, h: 480, fit: 'crop', crop: 'center' %} 480w,
+                  {% render 'imgix', src: image_desktop_master, w: 640, h: 640, fit: 'crop', crop: 'center' %} 640w,
+                  {% render 'imgix', src: image_desktop_master, w: 800, h: 800, fit: 'crop', crop: 'center' %} 800w,
+                  {% render 'imgix', src: image_desktop_master, w: 960, h: 960, fit: 'crop', crop: 'center' %} 960w,
+                  {% render 'imgix', src: image_desktop_master, w: 1200, h: 1200, fit: 'crop', crop: 'center' %} 1200w,
+                  {% render 'imgix', src: image_desktop_master, w: 1500, h: 1500, fit: 'crop', crop: 'center' %} 1500w
+                "
+                sizes="{{ sizes_attr }}"
+              >
+          {%- endif -%}
           <img
             class="w-full h-full object-cover"
             src="{% render 'imgix', src: image_master, w: 640, h: 640, fit: 'crop', crop: 'center' %}"
@@ -38,6 +56,9 @@
             width="750"
             height="750"
           >
+          {%- if image_desktop_obj != blank -%}
+            </picture>
+          {%- endif -%}
           {% comment %}theme-check-enable RemoteAsset {% endcomment %}
 
         </div>
