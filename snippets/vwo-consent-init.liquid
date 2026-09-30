@@ -1,0 +1,53 @@
+{% comment %}
+  Bridges Consentmo consent to VWO's "Custom" cookie-consent integration so the
+  Insights libraries (heatmaps/recordings) load once analytics consent is given.
+  Must render before content_for_header — the VWO SmartCode app embed reads
+  window.VWO.consentState when it executes. States: 1 accepted, 2 pending, 3 denied.
+{% endcomment %}
+<script>
+  (function () {
+    window.VWO = window.VWO || [];
+    window.VWO.init =
+      window.VWO.init ||
+      function (state) {
+        window.VWO.consentState = state;
+      };
+
+    function readCookie(name) {
+      var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+      return match ? decodeURIComponent(match[1]) : '';
+    }
+
+    function consentStateFromCookies() {
+      var status = readCookie('cookieconsent_status');
+      if (status === 'allow') {
+        var disabled = readCookie('cookieconsent_preferences_disabled');
+        return disabled.indexOf('analytics') === -1 ? 1 : 3;
+      }
+      if (status === 'deny') return 3;
+      return 2;
+    }
+
+    function currentConsentState() {
+      if (window.Consentmo && typeof window.Consentmo.analyticsAllowed === 'function') {
+        try {
+          return window.Consentmo.analyticsAllowed() ? 1 : 3;
+        } catch (error) {
+          // fall through to cookie read
+        }
+      }
+      return consentStateFromCookies();
+    }
+
+    window.VWO.init(consentStateFromCookies());
+
+    function onConsentUpdate() {
+      window.VWO.init(currentConsentState());
+    }
+
+    // Consentmo's ConsentUpdate event; listen on both targets since the
+    // dispatch target isn't documented. Duplicate calls are harmless.
+    document.addEventListener('consentmoSignal', onConsentUpdate);
+    window.addEventListener('consentmoSignal', onConsentUpdate);
+  })();
+</script>
