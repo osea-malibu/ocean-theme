@@ -22,7 +22,9 @@
 <meta property="og:description" content="{{ og_description | escape }}">
 
 {%- liquid
-  if request.page_type == 'product' and product.metafields.my_fields.white_image_bg != blank
+  if request.page_type == 'product' and product.selected_variant.featured_media.preview_image != blank
+    assign page_image_custom = product.selected_variant.featured_media.preview_image
+  elsif request.page_type == 'product' and product.metafields.my_fields.white_image_bg != blank
     assign page_image_custom = product.metafields.my_fields.white_image_bg
   else
     assign page_image_custom = page_image
