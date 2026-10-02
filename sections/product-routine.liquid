@@ -1,23 +1,240 @@
-{%- if product.metafields.custom.upsell_complete_routine -%}
+{% comment %}
+  Complete Your Routine — PDP cross-sell.
+
+  Data contract (metaobjects):
+  - Product metafield `custom.routine` → single reference to a `routine` metaobject:
+      - category:   single choice, 'body' or 'face' — picks default step labels + eyebrow
+      - eyebrow:    single line text (optional) — overrides the category default eyebrow
+      - subheading: single line text (optional)
+      - steps:      list of `routine_step` metaobject references (max 4, order = step order)
+  - `routine_step` metaobject:
+      - product:     product reference (required)
+      - label:       single line text (optional) — overrides the category default for its position
+      - hover_image: file reference (optional) — crossfaded in on card hover
+  Falls back to the legacy `custom.upsell_complete_routine` product list metafield
+  (numbered steps, no labels/hover/bundle) while products migrate.
+
+  The step matching the current PDP product renders as the "you're here" card with a
+  static pill instead of an ATC. The bundle bar adds every other step's selected
+  variant in one /cart/add.js call (wired in product-routine.js).
+{% endcomment %}
+
+{%- liquid
+  assign routine = product.metafields.custom.routine.value
+  assign steps = routine.steps.value
+  assign legacy_products = product.metafields.custom.upsell_complete_routine.value
+
+  assign use_steps = false
+  if routine != blank and steps != blank
+    assign use_steps = true
+  endif
+-%}
+
+{%- if use_steps or legacy_products != blank -%}
+  {%- liquid
+    assign step_words = 'one,two,three,four' | split: ','
+
+    if use_steps
+      assign loop_items = steps
+    else
+      assign loop_items = legacy_products
+    endif
+
+    # Category-driven defaults, overridable per routine / per step
+    assign category = routine.category.value | default: 'body'
+    if category == 'face'
+      assign default_labels = section.settings.face_step_labels | split: ', '
+      assign default_eyebrow = section.settings.face_eyebrow
+    else
+      assign default_labels = section.settings.body_step_labels | split: ', '
+      assign default_eyebrow = section.settings.body_eyebrow
+    endif
+
+    assign eyebrow = ''
+    assign subheading = ''
+    if use_steps
+      assign eyebrow = routine.eyebrow.value | default: default_eyebrow
+      assign subheading = routine.subheading.value
+    endif
+
+    # Which step is the product this PDP sells? (0 = not in the routine)
+    assign current_step = 0
+    if use_steps
+      for step in loop_items limit: 4
+        if step.product.value.id == product.id
+          assign current_step = forloop.index
+        endif
+      endfor
+    endif
+
+    # Initial bundle totals over every other step's default variant (JS re-sums on
+    # variant change). Compare-at only ever shows when it genuinely exceeds the total.
+    assign bundle_total = 0
+    assign bundle_compare = 0
+    assign bundle_count = 0
+    if use_steps
+      for step in loop_items limit: 4
+        assign step_product = step.product.value
+        if step_product == blank or step_product.id == product.id
+          continue
+        endif
+        assign default_variant = step_product.selected_or_first_available_variant
+        unless default_variant.available
+          continue
+        endunless
+        assign bundle_total = bundle_total | plus: default_variant.price
+        assign compare = default_variant.compare_at_price | default: default_variant.price
+        if compare < default_variant.price
+          assign compare = default_variant.price
+        endif
+        assign bundle_compare = bundle_compare | plus: compare
+        assign bundle_count = bundle_count | plus: 1
+      endfor
+    endif
+
+    assign show_bundle = false
+    if section.settings.show_bundle and bundle_count > 1
+      assign show_bundle = true
+    endif
+  -%}
+
   <div class="product-routine {{ section.settings.section_classes }}">
-    <div class="{{ section.settings.container_classes }}">
-      <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
-      <ul class="{{ section.settings.wrapper_classes }}" role="list">
-        {%- for routine_product in product.metafields.custom.upsell_complete_routine.value -%}
-          <li class="{{ section.settings.card_classes }}">
-            {%-  assign product_color = product.metafields.custom.product_color_light -%}
-            <b class="{% if product_color != blank %}{{ product_color }}{% else %}bg-wave-200{% endif %} absolute px-1 py-0.5 rounded-t uppercase w-full block text-center">Step {{ forloop.index }}</b>
-            {% render 'card-product',
-              card_product: routine_product,
-              section_id: section.id,
-              card_class: 'flex flex-col relative grow h-full pt-7',
-              button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
-            %}
+    <product-routine class="block">
+      <div class="text-center mb-6 lg:mb-8">
+        {%- if section.settings.show_eyebrow and eyebrow != blank -%}
+          <p class="text-xs font-medium uppercase tracking-widest text-seaweed-700 mb-2">{{ eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="font-serif text-3xl md:text-4xl tracking-tight text-seaweed-800">{{ section.settings.heading | escape }}</h2>
+        {%- liquid
+          assign show_subtext = false
+          if section.settings.show_subtext
+            if subheading != blank or current_step > 0
+              assign show_subtext = true
+            endif
+          endif
+        -%}
+        {%- if show_subtext -%}
+          <p class="mt-2 text-sm md:text-base max-w-xl mx-auto">
+            {%- if subheading != blank -%}{{ subheading }}{% if current_step > 0 %} {% endif %}{%- endif -%}
+            {%- if current_step > 0 -%}
+              {%- assign current_word_index = current_step | minus: 1 -%}
+              You're on step {{ step_words[current_word_index] }} — add the rest to complete the ritual
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <ul class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 lg:gap-x-6 pt-3" role="list">
+        {%- for item in loop_items limit: 4 -%}
+          {%- liquid
+            if use_steps
+              assign step_product = item.product.value
+              assign hover_image = item.hover_image.value
+              assign default_label = default_labels[forloop.index0]
+              assign step_label = item.label.value | default: default_label
+            else
+              assign step_product = item
+              assign hover_image = nil
+              assign step_label = ''
+            endif
+
+            if step_product == blank
+              continue
+            endif
+
+            assign is_current = false
+            if use_steps and step_product.id == product.id
+              assign is_current = true
+            endif
+
+            assign chip_color = step_product.metafields.custom.product_color_light | default: 'bg-wave-200'
+          -%}
+
+          <li
+            class="relative rounded-lg{% if is_current %} bg-sand-200 ring-1 ring-sand-400 p-2 lg:p-3{% endif %}"
+            data-routine-step
+            {% if is_current %}data-current-product{% endif %}
+          >
+            <b class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wider {% if is_current %}bg-seaweed-700 text-white{% else %}text-seaweed-800 {{ chip_color }}{% endif %}">
+              {%- if step_label != blank -%}
+                0{{ forloop.index }} · {{ step_label }}{% if is_current %} — {{ section.settings.current_label }}{% endif %}
+              {%- else -%}
+                Step {{ forloop.index }}
+              {%- endif -%}
+            </b>
+
+            {%- if is_current -%}
+              {%- capture current_cta_html -%}
+                <div class="flex items-center justify-center gap-1.5 w-full mt-2 py-2 px-3 rounded-full border border-seaweed-700 bg-sand-100 text-sm font-medium text-seaweed-800">
+                  {% render 'icon-checkmark', classes: 'w-4 h-4 shrink-0', stroke_width: 2, aria_hidden: true %}
+                  <span>{{ section.settings.current_cta_text | escape }}</span>
+                </div>
+              {%- endcapture -%}
+              {% render 'card-product',
+                card_product: step_product,
+                section_id: section.id,
+                card_class: 'flex flex-col relative grow h-full pt-4',
+                image_class: 'rounded-t-full overflow-hidden',
+                variant_picker_type: 'none',
+                custom_cta_html: current_cta_html,
+                remove_linking: true,
+                hover_image: hover_image
+              %}
+            {%- else -%}
+              {% render 'card-product',
+                card_product: step_product,
+                section_id: section.id,
+                card_class: 'flex flex-col relative grow h-full pt-4',
+                image_class: 'rounded-t-full overflow-hidden',
+                button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
+                show_price_range: false,
+                hover_image: hover_image
+              %}
+
+              {%- if show_bundle -%}
+                {%- comment -%} Minimal variant price map for the bundle bar's live re-sum. {%- endcomment -%}
+                <script type="application/json" data-step-variants>
+                  [{%- for variant in step_product.variants -%}{"id":{{ variant.id }},"price":{{ variant.price }},"compare_at_price":{{ variant.compare_at_price | default: variant.price }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+                </script>
+              {%- endif -%}
+            {%- endif -%}
           </li>
-        {%- endfor %}
+        {%- endfor -%}
       </ul>
-    </div>
+
+      {%- if show_bundle -%}
+        {%- liquid
+          assign bundle_word_index = bundle_count | minus: 1
+          assign bundle_count_word = step_words[bundle_word_index]
+        -%}
+        <div class="mt-8 lg:mt-10 bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
+          <div class="min-w-0">
+            <h3 class="font-serif text-xl lg:text-2xl text-sand-100">{{ section.settings.bundle_heading | escape }}</h3>
+            <p class="text-sm text-sand-300">
+              Adds the {% if current_step > 0 %}remaining {% endif %}{{ bundle_count_word }} steps in the sizes selected above
+            </p>
+            <p class="hidden text-sm text-coral-300 mt-1" data-bundle-error role="alert"></p>
+          </div>
+          <div class="ml-auto flex items-center gap-3 lg:gap-4">
+            <s class="text-sand-400 font-medium" data-bundle-compare {% if bundle_compare <= bundle_total %}hidden{% endif %}>
+              {{- bundle_compare | money_without_trailing_zeros -}}
+            </s>
+            <span class="font-serif text-2xl lg:text-3xl text-sand-100" data-bundle-total>{{ bundle_total | money_without_trailing_zeros }}</span>
+            <button
+              type="button"
+              class="button button-sm sm:button-md bg-sand-100 text-seaweed-800 hover:bg-sand-200 motion-safe:transition disabled:opacity-50"
+              data-bundle-add
+              aria-haspopup="dialog"
+            >
+              Add all {{ bundle_count_word }}
+            </button>
+          </div>
+        </div>
+      {%- endif -%}
+    </product-routine>
   </div>
+
+  <script src="{{ 'product-routine.min.js' | asset_url }}" defer></script>
 {%- endif -%}
 
 {% schema %}
@@ -27,7 +244,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Powered by the 'Complete Your Routine' product metafield."
+      "content": "Powered by the 'routine' metaobject product metafield, with the legacy 'Complete Your Routine' product list as fallback."
     },
     {
       "type": "textarea",
@@ -35,34 +252,86 @@
       "label": "Section classes"
     },
     {
-      "type": "textarea",
-      "id": "container_classes",
-      "label": "Container classes"
-    },
-    {
       "type": "text",
       "id": "heading",
-      "default": "You may also like",
+      "default": "Complete Your Routine",
       "label": "t:sections.product-recommendations.settings.heading.label"
     },
     {
-      "type": "textarea",
-      "id": "heading_classes",
-      "label": "Heading classes"
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "default": true,
+      "label": "Show eyebrow"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subtext",
+      "default": true,
+      "label": "Show subtext",
+      "info": "The routine's subheading and the \"You're on step…\" line under the heading."
     },
     {
       "type": "header",
-      "content": "t:sections.product-recommendations.settings.header__2.content"
+      "content": "Step label defaults"
     },
     {
-      "type": "textarea",
-      "id": "wrapper_classes",
-      "label": "Product cards wrapper classes"
+      "type": "text",
+      "id": "body_step_labels",
+      "default": "Cleanse, Exfoliate, Treat, Moisturize",
+      "label": "Body Care step labels",
+      "info": "Comma-separated, in step order. A routine step's own label overrides its position here."
     },
     {
-      "type": "textarea",
-      "id": "card_classes",
-      "label": "Product card classes"
+      "type": "text",
+      "id": "face_step_labels",
+      "default": "Cleanse, Treat, Moisturize, Protect",
+      "label": "Face Care step labels"
+    },
+    {
+      "type": "text",
+      "id": "body_eyebrow",
+      "default": "The Body Care Ritual",
+      "label": "Body Care eyebrow",
+      "info": "Used when the routine has no eyebrow of its own."
+    },
+    {
+      "type": "text",
+      "id": "face_eyebrow",
+      "default": "The Skincare Ritual",
+      "label": "Face Care eyebrow"
+    },
+    {
+      "type": "header",
+      "content": "Current product card"
+    },
+    {
+      "type": "text",
+      "id": "current_label",
+      "default": "You're Here",
+      "label": "Current step chip suffix"
+    },
+    {
+      "type": "text",
+      "id": "current_cta_text",
+      "default": "This product — choose your size above",
+      "label": "Current product card text"
+    },
+    {
+      "type": "header",
+      "content": "Bundle bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bundle",
+      "default": true,
+      "label": "Show add-all bundle bar",
+      "info": "Only renders for metaobject-powered routines with at least two addable steps."
+    },
+    {
+      "type": "text",
+      "id": "bundle_heading",
+      "default": "Finish the Ritual in One Tap",
+      "label": "Bundle bar heading"
     }
   ]
 }

@@ -32,6 +32,8 @@
     - title_text: {String} Replaces product name with custom text (optional)
     - short_description_text: {String} Replaces short description with custom text (optional)
     - custom_badge_html: {String} Replaces badge with custom HTML (optional)
+    - custom_cta_html: {String} Replaces the ATC/variant-picker area with custom HTML, e.g. a static "you're here" pill (optional)
+    - hover_image: {Object} Image object crossfaded over the product image on hover (optional)
     - mini: {Boolean} Compact format — small image, no description, no variant picker. Default: false (optional)
       When no picker is rendered (mini, or variant_picker_type: 'none') and default_to_mini /
       default_to_jumbo are unset, the card pins the largest size — the variant with the highest
@@ -132,7 +134,11 @@
         endif
       endif
     -%}
-    {%- if is_pdp_link -%}
+    {%- if custom_cta_html != blank -%}
+      <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+        {{ custom_cta_html }}
+      </div>
+    {%- elsif is_pdp_link -%}
       <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         <a class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50" href="{{ card_product.url }}">
           {{- pdp_link_label -}}
@@ -450,12 +456,12 @@
   <div class="relative block overflow-hidden no-underline rounded mb-2" tabindex="-1">
     {%- if card_product.featured_media -%}
       {%- if remove_linking -%}
-        <div class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
+        <div class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if hover_image != blank %} relative{% endif %}{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">
       {%- else -%}
         <a
           aria-label="{{ title_accessible_text | escape }} product page"
           href="{{ card_product.url | default: '#' }}"
-          class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if image_class != blank %} {{ image_class }}{% endif %}"
+          class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if hover_image != blank %} relative{% endif %}{% if image_class != blank %} {{ image_class }}{% endif %}"
           tabindex="-1"
         >
       {%- endif -%}
@@ -517,6 +523,24 @@
           {% endif %}
           class="{% if image_element_class != blank %}{{ image_element_class }}{% else %}w-full h-full object-cover{% endif %}"
         >
+
+        {%- if hover_image != blank -%}
+          {%- assign hover_master = hover_image | image_url -%}
+          <img
+            src="{% render 'imgix', src: hover_master, w: default_w %}"
+            srcset="
+              {% render 'imgix', src: hover_master, w: 480 %} 480w,
+              {% render 'imgix', src: hover_master, w: 960 %} 960w
+            "
+            sizes="{{ card_sizes }}"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            width="{{ hover_image.width }}"
+            height="{{ hover_image.width | divided_by: hover_image.aspect_ratio | round }}"
+            class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 motion-safe:transition-opacity motion-safe:duration-300"
+          >
+        {%- endif -%}
       {%- endif -%}
       {% comment %} theme-check-enable RemoteAsset {% endcomment %}
 
