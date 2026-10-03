@@ -510,18 +510,23 @@
 
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org/",
+    "@context": "https://schema.org",
     "@type": "Product",
     "name": {{ product.title | json }},
     "url": {{ shop.url | append: product.url | json }},
-    {%- if product.selected_or_first_available_variant.featured_media -%}
-      {%- assign media_size = product.selected_or_first_available_variant.featured_media.preview_image.width -%}
+    {%- if product.selected_variant.featured_media != blank -%}
+      {%- assign media_size = product.selected_variant.featured_media.preview_image.width -%}
       "image": [
-        {%- if product.metafields.my_fields.white_image_bg != blank -%}
-          {{ product.metafields.my_fields.white_image_bg | image_url: width: 1200 | prepend: "https:" | json }}
-        {%- else -%}
-          {{ product.selected_or_first_available_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
-        {%- endif -%}
+        {{ product.selected_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
+      ],
+    {%- elsif product.metafields.my_fields.white_image_bg != blank -%}
+      "image": [
+        {{ product.metafields.my_fields.white_image_bg | image_url: width: 1200 | prepend: "https:" | json }}
+      ],
+    {%- elsif product.featured_media != blank -%}
+      {%- assign media_size = product.featured_media.preview_image.width -%}
+      "image": [
+        {{ product.featured_media | image_url: width: media_size | prepend: "https:" | json }}
       ],
     {%- endif -%}
     "description": {{ product.description | strip_html | json }},
@@ -554,7 +559,7 @@
           {%- if variant.sku != blank -%}
             "sku": {{ variant.sku | json }},
           {%- endif -%}
-          "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "availability" : "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
           "price" : {{ variant.price | divided_by: 100.00 | json }},
           "priceCurrency" : {{ cart.currency.iso_code | json }},
           "url" : {{ shop.url | append: variant.url | json }}
