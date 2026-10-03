@@ -1,0 +1,30 @@
+{% comment %}
+  Outputs the product palette CSS custom properties (--p-surface/core/inverse/border)
+  for a style attribute or style block. Pair with the bg-p-* / text-p-* / border-p-* /
+  ring-p-border utilities in src/styles/product-palette.css.
+
+  Accepts:
+  - palette_product: {Object} Product Liquid object (required)
+
+  Values come from the product's theme.palette metafield (Product Palette metaobject),
+  falling back to the legacy theme.surface / theme.inverse scalars, then theme defaults.
+  Legacy theme.core is deliberately NOT a fallback — those values are the oversaturated
+  ones the palette system replaces.
+
+  Usage:
+  <li style="{% render 'product-palette-vars', palette_product: product %}">
+{% endcomment %}
+{%- liquid
+  assign pal = palette_product.metafields.theme.palette.value
+  if pal != blank
+    assign p_surface = pal.surface.value
+    assign p_core = pal.core.value
+    assign p_inverse = pal.inverse.value
+    assign p_border = pal.border.value
+  endif
+  assign p_surface = p_surface | default: palette_product.metafields.theme.surface | default: '#f1f5f4'
+  assign p_core = p_core | default: '#c4d5b6'
+  assign p_inverse = p_inverse | default: palette_product.metafields.theme.inverse | default: '#1d4d41'
+  assign p_border = p_border | default: '#dad6ae'
+-%}
+--p-surface: {{ p_surface }}; --p-core: {{ p_core }}; --p-inverse: {{ p_inverse }}; --p-border: {{ p_border }};

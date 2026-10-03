@@ -102,9 +102,9 @@
     <product-routine class="block">
       <div class="text-center mb-6 lg:mb-8">
         {%- if section.settings.show_eyebrow and eyebrow != blank -%}
-          <p class="text-xs font-medium uppercase tracking-widest text-seaweed-700 mb-2">{{ eyebrow }}</p>
+          <p class="text-xs font-book uppercase tracking-[0.2em] text-seaweed-700 mb-2">{{ eyebrow }}</p>
         {%- endif -%}
-        <h2 class="font-serif text-3xl md:text-4xl tracking-tight text-seaweed-800">{{ section.settings.heading | escape }}</h2>
+        <h2 class="font-serif text-3xl md:text-4xl text-seaweed-700">{{ section.settings.heading | escape }}</h2>
         {%- liquid
           assign show_subtext = false
           if section.settings.show_subtext
@@ -124,7 +124,18 @@
         {%- endif -%}
       </div>
 
-      <ul class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 lg:gap-x-6 pt-3" role="list">
+      {%- liquid
+        # Column count follows the routine length so 3-step routines don't strand an empty column.
+        assign step_count = loop_items.size | at_most: 4
+        if step_count == 3
+          assign grid_cols = 'md:grid-cols-3 md:max-w-4xl md:mx-auto'
+        elsif step_count == 2
+          assign grid_cols = 'md:max-w-2xl md:mx-auto'
+        else
+          assign grid_cols = 'md:grid-cols-4'
+        endif
+      -%}
+      <ul class="grid grid-cols-2 {{ grid_cols }} gap-x-4 gap-y-8 lg:gap-x-6 pt-3" role="list">
         {%- for item in loop_items limit: 4 -%}
           {%- liquid
             if use_steps
@@ -146,16 +157,14 @@
             if use_steps and step_product.id == product.id
               assign is_current = true
             endif
-
-            assign chip_color = step_product.metafields.custom.product_color_light | default: 'bg-wave-200'
           -%}
 
           <li
-            class="relative rounded-lg{% if is_current %} bg-sand-200 ring-1 ring-sand-400 p-2 lg:p-3{% endif %}"
+            class="group/card relative rounded-lg ring-1 p-2 lg:p-3 motion-safe:transition motion-safe:duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(29,77,65,0.12)] {% if is_current %}bg-p-core ring-p-border{% else %}bg-white ring-sand-400{% endif %}"
             data-routine-step
-            {% if is_current %}data-current-product{% endif %}
+            {% if is_current %}data-current-product style="{% render 'product-palette-vars', palette_product: step_product %}"{% endif %}
           >
-            <b class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wider {% if is_current %}bg-seaweed-700 text-white{% else %}text-seaweed-800 {{ chip_color }}{% endif %}">
+            <b class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-full px-3 py-1 text-xs font-book uppercase tracking-widest text-white {% if is_current %}bg-seaweed-800{% else %}bg-seaweed-700{% endif %}">
               {%- if step_label != blank -%}
                 0{{ forloop.index }} · {{ step_label }}{% if is_current %} — {{ section.settings.current_label }}{% endif %}
               {%- else -%}
@@ -165,7 +174,7 @@
 
             {%- if is_current -%}
               {%- capture current_cta_html -%}
-                <div class="flex items-center justify-center gap-1.5 w-full mt-2 py-2 px-3 rounded-full border border-seaweed-700 bg-sand-100 text-sm font-medium text-seaweed-800">
+                <div class="flex items-center justify-center gap-1.5 w-full mt-2 py-2 px-3 rounded-lg border border-p-border bg-p-surface text-sm leading-6 font-medium text-p-inverse">
                   {% render 'icon-checkmark', classes: 'w-4 h-4 shrink-0', stroke_width: 2, aria_hidden: true %}
                   <span>{{ section.settings.current_cta_text | escape }}</span>
                 </div>
@@ -178,7 +187,8 @@
                 variant_picker_type: 'none',
                 custom_cta_html: current_cta_html,
                 remove_linking: true,
-                hover_image: hover_image
+                hover_image: hover_image,
+                hide_badge: true
               %}
             {%- else -%}
               {% render 'card-product',
@@ -188,7 +198,8 @@
                 image_class: 'rounded-t-full overflow-hidden',
                 button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
                 show_price_range: false,
-                hover_image: hover_image
+                hover_image: hover_image,
+                hide_badge: true
               %}
 
               {%- if show_bundle -%}
@@ -207,7 +218,7 @@
           assign bundle_word_index = bundle_count | minus: 1
           assign bundle_count_word = step_words[bundle_word_index]
         -%}
-        <div class="mt-8 lg:mt-10 bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
+        <div class="mt-8 bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
           <div class="min-w-0">
             <h3 class="font-serif text-xl lg:text-2xl text-sand-100">{{ section.settings.bundle_heading | escape }}</h3>
             <p class="text-sm text-sand-300">

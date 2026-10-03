@@ -538,7 +538,7 @@
             loading="lazy"
             width="{{ hover_image.width }}"
             height="{{ hover_image.width | divided_by: hover_image.aspect_ratio | round }}"
-            class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 motion-safe:transition-opacity motion-safe:duration-300"
+            class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 group-hover/card:opacity-100 group-focus-visible:opacity-100 motion-safe:transition-opacity motion-safe:duration-300"
           >
         {%- endif -%}
       {%- endif -%}
