@@ -98,7 +98,7 @@
     endif
   -%}
 
-  <div class="product-routine {{ section.settings.section_classes }}">
+  <div class="product-routine {{ section.settings.section_classes }}{% if section.settings.mobile_layout == 'carousel' %} pr-0 2xs:pr-6{% endif %}">
     <product-routine class="block">
       <div class="text-center mb-6 lg:mb-8">
         {%- if section.settings.show_eyebrow and eyebrow != blank -%}
@@ -142,7 +142,7 @@
       -%}
       {%- liquid
         if mobile_carousel
-          assign list_classes = 'flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-4 pt-4 md:pt-3 md:grid md:overflow-visible md:gap-x-4 md:gap-y-8 lg:gap-x-6'
+          assign list_classes = 'flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-4 pt-4 md:pt-3 md:grid md:overflow-visible md:gap-x-4 md:gap-y-8 lg:gap-x-6 pl-px pr-6 pb-px'
         else
           assign list_classes = 'grid grid-cols-2 gap-x-4 gap-y-8 lg:gap-x-6 pt-3'
         endif
@@ -230,27 +230,29 @@
           assign bundle_word_index = bundle_count | minus: 1
           assign bundle_count_word = step_words[bundle_word_index]
         -%}
-        <div class="mt-8 bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
-          <div class="min-w-0">
-            <h3 class="font-serif text-xl lg:text-2xl text-sand-100">{{ section.settings.bundle_heading | escape }}</h3>
-            <p class="text-sm text-sand-300">
-              Adds the {% if current_step > 0 %}remaining {% endif %}{{ bundle_count_word }} steps in the sizes selected above
-            </p>
-            <p class="hidden text-sm text-coral-300 mt-1" data-bundle-error role="alert"></p>
-          </div>
-          <div class="ml-auto flex items-center gap-3 lg:gap-4">
-            <s class="text-sand-400 font-medium" data-bundle-compare {% if bundle_compare <= bundle_total %}hidden{% endif %}>
-              {{- bundle_compare | money_without_trailing_zeros -}}
-            </s>
-            <span class="font-serif text-2xl lg:text-3xl text-sand-100" data-bundle-total>{{ bundle_total | money_without_trailing_zeros }}</span>
-            <button
-              type="button"
-              class="button button-sm sm:button-md bg-sand-100 text-seaweed-800 hover:bg-sand-200 motion-safe:transition disabled:opacity-50"
-              data-bundle-add
-              aria-haspopup="dialog"
-            >
-              Add all {{ bundle_count_word }}
-            </button>
+        <div class="pr-4 2xs:pr-0">
+          <div class="mt-8 bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
+            <div class="min-w-0">
+              <h3 class="font-serif text-xl lg:text-2xl text-sand-100">{{ section.settings.bundle_heading | escape }}</h3>
+              <p class="text-sm text-sand-300">
+                Adds the {% if current_step > 0 %}remaining {% endif %}{{ bundle_count_word }} steps in the sizes selected above
+              </p>
+              <p class="hidden text-sm text-coral-300 mt-1" data-bundle-error role="alert"></p>
+            </div>
+            <div class="ml-auto flex items-center gap-3 lg:gap-4">
+              <s class="text-sand-400 font-medium" data-bundle-compare {% if bundle_compare <= bundle_total %}hidden{% endif %}>
+                {{- bundle_compare | money_without_trailing_zeros -}}
+              </s>
+              <span class="font-serif text-2xl lg:text-3xl text-sand-100" data-bundle-total>{{ bundle_total | money_without_trailing_zeros }}</span>
+              <button
+                type="button"
+                class="button button-sm sm:button-md bg-sand-100 text-seaweed-800 hover:bg-sand-200 motion-safe:transition disabled:opacity-50"
+                data-bundle-add
+                aria-haspopup="dialog"
+              >
+                Add all {{ bundle_count_word }}
+              </button>
+            </div>
           </div>
         </div>
       {%- endif -%}
