@@ -148,9 +148,9 @@
       -%}
       {%- liquid
         if mobile_carousel
-          assign list_classes = 'flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-4 pt-4 md:pt-3 md:grid md:overflow-visible md:gap-x-4 md:gap-y-8 lg:gap-x-6 pl-px pr-6 pb-12'
+          assign list_classes = 'flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-4 pt-4 md:pt-3 md:grid md:overflow-visible md:gap-x-4 md:gap-y-8 lg:gap-x-6 pl-px pr-6 pb-8'
         else
-          assign list_classes = 'grid grid-cols-2 gap-x-4 gap-y-8 lg:gap-x-6 pt-3'
+          assign list_classes = 'grid grid-cols-2 gap-x-4 gap-y-8 lg:gap-x-6 pt-3 mb-8'
         endif
       -%}
       <ul class="{{ list_classes }} {{ grid_cols }}" role="list">
@@ -237,7 +237,7 @@
           assign bundle_count_word = step_words[bundle_word_index]
         -%}
         <div class="pr-4 2xs:pr-0">
-          <div class="mt-8 bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
+          <div class="bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
             <div class="min-w-0">
               <h3 class="font-serif text-xl lg:text-2xl text-sand-100">{{ section.settings.bundle_heading | escape }}</h3>
               <p class="text-sm text-sand-300">
