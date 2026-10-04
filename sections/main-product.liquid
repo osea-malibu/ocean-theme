@@ -216,7 +216,7 @@
                           product: product,
                           use_variant: true,
                           price_class: 'main-price ml-auto',
-                          slashed_price_color: 'md:text-white/75 text-seaweed-800',
+                          slashed_price_color: 'md:text-white/75 text-seaweed-800/75',
                           show_spinner: true
                         %}
                         {%- unless product.selected_or_first_available_variant.available -%}
@@ -432,7 +432,7 @@
                 <span class="label">
                   {{ 'products.product.add_to_cart' | t }}
                 </span>
-                {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto', in_button: true, slashed_price_color: 'text-white/75' -%}
+                {%- render 'price', product: product, use_variant: true, price_class: 'main-price ml-auto', in_button: true, slashed_price_color: 'md:text-white/75 text-seaweed-800/75 sm:pl-2' -%}
               </button>
             </div>
             <div
