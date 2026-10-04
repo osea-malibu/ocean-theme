@@ -139,6 +139,12 @@
         if section.settings.mobile_layout == 'carousel'
           assign mobile_carousel = true
         endif
+
+        # Arch-top image frames; off falls back to card-product's standard rounded rectangle
+        assign image_shape_class = ''
+        if section.settings.arch_images
+          assign image_shape_class = 'rounded-t-full overflow-hidden'
+        endif
       -%}
       {%- liquid
         if mobile_carousel
@@ -195,7 +201,7 @@
                 card_product: step_product,
                 section_id: section.id,
                 card_class: 'flex flex-col relative grow h-full pt-4',
-                image_class: 'rounded-t-full overflow-hidden',
+                image_class: image_shape_class,
                 variant_picker_type: 'none',
                 custom_cta_html: current_cta_html,
                 remove_linking: true,
@@ -207,7 +213,7 @@
                 card_product: step_product,
                 section_id: section.id,
                 card_class: 'flex flex-col relative grow h-full pt-4',
-                image_class: 'rounded-t-full overflow-hidden',
+                image_class: image_shape_class,
                 button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
                 show_price_range: false,
                 hover_image: hover_image,
@@ -294,6 +300,13 @@
       "default": true,
       "label": "Show subtext",
       "info": "The routine's subheading and the \"You're on step…\" line under the heading."
+    },
+    {
+      "type": "checkbox",
+      "id": "arch_images",
+      "default": true,
+      "label": "Arched product images",
+      "info": "Off = standard rounded rectangle."
     },
     {
       "type": "select",
