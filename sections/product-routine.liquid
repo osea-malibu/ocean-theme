@@ -67,33 +67,56 @@
       endfor
     endif
 
-    # Initial bundle totals over every other step's default variant (JS re-sums on
-    # variant change). Compare-at only ever shows when it genuinely exceeds the total.
+    # Which step products are already in the cart (any variant counts as covered)?
+    # The bundle only ever adds the steps that are missing; JS re-checks on cart:updated.
+    assign cart_ids = cart.items | map: 'product_id' | join: ',' | prepend: ',' | append: ','
+
+    # Initial bundle state over each missing step's default variant (the hero step uses
+    # the main form's default; JS tracks its live selection after load).
     assign bundle_total = 0
     assign bundle_compare = 0
-    assign bundle_count = 0
+    assign steps_total = 0
+    assign remaining_count = 0
+    assign in_cart_count = 0
+    assign hero_in_cart = false
     if use_steps
       for step in loop_items limit: 4
         assign step_product = step.product.value
-        if step_product == blank or step_product.id == product.id
+        if step_product == blank
           continue
         endif
+        assign steps_total = steps_total | plus: 1
+
+        assign cart_needle = ',' | append: step_product.id | append: ','
+        if cart_ids contains cart_needle
+          assign in_cart_count = in_cart_count | plus: 1
+          if step_product.id == product.id
+            assign hero_in_cart = true
+          endif
+          continue
+        endif
+
         assign default_variant = step_product.selected_or_first_available_variant
         unless default_variant.available
           continue
         endunless
+        assign remaining_count = remaining_count | plus: 1
         assign bundle_total = bundle_total | plus: default_variant.price
         assign compare = default_variant.compare_at_price | default: default_variant.price
         if compare < default_variant.price
           assign compare = default_variant.price
         endif
         assign bundle_compare = bundle_compare | plus: compare
-        assign bundle_count = bundle_count | plus: 1
       endfor
     endif
 
+    assign bundle_complete = false
+    if steps_total > 0 and in_cart_count == steps_total
+      assign bundle_complete = true
+    endif
+
     assign show_bundle = false
-    if section.settings.show_bundle and bundle_count > 1
+    if section.settings.show_bundle and steps_total > 1
       assign show_bundle = true
     endif
   -%}
@@ -180,6 +203,11 @@
           <li
             class="{% if mobile_carousel %}flex-none w-[76%] max-w-xs snap-center md:w-auto md:max-w-none {% endif %}group/card relative rounded-lg ring-1 p-2 lg:p-3 motion-safe:transition motion-safe:duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(29,77,65,0.12)] {% if is_current %}bg-p-core ring-p-border{% else %}bg-white ring-sand-400{% endif %}"
             data-routine-step
+            data-product-id="{{ step_product.id }}"
+            {%- liquid
+              assign cart_needle = ',' | append: step_product.id | append: ','
+            -%}
+            {% if cart_ids contains cart_needle %}data-in-cart{% endif %}
             {% if is_current %}data-current-product style="{% render 'product-palette-vars', palette_product: step_product %}"{% endif %}
           >
             <b class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-full px-3 py-1 text-xs font-book uppercase tracking-widest text-white {% if is_current %}bg-seaweed-800{% else %}bg-seaweed-700{% endif %}">
@@ -194,7 +222,13 @@
               {%- capture current_cta_html -%}
                 <div class="flex items-center justify-center gap-1.5 w-full mt-2 py-2 px-3 rounded-lg border border-p-border bg-p-surface text-sm leading-6 font-medium text-p-inverse">
                   {% render 'icon-checkmark', classes: 'w-4 h-4 shrink-0', stroke_width: 2, aria_hidden: true %}
-                  <span>{{ section.settings.current_cta_text | escape }}</span>
+                  <span
+                    data-current-pill
+                    data-text-default="{{ section.settings.current_cta_text | escape }}"
+                    data-text-in-cart="{{ section.settings.current_cta_in_cart_text | escape }}"
+                  >
+                    {%- if hero_in_cart -%}{{ section.settings.current_cta_in_cart_text | escape }}{%- else -%}{{ section.settings.current_cta_text | escape }}{%- endif -%}
+                  </span>
                 </div>
               {%- endcapture -%}
               {% render 'card-product',
@@ -208,6 +242,13 @@
                 hover_image: hover_image,
                 hide_badge: true
               %}
+
+              {%- if show_bundle -%}
+                {%- comment -%} Price map so the bundle can include this product at the main form's live selection. {%- endcomment -%}
+                <script type="application/json" data-step-variants>
+                  [{%- for variant in step_product.variants -%}{"id":{{ variant.id }},"price":{{ variant.price }},"compare_at_price":{{ variant.compare_at_price | default: variant.price }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+                </script>
+              {%- endif -%}
             {%- else -%}
               {% render 'card-product',
                 card_product: step_product,
@@ -233,20 +274,55 @@
 
       {%- if show_bundle -%}
         {%- liquid
-          assign bundle_word_index = bundle_count | minus: 1
-          assign bundle_count_word = step_words[bundle_word_index]
+          # Label templates: JS swaps {count} for a spelled-out number as cart state changes.
+          assign note_all_tpl = 'Adds all {count} steps in the sizes selected above'
+          assign note_partial_tpl = 'Adds the remaining {count} steps in the sizes selected above'
+          assign note_last = 'Adds the last step in the size selected above'
+          assign cta_all_tpl = 'Add all {count}'
+          assign cta_partial = 'Add the rest'
+          assign cta_last = 'Add the last step'
+
+          assign remaining_index = remaining_count | minus: 1
+          assign remaining_word = step_words[remaining_index]
+          if bundle_complete
+            assign initial_heading = section.settings.bundle_complete_heading
+            assign initial_note = section.settings.bundle_complete_note
+            assign initial_cta = cta_last
+          elsif in_cart_count == 0
+            assign initial_heading = section.settings.bundle_heading
+            assign initial_note = note_all_tpl | replace: '{count}', remaining_word
+            assign initial_cta = cta_all_tpl | replace: '{count}', remaining_word
+          elsif remaining_count == 1
+            assign initial_heading = section.settings.bundle_heading
+            assign initial_note = note_last
+            assign initial_cta = cta_last
+          else
+            assign initial_heading = section.settings.bundle_heading
+            assign initial_note = note_partial_tpl | replace: '{count}', remaining_word
+            assign initial_cta = cta_partial
+          endif
         -%}
         <div class="px-4 2xs:px-0">
           <div class="bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
             <div class="min-w-0">
-              <h3 class="font-serif text-xl lg:text-2xl text-sand-100">{{ section.settings.bundle_heading | escape }}</h3>
-              <p class="text-sm text-sand-300">
-                Adds the {% if current_step > 0 %}remaining {% endif %}{{ bundle_count_word }} steps in the sizes selected above
-              </p>
+              <h3
+                class="font-serif text-xl lg:text-2xl text-sand-100"
+                data-bundle-heading
+                data-heading-default="{{ section.settings.bundle_heading | escape }}"
+                data-heading-complete="{{ section.settings.bundle_complete_heading | escape }}"
+              >{{ initial_heading | escape }}</h3>
+              <p
+                class="text-sm text-sand-300"
+                data-bundle-note
+                data-note-all="{{ note_all_tpl | escape }}"
+                data-note-partial="{{ note_partial_tpl | escape }}"
+                data-note-last="{{ note_last | escape }}"
+                data-note-complete="{{ section.settings.bundle_complete_note | escape }}"
+              >{{ initial_note | escape }}</p>
               <p class="hidden text-sm text-coral-300 mt-1" data-bundle-error role="alert"></p>
             </div>
-            <div class="ml-auto flex items-center gap-3 lg:gap-4">
-              <s class="text-sand-400 font-medium" data-bundle-compare {% if bundle_compare <= bundle_total %}hidden{% endif %}>
+            <div class="ml-auto flex items-center gap-3 lg:gap-4" data-bundle-buy {% if bundle_complete %}hidden{% endif %}>
+              <s class="font-serif text-2xl lg:text-3xl text-sand-100/50 decoration-1" data-bundle-compare {% if bundle_compare <= bundle_total %}hidden{% endif %}>
                 {{- bundle_compare | money_without_trailing_zeros -}}
               </s>
               <span class="font-serif text-2xl lg:text-3xl text-sand-100" data-bundle-total>{{ bundle_total | money_without_trailing_zeros }}</span>
@@ -254,10 +330,11 @@
                 type="button"
                 class="button button-sm sm:button-md bg-sand-100 text-seaweed-800 hover:bg-sand-200 motion-safe:transition disabled:opacity-50"
                 data-bundle-add
+                data-cta-all="{{ cta_all_tpl | escape }}"
+                data-cta-partial="{{ cta_partial | escape }}"
+                data-cta-last="{{ cta_last | escape }}"
                 aria-haspopup="dialog"
-              >
-                Add all {{ bundle_count_word }}
-              </button>
+              >{{ initial_cta | escape }}</button>
             </div>
           </div>
         </div>
@@ -362,8 +439,15 @@
     {
       "type": "text",
       "id": "current_cta_text",
-      "default": "This product — choose your size above",
-      "label": "Current product card text"
+      "default": "The one you're here for",
+      "label": "Current product card text",
+      "info": "Shown while this page's product isn't in the cart yet."
+    },
+    {
+      "type": "text",
+      "id": "current_cta_in_cart_text",
+      "default": "In your bag",
+      "label": "Current product card text (in cart)"
     },
     {
       "type": "header",
@@ -375,6 +459,18 @@
       "default": true,
       "label": "Show add-all bundle bar",
       "info": "Only renders for metaobject-powered routines with at least two addable steps."
+    },
+    {
+      "type": "text",
+      "id": "bundle_complete_heading",
+      "default": "Your routine is complete",
+      "label": "Bundle bar heading (all steps in cart)"
+    },
+    {
+      "type": "text",
+      "id": "bundle_complete_note",
+      "default": "Every step is in your bag",
+      "label": "Bundle bar note (all steps in cart)"
     },
     {
       "type": "text",
