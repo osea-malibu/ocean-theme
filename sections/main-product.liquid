@@ -509,10 +509,9 @@
 </script>
 
 {%- liquid
-  assign schema_variant = product.selected_or_first_available_variant
-  assign schema_variant_image = nil
-  if product.variants.size > 1
-    assign schema_variant_image = schema_variant.featured_media
+  assign schema_variant = product.selected_variant
+  if product.variants.size == 1
+    assign schema_variant = product.variants.first
   endif
 -%}
 
@@ -522,10 +521,10 @@
     "@type": "Product",
     "name": {{ product.title | json }},
     "url": {{ shop.url | append: product.url | json }},
-    {%- if schema_variant_image != blank -%}
-      {%- assign media_size = schema_variant_image.preview_image.width -%}
+    {%- if product.selected_variant.featured_media != blank -%}
+      {%- assign media_size = product.selected_variant.featured_media.preview_image.width -%}
       "image": [
-        {{ schema_variant_image | image_url: width: media_size | prepend: "https:" | json }}
+        {{ product.selected_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
       ],
     {%- elsif product.metafields.my_fields.white_image_bg != blank -%}
       "image": [
