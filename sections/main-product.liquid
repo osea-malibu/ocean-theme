@@ -508,16 +508,24 @@
   });
 </script>
 
+{%- liquid
+  assign schema_variant = product.selected_or_first_available_variant
+  assign schema_variant_image = nil
+  if product.variants.size > 1
+    assign schema_variant_image = schema_variant.featured_media
+  endif
+-%}
+
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": {{ product.title | json }},
     "url": {{ shop.url | append: product.url | json }},
-    {%- if product.selected_variant.featured_media != blank -%}
-      {%- assign media_size = product.selected_variant.featured_media.preview_image.width -%}
+    {%- if schema_variant_image != blank -%}
+      {%- assign media_size = schema_variant_image.preview_image.width -%}
       "image": [
-        {{ product.selected_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
+        {{ schema_variant_image | image_url: width: media_size | prepend: "https:" | json }}
       ],
     {%- elsif product.metafields.my_fields.white_image_bg != blank -%}
       "image": [
@@ -530,8 +538,8 @@
       ],
     {%- endif -%}
     "description": {{ product.description | strip_html | json }},
-    {%- if product.selected_or_first_available_variant.sku != blank -%}
-      "sku": {{ product.selected_or_first_available_variant.sku | json }},
+    {%- if schema_variant.sku != blank -%}
+      "sku": {{ schema_variant.sku | json }},
     {%- endif -%}
     {%- if product.metafields.okendo.summaryData.reviewCount > 0 -%}
       "aggregateRating": {
