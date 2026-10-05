@@ -1,0 +1,107 @@
+{%- assign organization_logo = shop.brand.logo -%}
+{%- assign social_keys = 'social_twitter_link,social_facebook_link,social_pinterest_link,social_instagram_link,social_tiktok_link,social_tumblr_link,social_snapchat_link,social_youtube_link,social_vimeo_link' | split: ',' -%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": {{ shop.url | append: '/#organization' | json }},
+    "name": {{ shop.name | json }},
+    {%- if organization_logo != blank %}
+      "logo": {{ organization_logo | image_url: width: organization_logo.width | prepend: 'https:' | json }},
+    {%- endif %}
+    "sameAs": [
+      {%- assign social_separator = '' -%}
+      {%- for social_key in social_keys -%}
+        {%- assign social_url = settings[social_key] -%}
+        {%- if social_url != blank -%}
+          {{ social_separator }}{{ social_url | json }}
+          {%- assign social_separator = ',' -%}
+        {%- endif -%}
+      {%- endfor %}
+    ],
+    "url": {{ shop.url | json }}
+    {%- if request.page_type == 'page' and page.handle == 'customer-care' -%}
+      {%- assign free_ship_min = settings.shipping_countdown_threshold -%}
+      {%- comment -%}
+        Validate the text setting before numeric coercion so malformed input cannot
+        become a zero-cost shipping claim. Accept unsigned amounts with up to two decimals.
+      {%- endcomment -%}
+      {%- assign shipping_rate_text = settings.standard_shipping_rate | strip -%}
+      {%- assign shipping_rate_invalid_chars = shipping_rate_text | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9' | remove: '.' -%}
+      {%- assign shipping_rate_parts = shipping_rate_text | split: '.' -%}
+      {%- assign shipping_rate_without_dots = shipping_rate_text | remove: '.' -%}
+      {%- assign shipping_rate_dot_count = shipping_rate_text.size | minus: shipping_rate_without_dots.size -%}
+      {%- assign shipping_rate_first = shipping_rate_text | slice: 0 -%}
+      {%- assign shipping_rate_last = shipping_rate_text | slice: -1 -%}
+      {%- assign shipping_rate_valid = false -%}
+      {%- if shipping_rate_text != blank and shipping_rate_invalid_chars == empty and shipping_rate_dot_count <= 1 -%}
+        {%- unless shipping_rate_first == '.' or shipping_rate_last == '.' -%}
+          {%- if shipping_rate_dot_count == 0 or shipping_rate_parts.last.size <= 2 -%}
+            {%- assign shipping_rate_valid = true -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endif -%}
+      {%- if shipping_rate_valid and free_ship_min != nil and free_ship_min >= 0 -%}
+      {%- assign paid_ship_max = free_ship_min | minus: 0.01 -%}
+      {%- assign standard_shipping_rate = shipping_rate_text | times: 1.0 -%}
+      {%- capture shipping_description -%}
+        {%- if free_ship_min == 0 -%}
+          Standard domestic shipping is free on all US orders.
+        {%- else -%}
+        Standard domestic shipping costs ${{ standard_shipping_rate }} for orders under ${{ free_ship_min }} and is free for orders of ${{ free_ship_min }} or more.
+        {%- endif -%}
+      {%- endcapture -%}
+      ,"hasShippingService": {
+        "@type": "ShippingService",
+        "name": "US standard shipping",
+        "description": {{ shipping_description | strip | json }},
+        "fulfillmentType": "https://schema.org/FulfillmentTypeDelivery",
+        "shippingConditions": [
+          {%- if free_ship_min > 0 -%}
+          {
+            "@type": "ShippingConditions",
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "addressCountry": "US"
+            },
+            "orderValue": {
+              "@type": "MonetaryAmount",
+              "minValue": 0,
+              "maxValue": {{ paid_ship_max | json }},
+              "currency": "USD"
+            },
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": {{ standard_shipping_rate | json }},
+              "currency": "USD"
+            }
+          },
+          {%- endif -%}
+          {
+            "@type": "ShippingConditions",
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "addressCountry": "US"
+            },
+            "orderValue": {
+              "@type": "MonetaryAmount",
+              "minValue": {{ free_ship_min | json }},
+              "currency": "USD"
+            },
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": 0,
+              "currency": "USD"
+            }
+          }
+        ]
+      }
+      {%- endif -%}
+      ,"hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "merchantReturnLink": {{ shop.url | append: '/pages/customer-care' | json }}
+      }
+    {%- endif -%}
+  }
+</script>
