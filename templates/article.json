@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -34,9 +43,59 @@
           }
         }
       },
-      "block_order": ["featured_image", "title", "share", "content"],
+      "block_order": [
+        "featured_image",
+        "title",
+        "share",
+        "content"
+      ],
       "settings": {}
+    },
+    "rich_text_86mdGh": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_cEw3xE": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "Questions? Take our Quiz.",
+            "heading_classes": "font-medium tracking-wide text-lg mb-2 lg:text-xl",
+            "subheading_text": "",
+            "subheading_classes": ""
+          }
+        },
+        "paragraph_ACgdmR": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph_text": "Get a Custom Routine with Clean Essentials",
+            "paragraph_classes": "font-serif tracking-tight text-3xl lg:text-4xl leading-none mb-3"
+          }
+        },
+        "button_FUjWd4": {
+          "type": "button",
+          "settings": {
+            "button_label": "Take the quiz",
+            "button_link": "shopify://pages/quiz",
+            "button_aria_label": "",
+            "target_blank": false,
+            "button_icon": "",
+            "button_classes": "button button-primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_cEw3xE",
+        "paragraph_ACgdmR",
+        "button_FUjWd4"
+      ],
+      "settings": {
+        "section_heading": "",
+        "section_classes": "container",
+        "container_classes": "text-center bg-seafoam-200 py-8 rounded"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "rich_text_86mdGh"
+  ]
 }
