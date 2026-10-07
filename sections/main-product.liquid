@@ -508,6 +508,13 @@
   });
 </script>
 
+{%- liquid
+  assign schema_variant = product.selected_variant
+  if product.variants.size == 1
+    assign schema_variant = product.variants.first
+  endif
+-%}
+
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -530,8 +537,8 @@
       ],
     {%- endif -%}
     "description": {{ product.description | strip_html | json }},
-    {%- if product.selected_or_first_available_variant.sku != blank -%}
-      "sku": {{ product.selected_or_first_available_variant.sku | json }},
+    {%- if schema_variant.sku != blank -%}
+      "sku": {{ schema_variant.sku | json }},
     {%- endif -%}
     {%- if product.metafields.okendo.summaryData.reviewCount > 0 -%}
       "aggregateRating": {
