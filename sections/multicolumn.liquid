@@ -213,11 +213,7 @@
                                   {%- if block.settings.atc_button_product.selected_or_first_available_variant.available -%}
                                     <span>{{ 'products.product.add_to_cart' | t }}</span>
                                     <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
-                                      {% render 'price',
-                                        product: block.settings.atc_button_product,
-                                        show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
-                                        use_variant: true
-                                      %}
+                                      {% render 'price', product: block.settings.atc_button_product, show_price_range: block.settings.show_variants, use_variant: true %}
                                     </span>
                                   {%- else -%}
                                     {{ 'products.product.sold_out' | t }}
@@ -816,3 +812,19 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'price',
+                                            product: block.settings.atc_button_product,
+                                            show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
+                                            use_variant: true
+                                          %}
+  to: "{% render 'price', product: block.settings.atc_button_product, show_price_range:
+    block.settings.show_variants, use_variant: true %}"
+  position: 15611..15742
+{% endcomment %}
