@@ -517,15 +517,20 @@
   if product.selected_variant != blank
     assign schema_offer_variants = product.variants | where: 'id', product.selected_variant.id
   endif
+  assign schema_can_render = true
+  if product.variants.size > 1 and product.selected_variant != blank and product.selected_variant.featured_media.preview_image == blank
+    assign schema_can_render = false
+  endif
 -%}
 
+{%- if schema_can_render -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": {{ product.title | json }},
     "url": {{ shop.url | append: product.url | json }},
-    {%- if product.selected_variant.featured_media != blank -%}
+    {%- if product.selected_variant.featured_media.preview_image != blank -%}
       {%- assign media_size = product.selected_variant.featured_media.preview_image.width -%}
       "image": [
         {{ product.selected_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
@@ -580,6 +585,7 @@
     ]
   }
 </script>
+{%- endif -%}
 
 {% schema %}
 {
