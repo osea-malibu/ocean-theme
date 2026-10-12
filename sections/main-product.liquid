@@ -540,6 +540,7 @@
     {%- if schema_variant.sku != blank -%}
       "sku": {{ schema_variant.sku | json }},
     {%- endif -%}
+    {%- render 'structured-data-gtin', barcode: schema_variant.barcode -%}
     {%- if product.metafields.okendo.summaryData.reviewCount > 0 -%}
       "aggregateRating": {
         "@type": "AggregateRating",
