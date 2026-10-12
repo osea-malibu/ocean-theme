@@ -508,6 +508,9 @@
   });
 </script>
 
+{%- if product.id == 8092623623 -%}
+  {%- render 'structured-data-undaria-product-group', product: product -%}
+{%- else -%}
 {%- liquid
   assign schema_variant = product.selected_variant
   if product.variants.size == 1
@@ -575,6 +578,8 @@
     ]
   }
 </script>
+
+{%- endif -%}
 
 {% schema %}
 {
