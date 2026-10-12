@@ -208,3 +208,87 @@ test("Single-variant product may use its product-image fallback with its identit
   assert.equal(schema.offers.length, 1);
   assert.deepEqual(schema.image, ["https://cdn.example.com/curated-four-ounce.jpg"]);
 });
+
+const groupTemplate = await readFile(
+  `${root}/snippets/structured-data-undaria-product-group.liquid`,
+  "utf8"
+);
+
+test("Group pairs each validated identifier with its own image and offer", async () => {
+  const product = fixture();
+  product.id = 8092623623;
+  const [group] = await renderSchema(groupTemplate, product);
+  assert.equal(group.productGroupID, "8092623623");
+  assert.deepEqual(group.variesBy, ["https://schema.org/size"]);
+  assert.equal(group.aggregateRating.ratingCount, 42);
+  for (const [index, variant] of product.variants.entries()) {
+    const node = group.hasVariant[index];
+    assert.equal(node.sku, variant.sku);
+    assert.equal(node.gtin12, variant.barcode);
+    assert.equal(node.image, `https:${variant.featured_media.preview_image.src}`);
+    assert.equal(node.offers.url, `https://example.com${variant.url}`);
+    assert.equal(node.offers.price, variant.price / 100);
+  }
+  product.selected_variant = product.variants[1];
+  assert.deepEqual((await renderSchema(groupTemplate, product))[0], group);
+  product.variants[0].available = false;
+  const [sold] = await renderSchema(groupTemplate, product);
+  assert.deepEqual(
+    sold.hasVariant.map((node) => node.image),
+    group.hasVariant.map((node) => node.image)
+  );
+  assert.equal(sold.hasVariant[0].offers.availability, "https://schema.org/OutOfStock");
+});
+
+test("Group omits invalid GTINs without dropping correctly imaged products", async () => {
+  const product = fixture();
+  for (const barcode of [null, "abc", "675468102989"]) {
+    product.variants[1].barcode = barcode;
+    const [group] = await renderSchema(groupTemplate, product);
+    assert.equal(group.hasVariant.length, 2);
+    assert.equal(group.hasVariant[1].gtin12, undefined);
+    assert.equal(group.hasVariant[1].gtin, undefined);
+    assert.equal(group.hasVariant[1].offers.price, 22);
+  }
+});
+
+for (const missingIndex of [0, 1, 2]) {
+  test(`Group skips missing image at index ${missingIndex} with valid JSON separators`, async () => {
+    const product = fixture();
+    product.variants.push({ ...structuredClone(product.variants[0]), id: 103, sku: "THIRD" });
+    product.variants[missingIndex].featured_media = null;
+    const [group] = await renderSchema(groupTemplate, product);
+    assert.equal(group.hasVariant.length, 2);
+    assert.ok(group.hasVariant.every((node) => node.image));
+    assert.ok(!group.hasVariant.some((node) => node.sku === product.variants[missingIndex].sku));
+  });
+}
+
+test("Group emits no incomplete markup when every image is missing", async () => {
+  const product = fixture();
+  for (const variant of product.variants) variant.featured_media = null;
+  assert.deepEqual(await renderSchema(groupTemplate, product), []);
+});
+
+test("Group does not describe other sizes on an explicitly selected size with missing media", async () => {
+  const product = fixture();
+  product.selected_variant = product.variants[1];
+  product.selected_variant.featured_media = null;
+  assert.deepEqual(await renderSchema(groupTemplate, product), []);
+});
+
+test("Combined section emits one group for Undaria and one Product for other products", async () => {
+  const combinedStart = source.indexOf("{%- if product.id == 8092623623");
+  const combined = source.slice(combinedStart, source.indexOf("{% schema %}", combinedStart));
+  const product = fixture();
+  product.id = 8092623623;
+  const [group] = await renderSchema(combined, product);
+  assert.equal(group["@type"], "ProductGroup");
+  product.id = 1;
+  product.selected_variant = product.variants[1];
+  const schemas = await renderSchema(combined, product);
+  assert.equal(schemas.length, 1);
+  assert.equal(schemas[0]["@type"], "Product");
+  assert.equal(schemas[0].gtin12, "675468102988");
+  assert.equal(schemas[0].offers.length, 1);
+});

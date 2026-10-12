@@ -5,6 +5,19 @@
 {%- endcomment -%}
 {%- assign group_url = shop.url | append: product.url -%}
 {%- assign group_id = product.id | append: '' -%}
+{%- liquid
+  assign group_image_count = 0
+  for variant in product.variants
+    if variant.featured_media.preview_image != blank
+      assign group_image_count = group_image_count | plus: 1
+    endif
+  endfor
+  assign group_can_render = true
+  if product.selected_variant != blank and product.selected_variant.featured_media.preview_image == blank
+    assign group_can_render = false
+  endif
+-%}
+{%- if group_can_render and group_image_count > 0 -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -35,11 +48,15 @@
       },
     {%- endif -%}
     "hasVariant": [
+      {%- assign group_variant_written = false -%}
       {%- for variant in product.variants -%}
+        {%- assign variant_image = variant.featured_media.preview_image -%}
+        {%- if variant_image == blank -%}
+          {%- continue -%}
+        {%- endif -%}
         {%- assign variant_url = shop.url | append: variant.url -%}
         {%- assign variant_name = product.title | append: ' - ' | append: variant.title -%}
-        {%- assign variant_image = variant.featured_media.preview_image -%}
-        {%- assign variant_barcode = variant.barcode | strip -%}
+        {%- if group_variant_written -%},{%- endif -%}
         {
           "@type": "Product",
           "@id": {{ variant_url | append: '#product' | json }},
@@ -50,12 +67,8 @@
           {%- if variant.sku != blank -%}
             "sku": {{ variant.sku | json }},
           {%- endif -%}
-          {%- if variant_barcode != blank -%}
-            "gtin": {{ variant_barcode | json }},
-          {%- endif -%}
-          {%- if variant_image != blank -%}
-            "image": {{ variant_image | image_url: width: 1200 | prepend: 'https:' | json }},
-          {%- endif -%}
+          {%- render 'structured-data-gtin', barcode: variant.barcode -%}
+          "image": {{ variant_image | image_url: width: 1200 | prepend: 'https:' | json }},
           "offers": {
             "@type": "Offer",
             "url": {{ variant_url | json }},
@@ -63,8 +76,10 @@
             "priceCurrency": {{ cart.currency.iso_code | json }},
             "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}"
           }
-        }{% unless forloop.last %},{% endunless %}
+        }
+        {%- assign group_variant_written = true -%}
       {%- endfor -%}
     ]
   }
 </script>
+{%- endif -%}
