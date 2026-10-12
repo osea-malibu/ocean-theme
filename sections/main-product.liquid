@@ -513,6 +513,10 @@
   if product.variants.size == 1
     assign schema_variant = product.variants.first
   endif
+  assign schema_offer_variants = product.variants
+  if product.selected_variant != blank
+    assign schema_offer_variants = product.variants | where: 'id', product.selected_variant.id
+  endif
 -%}
 
 <script type="application/ld+json">
@@ -561,7 +565,7 @@
       "name": {{ product.vendor | json }}
     },
     "offers": [
-      {%- for variant in product.variants -%}
+      {%- for variant in schema_offer_variants -%}
         {
           "@type" : "Offer",
           {%- if variant.sku != blank -%}
