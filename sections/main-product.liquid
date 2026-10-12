@@ -516,15 +516,24 @@
   if product.variants.size == 1
     assign schema_variant = product.variants.first
   endif
+  assign schema_offer_variants = product.variants
+  if product.selected_variant != blank
+    assign schema_offer_variants = product.variants | where: 'id', product.selected_variant.id
+  endif
+  assign schema_can_render = true
+  if product.variants.size > 1 and product.selected_variant != blank and product.selected_variant.featured_media.preview_image == blank
+    assign schema_can_render = false
+  endif
 -%}
 
+{%- if schema_can_render -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": {{ product.title | json }},
     "url": {{ shop.url | append: product.url | json }},
-    {%- if product.selected_variant.featured_media != blank -%}
+    {%- if product.selected_variant.featured_media.preview_image != blank -%}
       {%- assign media_size = product.selected_variant.featured_media.preview_image.width -%}
       "image": [
         {{ product.selected_variant.featured_media | image_url: width: media_size | prepend: "https:" | json }}
@@ -543,6 +552,7 @@
     {%- if schema_variant.sku != blank -%}
       "sku": {{ schema_variant.sku | json }},
     {%- endif -%}
+    {%- render 'structured-data-gtin', barcode: schema_variant.barcode -%}
     {%- if product.metafields.okendo.summaryData.reviewCount > 0 -%}
       "aggregateRating": {
         "@type": "AggregateRating",
@@ -563,7 +573,7 @@
       "name": {{ product.vendor | json }}
     },
     "offers": [
-      {%- for variant in product.variants -%}
+      {%- for variant in schema_offer_variants -%}
         {
           "@type" : "Offer",
           {%- if variant.sku != blank -%}
@@ -578,6 +588,7 @@
     ]
   }
 </script>
+{%- endif -%}
 
 {%- endif -%}
 
