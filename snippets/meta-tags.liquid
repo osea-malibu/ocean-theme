@@ -38,7 +38,13 @@
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
-  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+  {%- liquid
+    assign og_price = product.price
+    if product.selected_variant != blank
+      assign og_price = product.selected_variant.price
+    endif
+  -%}
+  <meta property="og:price:amount" content="{{ og_price | money_without_currency | strip_html }}">
   <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
 {%- endif -%}
 
