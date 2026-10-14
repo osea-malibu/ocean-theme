@@ -43,7 +43,11 @@ if (!customElements.get("product-routine")) {
       this.onDocumentChange = (event) => {
         if (!this.contains(event.target)) this.updateBundle();
       };
-      this.onCartUpdated = () => this.refreshCartState();
+      // global.js's cart fetch patch fires cart:updated for ANY successful
+      // cart call, including our own /cart.js read — skip those or we loop.
+      this.onCartUpdated = () => {
+        if (!this.refreshingCart) this.refreshCartState();
+      };
       document.addEventListener("change", this.onDocumentChange);
       document.addEventListener("cart:updated", this.onCartUpdated);
 
@@ -66,6 +70,14 @@ if (!customElements.get("product-routine")) {
         const addButton = card.querySelector('button[name="add"]');
         return addButton && !addButton.disabled && card.querySelector('form input[name="id"]');
       });
+    }
+
+    /* A step is satisfied when it's in the cart or can't be added (sold out). */
+    isSatisfied(card) {
+      if (this.inCart(card)) return true;
+      if (card === this.heroCard) return this.heroSelection() === null;
+      const addButton = card.querySelector('button[name="add"]');
+      return !addButton || addButton.disabled || !card.querySelector('form input[name="id"]');
     }
 
     variantFrom(card, id) {
@@ -99,10 +111,13 @@ if (!customElements.get("product-routine")) {
       const hero = this.heroSelection();
       const remaining = cards.length + (hero ? 1 : 0);
       const inCartCount = this.stepCards.filter((card) => this.inCart(card)).length;
-      const complete = inCartCount === this.stepCards.length && this.stepCards.length > 0;
+      // Sold-out steps count as satisfied so the bar can still complete.
+      const complete = inCartCount > 0 && this.stepCards.every((card) => this.isSatisfied(card));
 
       this.syncState({ remaining, inCartCount, complete });
       this.addButton.disabled = remaining < 1;
+      // Fully sold-out routine with an empty cart: nothing to say or sell.
+      this.bundle.hidden = remaining < 1 && !complete;
       if (complete) return;
 
       let total = 0;
@@ -156,6 +171,7 @@ if (!customElements.get("product-routine")) {
     }
 
     refreshCartState() {
+      this.refreshingCart = true;
       fetch(`${window.Shopify.routes.root}cart.js`)
         .then((response) => response.json())
         .then((cart) => {
@@ -170,7 +186,10 @@ if (!customElements.get("product-routine")) {
           });
           this.updateBundle();
         })
-        .catch((error) => console.error("[ProductRoutine] cart check failed:", error));
+        .catch((error) => console.error("[ProductRoutine] cart check failed:", error))
+        .finally(() => {
+          this.refreshingCart = false;
+        });
     }
 
     formatMoney(cents) {
