@@ -196,7 +196,7 @@
   <div class="hidden overflow-x-scroll w-full">
     <div class="flex justify-center gap-2">
       {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
-        <div class="{{ matrix_product.metafields.custom.product_color_light }} rounded p-2 lg:p-4 flex-1">
+        <div class="bg-p-surface rounded p-2 lg:p-4 flex-1" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
           <div class="text-center">
             {%- liquid
               assign image_master = matrix_product.metafields.custom.product_image_transparent | image_url
@@ -266,7 +266,7 @@
         <tr>
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
             <th class="px-1 py-0 text-center w-1/{{ matrix_product_count }}">
-              <div class="py-2 rounded-t {{ matrix_product.metafields.custom.product_color_light }}">
+              <div class="py-2 rounded-t bg-p-surface" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
                 {%- liquid
                   assign image_master = matrix_product.metafields.custom.product_image_transparent | image_url
                 -%}
@@ -327,7 +327,7 @@
         <tr>
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
             <td class="text-left px-1 py-0 align-top text-sm">
-              <div class="p-2 {{ matrix_product.metafields.custom.product_color_light }}">
+              <div class="p-2 bg-p-surface" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
                 <h3 class="font-bold text-left text-sm mb-1{% unless forloop.first %} opacity-0{% endunless %}">Benefits</h3>
                 <ul class="icon-list bullet pl-5!">
                   {%- for benefit in matrix_product.metafields.custom.benefits.value -%}
@@ -341,7 +341,7 @@
         <tr>
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
             <td class="text-left px-1 py-0 align-top text-sm h-1">
-              <div class="p-2 h-full {{ matrix_product.metafields.custom.product_color_light }}">
+              <div class="p-2 h-full bg-p-surface" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
                 <h3 class="font-bold text-left text-sm mb-1{% unless forloop.first %} opacity-0{% endunless %}">Skin Type</h3>
                 <p>
                   {%- for skin_type in matrix_product.metafields.custom.skin_types_list.value -%}
@@ -355,7 +355,7 @@
         <tr>
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
             <td class="text-left px-1 py-0 align-top text-sm h-1">
-              <div class="p-2 h-full {{ matrix_product.metafields.custom.product_color_light }}">
+              <div class="p-2 h-full bg-p-surface" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
                 <h3 class="font-bold text-left text-sm mb-1{% unless forloop.first %} opacity-0{% endunless %}">Price</h3>
                 {%- render 'price', product: matrix_product, show_price_range: true -%}
               </div>
@@ -365,7 +365,7 @@
         <tr>
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
             <td class="text-left px-1 py-0 align-top text-sm leading-tight h-1">
-              <div class="p-2 h-full {{ matrix_product.metafields.custom.product_color_light }}">
+              <div class="p-2 h-full bg-p-surface" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
                 <h3 class="font-bold text-left text-sm mb-1{% unless forloop.first %} opacity-0{% endunless %}">Scent Profile</h3>
                 {%- if matrix_product.metafields.custom.scent_profile_short != blank -%}
                   {{ matrix_product.metafields.custom.scent_profile_short.value }}
@@ -379,7 +379,7 @@
         <tr>
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
             <td class="text-left px-1 py-0 align-top text-sm h-1">
-              <div class="p-2 rounded-b h-full {{ matrix_product.metafields.custom.product_color_light }}">
+              <div class="p-2 rounded-b h-full bg-p-surface" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
                 <h3 class="font-bold text-left text-sm mb-1{% unless forloop.first %} opacity-0{% endunless %}">Key Ingredients</h3>
                 <ul class="icon-list bullet pl-5!">
                   {%- for ingredient in matrix_product.metafields.custom.key_ingredients_list.value -%}

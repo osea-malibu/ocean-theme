@@ -1,7 +1,8 @@
 /* =========================
    Product palette utilities
-   Values come from CSS vars set on #main-product
-   (surface/inverse/accent/core + text-on-*)
+   Roles: surface / core / inverse / border — one Product Palette metaobject per family,
+   referenced by the product's theme.palette metafield.
+   Set the --p-* vars with {% render 'product-palette-vars', palette_product: product %}.
 ========================= */
 
 /* Raw mappings (just color, no paired text) */
@@ -29,11 +30,11 @@
     transparent
   );
 }
-@utility bg-p-accent {
+@utility bg-p-border {
   --tw-bg-opacity: 1;
   background-color: color-mix(
     in oklab,
-    var(--p-accent) calc(var(--tw-bg-opacity) * 100%),
+    var(--p-border) calc(var(--tw-bg-opacity) * 100%),
     transparent
   );
 }
@@ -47,8 +48,8 @@
 @utility text-p-inverse {
   color: var(--p-inverse);
 }
-@utility text-p-accent {
-  color: var(--p-accent);
+@utility text-p-border {
+  color: var(--p-border);
 }
 
 /* darken text for backgrounds */
@@ -71,8 +72,13 @@
 @utility border-p-inverse {
   border-color: var(--p-inverse);
 }
-@utility border-p-accent {
-  border-color: var(--p-accent);
+@utility border-p-border {
+  border-color: var(--p-border);
+}
+
+/* ring color variant (pairs with ring-1 etc.) */
+@utility ring-p-border {
+  --tw-ring-color: var(--p-border);
 }
 
 @utility decoration-p-surface {
@@ -87,9 +93,9 @@
   -webkit-text-decoration-color: var(--p-inverse);
   text-decoration-color: var(--p-inverse);
 }
-@utility decoration-p-accent {
-  -webkit-text-decoration-color: var(--p-accent);
-  text-decoration-color: var(--p-accent);
+@utility decoration-p-border {
+  -webkit-text-decoration-color: var(--p-border);
+  text-decoration-color: var(--p-border);
 }
 
 /* Gradients (works with bg-gradient-to-*) */
@@ -109,15 +115,13 @@
 @utility to-p-inverse {
   --tw-gradient-to: var(--p-inverse);
 }
-@utility to-p-accent {
-  --tw-gradient-to: var(--p-accent);
-}
+
 
 /* Buttons */
 @utility button-p-core {
   background-color: var(--p-core);
   border-color: var(--p-core);
-  color: var(--text-seaweed-800);
+  color: var(--p-inverse);
 
   &:visited,
   &:active,
@@ -126,36 +130,14 @@
   &:link {
     background-color: var(--p-core);
     border-color: var(--p-core);
-    color: var(--text-seaweed-800);
+    color: var(--p-inverse);
   }
 
   &:hover {
     /* Slightly darker for hover */
     background-color: color-mix(in oklab, var(--p-core) 90%, black);
     border-color: color-mix(in oklab, var(--p-core) 90%, black);
-    color: var(--text-seaweed-800);
+    color: var(--p-inverse);
   }
 }
 
-@utility button-p-accent {
-  background-color: var(--p-accent);
-  border-color: var(--p-accent);
-  color: var(--text-seaweed-800);
-
-  &:visited,
-  &:active,
-  &:focus,
-  &:focus-visible,
-  &:link {
-    background-color: var(--p-accent);
-    border-color: var(--p-accent);
-    color: var(--text-seaweed-800);
-  }
-
-  &:hover {
-    /* Slightly darker for hover */
-    background-color: color-mix(in oklab, var(--p-accent) 90%, black);
-    border-color: color-mix(in oklab, var(--p-accent) 90%, black);
-    color: var(--text-seaweed-800);
-  }
-}

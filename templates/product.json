@@ -221,6 +221,25 @@
         "header": "Set Includes"
       }
     },
+    "routine": {
+      "type": "product-routine",
+      "settings": {
+        "section_classes": "mb-16 container mt-8",
+        "heading": "Complete Your Routine",
+        "show_eyebrow": true,
+        "show_subtext": false,
+        "arch_images": true,
+        "mobile_layout": "carousel",
+        "body_step_labels": "Cleanse, Exfoliate, Treat, Moisturize",
+        "face_step_labels": "Cleanse, Treat, Moisturize, Protect",
+        "body_eyebrow": "The Body Care Ritual",
+        "face_eyebrow": "The Skincare Ritual",
+        "current_label": "You're Here",
+        "current_cta_text": "This product",
+        "show_bundle": true,
+        "bundle_heading": "Add the rest to complete the routine"
+      }
+    },
     "clinicals": {
       "type": "product-clinicals",
       "settings": {
@@ -316,18 +335,6 @@
         "founder_image": "shopify://shop_images/012624_OSEA_PRSHOOT-ROBIN-938.jpg"
       }
     },
-    "routine": {
-      "type": "product-routine",
-      "disabled": true,
-      "settings": {
-        "section_classes": "hidden",
-        "container_classes": "mb-12 container lg:max-w-screen-lg",
-        "heading": "Complete Your Routine",
-        "heading_classes": "text-3xl md:text-4xl tracking-tight font-serif mb-3 md:mb-4",
-        "wrapper_classes": "grid grid-cols-2 md:grid-cols-4 gap-4",
-        "card_classes": "relative"
-      }
-    },
     "faqs": {
       "type": "product-faqs",
       "custom_css": [],
@@ -372,6 +379,7 @@
     "main",
     "ugc",
     "set-includes",
+    "routine",
     "clinicals",
     "video",
     "ingredients_accordion",
@@ -379,7 +387,6 @@
     "scent_profile",
     "about_the_brand",
     "founder_quote",
-    "routine",
     "faqs",
     "reviews",
     "recently-viewed",

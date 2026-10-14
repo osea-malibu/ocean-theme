@@ -1,23 +1,348 @@
-{%- if product.metafields.custom.upsell_complete_routine -%}
-  <div class="product-routine {{ section.settings.section_classes }}">
-    <div class="{{ section.settings.container_classes }}">
-      <h2 class="{{ section.settings.heading_classes }}">{{ section.settings.heading | escape }}</h2>
-      <ul class="{{ section.settings.wrapper_classes }}" role="list">
-        {%- for routine_product in product.metafields.custom.upsell_complete_routine.value -%}
-          <li class="{{ section.settings.card_classes }}">
-            {%-  assign product_color = product.metafields.custom.product_color_light -%}
-            <b class="{% if product_color != blank %}{{ product_color }}{% else %}bg-wave-200{% endif %} absolute px-1 py-0.5 rounded-t uppercase w-full block text-center">Step {{ forloop.index }}</b>
-            {% render 'card-product',
-              card_product: routine_product,
-              section_id: section.id,
-              card_class: 'flex flex-col relative grow h-full pt-7',
-              button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4'
-            %}
+{% comment %}
+  Complete Your Routine — PDP cross-sell.
+
+  Data contract (metaobjects):
+  - Product metafield `custom.routine` → single reference to a `routine` metaobject:
+      - category:   single choice, 'body' or 'face' — picks default step labels + eyebrow
+      - eyebrow:    single line text (optional) — overrides the category default eyebrow
+      - subheading: single line text (optional)
+      - steps:      list of `routine_step` metaobject references (max 4, order = step order)
+  - `routine_step` metaobject:
+      - product:     product reference (required)
+      - label:       single line text (optional) — overrides the category default for its position
+      - hover_image: file reference (optional) — crossfaded in on card hover
+  Falls back to the legacy `custom.upsell_complete_routine` product list metafield
+  (numbered steps, no labels/hover/bundle) while products migrate.
+
+  The step matching the current PDP product renders as the "you're here" card with a
+  static pill instead of an ATC. The bundle bar adds every other step's selected
+  variant in one /cart/add.js call (wired in product-routine.js).
+{% endcomment %}
+
+{%- liquid
+  assign routine = product.metafields.custom.routine.value
+  assign steps = routine.steps.value
+  assign legacy_products = product.metafields.custom.upsell_complete_routine.value
+
+  assign use_steps = false
+  if routine != blank and steps != blank
+    assign use_steps = true
+  endif
+-%}
+
+{%- if use_steps or legacy_products != blank -%}
+  {%- liquid
+    assign step_words = 'one,two,three,four' | split: ','
+
+    if use_steps
+      assign loop_items = steps
+    else
+      assign loop_items = legacy_products
+    endif
+
+    # Category-driven defaults, overridable per routine / per step
+    assign category = routine.category.value | default: 'body'
+    if category == 'face'
+      assign default_labels = section.settings.face_step_labels | split: ', '
+      assign default_eyebrow = section.settings.face_eyebrow
+    else
+      assign default_labels = section.settings.body_step_labels | split: ', '
+      assign default_eyebrow = section.settings.body_eyebrow
+    endif
+
+    assign eyebrow = ''
+    assign subheading = ''
+    if use_steps
+      assign eyebrow = routine.eyebrow.value | default: default_eyebrow
+      assign subheading = routine.subheading.value
+    endif
+
+    # Which step is the product this PDP sells? (0 = not in the routine)
+    assign current_step = 0
+    if use_steps
+      for step in loop_items limit: 4
+        if step.product.value.id == product.id
+          assign current_step = forloop.index
+        endif
+      endfor
+    endif
+
+    # Which step products are already in the cart (any variant counts as covered)?
+    # The bundle only ever adds the steps that are missing; JS re-checks on cart:updated.
+    assign cart_ids = cart.items | map: 'product_id' | join: ',' | prepend: ',' | append: ','
+
+    # Initial bundle state over each missing step's default variant (the hero step uses
+    # the main form's default; JS tracks its live selection after load).
+    assign bundle_total = 0
+    assign bundle_compare = 0
+    assign steps_total = 0
+    assign remaining_count = 0
+    assign in_cart_count = 0
+    assign hero_in_cart = false
+    if use_steps
+      for step in loop_items limit: 4
+        assign step_product = step.product.value
+        if step_product == blank
+          continue
+        endif
+        assign steps_total = steps_total | plus: 1
+
+        assign cart_needle = ',' | append: step_product.id | append: ','
+        if cart_ids contains cart_needle
+          assign in_cart_count = in_cart_count | plus: 1
+          if step_product.id == product.id
+            assign hero_in_cart = true
+          endif
+          continue
+        endif
+
+        assign default_variant = step_product.selected_or_first_available_variant
+        unless default_variant.available
+          continue
+        endunless
+        assign remaining_count = remaining_count | plus: 1
+        assign bundle_total = bundle_total | plus: default_variant.price
+        assign compare = default_variant.compare_at_price | default: default_variant.price
+        if compare < default_variant.price
+          assign compare = default_variant.price
+        endif
+        assign bundle_compare = bundle_compare | plus: compare
+      endfor
+    endif
+
+    assign bundle_complete = false
+    if steps_total > 0 and in_cart_count == steps_total
+      assign bundle_complete = true
+    endif
+
+    assign show_bundle = false
+    if section.settings.show_bundle and steps_total > 1
+      assign show_bundle = true
+    endif
+  -%}
+
+  <div class="product-routine {{ section.settings.section_classes }}{% if section.settings.mobile_layout == 'carousel' %} px-0 2xs:px-6{% endif %}">
+    <product-routine class="block">
+      <div class="text-center mb-6 lg:mb-8">
+        {%- if section.settings.show_eyebrow and eyebrow != blank -%}
+          <p class="text-xs font-book uppercase tracking-[0.2em] text-seaweed-700 mb-2">{{ eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="font-serif text-3xl md:text-4xl text-seaweed-700">{{ section.settings.heading | escape }}</h2>
+        {%- liquid
+          assign show_subtext = false
+          if section.settings.show_subtext
+            if subheading != blank or current_step > 0
+              assign show_subtext = true
+            endif
+          endif
+        -%}
+        {%- if show_subtext -%}
+          <p class="mt-2 text-sm md:text-base max-w-xl mx-auto">
+            {%- if subheading != blank -%}{{ subheading }}{% if current_step > 0 %} {% endif %}{%- endif -%}
+            {%- if current_step > 0 -%}
+              {%- assign current_word_index = current_step | minus: 1 -%}
+              You're on step {{ step_words[current_word_index] }} — add the rest to complete the routine
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+      </div>
+
+      {%- liquid
+        # Column count follows the routine length so 3-step routines don't strand an empty column.
+        assign step_count = loop_items.size | at_most: 4
+        if step_count == 3
+          assign grid_cols = 'md:grid-cols-3 md:max-w-4xl md:mx-auto'
+        elsif step_count == 2
+          assign grid_cols = 'md:grid-cols-2 md:max-w-2xl md:mx-auto'
+        else
+          assign grid_cols = 'md:grid-cols-4'
+        endif
+
+        assign mobile_carousel = false
+        if section.settings.mobile_layout == 'carousel'
+          assign mobile_carousel = true
+        endif
+
+        # Arch-top image frames; off falls back to card-product's standard rounded rectangle
+        assign image_shape_class = ''
+        if section.settings.arch_images
+          assign image_shape_class = 'rounded-t-full overflow-hidden'
+        endif
+      -%}
+      {%- liquid
+        if mobile_carousel
+          assign list_classes = 'flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-3.5 pt-4 md:pt-3 md:grid md:overflow-visible md:gap-x-4 md:gap-y-8 lg:gap-x-6 px-4 2xs:px-px scroll-pl-4 2xs:scroll-pl-0 pb-4 lg:pb-6'
+        else
+          assign list_classes = 'grid grid-cols-2 gap-x-4 gap-y-8 lg:gap-x-6 pt-3 pb-4 lg:pb-6'
+        endif
+      -%}
+      <ul class="{{ list_classes }} {{ grid_cols }}" role="list">
+        {%- for item in loop_items limit: 4 -%}
+          {%- liquid
+            if use_steps
+              assign step_product = item.product.value
+              assign hover_image = item.hover_image.value
+              assign default_label = default_labels[forloop.index0]
+              assign step_label = item.label.value | default: default_label
+            else
+              assign step_product = item
+              assign hover_image = nil
+              assign step_label = ''
+            endif
+
+            if step_product == blank
+              continue
+            endif
+
+            assign is_current = false
+            if use_steps and step_product.id == product.id
+              assign is_current = true
+            endif
+          -%}
+
+          <li
+            class="{% if mobile_carousel %}flex-none w-[64%] max-w-[16rem] snap-center md:w-auto md:max-w-none {% endif %}group/card relative rounded-lg ring-1 p-2 lg:p-3 motion-safe:transition motion-safe:duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(29,77,65,0.12)] {% if is_current %}bg-p-core ring-p-border{% else %}bg-white ring-sand-400{% endif %}"
+            data-routine-step
+            data-product-id="{{ step_product.id }}"
+            {%- liquid
+              assign cart_needle = ',' | append: step_product.id | append: ','
+            -%}
+            {% if cart_ids contains cart_needle %}data-in-cart{% endif %}
+            {% if is_current %}data-current-product style="{% render 'product-palette-vars', palette_product: step_product %}"{% endif %}
+          >
+            <b class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-full px-3 py-1 text-xs font-book uppercase tracking-widest text-white {% if is_current %}bg-seaweed-800{% else %}bg-seaweed-700{% endif %}">
+              {%- if step_label != blank -%}
+                0{{ forloop.index }} · {{ step_label }}{% if is_current %} — {{ section.settings.current_label }}{% endif %}
+              {%- else -%}
+                Step {{ forloop.index }}
+              {%- endif -%}
+            </b>
+
+            {%- if is_current -%}
+              {%- capture current_cta_html -%}
+                <div class="flex items-center justify-center gap-1.5 w-full mt-2 py-2 px-3 rounded-lg border border-p-border bg-p-surface text-sm leading-6 font-medium text-p-inverse">
+                  {% render 'icon-checkmark', classes: 'w-4 h-4 shrink-0', stroke_width: 2, aria_hidden: true %}
+                  <span
+                    data-current-pill
+                    data-text-default="{{ section.settings.current_cta_text | escape }}"
+                    data-text-in-cart="{{ section.settings.current_cta_in_cart_text | escape }}"
+                  >
+                    {%- if hero_in_cart -%}{{ section.settings.current_cta_in_cart_text | escape }}{%- else -%}{{ section.settings.current_cta_text | escape }}{%- endif -%}
+                  </span>
+                </div>
+              {%- endcapture -%}
+              {% render 'card-product',
+                card_product: step_product,
+                section_id: section.id,
+                card_class: 'flex flex-col relative grow h-full pt-4',
+                image_class: image_shape_class,
+                variant_picker_type: 'none',
+                custom_cta_html: current_cta_html,
+                remove_linking: true,
+                hover_image: hover_image,
+                hide_badge: true
+              %}
+
+              {%- if show_bundle -%}
+                {%- comment -%} Price map so the bundle can include this product at the main form's live selection. {%- endcomment -%}
+                <script type="application/json" data-step-variants>
+                  [{%- for variant in step_product.variants -%}{"id":{{ variant.id }},"price":{{ variant.price }},"compare_at_price":{{ variant.compare_at_price | default: variant.price }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+                </script>
+              {%- endif -%}
+            {%- else -%}
+              {% render 'card-product',
+                card_product: step_product,
+                section_id: section.id,
+                card_class: 'flex flex-col relative grow h-full pt-4',
+                image_class: image_shape_class,
+                button_class: 'h-10 sm:h-auto flex-col sm:flex-row py-1 sm:py-2 button-sm sm:button-md leading-none sm:leading-normal md:px-3 md:tracking-wider lg:px-4',
+                show_price_range: false,
+                hover_image: hover_image,
+                hide_badge: true
+              %}
+
+              {%- if show_bundle -%}
+                {%- comment -%} Minimal variant price map for the bundle bar's live re-sum. {%- endcomment -%}
+                <script type="application/json" data-step-variants>
+                  [{%- for variant in step_product.variants -%}{"id":{{ variant.id }},"price":{{ variant.price }},"compare_at_price":{{ variant.compare_at_price | default: variant.price }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+                </script>
+              {%- endif -%}
+            {%- endif -%}
           </li>
-        {%- endfor %}
+        {%- endfor -%}
       </ul>
-    </div>
+
+      {%- if show_bundle -%}
+        {%- liquid
+          # Label templates: JS swaps {count} for a spelled-out number as cart state changes.
+          assign note_all_tpl = 'Adds all {count} steps in the sizes selected above'
+          assign note_partial_tpl = 'Adds the remaining {count} steps in the sizes selected above'
+          assign note_last = 'Adds the last step in the size selected above'
+          assign cta_all_tpl = 'Add all {count}'
+          assign cta_partial = 'Add the rest'
+          assign cta_last = 'Add the last step'
+
+          assign remaining_index = remaining_count | minus: 1
+          assign remaining_word = step_words[remaining_index]
+          if bundle_complete
+            assign initial_heading = section.settings.bundle_complete_heading
+            assign initial_note = section.settings.bundle_complete_note
+            assign initial_cta = cta_last
+          elsif in_cart_count == 0
+            assign initial_heading = section.settings.bundle_heading
+            assign initial_note = note_all_tpl | replace: '{count}', remaining_word
+            assign initial_cta = cta_all_tpl | replace: '{count}', remaining_word
+          elsif remaining_count == 1
+            assign initial_heading = section.settings.bundle_heading
+            assign initial_note = note_last
+            assign initial_cta = cta_last
+          else
+            assign initial_heading = section.settings.bundle_heading
+            assign initial_note = note_partial_tpl | replace: '{count}', remaining_word
+            assign initial_cta = cta_partial
+          endif
+        -%}
+        <div class="px-4 2xs:px-0">
+          <div class="bg-seaweed-700 rounded-lg p-4 lg:px-6 flex flex-wrap items-center gap-x-6 gap-y-3" data-routine-bundle>
+            <div class="min-w-0">
+              <h3
+                class="font-serif text-xl lg:text-2xl text-sand-100"
+                data-bundle-heading
+                data-heading-default="{{ section.settings.bundle_heading | escape }}"
+                data-heading-complete="{{ section.settings.bundle_complete_heading | escape }}"
+              >{{ initial_heading | escape }}</h3>
+              <p
+                class="text-sm text-sand-300"
+                data-bundle-note
+                data-note-all="{{ note_all_tpl | escape }}"
+                data-note-partial="{{ note_partial_tpl | escape }}"
+                data-note-last="{{ note_last | escape }}"
+                data-note-complete="{{ section.settings.bundle_complete_note | escape }}"
+              >{{ initial_note | escape }}</p>
+              <p class="hidden text-sm text-coral-300 mt-1" data-bundle-error role="alert"></p>
+            </div>
+            <div class="ml-auto flex items-center gap-3 lg:gap-4" data-bundle-buy {% if bundle_complete %}hidden{% endif %}>
+              <s class="font-serif text-2xl lg:text-3xl text-sand-100/50 decoration-1" data-bundle-compare {% if bundle_compare <= bundle_total %}hidden{% endif %}>
+                {{- bundle_compare | money_without_trailing_zeros -}}
+              </s>
+              <span class="font-serif text-2xl lg:text-3xl text-sand-100" data-bundle-total>{{ bundle_total | money_without_trailing_zeros }}</span>
+              <button
+                type="button"
+                class="button button-sm sm:button-md bg-sand-100 text-seaweed-800 hover:bg-sand-200 motion-safe:transition disabled:opacity-50"
+                data-bundle-add
+                data-cta-all="{{ cta_all_tpl | escape }}"
+                data-cta-partial="{{ cta_partial | escape }}"
+                data-cta-last="{{ cta_last | escape }}"
+                aria-haspopup="dialog"
+              >{{ initial_cta | escape }}</button>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </product-routine>
   </div>
+
+  <script src="{{ 'product-routine.min.js' | asset_url }}" defer></script>
 {%- endif -%}
 
 {% schema %}
@@ -27,7 +352,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Powered by the 'Complete Your Routine' product metafield."
+      "content": "Powered by the 'routine' metaobject product metafield, with the legacy 'Complete Your Routine' product list as fallback."
     },
     {
       "type": "textarea",
@@ -35,34 +360,123 @@
       "label": "Section classes"
     },
     {
-      "type": "textarea",
-      "id": "container_classes",
-      "label": "Container classes"
-    },
-    {
       "type": "text",
       "id": "heading",
-      "default": "You may also like",
+      "default": "Complete Your Routine",
       "label": "t:sections.product-recommendations.settings.heading.label"
     },
     {
-      "type": "textarea",
-      "id": "heading_classes",
-      "label": "Heading classes"
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "default": true,
+      "label": "Show eyebrow"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subtext",
+      "default": true,
+      "label": "Show subtext",
+      "info": "The routine's subheading and the \"You're on step…\" line under the heading."
+    },
+    {
+      "type": "checkbox",
+      "id": "arch_images",
+      "default": true,
+      "label": "Arched product images",
+      "info": "Off = standard rounded rectangle."
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "default": "carousel",
+      "options": [
+        { "value": "carousel", "label": "Horizontal scroll" },
+        { "value": "grid", "label": "2-column grid" }
+      ],
+      "info": "Desktop always shows the full row."
     },
     {
       "type": "header",
-      "content": "t:sections.product-recommendations.settings.header__2.content"
+      "content": "Step label defaults"
     },
     {
-      "type": "textarea",
-      "id": "wrapper_classes",
-      "label": "Product cards wrapper classes"
+      "type": "text",
+      "id": "body_step_labels",
+      "default": "Cleanse, Exfoliate, Treat, Moisturize",
+      "label": "Body Care step labels",
+      "info": "Comma-separated, in step order. A routine step's own label overrides its position here."
     },
     {
-      "type": "textarea",
-      "id": "card_classes",
-      "label": "Product card classes"
+      "type": "text",
+      "id": "face_step_labels",
+      "default": "Cleanse, Treat, Moisturize, Protect",
+      "label": "Face Care step labels"
+    },
+    {
+      "type": "text",
+      "id": "body_eyebrow",
+      "default": "The Body Care Ritual",
+      "label": "Body Care eyebrow",
+      "info": "Used when the routine has no eyebrow of its own."
+    },
+    {
+      "type": "text",
+      "id": "face_eyebrow",
+      "default": "The Skincare Ritual",
+      "label": "Face Care eyebrow"
+    },
+    {
+      "type": "header",
+      "content": "Current product card"
+    },
+    {
+      "type": "text",
+      "id": "current_label",
+      "default": "You're Here",
+      "label": "Current step chip suffix"
+    },
+    {
+      "type": "text",
+      "id": "current_cta_text",
+      "default": "The one you're here for",
+      "label": "Current product card text",
+      "info": "Shown while this page's product isn't in the cart yet."
+    },
+    {
+      "type": "text",
+      "id": "current_cta_in_cart_text",
+      "default": "In your bag",
+      "label": "Current product card text (in cart)"
+    },
+    {
+      "type": "header",
+      "content": "Bundle bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bundle",
+      "default": true,
+      "label": "Show add-all bundle bar",
+      "info": "Only renders for metaobject-powered routines with at least two addable steps."
+    },
+    {
+      "type": "text",
+      "id": "bundle_complete_heading",
+      "default": "Your routine is complete",
+      "label": "Bundle bar heading (all steps in cart)"
+    },
+    {
+      "type": "text",
+      "id": "bundle_complete_note",
+      "default": "Every step is in your bag",
+      "label": "Bundle bar note (all steps in cart)"
+    },
+    {
+      "type": "text",
+      "id": "bundle_heading",
+      "default": "Finish the Ritual in One Tap",
+      "label": "Bundle bar heading"
     }
   ]
 }
