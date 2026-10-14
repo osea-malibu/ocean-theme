@@ -314,9 +314,13 @@ test("Group does not describe other sizes on an explicitly selected size with mi
   assert.deepEqual(await renderSchema(groupTemplate, product), []);
 });
 
+const combinedStart = source.indexOf("{%- if product.id == 8092623623");
+assert.ok(combinedStart >= 0, "Find the Undaria schema switch");
+const combinedEnd = source.indexOf("{% schema %}", combinedStart);
+assert.ok(combinedEnd >= 0, "Find the combined schema block end");
+const combined = source.slice(combinedStart, combinedEnd);
+
 test("Combined section emits one group for Undaria and one Product for other products", async () => {
-  const combinedStart = source.indexOf("{%- if product.id == 8092623623");
-  const combined = source.slice(combinedStart, source.indexOf("{% schema %}", combinedStart));
   const product = fixture();
   product.id = 8092623623;
   const [group] = await renderSchema(combined, product);
@@ -328,4 +332,27 @@ test("Combined section emits one group for Undaria and one Product for other pro
   assert.equal(schemas[0]["@type"], "Product");
   assert.equal(schemas[0].gtin12, "675468102988");
   assert.equal(schemas[0].offers.length, 1);
+});
+
+test("Combined switch preserves distinct missing-media policies without competing Product blocks", async () => {
+  const product = fixture();
+  product.id = 8092623623;
+  product.selected_variant = product.variants[1];
+  product.selected_variant.featured_media = null;
+  assert.deepEqual(await renderSchema(combined, product), []);
+  product.selected_variant = null;
+  const family = await renderSchema(combined, product);
+  assert.equal(family.length, 1);
+  assert.equal(family[0]["@type"], "ProductGroup");
+  assert.equal(family[0].hasVariant.length, 1);
+  assert.equal(family[0].hasVariant[0].sku, "SERUM-4");
+  product.id = 1;
+  product.selected_variant = product.variants[1];
+  const ordinary = await renderSchema(combined, product);
+  assert.equal(ordinary.length, 1);
+  assert.equal(ordinary[0]["@type"], "Product");
+  assert.equal(ordinary[0].sku, undefined);
+  assert.equal(ordinary[0].gtin12, undefined);
+  assert.equal(ordinary[0].url, "https://example.com/products/serum");
+  assert.equal(ordinary[0].offers.length, 2);
 });

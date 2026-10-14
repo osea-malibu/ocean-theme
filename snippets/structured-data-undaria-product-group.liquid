@@ -2,6 +2,8 @@
   Undaria Body Oil pilot only. The Shopify product ID identifies the family.
   Variant data remains owned by Shopify.
   Reviews describe the whole product family, not individual sizes.
+  Missing selected media suppresses this group rather than substituting another size.
+  Restore verified variant media to recover that selected URL's group markup.
 {%- endcomment -%}
 {%- assign group_url = shop.url | append: product.url -%}
 {%- assign group_id = product.id | append: '' -%}
