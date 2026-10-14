@@ -46,6 +46,9 @@
   -%}
   <meta property="og:price:amount" content="{{ og_price | money_without_currency | strip_html }}">
   <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+  {%- if product.selected_variant != blank -%}
+    <meta property="og:availability" content="{% if product.selected_variant.available %}instock{% else %}out of stock{% endif %}">
+  {%- endif -%}
 {%- endif -%}
 
 {%- if settings.social_twitter_link != blank -%}
