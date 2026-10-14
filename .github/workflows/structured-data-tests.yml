@@ -1,0 +1,25 @@
+name: Structured data tests
+
+on:
+  pull_request:
+    paths:
+      - "sections/main-product.liquid"
+      - "snippets/structured-data-*.liquid"
+      - "tools/**"
+      - "package*.json"
+      - ".github/workflows/structured-data-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run test:structured-data
