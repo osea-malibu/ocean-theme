@@ -697,7 +697,7 @@ const getBundleItemsLoop = (items) => {
     for (const item of items) {
         const bundleId =
             item?.properties?._bundleId ?? item?.properties?.bundleId;
-        if (!bundleId) continue;
+        if (!bundleId || !/^([0-9a-f]{32}|[0-9A-Z]{26})$/.test(bundleId)) continue;
         if (!Object.hasOwn(bundleItemsMap, bundleId)) {
             bundleItemsMap[bundleId] = {
                 bundleId,
