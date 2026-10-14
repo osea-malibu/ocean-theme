@@ -25,6 +25,7 @@ Custom Shopify theme for OSEA Malibu, built on Dawn (Online Store 2.0). Powers t
 ```bash
 npm run build          # Build JS bundles + Tailwind CSS (one-shot)
 npm run dev            # Build in watch mode (incremental, for local development)
+npm run test:structured-data # Check GTIN and product-schema regression cases
 npm run format         # Format all files with Prettier
 npm run format:check   # Check formatting without writing
 
@@ -32,7 +33,8 @@ shopify theme dev      # Local dev server with live preview (requires Shopify CL
 shopify theme check    # Liquid linting
 ```
 
-No tests are configured.
+Structured-data tests run in CI for relevant pull requests. Local image-filter stubs
+do not replace Shopify preview validation. The generic `npm test` command is not configured.
 
 ---
 

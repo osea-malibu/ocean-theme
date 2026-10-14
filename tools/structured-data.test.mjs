@@ -15,11 +15,9 @@ const source = (await readFile(`${root}/sections/main-product.liquid`, "utf8")).
 );
 const start = source.indexOf("{%- liquid\n  assign schema_variant");
 assert.ok(start >= 0, "Find the Product schema selection block");
-const scriptEnd = source.indexOf("</script>", start) + "</script>".length;
-const productTemplate = source.slice(
-  start,
-  source.indexOf("{%- endif -%}", scriptEnd) + "{%- endif -%}".length
-);
+const end = source.indexOf("</script>", start);
+assert.ok(end >= 0, "Find the Product schema block end");
+const productTemplate = source.slice(start, end + "</script>".length);
 
 export function fixture() {
   const media = (size) => ({
@@ -141,6 +139,7 @@ test("Base page retains curated image and all offers without a size-specific ide
   assert.equal(after.gtin12, undefined);
   assert.equal(after.offers.length, 2);
   assert.equal(after.offers[0].availability, "https://schema.org/OutOfStock");
+  assert.equal(after.url, "https://example.com/products/serum");
 });
 
 test("Selected variant pairs GTIN, SKU, image, stock, and exactly one matching offer", async () => {
@@ -151,6 +150,7 @@ test("Selected variant pairs GTIN, SKU, image, stock, and exactly one matching o
   const [schema] = await renderSchema(productTemplate, product);
   assert.equal(schema.sku, variant.sku);
   assert.equal(schema.gtin12, variant.barcode);
+  assert.equal(schema.url, "https://example.com/products/serum?variant=102");
   assert.deepEqual(schema.image, ["https://cdn.example.com/one-ounce.jpg"]);
   assert.deepEqual(schema.offers, [
     {
@@ -189,13 +189,45 @@ test("Blank or invalid barcode does not remove a correctly imaged variant's offe
   }
 });
 
-test("Missing selected media suppresses variant Product markup instead of using another size", async () => {
+test("Missing selected media retains the base representation without a variant identity", async () => {
   const product = fixture();
+  const [base] = await renderSchema(productTemplate, product);
   product.selected_variant = product.variants[1];
   for (const media of [null, { preview_image: null }]) {
     product.selected_variant.featured_media = media;
-    assert.deepEqual(await renderSchema(productTemplate, product), []);
+    const schemas = await renderSchema(productTemplate, product);
+    assert.equal(schemas.length, 1);
+    assert.deepEqual(schemas[0], base);
   }
+});
+
+test("Missing selected media falls back to featured product media when no curated image exists", async () => {
+  const product = fixture();
+  product.selected_variant = product.variants[1];
+  product.selected_variant.featured_media = null;
+  product.metafields.my_fields.white_image_bg = null;
+  const [schema] = await renderSchema(productTemplate, product);
+  assert.deepEqual(schema.image, ["https://cdn.example.com/four-ounce.jpg"]);
+  assert.equal(schema.sku, undefined);
+  assert.equal(schema.gtin12, undefined);
+  assert.equal(schema.url, "https://example.com/products/serum");
+  assert.equal(schema.offers.length, 2);
+  assert.equal(schema.aggregateRating.ratingCount, "42");
+});
+
+test("Missing all images keeps other product information without inventing an image", async () => {
+  const product = fixture();
+  product.selected_variant = product.variants[1];
+  product.selected_variant.featured_media = null;
+  product.featured_media = null;
+  product.metafields.my_fields.white_image_bg = null;
+  const [schema] = await renderSchema(productTemplate, product);
+  assert.equal(schema.image, undefined);
+  assert.equal(schema.sku, undefined);
+  assert.equal(schema.gtin12, undefined);
+  assert.equal(schema.offers.length, 2);
+  assert.equal(schema.brand.name, product.vendor);
+  assert.equal(schema.description, "Body serum");
 });
 
 test("Single-variant product may use its product-image fallback with its identity", async () => {
@@ -207,6 +239,11 @@ test("Single-variant product may use its product-image fallback with its identit
   assert.equal(schema.gtin12, "675468102971");
   assert.equal(schema.offers.length, 1);
   assert.deepEqual(schema.image, ["https://cdn.example.com/curated-four-ounce.jpg"]);
+  assert.equal(schema.url, "https://example.com/products/serum?variant=101");
+  product.selected_variant = null;
+  const [base] = await renderSchema(productTemplate, product);
+  assert.equal(base.url, "https://example.com/products/serum");
+  assert.equal(base.gtin12, "675468102971");
 });
 
 const groupTemplate = await readFile(
