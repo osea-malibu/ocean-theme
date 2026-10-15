@@ -374,13 +374,7 @@
                                   {%- endif -%}
                                   {%- unless block.settings.hide_atc_button_price -%}
                                     <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
-                                      {% render 'price',
-                                        product: block.settings.atc_button_product,
-                                        show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
-                                        use_variant: true,
-                                        subscription: block.settings.is_subscription,
-                                        in_button: true
-                                      %}
+                                      {% render 'price', product: block.settings.atc_button_product, show_price_range: block.settings.show_variants, use_variant: true, subscription: block.settings.is_subscription, in_button: true %}
                                     </span>
                                   {%- endunless -%}
                                 {%- else -%}
@@ -1242,3 +1236,22 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'price',
+                                            product: block.settings.atc_button_product,
+                                            show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
+                                            use_variant: true,
+                                            subscription: block.settings.is_subscription,
+                                            in_button: true
+                                          %}
+  to: "{% render 'price', product: block.settings.atc_button_product, show_price_range:
+    block.settings.show_variants, use_variant: true, subscription: block.settings.is_subscription,
+    in_button: true %}"
+  position: 25169..25363
+{% endcomment %}
