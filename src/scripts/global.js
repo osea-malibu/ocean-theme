@@ -1308,6 +1308,7 @@ class VariantSelects extends HTMLElement {
           ".product .main-price"
         );
         replaceContent(".subscription .selling-plan-options");
+        replaceContent(".subscription .selling-plan-select");
 
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
@@ -1510,6 +1511,13 @@ class SubscriptionRadios extends HTMLElement {
       }
       input.addEventListener("change", this.onPurchaseOptionChange.bind(this));
     });
+
+    // VWO subscription test: delegated so the listener survives variant-change innerHTML swaps
+    this.addEventListener("change", (e) => {
+      if (!e.target.matches(".vwo-frequency-select")) return;
+      const radio = this.querySelector(`input[name="selling_plan"][value="${e.target.value}"]`);
+      if (radio) radio.checked = true;
+    });
   }
 
   onPurchaseOptionChange(e) {
@@ -1571,6 +1579,7 @@ class SubscriptionRadios extends HTMLElement {
     Array.from(this.querySelectorAll('input[name="selling_plan"]'))?.forEach(
       (input) => (input.checked = false)
     );
+    this.syncFrequencySelect();
   }
 
   setDefaultSellingPlan() {
@@ -1580,6 +1589,15 @@ class SubscriptionRadios extends HTMLElement {
     ];
 
     defaultSellingPlanInput.checked = true;
+    this.syncFrequencySelect();
+  }
+
+  // VWO subscription test: mirror the checked selling_plan radio in the variant dropdown
+  syncFrequencySelect() {
+    const select = this.querySelector(".vwo-frequency-select");
+    if (!select) return;
+    const checked = this.querySelector('input[name="selling_plan"]:checked');
+    select.value = checked ? checked.value : "";
   }
 }
 customElements.define("subscription-radios", SubscriptionRadios);
