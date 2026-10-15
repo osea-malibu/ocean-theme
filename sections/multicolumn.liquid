@@ -261,12 +261,7 @@
                                       <span>{{ 'products.product.add_to_cart' | t }}</span>
                                     {%- endif -%}
                                     <span id="price-{{ block.settings.atc_button_product.id }}-{{ block.id }}" class="whitespace-nowrap tracking-wide">
-                                      {% render 'price',
-                                        product: block.settings.atc_button_product,
-                                        show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
-                                        use_variant: true,
-                                        subscription: block.settings.is_subscription
-                                      %}
+                                      {% render 'price', product: block.settings.atc_button_product, show_price_range: block.settings.show_variants, use_variant: true, subscription: block.settings.is_subscription %}
                                     </span>
                                   {%- else -%}
                                     {{ 'products.product.sold_out' | t }}
@@ -1066,3 +1061,21 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'price',
+                                            product: block.settings.atc_button_product,
+                                            show_price_range: block.settings.show_variants and block.settings.atc_button_product.has_only_default_variant == false,
+                                            use_variant: true,
+                                            subscription: block.settings.is_subscription
+                                          %}
+  to: "{% render 'price', product: block.settings.atc_button_product, show_price_range:
+    block.settings.show_variants, use_variant: true, subscription: block.settings.is_subscription
+    %}"
+  position: 19766..19943
+{% endcomment %}
