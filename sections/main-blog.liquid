@@ -128,19 +128,73 @@
       </nav>
     </div>
 
+    {%- liquid
+      assign brand_articles = '' | split: ''
+      if section.settings.brand_article_one != blank
+        assign first_article = section.settings.brand_article_one | sort
+        assign brand_articles = brand_articles | concat: first_article
+      endif
+      if section.settings.brand_article_two != blank
+        assign second_article = section.settings.brand_article_two | sort
+        assign brand_articles = brand_articles | concat: second_article
+      endif
+      assign brand_article_handles = brand_articles | map: 'handle'
+      assign brand_below_pagination = false
+      if section.settings.brand_below_pagination_blog != blank and section.settings.brand_below_pagination_blog.handle == blog.handle
+        assign brand_below_pagination = true
+      endif
+    -%}
+    {%- capture brand_content -%}
+      <h3 class="mb-4 font-serif text-3xl tracking-tight text-center px-6">About Our Brand</h3>
+      <glide-slider
+        class="pl-6 sm:pr-6 glide sm:peek.after-120 sm:perView-1 perView-3 peek.after-0 bound-true"
+        id="brand-slider-{{ section.id }}"
+        data-breakpoint-limit="sm"
+      >
+        <div class="glide__track" data-glide-el="track">
+          <ul
+            class="glide__slides sm:grid sm:grid-cols-2 sm:gap-4 md:gap-6 md:mx-auto lg:max-w-screen-md lg:gap-20"
+            role="presentation"
+          >
+            {%- for brand_article in brand_articles -%}
+              <li>
+                {%- render 'card-article',
+                  article: brand_article,
+                  unique_id: '-brand_featured',
+                  show_image: true,
+                  card_classes: 'flex flex-col whitespace-normal',
+                  image_classes: 'rounded-md',
+                  image_aspect: 'pt-[100%]',
+                  title_classes: 'tracking-wide font-medium mb-1 leading-tight mt-2',
+                  tag_classes: 'sr-only',
+                  date_classes: 'sr-only',
+                  author_classes: 'sr-only',
+                  excerpt_classes: 'text-sm leading-tight mb-2',
+                  excerpt_length: 10,
+                  link_classes: 'link font-bold uppercase tracking-widest text-xs'
+                -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div
+          class="glide__bullets flex justify-center sm:hidden mt-1"
+          data-glide-el="controls[nav]"
+        >
+          {%- for dot in (1..2) -%}
+            <button
+              class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
+              data-glide-dir="={{ forloop.index0 }}"
+            >
+              <span class="sr-only">Go to slide {{ forloop.index }}</span>
+              <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
+            </button>
+          {%- endfor -%}
+        </div>
+      </glide-slider>
+    {%- endcapture -%}
+
     <ul class="blog-articles container mb-12 lg:max-w-screen-lg grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
-      {%- liquid
-        assign brand_articles = '' | split: ''
-        if section.settings.brand_article_one != blank
-          assign first_article = section.settings.brand_article_one | sort
-          assign brand_articles = brand_articles | concat: first_article
-        endif
-        if section.settings.brand_article_two != blank
-          assign second_article = section.settings.brand_article_two | sort
-          assign brand_articles = brand_articles | concat: second_article
-        endif
-        assign brand_article_handles = brand_articles | map: 'handle'
-      -%}
       {%- for article in blog.articles -%}
         {%- unless current_tags == nil and section.settings.main_featured_article == blank and forloop.first or brand_article_handles contains article.handle -%}
           {%- unless article.metafields.custom.hide_from_blog -%}
@@ -162,56 +216,10 @@
             </li>
           {%- endunless -%}
         {%- endunless -%}
-        {%- if forloop.index == 3 and current_page == 1 -%}
+        {%- if forloop.index == 3 and current_page == 1 and brand_below_pagination == false -%}
           {%- if brand_articles.size > 0 -%}
             <li class="bg-sand-200 -mx-4 2xs:-mx-6 py-8 order-3 sm:mx-0 sm:px-6 sm:order-6 sm:col-span-2 md:px-8 md:order-8 md:col-span-3">
-              <h3 class="mb-4 font-serif text-3xl tracking-tight text-center px-6">About Our Brand</h3>
-              <glide-slider
-                class="pl-6 sm:pr-6 glide sm:peek.after-120 sm:perView-1 perView-3 peek.after-0 bound-true"
-                id="brand-slider-{{ section.id }}"
-                data-breakpoint-limit="sm"
-              >
-                <div class="glide__track" data-glide-el="track">
-                  <ul
-                    class="glide__slides sm:grid sm:grid-cols-2 sm:gap-4 md:gap-6 md:mx-auto lg:max-w-screen-md lg:gap-20"
-                    role="presentation"
-                  >
-                    {%- for brand_article in brand_articles -%}
-                      <li>
-                        {%- render 'card-article',
-                          article: brand_article,
-                          unique_id: '-brand_featured',
-                          show_image: true,
-                          card_classes: 'flex flex-col whitespace-normal',
-                          image_classes: 'rounded-md',
-                          image_aspect: 'pt-[100%]',
-                          title_classes: 'tracking-wide font-medium mb-1 leading-tight mt-2',
-                          tag_classes: 'sr-only',
-                          date_classes: 'sr-only',
-                          author_classes: 'sr-only',
-                          excerpt_classes: 'text-sm leading-tight mb-2',
-                          excerpt_length: 10,
-                          link_classes: 'link font-bold uppercase tracking-widest text-xs'
-                        -%}
-                      </li>
-                    {%- endfor -%}
-                  </ul>
-                </div>
-                <div
-                  class="glide__bullets flex justify-center sm:hidden mt-1"
-                  data-glide-el="controls[nav]"
-                >
-                  {%- for dot in (1..2) -%}
-                    <button
-                      class="glide__bullet p-2{% if forloop.first %} active{% endif %}"
-                      data-glide-dir="={{ forloop.index0 }}"
-                    >
-                      <span class="sr-only">Go to slide {{ forloop.index }}</span>
-                      <span class="block w-2 h-2 bg-seaweed-700 rounded-full"></span>
-                    </button>
-                  {%- endfor -%}
-                </div>
-              </glide-slider>
+              {{- brand_content -}}
             </li>
           {%- endif -%}
         {%- endif -%}
@@ -220,6 +228,14 @@
 
     {%- if paginate.pages > 1 -%}
       {%- render 'pagination', paginate: paginate -%}
+    {%- endif -%}
+
+    {%- if brand_below_pagination and current_page == 1 and brand_articles.size > 0 -%}
+      <div class="container lg:max-w-screen-lg mt-8">
+        <div class="bg-sand-200 -mx-4 2xs:-mx-6 py-8 sm:mx-0 sm:px-6 md:px-8">
+          {{- brand_content -}}
+        </div>
+      </div>
     {%- endif -%}
   </div>
 {%- endpaginate -%}
@@ -261,6 +277,12 @@
     {
       "type": "header",
       "content": "Brand section"
+    },
+    {
+      "type": "blog",
+      "id": "brand_below_pagination_blog",
+      "label": "Blog with brand below pagination",
+      "info": "Move the brand section below the page numbers for this blog only, on page 1. Leave blank to keep it within the articles for all blogs."
     },
     {
       "type": "article",
