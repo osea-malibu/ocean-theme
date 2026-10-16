@@ -289,6 +289,41 @@ test("Group omits invalid GTINs without dropping correctly imaged products", asy
   }
 });
 
+test("Group variant identities remain distinct with blank or duplicate SKUs", async () => {
+  const product = fixture();
+  for (const sku of ["", "SHARED-SKU"]) {
+    for (const variant of product.variants) variant.sku = sku;
+    const [group] = await renderSchema(groupTemplate, product);
+    assert.equal(new Set(group.hasVariant.map((node) => node["@id"])).size, 2);
+    for (const [index, variant] of product.variants.entries()) {
+      const node = group.hasVariant[index];
+      assert.equal(node["@id"], `https://example.com${variant.url}#product`);
+      assert.equal(node.url, node.offers.url);
+      assert.equal(node.size, variant.option1);
+      assert.equal(node.sku, sku || undefined);
+      assert.equal(node.gtin12, variant.barcode);
+    }
+  }
+});
+
+test("Group reviews prefer current Okendo data, support legacy data, and omit absent ratings", async () => {
+  const product = fixture();
+  product.metafields.okendo.ReviewCount = 12;
+  product.metafields.okendo.ReviewAverageValue = 4.2;
+  const [current] = await renderSchema(groupTemplate, product);
+  assert.equal(current.aggregateRating.ratingCount, 42);
+  assert.equal(current.aggregateRating.ratingValue, 4.8);
+  assert.ok(current.hasVariant.every((node) => node.aggregateRating === undefined));
+  delete product.metafields.okendo.summaryData;
+  const [legacy] = await renderSchema(groupTemplate, product);
+  assert.equal(legacy.aggregateRating.ratingCount, 12);
+  assert.equal(legacy.aggregateRating.ratingValue, 4.2);
+  product.metafields.okendo = {};
+  const [unrated] = await renderSchema(groupTemplate, product);
+  assert.equal(unrated.aggregateRating, undefined);
+  assert.equal(unrated.hasVariant.length, 2);
+});
+
 for (const missingIndex of [0, 1, 2]) {
   test(`Group skips missing image at index ${missingIndex} with valid JSON separators`, async () => {
     const product = fixture();
