@@ -1,0 +1,87 @@
+{%- comment -%}
+  Undaria Body Oil pilot only. The Shopify product ID identifies the family.
+  Variant data remains owned by Shopify.
+  Reviews describe the whole product family, not individual sizes.
+  Missing selected media suppresses this group rather than substituting another size.
+  Restore verified variant media to recover that selected URL's group markup.
+{%- endcomment -%}
+{%- assign group_url = shop.url | append: product.url -%}
+{%- assign group_id = product.id | append: '' -%}
+{%- liquid
+  assign group_image_count = 0
+  for variant in product.variants
+    if variant.featured_media.preview_image != blank
+      assign group_image_count = group_image_count | plus: 1
+    endif
+  endfor
+  assign group_can_render = true
+  if product.selected_variant != blank and product.selected_variant.featured_media.preview_image == blank
+    assign group_can_render = false
+  endif
+-%}
+{%- if group_can_render and group_image_count > 0 -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProductGroup",
+    "@id": {{ group_url | append: '#product-group' | json }},
+    "productGroupID": {{ group_id | json }},
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | json }},
+    "url": {{ group_url | json }},
+    "variesBy": ["https://schema.org/size"],
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | json }}
+    },
+    {%- if product.metafields.okendo.summaryData.reviewCount > 0 -%}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "description": "Okendo Reviews",
+        "ratingValue": {{ product.metafields.okendo.summaryData.reviewAverageValue | json }},
+        "ratingCount": {{ product.metafields.okendo.summaryData.reviewCount | json }}
+      },
+    {%- elsif product.metafields.okendo.ReviewCount > 0 -%}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "description": "Okendo Reviews",
+        "ratingValue": {{ product.metafields.okendo.ReviewAverageValue | json }},
+        "ratingCount": {{ product.metafields.okendo.ReviewCount | json }}
+      },
+    {%- endif -%}
+    "hasVariant": [
+      {%- assign group_variant_written = false -%}
+      {%- for variant in product.variants -%}
+        {%- assign variant_image = variant.featured_media.preview_image -%}
+        {%- if variant_image == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign variant_url = shop.url | append: variant.url -%}
+        {%- assign variant_name = product.title | append: ' - ' | append: variant.title -%}
+        {%- if group_variant_written -%},{%- endif -%}
+        {
+          "@type": "Product",
+          "@id": {{ variant_url | append: '#product' | json }},
+          "name": {{ variant_name | json }},
+          "description": {{ product.description | strip_html | json }},
+          "size": {{ variant.option1 | json }},
+          "url": {{ variant_url | json }},
+          {%- if variant.sku != blank -%}
+            "sku": {{ variant.sku | json }},
+          {%- endif -%}
+          {%- render 'structured-data-gtin', barcode: variant.barcode -%}
+          "image": {{ variant_image | image_url: width: 1200 | prepend: 'https:' | json }},
+          "offers": {
+            "@type": "Offer",
+            "url": {{ variant_url | json }},
+            "price": {{ variant.price | divided_by: 100.0 | json }},
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}"
+          }
+        }
+        {%- assign group_variant_written = true -%}
+      {%- endfor -%}
+    ]
+  }
+</script>
+{%- endif -%}
