@@ -1,0 +1,42 @@
+{%- comment -%}
+  Outputs a trailing-comma JSON property for a numeric GTIN with a valid checksum.
+  Pass the barcode of the variant represented by the surrounding Product node.
+  Format validation does not verify GS1 ownership or assignment to that product.
+{%- endcomment -%}
+{%- liquid
+  assign gtin_barcode = barcode | default: '' | strip
+  assign gtin_length = gtin_barcode.size
+  assign gtin_valid = false
+
+  if gtin_length == 8 or gtin_length == 12 or gtin_length == 13 or gtin_length == 14
+    assign gtin_allowed_digits = '0123456789'
+    assign gtin_non_zero_digits = gtin_barcode | remove: '0'
+
+    if gtin_non_zero_digits != blank
+      assign gtin_valid = true
+      assign gtin_digits = gtin_barcode | split: '' | reverse
+      assign gtin_sum = 0
+
+      for gtin_digit in gtin_digits
+        unless gtin_allowed_digits contains gtin_digit
+          assign gtin_valid = false
+          break
+        endunless
+        assign gtin_number = gtin_digit | plus: 0
+        assign gtin_position = forloop.index0 | modulo: 2
+        if gtin_position == 1
+          assign gtin_number = gtin_number | times: 3
+        endif
+        assign gtin_sum = gtin_sum | plus: gtin_number
+      endfor
+
+      assign gtin_remainder = gtin_sum | modulo: 10
+      if gtin_remainder != 0
+        assign gtin_valid = false
+      endif
+    endif
+  endif
+-%}
+{%- if gtin_valid -%}
+  "gtin{{ gtin_length }}": {{ gtin_barcode | json }},
+{%- endif -%}
