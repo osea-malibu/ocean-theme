@@ -70,14 +70,14 @@ Accepts:
             </span>
           </label>
           {%- if option == 'autodeliver' -%}
-            <span class="block pr-2 pl-9 -mt-2 mb-3 text-xs leading-tight 2xs:tracking-wide md:tracking-normal lg:tracking-wide 2xs:pl-10 2xs:pr-3 xs:pr-4">
+            <span class="block pr-2 pl-9 -mt-2 mb-3 text-xs leading-tight vwo-sub-subhead 2xs:tracking-wide md:tracking-normal lg:tracking-wide 2xs:pl-10 2xs:pr-3 xs:pr-4">
               <b class="font-medium">FREE US shipping</b>, skip or cancel anytime.
               <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#SubscriptionPopup-{{ block.id }}" {{ block.shopify_attributes }}>
                 <button class="underline cursor-pointer product-popup-modal__button md:tracking-tight lg:tracking-wide" type="button" aria-haspopup="dialog">Learn more</button>
               </modal-opener>
             </span>
-            <div class="overflow-hidden pr-2 pl-9 max-h-0 2xs:pl-10 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
-              <fieldset class="flex pb-3 mb-2 selling-plan-options js">
+            <div class="overflow-hidden pr-2 pl-9 max-h-0 sub-expand 2xs:pl-10 2xs:pr-3 xs:pr-4 peer-checked:max-h-20 motion-safe:transition-max-height">
+              <fieldset class="flex pb-3 mb-2 selling-plan-options vwo-sub-control js">
                 <legend class="text-sm font-medium">Delivery every</legend>
                 {%- for allocation in product.selected_or_first_available_variant.selling_plan_allocations -%}
                   {%- if allocation.selling_plan_group_id == subscription_group.id -%}
@@ -122,6 +122,32 @@ Accepts:
                   <label for="{{ block.id }}-none">None</label>
                 </div>
               </fieldset>
+              {% comment %} VWO subscription test variant — inert until test CSS unhides .vwo-sub-variant {% endcomment %}
+              <div class="hidden pb-3 vwo-sub-variant selling-plan-select js">
+                <label for="{{ block.id }}-frequency" class="block mb-1 text-sm font-medium">Delivery every</label>
+                <select
+                  id="{{ block.id }}-frequency"
+                  class="block py-2 pr-9 pl-3 w-full text-sm bg-white rounded-lg border appearance-none cursor-pointer max-w-60 border-seaweed-400 vwo-frequency-select bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231d4d41%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22/%3E%3C/svg%3E')] bg-[length:1rem_1rem] bg-[position:right_0.75rem_center] bg-no-repeat"
+                >
+                  <option value="" disabled selected hidden>Select frequency</option>
+                  {%- for allocation in product.selected_or_first_available_variant.selling_plan_allocations -%}
+                    {%- if allocation.selling_plan_group_id == subscription_group.id -%}
+                      <option value="{{ allocation.selling_plan.id }}">
+                        {{- allocation.selling_plan.name | replace: 'Delivery every', '' | strip | downcase -}}
+                      </option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+              </div>
+              <ul class="hidden pb-2 space-y-2 text-sm vwo-sub-variant">
+                <li class="flex gap-2 items-center">{% render 'icon-checkmark', classes: 'shrink-0 w-4 h-4 text-seaweed-700', stroke_width: 2.5, aria_hidden: true %}Free shipping</li>
+                <li class="flex gap-2 items-center">{% render 'icon-checkmark', classes: 'shrink-0 w-4 h-4 text-seaweed-700', stroke_width: 2.5, aria_hidden: true %}Deluxe samples with every order</li>
+                <li class="flex gap-2 items-center">{% render 'icon-checkmark', classes: 'shrink-0 w-4 h-4 text-seaweed-700', stroke_width: 2.5, aria_hidden: true %}Early access to new products</li>
+                <li class="flex gap-2 items-center">{% render 'icon-checkmark', classes: 'shrink-0 w-4 h-4 text-seaweed-700', stroke_width: 2.5, aria_hidden: true %}Edit, pause, skip or cancel anytime</li>
+              </ul>
+              <modal-opener class="hidden pb-3 product-popup-modal__opener no-js-hidden vwo-sub-variant" data-modal="#SubscriptionPopup-{{ block.id }}">
+                <button class="text-sm underline cursor-pointer product-popup-modal__button" type="button" aria-haspopup="dialog">Learn more</button>
+              </modal-opener>
             </div>
           {%- endif -%}
         </div>

@@ -117,6 +117,11 @@
   border-color: var(--color-seaweed-700);
   color: var(--color-white);
 
+  /* Wins over classes carried in when JS copies picker price HTML into the button */
+  & s {
+    color: color-mix(in oklab, var(--color-white) 75%, transparent);
+  }
+
   &:visited,
   &:active,
   &:focus,
@@ -215,6 +220,11 @@
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
   color: var(--color-seaweed-800);
+
+  /* Wins over classes carried in when JS copies picker price HTML into the button */
+  & s {
+    color: color-mix(in oklab, var(--color-seaweed-700) 75%, transparent);
+  }
 
   &:visited,
   &:active,

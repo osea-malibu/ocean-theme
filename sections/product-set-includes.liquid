@@ -28,7 +28,7 @@
               endif
             -%}
 
-            <li class="snap-start flex-1 rounded-lg bg-p-surface p-4 lg:p-6 xl:p-8 min-w-[288px] xs:min-w-[320px] sm:min-w-[480px] md:min-w-[620px]" style="--p-surface: {{ product_in_set.metafields.theme.surface | default: '#f1f5f4' }}">
+            <li class="snap-start flex-1 rounded-lg bg-p-surface p-4 lg:p-6 xl:p-8 min-w-[288px] xs:min-w-[320px] sm:min-w-[480px] md:min-w-[620px]" style="{% render 'product-palette-vars', palette_product: product_in_set %}">
               <div class="flex flex-col md:flex-row gap-4 mb-4">
                 <div class="w-full order-1 grow flex flex-col items-start">
                   {%- if disable_product_links -%}

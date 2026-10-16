@@ -84,18 +84,7 @@
             {%- if collection.metafields.custom.plp_interrupter != blank -%}
               {%- for interrupter in collection.metafields.custom.plp_interrupter.value -%}
                 <li class="collection-promo-section relative overflow-hidden rounded {{ interrupter.wrapper_classes }}">
-                  {% render 'collection-promo-section',
-                    promo_section_image_mobile: interrupter.image_mobile,
-                    promo_section_image_desktop: interrupter.image_desktop,
-                    promo_section_image_classes: interrupter.image_classes,
-                    promo_section_content: interrupter.content,
-                    promo_section_content_classes: interrupter.content_classes,
-                    promo_section_url: interrupter.url,
-                    promo_section_image_wrapper_classes: interrupter.image_wrapper_classes,
-                    promo_section_link_classes: interrupter.link_classes,
-                    promo_section_alt_text: interrupter.image_alt_text.value,
-                    promo_section_title: interrupter.collection.value | default: collection.title
-                  %}
+                  {% render 'collection-promo-section', promo_section_image_mobile: interrupter.image_mobile, promo_section_image_desktop: interrupter.image_desktop, promo_section_image_classes: interrupter.image_classes, promo_section_content: interrupter.content, promo_section_content_classes: interrupter.content_classes, promo_section_url: interrupter.url, promo_section_image_wrapper_classes: interrupter.image_wrapper_classes, promo_section_link_classes: interrupter.link_classes, promo_section_alt_text: interrupter.image_alt_text.value, promo_section_title: interrupter.collection.value, default: collection.title %}
                 </li>
               {%- endfor -%}
             {%- endif -%}
@@ -283,3 +272,31 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'collection-promo-section',
+                        promo_section_image_mobile: interrupter.image_mobile,
+                        promo_section_image_desktop: interrupter.image_desktop,
+                        promo_section_image_classes: interrupter.image_classes,
+                        promo_section_content: interrupter.content,
+                        promo_section_content_classes: interrupter.content_classes,
+                        promo_section_url: interrupter.url,
+                        promo_section_image_wrapper_classes: interrupter.image_wrapper_classes,
+                        promo_section_link_classes: interrupter.link_classes,
+                        promo_section_alt_text: interrupter.image_alt_text.value,
+                        promo_section_title: interrupter.collection.value | default: collection.title
+                      %}
+  to: "{% render 'collection-promo-section', promo_section_image_mobile: interrupter.image_mobile,
+    promo_section_image_desktop: interrupter.image_desktop, promo_section_image_classes:
+    interrupter.image_classes, promo_section_content: interrupter.content, promo_section_content_classes:
+    interrupter.content_classes, promo_section_url: interrupter.url, promo_section_image_wrapper_classes:
+    interrupter.image_wrapper_classes, promo_section_link_classes: interrupter.link_classes,
+    promo_section_alt_text: interrupter.image_alt_text.value, promo_section_title:
+    interrupter.collection.value, default: collection.title %}"
+  position: 4019..4626
+{% endcomment %}
