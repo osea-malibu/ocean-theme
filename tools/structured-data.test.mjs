@@ -30,12 +30,15 @@ export function fixture() {
     vendor: "Example",
     description: "<p>Body serum</p>",
     url: "/products/serum",
+    // Shopify's options_by_name is case-insensitive; this plain fixture uses the lookup key.
+    options_by_name: { size: { name: "Size", position: 1 } },
     variants: [
       {
         id: 101,
         sku: "SERUM-4",
         title: "4 fl oz",
         option1: "4 fl oz",
+        options: ["4 fl oz"],
         barcode: "675468102971",
         price: 4800,
         available: true,
@@ -47,6 +50,7 @@ export function fixture() {
         sku: "SERUM-1",
         title: "1 fl oz",
         option1: "1 fl oz",
+        options: ["1 fl oz"],
         barcode: "675468102988",
         price: 2200,
         available: true,
@@ -275,6 +279,45 @@ test("Group pairs each validated identifier with its own image and offer", async
     group.hasVariant.map((node) => node.image)
   );
   assert.equal(sold.hasVariant[0].offers.availability, "https://schema.org/OutOfStock");
+});
+
+test("Group reads Size by name when it is the second option", async () => {
+  const product = fixture();
+  product.options_by_name.size.position = 2;
+  for (const variant of product.variants) {
+    variant.options = ["Lavender", variant.option1];
+    variant.option2 = variant.option1;
+    variant.option1 = "Lavender";
+  }
+  const [group] = await renderSchema(groupTemplate, product);
+  assert.deepEqual(group.variesBy, ["https://schema.org/size"]);
+  assert.deepEqual(
+    group.hasVariant.map((node) => node.size),
+    ["4 fl oz", "1 fl oz"]
+  );
+  assert.deepEqual(
+    group.hasVariant.map((node) => node.sku),
+    ["SERUM-4", "SERUM-1"]
+  );
+});
+
+test("Group omits size and size variation when the product has no Size option", async () => {
+  const product = fixture();
+  // Model Shopify's missing option lookup as nil. LiquidJS otherwise treats
+  // a plain object's absent "size" key as its built-in object-size property.
+  product.options_by_name = { size: null, scent: { name: "Scent", position: 1 } };
+  for (const variant of product.variants) {
+    variant.option1 = "Lavender";
+    variant.options = ["Lavender"];
+  }
+  const [group] = await renderSchema(groupTemplate, product);
+  assert.equal(group.variesBy, undefined);
+  assert.equal(group.hasVariant.length, 2);
+  assert.ok(group.hasVariant.every((node) => node.size === undefined));
+  assert.deepEqual(
+    group.hasVariant.map((node) => node.offers.price),
+    [48, 22]
+  );
 });
 
 test("Group omits invalid GTINs without dropping correctly imaged products", async () => {

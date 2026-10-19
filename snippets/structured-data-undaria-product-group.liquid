@@ -8,6 +8,10 @@
 {%- assign group_url = shop.url | append: product.url -%}
 {%- assign group_id = product.id | append: '' -%}
 {%- liquid
+  assign size_option = product.options_by_name['size']
+  if size_option != blank
+    assign size_index = size_option.position | minus: 1
+  endif
   assign group_image_count = 0
   for variant in product.variants
     if variant.featured_media.preview_image != blank
@@ -29,7 +33,9 @@
     "name": {{ product.title | json }},
     "description": {{ product.description | strip_html | json }},
     "url": {{ group_url | json }},
-    "variesBy": ["https://schema.org/size"],
+    {%- if size_option != blank -%}
+      "variesBy": ["https://schema.org/size"],
+    {%- endif -%}
     "brand": {
       "@type": "Brand",
       "name": {{ product.vendor | json }}
@@ -64,7 +70,9 @@
           "@id": {{ variant_url | append: '#product' | json }},
           "name": {{ variant_name | json }},
           "description": {{ product.description | strip_html | json }},
-          "size": {{ variant.option1 | json }},
+          {%- if size_option != blank -%}
+            "size": {{ variant.options[size_index] | json }},
+          {%- endif -%}
           "url": {{ variant_url | json }},
           {%- if variant.sku != blank -%}
             "sku": {{ variant.sku | json }},
