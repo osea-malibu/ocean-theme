@@ -30,12 +30,15 @@ export function fixture() {
     vendor: "Example",
     description: "<p>Body serum</p>",
     url: "/products/serum",
+    // Shopify's options_by_name is case-insensitive; this plain fixture uses the lookup key.
+    options_by_name: { size: { name: "Size", position: 1 } },
     variants: [
       {
         id: 101,
         sku: "SERUM-4",
         title: "4 fl oz",
         option1: "4 fl oz",
+        options: ["4 fl oz"],
         barcode: "675468102971",
         price: 4800,
         available: true,
@@ -47,6 +50,7 @@ export function fixture() {
         sku: "SERUM-1",
         title: "1 fl oz",
         option1: "1 fl oz",
+        options: ["1 fl oz"],
         barcode: "675468102988",
         price: 2200,
         available: true,
@@ -244,4 +248,189 @@ test("Single-variant product may use its product-image fallback with its identit
   const [base] = await renderSchema(productTemplate, product);
   assert.equal(base.url, "https://example.com/products/serum");
   assert.equal(base.gtin12, "675468102971");
+});
+
+const groupTemplate = await readFile(
+  `${root}/snippets/structured-data-undaria-product-group.liquid`,
+  "utf8"
+);
+
+test("Group pairs each validated identifier with its own image and offer", async () => {
+  const product = fixture();
+  product.id = 8092623623;
+  const [group] = await renderSchema(groupTemplate, product);
+  assert.equal(group.productGroupID, "8092623623");
+  assert.deepEqual(group.variesBy, ["https://schema.org/size"]);
+  assert.equal(group.aggregateRating.ratingCount, 42);
+  for (const [index, variant] of product.variants.entries()) {
+    const node = group.hasVariant[index];
+    assert.equal(node.sku, variant.sku);
+    assert.equal(node.gtin12, variant.barcode);
+    assert.equal(node.image, `https:${variant.featured_media.preview_image.src}`);
+    assert.equal(node.offers.url, `https://example.com${variant.url}`);
+    assert.equal(node.offers.price, variant.price / 100);
+  }
+  product.selected_variant = product.variants[1];
+  assert.deepEqual((await renderSchema(groupTemplate, product))[0], group);
+  product.variants[0].available = false;
+  const [sold] = await renderSchema(groupTemplate, product);
+  assert.deepEqual(
+    sold.hasVariant.map((node) => node.image),
+    group.hasVariant.map((node) => node.image)
+  );
+  assert.equal(sold.hasVariant[0].offers.availability, "https://schema.org/OutOfStock");
+});
+
+test("Group reads Size by name when it is the second option", async () => {
+  const product = fixture();
+  product.options_by_name.size.position = 2;
+  for (const variant of product.variants) {
+    variant.options = ["Lavender", variant.option1];
+    variant.option2 = variant.option1;
+    variant.option1 = "Lavender";
+  }
+  const [group] = await renderSchema(groupTemplate, product);
+  assert.deepEqual(group.variesBy, ["https://schema.org/size"]);
+  assert.deepEqual(
+    group.hasVariant.map((node) => node.size),
+    ["4 fl oz", "1 fl oz"]
+  );
+  assert.deepEqual(
+    group.hasVariant.map((node) => node.sku),
+    ["SERUM-4", "SERUM-1"]
+  );
+});
+
+test("Group omits size and size variation when the product has no Size option", async () => {
+  const product = fixture();
+  // Model Shopify's missing option lookup as nil. LiquidJS otherwise treats
+  // a plain object's absent "size" key as its built-in object-size property.
+  product.options_by_name = { size: null, scent: { name: "Scent", position: 1 } };
+  for (const variant of product.variants) {
+    variant.option1 = "Lavender";
+    variant.options = ["Lavender"];
+  }
+  const [group] = await renderSchema(groupTemplate, product);
+  assert.equal(group.variesBy, undefined);
+  assert.equal(group.hasVariant.length, 2);
+  assert.ok(group.hasVariant.every((node) => node.size === undefined));
+  assert.deepEqual(
+    group.hasVariant.map((node) => node.offers.price),
+    [48, 22]
+  );
+});
+
+test("Group omits invalid GTINs without dropping correctly imaged products", async () => {
+  const product = fixture();
+  for (const barcode of [null, "abc", "675468102989"]) {
+    product.variants[1].barcode = barcode;
+    const [group] = await renderSchema(groupTemplate, product);
+    assert.equal(group.hasVariant.length, 2);
+    assert.equal(group.hasVariant[1].gtin12, undefined);
+    assert.equal(group.hasVariant[1].gtin, undefined);
+    assert.equal(group.hasVariant[1].offers.price, 22);
+  }
+});
+
+test("Group variant identities remain distinct with blank or duplicate SKUs", async () => {
+  const product = fixture();
+  for (const sku of ["", "SHARED-SKU"]) {
+    for (const variant of product.variants) variant.sku = sku;
+    const [group] = await renderSchema(groupTemplate, product);
+    assert.equal(new Set(group.hasVariant.map((node) => node["@id"])).size, 2);
+    for (const [index, variant] of product.variants.entries()) {
+      const node = group.hasVariant[index];
+      assert.equal(node["@id"], `https://example.com${variant.url}#product`);
+      assert.equal(node.url, node.offers.url);
+      assert.equal(node.size, variant.option1);
+      assert.equal(node.sku, sku || undefined);
+      assert.equal(node.gtin12, variant.barcode);
+    }
+  }
+});
+
+test("Group reviews prefer current Okendo data, support legacy data, and omit absent ratings", async () => {
+  const product = fixture();
+  product.metafields.okendo.ReviewCount = 12;
+  product.metafields.okendo.ReviewAverageValue = 4.2;
+  const [current] = await renderSchema(groupTemplate, product);
+  assert.equal(current.aggregateRating.ratingCount, 42);
+  assert.equal(current.aggregateRating.ratingValue, 4.8);
+  assert.ok(current.hasVariant.every((node) => node.aggregateRating === undefined));
+  delete product.metafields.okendo.summaryData;
+  const [legacy] = await renderSchema(groupTemplate, product);
+  assert.equal(legacy.aggregateRating.ratingCount, 12);
+  assert.equal(legacy.aggregateRating.ratingValue, 4.2);
+  product.metafields.okendo = {};
+  const [unrated] = await renderSchema(groupTemplate, product);
+  assert.equal(unrated.aggregateRating, undefined);
+  assert.equal(unrated.hasVariant.length, 2);
+});
+
+for (const missingIndex of [0, 1, 2]) {
+  test(`Group skips missing image at index ${missingIndex} with valid JSON separators`, async () => {
+    const product = fixture();
+    product.variants.push({ ...structuredClone(product.variants[0]), id: 103, sku: "THIRD" });
+    product.variants[missingIndex].featured_media = null;
+    const [group] = await renderSchema(groupTemplate, product);
+    assert.equal(group.hasVariant.length, 2);
+    assert.ok(group.hasVariant.every((node) => node.image));
+    assert.ok(!group.hasVariant.some((node) => node.sku === product.variants[missingIndex].sku));
+  });
+}
+
+test("Group emits no incomplete markup when every image is missing", async () => {
+  const product = fixture();
+  for (const variant of product.variants) variant.featured_media = null;
+  assert.deepEqual(await renderSchema(groupTemplate, product), []);
+});
+
+test("Group does not describe other sizes on an explicitly selected size with missing media", async () => {
+  const product = fixture();
+  product.selected_variant = product.variants[1];
+  product.selected_variant.featured_media = null;
+  assert.deepEqual(await renderSchema(groupTemplate, product), []);
+});
+
+const combinedStart = source.indexOf("{%- if product.id == 8092623623");
+assert.ok(combinedStart >= 0, "Find the Undaria schema switch");
+const combinedEnd = source.indexOf("{% schema %}", combinedStart);
+assert.ok(combinedEnd >= 0, "Find the combined schema block end");
+const combined = source.slice(combinedStart, combinedEnd);
+
+test("Combined section emits one group for Undaria and one Product for other products", async () => {
+  const product = fixture();
+  product.id = 8092623623;
+  const [group] = await renderSchema(combined, product);
+  assert.equal(group["@type"], "ProductGroup");
+  product.id = 1;
+  product.selected_variant = product.variants[1];
+  const schemas = await renderSchema(combined, product);
+  assert.equal(schemas.length, 1);
+  assert.equal(schemas[0]["@type"], "Product");
+  assert.equal(schemas[0].gtin12, "675468102988");
+  assert.equal(schemas[0].offers.length, 1);
+});
+
+test("Combined switch preserves distinct missing-media policies without competing Product blocks", async () => {
+  const product = fixture();
+  product.id = 8092623623;
+  product.selected_variant = product.variants[1];
+  product.selected_variant.featured_media = null;
+  assert.deepEqual(await renderSchema(combined, product), []);
+  product.selected_variant = null;
+  const family = await renderSchema(combined, product);
+  assert.equal(family.length, 1);
+  assert.equal(family[0]["@type"], "ProductGroup");
+  assert.equal(family[0].hasVariant.length, 1);
+  assert.equal(family[0].hasVariant[0].sku, "SERUM-4");
+  product.id = 1;
+  product.selected_variant = product.variants[1];
+  const ordinary = await renderSchema(combined, product);
+  assert.equal(ordinary.length, 1);
+  assert.equal(ordinary[0]["@type"], "Product");
+  assert.equal(ordinary[0].sku, undefined);
+  assert.equal(ordinary[0].gtin12, undefined);
+  assert.equal(ordinary[0].url, "https://example.com/products/serum");
+  assert.equal(ordinary[0].offers.length, 2);
 });
