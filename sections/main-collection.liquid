@@ -65,7 +65,7 @@
                 assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
               endif
   
-              if settings.enable_global_plp_tile or promo_tile_image != blank or promo_tile_video != blank
+              if promo_tile_image != blank or promo_tile_video != blank
                 assign has_promo_tile = true
               else
                 assign has_promo_tile = false
