@@ -1,0 +1,23 @@
+Shopify theme dev verification — 2026-10-23
+
+Started from a clean detached worktree at PR commit e5e3dc3eb. No unrelated
+local edits were uploaded. Target was unpublished GEO theme 198897598647;
+only main-product.liquid and structured-data-undaria-product-group.liquid
+were synchronized. No files were deleted and no live-theme upload occurred.
+
+Local server: http://127.0.0.1:9293
+All 32 requested product URLs returned HTTP 200 with no Liquid error text.
+Parsed JSON-LD and compared it with catalog data embedded in the same rendered
+HTML. All 32 passed the existing verification assertions:
+- correct preview theme ID and exactly one Product or ProductGroup per page;
+- complete groups with correct variant IDs, SKUs, GTINs, size labels, images,
+  USD prices and availability;
+- ordinary multi-variant base offers match the catalog;
+- selected ordinary offers, identifiers and assigned images match selection;
+- selected social prices match selected offers.
+
+This verifies Shopify-rendered output from theme dev. It is not post-release
+verification. PR 189 was still open and unmerged when this run began. Google
+cannot crawl the local loopback address, and the remote unpublished preview
+was previously blocked by robots.txt. The corrected Google code test remains
+recorded in review.txt. Google URL tests of the released code remain pending.
