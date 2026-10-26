@@ -5,6 +5,11 @@
   assign mobile_media = mobile_img.value
   assign desktop_media = desktop_img.value
 
+  assign has_image = false
+  if mobile_img != blank or desktop_img != blank
+    assign has_image = true
+  endif
+
   assign has_video = false
   if mobile_media and mobile_media.media_type == 'video'
     assign has_video = true
@@ -42,6 +47,18 @@
     assign dim_h = dim_w | divided_by: dim_ar | round
   endif
 -%}
+
+{%- if has_image == false -%}
+  {%- if promo_section_url != blank -%}
+    <a href="{{ promo_section_url }}" class="block {{ promo_section_link_classes }}">
+  {%- endif -%}
+  <div class="{{ promo_section_content_classes }}">
+    {{ promo_section_content }}
+  </div>
+  {%- if promo_section_url != blank -%}
+    </a>
+  {%- endif -%}
+{%- else -%}
 
 {%- if promo_section_url != blank -%}
   <a href="{{ promo_section_url }}" class="block {{ promo_section_link_classes }}"{% if has_video %} aria-label="{{ promo_section_name | escape }}"{% endif %}>
@@ -139,6 +156,9 @@
   </a>
 {%- endif -%}
 
-<div class="absolute z-10 {{ promo_section_content_classes }}">
-  {{ promo_section_content }}
-</div>
+{%- if promo_section_content != blank -%}
+  <div class="{{ promo_section_content_classes }}">
+    {{ promo_section_content }}
+  </div>
+{%- endif -%}
+{%- endif -%}
