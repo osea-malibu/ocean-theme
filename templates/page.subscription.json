@@ -22,9 +22,10 @@
           "settings": {
             "column_classes": "relative",
             "image": "shopify://shop_images/S_S_19_HP_Banner_Mobile_BLANK.jpg",
-            "image_desktop": "shopify://shop_images/subscribe.jpg",
+            "image_desktop": "shopify://shop_images/S_S_19_HP_Banner_Desktop_BLANK.jpg",
             "is_bg_image": false,
             "image_link": "",
+            "image_aria_label": "",
             "image_classes": "w-full sm:h-80 object-cover object-right h-96",
             "image_wrapper_classes": "",
             "image_link_classes": "",
@@ -43,9 +44,11 @@
             "button_icon": "<svg class=\"h-4 w-4\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"></line><polyline points=\"19 12 12 19 5 12\"></polyline></svg>",
             "product_form_classes": "",
             "is_atc_button": false,
+            "hide_atc_button_price": false,
             "is_subscription": false,
             "atc_button_product": "",
             "show_variants": false,
+            "default_variant_id": "",
             "variant_picker_type": "button",
             "variant_classes": "",
             "variant_button_classes": "",
@@ -66,6 +69,7 @@
             "column_classes": "px-6 sm:absolute top-12 left-0 sm:px-0 lg:left-12 sm:top-20 xl:left-24 w-full max-w-xs md:max-w-xs mx-auto",
             "is_bg_image": false,
             "image_link": "",
+            "image_aria_label": "",
             "image_classes": "",
             "image_wrapper_classes": "",
             "image_link_classes": "",
@@ -84,9 +88,11 @@
             "button_icon": "",
             "product_form_classes": "",
             "is_atc_button": false,
+            "hide_atc_button_price": false,
             "is_subscription": false,
             "atc_button_product": "",
             "show_variants": false,
+            "default_variant_id": "",
             "variant_picker_type": "button",
             "variant_classes": "",
             "variant_button_classes": "",
@@ -175,6 +181,7 @@
         "image_mobile": "shopify://shop_images/S_S_19_HP_Banner_Mobile_BLANK.jpg",
         "image": "shopify://shop_images/S_S_19_HP_Banner_Desktop_BLANK.jpg",
         "is_lazy": false,
+        "visibility_audience": "all",
         "image_link": "",
         "banner_classes": "container px-0 xs:px-6 mb-6",
         "image_classes": "w-full",
@@ -192,6 +199,7 @@
             "image_desktop": "shopify://shop_images/S_S_19_HP_Banner_Desktop_BLANK.jpg",
             "is_bg_image": false,
             "image_link": "",
+            "image_aria_label": "",
             "image_classes": "w-full object-cover object-right sm:object-[90%] md:object-right h-96 sm:h-72",
             "image_wrapper_classes": "",
             "image_link_classes": "",
@@ -210,9 +218,11 @@
             "button_icon": "",
             "product_form_classes": "",
             "is_atc_button": false,
+            "hide_atc_button_price": false,
             "is_subscription": false,
             "atc_button_product": "",
             "show_variants": false,
+            "default_variant_id": "",
             "variant_picker_type": "button",
             "variant_classes": "",
             "variant_button_classes": "",
@@ -233,6 +243,7 @@
             "column_classes": "md:hidden",
             "is_bg_image": false,
             "image_link": "",
+            "image_aria_label": "",
             "image_classes": "",
             "image_wrapper_classes": "",
             "image_link_classes": "",
@@ -251,9 +262,11 @@
             "button_icon": "",
             "product_form_classes": "",
             "is_atc_button": false,
+            "hide_atc_button_price": false,
             "is_subscription": false,
             "atc_button_product": "",
             "show_variants": false,
+            "default_variant_id": "",
             "variant_picker_type": "button",
             "variant_classes": "",
             "variant_button_classes": "",
@@ -269,7 +282,10 @@
           }
         }
       },
-      "block_order": ["column_ah3LyK", "column_6YgDVB"],
+      "block_order": [
+        "column_ah3LyK",
+        "column_6YgDVB"
+      ],
       "disabled": true,
       "settings": {
         "section_heading": "Subscription Products",
@@ -297,7 +313,9 @@
           }
         }
       },
-      "block_order": ["fd3358b5-af51-4c2d-ac3a-8662c1e660f6"],
+      "block_order": [
+        "fd3358b5-af51-4c2d-ac3a-8662c1e660f6"
+      ],
       "settings": {
         "section_heading": "",
         "section_classes": "",
@@ -350,6 +368,8 @@
         "container_classes": "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-8 sm:gap-x-4",
         "collection": "subscription",
         "is_subscription": true,
+        "show_reviews": false,
+        "review_traffic": "all",
         "card_image_classes": "pt-4",
         "variant_picker_type": "dropdown",
         "variant_picker_classes": "",
@@ -366,6 +386,7 @@
             "column_classes": "w-full py-6 relative z-10",
             "is_bg_image": false,
             "image_link": "",
+            "image_aria_label": "",
             "image_classes": "",
             "image_wrapper_classes": "",
             "image_link_classes": "",
@@ -384,9 +405,11 @@
             "button_icon": "",
             "product_form_classes": "",
             "is_atc_button": false,
+            "hide_atc_button_price": false,
             "is_subscription": false,
             "atc_button_product": "",
             "show_variants": false,
+            "default_variant_id": "",
             "variant_picker_type": "button",
             "variant_classes": "",
             "variant_button_classes": "",
@@ -402,7 +425,9 @@
           }
         }
       },
-      "block_order": ["template--15703204069559__f19ce9c5-2ae2-4809-af85-af307bf6f35a-column-1"],
+      "block_order": [
+        "template--15703204069559__f19ce9c5-2ae2-4809-af85-af307bf6f35a-column-1"
+      ],
       "disabled": true,
       "settings": {
         "section_heading": "Gift a Subscription",
@@ -454,13 +479,19 @@
           }
         }
       },
-      "block_order": ["paragraph_zWi6TX", "heading_6g8Rbi", "paragraph_z4RizK", "button_4ErjjR"],
+      "block_order": [
+        "paragraph_zWi6TX",
+        "heading_6g8Rbi",
+        "paragraph_z4RizK",
+        "button_4ErjjR"
+      ],
       "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image_mobile": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2_df475466-e025-41e8-86be-0e5b40f114c9.jpg",
         "image": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2.jpg",
         "is_lazy": false,
+        "visibility_audience": "all",
         "image_link": "shopify://pages/sea-rewards",
         "banner_classes": "container px-0 xs:px-6 mb-4",
         "image_classes": "w-full",
@@ -625,6 +656,7 @@
             "column_classes": "w-full py-6 relative z-10",
             "is_bg_image": false,
             "image_link": "",
+            "image_aria_label": "",
             "image_classes": "",
             "image_wrapper_classes": "",
             "image_link_classes": "",
@@ -643,9 +675,11 @@
             "button_icon": "",
             "product_form_classes": "",
             "is_atc_button": false,
+            "hide_atc_button_price": false,
             "is_subscription": false,
             "atc_button_product": "",
             "show_variants": false,
+            "default_variant_id": "",
             "variant_picker_type": "button",
             "variant_classes": "",
             "variant_button_classes": "",
@@ -661,7 +695,9 @@
           }
         }
       },
-      "block_order": ["column_EW9Fg7"],
+      "block_order": [
+        "column_EW9Fg7"
+      ],
       "disabled": true,
       "settings": {
         "section_heading": "Subscribe and save 15%",
@@ -706,12 +742,17 @@
           }
         }
       },
-      "block_order": ["heading_rMVY7m", "paragraph_MDedP4", "button_J3XwBG"],
+      "block_order": [
+        "heading_rMVY7m",
+        "paragraph_MDedP4",
+        "button_J3XwBG"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image_mobile": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2_df475466-e025-41e8-86be-0e5b40f114c9.jpg",
         "image": "shopify://shop_images/MEM2025_Landing_Page_-_Sea_Rewards_Desktop_LAYOUT_v2.jpg",
         "is_lazy": false,
+        "visibility_audience": "all",
         "image_link": "shopify://pages/sea-rewards",
         "banner_classes": "container px-0 xs:px-6",
         "image_classes": "w-full",
