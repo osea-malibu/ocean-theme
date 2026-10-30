@@ -1,0 +1,223 @@
+{%- liquid
+  assign block_settings = block.settings
+
+  case block_settings.font_family
+    when 'sans'
+      assign font_family_class = 'font-sans'
+    when 'serif'
+      assign font_family_class = 'font-serif'
+    else
+      assign font_family_class = ''
+  endcase
+
+  case block_settings.font_weight
+    when 'light'
+      assign font_weight_class = 'font-light'
+    when 'regular'
+      assign font_weight_class = 'font-regular'
+    when 'book'
+      assign font_weight_class = 'font-book'
+    when 'medium'
+      assign font_weight_class = 'font-medium'
+    when 'bold'
+      assign font_weight_class = 'font-bold'
+    else
+      assign font_weight_class = ''
+  endcase
+
+  case block_settings.alignment
+    when 'center'
+      assign alignment_class = 'text-center'
+    when 'right'
+      assign alignment_class = 'text-right'
+    else
+      assign alignment_class = 'text-left'
+  endcase
+
+  case block_settings.visibility
+    when 'mobile_only'
+      assign visibility_class = 'sm:hidden'
+    when 'desktop_only'
+      assign visibility_class = 'hidden sm:block'
+    else
+      assign visibility_class = ''
+  endcase
+-%}
+
+{%- if block_settings.enable_text_size -%}
+  {% style %}
+    #Text-{{ block.id }} {
+      font-size: {{ block_settings.text_size_mobile }}px;
+    }
+
+    @media (min-width: 40rem) {
+      #Text-{{ block.id }} {
+        font-size: {{ block_settings.text_size_desktop }}px;
+      }
+    }
+  {% endstyle %}
+{%- endif -%}
+
+<div
+  id="Text-{{ block.id }}"
+  class="rte a:link {{ alignment_class }}{% if font_family_class != blank %} {{ font_family_class }}{% endif %}{% if font_weight_class != blank %} {{ font_weight_class }}{% endif %}{% if visibility_class != blank %} {{ visibility_class }}{% endif %}{% if block_settings.classnames != blank %} {{ block_settings.classnames | escape }}{% endif %}"
+  {% if block_settings.color != blank %}
+    style="color: {{ block_settings.color }};"
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {{- block_settings.text -}}
+</div>
+
+{% schema %}
+{
+  "name": "Text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Add your text here.</p>"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text color"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font family",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "sans",
+          "label": "Sans (Circular)"
+        },
+        {
+          "value": "serif",
+          "label": "Serif (Canela)"
+        }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "regular",
+          "label": "Regular"
+        },
+        {
+          "value": "book",
+          "label": "Book"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "bold",
+          "label": "Bold"
+        }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_text_size",
+      "label": "Enable text size",
+      "info": "When disabled, text size is inherited or controlled through classnames.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 10,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size_desktop",
+      "min": 10,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop text size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Alignment"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "all",
+          "label": "Show everywhere"
+        },
+        {
+          "value": "mobile_only",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop_only",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "classnames",
+      "label": "Classnames",
+      "info": "Optional Tailwind classes for developer styling."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}
