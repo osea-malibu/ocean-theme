@@ -45,6 +45,11 @@
             assign badge_image_src = settings.shopifyCdnUrl | append: '/files/Allure_BestofBeauty_2022.png'
             assign badge_alt = 'Allure Best of Beauty 2022'
           -%}
+          {%- when 'Marie Claire Beauty Award' -%}
+          {%- liquid
+            assign badge_image_src = 'https://cdn.shopify.com/s/files/1/1368/9993/files/Osea_1.png?v=1793370829'
+            assign badge_alt = 'Marie Claire Beauty Award'
+          -%}
         {%- endcase -%}
         {%- if badge_image_src != blank -%}
           {% comment %}theme-check-disable RemoteAsset {% endcomment %}
