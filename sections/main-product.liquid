@@ -504,7 +504,29 @@
   });
 </script>
 
-{%- if product.id == 8092623623 -%}
+{%- comment -%}
+  Keep the UAO pilot behavior. Extend grouping only to the reviewed top-ten
+  size families; single products, sets and multi-option families keep Product.
+  Require every variant image so the rollout never silently drops an offer.
+{%- endcomment -%}
+{%- liquid
+  assign use_product_group = false
+  assign group_rollout_handles = 'undaria-algae-body-butter,dream-bio-retinol-body-serum,anti-aging-body-balm,hyaluronic-body-serum,ocean-cleanser' | split: ','
+  assign group_size_option = product.options_by_name['size']
+  if group_rollout_handles contains product.handle and product.variants.size > 1 and product.options.size == 1 and group_size_option != blank
+    assign use_product_group = true
+    for variant in product.variants
+      if variant.featured_media.preview_image == blank
+        assign use_product_group = false
+        break
+      endif
+    endfor
+  endif
+  if product.id == 8092623623
+    assign use_product_group = true
+  endif
+-%}
+{%- if use_product_group -%}
   {%- render 'structured-data-undaria-product-group', product: product -%}
 {%- else -%}
 {%- liquid
