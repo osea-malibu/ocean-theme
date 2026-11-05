@@ -131,7 +131,8 @@
                 remove_lazy_loading: remove_lazy_loading,
                 fetch_priority_high: fetch_priority_high,
                 image_element_class: 'aspect-[4/5]',
-                product_link_label_suffix: product_link_label_suffix
+                product_link_label_suffix: product_link_label_suffix,
+                show_wishlist: true
               -%}
             </li>
           {%- endfor -%}
@@ -146,6 +147,7 @@
     </div>
   {%- endpaginate -%}
 
+  {% render 'rivo-wishlist-assets' %}
 </div>
 
 {%- if collection -%}
