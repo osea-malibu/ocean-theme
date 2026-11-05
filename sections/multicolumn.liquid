@@ -503,6 +503,7 @@
                       name_class: block.settings.name_classes,
                       description_class: block.settings.description_classes,
                       hide_badge: block.settings.hide_badge,
+                      show_text_badge: block.settings.show_text_badge,
                       show_reviews: block.settings.show_reviews,
                       show_benefits: block.settings.show_benefits,
                       subscription: block.settings.subscription,
@@ -1065,6 +1066,13 @@
         },
         {
           "type": "checkbox",
+          "id": "show_text_badge",
+          "label": "Show text badge",
+          "info": "Shows New, savings, and similar badges on the product image. Off by default.",
+          "default": false
+        },
+        {
+          "type": "checkbox",
           "id": "show_reviews",
           "label": "Show reviews"
         },
@@ -1092,7 +1100,7 @@
           "type": "checkbox",
           "id": "percent_discount",
           "label": "Percent discount",
-          "info": "For sets, use % off instead of $ off in savings badge."
+          "info": "For sets, use % off instead of $ off in savings badge. Requires Show text badge."
         },
         {
           "type": "checkbox",

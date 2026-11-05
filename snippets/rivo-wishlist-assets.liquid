@@ -24,7 +24,7 @@
           });
         }, 150);
       } catch (err) {
-        console.log('[Wishlist Debug] Error tracking wishlist click', err);
+        // Tracking must never break the favorite click itself.
       }
     };
     // Delegated so it also covers buttons Rivo re-initializes dynamically.
@@ -32,34 +32,34 @@
       var btn = event.target.closest && event.target.closest('rivo-favorite-button');
       if (btn) trackWishlistClick(btn);
     });
-    const reInitWishlistBtns = (source = 'manual') => {
+    const reInitWishlistBtns = () => {
       try {
         const rivoAccountWidget = document.getElementById('rivo-account-slideout');
         if (window.RivoProfileAlpine && rivoAccountWidget) {
-          console.log(`[Wishlist Debug] Reinitializing wishlist buttons (${source})`);
           window.RivoProfileAlpine.$data(rivoAccountWidget).initializeFavoriteButtons();
         }
       } catch (err) {
-        console.log('[Wishlist Debug] Error initializing wishlist buttons', err);
+        // Rivo not ready yet; its own load initializes the hearts already on the page.
       }
     };
     const setupGridWatcher = () => {
       // #ProductGridContainer is replaced wholesale by facets.js when filters or sort change.
-      // Direct children only: Rivo injecting the heart icon must not retrigger a re-init.
       const grids = document.querySelectorAll('[data-infinite-scroll-results], #ProductGridContainer');
       if (!grids.length) return;
       let queued = false;
-      const observer = new MutationObserver(() => {
+      const observer = new MutationObserver((mutations) => {
+        // Ignore Rivo injecting the heart icon, or every re-init would trigger another.
+        if (mutations.every((m) => m.target.closest && m.target.closest('rivo-favorite-button'))) return;
         if (queued) return;
         queued = true;
         requestAnimationFrame(() => {
           queued = false;
-          reInitWishlistBtns('grid-change');
+          reInitWishlistBtns();
         });
       });
-      grids.forEach((grid) => observer.observe(grid, { childList: true }));
+      grids.forEach((grid) => observer.observe(grid, { childList: true, subtree: true }));
     };
-    reInitWishlistBtns('initial');
+    reInitWishlistBtns();
     setupGridWatcher();
   })();
 </script>
@@ -84,11 +84,24 @@
     z-index: 10 !important;
   }
   .favorite-button-wrapper rivo-favorite-button {
+    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  /* Invisible 44px hit area around the ~28px bubble so near-misses don't open the PDP. */
+  .favorite-button-wrapper rivo-favorite-button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+  /* Hide the white bubble until Rivo has loaded the heart, and whenever Rivo hides it. */
+  .favorite-button-wrapper:not(
+      :has(> rivo-favorite-button[data-rivo-favorite-loaded]:not([style*='display: none']))
+    ) {
+    display: none !important;
   }
 </style>
 {% if template.name == 'product' %}
