@@ -16,6 +16,8 @@
     - description_class: {String} Tailwind styling classes (optional)
     - badge_class: {String} Tailwind styling classes (optional)
     - hide_badge: {Boolean} Hide text badge. Default: false (optional)
+    - show_wishlist: {Boolean} Show the Rivo favorite heart instead of the text badge. The page must also
+      render 'rivo-wishlist-assets' once. Default: false (optional)
     - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
     - reviews_paid_only: {Boolean} Gate reviews to paid traffic via <paid-only>. Default: false (optional)
     - align_reviews_right: {Boolean} Align reviews to the right. Default: false (optional)
@@ -560,10 +562,11 @@
     {%- unless mini or hide_badge -%}
       {%- if custom_badge_html != blank -%}
         {{ custom_badge_html }}
+      {%- elsif show_wishlist -%}
+        <span class="absolute top-1 right-1">{% render 'rivo-wishlist-heart', product: card_product %}</span>
       {%- else -%}
-        {% comment %} {% assign positioned_badge = 'absolute top-1 right-1 mb-1 ' | append: badge_class %}
-        {% render 'product-text-badge', product: card_product, classes: positioned_badge, percent_discount: percent_discount %} {% endcomment %}
-        <span class="absolute top-1 right-1 mb-1">{% render 'rivo-wishlist-heart' product: card_product %}</span>
+        {% assign positioned_badge = 'absolute top-1 right-1 mb-1 ' | append: badge_class %}
+        {% render 'product-text-badge', product: card_product, classes: positioned_badge, percent_discount: percent_discount %}
       {%- endif -%}
       
       {% render 'product-image-badge', product: card_product, classes: 'z-10 left-1 top-1 w-12 xl:w-16 gap-1' %}
