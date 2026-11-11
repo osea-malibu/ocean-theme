@@ -31,76 +31,84 @@
     class="product-before-after container {{ section.settings.section_classes }}"
     style="{% render 'product-palette-vars', palette_product: ba_product %}"
   >
-    <div class="grid lg:grid-cols-2 gap-y-8 gap-x-12 xl:gap-x-24 items-center">
-      <div class="lg:max-w-xl">
+    <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-10">
+      <div class="text-center mb-6 lg:mb-10">
         {%- if section.settings.eyebrow != blank -%}
           <p class="text-xs font-book uppercase tracking-[0.2em] text-seaweed-700 mb-2">{{ section.settings.eyebrow | escape }}</p>
         {%- endif -%}
-        <h2 class="font-serif text-3xl md:text-4xl text-seaweed-700">
-          {{- section.settings.heading | escape | replace: '®', '<sup class="text-[60%]">®</sup>' -}}
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl tracking-tight text-seaweed-700">
+          {{- section.settings.heading | escape | replace: '®', '<sup class="text-[50%]">®</sup>' -}}
         </h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="mt-2 text-sm md:text-base max-w-xl mx-auto">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
 
+      <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 xl:gap-14 items-center max-w-5xl mx-auto">
+      <div>
         {%- if results != blank -%}
-          <div class="mt-6 lg:mt-8">
+          <div class="flex flex-col gap-6">
             {%- for result in results -%}
-              {%- if result.title != blank -%}
-                <h3 class="text-xs font-book uppercase tracking-widest text-seaweed-700 {% unless forloop.first %}mt-6{% endunless %}">
-                  {{- result.title | remove: ':' -}}
-                </h3>
-              {%- endif -%}
-              <ul class="divide-y divide-sand-400 border-b border-sand-400" role="list">
-                {%- for stat in result.stats -%}
-                  <li class="flex items-center gap-4 lg:gap-6 py-4">
-                    <span class="flex-none flex items-center justify-center size-16 lg:size-18 rounded-full border border-p-border bg-p-surface text-p-inverse">
-                      {%- if stat.value_type == 'text' or stat.value == blank -%}
-                        {% render 'icon-checkmark', classes: 'w-6 h-6', stroke_width: 1.5, aria_hidden: true %}
-                      {%- else -%}
-                        <b class="font-medium text-xl lg:text-2xl leading-none">
-                          {{- stat.value -}}
-                          <small class="text-[60%]">{% if stat.value_type == 'percent' %}%{% else %}hr{% endif %}</small>
-                        </b>
-                      {%- endif -%}
-                    </span>
-                    <p class="text-sm lg:text-base leading-snug">
-                      {%- if stat.value_type == 'text' and stat.value != blank -%}
-                        <b class="font-medium">{{ stat.value }}</b>
-                      {% elsif stat.value != blank %}
-                        <span class="sr-only">{{ stat.value }}{% if stat.value_type == 'percent' %}%{% else %} hours{% endif %}</span>
-                      {%- endif -%}
-                      {{ stat.description }}
-                    </p>
-                  </li>
-                {%- endfor -%}
-              </ul>
-            {%- endfor -%}
-
-            {%- liquid
-              assign citations = ''
-              for result in results
-                if result.citations != blank
-                  assign citations = citations | append: '<br />' | append: result.citations
-                endif
-              endfor
-              assign citations_array = citations | split: '<br />' | compact
-            -%}
-            {%- if citations_array.size > 0 -%}
-              <details class="group mt-4 text-xs">
-                <summary class="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                  <span class="link">{{ section.settings.details_label | escape }}</span>
-                </summary>
-                <ul class="mt-3 leading-tight space-y-1" role="list">
-                  {%- for citation in citations_array -%}
-                    {%- if citation != blank -%}<li>{{ citation }}</li>{%- endif -%}
+              <div>
+                {%- if result.title != blank -%}
+                  <h3 class="text-xs font-medium uppercase tracking-widest text-seaweed-700 mb-1">
+                    {{- result.title | remove: ':' -}}
+                  </h3>
+                {%- endif -%}
+                <ul class="divide-y divide-sand-300" role="list">
+                  {%- for stat in result.stats -%}
+                    <li class="flex items-center gap-3 lg:gap-4 py-2.5">
+                      <span class="flex-none flex items-center justify-center size-12 rounded-full border border-p-border bg-p-surface text-p-inverse">
+                        {%- if stat.value_type == 'text' or stat.value == blank -%}
+                          {% render 'icon-checkmark', classes: 'w-4 h-4', stroke_width: 2, aria_hidden: true %}
+                        {%- else -%}
+                          <b class="font-medium text-base leading-none">
+                            {{- stat.value -}}
+                            <small class="text-[60%]">{% if stat.value_type == 'percent' %}%{% else %}hr{% endif %}</small>
+                          </b>
+                        {%- endif -%}
+                      </span>
+                      <p class="text-sm lg:text-base leading-snug">
+                        {%- if stat.value_type == 'text' and stat.value != blank -%}
+                          <b class="font-medium">{{ stat.value }}</b>
+                        {% elsif stat.value != blank %}
+                          <span class="sr-only">{{ stat.value }}{% if stat.value_type == 'percent' %}%{% else %} hours{% endif %}</span>
+                        {%- endif -%}
+                        {{ stat.description }}
+                      </p>
+                    </li>
                   {%- endfor -%}
                 </ul>
-              </details>
-            {%- endif -%}
+              </div>
+            {%- endfor -%}
           </div>
+
+          {%- liquid
+            assign citations = ''
+            for result in results
+              if result.citations != blank
+                assign citations = citations | append: '<br />' | append: result.citations
+              endif
+            endfor
+            assign citations_array = citations | split: '<br />' | compact
+          -%}
+          {%- if citations_array.size > 0 -%}
+            <details class="mt-4 text-xs">
+              <summary class="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <span class="link">{{ section.settings.details_label | escape }}</span>
+              </summary>
+              <ul class="mt-3 leading-tight space-y-1" role="list">
+                {%- for citation in citations_array -%}
+                  {%- if citation != blank -%}<li>{{ citation }}</li>{%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </details>
+          {%- endif -%}
         {%- endif -%}
       </div>
 
       <before-after-results
-        class="block"
+        class="block order-first lg:order-none rounded-lg bg-p-core ring-1 ring-p-border p-2 lg:p-3"
         data-product-handle="{{ ba_product.handle }}"
         role="region"
         aria-roledescription="carousel"
@@ -126,7 +134,7 @@
               {% unless forloop.first %}hidden inert{% endunless %}
             >
               <div
-                class="relative aspect-square overflow-hidden rounded-lg ring-1 ring-sand-400 bg-sand-100 select-none touch-pan-y cursor-ew-resize group/ba"
+                class="relative aspect-square overflow-hidden rounded-md bg-p-surface select-none touch-pan-y cursor-ew-resize group/ba"
                 data-ba-media
                 style="--ba-pos: 50%;"
               >
@@ -190,15 +198,15 @@
           {%- endfor -%}
         </div>
 
-        <div class="flex items-center gap-4 mt-3 min-h-10">
+        <div class="flex items-center gap-4 mt-2 -mb-1 px-1 min-h-10 text-p-inverse">
           <p class="text-sm" data-ba-caption-text>{{ first_slide.caption.value | escape }}</p>
           {%- if slide_count > 1 -%}
-            <div class="ml-auto flex items-center gap-1 text-sm text-seaweed-700">
-              <button type="button" class="p-2 rounded-full hover:bg-sand-200 motion-safe:transition" data-ba-prev aria-label="Previous result">
+            <div class="ml-auto flex items-center gap-1 text-sm">
+              <button type="button" class="p-2 rounded-full hover:bg-p-surface motion-safe:transition" data-ba-prev aria-label="Previous result">
                 {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-5 w-5 block' %}
               </button>
               <span class="tabular-nums min-w-8 text-center" data-ba-counter aria-hidden="true">1/{{ slide_count }}</span>
-              <button type="button" class="p-2 rounded-full hover:bg-sand-200 motion-safe:transition" data-ba-next aria-label="Next result">
+              <button type="button" class="p-2 rounded-full hover:bg-p-surface motion-safe:transition" data-ba-next aria-label="Next result">
                 {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-5 w-5 block rotate-180' %}
               </button>
             </div>
@@ -206,6 +214,7 @@
           {%- endif -%}
         </div>
       </before-after-results>
+      </div>
     </div>
   </div>
 
@@ -235,7 +244,6 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "default": "The Clinicals",
       "label": "Eyebrow"
     },
     {
@@ -243,6 +251,11 @@
       "id": "heading",
       "default": "Results You Can Sea®",
       "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
     },
     {
       "type": "text",
