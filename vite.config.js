@@ -22,6 +22,7 @@ export default defineConfig({
         "password-modal": resolve(__dirname, "src/scripts/password-modal.js"),
         "onetime-bundle-builder": resolve(__dirname, "src/scripts/onetime-bundle-builder.js"),
         "product-routine": resolve(__dirname, "src/scripts/product-routine.js"),
+        "before-after-results": resolve(__dirname, "src/scripts/before-after-results.js"),
         timeline: resolve(__dirname, "src/scripts/timeline.js"),
         // CSS entry point for Tailwind compilation
         application: resolve(__dirname, "src/styles/application.css"),

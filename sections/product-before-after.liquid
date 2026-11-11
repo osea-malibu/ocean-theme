@@ -1,0 +1,271 @@
+{% comment %}
+  Clinicals with before/after — stats on the left, drag-to-compare photo carousel on the right.
+
+  Data contract:
+  - Product metafield `custom.before_after` → list of `before_after` metaobject references
+    (slide order = list order):
+      - before_image: file reference (required) — square crop, same framing as after_image
+      - after_image:  file reference (required)
+      - before_label: single line text (optional) — defaults to "Before"
+      - after_label:  single line text (required) — e.g. "After 4 weeks"
+      - caption:      single line text (optional) — shown under the image
+  - Stats + citations come from the existing `custom.clinical_results` JSON metafield.
+
+  PDP-agnostic: the Product setting overrides the page product, so the same section works on
+  landing pages. On PDPs, product-clinicals hides itself when this section has slides to show.
+{% endcomment %}
+
+{%- liquid
+  assign ba_product = section.settings.product | default: product
+  assign slides = ba_product.metafields.custom.before_after.value
+  assign results = ba_product.metafields.custom.clinical_results.value
+-%}
+
+{%- if slides != blank -%}
+  {%- liquid
+    assign slide_count = slides.size
+    assign first_slide = slides | first
+    assign sizes_attr = '(min-width: 1024px) 50vw, 100vw'
+  -%}
+  <div
+    class="product-before-after container {{ section.settings.section_classes }}"
+    style="{% render 'product-palette-vars', palette_product: ba_product %}"
+  >
+    <div class="grid lg:grid-cols-2 gap-y-8 gap-x-12 xl:gap-x-24 items-center">
+      <div class="lg:max-w-xl">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="text-xs font-book uppercase tracking-[0.2em] text-seaweed-700 mb-2">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 class="font-serif text-3xl md:text-4xl text-seaweed-700">
+          {{- section.settings.heading | escape | replace: '®', '<sup class="text-[60%]">®</sup>' -}}
+        </h2>
+
+        {%- if results != blank -%}
+          <div class="mt-6 lg:mt-8">
+            {%- for result in results -%}
+              {%- if result.title != blank -%}
+                <h3 class="text-xs font-book uppercase tracking-widest text-seaweed-700 {% unless forloop.first %}mt-6{% endunless %}">
+                  {{- result.title | remove: ':' -}}
+                </h3>
+              {%- endif -%}
+              <ul class="divide-y divide-sand-400 border-b border-sand-400" role="list">
+                {%- for stat in result.stats -%}
+                  <li class="flex items-center gap-4 lg:gap-6 py-4">
+                    <span class="flex-none flex items-center justify-center size-16 lg:size-18 rounded-full border border-p-border bg-p-surface text-p-inverse">
+                      {%- if stat.value_type == 'text' or stat.value == blank -%}
+                        {% render 'icon-checkmark', classes: 'w-6 h-6', stroke_width: 1.5, aria_hidden: true %}
+                      {%- else -%}
+                        <b class="font-medium text-xl lg:text-2xl leading-none">
+                          {{- stat.value -}}
+                          <small class="text-[60%]">{% if stat.value_type == 'percent' %}%{% else %}hr{% endif %}</small>
+                        </b>
+                      {%- endif -%}
+                    </span>
+                    <p class="text-sm lg:text-base leading-snug">
+                      {%- if stat.value_type == 'text' and stat.value != blank -%}
+                        <b class="font-medium">{{ stat.value }}</b>
+                      {% elsif stat.value != blank %}
+                        <span class="sr-only">{{ stat.value }}{% if stat.value_type == 'percent' %}%{% else %} hours{% endif %}</span>
+                      {%- endif -%}
+                      {{ stat.description }}
+                    </p>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endfor -%}
+
+            {%- liquid
+              assign citations = ''
+              for result in results
+                if result.citations != blank
+                  assign citations = citations | append: '<br />' | append: result.citations
+                endif
+              endfor
+              assign citations_array = citations | split: '<br />' | compact
+            -%}
+            {%- if citations_array.size > 0 -%}
+              <details class="group mt-4 text-xs">
+                <summary class="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                  <span class="link">{{ section.settings.details_label | escape }}</span>
+                </summary>
+                <ul class="mt-3 leading-tight space-y-1" role="list">
+                  {%- for citation in citations_array -%}
+                    {%- if citation != blank -%}<li>{{ citation }}</li>{%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </details>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <before-after-results
+        class="block"
+        data-product-handle="{{ ba_product.handle }}"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="{{ section.settings.region_label | escape }}"
+      >
+        <div class="relative">
+          {%- for slide in slides -%}
+            {%- liquid
+              assign before_image = slide.before_image.value
+              assign after_image = slide.after_image.value
+              assign before_label = slide.before_label.value | default: 'Before'
+              assign after_label = slide.after_label.value | default: 'After'
+              if before_image == blank or after_image == blank
+                continue
+              endif
+            -%}
+            <div
+              data-ba-slide
+              data-ba-caption="{{ slide.caption.value | escape }}"
+              role="group"
+              aria-roledescription="slide"
+              aria-label="{{ forloop.index }} of {{ slide_count }}"
+              {% unless forloop.first %}hidden inert{% endunless %}
+            >
+              <div
+                class="relative aspect-square overflow-hidden rounded-lg ring-1 ring-sand-400 bg-sand-100 select-none touch-pan-y cursor-ew-resize group/ba"
+                data-ba-media
+                style="--ba-pos: 50%;"
+              >
+                {%- for image in (1..2) -%}
+                  {%- liquid
+                    if forloop.first
+                      assign img = before_image
+                      assign layer_class = ''
+                    else
+                      assign img = after_image
+                      assign layer_class = ' [clip-path:inset(0_0_0_var(--ba-pos))]'
+                    endif
+                    assign image_master = img | image_url
+                  -%}
+                  {% comment %}theme-check-disable RemoteAsset {% endcomment %}
+                  <img
+                    class="absolute inset-0 w-full h-full object-cover pointer-events-none{{ layer_class }}"
+                    src="{% render 'imgix', src: image_master, w: 800, h: 800, fit: 'crop', crop: 'center' %}"
+                    srcset="
+                      {% render 'imgix', src: image_master, w: 480, h: 480, fit: 'crop', crop: 'center' %} 480w,
+                      {% render 'imgix', src: image_master, w: 640, h: 640, fit: 'crop', crop: 'center' %} 640w,
+                      {% render 'imgix', src: image_master, w: 800, h: 800, fit: 'crop', crop: 'center' %} 800w,
+                      {% render 'imgix', src: image_master, w: 1200, h: 1200, fit: 'crop', crop: 'center' %} 1200w
+                    "
+                    sizes="{{ sizes_attr }}"
+                    loading="lazy"
+                    {%- liquid
+                      if forloop.first
+                        assign fallback_alt = before_label | remove: '*' | append: ': ' | append: slide.caption.value
+                      else
+                        assign fallback_alt = after_label | remove: '*' | append: ': ' | append: slide.caption.value
+                      endif
+                    -%}
+                    alt="{{ img.alt | default: fallback_alt | escape }}"
+                    width="1200"
+                    height="1200"
+                    draggable="false"
+                  >
+                  {% comment %}theme-check-enable RemoteAsset {% endcomment %}
+                {%- endfor -%}
+
+                <b class="absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-book uppercase tracking-widest text-white bg-seaweed-700">{{ before_label | escape }}</b>
+                <b class="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-book uppercase tracking-widest text-white bg-seaweed-700">{{ after_label | escape }}</b>
+
+                <div class="absolute inset-y-0 left-[var(--ba-pos)] w-px -translate-x-1/2 bg-white pointer-events-none"></div>
+                <div
+                  class="absolute top-1/2 left-[var(--ba-pos)] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-1 size-12 lg:size-14 rounded-full bg-white text-seaweed-700 shadow-[0_14px_34px_rgba(29,77,65,0.18)] motion-safe:transition-transform group-data-[dragging]/ba:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-seaweed-700"
+                  data-ba-handle
+                  role="slider"
+                  tabindex="0"
+                  aria-label="{{ section.settings.handle_label | escape }}"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                >
+                  {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-4 w-4' %}
+                  {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-4 w-4 rotate-180' %}
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="flex items-center gap-4 mt-3 min-h-10">
+          <p class="text-sm" data-ba-caption-text>{{ first_slide.caption.value | escape }}</p>
+          {%- if slide_count > 1 -%}
+            <div class="ml-auto flex items-center gap-1 text-sm text-seaweed-700">
+              <button type="button" class="p-2 rounded-full hover:bg-sand-200 motion-safe:transition" data-ba-prev aria-label="Previous result">
+                {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-5 w-5 block' %}
+              </button>
+              <span class="tabular-nums min-w-8 text-center" data-ba-counter aria-hidden="true">1/{{ slide_count }}</span>
+              <button type="button" class="p-2 rounded-full hover:bg-sand-200 motion-safe:transition" data-ba-next aria-label="Next result">
+                {% render 'icon-chevron', aria_hidden: true, stroke_width: 1.5, classes: 'h-5 w-5 block rotate-180' %}
+              </button>
+            </div>
+            <p class="sr-only" data-ba-status aria-live="polite"></p>
+          {%- endif -%}
+        </div>
+      </before-after-results>
+    </div>
+  </div>
+
+  <script src="{{ 'before-after-results.min.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Clinicals: Before & After",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Slides come from the product's 'Before & After' metafield; stats and testing details from 'Clinical Results'. Renders nothing when the product has no slides."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Leave empty on product pages to use the page's product. Pick one for landing pages."
+    },
+    {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Section classes"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "default": "The Clinicals",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Results You Can Sea®",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "details_label",
+      "default": "*Show testing details",
+      "label": "Testing details link"
+    },
+    {
+      "type": "header",
+      "content": "Accessibility"
+    },
+    {
+      "type": "text",
+      "id": "region_label",
+      "default": "Before and after results",
+      "label": "Carousel label"
+    },
+    {
+      "type": "text",
+      "id": "handle_label",
+      "default": "Drag to compare before and after",
+      "label": "Slider handle label"
+    }
+  ]
+}
+{% endschema %}

@@ -1,4 +1,5 @@
-{%- if product.metafields.custom.clinical_results != blank -%}
+{%- comment -%} Products with before/after slides get product-before-after instead {%- endcomment -%}
+{%- if product.metafields.custom.clinical_results != blank and product.metafields.custom.before_after.value == blank -%}
 <div class="product-clinicals container mb-6 lg:mb-12 {{ section.settings.section_classes }}">
   <div class="w-full flex flex-col lg:flex-row gap-y-5 lg:gap-0 justify-between">
     <div class="w-full lg:basis-[calc(50%-12px)] relative overflow-hidden h-full p-8 lg:p-12 xl:px-20 xl:pt-24 xl:pb-32 bg-white rounded-xl">
