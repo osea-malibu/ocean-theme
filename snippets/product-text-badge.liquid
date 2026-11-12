@@ -5,6 +5,7 @@
     - product: {Object} Product Liquid object
     - classes: {Object} Tailwind CSS classes
     - percent_discount: {Boolean} Show % off instead of $ off in savings badge (optional)
+    - eyebrow: {Boolean} Plain pill above the card title; only "New" and set savings show (optional)
 
     Usage:
     {% render 'product-text-badge', product: product %}
@@ -13,8 +14,20 @@
   assign set_products = collections['skincare-sets'].products | map: 'handle'
   assign badge_text = ''
   assign badge_class = 'badge whitespace-nowrap overflow-hidden'
+  assign metafield_text = product.metafields.badge.text | strip | downcase
 
-  if product.available == false
+  if eyebrow
+    if product.available == false
+      assign badge_text = ''
+    elsif metafield_text == 'new'
+      assign badge_text = 'New'
+    elsif set_products contains product.handle and product.compare_at_price != blank and product.compare_at_price > product.price
+      assign discount_amount = product.compare_at_price | minus: product.price
+      assign original_price_float = product.compare_at_price | times: 1.0
+      assign discount_percent = discount_amount | divided_by: original_price_float | times: 100 | ceil
+      assign badge_text = "Save " | append: discount_percent | append: '%'
+    endif
+  elsif product.available == false
     assign badge_text = 'Out of Stock'
   elsif product.metafields.badge.text != blank
     assign badge_text = product.metafields.badge.text
@@ -30,7 +43,9 @@
     endif
   endif
 
-  if product.available == false
+  if eyebrow
+    assign badge_class = badge_class | append: ' ' | append: 'text-xs'
+  elsif product.available == false
     assign badge_class = badge_class | append: ' ' | append: 'bg-wave-200 text-wave-800 text-xs sm:text-sm'
   elsif product.metafields.badge.type == blank or product.metafields.badge.type == 'Default'
     assign badge_class = badge_class | append: ' ' | append: 'text-xs sm:text-sm'
@@ -38,7 +53,7 @@
     assign badge_class = badge_class | append: ' ' | append: 'rounded-full w-12 h-12 lg:w-16 lg:h-16 text-sm uppercase flex items-center justify-center'
   endif
 
-  if product.metafields.badge.classes != blank
+  if product.metafields.badge.classes != blank and eyebrow != true
     assign badge_class = badge_class | append: ' ' | append: product.metafields.badge.classes
   endif
 
