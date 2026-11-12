@@ -79,7 +79,7 @@
       endif
     -%}
     {%- if show_badge_eyebrow and mini != true and hide_badge != true -%}
-      <div class="min-h-5 mb-1.5">
+      <div class="flex min-h-5 mb-2">
         {% render 'product-text-badge', product: card_product, eyebrow: true %}
       </div>
     {%- endif -%}
