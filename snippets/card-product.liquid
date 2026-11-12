@@ -19,7 +19,7 @@
     - show_text_badge: {Boolean} Show the text badge (New, set savings, etc.). Off by default since
       the badge test showed it hurt CVR. Default: false (optional)
     - show_badge_eyebrow: {Boolean} Show "New" / set savings as a pill above the title. Default: false (optional)
-    - subgrid_rows: {Boolean} Lay the card on 4 shared rows (image, badge + title, description, CTA) so
+    - subgrid_rows: {Boolean} Lay the card on 4 shared rows (image, badge, title + description, CTA) so
       cards line up across a grid row. The parent must span 4 rows with grid-rows-subgrid. Default: false (optional)
     - show_wishlist: {Boolean} Show the Rivo favorite heart; takes the text badge's spot if both are set.
       The page must also render 'rivo-wishlist-assets' once. Default: false (optional)
@@ -82,14 +82,16 @@
     {%- liquid
       if subgrid_rows
         assign cta_row_class = 'row-start-4 self-end '
+        assign eyebrow_classes = 'row-start-2 justify-self-start self-start mb-2'
       else
         assign cta_row_class = 'mt-auto '
+        assign eyebrow_classes = 'self-start mb-2'
       endif
     -%}
-    {%- if subgrid_rows -%}<div class="row-start-2 flex flex-col justify-end">{%- endif -%}
     {%- if show_badge_eyebrow and mini != true and hide_badge != true -%}
-      {% render 'product-text-badge', product: card_product, eyebrow: true, classes: 'self-start mb-2' %}
+      {% render 'product-text-badge', product: card_product, eyebrow: true, classes: eyebrow_classes %}
     {%- endif -%}
+    {%- if subgrid_rows -%}<div class="row-start-3">{%- endif -%}
     <div class="{{ title_wrapper_classes }}">
       {%- if show_reviews -%}
         {%- unless mini -%}
@@ -125,12 +127,12 @@
         </h3>
       {% unless remove_linking %}</a>{% endunless %}
     </div>
-    {%- if subgrid_rows -%}</div>{%- endif -%}
     {%- unless mini -%}
-      <p class="short-description text-sm lg:text-base leading-[1.1]!{% if subgrid_rows %} row-start-3{% endif %}{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
+      <p class="short-description text-sm lg:text-base leading-[1.1]!{% if card_product.variants.size == 1 and short_description_text == blank %} mb-1 lg:mb-2{% endif %}{% if description_class != blank %} {{ description_class }}{% endif %}">
         {{- short_description_text | default: card_product.metafields.custom_fields.short_description | escape -}}
       </p>
     {%- endunless -%}
+    {%- if subgrid_rows -%}</div>{%- endif -%}
 
     {%- liquid
       assign product_collections_handles = card_product.collections | map: 'handle'
