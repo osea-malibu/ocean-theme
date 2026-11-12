@@ -18,8 +18,8 @@
     - hide_badge: {Boolean} Hide all badges (text, image, custom, wishlist heart). Default: false (optional)
     - show_text_badge: {Boolean} Show the text badge (New, set savings, etc.). Off by default since
       the badge test showed it hurt CVR. Default: false (optional)
-    - show_badge_eyebrow: {Boolean} Show "New" / set savings as a compact pill above the title. The line is
-      reserved on every card so titles line up across a row. Default: false (optional)
+    - show_badge_eyebrow: {Boolean} Render "New" / set savings as a compact pill above the title, hidden
+      until VWO CSS shows .vwo-badge-eyebrow. The line is reserved on every card so titles line up. Default: false (optional)
     - show_wishlist: {Boolean} Show the Rivo favorite heart; takes the text badge's spot if both are set.
       The page must also render 'rivo-wishlist-assets' once. Default: false (optional)
     - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
@@ -79,7 +79,8 @@
       endif
     -%}
     {%- if show_badge_eyebrow and mini != true and hide_badge != true -%}
-      <div class="flex h-4 mb-2">
+      {%- comment -%} Hidden until the VWO "PLP: Badges above title" variant shows .vwo-badge-eyebrow {%- endcomment -%}
+      <div class="vwo-badge-eyebrow hidden h-4 mb-2">
         {% render 'product-text-badge', product: card_product, eyebrow: true %}
       </div>
     {%- endif -%}
