@@ -18,8 +18,8 @@
     - hide_badge: {Boolean} Hide all badges (text, image, custom, wishlist heart). Default: false (optional)
     - show_text_badge: {Boolean} Show the text badge (New, set savings, etc.). Off by default since
       the badge test showed it hurt CVR. Default: false (optional)
-    - show_badge_eyebrow: {Boolean} Show "New" / set savings as a pill above the title. Reserves the line
-      on every card so titles stay aligned across a row. Default: false (optional)
+    - show_badge_eyebrow: {Boolean} Show "New" / set savings as a pill above the title. No space is
+      reserved on unbadged cards, so badged titles sit lower in a row. Default: false (optional)
     - show_wishlist: {Boolean} Show the Rivo favorite heart; takes the text badge's spot if both are set.
       The page must also render 'rivo-wishlist-assets' once. Default: false (optional)
     - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
@@ -79,9 +79,7 @@
       endif
     -%}
     {%- if show_badge_eyebrow and mini != true and hide_badge != true -%}
-      <div class="flex min-h-5 mb-2">
-        {% render 'product-text-badge', product: card_product, eyebrow: true %}
-      </div>
+      {% render 'product-text-badge', product: card_product, eyebrow: true, classes: 'self-start mb-2' %}
     {%- endif -%}
     <div class="{{ title_wrapper_classes }}">
       {%- if show_reviews -%}
