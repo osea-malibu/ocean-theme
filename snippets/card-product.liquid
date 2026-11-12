@@ -18,9 +18,8 @@
     - hide_badge: {Boolean} Hide all badges (text, image, custom, wishlist heart). Default: false (optional)
     - show_text_badge: {Boolean} Show the text badge (New, set savings, etc.). Off by default since
       the badge test showed it hurt CVR. Default: false (optional)
-    - show_badge_eyebrow: {Boolean} Show "New" / set savings as a pill above the title. Default: false (optional)
-    - subgrid_rows: {Boolean} Lay the card on 4 shared rows (image, badge, title + description, CTA) so
-      cards line up across a grid row. The parent must span 4 rows with grid-rows-subgrid. Default: false (optional)
+    - show_badge_eyebrow: {Boolean} Show "New" / set savings as a pill above the title. Unbadged cards push
+      their text down onto the CTA so a badge's extra height lands under the image. Default: false (optional)
     - show_wishlist: {Boolean} Show the Rivo favorite heart; takes the text badge's spot if both are set.
       The page must also render 'rivo-wishlist-assets' once. Default: false (optional)
     - show_reviews: {Boolean} Show star review and review count. Default: false (optional)
@@ -60,8 +59,8 @@
 {% endcomment %}
 
 {%- if card_product != blank -%}
-<div class="{% if card_class != blank %}{{ card_class }}{% elsif subgrid_rows %}relative grid row-span-4 grid-rows-subgrid gap-y-0{% else %}flex flex-col relative grow h-full{% endif %}">
-  <div class="product-info{% if subgrid_rows %} contents{% else %} w-full order-1 grow flex flex-col{% endif %}">
+<div class="{% if card_class == blank %}flex flex-col relative grow h-full{% else %}{{ card_class }}{% endif %}">
+  <div class="product-info w-full order-1 grow flex flex-col">
     {%- liquid
       if align_reviews_right
         assign title_wrapper_classes = ''
@@ -80,19 +79,22 @@
       endif
     -%}
     {%- liquid
-      if subgrid_rows
-        assign cta_row_class = 'row-start-4 self-end '
-        assign eyebrow_classes = 'row-start-2 justify-self-start self-start mb-2'
-      else
-        assign cta_row_class = 'mt-auto '
-        assign eyebrow_classes = 'self-start mb-2'
+      # Badged text stays at the top so badges line up; unbadged text sits on the CTA so slack goes under the image
+      assign cta_push_class = 'mt-auto '
+      assign title_push_class = ''
+      if show_badge_eyebrow and mini != true and hide_badge != true
+        capture badge_eyebrow
+          render 'product-text-badge', product: card_product, eyebrow: true, classes: 'self-start mb-2'
+        endcapture
+        assign badge_eyebrow = badge_eyebrow | strip
+        if badge_eyebrow == blank
+          assign cta_push_class = ''
+          assign title_push_class = ' mt-auto'
+        endif
       endif
     -%}
-    {%- if show_badge_eyebrow and mini != true and hide_badge != true -%}
-      {% render 'product-text-badge', product: card_product, eyebrow: true, classes: eyebrow_classes %}
-    {%- endif -%}
-    {%- if subgrid_rows -%}<div class="row-start-3">{%- endif -%}
-    <div class="{{ title_wrapper_classes }}">
+    {{ badge_eyebrow }}
+    <div class="{{ title_wrapper_classes }}{{ title_push_class }}">
       {%- if show_reviews -%}
         {%- unless mini -%}
           {%- if reviews_paid_only -%}<paid-only class="block">{%- endif -%}
@@ -132,7 +134,6 @@
         {{- short_description_text | default: card_product.metafields.custom_fields.short_description | escape -}}
       </p>
     {%- endunless -%}
-    {%- if subgrid_rows -%}</div>{%- endif -%}
 
     {%- liquid
       assign product_collections_handles = card_product.collections | map: 'handle'
@@ -156,11 +157,11 @@
       endif
     -%}
     {%- if custom_cta_html != blank -%}
-      <div class="{{ cta_row_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+      <div class="{{ cta_push_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         {{ custom_cta_html }}
       </div>
     {%- elsif is_pdp_link -%}
-      <div class="{{ cta_row_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+      <div class="{{ cta_push_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         <a class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50" href="{{ card_product.url }}">
           {{- pdp_link_label -}}
         </a>
@@ -180,7 +181,7 @@
           endif
         endif
       -%}
-      <div class="{{ cta_row_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+      <div class="{{ cta_push_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         {%- liquid
           assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id
           assign subscription_group = nil
@@ -474,7 +475,7 @@
     {%- endif -%}
   </div>
 
-  <div class="relative block overflow-hidden no-underline rounded mb-2{% if subgrid_rows %} row-start-1{% endif %}" tabindex="-1">
+  <div class="relative block overflow-hidden no-underline rounded mb-2" tabindex="-1">
     {%- if card_product.featured_media -%}
       {%- if remove_linking -%}
         <div class="group block bg-wave-100 {% unless mini %}aspect-4/5{% endunless %}{% if hover_image != blank %} relative{% endif %}{% if image_class != blank %} {{ image_class }}{% endif %}" tabindex="-1">

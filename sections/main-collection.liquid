@@ -39,7 +39,7 @@
           <ul
             id="product-grid"
             data-id="{{ section.id }}"
-            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 sm:gap-x-4"
+            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-8 sm:gap-x-4"
           >
             {%- liquid
               if collection.handle == 'exclude-from-site'
@@ -72,7 +72,7 @@
               endif
             -%}
             {%- if has_promo_tile -%}
-              <li class="collection-promo-tile relative overflow-hidden rounded row-span-4 mb-8" style="order: 0">
+              <li class="collection-promo-tile relative overflow-hidden rounded" style="order: 0">
                 {%- render 'collection-promo-tile',
                   promo_tile_image: promo_tile_image,
                   promo_tile_video: promo_tile_video,
@@ -84,7 +84,7 @@
             {%- if collection.metafields.custom.plp_interrupter != blank -%}
               {%- for interrupter in collection.metafields.custom.plp_interrupter.value -%}
                 {%- assign interrupter_title = interrupter.collection.value | default: collection.title -%}
-                <li class="collection-promo-section relative overflow-hidden rounded row-span-4 mb-8 {{ interrupter.wrapper_classes }}">
+                <li class="collection-promo-section relative overflow-hidden rounded {{ interrupter.wrapper_classes }}">
                   {% render 'collection-promo-section', promo_section_image_mobile: interrupter.image_mobile, promo_section_image_desktop: interrupter.image_desktop, promo_section_image_classes: interrupter.image_classes, promo_section_content: interrupter.content, promo_section_content_classes: interrupter.content_classes, promo_section_url: interrupter.url, promo_section_image_wrapper_classes: interrupter.image_wrapper_classes, promo_section_link_classes: interrupter.link_classes, promo_section_alt_text: interrupter.image_alt_text.value, promo_section_title: interrupter_title %}
                 </li>
               {%- endfor -%}
@@ -117,7 +117,7 @@
               endif
             -%}
 
-            <li class="grid row-span-4 grid-rows-subgrid gap-y-0 mb-8" style="order: {{ forloop.index }}">
+            <li style="order: {{ forloop.index }}">
               {%- render 'card-product',
                 card_product: product,
                 section_id: collection.id,
@@ -133,8 +133,7 @@
                 image_element_class: 'aspect-[4/5]',
                 product_link_label_suffix: product_link_label_suffix,
                 show_wishlist: true,
-                show_badge_eyebrow: true,
-                subgrid_rows: true
+                show_badge_eyebrow: true
               -%}
             </li>
           {%- endfor -%}
