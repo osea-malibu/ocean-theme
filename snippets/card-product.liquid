@@ -78,10 +78,23 @@
         assign ratings_classes = ratings_classes | append: ' hidden'
       endif
     -%}
-    {%- if show_badge_eyebrow and mini != true and hide_badge != true -%}
-      {% render 'product-text-badge', product: card_product, eyebrow: true, classes: 'self-start mb-2' %}
-    {%- endif -%}
-    <div class="{{ title_wrapper_classes }}">
+    {%- liquid
+      # Eyebrow mode bottom-aligns the text with the CTA so uneven rows leave space under the image instead
+      assign cta_push_class = 'mt-auto '
+      assign title_push_class = ''
+      if show_badge_eyebrow and mini != true and hide_badge != true
+        assign cta_push_class = ''
+        capture badge_eyebrow
+          render 'product-text-badge', product: card_product, eyebrow: true, classes: 'self-start mb-2 mt-auto'
+        endcapture
+        assign badge_eyebrow = badge_eyebrow | strip
+        if badge_eyebrow == blank
+          assign title_push_class = ' mt-auto'
+        endif
+      endif
+    -%}
+    {{ badge_eyebrow }}
+    <div class="{{ title_wrapper_classes }}{{ title_push_class }}">
       {%- if show_reviews -%}
         {%- unless mini -%}
           {%- if reviews_paid_only -%}<paid-only class="block">{%- endif -%}
@@ -144,11 +157,11 @@
       endif
     -%}
     {%- if custom_cta_html != blank -%}
-      <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+      <div class="{{ cta_push_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         {{ custom_cta_html }}
       </div>
     {%- elsif is_pdp_link -%}
-      <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+      <div class="{{ cta_push_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         <a class="button button-tertiary w-full motion-safe:transition flex mt-2 disabled:opacity-50" href="{{ card_product.url }}">
           {{- pdp_link_label -}}
         </a>
@@ -168,7 +181,7 @@
           endif
         endif
       -%}
-      <div class="mt-auto overflow-hidden px-1 pb-1 -mb-1 -mx-1">
+      <div class="{{ cta_push_class }}overflow-hidden px-1 pb-1 -mb-1 -mx-1">
         {%- liquid
           assign product_form_id = 'product-form-' | append: card_product.id | append: '-' | append: section_id
           assign subscription_group = nil
