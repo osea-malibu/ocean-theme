@@ -1,4 +1,10 @@
-{%- paginate blog.articles by 11 -%}
+{%- liquid
+  assign articles_per_page = 11
+  if current_tags == blank
+    assign articles_per_page = 12
+  endif
+-%}
+{%- paginate blog.articles by articles_per_page -%}
   <div class="blog mb-6">
     <h1 class="sr-only">{{ blog.title | escape }}</h1>
 
@@ -115,12 +121,24 @@
       <h2 class="mb-3 font-serif text-3xl tracking-tight text-center">Browse by Category</h2>
       <nav class="mb-6">
         <ul class="flex sm:justify-center items-center tracking-wide font-book overflow-x-auto px-2 pb-1.5">
+          <li>
+            <a
+              href="{{ blog.url | append: '#nav' }}"
+              class="block py-1 px-3 tracking-wide whitespace-nowrap hover:text-seaweed-500 motion-safe:transition-colors{% if current_tags == blank %} bg-seafoam-200 font-medium{% endif %}"
+              {% if current_tags == blank %}aria-current="page"{% endif %}
+            >
+              All
+            </a>
+          </li>
           {%- for tag in blog.all_tags -%}
             {%- assign tag_handle = tag | handle -%}
+            {%- if tag_handle == 'all' -%}
+              {%- continue -%}
+            {%- endif -%}
             <li>
               <a
-                href="{% if tag == 'All' %}{{ blog.url | append: '#nav' }}{% else %}{{ blog.url | append: '/tagged/' | append: tag_handle | append: '#nav' }}{% endif %}"
-                class="block py-1 px-3 tracking-wide whitespace-nowrap hover:text-seaweed-500 motion-safe:transition-colors{% if current_tags contains tag %} {{ category_color }} font-medium{% endif %}{% if current_tags == nil and tag == 'All' %} bg-seafoam-200 font-medium{% endif %}"
+                href="{{ blog.url | append: '/tagged/' | append: tag_handle | append: '#nav' }}"
+                class="block py-1 px-3 tracking-wide whitespace-nowrap hover:text-seaweed-500 motion-safe:transition-colors{% if current_tags contains tag %} {{ category_color }} font-medium{% endif %}"
               >
                 {{- tag | replace: '-', ' ' | replace: 'How To', 'How-To' | replace: 'Osea', 'OSEA' -}}
               </a>
@@ -142,7 +160,7 @@
       endif
       assign brand_article_handles = brand_articles | map: 'handle'
       assign brand_below_pagination = false
-      if blog.metafields.custom.brand_section_below_pagination.value == true
+      if current_tags == blank or blog.metafields.custom.brand_section_below_pagination.value == true
         assign brand_below_pagination = true
       endif
     -%}
