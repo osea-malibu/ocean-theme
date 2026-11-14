@@ -392,7 +392,7 @@ test("Group does not describe other sizes on an explicitly selected size with mi
   assert.deepEqual(await renderSchema(groupTemplate, product), []);
 });
 
-const combinedStart = source.indexOf("{%- if product.id == 8092623623");
+const combinedStart = source.indexOf("{%- liquid\n  assign use_product_group");
 assert.ok(combinedStart >= 0, "Find the Undaria schema switch");
 const combinedEnd = source.indexOf("{% schema %}", combinedStart);
 assert.ok(combinedEnd >= 0, "Find the combined schema block end");
@@ -433,4 +433,92 @@ test("Combined switch preserves distinct missing-media policies without competin
   assert.equal(ordinary[0].gtin12, undefined);
   assert.equal(ordinary[0].url, "https://example.com/products/serum");
   assert.equal(ordinary[0].offers.length, 2);
+});
+
+for (const handle of [
+  "undaria-algae-body-butter",
+  "dream-bio-retinol-body-serum",
+  "anti-aging-body-balm",
+  "hyaluronic-body-serum",
+  "ocean-cleanser",
+]) {
+  test(`Rollout groups complete size family ${handle}, with safe catalog fallbacks`, async () => {
+    const product = fixture();
+    product.handle = handle;
+    product.options = ["Size"];
+    assert.equal((await renderSchema(combined, product))[0]["@type"], "ProductGroup");
+    product.selected_variant = product.variants[1];
+    assert.equal((await renderSchema(combined, product))[0].hasVariant.length, 2);
+    product.variants[1].featured_media = null;
+    const fallback = await renderSchema(combined, product);
+    assert.equal(fallback.length, 1);
+    assert.equal(fallback[0]["@type"], "Product");
+    assert.equal(fallback[0].offers.length, 2);
+    product.variants[1].featured_media = structuredClone(product.variants[0].featured_media);
+    product.options = ["Scent", "Size"];
+    assert.equal((await renderSchema(combined, product))[0]["@type"], "Product");
+    product.options = ["Size"];
+    product.variants = [product.variants[0]];
+    product.selected_variant = null;
+    assert.equal((await renderSchema(combined, product))[0]["@type"], "Product");
+  });
+}
+
+test("Rollout leaves sets, scent families and unrelated products on Product", async () => {
+  for (const handle of [
+    "undaria-algae-body-wash",
+    "undaria-body-bestsellers",
+    "dream-night-cream",
+    "undaria-algae-body-lotion",
+    "unreviewed-product",
+  ]) {
+    const product = fixture();
+    product.handle = handle;
+    product.options = ["Size"];
+    const schemas = await renderSchema(combined, product);
+    assert.equal(schemas.length, 1);
+    assert.equal(schemas[0]["@type"], "Product");
+  }
+});
+
+test("Size-family routing preserves a valid selected offer when another image is missing", async () => {
+  const product = fixture();
+  product.handle = "hyaluronic-body-serum";
+  product.options = ["Size"];
+  product.selected_variant = product.variants[0];
+  product.variants[1].featured_media = null;
+  const schemas = await renderSchema(combined, product);
+  assert.equal(schemas.length, 1);
+  assert.equal(schemas[0]["@type"], "Product");
+  assert.equal(schemas[0].sku, "SERUM-4");
+  assert.equal(schemas[0].offers.length, 1);
+  assert.equal(schemas[0].offers[0].url, "https://example.com/products/serum?variant=101");
+});
+
+test("Rollout never infers Size from a lone unsupported option", async () => {
+  const product = fixture();
+  product.handle = "hyaluronic-body-serum";
+  product.options = ["Scent"];
+  product.options_by_name = { size: null };
+  assert.equal((await renderSchema(combined, product))[0]["@type"], "Product");
+});
+
+test("Body Wash Duo retains its distinct ordinary selected identity and offer", async () => {
+  const product = fixture();
+  product.handle = "undaria-algae-body-wash";
+  product.options = ["Size"];
+  product.variants[1].title = "8 fl oz Duo";
+  product.variants[1].sku = "UABWD-1";
+  product.variants[1].barcode = "";
+  product.variants[1].price = 5800;
+  product.selected_variant = product.variants[1];
+  const [schema] = await renderSchema(combined, product);
+  assert.equal(schema["@type"], "Product");
+  assert.equal(schema.sku, "UABWD-1");
+  assert.equal(schema.gtin12, undefined);
+  assert.equal(schema.size, undefined);
+  assert.equal(schema.offers.length, 1);
+  assert.equal(schema.offers[0].price, 58);
+  product.selected_variant = null;
+  assert.equal((await renderSchema(combined, product))[0].offers.length, 2);
 });
