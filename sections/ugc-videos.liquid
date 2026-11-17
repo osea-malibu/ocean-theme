@@ -1,0 +1,56 @@
+{%- comment -%} Same carousel as product-ugc, but videos are picked here instead of from a product metafield. {%- endcomment -%}
+{%- if section.settings.videos != blank -%}
+  {%- render 'ugc-video-carousel',
+    entries: section.settings.videos,
+    header: section.settings.header,
+    subheader: section.settings.subheader,
+    section_classes: section.settings.section_classes,
+    paid_only: section.settings.paid_only
+  -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "UGC Videos",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "metaobject_list",
+      "id": "videos",
+      "label": "Videos",
+      "metaobject_type": "ugc_videos",
+      "limit": 20,
+      "info": "Pick entries from Content > Metaobjects > UGC Videos. Shown in this order."
+    },
+    {
+      "type": "textarea",
+      "id": "section_classes",
+      "label": "Section classes"
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "What our customers are saying"
+    },
+    {
+      "type": "text",
+      "id": "subheader",
+      "label": "Subheader",
+      "default": "Check out these reviews from real OSEA customers"
+    },
+    {
+      "type": "checkbox",
+      "id": "paid_only",
+      "label": "Show to paid traffic only",
+      "info": "When enabled, this section is only visible to visitors from paid sources (affiliate, CPC, Facebook ad, or TikTok ad). Detected via UTM params and persisted for the session.",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "UGC Videos"
+    }
+  ]
+}
+{% endschema %}
