@@ -4,7 +4,7 @@
 {%- endcomment -%}
 {%- if paid_only -%}<paid-only class="block">{%- endif -%}
 <div class="product-ugc-videos container mb-6 lg:mb-12 {{ section_classes }}">
-  <div class="bg-white rounded-xl p-6 lg:p-10">
+  <div class="bg-white rounded-xl p-6 lg:p-10 {{ wrapper_classes }}">
     <div class="text-center mb-5">
       {% if header != blank %}<h3 class="relative text-3xl md:text-4xl tracking-tight font-serif leading-none mb-2">{{ header }}</h3>{% endif %}
       {% if subheader != blank %}<p class="relative text-sm leading-tight tracking-wide">{{ subheader }}</p>{% endif %}
