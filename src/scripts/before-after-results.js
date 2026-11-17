@@ -89,7 +89,8 @@ if (!customElements.get("before-after-results")) {
       media.addEventListener("pointercancel", endDrag);
 
       handle.addEventListener("keydown", (event) => {
-        const current = parseFloat(handle.getAttribute("aria-valuenow")) || 50;
+        const value = parseFloat(handle.getAttribute("aria-valuenow"));
+        const current = Number.isFinite(value) ? value : 50;
         const next = {
           ArrowLeft: current - KEY_STEP,
           ArrowDown: current - KEY_STEP,
