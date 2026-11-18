@@ -70,6 +70,13 @@
               else
                 assign has_promo_tile = false
               endif
+
+              assign promo_image_high_priority = false
+              unless section.index > 2
+                if promo_tile_image != blank and promo_tile_video == blank
+                  assign promo_image_high_priority = true
+                endif
+              endunless
             -%}
             {%- if has_promo_tile -%}
               <li class="collection-promo-tile relative overflow-hidden rounded" style="order: 0">
@@ -77,7 +84,8 @@
                   promo_tile_image: promo_tile_image,
                   promo_tile_video: promo_tile_video,
                   promo_tile_url: promo_tile_url,
-                  promo_tile_title: collection.title
+                  promo_tile_title: collection.title,
+                  fetch_priority_high: promo_image_high_priority
                 -%}
               </li>
             {%- endif -%}
@@ -97,7 +105,9 @@
 
             {%- if forloop.index == 1 -%}
               {%- assign remove_lazy_loading = true -%}
-              {%- assign fetch_priority_high = true -%}
+              {%- unless promo_image_high_priority -%}
+                {%- assign fetch_priority_high = true -%}
+              {%- endunless -%}
             {%- endif -%}
 
             {%- for title_match_product in collection.products -%}
