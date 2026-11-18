@@ -15,6 +15,12 @@
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     <link rel="preconnect" href="https://cdn.shopifycloud.com" crossorigin>
+    {%- assign imgix_origin = settings.imgixUrl | strip -%}
+    {%- if settings.enableImgix and imgix_origin != blank -%}
+      {% comment %}theme-check-disable RemoteAsset{% endcomment %}
+      <link rel="preconnect" href="{{ imgix_origin | escape }}">
+      {% comment %}theme-check-enable RemoteAsset{% endcomment %}
+    {%- endif -%}
     <link rel="dns-prefetch" href="//cdn.shopifycloud.com">
     <link rel="dns-prefetch" href="//cdn.shopify.com">
 
