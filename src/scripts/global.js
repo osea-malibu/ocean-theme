@@ -551,11 +551,18 @@ class ShippingCountdown extends HTMLElement {
     window.__oseaPatchedCartFetch = true;
 
     const origFetch = window.fetch;
-    const CART_URL_RE = /\/cart(\.js|\/(add|update|change|clear)\.js)?(\?.*)?$/;
+    const CART_URL_RE = /\/cart(\.js|\/(add|update|change|clear)(\.js)?)?(\?.*)?$/;
 
     // Patch fetch so ANY cart mutation/reads trigger a refresh signal.
     window.fetch = async function patchedFetch(input, init) {
-      const res = await origFetch(input, init);
+      // The countdown's own read must not start another cart-update/read cycle.
+      const isShippingCountdownRead = init?.oseaShippingCountdownRead === true;
+      let fetchInit = init;
+      if (isShippingCountdownRead) {
+        fetchInit = { ...init };
+        delete fetchInit.oseaShippingCountdownRead;
+      }
+      const res = await origFetch(input, fetchInit);
       try {
         const url = typeof input === "string" ? input : input?.url || "";
         const method = (
@@ -564,7 +571,7 @@ class ShippingCountdown extends HTMLElement {
           "GET"
         ).toUpperCase();
         // Fire after any successful cart call (read or write); write ops will also hit /cart.js afterwards anyway.
-        if (CART_URL_RE.test(url) && res.ok) {
+        if (!isShippingCountdownRead && CART_URL_RE.test(url) && res.ok) {
           // Dispatch a consistent, theme-agnostic signal
           const evt = new CustomEvent("cart:refresh", { bubbles: true });
           window.dispatchEvent(evt);
@@ -576,18 +583,6 @@ class ShippingCountdown extends HTMLElement {
       } catch (_) {}
       return res;
     };
-
-    // Cross-tab signals (nice to have)
-    try {
-      window.__oseaCartBC = new BroadcastChannel("osea:cart");
-      window.__oseaCartBC.onmessage = (m) => {
-        if (m?.type === "cart:refresh") {
-          const evt = new CustomEvent("cart:refresh", { bubbles: true });
-          window.dispatchEvent(evt);
-          document.dispatchEvent(evt);
-        }
-      };
-    } catch (_) {}
 
     // If any script touches localStorage key, piggyback as a signal
     const _setItem = localStorage.setItem.bind(localStorage);
@@ -611,6 +606,10 @@ class ShippingCountdown extends HTMLElement {
     this._refreshDebounced = ((fn) => {
       let t;
       return () => {
+        if (this._cartInflight) {
+          this._refreshAfterCartRead = true;
+          return;
+        }
         clearTimeout(t);
         t = setTimeout(fn, 120);
       };
@@ -620,6 +619,7 @@ class ShippingCountdown extends HTMLElement {
     // Coalesce in-flight cart requests
     this._cartInflight = null;
     this._lastCartJson = null;
+    this._refreshAfterCartRead = false;
 
     // One-time global patch
     ShippingCountdown.ensureCartSignalsPatched();
@@ -665,12 +665,6 @@ class ShippingCountdown extends HTMLElement {
 
     // 3) Section re-renders often imply cart UI changed
     document.addEventListener("shopify:section:load", this._refreshDebounced, { passive: true });
-
-    // 4) BroadcastChannel echo (from patched fetch)
-    if (window.__oseaCartBC) {
-      this._bcHandler = (m) => m?.type === "cart:refresh" && this._refreshDebounced();
-      window.__oseaCartBC.addEventListener?.("message", this._bcHandler);
-    }
   }
 
   disconnectedCallback() {
@@ -694,10 +688,6 @@ class ShippingCountdown extends HTMLElement {
     }
 
     document.removeEventListener("shopify:section:load", this._refreshDebounced);
-
-    if (window.__oseaCartBC && this._bcHandler) {
-      window.__oseaCartBC.removeEventListener?.("message", this._bcHandler);
-    }
   }
 
   async getCartJson() {
@@ -705,16 +695,22 @@ class ShippingCountdown extends HTMLElement {
     if (this._cartInflight) return this._cartInflight;
 
     this._cartInflight = (async () => {
-      const res = await fetch("/cart.js", { credentials: "same-origin", cache: "no-store" });
+      const res = await fetch("/cart.js", {
+        credentials: "same-origin",
+        cache: "no-store",
+        oseaShippingCountdownRead: true,
+      });
       if (!res.ok) throw new Error("Cart fetch failed");
       const json = await res.json();
       this._lastCartJson = json;
-      // Tell other tabs
-      try {
-        window.__oseaCartBC?.postMessage?.({ type: "cart:refresh" });
-      } catch (_) {}
       return json;
-    })().finally(() => (this._cartInflight = null));
+    })().finally(() => {
+      this._cartInflight = null;
+      if (this._refreshAfterCartRead) {
+        this._refreshAfterCartRead = false;
+        if (this.isConnected) this._refreshDebounced();
+      }
+    });
 
     return this._cartInflight;
   }
