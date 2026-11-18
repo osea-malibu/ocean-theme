@@ -60,7 +60,7 @@
                 assign promo_tile_video = settings.global_plp_tile_video
                 assign promo_tile_url = settings.global_plp_tile_url
               else
-                assign promo_tile_image = collection.metafields.custom.promo_tile_image
+                assign promo_tile_image = collection.metafields.custom.promo_tile_image.value
                 assign promo_tile_video = collection.metafields.custom.promo_tile_video_portrait.value
                 assign promo_tile_url = collection.metafields.custom_fields.promo_tile_url
               endif
