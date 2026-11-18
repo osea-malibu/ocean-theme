@@ -1477,7 +1477,11 @@ class VariantRadios extends VariantSelects {
   updateOptions() {
     const fieldsets = Array.from(this.querySelectorAll("fieldset"));
     this.options = fieldsets.map((fieldset) => {
-      return Array.from(fieldset.querySelectorAll("input")).find((radio) => radio.checked).value;
+      const radios = Array.from(fieldset.querySelectorAll("input"));
+      // Glide carousel clones share radio names and can steal the live checked state
+      const radio =
+        radios.find((r) => r.checked) || radios.find((r) => r.defaultChecked) || radios[0];
+      return radio?.value;
     });
   }
 }
