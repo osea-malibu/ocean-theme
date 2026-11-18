@@ -27,6 +27,7 @@ function fixture({
   threshold = "50",
   failReads = false,
   failWrites = false,
+  broadcastChannel = class {},
 } = {}) {
   const classes = new Map();
   const timers = new Map();
@@ -76,11 +77,7 @@ function fixture({
     HTMLElement,
     CustomEvent,
     localStorage: { setItem() {} },
-    BroadcastChannel: class {
-      postMessage() {}
-      addEventListener() {}
-      removeEventListener() {}
-    },
+    BroadcastChannel: broadcastChannel,
     customElements: {
       define: (name, value) => classes.set(name, value),
       get: (name) => classes.get(name),
@@ -188,6 +185,54 @@ test("ordinary cart reads still notify existing consumers and then settle", asyn
   const count = f.calls.length;
   await f.tick(1000);
   assert.equal(f.calls.length, count);
+});
+
+test("two tabs do not broadcast countdown reads or create a cross-tab feedback loop", async () => {
+  const channels = [];
+  const broadcasts = [];
+  class SharedChannel extends EventTarget {
+    constructor(name) {
+      super();
+      this.name = name;
+      channels.push(this);
+    }
+    postMessage(data) {
+      broadcasts.push(data);
+      for (const channel of channels) {
+        if (channel !== this && channel.name === this.name) {
+          const event = new MessageEvent("message", { data });
+          channel.onmessage?.(event);
+          channel.dispatchEvent(event);
+        }
+      }
+    }
+  }
+  const a = fixture({ broadcastChannel: SharedChannel });
+  const b = fixture({ broadcastChannel: SharedChannel });
+  a.element.connectedCallback();
+  b.element.connectedCallback();
+  await a.tick(1000);
+  await b.tick(1000);
+  assert.equal(channels.length, 0, "countdowns must not create a BroadcastChannel");
+  assert.equal(broadcasts.length, 0, "countdown reads must never notify other tabs");
+  assert.equal(a.calls.length, 1);
+  assert.equal(b.calls.length, 1);
+
+  a.cart = { total_price: 2500, item_count: 1, items: [] };
+  const update = a.window.fetch("/cart/change.js", { method: "POST" });
+  await a.tick(1000);
+  await update;
+  await b.tick(1000);
+  assert.equal(a.element.text.textContent, "Add $25 to bag for free shipping");
+  assert.equal(b.calls.length, 1, "the other tab must not refresh from a read broadcast");
+  assert.equal(broadcasts.length, 0);
+  const reads = a.calls.length;
+  await a.tick(5000);
+  await b.tick(5000);
+  assert.equal(a.calls.length, reads);
+  assert.equal(b.calls.length, 1);
+  a.element.disconnectedCallback();
+  b.element.disconnectedCallback();
 });
 
 test("cart mutations refresh the remaining amount, free-shipping state, and empty state", async () => {

@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "src/scripts/**"
+      - "assets/*.min.js"
+      - "vite.config.js"
       - "tools/shipping-countdown.test.mjs"
       - "package*.json"
       - ".github/workflows/shipping-countdown-tests.yml"
@@ -22,3 +24,5 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run test:shipping-countdown
+      - run: npm run build
+      - run: git diff --exit-code -- 'assets/*.min.js'

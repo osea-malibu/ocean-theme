@@ -584,18 +584,6 @@ class ShippingCountdown extends HTMLElement {
       return res;
     };
 
-    // Cross-tab signals (nice to have)
-    try {
-      window.__oseaCartBC = new BroadcastChannel("osea:cart");
-      window.__oseaCartBC.onmessage = (m) => {
-        if (m?.type === "cart:refresh") {
-          const evt = new CustomEvent("cart:refresh", { bubbles: true });
-          window.dispatchEvent(evt);
-          document.dispatchEvent(evt);
-        }
-      };
-    } catch (_) {}
-
     // If any script touches localStorage key, piggyback as a signal
     const _setItem = localStorage.setItem.bind(localStorage);
     localStorage.setItem = function (k, v) {
@@ -677,12 +665,6 @@ class ShippingCountdown extends HTMLElement {
 
     // 3) Section re-renders often imply cart UI changed
     document.addEventListener("shopify:section:load", this._refreshDebounced, { passive: true });
-
-    // 4) BroadcastChannel echo (from patched fetch)
-    if (window.__oseaCartBC) {
-      this._bcHandler = (m) => m?.type === "cart:refresh" && this._refreshDebounced();
-      window.__oseaCartBC.addEventListener?.("message", this._bcHandler);
-    }
   }
 
   disconnectedCallback() {
@@ -706,10 +688,6 @@ class ShippingCountdown extends HTMLElement {
     }
 
     document.removeEventListener("shopify:section:load", this._refreshDebounced);
-
-    if (window.__oseaCartBC && this._bcHandler) {
-      window.__oseaCartBC.removeEventListener?.("message", this._bcHandler);
-    }
   }
 
   async getCartJson() {
@@ -725,10 +703,6 @@ class ShippingCountdown extends HTMLElement {
       if (!res.ok) throw new Error("Cart fetch failed");
       const json = await res.json();
       this._lastCartJson = json;
-      // Tell other tabs
-      try {
-        window.__oseaCartBC?.postMessage?.({ type: "cart:refresh" });
-      } catch (_) {}
       return json;
     })().finally(() => {
       this._cartInflight = null;
