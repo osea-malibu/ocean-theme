@@ -1,5 +1,11 @@
 {%- liquid
   assign audience = section.settings.visibility_audience | default: 'all'
+  assign image_loading = 'lazy'
+  assign image_fetchpriority = 'auto'
+  if section.settings.prioritize_images
+    assign image_loading = 'eager'
+    assign image_fetchpriority = 'high'
+  endif
   assign show_section = true
   if audience == 'logged_in' and customer == blank
     assign show_section = false
@@ -96,7 +102,8 @@
                         height="{{ block.settings.image.height }}"
                         width="{{ block.settings.image.width }}"
                         class="{{ block.settings.image_classes }}"
-                        loading="lazy"
+                        loading="{{ image_loading }}"
+                        fetchpriority="{{ image_fetchpriority }}"
                       >
                     {%- else -%}
 
@@ -119,7 +126,8 @@
                           height="{{ static_image_height }}"
                           width="{{ static_image_width }}"
                           class="{{ block.settings.image_classes }}"
-                          loading="lazy"
+                          loading="{{ image_loading }}"
+                          fetchpriority="{{ image_fetchpriority }}"
                         >
                       {%- else -%}
                         {%- liquid
@@ -188,7 +196,8 @@
                             height="{{ block.settings.image.height }}"
                             width="{{ block.settings.image.width }}"
                             class="{{ block.settings.image_classes }}"
-                            loading="lazy"
+                            loading="{{ image_loading }}"
+                            fetchpriority="{{ image_fetchpriority }}"
                           >
                         </picture>
                       {%- endif -%}
@@ -644,6 +653,13 @@
       "type": "image_picker",
       "id": "row_bg_image",
       "label": "Background image (optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "prioritize_images",
+      "label": "Prioritize banner images",
+      "default": false,
+      "info": "Load column images eagerly with high priority. Enable for banners visible when the page first loads."
     },
     {
       "type": "select",
