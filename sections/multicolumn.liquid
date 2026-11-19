@@ -1,4 +1,13 @@
-{% if section.settings.logged_in_only == false or customer %}
+{%- liquid
+  assign audience = section.settings.visibility_audience | default: 'all'
+  assign show_section = true
+  if audience == 'logged_in' and customer == blank
+    assign show_section = false
+  elsif audience == 'logged_out' and customer
+    assign show_section = false
+  endif
+-%}
+{%- if show_section -%}
   {% if section.settings.section_heading != blank %}
     <h2 class="sr-only">{{ section.settings.section_heading }}</h2>
   {% endif %}
@@ -637,9 +646,15 @@
       "label": "Background image (optional)"
     },
     {
-      "type": "checkbox",
-      "id": "logged_in_only",
-      "label": "Logged-in only"
+      "type": "select",
+      "id": "visibility_audience",
+      "label": "Show section to",
+      "default": "all",
+      "options": [
+        { "value": "all", "label": "Everyone" },
+        { "value": "logged_in", "label": "Logged-in customers only" },
+        { "value": "logged_out", "label": "Logged-out visitors only" }
+      ]
     },
     {
       "type": "header",
