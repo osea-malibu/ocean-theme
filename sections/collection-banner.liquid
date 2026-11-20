@@ -78,7 +78,20 @@
       </h1>
 
       {%- if section.settings.show_collection_description -%}
-        <p class="tracking-wide lg:text-lg xl:text-xl">{{ collection.description }}</p>
+        {%- liquid
+          # Block HTML previously escaped the paragraph wrapper; preserve its existing typography.
+          assign description_has_blocks = false
+          assign block_tags = 'p,h1,h2,h3,h4,h5,h6,ul,ol,div,table,blockquote,section' | split: ','
+          for tag_name in block_tags
+            assign open_tag = '<' | append: tag_name | append: '>'
+            assign open_tag_with_attributes = '<' | append: tag_name | append: ' '
+            if collection.description contains open_tag or collection.description contains open_tag_with_attributes
+              assign description_has_blocks = true
+              break
+            endif
+          endfor
+        -%}
+        <div{% unless description_has_blocks %} class="tracking-wide lg:text-lg xl:text-xl"{% endunless %}>{{ collection.description }}</div>
       {%- endif -%}
     </div>
 
