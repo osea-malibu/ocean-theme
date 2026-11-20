@@ -231,7 +231,7 @@
                   {%- for option in subscription_group.selling_plans -%}
                     <option
                       value="{{ option.id }}"
-                      {%- if option.id == default_option -%}selected{%- endif -%}
+                      {% if option.id == default_option %}selected{% endif %}
                     >
                       {{- option.name -}}
                     </option>
