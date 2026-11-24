@@ -37,6 +37,8 @@
       assign sizes_desktop = '100vw'
   endcase
 
+  assign sizes = '(min-width: 40rem) ' | append: sizes_desktop | append: ', ' | append: sizes_mobile
+
   case block_settings.alignment
     when 'center'
       assign alignment_class = 'justify-center'
@@ -89,6 +91,24 @@
   if block_settings.image != blank or block_settings.image_mobile != blank
     assign image_available = true
   endif
+
+  assign effective_alt = blank
+  unless block_settings.decorative
+    assign effective_alt = block_settings.alt
+    if effective_alt == blank and block_settings.image_mobile.alt != blank
+      assign effective_alt = block_settings.image_mobile.alt
+    endif
+    if effective_alt == blank and block_settings.image.alt != blank
+      assign effective_alt = block_settings.image.alt
+    endif
+  endunless
+
+  assign link_has_accessible_name = false
+  if block_settings.link_label != blank
+    assign link_has_accessible_name = true
+  elsif image_available and effective_alt != blank
+    assign link_has_accessible_name = true
+  endif
 -%}
 
 <div
@@ -101,6 +121,7 @@
         image: block_settings.image,
         image_mobile: block_settings.image_mobile,
         widths_preset: block_settings.widths_preset,
+        sizes: sizes,
         sizes_mobile: sizes_mobile,
         sizes_desktop: sizes_desktop,
         alt: block_settings.alt,
@@ -114,7 +135,7 @@
     {%- endif -%}
   {%- endcapture -%}
 
-  {%- if block_settings.link != blank -%}
+  {%- if block_settings.link != blank and link_has_accessible_name -%}
     <a
       href="{{ block_settings.link }}"
       class="{{ content_class }}"
@@ -168,7 +189,7 @@
       "type": "text",
       "id": "link_label",
       "label": "Link label",
-      "info": "Required when a linked image is decorative."
+      "info": "Required when the linked image is decorative or has no alt text. The link will not render without an accessible name."
     },
     {
       "type": "header",
