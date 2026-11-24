@@ -13,6 +13,12 @@
 {%- if promo_tile_image != blank -%}
   {%- liquid
     assign promo_tile_image_master = promo_tile_image | image_url
+    assign promo_tile_width = promo_tile_image.width
+    assign promo_tile_height = promo_tile_image.height
+    if promo_tile_width == blank or promo_tile_height == blank or promo_tile_width <= 0 or promo_tile_height <= 0
+      assign promo_tile_width = 352
+      assign promo_tile_height = 440
+    endif
     assign promo_tile_sizes = '(min-width: 1024px) calc((100vw - 6rem) / 4), (min-width: 768px) calc((100vw - 5rem) / 3), (min-width: 640px) calc((100vw - 4rem) / 2), (min-width: 400px) calc((100vw - 3.5rem) / 2), calc((100vw - 2.5rem) / 2)'
   -%}
   {%- if promo_tile_url != blank -%}
@@ -35,8 +41,8 @@
     src="{% render 'imgix', src: promo_tile_image_master, w: 352 %}"
     sizes="{{ promo_tile_sizes }}"
     alt="{{ promo_tile_image.alt }}"
-    width="{{ promo_tile_image.width }}"
-    height="{{ promo_tile_image.width | divided_by: promo_tile_image.aspect_ratio | round }}"
+    width="{{ promo_tile_width }}"
+    height="{{ promo_tile_height }}"
     {% if fetch_priority_high %}
       loading="eager"
       fetchpriority="high"
