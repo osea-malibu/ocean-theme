@@ -196,6 +196,7 @@
   <div class="hidden overflow-x-scroll w-full">
     <div class="flex justify-center gap-2">
       {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
+        {%- assign product_form_id = 'product-form-' | append: section.id | append: '-card-' | append: matrix_product.id | append: '-' | append: forloop.index -%}
         <div class="bg-p-surface rounded p-2 lg:p-4 flex-1" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
           <div class="text-center">
             {%- liquid
@@ -222,7 +223,7 @@
               {%- form 'product', matrix_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                 <input type="hidden" name="id" value="{{ matrix_product.selected_or_first_available_variant.id }}" disabled>
                 <input type="hidden" name="properties[_is_subscription]" value="false">
-                <div class="product-form__buttons relative" id="AddToCart">
+                <div class="product-form__buttons relative" id="AddToCart-{{ product_form_id }}">
                   <button
                     type="submit"
                     name="add"
@@ -265,6 +266,7 @@
       <thead>
         <tr>
           {%- for matrix_product in collection.metafields.custom.comparison_matrix_products.value -%}
+            {%- assign product_form_id = 'product-form-' | append: section.id | append: '-table-' | append: matrix_product.id | append: '-' | append: forloop.index -%}
             <th class="px-1 py-0 text-center w-1/{{ matrix_product_count }}">
               <div class="py-2 rounded-t bg-p-surface" style="{% render 'product-palette-vars', palette_product: matrix_product %}">
                 {%- liquid
@@ -291,7 +293,7 @@
                   {%- form 'product', matrix_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                     <input type="hidden" name="id" value="{{ matrix_product.selected_or_first_available_variant.id }}" disabled>
                     <input type="hidden" name="properties[_is_subscription]" value="false">
-                    <div class="product-form__buttons relative" id="AddToCart">
+                    <div class="product-form__buttons relative" id="AddToCart-{{ product_form_id }}">
                       <button
                         type="submit"
                         name="add"

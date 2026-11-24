@@ -4,6 +4,7 @@
   - promo_tile_url: {String} Link to promo tile destination (optional)
   - promo_tile_video: {VideoDrop} Liquid video object (optional)
   - promo_tile_title: {String} Fallback link label used when the image has no alt text (optional)
+  - fetch_priority_high: {Boolean} Prioritize an above-the-fold promo image (optional)
 
   Usage:
   {% render 'collection-promo-tile', promo_tile_image: collection.metafields.image.url %}
@@ -42,6 +43,10 @@
     alt="{{ promo_tile_image.alt }}"
     width="{{ promo_tile_width }}"
     height="{{ promo_tile_height }}"
+    {% if fetch_priority_high %}
+      loading="eager"
+      fetchpriority="high"
+    {% endif %}
     class="absolute inset-0 object-cover object-center h-full w-full"
   >
   {% comment %}theme-check-enable RemoteAsset {% endcomment %}

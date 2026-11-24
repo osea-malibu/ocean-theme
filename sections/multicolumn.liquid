@@ -1,4 +1,19 @@
-{% if section.settings.logged_in_only == false or customer %}
+{%- liquid
+  assign audience = section.settings.visibility_audience | default: 'all'
+  assign image_loading = 'lazy'
+  assign image_fetchpriority = 'auto'
+  if section.settings.prioritize_images
+    assign image_loading = 'eager'
+    assign image_fetchpriority = 'high'
+  endif
+  assign show_section = true
+  if audience == 'logged_in' and customer == blank
+    assign show_section = false
+  elsif audience == 'logged_out' and customer
+    assign show_section = false
+  endif
+-%}
+{%- if show_section -%}
   {% if section.settings.section_heading != blank %}
     <h2 class="sr-only">{{ section.settings.section_heading }}</h2>
   {% endif %}
@@ -87,7 +102,8 @@
                         height="{{ block.settings.image.height }}"
                         width="{{ block.settings.image.width }}"
                         class="{{ block.settings.image_classes }}"
-                        loading="lazy"
+                        loading="{{ image_loading }}"
+                        fetchpriority="{{ image_fetchpriority }}"
                       >
                     {%- else -%}
 
@@ -110,7 +126,8 @@
                           height="{{ static_image_height }}"
                           width="{{ static_image_width }}"
                           class="{{ block.settings.image_classes }}"
-                          loading="lazy"
+                          loading="{{ image_loading }}"
+                          fetchpriority="{{ image_fetchpriority }}"
                         >
                       {%- else -%}
                         {%- liquid
@@ -179,7 +196,8 @@
                             height="{{ block.settings.image.height }}"
                             width="{{ block.settings.image.width }}"
                             class="{{ block.settings.image_classes }}"
-                            loading="lazy"
+                            loading="{{ image_loading }}"
+                            fetchpriority="{{ image_fetchpriority }}"
                           >
                         </picture>
                       {%- endif -%}
@@ -290,7 +308,7 @@
                                   {%- for option in subscription_group.selling_plans -%}
                                     <option
                                       value="{{ option.id }}"
-                                      {%- if option.id == default_option -%}selected{%- endif -%}
+                                      {% if option.id == default_option %}selected{% endif %}
                                     >
                                       {{- option.name -}}
                                     </option>
@@ -638,8 +656,21 @@
     },
     {
       "type": "checkbox",
-      "id": "logged_in_only",
-      "label": "Logged-in only"
+      "id": "prioritize_images",
+      "label": "Prioritize banner images",
+      "default": false,
+      "info": "Load column images eagerly with high priority. Enable for banners visible when the page first loads."
+    },
+    {
+      "type": "select",
+      "id": "visibility_audience",
+      "label": "Show section to",
+      "default": "all",
+      "options": [
+        { "value": "all", "label": "Everyone" },
+        { "value": "logged_in", "label": "Logged-in customers only" },
+        { "value": "logged_out", "label": "Logged-out visitors only" }
+      ]
     },
     {
       "type": "header",
