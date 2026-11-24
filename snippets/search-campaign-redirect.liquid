@@ -1,0 +1,29 @@
+{%- comment -%}
+  Remove this snippet and its layout render when the 2026 BFCM campaign ends.
+{%- endcomment -%}
+{%- if request.page_type == 'search' -%}
+  {%- assign campaign_page = pages['black-friday-cyber-monday-offer-2026'] -%}
+
+  {%- if campaign_page != blank -%}
+    {%- assign campaign_url = routes.root_url
+      | append: '/pages/black-friday-cyber-monday-offer-2026'
+      | replace: '//', '/'
+    -%}
+
+    <script>
+      (() => {
+        const url = new URL(window.location.href);
+        const term = (url.searchParams.get('q') || '')
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, ' ');
+
+        const redirectTerms = ['dream duo', 'undaria travel duo'];
+
+        if (redirectTerms.includes(term)) {
+          window.location.replace({{ campaign_url | json }});
+        }
+      })();
+    </script>
+  {%- endif -%}
+{%- endif -%}
