@@ -10,14 +10,14 @@
       {%- case block.type -%}
         {%- when 'heading' -%}
           {%- if block.settings.heading_text != blank -%}
-            {%- if block.settings.heading_text contains '<h' -%}
+            {%- if block.settings.heading_text contains '<h' or block.settings.heading_text contains '<p' -%}
               <div class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.heading_text }}</div>
             {%- else -%}
               <h2 class="{{ block.settings.heading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.heading_text }}</h2>
             {%- endif -%}
           {%- endif -%}
           {%- if block.settings.subheading_text != blank -%}
-            {%- if block.settings.subheading_text contains '<h' -%}
+            {%- if block.settings.subheading_text contains '<h' or block.settings.subheading_text contains '<p' -%}
               <div class="{{ block.settings.subheading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.subheading_text }}</div>
             {%- else -%}
               <h3 class="{{ block.settings.subheading_classes }}" {{ block.shopify_attributes }}>{{ block.settings.subheading_text }}</h3>
