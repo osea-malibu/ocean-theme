@@ -1,10 +1,4 @@
-{%- liquid
-  assign articles_per_page = 11
-  if current_tags == blank
-    assign articles_per_page = 12
-  endif
--%}
-{%- paginate blog.articles by articles_per_page -%}
+{%- paginate blog.articles by 12 -%}
   <div class="blog mb-6">
     <h1 class="sr-only">{{ blog.title | escape }}</h1>
 
