@@ -573,7 +573,7 @@
       {%- if custom_badge_html != blank -%}
         {{ custom_badge_html }}
       {%- elsif show_wishlist -%}
-        <span class="absolute top-1 right-1">{% render 'rivo-wishlist-heart', product: card_product %}</span>
+        <div class="absolute top-1 right-1">{% render 'rivo-wishlist-heart', product: card_product %}</div>
       {%- elsif show_text_badge -%}
         {% assign positioned_badge = 'absolute top-1 right-1 mb-1 ' | append: badge_class %}
         {% render 'product-text-badge', product: card_product, classes: positioned_badge, percent_discount: percent_discount %}
