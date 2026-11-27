@@ -9,6 +9,51 @@
  */
 {
   "sections": {
+    "image_banner_zzfQ4q": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_V7qCkg": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_classes": ""
+          }
+        },
+        "paragraph_UWGr4L": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "",
+            "paragraph_classes": ""
+          }
+        },
+        "button_NdtNad": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_aria_label": "",
+            "button_link": "",
+            "target_blank": false,
+            "button_classes": "button-primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_V7qCkg",
+        "paragraph_UWGr4L",
+        "button_NdtNad"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_mobile": "shopify://shop_images/Homepage_Hero___Gifts_Shipping_Cut_Off___12-02-2026_-_Mobile_-_Layout.jpg",
+        "image": "shopify://shop_images/Homepage_Hero___Gifts_Shipping_Cut_Off___12-02-2026_-_Desktop_-_Layout.jpg",
+        "is_lazy": false,
+        "visibility_audience": "all",
+        "image_link": "",
+        "banner_classes": "container px-0 xs:px-6",
+        "image_classes": "w-full",
+        "text_block_classes": "max-w-md top-1/3"
+      }
+    },
     "image_banner_kUimz6": {
       "type": "image-banner",
       "blocks": {
@@ -1010,7 +1055,6 @@
         "column_D3RjUp",
         "column_DCaMtN"
       ],
-      "disabled": true,
       "name": "30th Anniversary Feature Cards",
       "settings": {
         "section_heading": "30th Anniversary Highlights",
@@ -1128,7 +1172,6 @@
         "column_7TCLnQ",
         "column_aMDeWx"
       ],
-      "disabled": true,
       "name": "LD26: Full Offer",
       "settings": {
         "section_heading": "",
@@ -2710,6 +2753,7 @@
     }
   },
   "order": [
+    "image_banner_zzfQ4q",
     "image_banner_kUimz6",
     "image_banner_LTPCUz",
     "multicolumn_mRzkkX",
